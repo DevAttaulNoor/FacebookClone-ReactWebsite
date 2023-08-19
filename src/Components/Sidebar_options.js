@@ -5,9 +5,9 @@ import '../CSS/Sidebar_options.css'
 function Sidebar_options({src, Icon, title}) {
   return (
     <div className='sidebarRow'>
-        {src && <Avatar src={src} />}
-        {Icon && <Icon /> }
-        <p>{title}</p>
+        <p id='sidebarSvg'>{src && <Avatar src={src} />}</p>
+        <p id='sidebarIcon'>{Icon && <Icon /> }</p>
+        <p id='sidebarTitle'>{title}</p>
     </div>
   )
 }

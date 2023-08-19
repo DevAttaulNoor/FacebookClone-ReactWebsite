@@ -20,7 +20,7 @@
 }
 
 .header_left img{
-    height: 45px;
+    height: 42px;
 }
 
 .header_search{
@@ -56,21 +56,18 @@
 
 .header_option{
     padding: 5px 40px;
+    margin: 0 5px;
     cursor: pointer;
 }
 
 .header_option:hover{
-    border-radius: 20px;
+    border-radius: 8px;
     background-color: whitesmoke;
 }
 
 .header_option svg{
     color: gray;
-    font-size: 32px;
-}
-
-.header_option svg:hover{
-    color: #2381fa;
+    font-size: 30px;
 }
 
 .header_option_active{
