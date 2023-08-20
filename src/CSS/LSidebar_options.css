@@ -1,25 +1,25 @@
-.sidebarRow{
+.LeftSidebarRow{
     display: flex;
     align-items: center;
     padding: 6px 14px;
 }
 
-.sidebarRow:first-child{
+.LeftSidebarRow:first-child{
     margin-top: 8px;
 }
 
-.sidebarRow:hover{
+.LeftSidebarRow:hover{
     background-color: rgb(211 211 211/33%);
     cursor: pointer;
 }
 
-.sidebarRow #sidebarTitle{
+.LeftSidebarRow #LeftSidebarTitle{
     font-weight: 500;
     padding-left: 8px;
 }
 
-.sidebarRow #sidebarSvg img,
-.sidebarRow #sidebarIcon img{
+.LeftSidebarRow #LeftSidebarSvg img,
+.LeftSidebarRow #LeftSidebarIcon img{
     height: 35px;
     width: 35px;
 }

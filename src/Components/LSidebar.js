@@ -1,11 +1,11 @@
 import React from 'react'
-import Sidebar_options from './Sidebar_options'
+import Sidebar_options from './LSidebar_options'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import '../CSS/Sidebar.css'
+import '../CSS/LSidebar.css'
 
-function Sidebar() {
+function LSidebar() {
   return (
-    <div className='sidebar'>
+    <div className='LeftSidebar'>
         <Sidebar_options src='https://media.licdn.com/dms/image/C4E03AQG0HcVoiR1-TA/profile-displayphoto-shrink_800_800/0/1649081167717?e=2147483647&v=beta&t=epvWpYY1NFwvj2VvLAzgeBWzQhAwyLYmssen-VIfJU8' title='Atta ul Noor'/>
         <Sidebar_options src='https://static.xx.fbcdn.net/rsrc.php/v3/y6/r/i0pziEs5Wj6.png' title='Friends'/>
         <Sidebar_options src='https://static.xx.fbcdn.net/rsrc.php/v3/y8/r/he-BkogidIc.png' title='Memories'/>
@@ -22,4 +22,4 @@ function Sidebar() {
   )
 }
 
-export default Sidebar
+export default LSidebar
