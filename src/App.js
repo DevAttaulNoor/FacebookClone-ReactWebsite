@@ -1,6 +1,6 @@
-import Feeds from "./Components/Feeds";
 import Header from "./Components/Header";
 import LeftSidebar from "./Components/LeftSidebar";
+import Feeds from "./Components/Feeds";
 import RightSidebar from "./Components/RightSidebar";
 
 function App() {
