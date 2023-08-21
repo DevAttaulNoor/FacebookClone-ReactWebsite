@@ -1,8 +1,8 @@
 import { Avatar, Icon } from '@mui/material'
 import React from 'react'
-import '../CSS/LSidebar_options.css'
+import '../CSS/LeftSidebar_options.css'
 
-function LSidebar_options({src, Icon, title}) {
+function LeftSidebar_options({src, Icon, title}) {
   return (
     <div className='leftSidebarRow'>
         <p id='LeftSidebarSvg'>{src && <Avatar src={src} />}</p>
@@ -12,4 +12,4 @@ function LSidebar_options({src, Icon, title}) {
   )
 }
 
-export default LSidebar_options
+export default LeftSidebar_options

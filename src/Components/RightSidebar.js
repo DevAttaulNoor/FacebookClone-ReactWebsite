@@ -1,7 +1,7 @@
 import React from 'react'
-import '../CSS/RSidebar.css'
+import '../CSS/RightSidebar.css'
 
-function RSidebar() {
+function RightSidebar() {
   return (
     <div className='Rightsidebar'>
         
@@ -9,4 +9,4 @@ function RSidebar() {
   )
 }
 
-export default RSidebar
+export default RightSidebar

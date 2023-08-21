@@ -4,22 +4,22 @@
     padding: 6px 14px;
 }
 
-.LeftSidebarRow:first-child{
+#LeftSidebarRow:first-child{
     margin-top: 8px;
 }
 
-.LeftSidebarRow:hover{
+#LeftSidebarRow:hover{
     background-color: rgb(211 211 211/33%);
     cursor: pointer;
 }
 
-.LeftSidebarRow #LeftSidebarTitle{
+#LeftSidebarRow #LeftSidebarTitle{
     font-weight: 500;
     padding-left: 8px;
 }
 
-.LeftSidebarRow #LeftSidebarSvg img,
-.LeftSidebarRow #LeftSidebarIcon img{
+#LeftSidebarRow #LeftSidebarSvg img,
+#LeftSidebarRow #LeftSidebarIcon img{
     height: 35px;
     width: 35px;
 }

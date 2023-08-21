@@ -1,7 +1,7 @@
 import Feeds from "./Components/Feeds";
 import Header from "./Components/Header";
-import LSidebar from "./Components/LSidebar";
-import RSidebar from "./Components/RSidebar";
+import LeftSidebar from "./Components/LeftSidebar";
+import RightSidebar from "./Components/RightSidebar";
 
 function App() {
   return (
@@ -10,9 +10,9 @@ function App() {
       <Header />
 
       <div className="app_body">
-        <LSidebar />
+        <LeftSidebar />
         <Feeds />
-        <RSidebar />
+        <RightSidebar />
       </div>
 
       {/* Body */}
