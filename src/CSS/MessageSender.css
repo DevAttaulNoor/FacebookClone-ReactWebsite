@@ -2,5 +2,60 @@
     display: flex;
     flex-direction: column;
     background-color: #fff;
-    
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 30px;
+    box-shadow: 4px 2px 10px #ccc;
+    box-sizing: border-box;
+}
+
+.messagesender_top{
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.messagesender_top form{
+    background-color: whitesmoke;
+    padding: 10px;
+    border-radius: 20px;
+    margin-left: 10px;
+    flex: 1;
+}
+
+.messagesender_top form input{
+    width: 100%;
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+}
+
+.messagesender_bottom{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid lightgray;
+    margin-top: 15px;
+}
+
+.messangerOption{
+    display: flex;
+    align-items: center;
+    padding: 5px 20px;
+    border-radius: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.messangerOption:hover{
+    background-color: whitesmoke;
+}
+
+.messangerOption p{
+    margin-left: 10px;
+}
+
+.messangerOption img{
+    font-size: large;
 }

@@ -1,25 +1,25 @@
-.LeftSidebarRow {
+.LeftsidebarRow {
     display: flex;
     align-items: center;
     padding: 6px 14px;
 }
 
-.LeftSidebarRow:first-child{
+.LeftsidebarRow:first-child{
     margin-top: 8px;
 }
 
-.LeftSidebarRow:hover{
+.LeftsidebarRow:hover{
     background-color: rgb(211 211 211/33%);
     cursor: pointer;
 }
 
-.LeftSidebarRow #LeftSidebarTitle{
+.LeftsidebarRow p{
     font-weight: 500;
     padding-left: 8px;
 }
 
-.LeftSidebarRow #LeftSidebarSvg img,
-.LeftSidebarRow #LeftSidebarIcon img{
+/* .LeftSidebarRow #LeftSidebarSvg p,
+.LeftSidebarRow #LeftSidebarIcon p{
     height: 35px;
     width: 35px;
-}
+} */
