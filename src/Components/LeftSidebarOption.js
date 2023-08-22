@@ -1,12 +1,12 @@
-import React from 'react'
 import { Avatar, Icon } from '@mui/material'
+import React from 'react'
 import '../CSS/LeftSidebarOption.css'
 
-function LeftSidebarOption(src, Icon, title) {
+function LeftSidebarOption({src, Icon, title}) {
   return (
-    <div className='leftsidebarRow'>
+    <div className='LeftsidebarRow'>
         {src && <Avatar src={src} />}
-        {Icon && <Icon/> }
+        {Icon && <Icon /> }
         <p>{title}</p>
     </div>
   )

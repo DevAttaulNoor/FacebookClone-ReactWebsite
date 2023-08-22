@@ -1,7 +1,7 @@
 import React from 'react'
+import LeftSidebarOption from './LeftSidebarOption'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import '../CSS/LeftSidebar.css'
-import LeftSidebarOption from './LeftSidebarOption';
 
 function LeftSidebar() {
   return (

@@ -6,7 +6,6 @@ import RightSidebar from "./Components/RightSidebar";
 function App() {
   return (
     <div className="App">
-      {/* Header */}
       <Header />
 
       <div className="app_body">

@@ -1,11 +1,7 @@
-.LeftsidebarRow {
+.LeftsidebarRow{
     display: flex;
     align-items: center;
     padding: 6px 14px;
-}
-
-.LeftsidebarRow:first-child{
-    margin-top: 8px;
 }
 
 .LeftsidebarRow:hover{
@@ -13,13 +9,16 @@
     cursor: pointer;
 }
 
+.LeftsidebarRow:first-child{
+    margin-top: 15px;
+}
+
 .LeftsidebarRow p{
     font-weight: 500;
     padding-left: 8px;
 }
 
-/* .LeftSidebarRow #LeftSidebarSvg p,
-.LeftSidebarRow #LeftSidebarIcon p{
+.LeftsidebarRow .MuiAvatar-img{
     height: 35px;
     width: 35px;
-} */
+}
