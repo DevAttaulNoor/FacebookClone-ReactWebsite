@@ -72,13 +72,13 @@
 }
 
 .modalHeading{
+    position: relative;
     text-align: center;
     border-bottom: 1px solid lightgray;
     height: 40px;
-    position: relative;
 }
 
-.modalHeading .MuiSvgIcon-root{
+.modalHeading .MuiIconButton-root{
     position: absolute;
     top: 0;
     right: 5px;
