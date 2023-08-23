@@ -7,7 +7,7 @@ import { useStateValue } from "./Components/StateProvider";
 
 function App() {
 	const [{user}, dispatch] = useStateValue();
-	console.log(user);
+	console.log(user)
 
 	return (
 		<>
