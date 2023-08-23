@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 
 function MessageSender() {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const handleClose = () => {
         setOpen(false)
     }

@@ -2,24 +2,35 @@ import Header from "./Components/Header";
 import LeftSidebar from "./Components/LeftSidebar";
 import Feeds from "./Components/Feeds";
 import RightSidebar from "./Components/RightSidebar";
+import Login from "./Components/Login";
+import { useStateValue } from "./Components/StateProvider";
 
 function App() {
-  return (
-    <div className="App">
-      <Header />
+	const [{user}, dispatch] = useStateValue();
+	console.log(user);
 
-      <div className="app_body">
-        <LeftSidebar />
-        <Feeds />
-        <RightSidebar />
-      </div>
+	return (
+		<>
+			{
+				!user ? (<Login />) : (
+					<div className="App">
+						<Header />
 
-      {/* Body */}
-      {/* Left Sidebar */}
-      {/* Posts */}
-      {/* Right Sidebar */}
-    </div>
-  );
+						<div className="app_body">
+							<LeftSidebar />
+							<Feeds />
+							<RightSidebar />
+						</div>
+
+						{/* Body */}
+						{/* Left Sidebar */}
+						{/* Posts */}
+						{/* Right Sidebar */}
+					</div>
+				)
+			}
+		</>
+	);
 }
 
 export default App;
