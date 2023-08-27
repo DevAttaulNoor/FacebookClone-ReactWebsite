@@ -3,13 +3,12 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 
 const firebaseConfig = firebase.initializeApp({
-    apiKey: "AIzaSyDIcQRNI5-u47uNipNeSig3RMOCYTNxNkk",
-    authDomain: "facebook-clone-d6f46.firebaseapp.com",
-    projectId: "facebook-clone-d6f46",
-    storageBucket: "facebook-clone-d6f46.appspot.com",
-    messagingSenderId: "58732281846",
-    appId: "1:58732281846:web:ee1d930a5d8c2dca5f51d7",
-    measurementId: "G-QNPL71KKSS"
+    apiKey: "AIzaSyA9lA6YzItci9gZgid3to3zEYL10U04C5o",
+    authDomain: "react-facebook-clone-e7bc0.firebaseapp.com",
+    projectId: "react-facebook-clone-e7bc0",
+    storageBucket: "react-facebook-clone-e7bc0.appspot.com",
+    messagingSenderId: "915537057768",
+    appId: "1:915537057768:web:50cf51cdd2fa935fe8765d"
 });
 
 const auth = firebase.auth();

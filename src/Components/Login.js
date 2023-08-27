@@ -2,11 +2,22 @@ import React from 'react'
 import fblogo from '../Imgs/fblogo.png';
 import "../CSS/Login.css"
 import { auth, provider } from './Firebase';
+import {useStateValue} from './StateProvider'
 
 function Login() {
+    const [{}, dispatch] = useStateValue();
     const signIn = () => {
         auth.signInWithPopup(provider).then((result) => {
-            console.log(result);
+            var credential = result.credential;
+            const photoURL = `${result.user.photoURL}?access_token=${credential.accessToken}`;
+
+            dispatch({
+                type: "SET_USER",
+                user:{
+                    displayName: result.user.displayName,
+                    photoURL: photoURL
+                }
+            })
         })
         .catch((error) => {
             if (error.code === 'auth/popup-closed-by-user') {

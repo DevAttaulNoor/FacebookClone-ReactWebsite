@@ -2,9 +2,11 @@ import { Avatar, IconButton, Modal } from '@mui/material'
 import React, { useState } from 'react'
 import "../CSS/MessageSender.css"
 import CloseIcon from '@mui/icons-material/Close';
+import { useStateValue } from './StateProvider';
 
 
 function MessageSender() {
+    const [{user}, dispatch] = useStateValue();
     const [open, setOpen] = useState(false);
     const handleClose = () => {
         setOpen(false)
@@ -27,8 +29,8 @@ function MessageSender() {
                         </div>
 
                         <div className="modalHeader_top">
-                            <Avatar />
-                            <h5>Atta ul Noor</h5>
+                            <Avatar src={user.photoURL} />
+                            <h5>{user.displayName}</h5>
                         </div>
 
                         <div className="modalBody">
@@ -37,7 +39,7 @@ function MessageSender() {
 
                         <div className="modalFooter">
                             <div className="modalFooterLeft">
-                                <h4>Add to yor post</h4>
+                                <h4>Add to your post</h4>
                             </div>
                             <div className="modalFooterRight">
                                 <IconButton>
@@ -58,9 +60,9 @@ function MessageSender() {
 
             <div className='messagesender'>
                 <div className="messagesender_top">
-                    <Avatar />
+                    <Avatar src={user.photoURL}/>
                     <form action="">
-                        <input type="text" placeholder="What's on your mind Atta ul Noor" onClick={handleOpen}/>
+                        <input type="text" placeholder={`What's on your mind ${user.displayName}`} onClick={handleOpen}/>
                     </form>
                 </div>
 

@@ -15,9 +15,12 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import IconButton from '@mui/material/IconButton';
 
 import fblogo from '../Imgs/fblogo.png';
+import { useStateValue } from './StateProvider';
 
 
 function Header() {
+    const [{user}, dispatch] = useStateValue();
+
     return (
         <div className='header'>
             <div className='header_left'>
@@ -58,7 +61,8 @@ function Header() {
                     <NotificationsIcon />
                 </IconButton>
                 <IconButton>
-                    <Avatar src='https://media.licdn.com/dms/image/C4E03AQG0HcVoiR1-TA/profile-displayphoto-shrink_800_800/0/1649081167717?e=2147483647&v=beta&t=epvWpYY1NFwvj2VvLAzgeBWzQhAwyLYmssen-VIfJU8' />
+                    <Avatar src={user.photoURL}/>
+                    {/* <h5>{user.displayName}</h5> */}
                 </IconButton>
             </div>
         </div>
