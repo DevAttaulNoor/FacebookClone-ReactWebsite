@@ -1,8 +1,7 @@
 .feeds{
     flex: 1;
-    padding: 30px 150px;
+    padding: 20px 150px;
     display: flex;
     flex-direction: column;
     max-width: 600px;
-    margin-top: 20px;
 }

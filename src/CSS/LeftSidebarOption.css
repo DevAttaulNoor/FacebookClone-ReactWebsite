@@ -1,7 +1,7 @@
 .LeftsidebarRow{
     display: flex;
     align-items: center;
-    padding: 6px 14px;
+    padding: 8px 15px;
 }
 
 .LeftsidebarRow:hover{
@@ -18,7 +18,7 @@
     padding-left: 8px;
 }
 
-.LeftsidebarRow .MuiAvatar-img{
-    height: 35px;
-    width: 35px;
+.LeftsidebarRow .MuiAvatar-root{
+    height: 36px;
+    width: 36px;
 }

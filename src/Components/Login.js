@@ -10,6 +10,7 @@ function Login() {
         auth.signInWithPopup(provider).then((result) => {
             var credential = result.credential;
             const photoURL = `${result.user.photoURL}?access_token=${credential.accessToken}`;
+            // console.log(result)
 
             dispatch({
                 type: "SET_USER",
