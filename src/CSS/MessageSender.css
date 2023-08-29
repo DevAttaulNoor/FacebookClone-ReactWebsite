@@ -4,9 +4,10 @@
     background-color: #fff;
     width: 100%;
     padding: 15px;
+    padding-bottom: 0;
     border-radius: 10px;
     margin-top: 20px;
-    box-shadow: 1px 1px 10px #ccc;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
     box-sizing: border-box;
 }
 
@@ -34,7 +35,7 @@
 .messagesender_bottom{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     border-top: 1px solid lightgray;
     margin-top: 15px;
 }
@@ -42,18 +43,22 @@
 .messangerOption{
     display: flex;
     align-items: center;
-    padding: 5px 20px;
+    padding: 10px 34px;
     border-radius: 20px;
-    margin-top: 10px;
+    margin: 8px 0;
     cursor: pointer;
 }
 
 .messangerOption:hover{
+    border-radius: 8px;
     background-color: whitesmoke;
 }
 
 .messangerOption p{
     margin-left: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    color: grey;
 }
 
 .messangerOption img{
@@ -103,6 +108,7 @@
     padding: 10px 0;
     letter-spacing: 1px;
     font-family: sans-serif;
+    resize: none;
 }
 
 .modalFooter{

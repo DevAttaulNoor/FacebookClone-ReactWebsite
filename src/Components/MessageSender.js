@@ -5,6 +5,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useStateValue } from './StateProvider';
 import firebase from 'firebase/app';
 import { db, storage } from './Firebase';
+import Picker from 'emoji-picker-react';
+
 
 function MessageSender() {
     const [{ user }, dispatch] = useStateValue();
@@ -12,6 +14,8 @@ function MessageSender() {
     const [image, setImage] = useState("")
     const [message, setMessage] = useState("")
     const [progress, setProgress] = useState(0);
+    const [chosenEmoji, setChosenEmoji] = useState(null);
+
 
     const handleClose = () => {
         setOpen(false)
@@ -33,6 +37,10 @@ function MessageSender() {
 
     const handleUpload = (e) => {
         e.preventDefault();
+        if (message === "" && image === "") {
+            return;
+        }
+
         if (image === "") {
             db.collection("Posts").add({
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -76,6 +84,12 @@ function MessageSender() {
         }
     }
 
+    // const onEmojiClick = (event, emojiObject) => {
+    //     const emoji = emojiObject.emoji; // Get the selected emoji
+    //     setMessage(prevMessage => prevMessage + emoji); // Append the emoji to the message
+    //     setChosenEmoji(emojiObject); // Set the chosen emoji state
+    // };
+
     return (
         <>
             <Modal open={open} onClose={handleClose}>
@@ -114,8 +128,18 @@ function MessageSender() {
                                 <IconButton>
                                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Y4mYLVOhTwq.png?_nc_eui2=AeHSN24y7ZwUiP0ks-vc5M5LvPIN-OmHLJy88g346YcsnMgGxvtWqzXUT3WG--zLIURpvgdh0oglkNtF3k-n2n77" alt="" />
                                 </IconButton>
+
+                                {/* {chosenEmoji ? (
+                                    <span>Your Emoji: {chosenEmoji.emoji}</span>
+                                ) : (
+                                    <span>No Emoji</span>
+                                )}
+                                <Picker onEmojiClick={onEmojiClick} /> */}
+
+
                             </div>
                         </div>
+
                         {image !== "" && <h2 className='image_progress'>Image is added</h2>}
                         {progress != "" && <progress className='post_progress' value={progress} max="100" />}
                         <input type="submit" className='post_submit' onClick={handleUpload} value="Post" />
