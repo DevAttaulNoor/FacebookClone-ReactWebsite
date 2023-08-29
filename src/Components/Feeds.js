@@ -17,13 +17,19 @@ function Feeds() {
         });
     },[]);
 
+    const convertTimestampToReadableDate = (timestamp) => {
+        const date = new Date(timestamp.seconds * 1000); // Convert seconds to milliseconds
+        return date.toDateString(); // You can format the date further if needed
+    }
+
     return (
         <div className='feeds'>
             <Storyreels />
             <MessageSender />
             {
                 posts.map(post=>{
-                    return <Posts photoURL={post.data.photoURL} image={post.data.image} username={post.data.username} timestamp="1:10 pm" message={post.data.message} />
+                    const formattedDate = convertTimestampToReadableDate(post.data.timestamp);
+                    return <Posts photoURL={post.data.photoURL} image={post.data.image} username={post.data.username} timestamp={formattedDate} message={post.data.message} />
                 })
             }
         </div>
