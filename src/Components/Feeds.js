@@ -8,28 +8,64 @@ import { db } from './Firebase'
 function Feeds() {
     const [posts, setPosts] = useState([]);
 
-    useEffect(()=>{
-        db.collection("Posts").orderBy("timestamp", "desc").onSnapshot(snapshot=>{
-            setPosts(snapshot.docs.map(doc=>({
+    useEffect(() => {
+        db.collection("Posts").orderBy("timestamp", "desc").onSnapshot(snapshot => {
+            setPosts(snapshot.docs.map(doc => ({
                 id: doc.id,
                 data: doc.data()
             })))
         });
-    },[]);
+    }, []);
 
-    const convertTimestampToReadableDate = (timestamp) => {
-        const date = new Date(timestamp.seconds * 1000); // Convert seconds to milliseconds
-        return date.toDateString(); // You can format the date further if needed
-    }
+    const timeAgo = (timestamp) => {
+        const currentDate = new Date();
+        const postDate = timestamp.toDate();
+        const seconds = Math.floor((currentDate - postDate) / 1000);
+        const periods = {
+            decade: 315360000,
+            year: 31536000,
+            month: 2628000,
+            week: 604800,
+            day: 86400,
+            hour: 3600,
+            minute: 60,
+            second: 1,
+        };
+
+        let elapsed = 0;
+        let granularity = 0;
+        let unit = '';
+
+        for (const period in periods) {
+            elapsed = Math.floor(seconds / periods[period]);
+
+            if (elapsed >= 1) {
+                granularity = elapsed;
+                unit = period;
+                break;
+            }
+        }
+        return `${granularity} ${unit}${granularity > 1 ? 's' : ''} ago`;
+    };
 
     return (
         <div className='feeds'>
             <Storyreels />
             <MessageSender />
             {
-                posts.map(post=>{
-                    const formattedDate = convertTimestampToReadableDate(post.data.timestamp);
-                    return <Posts photoURL={post.data.photoURL} image={post.data.image} username={post.data.username} timestamp={formattedDate} message={post.data.message} />
+                posts.map(post => {
+                    const formattedDate = timeAgo(post.data.timestamp);
+                    return (
+                        <Posts
+                            id={post.id} // Pass the document ID as a prop
+                            photoURL={post.data.photoURL}
+                            image={post.data.image}
+                            username={post.data.username}
+                            timestamp={formattedDate}
+                            message={post.data.message}
+                            key={post.id}
+                        />
+                    );
                 })
             }
         </div>

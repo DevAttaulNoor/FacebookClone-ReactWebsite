@@ -7,7 +7,6 @@ import firebase from 'firebase/app';
 import { db, storage } from './Firebase';
 import Picker from 'emoji-picker-react';
 
-
 function MessageSender() {
     const [{ user }, dispatch] = useStateValue();
     const [open, setOpen] = useState(false);
