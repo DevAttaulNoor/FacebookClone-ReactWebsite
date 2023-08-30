@@ -7,6 +7,8 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
+import Modal from 'react-modal';
+
 
 function Posts({ id, photoURL, image, username, timestamp, message }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -15,6 +17,8 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     const [isDropdownVisible, setIsDropdownVisible] = useState(false); // New state for dropdown
     const [isDropdownClicked, setIsDropdownClicked] = useState(false);
 
+    // Inside your Posts component
+    Modal.setAppElement('#root'); // This is required to handle accessibility
 
     const handleEdit = () => {
         setIsEditing(true);
@@ -47,7 +51,6 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     const toggleDropdown = () => {
         setIsDropdownVisible(!isDropdownVisible);
         setIsDropdownClicked(!isDropdownClicked);
-
     };
 
     return (
@@ -65,11 +68,11 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                     {isDropdownVisible && (
                         <div className="dropdownMenu">
                             {/* Dropdown menu items go here */}
-                            <button onClick={handleDelete}>Delete</button>
+                            <button onClick={handleDelete}>Delete the post</button>
                             {isEditing ? (
-                                <button onClick={handleSave}>Save</button>
+                                <button onClick={handleSave}>Save the post</button>
                             ) : (
-                                <button onClick={handleEdit}>Edit</button>
+                                <button onClick={handleEdit}>Edit the post</button>
                             )}
                         </div>
                     )}
@@ -77,36 +80,33 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
             </div>
 
             <div className="post_middle">
-                {/* <p style={{ fontSize: image === "" ? "25px" : "15px" }}>
-                    {message}
-                </p> */}
-
-                {/* {image === "" && <p style={{ fontSize: "25px" }}>{message}</p>} */}
                 {isEditing ? (
-                    <div>
-                        <textarea
-                            value={editedMessage}
-                            onChange={e => setEditedMessage(e.target.value)}
-                        />
-                        {!isEditing && <input
+                    <Modal
+                        isOpen={isEditing}
+                        onRequestClose={() => setIsEditing(false)}
+                        contentLabel="Edit Post"
+                        className="modal"
+                    >
+                        <h2>Edit Post</h2>
+                        <input
                             type="text"
-                            value={editedImage}
-                            onChange={e => setEditedImage(e.target.value)}
-                        />}
+                            value={editedMessage}
+                            onChange={(e) => setEditedMessage(e.target.value)}
+                        />
                         <input
                             type="text"
                             value={editedImage}
-                            onChange={e => setEditedImage(e.target.value)}
+                            onChange={(e) => setEditedImage(e.target.value)}
                         />
-                    </div>
+                        <button onClick={handleSave}>Save</button>
+                        <button onClick={() => setIsEditing(false)}>Cancel</button>
+                    </Modal>
                 ) : (
                     <div>
                         <p>{editedMessage}</p>
                         <img src={editedImage} alt="Post" />
                     </div>
                 )}
-
-                {image && <img src={image} />}
             </div>
 
             <div className="post_bottom">

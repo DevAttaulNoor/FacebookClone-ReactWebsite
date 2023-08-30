@@ -9,6 +9,7 @@
 .post_top{
     display: flex;
     justify-content: space-between;
+    position: relative;
 }
 
 .post_topleft{
@@ -27,12 +28,44 @@
 }
 
 .post_topright.clicked {
-    background-color: whitesmoke;
+    background-color: #fff;
 }
 
 .dropdownMenu{
+    position: absolute;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    top: 70%; 
+    right: 15px; 
+    background-color: #fff;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    padding: 8px;
+    z-index: 1; 
+}
+
+.dropdownMenu button{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: #fff;
+    width: 180px;
+    padding: 10px 30px 10px 4px;
+    border: none;
+    outline: none;
+}
+
+.dropdownMenu button:first-child{
+    border-bottom: 1px solid gray;
+}
+
+.dropdownMenu button:hover{
+    background-color: whitesmoke;
+    cursor: pointer;
 }
 
 .postinfo{
@@ -63,6 +96,19 @@
 
 .post_middle img{
     width: 100%;
+}
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    max-width: 90%;
 }
 
 .post_bottom{
