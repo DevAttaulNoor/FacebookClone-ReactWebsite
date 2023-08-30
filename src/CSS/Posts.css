@@ -16,6 +16,24 @@
     align-items: center;
 }
 
+.post_topright .MuiSvgIcon-root{
+    border-radius: 50%;
+    padding: 2px;
+}
+
+.post_topright .MuiSvgIcon-root:hover{
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+
+.post_topright.clicked {
+    background-color: whitesmoke;
+    padding: 0;
+    margin: 0;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
 .postinfo{
     margin-left: 10px;
 }

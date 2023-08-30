@@ -12,6 +12,9 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     const [isEditing, setIsEditing] = useState(false);
     const [editedMessage, setEditedMessage] = useState(message);
     const [editedImage, setEditedImage] = useState(image);
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false); // New state for dropdown
+    const [isDropdownClicked, setIsDropdownClicked] = useState(false);
+
 
     const handleEdit = () => {
         setIsEditing(true);
@@ -41,6 +44,12 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
             });
     };
 
+    const toggleDropdown = () => {
+        setIsDropdownVisible(!isDropdownVisible);
+        setIsDropdownClicked(!isDropdownClicked);
+
+    };
+
     return (
         <div className='post'>
             <div className="post_top">
@@ -49,15 +58,22 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                     <div className="postinfo">
                         <h4>{username}</h4>
                         <p>{timestamp} <PublicIcon /></p>
-                        <button onClick={handleDelete}>Delete</button>
-                        {isEditing ? (
-                            <button onClick={handleSave}>Save</button>
-                        ) : (
-                            <button onClick={handleEdit}>Edit</button>
-                        )}
                     </div>
                 </div>
-                <MoreHorizIcon />
+                <div className={`post_topright ${isDropdownClicked ? 'clicked' : ''}`} onClick={toggleDropdown}>
+                    <MoreHorizIcon />
+                    {isDropdownVisible && (
+                        <div className="dropdownMenu">
+                            {/* Dropdown menu items go here */}
+                            <button onClick={handleDelete}>Delete</button>
+                            {isEditing ? (
+                                <button onClick={handleSave}>Save</button>
+                            ) : (
+                                <button onClick={handleEdit}>Edit</button>
+                            )}
+                        </div>
+                    )}
+                </div>
             </div>
 
             <div className="post_middle">
@@ -72,7 +88,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                             value={editedMessage}
                             onChange={e => setEditedMessage(e.target.value)}
                         />
-                        {!isEditing &&<input
+                        {!isEditing && <input
                             type="text"
                             value={editedImage}
                             onChange={e => setEditedImage(e.target.value)}
@@ -82,7 +98,6 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                             value={editedImage}
                             onChange={e => setEditedImage(e.target.value)}
                         />
-                        <button onClick={handleSave}>Save</button>
                     </div>
                 ) : (
                     <div>
