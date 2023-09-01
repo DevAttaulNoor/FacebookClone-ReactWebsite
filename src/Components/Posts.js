@@ -62,6 +62,8 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
             .catch(error => {
                 console.error("Error removing document: ", error);
             });
+            
+            deleteComment();
     };
 
     const handleImageUpload = (e) => {
@@ -138,7 +140,6 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         setIsCommentModalOpen(false);
     };
 
-    // Function to post a comment
     const postComment = () => {
         if (comment.trim() === '') {
             return;
@@ -184,6 +185,19 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         };
     }, [id]); // Make sure to include 'id' in the dependency array
 
+    const deleteComment = (commentId) => {
+        db.collection("Posts")
+            .doc(id)
+            .collection("comments")
+            .doc(commentId)
+            .delete()
+            .then(() => {
+                console.log("Comment successfully deleted!");
+            })
+            .catch((error) => {
+                console.error("Error removing comment: ", error);
+            });
+    };
 
     const openShareDialog = () => {
         setIsShareDialogOpen(true);
@@ -306,8 +320,9 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                                         <p className='post_commentInfo_User'>{user.displayName}</p>
                                         <p className='post_commentInfo_Comment'>{comment.text}</p>
                                         <p className='post_commentInfo_Timestamp'>
-                                            {timeAgo(new Date(comment.timestamp))}
+                                            {timeAgo(comment.timestamp)}
                                         </p>
+                                        <button onClick={() => deleteComment(comment.id)}>Delete Comment</button>
                                     </div>
                                 </div>
                             ))}
