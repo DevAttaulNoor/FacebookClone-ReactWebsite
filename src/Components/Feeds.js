@@ -9,18 +9,28 @@ function Feeds() {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        db.collection("Posts").orderBy("timestamp", "desc").onSnapshot(snapshot => {
-            setPosts(snapshot.docs.map(doc => ({
-                id: doc.id,
-                data: doc.data()
-            })))
+        const unsubscribe = db.collection("Posts").orderBy("timestamp", "desc").onSnapshot(snapshot => {
+            setPosts(
+                snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    data: doc.data()
+                }))
+            );
         });
+    
+        // Cleanup the subscription when the component unmounts
+        return () => unsubscribe();
     }, []);
 
     const timeAgo = (timestamp) => {
+        if (!timestamp || !timestamp.toDate) {
+            return "0 second ago"
+        }
         const currentDate = new Date();
         const postDate = timestamp.toDate();
         const seconds = Math.floor((currentDate - postDate) / 1000);
+        // Ensure the timestamp is at least 1 second in the past
+        const secondsDifference = Math.max(seconds, 1);
         const periods = {
             decade: 315360000,
             year: 31536000,
@@ -37,7 +47,7 @@ function Feeds() {
         let unit = '';
 
         for (const period in periods) {
-            elapsed = Math.floor(seconds / periods[period]);
+            elapsed = Math.floor(secondsDifference / periods[period]);
 
             if (elapsed >= 1) {
                 granularity = elapsed;
@@ -72,4 +82,4 @@ function Feeds() {
     )
 }
 
-export default Feeds
+export default Feeds;

@@ -42,10 +42,10 @@ function MessageSender() {
 
         if (image === "") {
             db.collection("Posts").add({
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                message: message,
                 username: user.displayName,
-                photoURL: user.photoURL
+                photoURL: user.photoURL,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                message: message
             });
             handleClose();
             setMessage("");
@@ -67,10 +67,10 @@ function MessageSender() {
                 () => {
                     storage.ref("Images").child(image.name).getDownloadURL().then(url => {
                         db.collection("Posts").add({
-                            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                            message: message,
                             username: user.displayName,
                             photoURL: user.photoURL,
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                            message: message,
                             image: url
                         });
                         handleClose();

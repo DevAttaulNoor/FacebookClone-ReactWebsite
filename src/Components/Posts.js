@@ -25,6 +25,11 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     };
 
     const handleSave = () => {
+        if (!editedMessage && !editedImage) {
+            alert("Post cannot be empty!");
+            return;
+        }
+    
         db.collection("Posts").doc(id).update({
             message: editedMessage,
             image: editedImage
@@ -46,6 +51,21 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
             .catch(error => {
                 console.error("Error removing document: ", error);
             });
+    };
+
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0]; // Get the selected image file
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setEditedImage(reader.result); // Set the selected image as editedImage
+            };
+            reader.readAsDataURL(file); // Read the image file and convert it to data URL
+        } else {
+            // If no file is selected (e.g., user canceled the upload), reset editedImage to null
+            setEditedImage(null);
+        }
     };
 
     const toggleDropdown = () => {
@@ -81,30 +101,32 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
 
             <div className="post_middle">
                 {isEditing ? (
-                    <Modal
-                        isOpen={isEditing}
-                        onRequestClose={() => setIsEditing(false)}
-                        contentLabel="Edit Post"
-                        className="modal"
-                    >
+                    <Modal className="modal" isOpen={isEditing} onRequestClose={() => setIsEditing(false)} contentLabel="Edit Post">
                         <h2>Edit Post</h2>
-                        <input
-                            type="text"
-                            value={editedMessage}
-                            onChange={(e) => setEditedMessage(e.target.value)}
-                        />
-                        <input
-                            type="text"
-                            value={editedImage}
-                            onChange={(e) => setEditedImage(e.target.value)}
-                        />
-                        <button onClick={handleSave}>Save</button>
-                        <button onClick={() => setIsEditing(false)}>Cancel</button>
+                        <input type="text" value={editedMessage} onChange={(e) => setEditedMessage(e.target.value)} />
+
+                        <div className="file-input-container">
+                            <label htmlFor="file-input" className="file-input-label">
+                                Select Image
+                            </label>
+                            <input
+                                type="file"
+                                id="file-input"
+                                accept="image/*"
+                                className="file-input"
+                                onChange={handleImageUpload}
+                            />
+                            <span className="file-name">{editedImage ? editedImage.name : "No file selected"}</span>
+                        </div>
+                        <div className="modalBtns">
+                            <button onClick={handleSave}>Save</button>
+                            <button onClick={() => setIsEditing(false)}>Cancel</button>
+                        </div>
                     </Modal>
                 ) : (
                     <div>
                         <p>{editedMessage}</p>
-                        <img src={editedImage} alt="Post" />
+                        <img src={editedImage} />
                     </div>
                 )}
             </div>
