@@ -1,4 +1,4 @@
-.post{
+.post {
     background-color: #fff;
     border-radius: 10px;
     margin-top: 20px;
@@ -6,23 +6,24 @@
     padding-bottom: 0;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
 }
-.post_top{
+
+.post_top {
     display: flex;
     justify-content: space-between;
     position: relative;
 }
 
-.post_topleft{
+.post_topleft {
     display: flex;
     align-items: center;
 }
 
-.post_topright .MuiSvgIcon-root{
+.post_topright .MuiSvgIcon-root {
     border-radius: 50%;
     padding: 2px;
 }
 
-.post_topright .MuiSvgIcon-root:hover{
+.post_topright .MuiSvgIcon-root:hover {
     background-color: whitesmoke;
     cursor: pointer;
 }
@@ -31,22 +32,22 @@
     background-color: #fff;
 }
 
-.dropdownMenu{
+.dropdownMenu {
     position: absolute;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    top: 70%; 
-    right: 15px; 
+    top: 70%;
+    right: 15px;
     background-color: #fff;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
     border-radius: 4px;
     padding: 8px;
-    z-index: 1; 
+    z-index: 1;
 }
 
-.dropdownMenu button{
+.dropdownMenu button {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -59,42 +60,42 @@
     outline: none;
 }
 
-.dropdownMenu button:first-child{
+.dropdownMenu button:first-child {
     border-bottom: 1px solid gray;
 }
 
-.dropdownMenu button:hover{
+.dropdownMenu button:hover {
     background-color: whitesmoke;
     cursor: pointer;
 }
 
-.postinfo{
+.postinfo {
     margin-left: 10px;
 }
 
-.postinfo h4{
+.postinfo h4 {
     font-size: 14px;
     font-weight: 600;
 }
 
-.postinfo p{
+.postinfo p {
     font-size: 12px;
     display: flex;
     align-items: center;
 }
 
-.postinfo p svg{
+.postinfo p svg {
     font-size: 12px;
     margin-left: 5px;
     margin-top: 3px;
 }
 
-.post_middle p{
+.post_middle p {
     margin: 15px 0;
     letter-spacing: 0.2px;
 }
 
-.post_middle img{
+.post_middle img {
     width: 100%;
 }
 
@@ -113,13 +114,13 @@
     flex-direction: column;
 }
 
-.modal h2{
+.modal h2 {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.modal input{
+.modal input {
     padding: 10px 5px;
     font-size: 15px;
     font-weight: 600;
@@ -135,7 +136,8 @@
 .file-input-container {
     display: flex;
     align-items: center;
-    gap: 10px; /* Adjust the gap as needed */
+    gap: 10px;
+    /* Adjust the gap as needed */
 }
 
 /* Style for the custom file input button */
@@ -150,7 +152,8 @@
 
 /* Style for the file input */
 .file-input {
-    display: none; /* Hide the default file input */
+    display: none;
+    /* Hide the default file input */
 }
 
 /* Style for the file name display */
@@ -159,8 +162,7 @@
     color: #333;
 }
 
-
-.modal button{
+.modal button {
     padding: 5px;
     font-size: 15px;
     font-weight: 600;
@@ -171,29 +173,29 @@
     background-color: #fff;
 }
 
-.modal button:hover{
+.modal button:hover {
     background-color: whitesmoke;
     cursor: pointer;
 }
 
-.modalBtns{
+.modalBtns {
     display: flex;
     align-items: center;
     justify-content: space-around;
     margin: 10px 0;
 }
 
-.post_bottom{
+.post_bottom {
     display: flex;
     justify-content: space-around;
     border-top: 1px solid lightgray;
 }
 
-.post_bottom .MuiSvgIcon-root{
+.post_bottom .MuiSvgIcon-root {
     color: grey;
 }
 
-.post_bottomOption{
+.post_bottomOption {
     display: flex;
     align-items: center;
     padding: 8px 56px;
@@ -202,14 +204,80 @@
     cursor: pointer;
 }
 
-.post_bottomOption:hover{
+.post_bottomOption:hover {
     border-radius: 5px;
     background-color: whitesmoke;
 }
 
-.post_bottomOption p{
+.post_bottomOption p {
     margin-left: 10px;
     font-size: 15px;
     font-weight: 500;
     color: grey;
 }
+
+.post_shareModal {
+    position: absolute;
+    inset: 200px 550px 200px 550px;
+    border: 1px solid rgb(204, 204, 204);
+    background: #fff;
+    border-radius: 4px;
+    padding: 20px;
+    outline: none;
+    overflow: auto;
+}
+
+.post_commentModal{
+    position: absolute;
+    inset: 200px 450px 200px 450px;
+    border: 1px solid rgb(204, 204, 204);
+    background: #fff;
+    border-radius: 4px;
+    padding: 20px;
+    outline: none;
+    overflow: auto;
+}
+
+.post_commentModal input{
+    padding: 8px 5px;
+    margin: 10px 0;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    outline: 0;
+    background-color: whitesmoke;
+}
+
+.post_comment{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    width: fit-content;
+}
+
+.post_comment:last-child{
+    margin-bottom: 0px;
+}
+
+.post_commentInfo{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 8px;
+    background-color: whitesmoke;
+    border-radius: 18px;
+    padding: 6px 14px;
+}
+
+.post_commentInfo_User{
+    font-weight: 600;
+}
+
+.post_commentInfo_Comment{
+    font-weight: 400;
+    font-size: 17px;
+}
+
+
