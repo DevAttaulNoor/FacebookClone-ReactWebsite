@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
 import "../CSS/Posts.css"
 import { Avatar } from '@mui/material'
 import { db } from './Firebase'
@@ -16,6 +16,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     const [editedImage, setEditedImage] = useState(image);
     const [isDropdownVisible, setIsDropdownVisible] = useState(false); // New state for dropdown
     const [isDropdownClicked, setIsDropdownClicked] = useState(false);
+    const dropdownRef = useRef(null);
 
     // Inside your Posts component
     Modal.setAppElement('#root'); // This is required to handle accessibility
@@ -25,15 +26,18 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     };
 
     const handleSave = () => {
-        if (!editedMessage && !editedImage) {
+        if (!editedMessage && editedImage === undefined) {
             alert("Post cannot be empty!");
             return;
         }
     
-        db.collection("Posts").doc(id).update({
+        // Create an object to update in Firestore
+        const updatedData = {
             message: editedMessage,
-            image: editedImage
-        })
+            image: editedImage !== undefined ? editedImage : null, // Set to null if editedImage is undefined
+        };
+    
+        db.collection("Posts").doc(id).update(updatedData)
             .then(() => {
                 console.log("Document successfully updated!");
                 setIsEditing(false);
@@ -41,7 +45,8 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
             .catch(error => {
                 console.error("Error updating document: ", error);
             });
-    };
+    }
+    
 
     const handleDelete = () => {
         db.collection("Posts").doc(id).delete()
@@ -73,6 +78,29 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         setIsDropdownClicked(!isDropdownClicked);
     };
 
+    useEffect(() => {
+        // Function to close the dropdown when a click occurs outside of it
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownVisible(false);
+            }
+        };
+
+        // Add the event listener when the component mounts
+        document.addEventListener('mousedown', handleClickOutside);
+
+        // Remove the event listener when the component unmounts
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    useEffect(() => {
+        console.log('Editing:', isEditing);
+        console.log('Edited Message:', editedMessage);
+        console.log('Edited Image:', editedImage);
+    }, [isEditing, editedMessage, editedImage]);
+
     return (
         <div className='post'>
             <div className="post_top">
@@ -83,7 +111,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                         <p>{timestamp} <PublicIcon /></p>
                     </div>
                 </div>
-                <div className={`post_topright ${isDropdownClicked ? 'clicked' : ''}`} onClick={toggleDropdown}>
+                <div className={`post_topright ${isDropdownClicked ? 'clicked' : ''}`} onClick={toggleDropdown} ref={dropdownRef}>
                     <MoreHorizIcon />
                     {isDropdownVisible && (
                         <div className="dropdownMenu">
@@ -126,7 +154,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                 ) : (
                     <div>
                         <p>{editedMessage}</p>
-                        <img src={editedImage} />
+                        {image && <img src={editedImage} />}
                     </div>
                 )}
             </div>

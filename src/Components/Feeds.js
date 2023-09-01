@@ -17,8 +17,6 @@ function Feeds() {
                 }))
             );
         });
-    
-        // Cleanup the subscription when the component unmounts
         return () => unsubscribe();
     }, []);
 
@@ -29,7 +27,6 @@ function Feeds() {
         const currentDate = new Date();
         const postDate = timestamp.toDate();
         const seconds = Math.floor((currentDate - postDate) / 1000);
-        // Ensure the timestamp is at least 1 second in the past
         const secondsDifference = Math.max(seconds, 1);
         const periods = {
             decade: 315360000,
