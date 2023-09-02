@@ -1,8 +1,8 @@
+import '../CSS/LeftSidebar.css'
 import React from 'react'
+import { useStateValue } from './StateProvider';
 import LeftSidebarOption from './LeftSidebarOption'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import '../CSS/LeftSidebar.css'
-import { useStateValue } from './StateProvider';
 
 function LeftSidebar() {
     const [{user}, dispatch] = useStateValue();

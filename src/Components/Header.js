@@ -1,22 +1,18 @@
-import React from 'react'
 import '../CSS/Header.css'
+import React from 'react'
+import { Avatar } from '@mui/material';
+import { useStateValue } from './StateProvider';
+import fblogo from '../Imgs/fblogo.png';
 import SearchIcon from '@mui/icons-material/Search';
 import HomeIcon from '@mui/icons-material/Home';
-// import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import PeopleIcon from '@mui/icons-material/People';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
 import GroupsIcon from '@mui/icons-material/Groups';
-// import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Avatar } from '@mui/material';
 import AppsIcon from '@mui/icons-material/Apps';
 import ForumIcon from '@mui/icons-material/Forum';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import IconButton from '@mui/material/IconButton';
-
-import fblogo from '../Imgs/fblogo.png';
-import { useStateValue } from './StateProvider';
-
 
 function Header() {
     const [{user}, dispatch] = useStateValue();

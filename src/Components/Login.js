@@ -1,8 +1,8 @@
-import React from 'react'
-import fblogo from '../Imgs/fblogo.png';
 import "../CSS/Login.css"
+import React from 'react'
 import { auth, provider } from './Firebase';
-import {useStateValue} from './StateProvider'
+import { useStateValue } from './StateProvider'
+import fblogo from '../Imgs/fblogo.png';
 
 function Login() {
     const [{}, dispatch] = useStateValue();

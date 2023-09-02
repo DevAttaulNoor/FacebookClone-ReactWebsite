@@ -1,11 +1,10 @@
-import React from 'react'
 import '../CSS/RightSidebar.css'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import React from 'react'
 import { Avatar } from '@mui/material';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import SearchIcon from '@mui/icons-material/Search';
-
 
 function RightSidebar() {
     return (

@@ -62,7 +62,7 @@ function Feeds() {
             {
                 posts.map(post => {
                     const formattedDate = timeAgo(post.data.timestamp);
-                    {console.log("Feed timeago: ",formattedDate)}
+                    // {console.log("Feed timeago: ",formattedDate)}
                     return (
                         <Posts
                             id={post.id} // Pass the document ID as a prop

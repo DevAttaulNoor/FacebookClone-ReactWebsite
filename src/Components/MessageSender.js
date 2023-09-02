@@ -1,10 +1,11 @@
-import { Avatar, IconButton, Modal } from '@mui/material'
-import React, { useState } from 'react'
 import "../CSS/MessageSender.css"
-import CloseIcon from '@mui/icons-material/Close';
+import React, { useState } from 'react'
+import firebase from "firebase/compat/app"
 import { useStateValue } from './StateProvider';
-import firebase from 'firebase/app';
 import { db, storage } from './Firebase';
+import { Avatar, IconButton, Modal } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close';
+
 import Picker from 'emoji-picker-react';
 
 function MessageSender() {
@@ -14,7 +15,6 @@ function MessageSender() {
     const [message, setMessage] = useState("")
     const [progress, setProgress] = useState(0);
     const [chosenEmoji, setChosenEmoji] = useState(null);
-
 
     const handleClose = () => {
         setOpen(false)

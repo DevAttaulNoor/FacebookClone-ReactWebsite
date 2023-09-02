@@ -1,6 +1,6 @@
-import { Avatar, Icon } from '@mui/material'
-import React from 'react'
 import '../CSS/LeftSidebarOption.css'
+import React from 'react'
+import { Avatar, Icon } from '@mui/material'
 
 function LeftSidebarOption({src, Icon, title}) {
   return (
