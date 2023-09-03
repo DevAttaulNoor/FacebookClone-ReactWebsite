@@ -1,5 +1,5 @@
 import '../CSS/Header.css'
-import React from 'react'
+import React, { useState } from 'react'
 import { Avatar } from '@mui/material';
 import { useStateValue } from './StateProvider';
 import fblogo from '../Imgs/fblogo.png';
@@ -14,8 +14,31 @@ import ForumIcon from '@mui/icons-material/Forum';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import IconButton from '@mui/material/IconButton';
 
+import { auth } from './Firebase';
+
 function Header() {
-    const [{user}, dispatch] = useStateValue();
+    const [{ user }, dispatch] = useStateValue();
+    const [isDialogVisible, setIsDialogVisible] = useState(false);
+
+    const handleSignOut = () => {
+        auth
+            .signOut()
+            .then(() => {
+                // Sign-out successful, update user state
+                dispatch({
+                    type: "SET_USER",
+                    user: null, // Set the user to null to indicate they are signed out
+                });
+            })
+            .catch((error) => {
+                console.error("Sign out error:", error);
+            });
+    };
+
+    // Function to toggle the dialog visibility
+    const toggleDialog = () => {
+        setIsDialogVisible(!isDialogVisible);
+    };
 
     return (
         <div className='header'>
@@ -57,8 +80,17 @@ function Header() {
                     <NotificationsIcon />
                 </IconButton>
                 <IconButton>
-                    <Avatar src={user.photoURL}/>
-                    {/* <h5>{user.displayName}</h5> */}
+                    {/* Avatar */}
+                    <div className={`header_rightId ${isDialogVisible ? 'clicked' : ''}`}>
+                        <Avatar src={user.photoURL} onClick={toggleDialog} />
+
+                        {isDialogVisible && (
+                            <div className="dialogBox">
+                                <button onClick={handleSignOut}>Sign Out</button>
+                                {/* You can add more options in the dialog box */}
+                            </div>
+                        )}
+                    </div>
                 </IconButton>
             </div>
         </div>

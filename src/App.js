@@ -5,11 +5,9 @@ import RightSidebar from "./Components/RightSidebar";
 import Login from "./Components/Login";
 import { useStateValue } from "./Components/StateProvider";
 
-
 function App() {
 	const [{ user }, dispatch] = useStateValue();
-	console.log(user)
-
+	
 	return (
 		<>
 			{!user ? (<Login />)
@@ -25,7 +23,6 @@ function App() {
 				)
 			}
 		</>
-
 	);
 }
 
