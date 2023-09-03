@@ -5,14 +5,12 @@ A Facebook clone built using React.js and Firebase, allowing users to create pos
 - [Demo](#demo)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-- [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
 
 ## Demo
 [Live Demo](https://your-demo-link-here.com)
-
 
 ## Features
 - User authentication with Firebase Authentication.
@@ -45,4 +43,4 @@ Contributions are welcome! If you want to contribute to this project, follow the
 Please ensure your code follows the project's coding standards and includes tests when applicable.
 
 ## License
-This project is licensed under DevAttaulNoor
+This project is licensed under DevAttaulNoor.
