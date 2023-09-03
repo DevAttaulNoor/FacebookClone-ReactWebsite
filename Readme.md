@@ -1,5 +1,5 @@
-# Facebook Clone with React.js and Firebase Integration
-A Facebook clone built using React.js and Firebase, allowing users to create posts, like and comment on posts, follow other users, and more.
+## Facebook Clone with React.js and Firebase Integration
+The Facebook Clone project is a web application created using the React.js library and integrated with Firebase services. Its purpose is to mimic the fundamental features of Facebook, allowing users to create profiles, like and comment on posts, interact with other users, and experience a real-time social networking environment.
 
 ## Table of Contents
 - [Demo](#demo)
