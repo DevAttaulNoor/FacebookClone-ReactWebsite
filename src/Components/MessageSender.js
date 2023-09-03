@@ -14,10 +14,12 @@ function MessageSender() {
     const [image, setImage] = useState("")
     const [message, setMessage] = useState("")
     const [progress, setProgress] = useState(0);
-    const [chosenEmoji, setChosenEmoji] = useState(null);
 
     const handleClose = () => {
         setOpen(false)
+        setMessage("")
+        setImage("")
+        setProgress(0)
     }
 
     const handleOpen = () => {
@@ -45,10 +47,9 @@ function MessageSender() {
                 username: user.displayName,
                 photoURL: user.photoURL,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                message: message
+                message: message,
             });
             handleClose();
-            setMessage("");
         }
 
         else {
@@ -74,20 +75,11 @@ function MessageSender() {
                             image: url
                         });
                         handleClose();
-                        setMessage("");
-                        setImage("");
-                        setProgress(0);
                     })
                 }
             )
         }
     }
-
-    // const onEmojiClick = (event, emojiObject) => {
-    //     const emoji = emojiObject.emoji; // Get the selected emoji
-    //     setMessage(prevMessage => prevMessage + emoji); // Append the emoji to the message
-    //     setChosenEmoji(emojiObject); // Set the chosen emoji state
-    // };
 
     return (
         <>
@@ -127,18 +119,8 @@ function MessageSender() {
                                 <IconButton>
                                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Y4mYLVOhTwq.png?_nc_eui2=AeHSN24y7ZwUiP0ks-vc5M5LvPIN-OmHLJy88g346YcsnMgGxvtWqzXUT3WG--zLIURpvgdh0oglkNtF3k-n2n77" alt="" />
                                 </IconButton>
-
-                                {/* {chosenEmoji ? (
-                                    <span>Your Emoji: {chosenEmoji.emoji}</span>
-                                ) : (
-                                    <span>No Emoji</span>
-                                )}
-                                <Picker onEmojiClick={onEmojiClick} /> */}
-
-
                             </div>
                         </div>
-
                         {image !== "" && <h2 className='image_progress'>Image is added</h2>}
                         {progress != "" && <progress className='post_progress' value={progress} max="100" />}
                         <input type="submit" className='post_submit' onClick={handleUpload} value="Post" />

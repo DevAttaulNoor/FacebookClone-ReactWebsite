@@ -2,7 +2,7 @@ import "../CSS/Posts.css"
 import React, { useState, useEffect, useRef } from 'react';
 import Modal from 'react-modal';
 import { Avatar } from '@mui/material'
-import { db } from './Firebase'
+import { db, storage } from './Firebase'
 import { useStateValue } from './StateProvider';
 import PublicIcon from '@mui/icons-material/Public';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -41,29 +41,99 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         // Create an object to update in Firestore
         const updatedData = {
             message: editedMessage,
-            image: editedImage !== undefined ? editedImage : null, // Set to null if editedImage is undefined
+            // Check if there's a new editedImage; if not, keep the original image
+            image: editedImage !== undefined ? editedImage : null,
         };
 
-        db.collection("Posts").doc(id).update(updatedData)
-            .then(() => {
-                console.log("Document successfully updated!");
-                setIsEditing(false);
-            })
-            .catch(error => {
-                console.error("Error updating document: ", error);
-            });
-    }
+        // If there's a new editedImage, upload it to Firestore Storage
+        if (editedImage !== null && editedImage !== undefined) {
+            // Generate a unique filename (e.g., using a timestamp)
+            const timestamp = new Date().getTime();
+            const editedFileName = `edited_image_${timestamp}.jpg`; // Set the file type to JPEG
+
+            // Reference to the Firebase Storage bucket
+            const storageRef = storage.ref();
+
+            // Reference to the specific edited image file
+            const editedImageRef = storageRef.child(`Images/${editedFileName}`);
+
+            // Upload the edited image file with content type
+            editedImageRef.put(editedImage, { contentType: "image/jpeg" }) // Specify content type as image/jpeg
+                .then((snapshot) => {
+                    // Image successfully uploaded, now get the download URL
+                    console.log(snapshot.ref.getDownloadURL())
+                    return snapshot.ref.getDownloadURL();
+                })
+                .then((downloadURL) => {
+                    // Add the download URL to the updatedData object
+                    updatedData.image = downloadURL;
+
+                    // Update the Firestore document with the edited data
+                    db.collection("Posts")
+                        .doc(id)
+                        .update(updatedData)
+                        .then(() => {
+                            console.log("Document successfully updated!");
+                            setIsEditing(false);
+                            setIsDropdownVisible(false);
+                        })
+                        .catch((error) => {
+                            console.error("Error updating document: ", error);
+                        });
+                })
+                .catch((error) => {
+                    console.error("Error uploading edited image: ", error);
+                });
+        } else {
+            // No new image to upload, update the Firestore document with the edited data directly
+            db.collection("Posts")
+                .doc(id)
+                .update(updatedData)
+                .then(() => {
+                    console.log("Document successfully updated!");
+                    setIsEditing(false);
+                    setIsDropdownVisible(false);
+                })
+                .catch((error) => {
+                    console.error("Error updating document: ", error);
+                });
+        }
+    };
 
     const handleDelete = () => {
-        db.collection("Posts").doc(id).delete()
-            .then(() => {
-                console.log("Document successfully deleted!");
+        // Reference to the post's comments collection
+        const commentsRef = db.collection("Posts").doc(id).collection("comments");
+
+        // Delete all comments in the collection
+        const deleteCommentsPromise = commentsRef.get()
+            .then((querySnapshot) => {
+                const batch = db.batch();
+                querySnapshot.forEach((doc) => {
+                    batch.delete(doc.ref);
+                });
+                return batch.commit();
             })
-            .catch(error => {
-                console.error("Error removing document: ", error);
+            .catch((error) => {
+                console.error("Error removing comments: ", error);
             });
-            
-            deleteComment();
+
+        // Delete the post after comments are deleted
+        const deletePostPromise = db.collection("Posts").doc(id).delete()
+            .then(() => {
+                console.log("Post document successfully deleted!");
+            })
+            .catch((error) => {
+                console.error("Error removing post document: ", error);
+            });
+
+        // Use Promise.all to wait for both delete operations to complete
+        Promise.all([deleteCommentsPromise, deletePostPromise])
+            .then(() => {
+                console.log("Post and comments successfully deleted!");
+            })
+            .catch((error) => {
+                console.error("Error deleting post and comments: ", error);
+            });
     };
 
     const handleImageUpload = (e) => {
@@ -258,11 +328,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                         <div className="dropdownMenu">
                             {/* Dropdown menu items go here */}
                             <button onClick={handleDelete}>Delete the post</button>
-                            {isEditing ? (
-                                <button onClick={handleSave}>Save the post</button>
-                            ) : (
-                                <button onClick={handleEdit}>Edit the post</button>
-                            )}
+                            {!isEditing && <button onClick={handleEdit}>Edit the post</button>}
                         </div>
                     )}
                 </div>
@@ -270,7 +336,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
 
             <div className="post_middle">
                 {isEditing ? (
-                    <Modal className="modal" isOpen={isEditing} onRequestClose={() => setIsEditing(false)} contentLabel="Edit Post">
+                    <Modal className="modal" isOpen={isEditing} onRequestClose={() => setIsEditing(false)}>
                         <h2>Edit Post</h2>
                         <input type="text" value={editedMessage} onChange={(e) => setEditedMessage(e.target.value)} />
 

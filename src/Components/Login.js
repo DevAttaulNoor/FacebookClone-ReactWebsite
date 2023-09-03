@@ -42,7 +42,7 @@ function Login() {
                 // User is signed in, set the user in the context
                 // Append the access token to the photoURL
                 const { photoURL, displayName } = authUser;
-                const accessToken = ''; // You may need to retrieve the access token from authUser if it's available there
+                const accessToken = 'AccessToken.getCurrentAccessToken()'; // You may need to retrieve the access token from authUser if it's available there
                 const photoURLWithToken = `${photoURL}?access_token=${accessToken}`;
 
                 dispatch({
