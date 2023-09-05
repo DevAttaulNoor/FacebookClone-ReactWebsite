@@ -21,14 +21,18 @@ function Header() {
     const [isDialogVisible, setIsDialogVisible] = useState(false);
 
     const handleSignOut = () => {
-        auth
-            .signOut()
+        auth.signOut()
             .then(() => {
-                // Sign-out successful, update user state
+                // Clear the user data from session storage
+                sessionStorage.removeItem('userData');
+                
+                // Set the user to null to indicate they are signed out
                 dispatch({
                     type: "SET_USER",
-                    user: null, // Set the user to null to indicate they are signed out
+                    user: null,
                 });
+    
+                // You can also perform any additional sign-out actions here, such as redirection
             })
             .catch((error) => {
                 console.error("Sign out error:", error);

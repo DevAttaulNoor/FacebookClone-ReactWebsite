@@ -9,67 +9,86 @@ function Login() {
     const [isLoading, setIsLoading] = useState(true); // Added loading state
 
     const signIn = () => {
-        auth.signInWithPopup(provider).then((result) => {
-            console.log(result)
-            var credential = result.credential;
-            // Append the access token to the photoURL
-            const photoURL = `${result.user.photoURL}?access_token=${credential.accessToken}`;
-            const { displayName } = result.user;
+        auth.signInWithPopup(provider)
+            .then((result) => {
+                var credential = result.credential;
+                const photoURL = `${result.user.photoURL}?access_token=${credential.accessToken}`;
+                const displayName = result.user.displayName;
 
-            dispatch({
-                type: "SET_USER",
-                user: {
-                    displayName,
-                    photoURL
-                }
+                // Save user data in session storage
+                const userData = {
+                    displayName: displayName,
+                    photoURL: photoURL
+                };
+
+                // Store the user data in session storage
+                sessionStorage.setItem('userData', JSON.stringify(userData));
+
+                dispatch({
+                    type: "SET_USER",
+                    user: userData
+                });
             })
-        })
             .catch((error) => {
                 if (error.code === 'auth/popup-closed-by-user') {
-                    // Handle the popup closed by the user
                     console.log("Authentication popup closed by user.");
                 } else {
-                    // Handle other authentication errors
                     console.error("Authentication error:", error);
                 }
             });
     }
 
+
+    // useEffect(() => {
+    //     const unsubscribe = auth.onAuthStateChanged((authUser) => {
+    //         console.log(authUser)
+    //         if (authUser) {
+    //             // User is signed in, set the user in the context
+    //             const { photoURL, displayName } = authUser;
+    //             const accessToken = authUser.getIdToken(); // Get the access token from the user object
+    //             const photoURLWithToken = `${photoURL}?access_token=${accessToken}`;
+
+    //             dispatch({
+    //                 type: "SET_USER",
+    //                 user: {
+    //                     displayName,
+    //                     photoURL: photoURLWithToken
+    //                 }
+    //             })
+    //         } else {
+    //             // No user is signed in, set the user to null or an initial state
+    //             dispatch({
+    //                 type: "SET_USER",
+    //                 user: null,
+    //             });
+    //         }
+
+    //         // Authentication state check is complete, stop loading
+    //         setIsLoading(false);
+    //     });
+
+    //     return () => {
+    //         unsubscribe(); // Unsubscribe when the component unmounts
+    //     };
+    // }, []);
+
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((authUser) => {
-            console.log(authUser)
-            if (authUser) {
-                // User is signed in, set the user in the context
-                // Append the access token to the photoURL
-                const { photoURL, displayName } = authUser;
-                const accessToken = 'AccessToken.getCurrentAccessToken()'; // You may need to retrieve the access token from authUser if it's available there
-                const photoURLWithToken = `${photoURL}?access_token=${accessToken}`;
+        const storedUserData = sessionStorage.getItem('userData');
 
-                dispatch({
-                    type: "SET_USER",
-                    user: {
-                        displayName,
-                        photoURL: photoURLWithToken
-                    }
-                })
-            } else {
-                // No user is signed in, set the user to null or an initial state
-                dispatch({
-                    type: "SET_USER",
-                    user: null,
-                });
-            }
+        if (storedUserData) {
+            // If user data is found in session storage, parse it and set it in the context
+            const userData = JSON.parse(storedUserData);
+            dispatch({
+                type: "SET_USER",
+                user: userData
+            });
+        }
 
-            // Authentication state check is complete, stop loading
-            setIsLoading(false);
-        });
-
-        return () => {
-            unsubscribe(); // Unsubscribe when the component unmounts
-        };
+        setIsLoading(false);
     }, []);
 
-    // Render a loading indicator while authentication state is being checked
+
+    // // Render a loading indicator while authentication state is being checked
     if (isLoading) {
         return (
             <div>Loading...</div> // You can use a loading spinner or other UI here
