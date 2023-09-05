@@ -130,17 +130,12 @@
     margin: 10px 0;
 }
 
-/* Add your existing CSS styles */
-
-/* Style for the file input container */
 .file-input-container {
     display: flex;
     align-items: center;
     gap: 10px;
-    /* Adjust the gap as needed */
 }
 
-/* Style for the custom file input button */
 .file-input-label {
     padding: 8px 12px;
     background-color: #007bff;
@@ -150,13 +145,10 @@
     cursor: pointer;
 }
 
-/* Style for the file input */
 .file-input {
     display: none;
-    /* Hide the default file input */
 }
 
-/* Style for the file name display */
 .file-name {
     font-size: 14px;
     color: #333;
@@ -279,5 +271,3 @@
     font-weight: 400;
     font-size: 17px;
 }
-
-

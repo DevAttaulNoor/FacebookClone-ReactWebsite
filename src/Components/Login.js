@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { auth, provider } from './Firebase';
 import { useStateValue } from './StateProvider'
 import fblogo from '../Imgs/fblogo.png';
+import Loading from "./Loading";
 
 function Login() {
     const [{ }, dispatch] = useStateValue();
-    const [isLoading, setIsLoading] = useState(true); // Added loading state
+    const [isLoading, setIsLoading] = useState(true); 
 
     const signIn = () => {
         auth.signInWithPopup(provider)
@@ -38,40 +39,6 @@ function Login() {
             });
     }
 
-
-    // useEffect(() => {
-    //     const unsubscribe = auth.onAuthStateChanged((authUser) => {
-    //         console.log(authUser)
-    //         if (authUser) {
-    //             // User is signed in, set the user in the context
-    //             const { photoURL, displayName } = authUser;
-    //             const accessToken = authUser.getIdToken(); // Get the access token from the user object
-    //             const photoURLWithToken = `${photoURL}?access_token=${accessToken}`;
-
-    //             dispatch({
-    //                 type: "SET_USER",
-    //                 user: {
-    //                     displayName,
-    //                     photoURL: photoURLWithToken
-    //                 }
-    //             })
-    //         } else {
-    //             // No user is signed in, set the user to null or an initial state
-    //             dispatch({
-    //                 type: "SET_USER",
-    //                 user: null,
-    //             });
-    //         }
-
-    //         // Authentication state check is complete, stop loading
-    //         setIsLoading(false);
-    //     });
-
-    //     return () => {
-    //         unsubscribe(); // Unsubscribe when the component unmounts
-    //     };
-    // }, []);
-
     useEffect(() => {
         const storedUserData = sessionStorage.getItem('userData');
 
@@ -87,12 +54,9 @@ function Login() {
         setIsLoading(false);
     }, []);
 
-
-    // // Render a loading indicator while authentication state is being checked
+    // Render a loading indicator while authentication state is being checked
     if (isLoading) {
-        return (
-            <div>Loading...</div> // You can use a loading spinner or other UI here
-        );
+        return <Loading />;
     }
 
     return (

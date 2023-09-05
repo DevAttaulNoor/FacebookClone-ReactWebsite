@@ -103,3 +103,42 @@
     background-color: #F0F2F5;
     color: #000;
 }
+
+.dialogBox {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    top: 100%;
+    right: 20px;
+    background-color: #fff;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    padding: 8px;
+    z-index: 1;
+}
+
+.dialogBox button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: #fff;
+    width: 120px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border: 1px solid gray;
+    border-bottom: none;
+}
+
+.dialogBox button:last-child {
+    border-bottom: 1px solid gray;
+}
+
+.dialogBox button:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+}

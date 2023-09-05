@@ -194,18 +194,15 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         getLikesCount();
     }, [id]);
 
-    // Function to open the comment input field
     const openCommentInput = () => {
         setIsCommenting(true);
         setIsCommentModalOpen(true);
     };
 
-    // Function to open the comment modal
     const openCommentModal = () => {
         setIsCommentModalOpen(true);
     };
 
-    // Function to close the comment modal
     const closeCommentModal = () => {
         setIsCommentModalOpen(false);
     };

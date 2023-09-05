@@ -1,5 +1,5 @@
 import '../CSS/Header.css'
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
 import { Avatar } from '@mui/material';
 import { useStateValue } from './StateProvider';
 import fblogo from '../Imgs/fblogo.png';
@@ -19,20 +19,19 @@ import { auth } from './Firebase';
 function Header() {
     const [{ user }, dispatch] = useStateValue();
     const [isDialogVisible, setIsDialogVisible] = useState(false);
+    const dialogBoxRef = useRef(null);
 
     const handleSignOut = () => {
         auth.signOut()
             .then(() => {
                 // Clear the user data from session storage
                 sessionStorage.removeItem('userData');
-                
+
                 // Set the user to null to indicate they are signed out
                 dispatch({
                     type: "SET_USER",
                     user: null,
                 });
-    
-                // You can also perform any additional sign-out actions here, such as redirection
             })
             .catch((error) => {
                 console.error("Sign out error:", error);
@@ -43,6 +42,22 @@ function Header() {
     const toggleDialog = () => {
         setIsDialogVisible(!isDialogVisible);
     };
+
+    // Add an event listener to handle clicks outside the dialog box
+    useEffect(() => {
+        const handleOutsideClick = (e) => {
+            if (dialogBoxRef.current && !dialogBoxRef.current.contains(e.target)) {
+                setIsDialogVisible(false);
+            }
+        };
+
+        window.addEventListener("click", handleOutsideClick);
+
+        // Cleanup the event listener when the component unmounts
+        return () => {
+            window.removeEventListener("click", handleOutsideClick);
+        };
+    }, []);
 
     return (
         <div className='header'>
@@ -84,14 +99,14 @@ function Header() {
                     <NotificationsIcon />
                 </IconButton>
                 <IconButton>
-                    {/* Avatar */}
-                    <div className={`header_rightId ${isDialogVisible ? 'clicked' : ''}`}>
-                        <Avatar src={user.photoURL} onClick={toggleDialog} />
+                    <div className={`header_rightAvatarBox ${isDialogVisible ? 'clicked' : ''}`}>
+                        <Avatar src={user.photoURL} onClick={toggleDialog} ref={dialogBoxRef} />
 
                         {isDialogVisible && (
                             <div className="dialogBox">
+                                <button>Home</button>
+                                <button>Settings</button>
                                 <button onClick={handleSignOut}>Sign Out</button>
-                                {/* You can add more options in the dialog box */}
                             </div>
                         )}
                     </div>
