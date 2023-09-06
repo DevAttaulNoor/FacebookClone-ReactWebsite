@@ -1,0 +1,34 @@
+.user-home-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cover-photo img {
+    max-width: 100%;
+    height: auto;
+}
+
+.profile-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: -50px;
+    /* Adjust this value to position the profile section correctly */
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: 24px;
+    margin: 0;
+}

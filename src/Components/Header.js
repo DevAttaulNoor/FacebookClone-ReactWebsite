@@ -13,6 +13,7 @@ import AppsIcon from '@mui/icons-material/Apps';
 import ForumIcon from '@mui/icons-material/Forum';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import IconButton from '@mui/material/IconButton';
+import { Link } from 'react-router-dom';
 
 import { auth } from './Firebase';
 
@@ -72,7 +73,9 @@ function Header() {
 
             <div className="header_middle">
                 <div className='header_option header_option_active'>
-                    <HomeIcon />
+                    <Link to="/homepage">
+                        <HomeIcon />
+                    </Link>
                 </div>
                 <div className='header_option'>
                     <PeopleIcon />
@@ -104,7 +107,9 @@ function Header() {
 
                         {isDialogVisible && (
                             <div className="dialogBox">
-                                <button>Home</button>
+                                <Link to="/homepage">
+                                    <button>Home</button>
+                                </Link>
                                 <button>Settings</button>
                                 <button onClick={handleSignOut}>Sign Out</button>
                             </div>
