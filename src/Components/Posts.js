@@ -25,6 +25,8 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     const [isCommenting, setIsCommenting] = useState(false);
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
     const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
+    const [imageFile, setImageFile] = useState(null);
+
 
     Modal.setAppElement('#root');
 
@@ -62,13 +64,13 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                 .catch((error) => {
                     console.error("Error updating document: ", error);
                 });
-        } 
-        
+        }
+
         else {
             // No new image to upload, update the Firestore document with the edited data directly
             db.collection("Posts").doc(id).update({
-                    message: editedMessage,
-                })
+                message: editedMessage,
+            })
                 .then(() => {
                     console.log("Document successfully updated!");
                     setIsEditing(false);
@@ -117,17 +119,18 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
 
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
-    
+
         if (file) {
             const storageRef = storage.ref(`Images/${file.name}`);
-            
+
             storageRef.put(file).then((snapshot) => {
                 snapshot.ref.getDownloadURL().then((url) => {
                     setEditedImage(url);
-    
+                    setImageFile(file);
+
                     db.collection("Posts").doc(id).update({
-                            image: url
-                        })
+                        image: url
+                    })
                         .then(() => {
                             console.log("Image URL in Firestore updated successfully!");
                         })
@@ -328,19 +331,24 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                         <h2>Edit Post</h2>
                         <input type="text" value={editedMessage} onChange={(e) => setEditedMessage(e.target.value)} />
 
-                        <div className="file-input-container">
-                            <label htmlFor="file-input" className="file-input-label">
-                                Select Image
-                            </label>
-                            <input
-                                type="file"
-                                id="file-input"
-                                accept="image/*"
-                                className="file-input"
-                                onChange={handleImageUpload}
-                            />
-                            <span className="file-name">{editedImage ? editedImage.name : "No file selected"}</span>
+                        <div className="editedImageContainer">
+                            <div className="file-input-container">
+                                <div className="image-url-container">
+                                    <input type="text" value={editedImage || ''} readOnly />
+                                </div>
+
+                                <label htmlFor="file-input" className="file-input-label">Select Image</label>
+                                <input className="file-input" type="file" id="file-input" accept="image/*" onChange={handleImageUpload} />
+                            </div>
+                            {editedImage ? (
+                                <img className="edited-image" src={editedImage} alt="Edited" />
+                            ) : image ? (
+                                <img className="edited-image" src={image} alt="Original" />
+                            ) : (
+                                <p className="noEditedimg">No image selected</p>
+                            )}
                         </div>
+
                         <div className="modalBtns">
                             <button onClick={handleSave}>Save</button>
                             <button onClick={() => setIsEditing(false)}>Cancel</button>
