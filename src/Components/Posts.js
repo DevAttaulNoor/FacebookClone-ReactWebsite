@@ -38,57 +38,37 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
             return;
         }
 
-        // Create an object to update in Firestore
-        const updatedData = {
-            message: editedMessage,
-            // Check if there's a new editedImage; if not, keep the original image
-            image: editedImage !== undefined ? editedImage : null,
-        };
-
-        // If there's a new editedImage, upload it to Firestore Storage
         if (editedImage !== null && editedImage !== undefined) {
-            // Generate a unique filename (e.g., using a timestamp)
-            const timestamp = new Date().getTime();
-            const editedFileName = `edited_image_${timestamp}.jpg`; // Set the file type to JPEG
+            const uploadTask = storage.ref(`Images/${editedImage.name}`).put(editedImage);
 
-            // Reference to the Firebase Storage bucket
-            const storageRef = storage.ref();
+            uploadTask
+                .then((snapshot) => snapshot.ref.getDownloadURL())
+                .then((url) => {
+                    const updatedData = {
+                        message: editedMessage,
+                        image: url,
+                    };
 
-            // Reference to the specific edited image file
-            const editedImageRef = storageRef.child(`Images/${editedFileName}`);
-
-            // Upload the edited image file with content type
-            editedImageRef.put(editedImage, { contentType: "image/jpeg" }) // Specify content type as image/jpeg
-                .then((snapshot) => {
-                    // Image successfully uploaded, now get the download URL
-                    console.log(snapshot.ref.getDownloadURL())
-                    return snapshot.ref.getDownloadURL();
-                })
-                .then((downloadURL) => {
-                    // Add the download URL to the updatedData object
-                    updatedData.image = downloadURL;
-
-                    // Update the Firestore document with the edited data
-                    db.collection("Posts")
+                    // Update the Firestore document with the edited data, including the image URL
+                    return db.collection("Posts")
                         .doc(id)
-                        .update(updatedData)
-                        .then(() => {
-                            console.log("Document successfully updated!");
-                            setIsEditing(false);
-                            setIsDropdownVisible(false);
-                        })
-                        .catch((error) => {
-                            console.error("Error updating document: ", error);
-                        });
+                        .update(updatedData);
+                })
+                .then(() => {
+                    console.log("Document successfully updated!");
+                    setIsEditing(false);
+                    setIsDropdownVisible(false);
                 })
                 .catch((error) => {
-                    console.error("Error uploading edited image: ", error);
+                    console.error("Error updating document: ", error);
                 });
-        } else {
+        } 
+        
+        else {
             // No new image to upload, update the Firestore document with the edited data directly
-            db.collection("Posts")
-                .doc(id)
-                .update(updatedData)
+            db.collection("Posts").doc(id).update({
+                    message: editedMessage,
+                })
                 .then(() => {
                     console.log("Document successfully updated!");
                     setIsEditing(false);
@@ -101,7 +81,6 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     };
 
     const handleDelete = () => {
-        // Reference to the post's comments collection
         const commentsRef = db.collection("Posts").doc(id).collection("comments");
 
         // Delete all comments in the collection
@@ -137,14 +116,26 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     };
 
     const handleImageUpload = (e) => {
-        const file = e.target.files[0]; // Get the selected image file
-
+        const file = e.target.files[0];
+    
         if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setEditedImage(reader.result); // Set the selected image as editedImage
-            };
-            reader.readAsDataURL(file); // Read the image file and convert it to data URL
+            const storageRef = storage.ref(`Images/${file.name}`);
+            
+            storageRef.put(file).then((snapshot) => {
+                snapshot.ref.getDownloadURL().then((url) => {
+                    setEditedImage(url);
+    
+                    db.collection("Posts").doc(id).update({
+                            image: url
+                        })
+                        .then(() => {
+                            console.log("Image URL in Firestore updated successfully!");
+                        })
+                        .catch((error) => {
+                            console.error("Error updating image URL in Firestore: ", error);
+                        });
+                });
+            });
         } else {
             // If no file is selected (e.g., user canceled the upload), reset editedImage to null
             setEditedImage(null);
