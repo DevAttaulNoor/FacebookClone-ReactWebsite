@@ -2,24 +2,71 @@ import "../CSS/HomePage.css"
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useStateValue } from './StateProvider';
+import cover from "../Imgs/Cover.jpg";
+import Feeds from './Feeds'
 
 function HomePage() {
     const [{ user }, dispatch] = useStateValue();
 
-    // You can replace these URLs with actual image URLs for the profile picture and cover photo.
-    const profilePictureUrl = 'https://example.com/profile-picture.jpg';
-    const coverPhotoUrl = 'https://example.com/cover-photo.jpg';
-
     return (
-        <div className="user-home-page">
-            <div className="cover-photo">
-                <img src={coverPhotoUrl} alt="Cover" />
+        <div className="userHomePage">
+            <div className="coverPhotoSection">
+                <img src={cover} alt="Cover" />
+                <button id="avatarBtn">Create with avatar</button>
+                <button id="editBtn">Edit cover photo</button>
             </div>
-            <div className="profile-section">
-                <img src={user.photoURL} alt="Profile" className="profile-picture" />
-                <h1>{user.displayName}</h1>
-                {/* Add more user information here */}
+            <div className="profileSection">
+                <div className="profileSections">
+                    <div className="profileSections_left">
+                        <img src={user.photoURL} alt="Profile" />
+                        <div className="profileSections_left_right">
+                            <h1>{user.displayName}</h1>
+                            <h4>{0} friends</h4>
+                        </div>
+                    </div>
+                    <div className="proflieSections_right">
+                        <button>Add to story</button>
+                        <button>Edit profile</button>
+                        <button>Arrow</button>
+                    </div>
+                </div>
+
+                <div className="userComponents">
+                    <div className="userComponent_left">
+                        <div className='component active'>
+                            Posts
+                        </div>
+                        <div className='component'>
+                            About
+                        </div>
+                        <div className='component'>
+                            Friends
+                        </div>
+                        <div className='component'>
+                            Photos
+                        </div>
+                        <div className='component'>
+                            Videos
+                        </div>
+                        <div className='component'>
+                            Check-ins
+                        </div>
+                        <div className='component'>
+                            More
+                        </div>
+                    </div>
+                    <div className="userComponent_right">
+                        <div>
+                            <button>Arrow</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <div className="userFeed">
+                {/* <Feeds/> */}
+            </div>
+
             {/* Add other Facebook-like components such as posts, friends list, etc. */}
             <Link to="/">Go Back</Link>
         </div>

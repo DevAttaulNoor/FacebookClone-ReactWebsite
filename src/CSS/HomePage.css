@@ -1,34 +1,178 @@
-.user-home-page {
+.userHomePage {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
-.cover-photo img {
-    max-width: 100%;
-    height: auto;
+/* Cover Photo Section */
+.coverPhotoSection{
+    position: absolute;
+    width: 1090px;
+    height: 410px;
 }
 
-.profile-section {
+.coverPhotoSection img {
+    width: 1090px;
+    height: 410px;
+    object-fit: cover;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.coverPhotoSection button {
+    position: absolute;
+    padding: 7px 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    width: 165px;
+}
+
+.coverPhotoSection #editBtn{
+    bottom: 15px;
+    right: 32px;
+}
+
+.coverPhotoSection #avatarBtn {
+    bottom: 56px;
+    right: 32px;
+}
+
+/* Profile Section */
+.profileSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 585px;    
     background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    margin-top: -50px;
-    /* Adjust this value to position the profile section correctly */
 }
 
-.profile-picture {
-    width: 150px;
-    height: 150px;
+.profileSections{
+    position: absolute;
+    bottom: 165px;
+    width: 1020px;
+    height: 180px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Profile Left Section */
+.profileSections_left{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    /* padding-left: 30px; */
+}
+
+.profileSections_left img {
+    width: 170px;
+    height: 170px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #fff;
-    margin-bottom: 10px;
+    border: 4px solid #fff;
 }
 
-h1 {
-    font-size: 24px;
-    margin: 0;
+.profileSections_left_right {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    padding-left: 12px;
+    margin-top: auto;
+    margin-bottom: 20px;
+}
+
+.profileSections_left_right h4 {
+    font-size: 15px;
+    font-weight: 500;
+    color: gray;
+}
+
+/* Profile Right Section */
+.proflieSections_right{
+    display: flex;
+    align-items: flex-end;
+    /* padding-right: 30px; */
+    margin-bottom: 20px;
+}
+
+.proflieSections_right button{
+    background-color: #E4E6EB;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px 12px;
+    margin: 0 4px;
+}
+
+.proflieSections_right button:hover{
+    background-color: lightgrey;
+    cursor: pointer;
+}
+
+.proflieSections_right button:last-child{
+    margin-right: 0;
+}
+
+.proflieSections_right button:first-child{
+    background-color: #1B74E4;
+    color: #fff;
+    margin-left: 0;
+}
+
+/** User Component Section */
+.userComponents{
+    display: flex;
+    justify-content: space-between;
+    width: 1020px;
+    border-top: 1px solid rgb(197, 197, 197);
+}
+
+/* User Component Left Section */
+.userComponent_left{
+    display: flex;
+}
+
+.component{
+    padding: 16px;
+    margin: 3px 3px 3px 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: gray;
+}
+
+.component:hover{
+    background-color: whitesmoke;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+/* User Component Right Section */
+.userComponent_right{
+    display: flex;
+    align-items: center;
+}
+
+.userComponent_right button{
+    background-color: #E4E6EB;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px 12px;
+}
+
+/* User Feeds Section */
+.userFeed{
+    width: 500px;
 }
