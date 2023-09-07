@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import { useStateValue } from './StateProvider';
 import cover from "../Imgs/Cover.jpg";
 import Feeds from './Feeds'
+import HomePageIntro from "./HomePageIntro";
+import HomePagePhotos from "./HomePagePhotos";
+import HomePageFriends from "./HomePageFriends";
 
 function HomePage() {
     const [{ user }, dispatch] = useStateValue();
@@ -15,6 +18,7 @@ function HomePage() {
                 <button id="avatarBtn">Create with avatar</button>
                 <button id="editBtn">Edit cover photo</button>
             </div>
+
             <div className="profileSection">
                 <div className="profileSections">
                     <div className="profileSections_left">
@@ -63,8 +67,24 @@ function HomePage() {
                 </div>
             </div>
 
-            <div className="userFeed">
-                {/* <Feeds/> */}
+            <div className="userHomePage_bottom">
+                <div className="userHomePage_bottom_left">
+                    <div className="userIntro">
+                        <HomePageIntro />
+                    </div>
+                    <div className="userPhotos">
+                        <HomePagePhotos />
+                    </div>
+                    <div className="userFriends">
+                        <HomePageFriends />
+                    </div>
+                </div>
+                <div className="userHomePage_bottom_right">
+                    <div className="userFeed">
+                        {/* <Feeds/> */}
+                        Feeds
+                    </div>
+                </div>
             </div>
 
             {/* Add other Facebook-like components such as posts, friends list, etc. */}
