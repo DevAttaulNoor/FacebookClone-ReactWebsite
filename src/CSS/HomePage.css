@@ -1,25 +1,27 @@
 .userHomePage {
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 800vh;
+    height: auto; 
+    min-height: 100vh; 
 }
 
 /* Cover Photo Section */
-.coverPhotoSection{
-    position: absolute;
-    width: 1090px;
-    height: 410px;
+.coverPhotoSection {
+    width: 100%; 
+    max-width: 1090px; 
+    height: auto; 
+    position: relative;
 }
 
 .coverPhotoSection img {
+    position: absolute;
     width: 1090px;
     height: 410px;
-    object-fit: cover;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    object-fit: cover;
 }
 
 .coverPhotoSection button {
@@ -33,42 +35,37 @@
     outline: none;
     border-radius: 6px;
     width: 165px;
-}
-
-.coverPhotoSection #editBtn{
     bottom: 15px;
     right: 32px;
 }
 
-.coverPhotoSection #avatarBtn {
+.coverPhotoSection #editBtn {
     bottom: 56px;
-    right: 32px;
 }
 
 /* Profile Section */
 .profileSection {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-    height: 585px;    
     background-color: white;
+    width: 100%;
 }
 
-.profileSections{
-    position: absolute;
-    top: 330px;
-    width: 1020px;
-    height: 180px;
+.profileSections {
     display: flex;
     justify-content: space-between;
+    width: 100%; 
+    max-width: 1020px; 
+    margin: 0 auto; 
+    padding: 20px;
+    height: 490px;
+    z-index: 1;
 }
 
 /* Profile Left Section */
-.profileSections_left{
+.profileSections_left {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: flex-start;
 }
 
@@ -82,11 +79,16 @@
 
 .profileSections_left_right {
     display: flex;
-    align-items: start;
     flex-direction: column;
     padding-left: 12px;
     margin-top: auto;
     margin-bottom: 20px;
+}
+
+.profileSections_left_right h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 6px;
 }
 
 .profileSections_left_right h4 {
@@ -113,35 +115,37 @@
     margin: 0 4px;
 }
 
-.proflieSections_right button:hover{
+.proflieSections_right button:hover {
     background-color: lightgrey;
     cursor: pointer;
 }
 
-.proflieSections_right button:last-child{
+.proflieSections_right button:last-child {
     margin-right: 0;
 }
 
-.proflieSections_right button:first-child{
+.proflieSections_right button:first-child {
     background-color: #1B74E4;
     color: #fff;
     margin-left: 0;
 }
 
 /** User Component Section */
-.userComponents{
+.userComponents {
     display: flex;
     justify-content: space-between;
-    width: 1020px;
+    width: 100%; 
+    max-width: 1020px; 
     border-top: 1px solid rgb(197, 197, 197);
+    margin: 0 auto;
 }
 
 /* User Component Left Section */
-.userComponent_left{
+.userComponent_left {
     display: flex;
 }
 
-.component{
+.component {
     padding: 16px;
     margin: 3px 3px 3px 0;
     font-size: 15px;
@@ -149,19 +153,19 @@
     color: gray;
 }
 
-.component:hover{
+.component:hover {
     background-color: whitesmoke;
     cursor: pointer;
     border-radius: 8px;
 }
 
 /* User Component Right Section */
-.userComponent_right{
+.userComponent_right {
     display: flex;
     align-items: center;
 }
 
-.userComponent_right button{
+.userComponent_right button {
     background-color: #E4E6EB;
     border: none;
     outline: none;
@@ -171,27 +175,22 @@
     padding: 8px 12px;
 }
 
-.userComponent_right button:hover{
+.userComponent_right button:hover {
     background-color: lightgrey;
     cursor: pointer;
 }
 
 /* Home Page Bottom */
-.userHomePage_bottom{
-    width: 1020px;
+.userHomePage_bottom {
+    width: 100%; 
+    max-width: 1020px;
     display: flex;
     justify-content: space-between;
+    margin: 0 auto;
 }
 
-.userHomePage_bottom_left{
+.userHomePage_bottom_left,
+.userHomePage_bottom_right {
     margin: 0;
     padding: 0;
-    position: relative;
 }
-
-.userHomePage_bottom_right{
-    margin: 0;
-    padding: 0;
-    position: relative;
-}
-

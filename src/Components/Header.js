@@ -73,7 +73,7 @@ function Header() {
 
             <div className="header_middle">
                 <div className='header_option header_option_active'>
-                    <Link to="/homepage">
+                    <Link to="/">
                         <HomeIcon />
                     </Link>
                 </div>

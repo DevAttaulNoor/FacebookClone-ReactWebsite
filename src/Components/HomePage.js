@@ -1,7 +1,7 @@
-import "../CSS/HomePage.css"
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useStateValue } from './StateProvider';
+import "../CSS/HomePage.css";
+import React from "react";
+import { Link } from "react-router-dom";
+import { useStateValue } from "./StateProvider";
 import cover from "../Imgs/Cover.jpg";
 import HomePageIntro from "./HomePageIntro";
 import HomePagePhotos from "./HomePagePhotos";
@@ -37,27 +37,13 @@ function HomePage() {
 
                 <div className="userComponents">
                     <div className="userComponent_left">
-                        <div className='component active'>
-                            Posts
-                        </div>
-                        <div className='component'>
-                            About
-                        </div>
-                        <div className='component'>
-                            Friends
-                        </div>
-                        <div className='component'>
-                            Photos
-                        </div>
-                        <div className='component'>
-                            Videos
-                        </div>
-                        <div className='component'>
-                            Check-ins
-                        </div>
-                        <div className='component'>
-                            More
-                        </div>
+                        <div className="component active">Posts</div>
+                        <div className="component">About</div>
+                        <div className="component">Friends</div>
+                        <div className="component">Photos</div>
+                        <div className="component">Videos</div>
+                        <div className="component">Check-ins</div>
+                        <div className="component">More</div>
                     </div>
                     <div className="userComponent_right">
                         <div>
@@ -85,9 +71,6 @@ function HomePage() {
                     </div>
                 </div>
             </div>
-
-            {/* Add other Facebook-like components such as posts, friends list, etc. */}
-            <Link to="/">Go Back</Link>
         </div>
     );
 }
