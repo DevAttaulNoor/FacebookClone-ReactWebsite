@@ -130,15 +130,19 @@
     padding: 10px;
     border: none;
     outline: none;
-    border: 1px solid gray;
-    border-bottom: none;
+    border-bottom: 1px solid gray;
 }
 
 .dialogBox button:last-child {
-    border-bottom: 1px solid gray;
+    border-bottom: none;
 }
 
 .dialogBox button:hover {
     background-color: whitesmoke;
     cursor: pointer;
+}
+
+.dialogBox a{
+    text-decoration: none;
+    border-bottom: 1px solid gray;
 }

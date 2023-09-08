@@ -4,14 +4,22 @@ import { auth, provider } from './Firebase';
 import { useStateValue } from './StateProvider'
 import fblogo from '../Imgs/fblogo.png';
 import Loading from "./Loading";
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const [{ }, dispatch] = useStateValue();
-    const [isLoading, setIsLoading] = useState(true); 
+    const [isLoading, setIsLoading] = useState(true);
+    const isUserLoggedOut = sessionStorage.getItem('userLoggedOut');
+    const navigate = useNavigate();
+
+    if (isUserLoggedOut === 'true') {
+        sessionStorage.removeItem('userLoggedOut');
+    }
 
     const signIn = () => {
         auth.signInWithPopup(provider)
             .then((result) => {
+                console.log(result)
                 var credential = result.credential;
                 const photoURL = `${result.user.photoURL}?access_token=${credential.accessToken}`;
                 const displayName = result.user.displayName;
@@ -29,6 +37,9 @@ function Login() {
                     type: "SET_USER",
                     user: userData
                 });
+
+                // Redirect the user to the home page after successful login
+                navigate('/');
             })
             .catch((error) => {
                 if (error.code === 'auth/popup-closed-by-user') {

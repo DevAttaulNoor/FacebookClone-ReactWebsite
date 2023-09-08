@@ -14,15 +14,22 @@ import ForumIcon from '@mui/icons-material/Forum';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import IconButton from '@mui/material/IconButton';
 import { Link } from 'react-router-dom';
-
+import { useLocation } from 'react-router-dom';
 import { auth } from './Firebase';
 
 function Header() {
     const [{ user }, dispatch] = useStateValue();
     const [isDialogVisible, setIsDialogVisible] = useState(false);
     const dialogBoxRef = useRef(null);
+    const location = useLocation();
 
     const handleSignOut = () => {
+        // Clear the user data from session storage
+        sessionStorage.removeItem('userData');
+
+        // Set a flag in session storage to indicate logout
+        sessionStorage.setItem('userLoggedOut', 'true');
+
         auth.signOut()
             .then(() => {
                 // Clear the user data from session storage
@@ -72,7 +79,7 @@ function Header() {
             </div>
 
             <div className="header_middle">
-                <div className='header_option header_option_active'>
+                <div className={`header_option ${location.pathname === '/' ? 'header_option_active' : ''}`}>
                     <Link to="/">
                         <HomeIcon />
                     </Link>
@@ -109,6 +116,7 @@ function Header() {
                             <div className="dialogBox">
                                 <Link to="/homepage">
                                     <button>Home</button>
+
                                 </Link>
                                 <button>Settings</button>
                                 <button onClick={handleSignOut}>Sign Out</button>
