@@ -3,10 +3,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useStateValue } from './StateProvider';
 import cover from "../Imgs/Cover.jpg";
-import Feeds from './Feeds'
 import HomePageIntro from "./HomePageIntro";
 import HomePagePhotos from "./HomePagePhotos";
 import HomePageFriends from "./HomePageFriends";
+import HomePageFeed from "./HomePageFeed";
 
 function HomePage() {
     const [{ user }, dispatch] = useStateValue();
@@ -81,8 +81,7 @@ function HomePage() {
                 </div>
                 <div className="userHomePage_bottom_right">
                     <div className="userFeed">
-                        {/* <Feeds/> */}
-                        Feeds
+                        <HomePageFeed />
                     </div>
                 </div>
             </div>

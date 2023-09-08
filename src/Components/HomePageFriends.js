@@ -7,7 +7,7 @@ function HomePageFriends() {
         <div className='homepageFriends'>
             <div className="homepageFriends_top">
                 <h2>Friends</h2>
-                <p>See all friends</p>
+                <a href="#">See all friends</a>
             </div>
 
             <div className="homepageFriends_bottom">

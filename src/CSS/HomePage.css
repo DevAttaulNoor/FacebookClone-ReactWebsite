@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 500vh;
+    height: 800vh;
 }
 
 /* Cover Photo Section */
@@ -180,6 +180,18 @@
 .userHomePage_bottom{
     width: 1020px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
 }
+
+.userHomePage_bottom_left{
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.userHomePage_bottom_right{
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+

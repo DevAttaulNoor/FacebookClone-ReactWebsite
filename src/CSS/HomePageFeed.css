@@ -1,0 +1,23 @@
+.homepageFeed{
+    display: flex;
+    flex-direction: column;
+    width: 570px;
+    margin: 15px;
+    margin-right: 0;
+}
+
+.homepageFeed .messagesender{
+    margin-top: 0;
+}
+
+.homepageFeed .messagesender .messangerOption{
+    padding: 10px 25px;
+}
+
+.homepageFeed .post{
+    margin-top: 15px;
+}
+
+.homepageFeed .post .post_bottomOption{
+    padding: 6px 50px;
+}
