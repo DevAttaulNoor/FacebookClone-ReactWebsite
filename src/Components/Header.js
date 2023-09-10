@@ -46,12 +46,10 @@ function Header() {
             });
     };
 
-    // Function to toggle the dialog visibility
     const toggleDialog = () => {
         setIsDialogVisible(!isDialogVisible);
     };
 
-    // Add an event listener to handle clicks outside the dialog box
     useEffect(() => {
         const handleOutsideClick = (e) => {
             if (dialogBoxRef.current && !dialogBoxRef.current.contains(e.target)) {
@@ -116,7 +114,6 @@ function Header() {
                             <div className="dialogBox">
                                 <Link to="/homepage">
                                     <button>Home</button>
-
                                 </Link>
                                 <button>Settings</button>
                                 <button onClick={handleSignOut}>Sign Out</button>

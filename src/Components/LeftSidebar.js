@@ -3,13 +3,16 @@ import React from 'react'
 import { useStateValue } from './StateProvider';
 import LeftSidebarOption from './LeftSidebarOption'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { Link } from 'react-router-dom';
 
 function LeftSidebar() {
-    const [{user}, dispatch] = useStateValue();
+    const [{ user }, dispatch] = useStateValue();
 
     return (
         <div className='LeftSidebar'>
-            <LeftSidebarOption src={user.photoURL} title={user.displayName} />
+            <Link to="/homepage">
+                <LeftSidebarOption src={user.photoURL} title={user.displayName} />
+            </Link>
             <LeftSidebarOption src='https://static.xx.fbcdn.net/rsrc.php/v3/y6/r/i0pziEs5Wj6.png' title='Friends' />
             <LeftSidebarOption src='https://static.xx.fbcdn.net/rsrc.php/v3/y8/r/he-BkogidIc.png' title='Memories' />
             <LeftSidebarOption src='https://static.xx.fbcdn.net/rsrc.php/v3/yS/r/k0Svfg6IJtR.png' title='Saved' />

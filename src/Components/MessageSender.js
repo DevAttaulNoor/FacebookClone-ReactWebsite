@@ -6,8 +6,6 @@ import { db, storage } from './Firebase';
 import { Avatar, IconButton, Modal } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
 
-import Picker from 'emoji-picker-react';
-
 function MessageSender() {
     const [{ user }, dispatch] = useStateValue();
     const [open, setOpen] = useState(false);
