@@ -201,35 +201,35 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         setIsCommentModalOpen(false);
     };
 
-    const postComment = () => {
+    const postComment = async () => {
         if (comment.trim() === '') {
             return;
         }
 
-        // Create a new comment object
         const newComment = {
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
             text: comment,
             timestamp: new Date(),
-            // You can also store the commenter's username and photoURL here
         };
 
-        // Update comments in Firestore
-        db.collection("Posts").doc(id).collection("comments").add(newComment);
-
-        // Clear the comment input field
-        setComment('');
-
-        // Close the comment input field
-        setIsCommenting(false);
+        try {
+            await db.collection("Posts").doc(id).collection("comments").add(newComment);
+            setComment('');
+            setIsCommenting(false);
+        } catch (error) {
+            console.error("Error posting comment:", error);
+        }
     };
 
     useEffect(() => {
-        // Function to retrieve and listen to comments in real-time
         const getRealtimeComments = () => {
             const commentsRef = db.collection("Posts").doc(id).collection("comments");
 
             // Set up a real-time listener for new comments and changes
-            return commentsRef.orderBy("timestamp", "desc").onSnapshot((querySnapshot) => {
+            return commentsRef.orderBy("timestamp", "asc").onSnapshot((querySnapshot) => {
                 const fetchedComments = [];
                 querySnapshot.forEach((doc) => {
                     fetchedComments.push({ id: doc.id, ...doc.data() });
@@ -244,7 +244,8 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         return () => {
             unsubscribe();
         };
-    }, [id]); // Make sure to include 'id' in the dependency array
+    }, [id]);
+
 
     const deleteComment = (commentId) => {
         db.collection("Posts")
@@ -377,9 +378,9 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                         <div className='post_comments'>
                             {comments.map((comment) => (
                                 <div key={comment.id} className='post_comment'>
-                                    <Avatar src={user.photoURL} />
+                                    <Avatar src={comment.photoURL} /> {/* Use comment.photoURL */}
                                     <div className='post_commentInfo'>
-                                        <p className='post_commentInfo_User'>{user.displayName}</p>
+                                        <p className='post_commentInfo_User'>{comment.displayName}</p> {/* Use comment.displayName */}
                                         <p className='post_commentInfo_Comment'>{comment.text}</p>
                                         <p className='post_commentInfo_Timestamp'>
                                             {timeAgo(comment.timestamp)}
@@ -388,6 +389,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                                     </div>
                                 </div>
                             ))}
+
                         </div>
                         {isCommenting && (
                             <div className='post_commentInput'>

@@ -42,6 +42,8 @@ function MessageSender() {
 
         if (image === "") {
             db.collection("Posts").add({
+                uid: user.uid,
+                email: user.email,
                 username: user.displayName,
                 photoURL: user.photoURL,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -66,6 +68,8 @@ function MessageSender() {
                 () => {
                     storage.ref("Images").child(image.name).getDownloadURL().then(url => {
                         db.collection("Posts").add({
+                            uid: user.uid,
+                            email: user.email,
                             username: user.displayName,
                             photoURL: user.photoURL,
                             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
