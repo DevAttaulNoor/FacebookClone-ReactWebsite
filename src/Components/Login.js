@@ -6,7 +6,6 @@ import fblogo from '../Imgs/fblogo.png';
 import Loading from "./Loading";
 import { useNavigate } from 'react-router-dom';
 
-
 function Login() {
     const [{ }, dispatch] = useStateValue();
     const [isLoading, setIsLoading] = useState(true);

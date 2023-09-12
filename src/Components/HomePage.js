@@ -15,8 +15,8 @@ function HomePage() {
         <div className="userHomePage">
             <div className="coverPhotoSection">
                 <img src={cover} alt="Cover" />
-                <button id="avatarBtn">Create with avatar</button>
-                <button id="editBtn">Edit cover photo</button>
+                <button>Create with avatar</button>
+                <button>Edit cover photo</button>
             </div>
 
             <div className="profileSection">

@@ -22,6 +22,7 @@
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     object-fit: cover;
+    z-index: 1;
 }
 
 .coverPhotoSection button {
@@ -35,12 +36,13 @@
     outline: none;
     border-radius: 6px;
     width: 165px;
-    bottom: 15px;
+    top: 315px;
     right: 32px;
+    z-index: 2;
 }
 
-.coverPhotoSection #editBtn {
-    bottom: 56px;
+.coverPhotoSection button:last-child {
+    top: 360px;
 }
 
 /* Profile Section */
