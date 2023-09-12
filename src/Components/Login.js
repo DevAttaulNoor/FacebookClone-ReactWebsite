@@ -30,20 +30,18 @@ function Login() {
             .then((result) => {
                 console.log(result)
                 const userCredential = result;
-                const user = userCredential.user; // User object
-                const uid = user.uid; // User UID
+                const user = userCredential.user; 
+                const uid = user.uid; 
                 const email = user.email;
                 const displayName = user.displayName;
                 const photoURL = `${user.photoURL}?access_token=${userCredential.credential.accessToken}`;
 
-                // Save user data in session storage
                 const userData = {
-                    uid: uid, // Add User UID
+                    uid: uid,
                     email: email,
                     displayName: displayName,
                     photoURL: photoURL
                 };
-                // Store the user data in session storage
                 sessionStorage.setItem('userData', JSON.stringify(userData));
 
                 dispatch({
@@ -51,7 +49,6 @@ function Login() {
                     user: userData
                 });
 
-                // Redirect the user to the home page after successful login
                 navigate('/');
             })
             .catch((error) => {
@@ -65,19 +62,16 @@ function Login() {
 
     const signInWithEmailAndPassword = async () => {
         try {
-            // Sign in with email and password
             const userCredential = await auth.signInWithEmailAndPassword(
                 emailSignIn,
                 passwordSignIn
             );
 
-            // Extract user data
             const user = userCredential.user;
             const uid = user.uid;
             const displayName = user.displayName;
             const photoURL = user.photoURL;
 
-            // Save user data in session storage
             const userData = {
                 uid: uid,
                 email: emailSignIn,
@@ -86,22 +80,13 @@ function Login() {
             };
             sessionStorage.setItem('userData', JSON.stringify(userData));
 
-            // Dispatch user data to the context
             dispatch({
                 type: "SET_USER",
                 user: userData
             });
-
-            // Debugging: Check if this code block is executed
-            console.log('Sign-in successful. User data:', userData);
-
-            // Redirect the user to the home page after successful login
             navigate('/');
 
-            // Debugging: Check if this line is reached
-            console.log('Redirecting to the homepage.');
         } catch (error) {
-            // Handle sign-in error
             console.error('Sign-In Error:', error.message);
         }
     };
@@ -120,11 +105,6 @@ function Login() {
 
         setIsLoading(false);
     }, []);
-
-    // Render a loading indicator while authentication state is being checked
-    if (isLoading) {
-        return <Loading />;
-    }
 
     const handleSignup = async (e) => {
         e.preventDefault();
@@ -188,9 +168,10 @@ function Login() {
         }
     };
 
-
-
-
+    // Render a loading indicator while authentication state is being checked
+    if (isLoading) {
+        return <Loading />;
+    }
 
     return (
         <div className='login_wrapper'>
@@ -255,7 +236,6 @@ function Login() {
                 />
                 <button type="submit">Log In</button>
             </form>
-
         </div>
     )
 }

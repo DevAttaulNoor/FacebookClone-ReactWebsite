@@ -6,18 +6,23 @@ import { db } from './Firebase'
 
 function HomePageFeed() {
     const [posts, setPosts] = useState([]);
+    const userDataStr = sessionStorage.getItem('userData');
+    const userData = JSON.parse(userDataStr);
+    const userUid = userData.uid;
 
     useEffect(() => {
         const unsubscribe = db.collection("Posts").orderBy("timestamp", "desc").onSnapshot(snapshot => {
-            setPosts(
-                snapshot.docs.map(doc => ({
+            const filteredPosts = snapshot.docs
+                .filter(doc => doc.data().uid === userUid) // Filter posts by userUid
+                .map(doc => ({
                     id: doc.id,
                     data: doc.data()
-                }))
-            );
+                }));
+
+            setPosts(filteredPosts);
         });
         return () => unsubscribe();
-    }, []);
+    }, [userUid]); // Add userUid as a dependency to re-run the effect when it changes
 
     const timeAgo = (timestamp) => {
         if (!timestamp || !timestamp.toDate) {
