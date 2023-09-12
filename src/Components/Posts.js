@@ -246,7 +246,6 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         };
     }, [id]);
 
-
     const deleteComment = (commentId) => {
         db.collection("Posts")
             .doc(id)
@@ -357,7 +356,8 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                     </Modal>
                 ) : (
                     <div>
-                        <p>{editedMessage}</p>
+                        <p style={{ fontSize: image ? '15px' : '30px' }}>{editedMessage}</p>
+                        {/* <p>{editedMessage}</p> */}
                         {image && <img src={editedImage} />}
                     </div>
                 )}

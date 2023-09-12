@@ -22,7 +22,6 @@
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     object-fit: cover;
-    z-index: 1;
 }
 
 .coverPhotoSection button {
@@ -38,7 +37,6 @@
     width: 165px;
     top: 315px;
     right: 32px;
-    z-index: 2;
 }
 
 .coverPhotoSection button:last-child {
