@@ -1,6 +1,6 @@
 import "../CSS/Login.css";
 import React, { useEffect, useState } from 'react';
-import { auth, provider, storage } from './Firebase';
+import { auth, db, provider, storage } from './Firebase';
 import { useStateValue } from './StateProvider'
 import fblogo from '../Imgs/fblogo.png';
 import Loading from "./Loading";
@@ -16,6 +16,7 @@ function Login() {
     const [passwordSignUp, setPasswordSignUp] = useState('');
     const [username, setUsername] = useState('');
     const [profilePicture, setProfilePicture] = useState(null);
+    const [coverPicture, setCoverPicture] = useState(null);
 
     const [emailSignIn, setEmailSignIn] = useState('');
     const [passwordSignIn, setPasswordSignIn] = useState('');
@@ -34,18 +35,29 @@ function Login() {
                 const email = user.email;
                 const displayName = user.displayName;
                 const photoURL = `${user.photoURL}?access_token=${userCredential.credential.accessToken}`;
+                const coverphotoUrl = ''
 
                 const userData = {
                     uid: uid,
                     email: email,
                     displayName: displayName,
-                    photoURL: photoURL
+                    photoURL: photoURL,
+                    coverphotoUrl: coverphotoUrl
                 };
                 sessionStorage.setItem('userData', JSON.stringify(userData));
 
                 dispatch({
                     type: "SET_USER",
                     user: userData
+                });
+
+
+                db.collection("Users").doc(uid).set({
+                    uid: user.uid,
+                    email: user.email,
+                    username: user.displayName,
+                    photoURL: user.photoURL,
+                    coverphotoUrl: coverphotoUrl
                 });
 
                 navigate('/');
@@ -70,12 +82,14 @@ function Login() {
             const uid = user.uid;
             const displayName = user.displayName;
             const photoURL = user.photoURL;
+            const coverphotoUrl = user.coverphotoUrl;
 
             const userData = {
                 uid: uid,
                 email: emailSignIn,
                 displayName: displayName,
-                photoURL: photoURL
+                photoURL: photoURL,
+                coverphotoUrl: coverphotoUrl
             };
             sessionStorage.setItem('userData', JSON.stringify(userData));
 
@@ -109,39 +123,44 @@ function Login() {
         e.preventDefault();
 
         try {
-            // Step 1: Create a new user with email and password
             const userCredential = await auth.createUserWithEmailAndPassword(
                 emailSignUp,
                 passwordSignUp
             );
 
-            const user = userCredential.user; // User object
-            const uid = user.uid; // User UID
+            const user = userCredential.user; 
+            const uid = user.uid; 
 
             // Step 2: Upload profile picture to Firebase Storage
             let photoURL = null;
             if (profilePicture) {
-                const storageRef = storage.ref(`profile-pictures/${userCredential.user.uid}`);
+                const storageRef = storage.ref(`Images/Users/ProfileImage/${userCredential.user.uid}/${profilePicture.name}`);
                 await storageRef.put(profilePicture);
                 const downloadURL = await storageRef.getDownloadURL();
                 photoURL = downloadURL;
             }
 
-            // Step 3: Set username and profile picture in user's profile
+            // Step 2: Upload profile picture to Firebase Storage
+            let coverphotoUrl = null;
+            if (coverPicture) {
+                const storageRef = storage.ref(`Images/Users/CoverImage/${userCredential.user.uid}/${coverPicture.name}`);
+                await storageRef.put(coverPicture);
+                const downloadURL = await storageRef.getDownloadURL();
+                coverphotoUrl = downloadURL;
+            }
+
             await userCredential.user.updateProfile({
                 displayName: username,
                 photoURL: photoURL,
             });
 
-            // Save user data in session storage
             const userData = {
-                uid: uid, // Add User UID
+                uid: uid, 
                 email: emailSignUp,
                 displayName: username,
                 photoURL: photoURL,
+                coverphotoUrl: coverphotoUrl
             };
-
-            // Store the user data in session storage
             sessionStorage.setItem('userData', JSON.stringify(userData));
 
             dispatch({
@@ -149,7 +168,15 @@ function Login() {
                 user: userData,
             });
 
-            // Redirect the user to the home page after successful login
+
+            db.collection("Users").doc(uid).set({
+                uid: user.uid,
+                email: user.email,
+                username: user.displayName,
+                photoURL: user.photoURL,
+                coverphotoUrl: coverphotoUrl
+            });
+
             navigate('/');
 
             // User successfully signed up
@@ -160,10 +187,15 @@ function Login() {
         }
     };
 
-
     const handleProfilePictureChange = (e) => {
         if (e.target.files[0]) {
             setProfilePicture(e.target.files[0]);
+        }
+    };
+
+    const handleCoverPictureChange = (e) => {
+        if (e.target.files[0]) {
+            setCoverPicture(e.target.files[0]);
         }
     };
 
@@ -209,6 +241,12 @@ function Login() {
                         type="file"
                         accept="image/*"
                         onChange={handleProfilePictureChange}
+                    />
+                    <label>Cover Picture:</label>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleCoverPictureChange}
                     />
                     <button type="submit">Sign Up</button>
                 </form>

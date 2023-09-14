@@ -53,7 +53,7 @@ function MessageSender() {
         }
 
         else {
-            const uploadTask = storage.ref(`Images/${image.name}`).put(image);
+            const uploadTask = storage.ref(`Images/Posts/${user.uid}/${image.name}`).put(image);
 
             uploadTask.on(
                 "state_changed",
@@ -66,7 +66,7 @@ function MessageSender() {
                     alert(error.message);
                 },
                 () => {
-                    storage.ref("Images").child(image.name).getDownloadURL().then(url => {
+                    storage.ref(`Images/Posts/${user.uid}`).child(image.name).getDownloadURL().then(url => {
                         db.collection("Posts").add({
                             uid: user.uid,
                             email: user.email,

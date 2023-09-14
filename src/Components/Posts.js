@@ -35,14 +35,9 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     };
 
     const handleSave = () => {
-        if (!editedMessage && editedImage === undefined) {
-            alert("Post cannot be empty!");
-            return;
-        }
-
         if (editedImage !== null && editedImage !== undefined) {
-            const uploadTask = storage.ref(`Images/${editedImage.name}`).put(editedImage);
-
+            const uploadTask = storage.ref(`Images/Posts/${user.uid}/${editedImage.name}`).put(editedImage);
+    
             uploadTask
                 .then((snapshot) => snapshot.ref.getDownloadURL())
                 .then((url) => {
@@ -50,7 +45,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                         message: editedMessage,
                         image: url,
                     };
-
+    
                     // Update the Firestore document with the edited data, including the image URL
                     return db.collection("Posts")
                         .doc(id)
@@ -64,13 +59,12 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                 .catch((error) => {
                     console.error("Error updating document: ", error);
                 });
-        }
-
-        else {
-            // No new image to upload, update the Firestore document with the edited data directly
-            db.collection("Posts").doc(id).update({
-                message: editedMessage,
-            })
+        } else {
+            // No new image to upload, update the Firestore document with the edited message only
+            if (editedMessage !== message) {
+                db.collection("Posts").doc(id).update({
+                    message: editedMessage,
+                })
                 .then(() => {
                     console.log("Document successfully updated!");
                     setIsEditing(false);
@@ -79,9 +73,14 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                 .catch((error) => {
                     console.error("Error updating document: ", error);
                 });
+            } else {
+                // No changes were made, so simply close the editing form
+                setIsEditing(false);
+                setIsDropdownVisible(false);
+            }
         }
     };
-
+    
     const handleDelete = () => {
         const commentsRef = db.collection("Posts").doc(id).collection("comments");
 
@@ -121,7 +120,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         const file = e.target.files[0];
 
         if (file) {
-            const storageRef = storage.ref(`Images/${file.name}`);
+            const storageRef = storage.ref(`Images/Posts/${user.uid}/${file.name}`);
 
             storageRef.put(file).then((snapshot) => {
                 snapshot.ref.getDownloadURL().then((url) => {
@@ -357,7 +356,6 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                 ) : (
                     <div>
                         <p style={{ fontSize: image ? '15px' : '30px' }}>{editedMessage}</p>
-                        {/* <p>{editedMessage}</p> */}
                         {image && <img src={editedImage} />}
                     </div>
                 )}
