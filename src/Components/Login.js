@@ -2,66 +2,63 @@ import "../CSS/Login.css";
 import React, { useEffect, useState } from 'react';
 import { auth, db, provider, storage } from './Firebase';
 import { useStateValue } from './StateProvider'
-import fblogo from '../Imgs/fblogo.png';
-import Loading from "./Loading";
 import { useNavigate } from 'react-router-dom';
+import Loading from "./Loading";
+import fblogo from '../Imgs/fblogo.png';
 
 function Login() {
     const [{ }, dispatch] = useStateValue();
-    const [isLoading, setIsLoading] = useState(true);
-    const isUserLoggedOut = sessionStorage.getItem('userLoggedOut');
-    const navigate = useNavigate();
-
-    const [emailSignUp, setEmailSignUp] = useState('');
-    const [passwordSignUp, setPasswordSignUp] = useState('');
     const [username, setUsername] = useState('');
     const [profilePicture, setProfilePicture] = useState(null);
     const [coverPicture, setCoverPicture] = useState(null);
-
+    const [emailSignUp, setEmailSignUp] = useState('');
+    const [passwordSignUp, setPasswordSignUp] = useState('');
     const [emailSignIn, setEmailSignIn] = useState('');
     const [passwordSignIn, setPasswordSignIn] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
+    const isUserLoggedOut = sessionStorage.getItem('userLoggedOut');
+    const navigate = useNavigate();
 
     if (isUserLoggedOut === 'true') {
         sessionStorage.removeItem('userLoggedOut');
     }
 
-    const signIn = () => {
-        auth.signInWithPopup(provider)
-            .then((result) => {
-                console.log(result)
-                const userCredential = result;
-                const user = userCredential.user; 
-                const uid = user.uid; 
-                const email = user.email;
-                const displayName = user.displayName;
-                const photoURL = `${user.photoURL}?access_token=${userCredential.credential.accessToken}`;
-                const coverphotoUrl = ''
+    const signInWithFacebook = () => {
+        auth.signInWithPopup(provider).then((result) => {
+            // console.log(result)
+            const userCredential = result;
+            const user = userCredential.user;
+            const uid = user.uid;
+            const email = user.email;
+            const displayName = user.displayName;
+            const photoURL = `${user.photoURL}?access_token=${userCredential.credential.accessToken}`;
+            const coverphotoUrl = ''
 
-                const userData = {
-                    uid: uid,
-                    email: email,
-                    displayName: displayName,
-                    photoURL: photoURL,
-                    coverphotoUrl: coverphotoUrl
-                };
-                sessionStorage.setItem('userData', JSON.stringify(userData));
+            const userData = {
+                uid: uid,
+                email: email,
+                displayName: displayName,
+                photoURL: photoURL,
+                coverphotoUrl: coverphotoUrl
+            };
+            sessionStorage.setItem('userData', JSON.stringify(userData));
 
-                dispatch({
-                    type: "SET_USER",
-                    user: userData
-                });
+            dispatch({
+                type: "SET_USER",
+                user: userData
+            });
 
 
-                db.collection("Users").doc(uid).set({
-                    uid: user.uid,
-                    email: user.email,
-                    username: user.displayName,
-                    photoURL: user.photoURL,
-                    coverphotoUrl: coverphotoUrl
-                });
+            db.collection("Users").doc(uid).set({
+                uid: user.uid,
+                email: user.email,
+                username: user.displayName,
+                photoURL: user.photoURL,
+                coverphotoUrl: coverphotoUrl
+            });
+            navigate('/');
+        })
 
-                navigate('/');
-            })
             .catch((error) => {
                 if (error.code === 'auth/popup-closed-by-user') {
                     console.log("Authentication popup closed by user.");
@@ -98,15 +95,15 @@ function Login() {
                 user: userData
             });
             navigate('/');
-
-        } catch (error) {
+        } 
+        
+        catch (error) {
             console.error('Sign-In Error:', error.message);
         }
     };
 
     useEffect(() => {
         const storedUserData = sessionStorage.getItem('userData');
-
         if (storedUserData) {
             // If user data is found in session storage, parse it and set it in the context
             const userData = JSON.parse(storedUserData);
@@ -115,7 +112,6 @@ function Login() {
                 user: userData
             });
         }
-
         setIsLoading(false);
     }, []);
 
@@ -128,10 +124,9 @@ function Login() {
                 passwordSignUp
             );
 
-            const user = userCredential.user; 
-            const uid = user.uid; 
+            const user = userCredential.user;
+            const uid = user.uid;
 
-            // Step 2: Upload profile picture to Firebase Storage
             let photoURL = null;
             if (profilePicture) {
                 const storageRef = storage.ref(`Images/Users/ProfileImage/${userCredential.user.uid}/${profilePicture.name}`);
@@ -140,7 +135,6 @@ function Login() {
                 photoURL = downloadURL;
             }
 
-            // Step 2: Upload profile picture to Firebase Storage
             let coverphotoUrl = null;
             if (coverPicture) {
                 const storageRef = storage.ref(`Images/Users/CoverImage/${userCredential.user.uid}/${coverPicture.name}`);
@@ -155,7 +149,7 @@ function Login() {
             });
 
             const userData = {
-                uid: uid, 
+                uid: uid,
                 email: emailSignUp,
                 displayName: username,
                 photoURL: photoURL,
@@ -168,7 +162,6 @@ function Login() {
                 user: userData,
             });
 
-
             db.collection("Users").doc(uid).set({
                 uid: user.uid,
                 email: user.email,
@@ -178,11 +171,10 @@ function Login() {
             });
 
             navigate('/');
-
-            // User successfully signed up
-            console.log('User signed up:', userCredential.user);
-        } catch (error) {
-            // Handle signup error
+            // console.log('User signed up:', userCredential.user);
+        } 
+        
+        catch (error) {
             console.error('Signup Error:', error.message);
         }
     };

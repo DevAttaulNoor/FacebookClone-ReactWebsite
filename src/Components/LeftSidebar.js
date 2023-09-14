@@ -1,9 +1,9 @@
 import '../CSS/LeftSidebar.css'
 import React from 'react'
 import { useStateValue } from './StateProvider';
+import { Link } from 'react-router-dom';
 import LeftSidebarOption from './LeftSidebarOption'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { Link } from 'react-router-dom';
 
 function LeftSidebar() {
     const [{ user }, dispatch] = useStateValue();

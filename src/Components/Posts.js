@@ -1,9 +1,9 @@
 import "../CSS/Posts.css"
 import React, { useState, useEffect, useRef } from 'react';
-import Modal from 'react-modal';
 import { Avatar } from '@mui/material'
 import { db, storage } from './Firebase'
 import { useStateValue } from './StateProvider';
+import Modal from 'react-modal';
 import PublicIcon from '@mui/icons-material/Public';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
@@ -11,6 +11,8 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 
 function Posts({ id, photoURL, image, username, timestamp, message }) {
+    Modal.setAppElement('#root');
+
     const [{ user }, dispatch] = useStateValue();
     const [isEditing, setIsEditing] = useState(false);
     const [editedMessage, setEditedMessage] = useState(message);
@@ -27,9 +29,6 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
     const [imageFile, setImageFile] = useState(null);
 
-
-    Modal.setAppElement('#root');
-
     const handleEdit = () => {
         setIsEditing(true);
     };
@@ -38,18 +37,14 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         if (editedImage !== null && editedImage !== undefined) {
             const uploadTask = storage.ref(`Images/Posts/${user.uid}/${editedImage.name}`).put(editedImage);
     
-            uploadTask
-                .then((snapshot) => snapshot.ref.getDownloadURL())
-                .then((url) => {
+            uploadTask.then((snapshot) => snapshot.ref.getDownloadURL()).then((url) => {
                     const updatedData = {
                         message: editedMessage,
                         image: url,
                     };
     
                     // Update the Firestore document with the edited data, including the image URL
-                    return db.collection("Posts")
-                        .doc(id)
-                        .update(updatedData);
+                    return db.collection("Posts").doc(id).update(updatedData);
                 })
                 .then(() => {
                     console.log("Document successfully updated!");
@@ -59,7 +54,9 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                 .catch((error) => {
                     console.error("Error updating document: ", error);
                 });
-        } else {
+        } 
+        
+        else {
             // No new image to upload, update the Firestore document with the edited message only
             if (editedMessage !== message) {
                 db.collection("Posts").doc(id).update({
@@ -73,7 +70,8 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                 .catch((error) => {
                     console.error("Error updating document: ", error);
                 });
-            } else {
+            } 
+            else {
                 // No changes were made, so simply close the editing form
                 setIsEditing(false);
                 setIsDropdownVisible(false);
@@ -138,7 +136,8 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                         });
                 });
             });
-        } else {
+        } 
+        else {
             // If no file is selected (e.g., user canceled the upload), reset editedImage to null
             setEditedImage(null);
         }
@@ -167,7 +166,6 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     }, []);
 
     const handleLike = () => {
-        // Toggle the like state
         setLiked(!liked);
 
         // Update the likes count in Firestore
@@ -246,12 +244,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     }, [id]);
 
     const deleteComment = (commentId) => {
-        db.collection("Posts")
-            .doc(id)
-            .collection("comments")
-            .doc(commentId)
-            .delete()
-            .then(() => {
+        db.collection("Posts").doc(id).collection("comments").doc(commentId).delete().then(() => {
                 console.log("Comment successfully deleted!");
             })
             .catch((error) => {

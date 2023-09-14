@@ -24,15 +24,11 @@ function Header() {
     const location = useLocation();
 
     const handleSignOut = () => {
-        // Clear the user data from session storage
         sessionStorage.removeItem('userData');
-
-        // Set a flag in session storage to indicate logout
         sessionStorage.setItem('userLoggedOut', 'true');
 
         auth.signOut()
             .then(() => {
-                // Clear the user data from session storage
                 sessionStorage.removeItem('userData');
 
                 // Set the user to null to indicate they are signed out
@@ -69,7 +65,6 @@ function Header() {
         <div className='header'>
             <div className='header_left'>
                 <img src={fblogo} alt="" />
-
                 <div className='header_search'>
                     <SearchIcon />
                     <input type="text" placeholder='Search Facebook' />
@@ -109,7 +104,6 @@ function Header() {
                 <IconButton>
                     <div className={`header_rightAvatarBox ${isDialogVisible ? 'clicked' : ''}`}>
                         <Avatar src={user.photoURL} onClick={toggleDialog} ref={dialogBoxRef} />
-
                         {isDialogVisible && (
                             <div className="dialogBox">
                                 <Link to="/homepage">

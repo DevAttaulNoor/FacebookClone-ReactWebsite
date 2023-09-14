@@ -1,6 +1,6 @@
+import "../CSS/HomePageFriends.css"
 import React from 'react'
 import cover from "../Imgs/Cover.jpg";
-import "../CSS/HomePageFriends.css"
 
 function HomePageFriends() {
     return (
@@ -9,7 +9,6 @@ function HomePageFriends() {
                 <h2>Friends</h2>
                 <a href="#">See all friends</a>
             </div>
-
             <div className="homepageFriends_bottom">
                 <div className="grid-container">
                     <div className="friend">

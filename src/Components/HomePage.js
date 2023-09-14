@@ -1,13 +1,12 @@
 import "../CSS/HomePage.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useStateValue } from "./StateProvider";
-import cover from "../Imgs/Cover.jpg";
+import { db, storage } from './Firebase';
 import HomePageIntro from "./HomePageIntro";
 import HomePagePhotos from "./HomePagePhotos";
 import HomePageFriends from "./HomePageFriends";
 import HomePageFeed from "./HomePageFeed";
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
-import { db, storage } from './Firebase';
 
 function HomePage() {
     const [{ user }, dispatch] = useStateValue();
@@ -18,7 +17,6 @@ function HomePage() {
         const file = e.target.files[0];
         if (file) {
             setProfileImage(file);
-
             const storageRef = storage.ref(`Images/Users/ProfileImage/${user.uid}/${file.name}`);
 
             storageRef.put(file).then((snapshot) => {
@@ -61,7 +59,6 @@ function HomePage() {
         const coverfile = e.target.files[0];
         if (coverfile) {
             setCoverImage(coverfile);
-
             const storageRef = storage.ref(`Images/Users/CoverImage/${user.uid}/${coverfile.name}`);
 
             storageRef.put(coverfile).then((snapshot) => {
@@ -105,7 +102,6 @@ function HomePage() {
             <div className="coverPhotoSection">
                 <img src={user.coverphotoUrl} alt="Cover" />
                 <button>Create with avatar</button>
-
             </div>
 
             <div className="profileSection">

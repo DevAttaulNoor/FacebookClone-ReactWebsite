@@ -1,9 +1,9 @@
-import "../CSS/MessageSender.css"
-import React, { useState } from 'react'
-import firebase from "firebase/compat/app"
+import "../CSS/MessageSender.css";
+import React, { useState } from 'react';
 import { useStateValue } from './StateProvider';
 import { db, storage } from './Firebase';
-import { Avatar, IconButton, Modal } from '@mui/material'
+import { Avatar, IconButton, Modal } from '@mui/material';
+import firebase from "firebase/compat/app";
 import CloseIcon from '@mui/icons-material/Close';
 
 function MessageSender() {
@@ -54,7 +54,7 @@ function MessageSender() {
 
         else {
             const uploadTask = storage.ref(`Images/Posts/${user.uid}/${image.name}`).put(image);
-
+            
             uploadTask.on(
                 "state_changed",
                 (snapshot) => {
@@ -94,16 +94,13 @@ function MessageSender() {
                                 <CloseIcon />
                             </IconButton>
                         </div>
-
                         <div className="modalHeader_top">
                             <Avatar src={user.photoURL} />
                             <h5>{user.displayName}</h5>
                         </div>
-
                         <div className="modalBody">
                             <textarea cols="5" placeholder="What's on your mind" onChange={e => setMessage(e.target.value)}>{message}</textarea>
                         </div>
-
                         <div className="modalFooter">
                             <div className="modalFooterLeft">
                                 <h4>Add to your post</h4>
@@ -137,7 +134,6 @@ function MessageSender() {
                         <input type="text" placeholder={`What's on your mind ${user.displayName}`} onClick={handleOpen} />
                     </form>
                 </div>
-
                 <div className="messagesender_bottom">
                     <div className="messangerOption">
                         <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/c0dWho49-X3.png?_nc_eui2=AeHnEIjVawZBI76yMIMwddXsVnUPE18ZZ-dWdQ8TXxln51Q2S_zbzfHpnn234I7BWgTtb2IssbzIPCV_o410lzBg" alt="" />

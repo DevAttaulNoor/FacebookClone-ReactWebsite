@@ -1,6 +1,6 @@
+import "../CSS/HomePagePhotos.css";
 import React from 'react';
 import cover from "../Imgs/Cover.jpg";
-import "../CSS/HomePagePhotos.css";
 
 function HomePagePhotos() {
     return (
@@ -9,10 +9,8 @@ function HomePagePhotos() {
                 <h2>Photos</h2>
                 <a href="#">See all photos</a>
             </div>
-
             <div className="homepagePhotos_bottom">
                 <div className="grid-container">
-                    {/* Repeat this block for each image */}
                     <img src={cover} alt="" />
                     <img src={cover} alt="" />
                     <img src={cover} alt="" />

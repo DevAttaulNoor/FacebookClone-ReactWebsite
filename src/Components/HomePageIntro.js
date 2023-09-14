@@ -1,5 +1,5 @@
-import React from 'react'
 import "../CSS/HomePageIntro.css"
+import React from 'react'
 
 function HomePageIntro() {
     return (
