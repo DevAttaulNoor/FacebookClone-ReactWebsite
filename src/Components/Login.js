@@ -201,7 +201,7 @@ function Login() {
             <div className="login">
                 <img src={fblogo} alt="" />
                 <h2>Sign in with Facebook</h2>
-                <button onClick={signIn}>Login with Facebook</button>
+                <button onClick={signInWithFacebook}>Login with Facebook</button>
             </div>
 
             <div>

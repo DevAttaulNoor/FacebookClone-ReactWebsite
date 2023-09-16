@@ -78,7 +78,9 @@ function Header() {
                     </Link>
                 </div>
                 <div className='header_option'>
-                    <PeopleIcon />
+                    <Link to="/friendpage">
+                        <PeopleIcon />
+                    </Link>
                 </div>
                 <div className='header_option'>
                     <SmartDisplayIcon />

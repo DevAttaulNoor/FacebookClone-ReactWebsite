@@ -6,6 +6,7 @@ import LeftSidebar from "./Components/LeftSidebar";
 import RightSidebar from "./Components/RightSidebar";
 import Feeds from "./Components/Feeds";
 import HomePage from "./Components/HomePage";
+import FriendsPage from './Components/FriendsPage';
 
 function App() {
 	const [{ user }, dispatch] = useStateValue();
@@ -35,6 +36,7 @@ function App() {
 								<Route path="left-sidebar" element={<LeftSidebar />} />
 								<Route path="right-sidebar" element={<RightSidebar />} /> */}
 								<Route path="homepage" element={<HomePage />} />
+								<Route path="friendpage" element={<FriendsPage />} />
 							</Routes>
 						</div>
 					</div>
