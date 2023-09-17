@@ -1,9 +1,9 @@
 import '../CSS/Feeds.css'
 import React, { useEffect, useState } from 'react'
+import { db } from './Firebase'
 import Storyreels from './Storyreels'
 import MessageSender from './MessageSender'
 import Posts from './Posts'
-import { db } from './Firebase'
 
 function Feeds() {
     const [posts, setPosts] = useState([]);

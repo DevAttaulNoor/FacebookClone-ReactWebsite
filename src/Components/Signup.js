@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { auth, db, storage } from './Firebase';
 import { useStateValue } from './StateProvider'
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
+import Loading from "./Loading";
 
 function Signup() {
     const [{ }, dispatch] = useStateValue();
@@ -11,6 +13,7 @@ function Signup() {
     const [coverPicture, setCoverPicture] = useState(null);
     const [emailSignUp, setEmailSignUp] = useState('');
     const [passwordSignUp, setPasswordSignUp] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
     const handleSignup = async (e) => {
@@ -46,6 +49,14 @@ function Signup() {
                 photoURL: photoURL,
             });
 
+            db.collection("Users").doc(uid).set({
+                uid: user.uid,
+                email: user.email,
+                username: user.displayName,
+                photoURL: user.photoURL,
+                coverphotoUrl: coverphotoUrl
+            });
+
             const userData = {
                 uid: uid,
                 email: emailSignUp,
@@ -60,16 +71,7 @@ function Signup() {
                 user: userData,
             });
 
-            db.collection("Users").doc(uid).set({
-                uid: user.uid,
-                email: user.email,
-                username: user.displayName,
-                photoURL: user.photoURL,
-                coverphotoUrl: coverphotoUrl
-            });
-
-            navigate('/');
-            // console.log('User signed up:', userCredential.user);
+            navigate('/home');
         }
 
         catch (error) {
@@ -88,6 +90,24 @@ function Signup() {
             setCoverPicture(e.target.files[0]);
         }
     };
+
+    useEffect(() => {
+        const storedUserData = sessionStorage.getItem('userData');
+        if (storedUserData) {
+            // If user data is found in session storage, parse it and set it in the context
+            const userData = JSON.parse(storedUserData);
+            dispatch({
+                type: "SET_USER",
+                user: userData
+            });
+        }
+        setIsLoading(false);
+    }, []);
+
+    // Render a loading indicator while authentication state is being checked
+    if (isLoading) {
+        return <Loading />;
+    }
 
     return (
         <div>

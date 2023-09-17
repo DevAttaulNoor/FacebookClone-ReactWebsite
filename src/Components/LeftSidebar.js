@@ -10,7 +10,7 @@ function LeftSidebar() {
 
     return (
         <div className='LeftSidebar'>
-            <Link to="/homepage">
+            <Link to="/userhomepage">
                 <LeftSidebarOption src={user.photoURL} title={user.displayName} />
             </Link>
             <LeftSidebarOption src='https://static.xx.fbcdn.net/rsrc.php/v3/y6/r/i0pziEs5Wj6.png' title='Friends' />

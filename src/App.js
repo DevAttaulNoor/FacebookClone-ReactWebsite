@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { useStateValue } from "./Components/StateProvider";
 import Login from "./Components/Login";
 import Header from "./Components/Header";
@@ -10,8 +10,11 @@ import FriendsPage from './Components/FriendsPage';
 import StartupPage from './Components/StartupPage';
 import Signup from './Components/Signup';
 
+
 function App() {
 	const [{ user }, dispatch] = useStateValue();
+	const isUserLoggedOut = sessionStorage.getItem('userLoggedOut');
+	// const navigate = useNavigate();
 
 	const Home = () => {
 		return (
@@ -26,10 +29,13 @@ function App() {
 	return (
 		<Router>
 			<>
-				<StartupPage />
-
-				{!user ? (
+				{isUserLoggedOut ? (
+					// navigate('/home')
+					// <Navigate to="/home" />
+					<StartupPage />
+				) : !user ? (
 					<div>
+						<StartupPage />
 						<div className="userAuths">
 							<Routes>
 								<Route path='login' element={<Login />} />
@@ -42,8 +48,8 @@ function App() {
 						<Header />
 						<div className="app_body">
 							<Routes>
-								<Route path="/" element={<Home />} />
-								<Route path="homepage" element={<HomePage />} />
+								<Route path="home" element={<Home />} />
+								<Route path="userhomepage" element={<HomePage />} />
 								<Route path="friendpage" element={<FriendsPage />} />
 							</Routes>
 						</div>

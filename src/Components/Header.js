@@ -72,8 +72,8 @@ function Header() {
             </div>
 
             <div className="header_middle">
-                <div className={`header_option ${location.pathname === '/' ? 'header_option_active' : ''}`}>
-                    <Link to="/">
+                <div className={`header_option ${location.pathname === '/home' ? 'header_option_active' : ''}`}>
+                    <Link to="/home">
                         <HomeIcon />
                     </Link>
                 </div>
@@ -108,7 +108,7 @@ function Header() {
                         <Avatar src={user.photoURL} onClick={toggleDialog} ref={dialogBoxRef} />
                         {isDialogVisible && (
                             <div className="dialogBox">
-                                <Link to="/homepage">
+                                <Link to="/userhomepage">
                                     <button>Home</button>
                                 </Link>
                                 <button>Settings</button>

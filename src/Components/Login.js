@@ -20,7 +20,6 @@ function Login() {
 
     const signInWithFacebook = () => {
         auth.signInWithPopup(provider).then((result) => {
-            // console.log(result)
             const userCredential = result;
             const user = userCredential.user;
             const uid = user.uid;
@@ -51,7 +50,7 @@ function Login() {
                 photoURL: user.photoURL,
                 coverphotoUrl: coverphotoUrl
             });
-            navigate('/');
+            navigate('/home');
         })
 
             .catch((error) => {
@@ -94,7 +93,7 @@ function Login() {
                     user: updatedUserData
                 });
                 
-                navigate('/');
+                navigate('/home');
             } else {
                 console.error('User data not found in Firestore');
             }
@@ -155,4 +154,3 @@ function Login() {
 }
 
 export default Login;
-
