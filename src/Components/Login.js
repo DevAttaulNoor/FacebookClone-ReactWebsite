@@ -74,34 +74,40 @@ function Login() {
                 emailSignIn,
                 passwordSignIn
             );
-
+    
             const user = userCredential.user;
             const uid = user.uid;
-            const displayName = user.displayName;
-            const photoURL = user.photoURL;
-            const coverphotoUrl = user.coverphotoUrl;
-
-            const userData = {
-                uid: uid,
-                email: emailSignIn,
-                displayName: displayName,
-                photoURL: photoURL,
-                coverphotoUrl: coverphotoUrl
-            };
-            sessionStorage.setItem('userData', JSON.stringify(userData));
-
-            dispatch({
-                type: "SET_USER",
-                user: userData
-            });
-            navigate('/');
-        } 
-        
-        catch (error) {
+    
+            // Fetch user data from Firestore
+            const userDoc = await db.collection('Users').doc(uid).get();
+            if (userDoc.exists) {
+                const userData = userDoc.data();
+                
+                // Update the user's profile information
+                const updatedUserData = {
+                    uid: uid,
+                    email: emailSignIn,
+                    displayName: userData.username,
+                    photoURL: userData.photoURL,
+                    coverphotoUrl: userData.coverphotoUrl
+                };
+                
+                sessionStorage.setItem('userData', JSON.stringify(updatedUserData));
+    
+                dispatch({
+                    type: "SET_USER",
+                    user: updatedUserData
+                });
+                
+                navigate('/');
+            } else {
+                console.error('User data not found in Firestore');
+            }
+        } catch (error) {
             console.error('Sign-In Error:', error.message);
         }
     };
-
+    
     useEffect(() => {
         const storedUserData = sessionStorage.getItem('userData');
         if (storedUserData) {

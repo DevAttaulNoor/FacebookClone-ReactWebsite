@@ -77,7 +77,7 @@ function Header() {
                         <HomeIcon />
                     </Link>
                 </div>
-                <div className='header_option'>
+                <div className={`header_option ${location.pathname === '/friendpage' ? 'header_option_active' : ''}`}>
                     <Link to="/friendpage">
                         <PeopleIcon />
                     </Link>
