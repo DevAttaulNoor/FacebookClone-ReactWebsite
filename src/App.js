@@ -7,6 +7,8 @@ import RightSidebar from "./Components/RightSidebar";
 import Feeds from "./Components/Feeds";
 import HomePage from "./Components/HomePage";
 import FriendsPage from './Components/FriendsPage';
+import StartupPage from './Components/StartupPage';
+import Signup from './Components/Signup';
 
 function App() {
 	const [{ user }, dispatch] = useStateValue();
@@ -24,17 +26,23 @@ function App() {
 	return (
 		<Router>
 			<>
+				<StartupPage />
+
 				{!user ? (
-					<Login />
+					<div>
+						<div className="userAuths">
+							<Routes>
+								<Route path='login' element={<Login />} />
+								<Route path='signup' element={<Signup />} />
+							</Routes>
+						</div>
+					</div>
 				) : (
 					<div className="App">
 						<Header />
 						<div className="app_body">
 							<Routes>
 								<Route path="/" element={<Home />} />
-								{/* <Route path="feeds" element={<Feeds />} />
-								<Route path="left-sidebar" element={<LeftSidebar />} />
-								<Route path="right-sidebar" element={<RightSidebar />} /> */}
 								<Route path="homepage" element={<HomePage />} />
 								<Route path="friendpage" element={<FriendsPage />} />
 							</Routes>
