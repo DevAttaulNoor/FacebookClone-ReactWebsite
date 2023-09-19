@@ -1,0 +1,53 @@
+.friendsCard{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 335px;
+    border-radius: 6px;
+    background-color: #fff;
+}
+
+.friendsCard .friendsCard_top img{
+    width: 200px;
+    height: 174px;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+}
+
+.friendsCard_bottom{
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px 10px 10px;
+}
+
+.friendsCard_bottom #friendName{
+    padding: 0 0 5px 0;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.friendsCard_bottom #friendMutual{
+    color: gray;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 5px 0 0 0;
+}
+
+.friendsCard_bottom button{
+    margin: 10px 0 0 0;
+    width: 176px;
+    height: 36px;
+    padding: 0 10px;
+    background-color: #E7F3FF;
+    color: #1877f2;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+}
+
+.friendsCard_bottom button:last-child{
+    background-color: whitesmoke;
+    color: #000;
+}
