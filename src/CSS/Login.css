@@ -1,36 +1,221 @@
-.login_wrapper{
-    display: grid;
-    place-items: center;
+/* Login */
+.login {
     height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.login_wrapper img{
-    width: 100px
+/* LoginIntro */
+.loginIntro {
+    margin-right: 50px;
 }
 
-.login{
-    width: 400px;
-    margin: 0px auto;
-    background-color: rgb(233, 233, 233);
-    padding: 20px;
-    text-align: center;
-    border-radius: 10px;
+.loginIntro h1{
+    font-size: 54px;
+    font-weight: 750;
+    color: #1877f2;
 }
 
-.login h2{
-    margin: 20px 0;
+.loginIntro p{
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 32px;
+    width: 500px;
+    padding: 0 0 20px;
 }
 
-.login button{
-    background-color: #1778f2;
-    border: 0;
-    outline: 0;
-    font-size: 16px;
-    color: #fff;
-    border-radius: 5px;
-    padding: 10px 20px;
-    margin-top: 20px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+/* LoginForm */
+.loginForm form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    padding: 15px;
+    margin-top: 40px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+}
+
+.loginForm form input {
+    width: 328px;
+    height: 20px;
+    padding: 15px 16px;
+    font-size: 17px;
+    margin: 6px 0;
+    border: 1px solid lightgray;
+    outline: none;
+    border-radius: 6px;
+}
+
+.passwordContainer {
+    position: relative;
+}
+
+.passwordToggle {
+    position: absolute;
+    top: 55%;
+    right: 10px;
+    color: gray;
+    transform: translateY(-50%);
     cursor: pointer;
+}
+
+.loginForm form #submitBtn {
+    width: 362px;
+    height: 48px;
+    padding: 0 16px;
+    font-size: 23px;
+    font-weight: 600;
+    margin-top: 6px;
+    border: 1px solid lightgray;
+    color: #fff;
+    background-color: #1877f2;
+    border-radius: 6px;
+}
+
+.loginForm form #forgetBtn {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: 400;
+    color: #1877f2;
+    background-color: #fff;
+    margin-top: 15px;
+    width: max-content;
+}
+
+.loginForm form #line {
+    border: none;
+    border-top: 1px solid lightgray;
+    width: 100%;
+    margin: 20px 16px;
+}
+
+.loginForm form #newAccBtn {
+    height: 48px;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    font-weight: 700;
+    padding: 0 16px;
+    color: #fff;
+    background-color: #42b72a;
+}
+
+.loginForm button:hover{
+    cursor: pointer;
+}
+
+/* Login with Fb */
+.loginFB {
+    display: flex;
+    justify-content: center;
+    margin-top: 28px;
+}
+
+.loginFB button {
+    border: none;
+    outline: none;
+    color: #000;
+    background-color: inherit;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.loginFB p {
+    background-color: inherit;
+    font-size: 14px;
+    margin-left: 3px;
+}
+
+/* Create New Account */
+.newAccountModal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.newAccountModal #line{
+    margin: 12px 0 4px 0;
+}
+
+/* Intro Div */
+.newAccountIntro{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.newAccountIntro button{
+    position: absolute;
+    top: 10px;
+    right: 0;
+}
+
+/* Form Div */
+.newAccountForm form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.newAccountForm form input{
+    font-size: 15px;
+    padding: 10px 8px;
+    width: 380px;
+    height: 16px;
+    margin: 8px 0;
+    border: 1px solid lightgray;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    outline: none;
+}
+
+.newAccountForm form #terms{
+    font-size: 10px;
+    width: 395px;
+    padding: 8x 0;
+}
+
+.newAccountForm form button{
+    height: 36px;
+    width: 194px;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    font-weight: 700;
+    padding: 0 16px;
+    margin: 12px 0;
+    color: #fff;
+    background-color: #42b72a;
+}
+
+.newAccountForm form .namesContainer{
+    display: flex;
+}
+
+.newAccountForm form .namesContainer input{
+    font-size: 15px;
+    padding: 10px;
+    width: 171px;
+    height: 16px;
+}
+
+.newAccountForm form .namesContainer input:first-child{
+    margin-right: 6px;
+}
+
+.newAccountForm form .namesContainer input:last-child{
+    margin-left: 6px;
 }

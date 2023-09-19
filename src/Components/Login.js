@@ -1,17 +1,30 @@
 import "../CSS/Login.css";
 import React, { useEffect, useState } from 'react';
-import { auth, db, provider } from './Firebase';
+import { auth, db, provider, storage } from './Firebase';
 import { useStateValue } from './StateProvider'
 import { useNavigate } from 'react-router-dom';
 import Loading from "./Loading";
-import fblogo from '../Imgs/fblogo.png';
+import Modal from 'react-modal';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 function Login() {
+    Modal.setAppElement('#root');
+
     const [{ }, dispatch] = useStateValue();
     const [emailSignIn, setEmailSignIn] = useState('');
     const [passwordSignIn, setPasswordSignIn] = useState('');
+    const [username, setUsername] = useState('');
+    const [profilePicture, setProfilePicture] = useState(null);
+    const [coverPicture, setCoverPicture] = useState(null);
+    const [emailSignUp, setEmailSignUp] = useState('');
+    const [passwordSignUp, setPasswordSignUp] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const isUserLoggedOut = sessionStorage.getItem('userLoggedOut');
+    const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+    const [showPassword, setShowPassword] = useState(false); // State to track password visibility
+    const [isProcessing, setIsProcessing] = useState(false);
+
     const navigate = useNavigate();
 
     if (isUserLoggedOut === 'true') {
@@ -19,6 +32,8 @@ function Login() {
     }
 
     const signInWithFacebook = () => {
+        setIsProcessing(true); // Start loading
+
         auth.signInWithPopup(provider).then((result) => {
             const userCredential = result;
             const user = userCredential.user;
@@ -59,24 +74,29 @@ function Login() {
                 } else {
                     console.error("Authentication error:", error);
                 }
+            })
+            .finally(() => {
+                setIsProcessing(false); // Stop loading
             });
     }
 
     const signInWithEmailAndPassword = async () => {
+        setIsProcessing(true); // Start loading
+
         try {
             const userCredential = await auth.signInWithEmailAndPassword(
                 emailSignIn,
                 passwordSignIn
             );
-    
+
             const user = userCredential.user;
             const uid = user.uid;
-    
+
             // Fetch user data from Firestore
             const userDoc = await db.collection('Users').doc(uid).get();
             if (userDoc.exists) {
                 const userData = userDoc.data();
-                
+
                 // Update the user's profile information
                 const updatedUserData = {
                     uid: uid,
@@ -85,23 +105,25 @@ function Login() {
                     photoURL: userData.photoURL,
                     coverphotoUrl: userData.coverphotoUrl
                 };
-                
+
                 sessionStorage.setItem('userData', JSON.stringify(updatedUserData));
-    
+
                 dispatch({
                     type: "SET_USER",
                     user: updatedUserData
                 });
-                
+
                 navigate('/home');
             } else {
                 console.error('User data not found in Firestore');
             }
         } catch (error) {
             console.error('Sign-In Error:', error.message);
+        } finally {
+            setIsProcessing(false); // Stop loading
         }
     };
-    
+
     useEffect(() => {
         const storedUserData = sessionStorage.getItem('userData');
         if (storedUserData) {
@@ -115,40 +137,225 @@ function Login() {
         setIsLoading(false);
     }, []);
 
+    const handleSignup = async (e) => {
+
+        e.preventDefault();
+        setIsProcessing(true); // Start loading
+
+
+        try {
+            const userCredential = await auth.createUserWithEmailAndPassword(
+                emailSignUp,
+                passwordSignUp
+            );
+
+            const user = userCredential.user;
+            const uid = user.uid;
+
+            let photoURL = null;
+            if (profilePicture) {
+                const storageRef = storage.ref(`Images/Users/ProfileImage/${userCredential.user.uid}/${profilePicture.name}`);
+                await storageRef.put(profilePicture);
+                const downloadURL = await storageRef.getDownloadURL();
+                photoURL = downloadURL;
+            }
+
+            let coverphotoUrl = null;
+            if (coverPicture) {
+                const storageRef = storage.ref(`Images/Users/CoverImage/${userCredential.user.uid}/${coverPicture.name}`);
+                await storageRef.put(coverPicture);
+                const downloadURL = await storageRef.getDownloadURL();
+                coverphotoUrl = downloadURL;
+            }
+
+            await userCredential.user.updateProfile({
+                displayName: username,
+                photoURL: photoURL,
+            });
+
+            db.collection("Users").doc(uid).set({
+                uid: user.uid,
+                email: user.email,
+                username: user.displayName,
+                photoURL: user.photoURL,
+                coverphotoUrl: coverphotoUrl
+            });
+
+            const userData = {
+                uid: uid,
+                email: emailSignUp,
+                displayName: username,
+                photoURL: photoURL,
+                coverphotoUrl: coverphotoUrl
+            };
+            sessionStorage.setItem('userData', JSON.stringify(userData));
+
+            dispatch({
+                type: "SET_USER",
+                user: userData,
+            });
+
+            navigate('/home');
+        }
+
+        catch (error) {
+            console.error('Signup Error:', error.message);
+        }
+        finally {
+            setIsProcessing(false); // Stop loading
+        }
+    };
+
+    const handleProfilePictureChange = (e) => {
+        if (e.target.files[0]) {
+            setProfilePicture(e.target.files[0]);
+        }
+    };
+
+    const handleCoverPictureChange = (e) => {
+        if (e.target.files[0]) {
+            setCoverPicture(e.target.files[0]);
+        }
+    };
+
+    const openSignupModal = () => {
+        setIsSignupModalOpen(true);
+    };
+
+    const closeSignupModal = () => {
+        setIsSignupModalOpen(false);
+    };
+
+    // Function to toggle password visibility
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    };
+
     // Render a loading indicator while authentication state is being checked
     if (isLoading) {
         return <Loading />;
     }
 
     return (
-        <div className='login_wrapper'>
-            <div className="login">
-                <img src={fblogo} alt="" />
-                <h2>Sign in with Facebook</h2>
-                <button onClick={signInWithFacebook}>Login with Facebook</button>
+        <div className='login'>
+            <div className="loginIntro">
+                <h1>facebook</h1>
+                <p>Facebook helps you connect and share with the people in your life.</p>
             </div>
 
-            <h2>Log In</h2>
-            <form onSubmit={(e) => {
-                e.preventDefault();
-                signInWithEmailAndPassword();
-            }}>
-                <label>Email:</label>
-                <input
-                    type="email"
-                    value={emailSignIn}
-                    onChange={(e) => setEmailSignIn(e.target.value)}
-                    required
-                />
-                <label>Password:</label>
-                <input
-                    type="password"
-                    value={passwordSignIn}
-                    onChange={(e) => setPasswordSignIn(e.target.value)}
-                    required
-                />
-                <button type="submit">Log In</button>
-            </form>
+            <div className="loginForm">
+                <form onSubmit={(e) => {
+                    e.preventDefault();
+                    signInWithEmailAndPassword();
+                }}>
+                    <input
+                        type="email"
+                        value={emailSignIn}
+                        placeholder="Email address"
+                        onChange={(e) => setEmailSignIn(e.target.value)}
+                        required
+                    />
+                    <div className="passwordContainer">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            value={passwordSignIn}
+                            placeholder="Password"
+                            onChange={(e) => setPasswordSignIn(e.target.value)}
+                            required
+                        />
+                        <span className="passwordToggle" onClick={togglePasswordVisibility}>
+                            {showPassword ? (
+                                <VisibilityIcon />
+                            ) : (
+                                <VisibilityOffIcon />
+                            )}
+                        </span>
+                    </div>
+                    <button id="submitBtn" type="submit">
+                        {isProcessing ? 'Logging in...' : 'Log in'}
+                    </button>
+                    <button id="forgetBtn" type="button">Forgotten password?</button>
+                    <hr id="line" />
+                    <button id="newAccBtn" type="button" onClick={openSignupModal}>Create new account</button>
+                </form>
+
+                <div className="loginFB">
+                    <button onClick={signInWithFacebook}>Log in</button>
+                    <p>with existing FB account</p>
+                </div>
+            </div>
+
+            <Modal className="newAccountModal" isOpen={isSignupModalOpen} onRequestClose={closeSignupModal}>
+                <div className="newAccountIntro">
+                    <h1>Sign Up</h1>
+                    <p>It's quick and easy.</p>
+                    <button onClick={closeSignupModal}>Close</button>
+                </div>
+
+                <hr id="line" />
+
+                <div className="newAccountForm">
+                    <form onSubmit={handleSignup}>
+                        <div className="namesContainer">
+                            <input
+                                type="text"
+                                value={username}
+                                placeholder="First name"
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                            {/* <input
+                                type="text"
+                                value={username}
+                                placeholder="Surname"
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            /> */}
+                        </div>
+                        <input
+                            type="email"
+                            value={emailSignUp}
+                            placeholder="Email address"
+                            onChange={(e) => setEmailSignUp(e.target.value)}
+                            required
+                        />
+                        <div className="passwordContainer">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                value={passwordSignUp}
+                                placeholder="Password"
+                                onChange={(e) => setPasswordSignUp(e.target.value)}
+                                required
+                            />
+                            <span className="passwordToggle" onClick={togglePasswordVisibility}>
+                                {showPassword ? (
+                                    <VisibilityIcon />
+                                ) : (
+                                    <VisibilityOffIcon />
+                                )}
+                            </span>
+                        </div>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            placeholder="Display photo"
+                            onChange={handleProfilePictureChange}
+                            required
+                        />
+                        <input
+                            type="file"
+                            accept="image/*"
+                            placeholder="Cover photo"
+                            onChange={handleCoverPictureChange}
+                            required
+                        />
+                        <p id="terms">By clicking Sign Up, you agree to our Terms, Privacy Policy and Cookies Policy. You may receive SMS notifications from us and can opt out at any time.</p>
+                        <button type="submit">
+                            {isProcessing ? 'Signing up...' : 'Create new account'}
+                        </button>
+                    </form>
+                </div>
+            </Modal>
         </div>
     )
 }
