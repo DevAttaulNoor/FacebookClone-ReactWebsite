@@ -1,7 +1,9 @@
 import '../CSS/Header.css'
 import React, { useState, useRef, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import { useStateValue } from './StateProvider';
+import { auth } from './Firebase';
 import fblogo from '../Imgs/fblogo.png';
 import SearchIcon from '@mui/icons-material/Search';
 import HomeIcon from '@mui/icons-material/Home';
@@ -13,9 +15,6 @@ import AppsIcon from '@mui/icons-material/Apps';
 import ForumIcon from '@mui/icons-material/Forum';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import IconButton from '@mui/material/IconButton';
-import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-import { auth } from './Firebase';
 
 function Header() {
     const [{ user }, dispatch] = useStateValue();
@@ -72,16 +71,16 @@ function Header() {
             </div>
 
             <div className="header_middle">
-                <div className={`header_option ${location.pathname === '/home' ? 'header_option_active' : ''}`}>
-                    <Link to="/home">
+                <Link to="/home">
+                    <div className={`header_option ${location.pathname === '/home' ? 'header_option_active' : ''}`}>
                         <HomeIcon />
-                    </Link>
-                </div>
-                <div className={`header_option ${location.pathname === '/friendpage' ? 'header_option_active' : ''}`}>
-                    <Link to="/friendpage">
+                    </div>
+                </Link>
+                <Link to="/friendpage">
+                    <div className={`header_option ${location.pathname === '/friendpage' ? 'header_option_active' : ''}`}>
                         <PeopleIcon />
-                    </Link>
-                </div>
+                    </div>
+                </Link>
                 <div className='header_option'>
                     <SmartDisplayIcon />
                 </div>

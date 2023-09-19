@@ -23,7 +23,8 @@ function Login() {
     const isUserLoggedOut = sessionStorage.getItem('userLoggedOut');
     const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
     const [showPassword, setShowPassword] = useState(false); // State to track password visibility
-    const [isProcessing, setIsProcessing] = useState(false);
+    const [isLoginProcessing, setIsLoginProcessing] = useState(false);
+    const [isSignupProcessing, setIsSignupProcessing] = useState(false);
 
     const navigate = useNavigate();
 
@@ -32,8 +33,6 @@ function Login() {
     }
 
     const signInWithFacebook = () => {
-        setIsProcessing(true); // Start loading
-
         auth.signInWithPopup(provider).then((result) => {
             const userCredential = result;
             const user = userCredential.user;
@@ -74,14 +73,11 @@ function Login() {
                 } else {
                     console.error("Authentication error:", error);
                 }
-            })
-            .finally(() => {
-                setIsProcessing(false); // Stop loading
             });
     }
 
     const signInWithEmailAndPassword = async () => {
-        setIsProcessing(true); // Start loading
+        setIsLoginProcessing(true); // Start loading
 
         try {
             const userCredential = await auth.signInWithEmailAndPassword(
@@ -120,7 +116,7 @@ function Login() {
         } catch (error) {
             console.error('Sign-In Error:', error.message);
         } finally {
-            setIsProcessing(false); // Stop loading
+            setIsLoginProcessing(false); // Stop loading
         }
     };
 
@@ -138,10 +134,8 @@ function Login() {
     }, []);
 
     const handleSignup = async (e) => {
-
         e.preventDefault();
-        setIsProcessing(true); // Start loading
-
+        setIsSignupProcessing(true); // Start loading
 
         try {
             const userCredential = await auth.createUserWithEmailAndPassword(
@@ -202,7 +196,7 @@ function Login() {
             console.error('Signup Error:', error.message);
         }
         finally {
-            setIsProcessing(false); // Stop loading
+            setIsSignupProcessing(false); // Stop loading
         }
     };
 
@@ -272,8 +266,9 @@ function Login() {
                         </span>
                     </div>
                     <button id="submitBtn" type="submit">
-                        {isProcessing ? 'Logging in...' : 'Log in'}
+                        {isLoginProcessing ? 'Logging in...' : 'Log in'}
                     </button>
+
                     <button id="forgetBtn" type="button">Forgotten password?</button>
                     <hr id="line" />
                     <button id="newAccBtn" type="button" onClick={openSignupModal}>Create new account</button>
@@ -351,7 +346,7 @@ function Login() {
                         />
                         <p id="terms">By clicking Sign Up, you agree to our Terms, Privacy Policy and Cookies Policy. You may receive SMS notifications from us and can opt out at any time.</p>
                         <button type="submit">
-                            {isProcessing ? 'Signing up...' : 'Create new account'}
+                            {isSignupProcessing ? 'Signing up...' : 'Create new account'}
                         </button>
                     </form>
                 </div>
