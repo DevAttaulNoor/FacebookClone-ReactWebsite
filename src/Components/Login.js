@@ -25,7 +25,8 @@ function Login() {
     const [showPassword, setShowPassword] = useState(false); // State to track password visibility
     const [isLoginProcessing, setIsLoginProcessing] = useState(false);
     const [isSignupProcessing, setIsSignupProcessing] = useState(false);
-
+    const [loginerror, setLoginError] = useState(null);
+    const [signuperror, setSignupError] = useState(null);
     const navigate = useNavigate();
 
     if (isUserLoggedOut === 'true') {
@@ -77,7 +78,8 @@ function Login() {
     }
 
     const signInWithEmailAndPassword = async () => {
-        setIsLoginProcessing(true); // Start loading
+        setIsLoginProcessing(true);
+        setLoginError(null);
 
         try {
             const userCredential = await auth.signInWithEmailAndPassword(
@@ -110,13 +112,20 @@ function Login() {
                 });
 
                 navigate('/home');
-            } else {
+            }
+
+            else {
                 console.error('User data not found in Firestore');
             }
-        } catch (error) {
+        }
+
+        catch (error) {
             console.error('Sign-In Error:', error.message);
-        } finally {
-            setIsLoginProcessing(false); // Stop loading
+            setLoginError("Log in error. Try again");
+        }
+
+        finally {
+            setIsLoginProcessing(false);
         }
     };
 
@@ -135,7 +144,8 @@ function Login() {
 
     const handleSignup = async (e) => {
         e.preventDefault();
-        setIsSignupProcessing(true); // Start loading
+        setIsSignupProcessing(true);
+        setSignupError(null);
 
         try {
             const userCredential = await auth.createUserWithEmailAndPassword(
@@ -194,9 +204,11 @@ function Login() {
 
         catch (error) {
             console.error('Signup Error:', error.message);
+            setSignupError("Sign up error. Try again");
         }
+
         finally {
-            setIsSignupProcessing(false); // Stop loading
+            setIsSignupProcessing(false);
         }
     };
 
@@ -218,14 +230,22 @@ function Login() {
 
     const closeSignupModal = () => {
         setIsSignupModalOpen(false);
+        resetInputValues();
     };
 
-    // Function to toggle password visibility
     const togglePasswordVisibility = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     };
 
-    // Render a loading indicator while authentication state is being checked
+    const resetInputValues = () => {
+        setEmailSignUp('');
+        setPasswordSignUp('');
+        setUsername('');
+        setProfilePicture(null);
+        setCoverPicture(null);
+        setSignupError(null);
+    };
+
     if (isLoading) {
         return <Loading />;
     }
@@ -265,9 +285,10 @@ function Login() {
                             )}
                         </span>
                     </div>
-                    <button id="submitBtn" type="submit">
-                        {isLoginProcessing ? 'Logging in...' : 'Log in'}
+                    <button type="submit" id="submitBtn">
+                        {isLoginProcessing ? <div class="loadingSpin"></div> : 'Log in'}
                     </button>
+                    {loginerror && <p className="errorNote">{loginerror}</p>}
 
                     <button id="forgetBtn" type="button">Forgotten password?</button>
                     <hr id="line" />
@@ -346,8 +367,9 @@ function Login() {
                         />
                         <p id="terms">By clicking Sign Up, you agree to our Terms, Privacy Policy and Cookies Policy. You may receive SMS notifications from us and can opt out at any time.</p>
                         <button type="submit">
-                            {isSignupProcessing ? 'Signing up...' : 'Create new account'}
+                            {isSignupProcessing ? <div id="signupLoading" class="loadingSpin"></div> : 'Create new account'}
                         </button>
+                        {signuperror && <p id="signupError" className="errorNote">{signuperror}</p>}
                     </form>
                 </div>
             </Modal>
