@@ -1,14 +1,18 @@
+/* Friends */
 .friends{
-    height: 100vh;
-    width: 100%;
     display: flex;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 90vh;
+    width: 100%;
 }
 
+/* Friends LeftBar */
 .friendsleftbar{
     display: flex;
     flex-direction: column;
     padding: 10px;
-    width: 380px;
+    width: 40%;
     background-color: #fff;
     position: sticky;
     top: 0;
@@ -19,12 +23,22 @@
     color: initial;
 }
 
+/* Friends Main */
 .friendsMain{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     width: 100%;
-    padding: 20px;
+    padding: 20px 40px;
 }
 
-.friendsMain h2{
-    padding: 10px 0;
+.friendsMain .friendsMain_top h2{
+    padding: 10px 0 20px;
     font-size: 24px;
+}
+
+.friendsMain .friendsMain_bottom {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
 }
