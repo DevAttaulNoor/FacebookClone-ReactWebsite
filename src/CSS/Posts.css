@@ -1,3 +1,4 @@
+/** Post Section */
 .post {
     background-color: #fff;
     border-radius: 10px;
@@ -7,17 +8,41 @@
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
 }
 
+/** Post Top Section */
 .post_top {
     display: flex;
     justify-content: space-between;
     position: relative;
 }
 
+/* Post Top Left Section */
 .post_topleft {
     display: flex;
     align-items: center;
 }
 
+.postinfo {
+    margin-left: 10px;
+}
+
+.postinfo h4 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.postinfo p {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.postinfo p svg {
+    font-size: 12px;
+    margin-left: 5px;
+    margin-top: 3px;
+}
+
+/* Post Top Right Section */
 .post_topright .MuiSvgIcon-root {
     border-radius: 50%;
     padding: 2px;
@@ -69,37 +94,17 @@
     cursor: pointer;
 }
 
-.postinfo {
-    margin-left: 10px;
-}
-
-.postinfo h4 {
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.postinfo p {
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-}
-
-.postinfo p svg {
-    font-size: 12px;
-    margin-left: 5px;
-    margin-top: 3px;
-}
-
-.post_middle p {
+/** Post Middle Section */
+.post_middle #post_middleMessage {
     margin: 15px 0;
     letter-spacing: 0.2px;
 }
 
-.post_middle img {
+.post_middle #post_middleImg {
     width: 100%;
 }
 
-.modal {
+.post_editingModal {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -114,13 +119,13 @@
     flex-direction: column;
 }
 
-.modal h2 {
+.post_editingModal h2 {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.modal input {
+.post_editingModal input {
     padding: 10px 5px;
     font-size: 15px;
     font-weight: 600;
@@ -159,18 +164,9 @@
     display: none;
 }
 
-/* .file-name {
-    font-size: 14px;
-    color: #333;
-} */
-
-/* .edited-image-container{
-    border: 1px solid gray;
-} */
-
 .edited-image {
-    width: 348px; /* Your desired width */
-    height: 220px; /* Your desired height */
+    width: 348px;
+    height: 220px;
     object-fit: contain;
     border: 1px solid gray;
 }
@@ -182,7 +178,14 @@
     color: red;
 }
 
-.modal button {
+.post_editingModal .btns {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 10px 0;
+}
+
+.btns button {
     padding: 5px;
     font-size: 15px;
     font-weight: 600;
@@ -193,18 +196,31 @@
     background-color: #fff;
 }
 
-.modal button:hover {
+.btns button:hover {
     background-color: whitesmoke;
     cursor: pointer;
 }
 
-.modalBtns {
+/* Post Middle Reactions */
+.post_ReactInfo{
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    margin: 10px 0;
+    justify-content: space-between;
+    padding: 6px 0;
 }
 
+.post_ReactInfo p{
+    font-size: 14px;
+    font-weight: 450;
+    color: gray;
+}
+
+.post_ReactInfo p:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/** Post Bottom Section */
 .post_bottom {
     display: flex;
     justify-content: space-around;
@@ -236,51 +252,81 @@
     color: grey;
 }
 
-.post_shareModal {
+/** Post Bottom Modals for Like, Comment and Share */
+/* Modal of Like, Comment and Share */
+.Modal{
     position: absolute;
-    inset: 200px 550px 200px 550px;
+    inset: 150px 450px 150px 450px;
     border: 1px solid rgb(204, 204, 204);
     background: #fff;
-    border-radius: 4px;
-    padding: 20px;
+    border-radius: 8px;
+    padding: 10px 20px;
     outline: none;
-    overflow: auto;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
-.post_likeduserModal{
+.modalTop{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-direction: column;
+}
+
+.modalTop .MuiSvgIcon-root{
     position: absolute;
-    inset: 200px 550px 200px 550px;
-    border: 1px solid rgb(204, 204, 204);
-    background: #fff;
-    border-radius: 4px;
-    padding: 20px;
-    outline: none;
-    overflow: auto;
+    top: -3px;
+    right: -9px;
+    padding: 5px;
 }
 
-.post_commentModal{
-    position: absolute;
-    inset: 200px 450px 200px 450px;
-    border: 1px solid rgb(204, 204, 204);
-    background: #fff;
-    border-radius: 4px;
-    padding: 20px;
-    outline: none;
-    overflow: auto;
-}
-
-.post_commentModal input{
-    padding: 8px 5px;
-    margin: 10px 0;
-    font-size: 14px;
-    font-weight: 500;
-    border: 1px solid transparent;
-    border-radius: 12px;
-    outline: 0;
+.modalTop .MuiSvgIcon-root:hover{
+    cursor: pointer;
     background-color: whitesmoke;
+    border-radius: 50%;
 }
 
-.post_comment{
+.modalTop p{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.modalTop .line {
+    border: none;
+    border-top: 1px solid lightgray;
+    width: 100%;
+    margin: 5px 0 10px;
+}
+
+.modalMiddle {
+    height: 255px;
+    overflow-y: auto;
+}
+
+.modalBottom{
+    position: fixed;
+}
+
+/*  Likes Modal Section */
+.post_likes{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.post_likes:last-child{
+    margin-bottom: 0px;
+}
+
+.post_likes span{
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 8px;
+}
+
+/* Comments Modal Section */
+.post_comments{
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -288,11 +334,17 @@
     width: fit-content;
 }
 
-.post_comment:last-child{
+.post_comments:last-child{
     margin-bottom: 0px;
 }
 
 .post_commentInfo{
+    display: flex;
+    flex-direction: column;
+}
+
+/* Inner Part */
+.post_commentInner{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -302,11 +354,78 @@
     padding: 6px 14px;
 }
 
-.post_commentInfo_User{
+.post_commentInner .post_commentUser{
+    font-size: 16px;
     font-weight: 600;
 }
 
-.post_commentInfo_Comment{
+.post_commentInner .post_commentComment{
     font-weight: 400;
-    font-size: 17px;
+    font-size: 15px;
+    max-width: 410px;
+    word-wrap: break-word;
+}
+
+/* Outer Part */
+.post_commentOuter{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 3px 0 0 22px;
+}
+
+.post_commentOuter .post_commentTimestamp{
+    font-weight: 500;
+    font-size: 12px;
+    margin-left: 15px;
+    color: #65676B;
+}
+
+.post_commentOuter button{
+    font-size: 12px;
+    font-weight: 500;
+    outline: none;
+    border: none;
+    background-color: initial;
+    color: #65676B;
+}
+
+.post_commentOuter .post_commentTimestamp:hover,
+.post_commentOuter button:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.modalBottom .post_commentInput{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.modalBottom .post_commentInput input{
+    margin: 10px 0;
+    font-size: 14px;
+    font-weight: 450;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    outline: 0;
+    width: 425px;
+    margin-left: 8px;
+    background-color: whitesmoke;
+    padding: 12px 24px 12px 14px;
+}
+
+.modalBottom .post_commentInput .MuiSvgIcon-root{
+    position: absolute;
+    right: 4px;
+    border: 1px solid transparent;
+    outline: 0;
+    background-color: whitesmoke;
+    color: gray;
+    width: 16px;
+    height: 16px;
+}
+
+.modalBottom .post_commentInput .MuiSvgIcon-root:hover{
+    cursor: pointer;
 }

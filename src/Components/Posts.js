@@ -9,6 +9,8 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
+import CloseIcon from '@mui/icons-material/Close';
+import SendIcon from '@mui/icons-material/Send';
 
 function Posts({ id, photoURL, image, username, timestamp, message }) {
     Modal.setAppElement('#root');
@@ -19,17 +21,16 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     const [editedImage, setEditedImage] = useState(image);
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [isDropdownClicked, setIsDropdownClicked] = useState(false);
-    const dropdownRef = useRef(null);
-    const [liked, setLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(0);
-    const [likedUsers, setLikedUsers] = useState([]); // To store the liked users' information
-    const [isLikedUsersModalOpen, setIsLikedUsersModalOpen] = useState(false); // To control the modal visibility
+    const [likedUsers, setLikedUsers] = useState([]);
+    const [isLikedUsersModalOpen, setIsLikedUsersModalOpen] = useState(false);
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
     const [isCommenting, setIsCommenting] = useState(false);
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
     const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
     const [imageFile, setImageFile] = useState(null);
+    const dropdownRef = useRef(null);
 
     const handleEdit = () => {
         setIsEditing(true);
@@ -83,7 +84,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
 
     const handleDelete = async () => {
         const postRef = db.collection("Posts").doc(id);
-    
+
         // Delete the post document
         try {
             await postRef.delete();
@@ -91,7 +92,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         } catch (error) {
             console.error("Error removing post document: ", error);
         }
-    
+
         // Delete the "likes" subcollection
         const likesRef = postRef.collection("likes");
         const deleteLikesPromise = likesRef.get()
@@ -105,7 +106,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
             .catch((error) => {
                 console.error("Error removing likes subcollection: ", error);
             });
-    
+
         // Delete all comments in the collection
         const commentsRef = postRef.collection("comments");
         const deleteCommentsPromise = commentsRef.get()
@@ -119,7 +120,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
             .catch((error) => {
                 console.error("Error removing comments: ", error);
             });
-    
+
         // Use Promise.all to wait for all delete operations to complete
         try {
             await Promise.all([deleteLikesPromise, deleteCommentsPromise]);
@@ -128,7 +129,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
             console.error("Error deleting likes subcollection and comments: ", error);
         }
     };
-    
+
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
 
@@ -184,7 +185,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         // Check if the user has already liked the post
         const likedUsersRef = db.collection("Posts").doc(id).collection("likes");
         const likedUserDoc = await likedUsersRef.doc(user.uid).get();
-    
+
         if (likedUserDoc.exists) {
             // User has previously liked the post, so we should unlike it
             // Update the likes count in Firestore and remove the user's like information
@@ -194,7 +195,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                 .catch((error) => {
                     console.error("Error unliking post: ", error);
                 });
-    
+
             likedUserDoc.ref
                 .delete()
                 .catch((error) => {
@@ -209,7 +210,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                 .catch((error) => {
                     console.error("Error liking post: ", error);
                 });
-    
+
             likedUsersRef
                 .doc(user.uid)
                 .set({
@@ -223,7 +224,6 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                 });
         }
     };
-    
 
     const getLikedUsers = async () => {
         const likedUsersRef = db.collection("Posts").doc(id).collection("likes");
@@ -236,6 +236,24 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
 
         setLikedUsers(likedUsersData);
     };
+
+    // const getLikedUsers = async () => {
+    //     const likedUsersRef = db.collection("Posts").doc(id).collection("likes");
+    //     const querySnapshot = await likedUsersRef.get();
+
+    //     const likedUsersData = [];
+    //     const likedUserNames = [];
+
+    //     querySnapshot.forEach((doc) => {
+    //         const userData = doc.data();
+    //         likedUsersData.push(userData);
+    //         likedUserNames.push(userData.username);
+    //     });
+
+    //     setLikedUsers(likedUsersData);
+    //     return { likedUserNames };
+    // };
+
 
     useEffect(() => {
         const postRef = db.collection("Posts").doc(id);
@@ -253,9 +271,15 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     }, [id]);
 
     const handleLikedUsersClick = () => {
-        getLikedUsers(); // Retrieve the liked users' information
-        setIsLikedUsersModalOpen(true); // Open the modal
+        getLikedUsers();
+        setIsLikedUsersModalOpen(true);
     };
+
+    // const handleLikedUsersClick = async () => {
+    //     const names = await getLikedUsersNames();
+    //     setLikedUsersNames(names);
+    //     setIsLikedUsersModalOpen(true); // Open the modal
+    // };
 
     const openCommentInput = () => {
         setIsCommenting(true);
@@ -287,7 +311,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         try {
             await db.collection("Posts").doc(id).collection("comments").add(newComment);
             setComment('');
-            setIsCommenting(false);
+            // setIsCommenting(false);
         } catch (error) {
             console.error("Error posting comment:", error);
         }
@@ -332,23 +356,23 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         setIsShareDialogOpen(false);
     };
 
-    const timeAgo = (timestamp) => {
+    const timeAgowithInitials = (timestamp) => {
         if (!timestamp || !timestamp.toDate) {
-            return "0 second ago"
+            return "0s"
         }
         const currentDate = new Date();
         const postDate = timestamp.toDate();
         const seconds = Math.floor((currentDate - postDate) / 1000);
         const secondsDifference = Math.max(seconds, 1);
         const periods = {
-            decade: 315360000,
-            year: 31536000,
-            month: 2628000,
-            week: 604800,
-            day: 86400,
-            hour: 3600,
-            minute: 60,
-            second: 1,
+            D: 315360000,
+            Y: 31536000,
+            M: 2628000,
+            w: 604800,
+            d: 86400,
+            h: 3600,
+            m: 60,
+            s: 1,
         };
 
         let elapsed = 0;
@@ -364,11 +388,12 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                 break;
             }
         }
-        return `${granularity} ${unit}${granularity > 1 ? 's' : ''} ago`;
+        return `${granularity}${unit}${granularity > 1 ? '' : ''}`;
     };
 
     return (
         <div className='post'>
+            {/* Post Top Section */}
             <div className="post_top">
                 <div className="post_topleft">
                     <Avatar src={photoURL} />
@@ -389,9 +414,10 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                 </div>
             </div>
 
+            {/* Post Middle Section */}
             <div className="post_middle">
                 {isEditing ? (
-                    <Modal className="modal" isOpen={isEditing} onRequestClose={() => setIsEditing(false)}>
+                    <Modal className="post_editingModal" isOpen={isEditing} onRequestClose={() => setIsEditing(false)}>
                         <h2>Edit Post</h2>
                         <input type="text" value={editedMessage} onChange={(e) => setEditedMessage(e.target.value)} />
 
@@ -413,104 +439,98 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                             )}
                         </div>
 
-                        <div className="modalBtns">
+                        <div className="btns">
                             <button onClick={handleSave}>Save</button>
                             <button onClick={() => setIsEditing(false)}>Cancel</button>
                         </div>
                     </Modal>
                 ) : (
                     <div>
-                        <p style={{ fontSize: image ? '15px' : '30px' }}>{editedMessage}</p>
-                        {image && <img src={editedImage} />}
+                        <p id="post_middleMessage" style={{ fontSize: image ? '15px' : '30px' }}>{editedMessage}</p>
+                        {image && <img id="post_middleImg" src={editedImage} />}
                     </div>
                 )}
 
                 <div className="post_ReactInfo">
-                    {likesCount >= 1 && (
-                        <div>
-                            <p>
-                                <button onClick={handleLikedUsersClick}>
-                                    {likesCount} {likesCount === 1 ? 'Like' : 'Likes'}
-                                </button>
-                            </p>
-                        </div>
-                    )}
-                    {comments.length >= 1 && <p onClick={openCommentModal}>{comments.length} Comments</p>}
+                    {likesCount >= 1 && <p onClick={handleLikedUsersClick}> {likesCount} {likesCount === 1 ? 'Like' : 'Likes'} </p>}
+                    {comments.length >= 1 && <p onClick={openCommentModal}> {comments.length} {comments.length === 1 ? 'comment' : 'comments'} </p>}
+                </div>
+            </div>
 
-                    <Modal
-                        className="post_likeduserModal"
-                        isOpen={isLikedUsersModalOpen}
-                        onRequestClose={() => setIsLikedUsersModalOpen(false)}
-                        contentLabel="Liked Users"
-                    >
-                        <h2>Liked Users</h2>
-                        <div>
+            {/* Post Bottom Section */}
+            <div className="post_bottom">
+                {/* Modals for Like, Comment and Share */}
+                <div className="post_bottomModals">
+                    <Modal className="Modal" id="post_likeduserModal" isOpen={isLikedUsersModalOpen} onRequestClose={() => setIsLikedUsersModalOpen(false)}>
+                        <div className="modalTop">
+                            <CloseIcon onClick={() => setIsLikedUsersModalOpen(false)} />
+                            <p>Reactions</p>
+                            <hr className="line" />
+                        </div>
+
+                        <div className="modalMiddle">
                             {likedUsers.map((user) => (
-                                <div key={user.uid}>
+                                <div key={user.uid} className="post_likes">
                                     <Avatar src={user.photoUrl} />
                                     <span>{user.username}</span>
                                 </div>
                             ))}
                         </div>
-                        <button onClick={() => setIsLikedUsersModalOpen(false)}>Close</button>
                     </Modal>
 
+                    <Modal className="Modal" id="post_commentModal" isOpen={isCommentModalOpen} onRequestClose={closeCommentModal}>
+                        <div className="modalTop">
+                            <CloseIcon onClick={closeCommentModal} />
+                            <p>Comments</p>
+                            <hr className="line" />
+                        </div>
 
-                    <Modal
-                        className="post_commentModal"
-                        isOpen={isCommentModalOpen}
-                        onRequestClose={closeCommentModal}
-                        contentLabel='Comments'
-                    >
-                        <button onClick={closeCommentModal}>Close</button>
-
-                        <h2>Comments</h2>
-                        <div className='post_comments'>
+                        <div className="modalMiddle">
                             {comments.map((comment) => (
-                                <div key={comment.id} className='post_comment'>
-                                    <Avatar src={comment.photoURL} /> {/* Use comment.photoURL */}
-                                    <div className='post_commentInfo'>
-                                        <p className='post_commentInfo_User'>{comment.displayName}</p> {/* Use comment.displayName */}
-                                        <p className='post_commentInfo_Comment'>{comment.text}</p>
-                                        <p className='post_commentInfo_Timestamp'>
-                                            {timeAgo(comment.timestamp)}
-                                        </p>
-                                        <button onClick={() => deleteComment(comment.id)}>Delete Comment</button>
+                                <div key={comment.id} className='post_comments'>
+                                    <Avatar src={comment.photoURL} />
+                                    <div className="post_commentInfo">
+                                        <div className='post_commentInner'>
+                                            <p className='post_commentUser'>{comment.displayName}</p>
+                                            <p className='post_commentComment'>{comment.text}</p>
+                                        </div>
+                                        <div className='post_commentOuter'>
+                                            <button onClick={() => deleteComment(comment.id)}>Delete</button>
+                                            <p className='post_commentTimestamp'>{timeAgowithInitials(comment.timestamp)}</p>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
-
                         </div>
-                        {isCommenting && (
-                            <div className='post_commentInput'>
-                                <input
-                                    type='text'
-                                    placeholder='Write a comment...'
-                                    value={comment}
-                                    onChange={(e) => setComment(e.target.value)}
-                                />
-                                <button onClick={postComment}>Post</button>
-                            </div>
-                        )}
+
+                        <div className="modalBottom">
+                            {isCommenting && (
+                                <div className='post_commentInput'>
+                                    <Avatar src={user.photoURL} />
+                                    <input
+                                        type='text'
+                                        placeholder='Write a comment...'
+                                        value={comment}
+                                        onChange={(e) => setComment(e.target.value)}
+                                    />
+                                    <SendIcon onClick={postComment}/>
+                                </div>
+                            )}
+                        </div>
                     </Modal>
 
-                    <Modal
-                        className="post_shareModal"
-                        isOpen={isShareDialogOpen}
-                        onRequestClose={closeShareDialog}
-                        contentLabel='Share Post'
-                    >
-                        <h2>Share Post</h2>
-                        <p>Share this post with others:</p>
-                        {/* Add a field to display the post URL here */}
-                        <button onClick={closeShareDialog}>Close</button>
+                    <Modal className="Modal" id="post_shareModal" isOpen={isShareDialogOpen} onRequestClose={closeShareDialog}>
+                        <div className="modalTop">
+                            <CloseIcon onClick={closeShareDialog} />
+                            <p>Shares</p>
+                            <hr className="line" />
+                        </div>
                     </Modal>
                 </div>
-            </div>
 
-            <div className="post_bottom">
+                {/* Btns for Like, Comment and Share */}
                 <div className='post_bottomOption' onClick={handleLike}>
-                    <ThumbUpAltOutlinedIcon style={{ color: liked ? 'blue' : 'gray' }} />
+                    <ThumbUpAltOutlinedIcon />
                     <p>Like</p>
                 </div>
                 <div className='post_bottomOption' onClick={openCommentInput}>
