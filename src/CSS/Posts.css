@@ -247,6 +247,17 @@
     overflow: auto;
 }
 
+.post_likeduserModal{
+    position: absolute;
+    inset: 200px 550px 200px 550px;
+    border: 1px solid rgb(204, 204, 204);
+    background: #fff;
+    border-radius: 4px;
+    padding: 20px;
+    outline: none;
+    overflow: auto;
+}
+
 .post_commentModal{
     position: absolute;
     inset: 200px 450px 200px 450px;

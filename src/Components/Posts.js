@@ -22,6 +22,8 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     const dropdownRef = useRef(null);
     const [liked, setLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(0);
+    const [likedUsers, setLikedUsers] = useState([]); // To store the liked users' information
+    const [isLikedUsersModalOpen, setIsLikedUsersModalOpen] = useState(false); // To control the modal visibility
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
     const [isCommenting, setIsCommenting] = useState(false);
@@ -36,16 +38,16 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     const handleSave = () => {
         if (editedImage !== null && editedImage !== undefined) {
             const uploadTask = storage.ref(`Images/Posts/${user.uid}/${editedImage.name}`).put(editedImage);
-    
+
             uploadTask.then((snapshot) => snapshot.ref.getDownloadURL()).then((url) => {
-                    const updatedData = {
-                        message: editedMessage,
-                        image: url,
-                    };
-    
-                    // Update the Firestore document with the edited data, including the image URL
-                    return db.collection("Posts").doc(id).update(updatedData);
-                })
+                const updatedData = {
+                    message: editedMessage,
+                    image: url,
+                };
+
+                // Update the Firestore document with the edited data, including the image URL
+                return db.collection("Posts").doc(id).update(updatedData);
+            })
                 .then(() => {
                     console.log("Document successfully updated!");
                     setIsEditing(false);
@@ -54,23 +56,23 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                 .catch((error) => {
                     console.error("Error updating document: ", error);
                 });
-        } 
-        
+        }
+
         else {
             // No new image to upload, update the Firestore document with the edited message only
             if (editedMessage !== message) {
                 db.collection("Posts").doc(id).update({
                     message: editedMessage,
                 })
-                .then(() => {
-                    console.log("Document successfully updated!");
-                    setIsEditing(false);
-                    setIsDropdownVisible(false);
-                })
-                .catch((error) => {
-                    console.error("Error updating document: ", error);
-                });
-            } 
+                    .then(() => {
+                        console.log("Document successfully updated!");
+                        setIsEditing(false);
+                        setIsDropdownVisible(false);
+                    })
+                    .catch((error) => {
+                        console.error("Error updating document: ", error);
+                    });
+            }
             else {
                 // No changes were made, so simply close the editing form
                 setIsEditing(false);
@@ -78,11 +80,34 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
             }
         }
     };
-    
-    const handleDelete = () => {
-        const commentsRef = db.collection("Posts").doc(id).collection("comments");
 
+    const handleDelete = async () => {
+        const postRef = db.collection("Posts").doc(id);
+    
+        // Delete the post document
+        try {
+            await postRef.delete();
+            console.log("Post document successfully deleted!");
+        } catch (error) {
+            console.error("Error removing post document: ", error);
+        }
+    
+        // Delete the "likes" subcollection
+        const likesRef = postRef.collection("likes");
+        const deleteLikesPromise = likesRef.get()
+            .then((querySnapshot) => {
+                const batch = db.batch();
+                querySnapshot.forEach((doc) => {
+                    batch.delete(doc.ref);
+                });
+                return batch.commit();
+            })
+            .catch((error) => {
+                console.error("Error removing likes subcollection: ", error);
+            });
+    
         // Delete all comments in the collection
+        const commentsRef = postRef.collection("comments");
         const deleteCommentsPromise = commentsRef.get()
             .then((querySnapshot) => {
                 const batch = db.batch();
@@ -94,26 +119,16 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
             .catch((error) => {
                 console.error("Error removing comments: ", error);
             });
-
-        // Delete the post after comments are deleted
-        const deletePostPromise = db.collection("Posts").doc(id).delete()
-            .then(() => {
-                console.log("Post document successfully deleted!");
-            })
-            .catch((error) => {
-                console.error("Error removing post document: ", error);
-            });
-
-        // Use Promise.all to wait for both delete operations to complete
-        Promise.all([deleteCommentsPromise, deletePostPromise])
-            .then(() => {
-                console.log("Post and comments successfully deleted!");
-            })
-            .catch((error) => {
-                console.error("Error deleting post and comments: ", error);
-            });
+    
+        // Use Promise.all to wait for all delete operations to complete
+        try {
+            await Promise.all([deleteLikesPromise, deleteCommentsPromise]);
+            console.log("Likes subcollection and comments successfully deleted!");
+        } catch (error) {
+            console.error("Error deleting likes subcollection and comments: ", error);
+        }
     };
-
+    
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
 
@@ -136,7 +151,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                         });
                 });
             });
-        } 
+        }
         else {
             // If no file is selected (e.g., user canceled the upload), reset editedImage to null
             setEditedImage(null);
@@ -165,25 +180,82 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         };
     }, []);
 
-    const handleLike = () => {
-        setLiked(!liked);
+    const handleLike = async () => {
+        // Check if the user has already liked the post
+        const likedUsersRef = db.collection("Posts").doc(id).collection("likes");
+        const likedUserDoc = await likedUsersRef.doc(user.uid).get();
+    
+        if (likedUserDoc.exists) {
+            // User has previously liked the post, so we should unlike it
+            // Update the likes count in Firestore and remove the user's like information
+            db.collection("Posts")
+                .doc(id)
+                .update({ likesCount: Math.max(likesCount - 1, 0) })
+                .catch((error) => {
+                    console.error("Error unliking post: ", error);
+                });
+    
+            likedUserDoc.ref
+                .delete()
+                .catch((error) => {
+                    console.error("Error removing like information: ", error);
+                });
+        } else {
+            // User has not liked the post before, so we should like it
+            // Update the likes count in Firestore and add the user's like information
+            db.collection("Posts")
+                .doc(id)
+                .update({ likesCount: likesCount + 1 })
+                .catch((error) => {
+                    console.error("Error liking post: ", error);
+                });
+    
+            likedUsersRef
+                .doc(user.uid)
+                .set({
+                    uid: user.uid,
+                    photoUrl: user.photoURL,
+                    username: user.displayName,
+                    email: user.email,
+                })
+                .catch((error) => {
+                    console.error("Error adding like information: ", error);
+                });
+        }
+    };
+    
 
-        // Update the likes count in Firestore
-        const updatedLikesCount = liked ? likesCount - 1 : likesCount + 1;
-        db.collection("Posts").doc(id).update({ likesCount: updatedLikesCount });
+    const getLikedUsers = async () => {
+        const likedUsersRef = db.collection("Posts").doc(id).collection("likes");
+        const querySnapshot = await likedUsersRef.get();
+
+        const likedUsersData = [];
+        querySnapshot.forEach((doc) => {
+            likedUsersData.push(doc.data());
+        });
+
+        setLikedUsers(likedUsersData);
     };
 
     useEffect(() => {
-        // Retrieve the initial likes count from Firestore
-        const getLikesCount = async () => {
-            const postRef = db.collection("Posts").doc(id);
-            const postDoc = await postRef.get();
-            if (postDoc.exists) {
-                setLikesCount(postDoc.data().likesCount || 0);
+        const postRef = db.collection("Posts").doc(id);
+
+        const unsubscribe = postRef.onSnapshot((doc) => {
+            if (doc.exists) {
+                setLikesCount(doc.data().likesCount || 0);
             }
+        });
+
+        return () => {
+            // Unsubscribe from the snapshot listener when the component unmounts
+            unsubscribe();
         };
-        getLikesCount();
     }, [id]);
+
+    const handleLikedUsersClick = () => {
+        getLikedUsers(); // Retrieve the liked users' information
+        setIsLikedUsersModalOpen(true); // Open the modal
+    };
 
     const openCommentInput = () => {
         setIsCommenting(true);
@@ -245,8 +317,8 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
 
     const deleteComment = (commentId) => {
         db.collection("Posts").doc(id).collection("comments").doc(commentId).delete().then(() => {
-                console.log("Comment successfully deleted!");
-            })
+            console.log("Comment successfully deleted!");
+        })
             .catch((error) => {
                 console.error("Error removing comment: ", error);
             });
@@ -354,8 +426,35 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
                 )}
 
                 <div className="post_ReactInfo">
-                    {likesCount >= 1 && <p>{likesCount} {liked ? 'Liked' : 'Like'}</p>}
+                    {likesCount >= 1 && (
+                        <div>
+                            <p>
+                                <button onClick={handleLikedUsersClick}>
+                                    {likesCount} {likesCount === 1 ? 'Like' : 'Likes'}
+                                </button>
+                            </p>
+                        </div>
+                    )}
                     {comments.length >= 1 && <p onClick={openCommentModal}>{comments.length} Comments</p>}
+
+                    <Modal
+                        className="post_likeduserModal"
+                        isOpen={isLikedUsersModalOpen}
+                        onRequestClose={() => setIsLikedUsersModalOpen(false)}
+                        contentLabel="Liked Users"
+                    >
+                        <h2>Liked Users</h2>
+                        <div>
+                            {likedUsers.map((user) => (
+                                <div key={user.uid}>
+                                    <Avatar src={user.photoUrl} />
+                                    <span>{user.username}</span>
+                                </div>
+                            ))}
+                        </div>
+                        <button onClick={() => setIsLikedUsersModalOpen(false)}>Close</button>
+                    </Modal>
+
 
                     <Modal
                         className="post_commentModal"
