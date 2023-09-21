@@ -308,7 +308,7 @@
     position: fixed;
 }
 
-/*  Likes Modal Section */
+/**  Likes Modal Section */
 .post_likes{
     display: flex;
     align-items: center;
@@ -325,7 +325,7 @@
     margin-left: 8px;
 }
 
-/* Comments Modal Section */
+/** Comments Modal Section */
 .post_comments{
     display: flex;
     flex-direction: row;
@@ -396,6 +396,7 @@
     text-decoration: underline;
 }
 
+/* Bottom Part of the Comment Model */
 .modalBottom .post_commentInput{
     position: relative;
     display: flex;

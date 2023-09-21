@@ -13,7 +13,9 @@ function LeftSidebar() {
             <Link to="/userhomepage">
                 <LeftSidebarOption src={user.photoURL} title={user.displayName} />
             </Link>
-            <LeftSidebarOption src='https://static.xx.fbcdn.net/rsrc.php/v3/y6/r/i0pziEs5Wj6.png' title='Friends' />
+            <Link to="/friendpage">
+                <LeftSidebarOption src='https://static.xx.fbcdn.net/rsrc.php/v3/y6/r/i0pziEs5Wj6.png' title='Friends' />
+            </Link>
             <LeftSidebarOption src='https://static.xx.fbcdn.net/rsrc.php/v3/y8/r/he-BkogidIc.png' title='Memories' />
             <LeftSidebarOption src='https://static.xx.fbcdn.net/rsrc.php/v3/yS/r/k0Svfg6IJtR.png' title='Saved' />
             <LeftSidebarOption src='https://static.xx.fbcdn.net/rsrc.php/v3/yZ/r/MhkwI3R0SHP.png' title='Groups' />

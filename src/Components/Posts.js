@@ -237,24 +237,6 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         setLikedUsers(likedUsersData);
     };
 
-    // const getLikedUsers = async () => {
-    //     const likedUsersRef = db.collection("Posts").doc(id).collection("likes");
-    //     const querySnapshot = await likedUsersRef.get();
-
-    //     const likedUsersData = [];
-    //     const likedUserNames = [];
-
-    //     querySnapshot.forEach((doc) => {
-    //         const userData = doc.data();
-    //         likedUsersData.push(userData);
-    //         likedUserNames.push(userData.username);
-    //     });
-
-    //     setLikedUsers(likedUsersData);
-    //     return { likedUserNames };
-    // };
-
-
     useEffect(() => {
         const postRef = db.collection("Posts").doc(id);
 
@@ -274,12 +256,6 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         getLikedUsers();
         setIsLikedUsersModalOpen(true);
     };
-
-    // const handleLikedUsersClick = async () => {
-    //     const names = await getLikedUsersNames();
-    //     setLikedUsersNames(names);
-    //     setIsLikedUsersModalOpen(true); // Open the modal
-    // };
 
     const openCommentInput = () => {
         setIsCommenting(true);
@@ -311,7 +287,6 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
         try {
             await db.collection("Posts").doc(id).collection("comments").add(newComment);
             setComment('');
-            // setIsCommenting(false);
         } catch (error) {
             console.error("Error posting comment:", error);
         }
