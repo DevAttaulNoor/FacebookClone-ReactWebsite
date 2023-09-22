@@ -32,7 +32,7 @@ function App() {
 						<div className="app_body">
 							<Routes>
 								<Route path="home" element={<Home />} />
-								<Route path="friendpage" element={<FriendsPage />} />
+								<Route path="friendpage/*" element={<FriendsPage />}/>
 								<Route path="userhomepage" element={<HomePage />} />
 							</Routes>
 						</div>

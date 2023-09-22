@@ -1,45 +1,32 @@
-import "../CSS/FriendsPage.css"
-import React, { useEffect, useState } from 'react';
-import { db } from "./Firebase";
-import FriendsCard from './FriendsCard'
+import React from 'react';
+import { Link, Route, Routes } from 'react-router-dom';
+import FriendsPage_Home from './FriendsPage_Home';
+import FriendsPage_FriendsReqs from './FriendsPage_FriendsReqs';
+import FriendsPage_AllFriends from './FriendsPage_AllFriends';
 
 function FriendsPage() {
-    const [users, setUsers] = useState([]);
-
-    useEffect(() => {
-        const unsubscribe = db.collection('Users').onSnapshot(snapshot => {
-            const userData = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
-            setUsers(userData);
-        });
-        return () => {
-            // Unsubscribe from the snapshot listener when the component unmounts.
-            unsubscribe();
-        }
-    }, []);
-
     return (
         <div className='friends'>
             <div className="friendsleftbar">
                 <h1>Friends</h1>
-                <a href="">Home</a>
-                <a href="">Friend Requests</a>
-                <a href="">All friends</a>
+                <Link to="/friendpage/">Home</Link>
+                <Link to="/friendpage/friendReqs">Friend Requests</Link>
+                <Link to="/friendpage/allFriends">All friends</Link>
             </div>
             <div className='friendsMain'>
                 <div className="friendsMain_top">
                     <h2>People you may know</h2>
                 </div>
                 <div className="friendsMain_bottom">
-                    {users.map((user) => (
-                        <FriendsCard key={user.id} user={user} />
-                    ))}
+                    <Routes>
+                        <Route path="/" element={<FriendsPage_Home />} />
+                        <Route path="friendReqs" element={<FriendsPage_FriendsReqs />} />
+                        <Route path="allFriends" element={<FriendsPage_AllFriends />} />
+                    </Routes>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default FriendsPage
+export default FriendsPage;

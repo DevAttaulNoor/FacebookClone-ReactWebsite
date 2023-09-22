@@ -263,6 +263,7 @@ function Posts({ id, photoURL, image, username, timestamp, message }) {
     };
 
     const openCommentModal = () => {
+        setIsCommenting(true);
         setIsCommentModalOpen(true);
     };
 

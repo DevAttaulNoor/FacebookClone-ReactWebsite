@@ -1,7 +1,7 @@
 /* Friends */
 .friends{
     display: flex;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     height: 90vh;
     width: 100%;
