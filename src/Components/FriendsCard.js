@@ -10,20 +10,26 @@ function FriendsCard({ user }) {
             const senderUid = currentUser.uid;
             const senderName = currentUser.displayName;
             const senderEmail = currentUser.email;
+            const senderPhotoUrl = currentUser.photoURL;
 
             const userDocRef = db.collection('Users').doc(user.uid); // Receiver's document reference
+
+            // Generate a unique ID for the friend request
+            const friendRequestId = db.collection('friendRequests').doc().id;
 
             // Check if a request from the current user to this friend already exists
             const existingRequest = await userDocRef.collection('friendRequests')
                 .where('senderUid', '==', senderUid)
+                .where('receiverUid', '==', user.uid)
                 .get();
 
             if (existingRequest.empty) {
                 // Send a new friend request to the receiver
-                await userDocRef.collection('friendRequests').add({
+                await userDocRef.collection('friendRequests').doc(friendRequestId).set({
                     senderUid: senderUid,
                     senderName: senderName,
                     senderEmail: senderEmail,
+                    senderPhotoUrl: senderPhotoUrl,
                     receiverUid: user.uid,
                     receiverName: user.username,
                     receiverEmail: user.email,
@@ -32,10 +38,11 @@ function FriendsCard({ user }) {
 
                 // Also, create the same request in the sender's "friendRequests" subcollection
                 const senderDocRef = db.collection('Users').doc(senderUid);
-                await senderDocRef.collection('friendRequests').add({
+                await senderDocRef.collection('friendRequests').doc(friendRequestId).set({
                     senderUid: senderUid,
                     senderName: senderName,
                     senderEmail: senderEmail,
+                    senderPhotoUrl: senderPhotoUrl,
                     receiverUid: user.uid,
                     receiverName: user.username,
                     receiverEmail: user.email,
@@ -50,6 +57,7 @@ function FriendsCard({ user }) {
             console.error('Error sending friend request:', error);
         }
     };
+
 
     return (
         <div className='friendsCard'>
