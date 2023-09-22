@@ -25,6 +25,7 @@ function FriendsPage_FriendsReqs() {
                         senderName: data.senderName,
                         senderPhotoUrl: data.senderPhotoUrl,
                         status: data.status,
+                        receiverUid: data.receiverUid, // Add receiverUid to the request object
                     });
                 });
 
@@ -108,7 +109,8 @@ function FriendsPage_FriendsReqs() {
         <div>
             Friends Requests
             {friendRequests.map((request) => {
-                if (request.status !== "accepted") {
+                // Check if the request is for the current user
+                if (request.status !== "accepted" && request.receiverUid === user.uid) {
                     return (
                         <div key={request.id} className="friendsCard">
                             <div className="friendsCard_top">
