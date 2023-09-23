@@ -18,7 +18,7 @@ code {
 
 .app_body {
     display: flex;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
-    height: 90vh;
+    height: 91vh;
 }

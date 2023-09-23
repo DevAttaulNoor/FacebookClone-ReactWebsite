@@ -1,0 +1,10 @@
+.homepage_Leftbar{
+    flex: 0.278;
+    position: sticky;
+    top: 0;
+}
+
+.homepage_Leftbar a{
+    text-decoration: none;
+    color: initial;
+}

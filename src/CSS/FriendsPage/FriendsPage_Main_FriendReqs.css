@@ -1,0 +1,22 @@
+/* Freinds Main Requests Page */
+.friendspageMainReqs {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 20px 30px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.friendspageMainReqs .friendspageMainReqs_top p {
+    padding: 10px 0 15px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.friendspageMainReqs .friendspageMainReqs_bottom {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}

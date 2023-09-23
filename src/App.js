@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useStateValue } from "./Components/StateProvider";
-import Login from "./Components/Login";
-import Header from "./Components/Header";
-import LeftSidebar from "./Components/LeftSidebar";
-import RightSidebar from "./Components/RightSidebar";
-import Feeds from "./Components/Feeds";
-import HomePage from "./Components/HomePage";
-import FriendsPage from './Components/FriendsPage';
+import { useStateValue } from './Components/BackendRelated/StateProvider';
+import Login from './Components/StartupPage/Login';
+import Header from './Components/UniversalComponent/Header';
+import HomePage_Leftbar from './Components/HomePage/HomePage_Leftbar';
+import HomePage_Rightbar from './Components/HomePage/HomePage_Rightbar';
+import HomePage_Feeds from './Components/HomePage/HomePage_Feeds';
+import FriendsPage from './Components/FriendsPage/FriendsPage';
+import UserPage from './Components/UserPage/UserPage';
 
 function App() {
 	const [{ user }, dispatch] = useStateValue();
@@ -14,9 +14,9 @@ function App() {
 	const Home = () => {
 		return (
 			<>
-				<LeftSidebar />
-				<Feeds />
-				<RightSidebar />
+				<HomePage_Leftbar />
+				<HomePage_Feeds />
+				<HomePage_Rightbar />
 			</>
 		);
 	}
@@ -33,7 +33,7 @@ function App() {
 							<Routes>
 								<Route path="home" element={<Home />} />
 								<Route path="friendpage/*" element={<FriendsPage />}/>
-								<Route path="userhomepage" element={<HomePage />} />
+								<Route path="userhomepage" element={<UserPage />} />
 							</Routes>
 						</div>
 					</div>

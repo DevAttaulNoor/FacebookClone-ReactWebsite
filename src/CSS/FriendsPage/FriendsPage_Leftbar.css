@@ -1,0 +1,55 @@
+/* Friends LeftBar */
+.friendspageLeftbar{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 100vh;
+    background-color: #fff;
+    padding: 5px;
+
+}
+
+.friendspageLeftbar_Top{
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.friendspageLeftbar_Top p{
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.friendspageLeftbar_Top .MuiSvgIcon-root{
+    padding: 5px;
+    border-radius: 50%;
+    background-color: whitesmoke;
+}
+
+.friendspageLeftbar_Top .MuiSvgIcon-root:hover{
+    cursor: pointer;
+    background-color: rgb(167, 167, 167);
+}
+
+.friendspageLeftbar_Bottom{
+    display: grid;
+    grid-template-rows: repeat(1, 1fr);
+    gap: 5px;
+}
+
+.friendspageLeftbar_Bottom a{
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    color: initial;
+    padding: 10px;
+    transition: 3ms ease-in-out;
+}
+
+.friendspageLeftbar_Bottom a:hover{
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: rgb(167, 167, 167);
+}

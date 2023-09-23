@@ -1,0 +1,23 @@
+.userpage_Feed{
+    display: flex;
+    flex-direction: column;
+    width: 570px;
+    margin: 15px;
+    margin-right: 0;
+}
+
+.userpage_Feed .homepage_feedsPosting{
+    margin-top: 0;
+}
+
+.userpage_Feed .homepage_feedsPosting .homepage_feedsPostingOption{
+    padding: 10px 25px;
+}
+
+.userpage_Feed .homepage_feedsPosts{
+    margin-top: 15px;
+}
+
+.userpage_Feed .homepage_feedsPosts .homepage_feedsPosts_bottomOption{
+    padding: 6px 50px;
+}

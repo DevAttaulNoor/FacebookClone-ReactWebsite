@@ -1,0 +1,24 @@
+.homepage_leftbarOptions{
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+}
+
+.homepage_leftbarOptions:hover{
+    background-color: rgb(211 211 211/33%);
+    cursor: pointer;
+}
+
+.homepage_leftbarOptions:first-child{
+    margin-top: 15px;
+}
+
+.homepage_leftbarOptions p{
+    font-weight: 500;
+    padding-left: 8px;
+}
+
+.homepage_leftbarOptions .MuiAvatar-root{
+    height: 36px;
+    width: 36px;
+}

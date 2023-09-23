@@ -1,0 +1,44 @@
+.userpage_Photos {
+    height: auto;
+    width: 400px;
+    background-color: #fff;
+    margin: 15px 0;
+    border-radius: 8px;
+    padding: 18px;
+}
+
+.userpage_Photos_top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.userpage_Photos_top a {
+    font-size: 17px;
+    font-weight: 500;
+    color: #1B74E4;
+    text-decoration: none;
+    padding: 8px;
+}
+
+.userpage_Photos_top a:hover{
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+
+.userpage_Photos_bottom {
+    display: flex;
+    justify-content: center;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+.grid-container img {
+    max-width: 100%;
+    height: 120px;
+}
