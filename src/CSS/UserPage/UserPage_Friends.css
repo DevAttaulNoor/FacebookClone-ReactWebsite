@@ -29,17 +29,21 @@
 
 .userpage_Friends_bottom {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
 }
 
-.grid-container {
+.userpage_friendsContainer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
+    gap: 12px;
 }
 
-.grid-container img {
-    max-width: 100%;
+.userpage_friendsContainer img {
+    width: 125.5px;
     height: 120px;
 }
 
+.userpage_friendsContainer p {
+    font-size: 14px;
+    font-weight: 500;
+}
