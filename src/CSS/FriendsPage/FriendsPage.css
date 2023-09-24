@@ -1,4 +1,15 @@
 /* Friends Page */
 .friendspage{
+    overflow: hidden;
     display: flex;
+}
+
+.friendspage_leftbar{
+    position: sticky;
+    top: 0;
+}
+
+.friendspage_Main{
+    overflow-y: auto;
+    overflow-x: hidden;
 }

@@ -1,7 +1,10 @@
 import '../../CSS/FriendsPage/FriendsPage_Leftbar.css'
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import SettingsIcon from '@mui/icons-material/Settings';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 function FriendsPage_Leftbar() {
     return (
@@ -12,12 +15,44 @@ function FriendsPage_Leftbar() {
             </div>
 
             <div className="friendspageLeftbar_Bottom">
-                <Link to="/friendpage/">Home</Link>
-                <Link to="/friendpage/friendReqs">Friend Requests</Link>
-                <Link to="/friendpage/allFriends">All friends</Link>
+                <NavLink to="/friendpage/" activeClassName="active">
+                    <div className="friendspageLeftbar_BottomOptions">
+                        <div className="friendspageLeftbar_BottomOptionsLeft">
+                            <SupervisorAccountIcon />
+                            <p>Home</p>
+                        </div>
+                        <div className="friendspageLeftbar_BottomOptionsRight">
+                            <ArrowForwardIosIcon />
+                        </div>
+                    </div>
+                </NavLink>
+
+                <NavLink to="/friendpage/friendReqs" activeClassName="active">
+                    <div className="friendspageLeftbar_BottomOptions">
+                        <div className="friendspageLeftbar_BottomOptionsLeft">
+                            <PersonAddAlt1Icon />
+                            <p>Friend Requests</p>
+                        </div>
+                        <div className="friendspageLeftbar_BottomOptionsRight">
+                            <ArrowForwardIosIcon />
+                        </div>
+                    </div>
+                </NavLink>
+
+                <NavLink to="/friendpage/allFriends" activeClassName="active">
+                    <div className="friendspageLeftbar_BottomOptions">
+                        <div className="friendspageLeftbar_BottomOptionsLeft">
+                            <PersonAddAlt1Icon />
+                            <p>All friends</p>
+                        </div>
+                        <div className="friendspageLeftbar_BottomOptionsRight">
+                            <ArrowForwardIosIcon />
+                        </div>
+                    </div>
+                </NavLink>
             </div>
         </div>
     )
 }
 
-export default FriendsPage_Leftbar
+export default FriendsPage_Leftbar;
