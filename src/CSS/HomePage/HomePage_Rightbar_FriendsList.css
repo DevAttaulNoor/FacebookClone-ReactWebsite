@@ -1,0 +1,29 @@
+.homepage_rightbar_friendList{
+    position: sticky;
+    top: 0;
+    flex: 0.265;
+}
+
+.homepage_rightbar_friendListTop{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.homepage_rightbar_friendListBody_Options{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.homepage_rightbar_friendListBody_Options p{
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.homepage_rightbar_friendListTopRight svg{
+    margin: 0 10px;
+}

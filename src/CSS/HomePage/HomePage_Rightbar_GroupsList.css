@@ -1,0 +1,39 @@
+.homepage_rightbar_groupslist{
+    position: sticky;
+    top: 0;
+    flex: 0.265;
+}
+
+.homepage_rightbar_groupslistTop{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.homepage_rightbar_groupslistBodyOptions{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.homepage_rightbar_groupslistBodyOptions h4{
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.ml-10{
+    margin-left: 10px;
+}
+
+.ml-10 p{
+    font-size: 12px;
+    color: gray;
+}
+
+.ml-10 svg{
+    font-size: 16px;
+    color: gray;
+    margin-right: 10px;
+}
