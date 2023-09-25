@@ -1,7 +1,7 @@
 import '../../CSS/FriendsPage/FriendsPage_Leftbar_AllFriends.css'
-import React, { useEffect, useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Avatar } from '@mui/material';
+import { Avatar, IconButton } from '@mui/material';
 import { db } from '../BackendRelated/Firebase';
 import { useStateValue } from '../BackendRelated/StateProvider';
 import SearchIcon from '@mui/icons-material/Search';
@@ -55,6 +55,8 @@ async function fetchFriendDetailsData(friends, setFriends) {
 function FriendsPage_Leftbar_AllFriends() {
     const [{ user }, dispatch] = useStateValue();
     const [friends, setFriends] = useState([]);
+    const [dialogVisibility, setDialogVisibility] = useState({});
+    const dialogBoxRefs = useRef({});
 
     useEffect(() => {
         // Fetch friends data when user.uid changes
@@ -66,6 +68,42 @@ function FriendsPage_Leftbar_AllFriends() {
         if (friends.length > 0) {
             fetchFriendDetailsData(friends, setFriends);
         }
+    }, [friends]);
+
+    const toggleDialog = (friendUid) => {
+        setDialogVisibility((prevVisibility) => ({
+            ...prevVisibility,
+            [friendUid]: !prevVisibility[friendUid],
+        }));
+    };
+
+    useEffect(() => {
+        const handleOutsideClick = (e, friendUid) => {
+            if (
+                dialogBoxRefs.current[friendUid] &&
+                !dialogBoxRefs.current[friendUid].contains(e.target)
+            ) {
+                setDialogVisibility((prevVisibility) => ({
+                    ...prevVisibility,
+                    [friendUid]: false,
+                }));
+            }
+        };
+
+        for (const friend of friends) {
+            window.addEventListener("click", (e) =>
+                handleOutsideClick(e, friend.friendUid)
+            );
+        }
+
+        // Cleanup the event listeners when the component unmounts
+        return () => {
+            for (const friend of friends) {
+                window.removeEventListener("click", (e) =>
+                    handleOutsideClick(e, friend.friendUid)
+                );
+            }
+        };
     }, [friends]);
 
     return (
@@ -92,14 +130,23 @@ function FriendsPage_Leftbar_AllFriends() {
             <hr />
 
             <div className="friendspageLeftbar_AllfriendsBottom">
-                <p id='friendsCount'>0 friend</p>
+                <p id='friendsCount'>{friends.length} friend(s)</p>
                 {friends.map((friend) => (
                     <div className='friendsList' key={friend.friendUid}>
                         <div className='friendsListInfo'>
                             <Avatar src={friend.photoURL} />
                             <p id="friendName">{friend.username}</p>
                         </div>
-                        <MoreHorizIcon />
+                        <IconButton>
+                            <div className={`unfriend ${dialogVisibility[friend.friendUid] ? 'clicked' : ''}`}>
+                                <MoreHorizIcon onClick={() => toggleDialog(friend.friendUid)} ref={(ref) => (dialogBoxRefs.current[friend.friendUid] = ref)} />
+                                {dialogVisibility[friend.friendUid] && (
+                                    <div className="dialogBox">
+                                        <button>Unfriend</button>
+                                    </div>
+                                )}
+                            </div>
+                        </IconButton>
                     </div>
                 ))}
             </div>
