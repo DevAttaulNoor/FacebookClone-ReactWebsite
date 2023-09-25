@@ -1,7 +1,7 @@
 import "../../CSS/UserPage/UserPage_Friends.css"
 import React, { useEffect, useState } from 'react'
 import { useStateValue } from '../BackendRelated/StateProvider'
-import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_Main_AllFriends';
+import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_Leftbar_AllFriends';
 
 function UserPage_Friends() {
     const [{ user }, dispatch] = useStateValue();

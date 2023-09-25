@@ -2,7 +2,7 @@ import '../../CSS/HomePage/HomePage_Rightbar_FriendsList.css'
 import React, { useEffect, useState } from 'react'
 import { Avatar } from '@mui/material';
 import { useStateValue } from '../BackendRelated/StateProvider'
-import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_Main_AllFriends';
+import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_Leftbar_AllFriends';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import SearchIcon from '@mui/icons-material/Search';
 
