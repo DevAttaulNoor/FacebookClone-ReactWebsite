@@ -3,7 +3,6 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import FriendsPage_Main_Home from './FriendsPage_Main_Home';
 import FriendsPage_Main_FriendReqs from './FriendsPage_Main_FriendReqs';
-import FriendsPage_Main_AllFriends from './FriendsPage_Main_AllFriends';
 
 function FriendsPage_Main() {
     return (
@@ -11,7 +10,6 @@ function FriendsPage_Main() {
             <Routes>
                 <Route path="/" element={<FriendsPage_Main_Home />} />
                 <Route path="friendReqs" element={<FriendsPage_Main_FriendReqs />} />
-                <Route path="allFriends" element={<FriendsPage_Main_AllFriends />} />
             </Routes>
         </div>
     );

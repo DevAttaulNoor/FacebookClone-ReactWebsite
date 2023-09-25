@@ -1,10 +1,12 @@
 import '../../CSS/FriendsPage/FriendsPage_Leftbar.css'
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import FriendsPage_Leftbar_AllFriends from './FriendsPage_Leftbar_AllFriends';
 
 function FriendsPage_Leftbar() {
     return (
@@ -39,7 +41,11 @@ function FriendsPage_Leftbar() {
                     </div>
                 </NavLink>
 
-                <NavLink to="/friendpage/allFriends" activeClassName="active">
+                <Routes>
+                    <Route path="allFriends" element={<FriendsPage_Leftbar_AllFriends />} />
+                </Routes>
+
+                <NavLink to="/friendpage/allFriends">
                     <div className="friendspageLeftbar_BottomOptions">
                         <div className="friendspageLeftbar_BottomOptionsLeft">
                             <PersonAddAlt1Icon />

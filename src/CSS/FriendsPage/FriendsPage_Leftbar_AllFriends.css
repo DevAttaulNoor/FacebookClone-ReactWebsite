@@ -1,0 +1,121 @@
+/* Friends LeftBar All friends */
+.friendspageLeftbar_Allfriends {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 370px;
+    background-color: #fff;
+    padding: 15px;
+}
+
+/* Friends LeftBar All friends Top Section*/
+.friendspageLeftbar_AllfriendsTop {
+    display: flex;
+    flex-direction: column;
+}
+
+.friendspageLeftbar_AllfriendsTop_Top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.friendspageLeftbar_AllfriendsTop_Top .MuiSvgIcon-root a {
+    color: initial;
+}
+
+.friendspageLeftbar_AllfriendsTop_Top .MuiSvgIcon-root{
+    padding: 6px;
+    color: #000;
+}
+
+.friendspageLeftbar_AllfriendsTop_Top .MuiSvgIcon-root:hover {
+    border-radius: 50%;
+    background-color: whitesmoke;
+}
+
+.friendspageLeftbar_AllfriendsTop_Top .texts {
+    margin-left: 15px
+}
+
+.friendspageLeftbar_AllfriendsTop_Top .texts #mainText {
+    font-size: 10px;
+    font-weight: 400;
+}
+
+.friendspageLeftbar_AllfriendsTop_Top .texts #sideText {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.friendspageLeftbar_AllfriendsTop_Bottom{
+    margin-bottom: 15px;
+}
+
+.friendspageLeftbar_AllfriendsTop_Bottom .searchInp {
+    display: flex;
+    align-items: center;
+    background-color: #F0F2F5;
+    border-radius: 20px;
+    padding: 0px 8px;
+    height: 35px;
+}
+
+.friendspageLeftbar_AllfriendsTop_Bottom .searchInp .MuiSvgIcon-root {
+    color: gray;
+    height: 20px;
+    padding: 0px 3px 0 0;
+}
+
+.friendspageLeftbar_AllfriendsTop_Bottom .searchInp input {
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    min-width: 195px;
+    font-size: 16px;
+}
+
+/* Friends LeftBar All friends Bottom Section*/
+.friendspageLeftbar_AllfriendsBottom {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.friendspageLeftbar_AllfriendsBottom #friendsCount {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.friendspageLeftbar_AllfriendsBottom .friendsList {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px;
+}
+
+.friendspageLeftbar_AllfriendsBottom .friendsList:hover{
+    background-color: whitesmoke;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.friendspageLeftbar_AllfriendsBottom .friendsList .MuiSvgIcon-root{
+    padding: 5px;
+}
+
+.friendspageLeftbar_AllfriendsBottom .friendsList .MuiSvgIcon-root:hover{
+    border-radius: 50%;
+    background-color: rgb(202, 202, 202);
+    cursor: pointer;
+}
+
+.friendspageLeftbar_AllfriendsBottom .friendsList .friendsListInfo{
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.friendspageLeftbar_AllfriendsBottom .friendsList .friendsListInfo p{
+    margin-left: 8px;
+}

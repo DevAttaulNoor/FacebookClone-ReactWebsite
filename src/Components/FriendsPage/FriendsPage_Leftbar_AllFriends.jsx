@@ -1,7 +1,12 @@
-import '../../CSS/FriendsPage/FriendsPage_Main_AllFriends.css'
+import '../../CSS/FriendsPage/FriendsPage_Leftbar_AllFriends.css'
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { Avatar } from '@mui/material';
 import { db } from '../BackendRelated/Firebase';
 import { useStateValue } from '../BackendRelated/StateProvider';
+import SearchIcon from '@mui/icons-material/Search';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 async function fetchFriendsData(userUid, setFriends) {
     try {
@@ -47,7 +52,7 @@ async function fetchFriendDetailsData(friends, setFriends) {
     setFriends(updatedFriends.filter((friend) => friend !== null));
 }
 
-function FriendsPage_Main_AllFriends() {
+function FriendsPage_Leftbar_AllFriends() {
     const [{ user }, dispatch] = useStateValue();
     const [friends, setFriends] = useState([]);
 
@@ -64,27 +69,43 @@ function FriendsPage_Main_AllFriends() {
     }, [friends]);
 
     return (
-        <div className="friendspageMainAllfriends">
-            <div className="friendspageMainAllfriends_top">
-                <p>All Friends</p>
+        <div className='friendspageLeftbar_Allfriends'>
+            <div className="friendspageLeftbar_AllfriendsTop">
+                <div className='friendspageLeftbar_AllfriendsTop_Top'>
+                    <NavLink to="/friendpage">
+                        <KeyboardBackspaceIcon />
+                    </NavLink>
+                    <div className='texts'>
+                        <p id='mainText'>Friends</p>
+                        <p id='sideText'>All Friends</p>
+                    </div>
+                </div>
+
+                <div className="friendspageLeftbar_AllfriendsTop_Bottom">
+                    <div className='searchInp'>
+                        <SearchIcon />
+                        <input type="text" placeholder='Search Friends' />
+                    </div>
+                </div>
             </div>
 
-            <div className="friendspageMainAllfriends_bottom">
+            <hr />
+
+            <div className="friendspageLeftbar_AllfriendsBottom">
+                <p id='friendsCount'>0 friend</p>
                 {friends.map((friend) => (
-                    <div className='friendsCard' key={friend.friendUid}>
-                        <div className="friendsCard_top">
-                            <img src={friend.photoURL} alt="" />
-                        </div>
-                        <div className="friendsCard_bottom">
+                    <div className='friendsList' key={friend.friendUid}>
+                        <div className='friendsListInfo'>
+                            <Avatar src={friend.photoURL} />
                             <p id="friendName">{friend.username}</p>
-                            <p id="friendMutual">Mutual friends</p>
                         </div>
+                        <MoreHorizIcon />
                     </div>
                 ))}
             </div>
-        </div>
-    );
+        </div >
+    )
 }
 
 export { fetchFriendsData, fetchFriendDetailsData };
-export default FriendsPage_Main_AllFriends;
+export default FriendsPage_Leftbar_AllFriends
