@@ -1,7 +1,6 @@
 import '../../CSS/FriendsPage/FriendsPage_Leftbar.css'
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { Route, Routes } from 'react-router-dom';
+import { NavLink, Route, Routes } from 'react-router-dom';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';

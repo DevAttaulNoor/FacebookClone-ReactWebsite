@@ -6,6 +6,7 @@ import { useStateValue } from '../BackendRelated/StateProvider'
 function FriendsPage_Main_FriendReqs() {
     const [{ user }, dispatch] = useStateValue();
     const [friendRequests, setFriendRequests] = useState([]);
+    const [isRequestProcessing, setIsRequestProcessing] = useState(false);
 
     useEffect(() => {
         const fetchFriendRequests = async () => {
@@ -38,45 +39,70 @@ function FriendsPage_Main_FriendReqs() {
 
     const acceptFriendRequest = async (friendRequestId, senderUid) => {
         try {
+            // Check if the request is already being processed
+            if (isRequestProcessing) {
+                return;
+            }
+
+            setIsRequestProcessing(true); // Set a flag to indicate that the request is being processed
+
             const usersCollection = db.collection("Users");
+            const currentUserDoc = usersCollection.doc(user.uid);
 
-            // Update the sender's "Friends" subcollection
-            await usersCollection
-                .doc(senderUid)
+            // Check if the user is already a friend
+            const currentUserFriendsQuery = await currentUserDoc
                 .collection("Friends")
-                .add({
-                    friendUid: user.uid,
-                    // You can fetch other user details here using a similar approach
+                .where("friendUid", "==", senderUid)
+                .get();
+
+            if (currentUserFriendsQuery.docs.length === 0) {
+                // User is not already a friend, proceed to add them
+
+                // Update the sender's "Friends" subcollection
+                await usersCollection
+                    .doc(senderUid)
+                    .collection("Friends")
+                    .add({
+                        friendUid: user.uid,
+                        // You can fetch other user details here using a similar approach
+                    });
+
+                // Update the current user's "Friends" subcollection
+                await currentUserDoc
+                    .collection("Friends")
+                    .add({
+                        friendUid: senderUid,
+                        // You can fetch other user details here using a similar approach
+                    });
+
+                // Update the friend request's status to "accepted" in both the sender's and receiver's subcollections
+                const senderFriendRequestsCollection = usersCollection
+                    .doc(senderUid)
+                    .collection("friendRequests");
+                const receiverFriendRequestsCollection = currentUserDoc
+                    .collection("friendRequests");
+
+                await senderFriendRequestsCollection.doc(friendRequestId).update({
+                    status: "accepted",
                 });
 
-            // Update the current user's "Friends" subcollection
-            await usersCollection
-                .doc(user.uid)
-                .collection("Friends")
-                .add({
-                    friendUid: senderUid,
-                    // You can fetch other user details here using a similar approach
+                await receiverFriendRequestsCollection.doc(friendRequestId).update({
+                    status: "accepted",
                 });
 
-            // Update the friend request's status to "accepted" in both the sender's and receiver's subcollections
-            const senderFriendRequestsCollection = usersCollection
-                .doc(senderUid)
-                .collection("friendRequests");
-            const receiverFriendRequestsCollection = usersCollection
-                .doc(user.uid)
-                .collection("friendRequests");
+                // After successfully accepting the friend request, update the state
+                setFriendRequests((prevRequests) =>
+                    prevRequests.filter((request) => request.id !== friendRequestId)
+                );
 
-            await senderFriendRequestsCollection.doc(friendRequestId).update({
-                status: "accepted",
-            });
-
-            await receiverFriendRequestsCollection.doc(friendRequestId).update({
-                status: "accepted",
-            });
-
-            alert("Friend request accepted!");
+                alert("Friend request accepted!");
+            } else {
+                alert("You are already friends with this user.");
+            }
         } catch (error) {
             console.error("Error accepting friend request:", error);
+        } finally {
+            setIsRequestProcessing(false); // Reset the request processing flag
         }
     };
 
@@ -122,7 +148,13 @@ function FriendsPage_Main_FriendReqs() {
                                 <div className="friendsCard_bottom">
                                     <p id="friendName">{request.senderName}</p>
                                     <p id="friendMutual">Mutual friends</p>
-                                    <button onClick={() => acceptFriendRequest(request.id, request.senderUid)}>Accept</button>
+                                    {isRequestProcessing ? (
+                                        <button disabled>Accepting...</button>
+                                    ) : (
+                                        <button onClick={() => acceptFriendRequest(request.id, request.senderUid)}>
+                                            Accept
+                                        </button>
+                                    )}
                                     <button onClick={() => rejectFriendRequest(request.id, request.senderUid)}>Reject</button>
                                 </div>
                             </div>

@@ -52,6 +52,77 @@ async function fetchFriendDetailsData(friends, setFriends) {
     setFriends(updatedFriends.filter((friend) => friend !== null));
 }
 
+async function unfriendUser(loggedInUserUid, friendUid) {
+    try {
+        const userRef = db.collection('Users').doc(loggedInUserUid);
+        const friendRef = db.collection('Users').doc(friendUid);
+
+        // Get the list of friends for the logged-in user
+        const userFriendsQuery = await userRef.collection('Friends').where('friendUid', '==', friendUid).get();
+
+        // Get the list of friends for the friend
+        const friendFriendsQuery = await friendRef.collection('Friends').where('friendUid', '==', loggedInUserUid).get();
+
+        // Check if there is a match in both user's and friend's friends lists
+        if (!userFriendsQuery.empty && !friendFriendsQuery.empty) {
+            // Remove friend from logged-in user's "Friends" collection
+            userFriendsQuery.forEach(async (doc) => {
+                await userRef.collection('Friends').doc(doc.id).delete();
+            });
+
+            // Remove logged-in user from the friend's "Friends" collection
+            friendFriendsQuery.forEach(async (doc) => {
+                await friendRef.collection('Friends').doc(doc.id).delete();
+            });
+
+            console.log('Successfully unfriended user:', friendUid);
+        } else {
+            console.log('Friend not found in both user lists.');
+        }
+
+        // Now, remove any previous friend requests that have been accepted
+        const userFriendRequestQuerySender = await userRef.collection('friendRequests')
+            .where('senderUid', '==', friendUid)
+            .where('receiverUid', '==', loggedInUserUid)
+            .get();
+
+        const userFriendRequestQueryReceiver = await userRef.collection('friendRequests')
+            .where('receiverUid', '==', friendUid)
+            .where('senderUid', '==', loggedInUserUid)
+            .get();
+
+        const friendFriendRequestQuerySender = await friendRef.collection('friendRequests')
+            .where('senderUid', '==', loggedInUserUid)
+            .where('receiverUid', '==', friendUid)
+            .get();
+
+        const friendFriendRequestQueryReceiver = await friendRef.collection('friendRequests')
+            .where('receiverUid', '==', loggedInUserUid)
+            .where('senderUid', '==', friendUid)
+            .get();
+
+        userFriendRequestQuerySender.forEach(async (doc) => {
+            await userRef.collection('friendRequests').doc(doc.id).delete();
+        });
+
+        userFriendRequestQueryReceiver.forEach(async (doc) => {
+            await userRef.collection('friendRequests').doc(doc.id).delete();
+        });
+
+        friendFriendRequestQuerySender.forEach(async (doc) => {
+            await friendRef.collection('friendRequests').doc(doc.id).delete();
+        });
+
+        friendFriendRequestQueryReceiver.forEach(async (doc) => {
+            await friendRef.collection('friendRequests').doc(doc.id).delete();
+        });
+
+    } catch (error) {
+        console.error('Error unfriending user:', error);
+    }
+}
+
+
 function FriendsPage_Leftbar_AllFriends() {
     const [{ user }, dispatch] = useStateValue();
     const [friends, setFriends] = useState([]);
@@ -106,6 +177,15 @@ function FriendsPage_Leftbar_AllFriends() {
         };
     }, [friends]);
 
+    const handleUnfriend = (friendUid) => {
+        console.log("Unfriending user:", friendUid);
+        unfriendUser(user.uid, friendUid);
+
+        // Update the state to remove the friend with the specified friendUid
+        setFriends((prevFriends) => prevFriends.filter((friend) => friend.friendUid !== friendUid));
+    };
+
+
     return (
         <div className='friendspageLeftbar_Allfriends'>
             <div className="friendspageLeftbar_AllfriendsTop">
@@ -142,17 +222,18 @@ function FriendsPage_Leftbar_AllFriends() {
                                 <MoreHorizIcon onClick={() => toggleDialog(friend.friendUid)} ref={(ref) => (dialogBoxRefs.current[friend.friendUid] = ref)} />
                                 {dialogVisibility[friend.friendUid] && (
                                     <div className="dialogBox">
-                                        <button>Unfriend</button>
+                                        <button onClick={() => handleUnfriend(friend.friendUid)}>Unfriend</button>
                                     </div>
                                 )}
                             </div>
                         </IconButton>
                     </div>
                 ))}
+
             </div>
         </div >
     )
 }
 
 export { fetchFriendsData, fetchFriendDetailsData };
-export default FriendsPage_Leftbar_AllFriends
+export default FriendsPage_Leftbar_AllFriends;
