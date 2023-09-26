@@ -1,7 +1,7 @@
 import '../../CSS/FriendsPage/FriendsPage_Leftbar_AllFriends.css'
 import React, { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Avatar, IconButton } from '@mui/material';
+import { Avatar } from '@mui/material';
 import { db } from '../BackendRelated/Firebase';
 import { useStateValue } from '../BackendRelated/StateProvider';
 import SearchIcon from '@mui/icons-material/Search';
@@ -122,7 +122,6 @@ async function unfriendUser(loggedInUserUid, friendUid) {
     }
 }
 
-
 function FriendsPage_Leftbar_AllFriends() {
     const [{ user }, dispatch] = useStateValue();
     const [friends, setFriends] = useState([]);
@@ -178,13 +177,9 @@ function FriendsPage_Leftbar_AllFriends() {
     }, [friends]);
 
     const handleUnfriend = (friendUid) => {
-        console.log("Unfriending user:", friendUid);
         unfriendUser(user.uid, friendUid);
-
-        // Update the state to remove the friend with the specified friendUid
         setFriends((prevFriends) => prevFriends.filter((friend) => friend.friendUid !== friendUid));
     };
-
 
     return (
         <div className='friendspageLeftbar_Allfriends'>
@@ -217,19 +212,21 @@ function FriendsPage_Leftbar_AllFriends() {
                             <Avatar src={friend.photoURL} />
                             <p id="friendName">{friend.username}</p>
                         </div>
-                        <IconButton>
-                            <div className={`unfriend ${dialogVisibility[friend.friendUid] ? 'clicked' : ''}`}>
-                                <MoreHorizIcon onClick={() => toggleDialog(friend.friendUid)} ref={(ref) => (dialogBoxRefs.current[friend.friendUid] = ref)} />
-                                {dialogVisibility[friend.friendUid] && (
-                                    <div className="dialogBox">
-                                        <button onClick={() => handleUnfriend(friend.friendUid)}>Unfriend</button>
-                                    </div>
-                                )}
-                            </div>
-                        </IconButton>
+
+                        <div className={`unfriend ${dialogVisibility[friend.friendUid] ? 'clicked' : ''}`}>
+                            <MoreHorizIcon
+                                onClick={() => toggleDialog(friend.friendUid)}
+                                ref={(ref) => (dialogBoxRefs.current[friend.friendUid] = ref)}
+                            />
+
+                            {dialogVisibility[friend.friendUid] && (
+                                <div className="dialogBox">
+                                    <button onClick={() => handleUnfriend(friend.friendUid)}>Unfriend</button>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 ))}
-
             </div>
         </div >
     )

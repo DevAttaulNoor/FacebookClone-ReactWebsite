@@ -92,6 +92,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 6px;
+    position: relative;
 }
 
 .friendspageLeftbar_AllfriendsBottom .friendsList:hover{
@@ -120,13 +121,14 @@
     margin-left: 8px;
 }
 
+/* Dialog Box */
 .dialogBox {
     position: absolute;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    top: 100%;
+    top: 50px;
     right: 20px;
     background-color: #fff;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);

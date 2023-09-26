@@ -1,13 +1,14 @@
 import '../../CSS/FriendsPage/FriendsCard.css'
 import React, { useState, useEffect } from 'react';
-import { auth, db } from '../BackendRelated/Firebase'
+import { db } from '../BackendRelated/Firebase';
+import { useStateValue } from '../BackendRelated/StateProvider';
 
 function FriendsCard({ user }) {
-    const [friendRequestStatus, setFriendRequestStatus] = useState("not_sent"); // Default status
+    const [{user}, dispatch] = useStateValue()
+    const [friendRequestStatus, setFriendRequestStatus] = useState("not_sent");
     const [isFriendRequestPending, setIsFriendRequestPending] = useState(false);
-
-    const currentUser = auth.currentUser;
-    const senderUid = currentUser.uid;
+    const [isRequestProcessing, setIsRequestProcessing] = useState(false);
+    const senderUid = user.uid;
 
     useEffect(() => {
         // Check if a request from the current user to this friend already exists and if it's pending
@@ -34,14 +35,14 @@ function FriendsCard({ user }) {
 
     const sendFriendRequest = async () => {
         try {
-            if (friendRequestStatus === "not_sent") {
-                const senderName = currentUser.displayName;
-                const senderEmail = currentUser.email;
-                const senderPhotoUrl = currentUser.photoURL;
+            if (friendRequestStatus === "not_sent" && !isRequestProcessing) {
+                setIsRequestProcessing(true);
 
-                const userDocRef = db.collection('Users').doc(user.uid); // Receiver's document reference
+                const senderName = user.displayName;
+                const senderEmail = user.email;
+                const senderPhotoUrl = user.photoURL;
 
-                // Generate a unique ID for the friend request
+                const userDocRef = db.collection('Users').doc(user.uid);
                 const friendRequestId = db.collection('friendRequests').doc().id;
 
                 // Send a new friend request to the receiver
@@ -73,15 +74,13 @@ function FriendsCard({ user }) {
                 setIsFriendRequestPending(true);
 
                 alert('Friend request sent!');
-            }
-
-            else {
+            } else if (friendRequestStatus === "pending") {
                 alert('Friend request already sent or pending!');
             }
-        }
-
-        catch (error) {
+        } catch (error) {
             console.error('Error sending friend request:', error);
+        } finally {
+            setIsRequestProcessing(false);
         }
     };
 
@@ -94,10 +93,12 @@ function FriendsCard({ user }) {
                 <p id="friendName">{user.username}</p>
                 <p id="friendMutual">Mutual friends</p>
                 {friendRequestStatus === "not_sent" && (
-                    <button id="addBtn" onClick={sendFriendRequest}>Add friend</button>
+                    <button id="addBtn" onClick={sendFriendRequest} disabled={isFriendRequestPending || isRequestProcessing}>
+                        {isFriendRequestPending ? "Request Pending..." : "Add friend"}
+                    </button>
                 )}
                 {friendRequestStatus === "pending" && (
-                    <button id="pendingBtn" >Pending</button>
+                    <button id="pendingBtn" disabled>Pending</button>
                 )}
                 <button id="removeBtn">Remove</button>
             </div>
