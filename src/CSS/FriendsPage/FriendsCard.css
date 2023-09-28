@@ -52,3 +52,7 @@
     background-color: whitesmoke;
     color: #000;
 }
+
+.friendsCard_bottom button:hover{
+    cursor: pointer;
+}

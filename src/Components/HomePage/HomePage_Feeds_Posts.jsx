@@ -6,6 +6,7 @@ import { useStateValue } from '../BackendRelated/StateProvider';
 import Modal from 'react-modal';
 import PublicIcon from '@mui/icons-material/Public';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
@@ -23,6 +24,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, username, timestamp, messag
     const [isDropdownClicked, setIsDropdownClicked] = useState(false);
     const [likesCount, setLikesCount] = useState(0);
     const [likedUsers, setLikedUsers] = useState([]);
+    const [currentUserLiked, setCurrentUserLiked] = useState(false);
     const [isLikedUsersModalOpen, setIsLikedUsersModalOpen] = useState(false);
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
@@ -250,7 +252,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, username, timestamp, messag
             // Unsubscribe from the snapshot listener when the component unmounts
             unsubscribe();
         };
-    }, [id]);
+    }, [id, user.uid]);
 
     const handleLikedUsersClick = () => {
         getLikedUsers();
@@ -366,6 +368,30 @@ function HomePage_Feeds_Posts({ id, photoURL, image, username, timestamp, messag
         }
         return `${granularity}${unit}${granularity > 1 ? '' : ''}`;
     };
+
+    useEffect(() => {
+        const likedUsersRef = db.collection("Posts").doc(id).collection("likes");
+
+        // Add a snapshot listener to listen for changes in the "likes" subcollection
+        const unsubscribe = likedUsersRef.onSnapshot((querySnapshot) => {
+            const likedUsersData = [];
+            querySnapshot.forEach((doc) => {
+                likedUsersData.push(doc.data());
+            });
+            setLikedUsers(likedUsersData);
+
+            // Check if the current user has liked the post and set a flag accordingly
+            const currentUserLiked = likedUsersData.some((likedUser) => likedUser.uid === user.uid);
+            setCurrentUserLiked(currentUserLiked);
+        });
+
+        return () => {
+            // Unsubscribe from the snapshot listener when the component unmounts
+            unsubscribe();
+        };
+    }, [id, user.uid]);
+
+
 
     return (
         <div className='homepage_feedsPosts'>
@@ -489,7 +515,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, username, timestamp, messag
                                         value={comment}
                                         onChange={(e) => setComment(e.target.value)}
                                     />
-                                    <SendIcon onClick={postComment}/>
+                                    <SendIcon onClick={postComment} />
                                 </div>
                             )}
                         </div>
@@ -506,8 +532,17 @@ function HomePage_Feeds_Posts({ id, photoURL, image, username, timestamp, messag
 
                 {/* Btns for Like, Comment and Share */}
                 <div className='homepage_feedsPosts_bottomOption' onClick={handleLike}>
-                    <ThumbUpAltOutlinedIcon />
-                    <p>Like</p>
+                    {currentUserLiked ? (
+                        <>
+                            <ThumbUpIcon style={{ color: 'blue' }} />
+                            <p style={{ color: 'blue' }}>Like</p>
+                        </>
+                    ) : (
+                        <>
+                            <ThumbUpAltOutlinedIcon />
+                            <p>Like</p>
+                        </>
+                    )}
                 </div>
                 <div className='homepage_feedsPosts_bottomOption' onClick={openCommentInput}>
                     <ChatBubbleOutlineOutlinedIcon />

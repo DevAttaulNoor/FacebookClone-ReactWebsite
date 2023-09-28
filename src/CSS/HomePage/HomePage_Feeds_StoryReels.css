@@ -57,6 +57,7 @@
 .myStory img{
     flex: 1;
     object-fit: cover;
+    height: 142px;
     border-radius: 10px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
