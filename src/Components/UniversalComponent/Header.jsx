@@ -15,12 +15,19 @@ import AppsIcon from '@mui/icons-material/Apps';
 import ForumIcon from '@mui/icons-material/Forum';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 function Header() {
     const [{ user }, dispatch] = useStateValue();
     const [isDialogVisible, setIsDialogVisible] = useState(false);
     const dialogBoxRef = useRef(null);
     const location = useLocation();
+
+    // Define an array of paths where you want to hide the header
+    const pathsToHideHeader = ['/home/storyreels'];
+
+    // Determine whether to show the header based on the current route
+    const showHeader = !pathsToHideHeader.includes(location.pathname);
 
     const handleSignOut = () => {
         sessionStorage.removeItem('userData');
@@ -61,9 +68,18 @@ function Header() {
     }, []);
 
     return (
-        <div className='header'>
+        <div className={`header ${showHeader ? '' : 'transformed'}`}>
+            <div className='Transformed_header_left'>
+                <Link to={'/home'}>
+                    <CloseIcon className='closeIcon' />
+                    <img src={fblogo} alt="" />
+                </Link>
+            </div>
+
             <div className='header_left'>
-                <img src={fblogo} alt="" />
+                <Link to={'/home'}>
+                    <img src={fblogo} alt="" />
+                </Link>
                 <div className='header_search'>
                     <SearchIcon />
                     <input type="text" placeholder='Search Facebook' />
@@ -96,7 +112,7 @@ function Header() {
                 <IconButton>
                     <AppsIcon />
                 </IconButton>
-                <IconButton>
+                <IconButton id='msgIcon'>
                     <ForumIcon />
                 </IconButton>
                 <IconButton>

@@ -14,31 +14,28 @@ function HomePage_StoryReels_Main() {
         <div className='homepage_storyreels_Main'>
             <div className="homepage_storyreels_Main_Sidebar">
                 <div className='homepage_storyreels_Main_SidebarTop'>
-                    <img src={fblogo} alt="" />
-                    <CloseIcon />
-                </div>
-
-                <div className='homepage_storyreels_Main_SidebarMiddle'>
-                    <div className="homepage_storyreels_Main_SidebarMiddle_Top">
-                        <p>Your Story</p>
+                    <div className="homepage_storyreels_Main_SidebarTop_Top">
+                        <p>Your story</p>
                         <SettingsIcon />
                     </div>
-                    <div className="homepage_storyreels_Main_SidebarMiddle_Bottom">
+                    <div className="homepage_storyreels_Main_SidebarTop_Bottom">
                         <Avatar src={user.photoURL} />
                         <p>{user.displayName}</p>
                     </div>
+
+                    <hr />
                 </div>
             </div>
 
             <div className="homepage_storyreels_Main_Body">
-                <div className="homepage_storyreels_Main_BodyCard">
+                <div className="homepage_storyreels_Main_BodyCard Photo">
                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j" alt="" />
-                    <p>Create a photo story</p>
+                    <p>Create a Photo Story</p>
                 </div>
 
-                <div className="homepage_storyreels_Main_BodyCard">
+                <div className="homepage_storyreels_Main_BodyCard Text">
                     <TitleIcon/>
-                    <p>Create a text story</p>
+                    <p>Create a Text Story</p>
                 </div>
             </div>
         </div>

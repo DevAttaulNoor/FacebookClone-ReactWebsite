@@ -1,3 +1,4 @@
+/** Header Section */
 .header{
     display: flex;
     align-items: center;
@@ -21,6 +22,10 @@
 
 .header_left img{
     height: 42px;
+}
+
+.Transformed_header_left{
+    display: none;
 }
 
 .header_search{
@@ -145,4 +150,53 @@
 .dialogBox a{
     text-decoration: none;
     border-bottom: 1px solid gray;
+}
+
+/** Header Section Transformed */
+.header.transformed{
+    background-color: #f0f2f5;
+    padding: 25px 0;
+    box-shadow: none;
+}
+
+.header.transformed .header_left{
+    display: none;
+}
+
+.header.transformed .Transformed_header_left{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    width: 308px;
+    height: 8vh;
+    padding: 8px 0 0 12px;
+    background-color: #fff;
+    box-shadow: 0px 0px 3px #ccc;
+}
+
+.header.transformed .Transformed_header_left img, 
+.header.transformed .Transformed_header_left a{
+    height: 42px;
+}
+
+.header.transformed .Transformed_header_left .MuiSvgIcon-root{
+    padding: 8px;
+    background-color: #f0f2f5;
+    border-radius: 50%;
+    margin-right: 5px;
+    color: initial;
+}
+
+.header.transformed .Transformed_header_left .MuiSvgIcon-root:hover{
+    cursor: pointer;
+    background-color: whitesmoke;
+}
+
+.header.transformed .header_middle{
+    display: none;
+}
+
+.header.transformed .header_right #msgIcon{
+    display: none;
 }
