@@ -1,0 +1,51 @@
+/* HomePage Story Reels */
+.homepageStoryReels{
+    background-color: #fff;
+    width: 100%;
+    padding: 8px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.homepageStoryReels a{
+    color: initial;
+    text-decoration: none;
+}
+
+/* HomePage Story Reels Inner Section */
+.homepageStoryReels_Inner{
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.homepageStoryReels_Inner:hover{
+    cursor: pointer;
+    background-color: whitesmoke;
+}
+
+.homepageStoryReels_Inner .MuiSvgIcon-root{
+    background-color: #EBF5FF;
+    border-radius: 50%;
+    color: #1877F2;
+    padding: 8px;
+}
+
+.homepageStoryReels_Inner .homepageStoryReels_InnerInfo{
+    display: flex;
+    flex-direction: column;
+    margin-left: 12px;
+}
+
+.homepageStoryReels_InnerInfo h2{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.homepageStoryReels_InnerInfo p{
+    font-size: 14px;
+    font-weight: 400;
+    color: gray;
+}

@@ -1,0 +1,40 @@
+/* HomePage StoryReels Main */
+.homepage_storyreels_Main{
+    overflow: hidden;
+    display: flex;
+}
+
+/* HomePage StoryReels Main Sidebar Section */
+.homepage_storyreels_Main_Sidebar{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 385px;
+    background-color: #fff;
+    padding: 5px;
+    position: sticky;
+    top: 0;
+}
+
+/* HomePage StoryReels Main Sidebar Top Section */
+.homepage_storyreels_Main_SidebarTop img{
+    height: 42px;
+}
+
+/* HomePage StoryReels Main Sidebar Middle Section */
+.homepage_storyreels_Main_SidebarMiddle_Top .MuiSvgIcon-root{
+    padding: 5px;
+    border-radius: 50%;
+    background-color: whitesmoke;
+}
+
+.homepage_storyreels_Main_SidebarMiddle_Top .MuiSvgIcon-root:hover{
+    cursor: pointer;
+    background-color: rgb(167, 167, 167);
+}
+
+/* HomePage StoryReels Main Body Section */
+.homepage_storyreels_Main_Body{
+    overflow-y: auto;
+    overflow-x: hidden;
+}

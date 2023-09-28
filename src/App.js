@@ -8,6 +8,7 @@ import HomePage_Feeds from './Components/HomePage/HomePage_Feeds';
 import FriendsPage from './Components/FriendsPage/FriendsPage';
 import UserPage from './Components/UserPage/UserPage';
 import FriendsPage_Leftbar_AllFriends from './Components/FriendsPage/FriendsPage_Leftbar_AllFriends';
+import HomePage_StoryReels_Main from './Components/HomePage/HomePage_StoryReels_Main';
 
 function App() {
 	const [{ user }, dispatch] = useStateValue();
@@ -32,7 +33,8 @@ function App() {
 						<Header />
 						<div className="app_body">
 							<Routes>
-								<Route path="home" element={<Home />} />
+								<Route path="home/*" element={<Home />} />
+								<Route path="home/storyreels" element={<HomePage_StoryReels_Main/>}/>
 								<Route path="friendpage/*" element={<FriendsPage />}/>
 								<Route path="friendpage/allfriends" element={<FriendsPage_Leftbar_AllFriends />}/>
 								<Route path="userhomepage" element={<UserPage />} />
