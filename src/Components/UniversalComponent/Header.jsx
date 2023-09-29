@@ -14,7 +14,6 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import AppsIcon from '@mui/icons-material/Apps';
 import ForumIcon from '@mui/icons-material/Forum';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
 function Header() {
@@ -23,10 +22,7 @@ function Header() {
     const dialogBoxRef = useRef(null);
     const location = useLocation();
 
-    // Define an array of paths where you want to hide the header
-    const pathsToHideHeader = ['/home/storyreels'];
-
-    // Determine whether to show the header based on the current route
+    const pathsToHideHeader = ['/homepage/storyreels'];
     const showHeader = !pathsToHideHeader.includes(location.pathname);
 
     const handleSignOut = () => {
@@ -70,14 +66,14 @@ function Header() {
     return (
         <div className={`header ${showHeader ? '' : 'transformed'}`}>
             <div className='Transformed_header_left'>
-                <Link to={'/home'}>
+                <Link to={'/homepage'}>
                     <CloseIcon className='closeIcon' />
                     <img src={fblogo} alt="" />
                 </Link>
             </div>
 
             <div className='header_left'>
-                <Link to={'/home'}>
+                <Link to={'/homepage'}>
                     <img src={fblogo} alt="" />
                 </Link>
                 <div className='header_search'>
@@ -87,8 +83,8 @@ function Header() {
             </div>
 
             <div className="header_middle">
-                <Link to="/home">
-                    <div className={`header_option ${location.pathname === '/home' ? 'header_option_active' : ''}`}>
+                <Link to="/homepage">
+                    <div className={`header_option ${location.pathname === '/homepage' ? 'header_option_active' : ''}`}>
                         <HomeIcon />
                     </div>
                 </Link>
@@ -109,29 +105,22 @@ function Header() {
             </div>
 
             <div className="header_right">
-                <IconButton>
-                    <AppsIcon />
-                </IconButton>
-                <IconButton id='msgIcon'>
-                    <ForumIcon />
-                </IconButton>
-                <IconButton>
-                    <NotificationsIcon />
-                </IconButton>
-                <IconButton>
-                    <div className={`header_rightAvatarBox ${isDialogVisible ? 'clicked' : ''}`}>
-                        <Avatar src={user.photoURL} onClick={toggleDialog} ref={dialogBoxRef} />
-                        {isDialogVisible && (
-                            <div className="dialogBox">
-                                <Link to="/userhomepage">
-                                    <button>Home</button>
-                                </Link>
-                                <button>Settings</button>
-                                <button onClick={handleSignOut}>Sign Out</button>
-                            </div>
-                        )}
-                    </div>
-                </IconButton>
+                <AppsIcon />
+                <ForumIcon id='msgIcon' />
+                <NotificationsIcon />
+
+                <div className={`header_rightAvatarBox ${isDialogVisible ? 'clicked' : ''}`}>
+                    <Avatar src={user.photoURL} onClick={toggleDialog} ref={dialogBoxRef} />
+                    {isDialogVisible && (
+                        <div className="dialogBox">
+                            <Link to="/userhomepage">
+                                <button>Home</button>
+                            </Link>
+                            <button>Settings</button>
+                            <button onClick={handleSignOut}>Sign Out</button>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     )

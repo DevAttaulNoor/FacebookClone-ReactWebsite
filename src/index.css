@@ -12,13 +12,5 @@ body {
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-        monospace;
-}
-
-.app_body {
-    display: flex;
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: 90vh;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

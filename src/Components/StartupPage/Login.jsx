@@ -65,7 +65,7 @@ function Login() {
                 photoURL: user.photoURL,
                 coverphotoUrl: coverphotoUrl
             });
-            navigate('/home');
+            navigate('/homepage');
         })
 
             .catch((error) => {
@@ -111,7 +111,7 @@ function Login() {
                     user: updatedUserData
                 });
 
-                navigate('/home');
+                navigate('/homepage');
             }
 
             else {
@@ -199,7 +199,7 @@ function Login() {
                 user: userData,
             });
 
-            navigate('/home');
+            navigate('/homepage');
         }
 
         catch (error) {

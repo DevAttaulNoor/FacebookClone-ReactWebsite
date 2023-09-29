@@ -2,26 +2,14 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useStateValue } from './Components/BackendRelated/StateProvider';
 import Login from './Components/StartupPage/Login';
 import Header from './Components/UniversalComponent/Header';
-import HomePage_Leftbar from './Components/HomePage/HomePage_Leftbar';
-import HomePage_Rightbar from './Components/HomePage/HomePage_Rightbar';
-import HomePage_Feeds from './Components/HomePage/HomePage_Feeds';
 import FriendsPage from './Components/FriendsPage/FriendsPage';
 import UserPage from './Components/UserPage/UserPage';
 import FriendsPage_Leftbar_AllFriends from './Components/FriendsPage/FriendsPage_Leftbar_AllFriends';
 import HomePage_StoryReels_Main from './Components/HomePage/HomePage_StoryReels_Main';
+import HomePage from './Components/HomePage/HomePage';
 
 function App() {
 	const [{ user }, dispatch] = useStateValue();
-
-	const Home = () => {
-		return (
-			<>
-				<HomePage_Leftbar />
-				<HomePage_Feeds />
-				<HomePage_Rightbar />
-			</>
-		);
-	}
 
 	return (
 		<Router>
@@ -31,15 +19,13 @@ function App() {
 				) : (
 					<div className="App">
 						<Header />
-						<div className="app_body">
-							<Routes>
-								<Route path="home/*" element={<Home />} />
-								<Route path="home/storyreels" element={<HomePage_StoryReels_Main/>}/>
-								<Route path="friendpage/*" element={<FriendsPage />}/>
-								<Route path="friendpage/allfriends" element={<FriendsPage_Leftbar_AllFriends />}/>
-								<Route path="userhomepage" element={<UserPage />} />
-							</Routes>
-						</div>
+						<Routes>
+							<Route path="homepage/*" element={<HomePage />} />
+							<Route path="homepage/storyreels" element={<HomePage_StoryReels_Main />} />
+							<Route path="friendpage/*" element={<FriendsPage />} />
+							<Route path="friendpage/allfriends" element={<FriendsPage_Leftbar_AllFriends />} />
+							<Route path="userhomepage" element={<UserPage />} />
+						</Routes>
 					</div>
 				)}
 			</>

@@ -1,0 +1,16 @@
+/* HomePage Section */
+.homepage {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+.homepage .homepage_SidebarsLeft,
+.homepage .homepage_SidebarsRight{
+    position: sticky;
+    top: 71px;
+    overflow-y: auto;
+    width: 280px;
+}

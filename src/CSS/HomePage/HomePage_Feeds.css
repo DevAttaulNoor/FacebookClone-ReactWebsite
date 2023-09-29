@@ -1,7 +1,5 @@
 .homepage_Feeds{
-    flex: 1;
-    padding: 20px 150px;
     display: flex;
     flex-direction: column;
-    max-width: 600px;
+    max-width: 593px;
 }

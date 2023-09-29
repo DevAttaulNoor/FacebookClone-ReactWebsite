@@ -9,10 +9,6 @@
     cursor: pointer;
 }
 
-.homepage_leftbarOptions:first-child{
-    margin-top: 15px;
-}
-
 .homepage_leftbarOptions p{
     font-weight: 500;
     padding-left: 8px;
