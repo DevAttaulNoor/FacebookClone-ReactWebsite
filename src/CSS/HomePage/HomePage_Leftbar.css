@@ -1,4 +1,22 @@
+.homepage_Leftbar{
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 .homepage_Leftbar a{
     text-decoration: none;
     color: initial;
+}
+
+.homepage_Leftbar .terms{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-left: 15px;
+    font-size: 12px;
+    font-weight: 400;
+    color: gray;
+}
+
+.homepage_Leftbar .terms p{
+    height: fit-content;
 }

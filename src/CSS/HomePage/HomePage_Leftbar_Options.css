@@ -18,3 +18,11 @@
     height: 36px;
     width: 36px;
 }
+
+.homepage_leftbarOptions .MuiSvgIcon-root{
+    height: 26px;
+    width: 26px;
+    padding: 5px;
+    border-radius: 50%;
+    background-color: #E4E6EB;
+}

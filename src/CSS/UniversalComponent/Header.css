@@ -110,7 +110,8 @@
     margin-right: 8px;
 }
 
-.header_right .MuiSvgIcon-root:hover{
+.header_right .MuiSvgIcon-root:hover,
+.header_right .MuiAvatar-img:hover{
     cursor: pointer;
     background-color: whitesmoke;
 }

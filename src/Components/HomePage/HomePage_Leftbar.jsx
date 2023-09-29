@@ -26,8 +26,18 @@ function HomePage_Leftbar() {
             {/* <HomePage_Leftbar_Options src='https://static.xx.fbcdn.net/rsrc.php/v3/yN/r/ATlxuj_J5ty.png' title='Ads Manager' />
             <HomePage_Leftbar_Options src='https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/fNPcDZC-2PD.png' title='Crisis response' /> */}
             <HomePage_Leftbar_Options Icon={ArrowDropDownIcon} title='See more' />
+
+            <div className='terms'>
+                <p>Privacy</p>
+                <p>Terms</p>
+                <p>Advertising</p>
+                <p>Ad choices</p>
+                <p>Cookies</p>
+                <p>Meta© 2023</p>
+            </div>
         </div>
     )
 }
 
-export default HomePage_Leftbar
+
+export default HomePage_Leftbar 
