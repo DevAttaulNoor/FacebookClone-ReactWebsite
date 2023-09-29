@@ -5,7 +5,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import FriendsPage_Leftbar_AllFriends from './FriendsPage_Leftbar_AllFriends';
+import FriendsPage_AllFriends from './FriendsPage_AllFriends';
 
 function FriendsPage_Leftbar() {
     return (
@@ -41,7 +41,7 @@ function FriendsPage_Leftbar() {
                 </NavLink>
 
                 <Routes>
-                    <Route path="allFriends" element={<FriendsPage_Leftbar_AllFriends />} />
+                    <Route path="allFriends" element={<FriendsPage_AllFriends />} />
                 </Routes>
 
                 <NavLink to="/friendpage/allFriends">

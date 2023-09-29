@@ -1,32 +1,30 @@
-import "../../CSS/UserPage/UserPage_Friends.css"
+import '../../CSS/FriendUserPage/FriendUserPage_Friends.css'
 import React, { useEffect, useState } from 'react'
-import { useStateValue } from '../BackendRelated/StateProvider'
+import { useParams } from 'react-router-dom';
 import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_AllFriends_Leftbar';
 
-function UserPage_Friends() {
-    const [{ user }, dispatch] = useStateValue();
+function FriendUserPage_Friends() {
+    const { friendUid } = useParams();
     const [friends, setFriends] = useState([]);
 
     useEffect(() => {
-        // Fetch friends data when user.uid changes
-        fetchFriendsData(user.uid, setFriends);
-    }, [user.uid]);
+        fetchFriendsData(friendUid, setFriends);
+    }, [friendUid]);
 
     useEffect(() => {
-        // Fetch friend details when friends array changes
         if (friends.length > 0) {
             fetchFriendDetailsData(friends, setFriends);
         }
     }, [friends]);
 
     return (
-        <div className='userpage_Friends'>
-            <div className="userpage_Friends_top">
+        <div className='frienduserpage_Friends'>
+            <div className="frienduserpage_FriendsTop">
                 <h2>Friends</h2>
                 <a href="#">See all friends</a>
             </div>
-            <div className="userpage_Friends_bottom">
-                <div className="userpage_friendsContainer">
+            <div className="frienduserpage_FriendsBottom">
+                <div className="frienduserpage_FriendsContainer">
                     {friends.map((friend) => (
                         <div className="friend">
                             <img src={friend.photoURL} alt="" />
@@ -39,4 +37,4 @@ function UserPage_Friends() {
     )
 }
 
-export default UserPage_Friends
+export default FriendUserPage_Friends

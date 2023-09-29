@@ -1,4 +1,4 @@
-import '../../CSS/FriendsPage/FriendsPage_Leftbar_AllFriends.css'
+import '../../CSS/FriendsPage/FriendsPage_AllFriends_Leftbar.css'
 import React, { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Avatar } from '@mui/material';
@@ -122,7 +122,7 @@ async function unfriendUser(loggedInUserUid, friendUid) {
     }
 }
 
-function FriendsPage_Leftbar_AllFriends() {
+function FriendsPage_AllFriends_Leftbar() {
     const [{ user }, dispatch] = useStateValue();
     const [friends, setFriends] = useState([]);
     const [dialogVisibility, setDialogVisibility] = useState({});
@@ -182,9 +182,9 @@ function FriendsPage_Leftbar_AllFriends() {
     };
 
     return (
-        <div className='friendspageLeftbar_Allfriends'>
-            <div className="friendspageLeftbar_AllfriendsTop">
-                <div className='friendspageLeftbar_AllfriendsTop_Top'>
+        <div className='friendspage_allfriends_Leftbar'>
+            <div className="friendspage_allfriends_LeftbarTop">
+                <div className='friendspage_allfriends_LeftbarTop_Top'>
                     <NavLink to="/friendpage">
                         <KeyboardBackspaceIcon />
                     </NavLink>
@@ -194,7 +194,7 @@ function FriendsPage_Leftbar_AllFriends() {
                     </div>
                 </div>
 
-                <div className="friendspageLeftbar_AllfriendsTop_Bottom">
+                <div className="friendspage_allfriends_LeftbarTop_Bottom">
                     <div className='searchInp'>
                         <SearchIcon />
                         <input type="text" placeholder='Search Friends' />
@@ -204,13 +204,15 @@ function FriendsPage_Leftbar_AllFriends() {
 
             <hr />
 
-            <div className="friendspageLeftbar_AllfriendsBottom">
+            <div className="friendspage_allfriends_LeftbarBottom">
                 <p id='friendsCount'>{friends.length} friend(s)</p>
                 {friends.map((friend) => (
                     <div className='friendsList' key={friend.friendUid}>
                         <div className='friendsListInfo'>
-                            <Avatar src={friend.photoURL} />
-                            <p id="friendName">{friend.username}</p>
+                            <NavLink to={`/frienduserpage/${friend.friendUid}`}>
+                                <Avatar src={friend.photoURL} />
+                                <p id="friendName">{friend.username}</p>
+                            </NavLink>
                         </div>
 
                         <div className={`unfriend ${dialogVisibility[friend.friendUid] ? 'clicked' : ''}`}>
@@ -233,4 +235,4 @@ function FriendsPage_Leftbar_AllFriends() {
 }
 
 export { fetchFriendsData, fetchFriendDetailsData };
-export default FriendsPage_Leftbar_AllFriends;
+export default FriendsPage_AllFriends_Leftbar;

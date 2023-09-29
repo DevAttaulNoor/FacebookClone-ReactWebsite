@@ -1,0 +1,15 @@
+/* friendspage_Allfriends Allfriends Section */
+.friendspage_Allfriends{
+    overflow: hidden;
+    display: flex;
+}
+
+.friendspage_Allfriends_leftbar{
+    position: sticky;
+    top: 0;
+}
+
+.friendspage_Allfriends_Main{
+    overflow-y: auto;
+    overflow-x: hidden;
+}

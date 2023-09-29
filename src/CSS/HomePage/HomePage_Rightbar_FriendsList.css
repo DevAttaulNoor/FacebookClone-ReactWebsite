@@ -24,6 +24,13 @@
     font-weight: 600;
 }
 
+.homepage_rightbar_friendListBody_Options a{
+    color: initial;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
 .homepage_rightbar_friendListTopRight svg{
     margin: 0 10px;
 }

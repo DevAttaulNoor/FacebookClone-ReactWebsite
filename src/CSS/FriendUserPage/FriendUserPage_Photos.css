@@ -1,4 +1,5 @@
-.userpage_Friends {
+/* FriendUserPage Photos Section */
+.frienduserpage_Photo{
     height: auto;
     width: 400px;
     background-color: #fff;
@@ -7,14 +8,14 @@
     padding: 18px;
 }
 
-.userpage_Friends_top {
+.frienduserpage_PhotoTop {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.userpage_Friends_top a {
+.frienduserpage_PhotoTop a {
     font-size: 17px;
     font-weight: 500;
     color: #1B74E4;
@@ -22,27 +23,23 @@
     padding: 8px;
 }
 
-.userpage_Friends_top a:hover{
+.frienduserpage_PhotoTop a:hover{
     background-color: whitesmoke;
     cursor: pointer;
 }
 
-.userpage_Friends_bottom {
+.frienduserpage_PhotoBottom {
     display: flex;
+    justify-content: center;
 }
 
-.userpage_friendsContainer {
+.grid-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    gap: 5px;
 }
 
-.userpage_friendsContainer img {
-    width: 125.5px;
+.grid-container img {
+    width: 130px;
     height: 120px;
-}
-
-.userpage_friendsContainer p {
-    font-size: 14px;
-    font-weight: 500;
 }
