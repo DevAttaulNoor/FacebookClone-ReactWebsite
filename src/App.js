@@ -24,7 +24,7 @@ function App() {
 							<Route path="homepage/*" element={<HomePage />} />
 							<Route path="homepage/storyreels" element={<HomePage_StoryReels_Main />} />
 							<Route path="friendpage/*" element={<FriendsPage />} />
-							<Route path="friendpage/allfriends" element={<FriendsPage_AllFriends />} />
+							<Route path="friendpage/allFriends/*" element={<FriendsPage_AllFriends />} />
 							<Route path="userhomepage" element={<UserPage />} />
 							<Route path="frienduserpage/:friendUid" element={<FriendUserPage />} />
 						</Routes>

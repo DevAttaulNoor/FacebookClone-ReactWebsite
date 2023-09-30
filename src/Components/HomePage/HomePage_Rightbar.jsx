@@ -9,6 +9,7 @@ function HomePage_Rightbar() {
             <div className="homepage_Rightbar_Top">
                 <HomePage_Rightbar_FriendsList />
             </div>
+            <hr id='line'/>
             <div className="homepage_Rightbar_Bottom">
                 <HomePage_Rightbar_GroupsList />
             </div>

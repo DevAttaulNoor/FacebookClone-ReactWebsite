@@ -1,21 +1,53 @@
-.homepage_rightbar_friendList{
-    position: sticky;
-    top: 0;
-    flex: 0.265;
-}
+/** HomePage Rightbar FriendsList Section */
 
+/* HomePage Rightbar FriendsList Top Section */
 .homepage_rightbar_friendListTop{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* margin-top: 20px; */
-    margin-bottom: 20px;
+    margin: 0 0 2px 10px;
 }
 
+.homepage_rightbar_friendListTopLeft h4{
+    color: #65676B;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.homepage_rightbar_friendListTopRight{
+    display: flex;
+    align-items: center;
+}
+
+.homepage_rightbar_friendListTopRight svg{
+    color: #65676B;
+    width: 22px;
+    height: 22px;
+    padding: 6px;
+    border-radius: 50%;
+}
+
+.homepage_rightbar_friendListTopRight svg:first-child{
+    margin-right: 4px;
+}
+
+.homepage_rightbar_friendListTopRight svg:hover{
+    cursor: pointer;
+    background-color: rgb(211 211 211/33%);
+}
+
+/* HomePage Rightbar FriendsList Body Section */
 .homepage_rightbar_friendListBody_Options{
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+}
+
+.homepage_rightbar_friendListBody_Options:hover{
+    cursor: pointer;
+    background-color: rgb(211 211 211/33%);
 }
 
 .homepage_rightbar_friendListBody_Options p{
@@ -29,8 +61,4 @@
     text-decoration: none;
     display: flex;
     align-items: center;
-}
-
-.homepage_rightbar_friendListTopRight svg{
-    margin: 0 10px;
 }

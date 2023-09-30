@@ -27,7 +27,7 @@ function HomePage_Rightbar_FriendsList() {
         <div className='homepage_rightbar_friendList'>
             <div className="homepage_rightbar_friendListTop">
                 <div className="homepage_rightbar_friendListTopLeft">
-                    <h4>Contact</h4>
+                    <h4>Contacts</h4>
                 </div>
                 <div className="homepage_rightbar_friendListTopRight">
                     <SearchIcon />

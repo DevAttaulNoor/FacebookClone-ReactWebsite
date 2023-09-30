@@ -43,7 +43,7 @@
 .homepage_feedsPostingOption{
     display: flex;
     align-items: center;
-    padding: 10px 32px;
+    padding: 8px 28px;
     border-radius: 20px;
     margin: 8px 0;
     cursor: pointer;
@@ -55,7 +55,7 @@
 }
 
 .homepage_feedsPostingOption p{
-    margin-left: 10px;
+    margin-left: 8px;
     font-size: 15px;
     font-weight: 500;
     color: grey;

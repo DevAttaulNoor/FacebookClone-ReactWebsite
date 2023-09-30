@@ -6,6 +6,7 @@
     width: 370px;
     background-color: #fff;
     padding: 15px;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
 }
 
 /* Friends All friends Leftbar Top Section*/
@@ -83,6 +84,7 @@
 }
 
 .friendspage_allfriends_LeftbarBottom #friendsCount {
+    margin: 0 0 8px 8px;
     font-size: 15px;
     font-weight: 600;
 }
@@ -91,7 +93,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px;
+    padding: 5px 8px;
     position: relative;
 }
 

@@ -1,6 +1,7 @@
 .homepage_Leftbar{
     overflow-y: auto;
     overflow-x: hidden;
+    margin-left: 8px;
 }
 
 .homepage_Leftbar a{

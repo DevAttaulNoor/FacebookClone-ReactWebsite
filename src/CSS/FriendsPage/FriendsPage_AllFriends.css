@@ -2,6 +2,7 @@
 .friendspage_Allfriends{
     overflow: hidden;
     display: flex;
+    height: 91.5vh;
 }
 
 .friendspage_Allfriends_leftbar{

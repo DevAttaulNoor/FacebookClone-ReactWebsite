@@ -1,7 +1,8 @@
 .homepage_leftbarOptions{
     display: flex;
     align-items: center;
-    padding: 8px 15px;
+    padding: 8px 10px;
+    border-radius: 8px;
 }
 
 .homepage_leftbarOptions:hover{
@@ -12,6 +13,7 @@
 .homepage_leftbarOptions p{
     font-weight: 500;
     padding-left: 8px;
+    font-size: 14px;
 }
 
 .homepage_leftbarOptions .MuiAvatar-root{

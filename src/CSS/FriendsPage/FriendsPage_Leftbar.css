@@ -6,6 +6,7 @@
     width: 385px;
     background-color: #fff;
     padding: 5px;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
 }
 
 .friendspageLeftbar_Top{

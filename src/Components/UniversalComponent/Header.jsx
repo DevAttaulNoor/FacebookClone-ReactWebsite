@@ -8,7 +8,6 @@ import { useStateValue } from '../BackendRelated/StateProvider';
 import SearchIcon from '@mui/icons-material/Search';
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
-import StorefrontIcon from '@mui/icons-material/Storefront';
 import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
 import GroupsIcon from '@mui/icons-material/Groups';
 import AppsIcon from '@mui/icons-material/Apps';
@@ -21,9 +20,14 @@ function Header() {
     const [isDialogVisible, setIsDialogVisible] = useState(false);
     const dialogBoxRef = useRef(null);
     const location = useLocation();
+    const friendPages = ['/friendpage', '/friendpage/', '/friendpage/allFriends', '/friendpage/friendReqs'];
+    const friendPagesActive = friendPages.some((page) => location.pathname === page);
 
     const pathsToHideHeader = ['/homepage/storyreels'];
     const showHeader = !pathsToHideHeader.includes(location.pathname);
+
+    // Check if the current location matches any of the active pages
+
 
     const handleSignOut = () => {
         sessionStorage.removeItem('userData');
@@ -89,15 +93,12 @@ function Header() {
                     </div>
                 </Link>
                 <Link to="/friendpage">
-                    <div className={`header_option ${location.pathname === '/friendpage' ? 'header_option_active' : ''}`}>
+                    <div className={`header_option ${friendPagesActive ? 'header_option_active' : ''}`}>
                         <PeopleIcon />
                     </div>
                 </Link>
                 <div className='header_option'>
                     <SmartDisplayIcon />
-                </div>
-                <div className='header_option'>
-                    <StorefrontIcon />
                 </div>
                 <div className='header_option'>
                     <GroupsIcon />

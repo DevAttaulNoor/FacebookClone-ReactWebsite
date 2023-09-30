@@ -1,39 +1,56 @@
-.homepage_rightbar_groupslist{
-    position: sticky;
-    top: 0;
-    flex: 0.265;
-}
+/** HomePage Rightbar GroupsList Section */
 
+/* HomePage Rightbar GroupsList Top Section */
 .homepage_rightbar_groupslistTop{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 10px 0 2px 10px;
 }
 
+.homepage_rightbar_groupslistTopLeft h4{
+    color: #65676B;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.homepage_rightbar_groupslistTopRight svg{
+    color: #65676B;
+    width: 22px;
+    height: 22px;
+    padding: 6px;
+    border-radius: 50%;
+}
+
+.homepage_rightbar_groupslistTopRight svg:hover{
+    cursor: pointer;
+    background-color: rgb(211 211 211/33%);
+}
+
+/* HomePage Rightbar GroupsList Body Section */
 .homepage_rightbar_groupslistBodyOptions{
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 8px;
 }
 
-.homepage_rightbar_groupslistBodyOptions h4{
+.homepage_rightbar_groupslistBodyOptions:hover{
+    cursor: pointer;
+    background-color: rgb(211 211 211/33%);
+}
+
+.homepage_rightbar_groupslistBodyOptions svg{
+    background-color: #E4E6EB;
+    width: 22px;
+    height: 22px;
+    padding: 9px;
+    border-radius: 50%;
+}
+
+.homepage_rightbar_groupslistBodyOptions p{
     margin-left: 10px;
     font-size: 14px;
-}
-
-.ml-10{
-    margin-left: 10px;
-}
-
-.ml-10 p{
-    font-size: 12px;
-    color: gray;
-}
-
-.ml-10 svg{
-    font-size: 16px;
-    color: gray;
-    margin-right: 10px;
+    font-weight: 600;
 }

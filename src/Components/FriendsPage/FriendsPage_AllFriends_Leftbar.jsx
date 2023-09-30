@@ -185,7 +185,7 @@ function FriendsPage_AllFriends_Leftbar() {
         <div className='friendspage_allfriends_Leftbar'>
             <div className="friendspage_allfriends_LeftbarTop">
                 <div className='friendspage_allfriends_LeftbarTop_Top'>
-                    <NavLink to="/friendpage">
+                    <NavLink to="/friendpage/">
                         <KeyboardBackspaceIcon />
                     </NavLink>
                     <div className='texts'>
@@ -209,7 +209,7 @@ function FriendsPage_AllFriends_Leftbar() {
                 {friends.map((friend) => (
                     <div className='friendsList' key={friend.friendUid}>
                         <div className='friendsListInfo'>
-                            <NavLink to={`/frienduserpage/${friend.friendUid}`}>
+                            <NavLink to={`/friendpage/allFriends/frienduserpage/${friend.friendUid}`}>
                                 <Avatar src={friend.photoURL} />
                                 <p id="friendName">{friend.username}</p>
                             </NavLink>
