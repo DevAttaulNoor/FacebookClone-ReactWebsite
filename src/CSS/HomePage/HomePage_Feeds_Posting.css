@@ -1,5 +1,5 @@
 /** HomePage Feed Posting Section */
-.homepage_feedsPosting{
+.homepage_feedsPosting {
     display: flex;
     flex-direction: column;
     background-color: #fff;
@@ -13,13 +13,13 @@
 }
 
 /* HomePage Feed Posting Top Section */
-.homepage_feedsPosting_top{
+.homepage_feedsPosting_top {
     display: flex;
     align-items: center;
     flex: 1;
 }
 
-.homepage_feedsPosting_top input{
+.homepage_feedsPosting_top input {
     width: 100%;
     background-color: transparent;
     border: 0;
@@ -33,7 +33,7 @@
 }
 
 /* HomePage Feed Posting Bottom Section */
-.homepage_feedsPosting_bottom{
+.homepage_feedsPosting_bottom {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -41,7 +41,7 @@
     margin-top: 15px;
 }
 
-.homepage_feedsPosting_bottomOption{
+.homepage_feedsPosting_bottomOption {
     display: flex;
     align-items: center;
     padding: 8px 28px;
@@ -50,24 +50,24 @@
     cursor: pointer;
 }
 
-.homepage_feedsPosting_bottomOption:hover{
+.homepage_feedsPosting_bottomOption:hover {
     border-radius: 8px;
     background-color: whitesmoke;
 }
 
-.homepage_feedsPosting_bottomOption p{
+.homepage_feedsPosting_bottomOption p {
     margin-left: 8px;
     font-size: 15px;
     font-weight: 500;
     color: grey;
 }
 
-.homepage_feedsPosting_bottomOption img{
+.homepage_feedsPosting_bottomOption img {
     font-size: large;
 }
 
 /** HomePage Feed Posting Modal Section */
-.postingModal{
+.postingModal {
     /* top: 50%;
     background-color: #fff;
     width: 460px;
@@ -87,7 +87,7 @@
     z-index: 999;
 }
 
-.postingModal .post_progress{
+.postingModal .post_progress {
     width: -webkit-fill-available;
     margin: 0 16px;
 }
@@ -96,14 +96,14 @@ progress {
     block-size: 4px;
 }
 
-.postingModal .image_progress{
+.postingModal .image_progress {
     font-size: 12px;
     font-weight: 500px;
     margin: 5px 0 0 16px;
     color: green;
 }
 
-.postingModal form #submitBtn{
+.postingModal form #submitBtn {
     font-size: 14px;
     font-weight: 600;
     color: #fff;
@@ -118,7 +118,7 @@ progress {
 }
 
 /* HomePage Feed Posting Modal Top Section */
-.postingModal_Top{
+.postingModal_Top {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -126,12 +126,12 @@ progress {
     height: 55px;
 }
 
-.postingModal_Top p{
+.postingModal_Top p {
     font-size: 19px;
     font-weight: 700;
 }
 
-.postingModal_Top .MuiSvgIcon-root{
+.postingModal_Top .MuiSvgIcon-root {
     position: absolute;
     top: 11px;
     right: 12px;
@@ -140,60 +140,71 @@ progress {
     background-color: #E4E6EB;
 }
 
-.postingModal_Top .MuiSvgIcon-root:hover{
+.postingModal_Top .MuiSvgIcon-root:hover {
     cursor: pointer;
 }
 
 /* HomePage Feed Posting Modal Middle Section */
-.postingModal_Middle{
+.postingModal_Middle {
     display: flex;
     flex-direction: column;
     padding: 14px;
+    padding-bottom: 0;
 }
 
-.postingModal_MiddleTop{
+.postingModal_MiddleTop {
     display: flex;
     align-items: center;
+    margin-bottom: 10px;
 }
 
-.postingModal_MiddleTop p{
+.postingModal_MiddleTop p {
     margin-left: 10px;
     font-size: 15px;
     font-weight: 600;
 }
 
-.postingModal_MiddleMiddle textarea{
+.postingModal_MiddleMiddle textarea {
     width: 100%;
     min-height: 100px;
+    font-size: 22px;
+    font-weight: 400;
     border: 0;
-    font-size: 25px;
     outline: 0;
     padding: 10px 0;
-    letter-spacing: 1px;
-    font-family: sans-serif;
     resize: none;
 }
 
-.postingModal_MiddleBottom{
+.postingModal_MiddleBottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
 }
 
-.postingModal_MiddleBottom img{
+.postingModal_MiddleBottom img {
     width: 40px;
 }
 
-.postingModal_MiddleBottom .MuiSvgIcon-root{
+.postingModal_MiddleBottom .MuiSvgIcon-root {
     color: lightgray;
     width: 26px;
     height: 26px;
 }
 
-.postingModal_MiddleBottom .emojiBox {
-    position: absolute;
-    top: -200px;
+.postingModal_MiddleBottom img:hover,
+.postingModal_MiddleBottom .MuiSvgIcon-root:hover{
+    cursor: pointer;
+}
+
+/* DropdownBox Section */
+.postingModal_MiddleBottom .EmojiPickerReact {
+    width: 260px !important;
+    height: 240px !important;
+    flex-direction: column-reverse !important;
+    border-radius: 8px !important;
+    position: absolute !important;
+    top: 30px;
     right: 20px;
     background-color: #fff;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
@@ -201,51 +212,33 @@ progress {
     z-index: 1;
 }
 
-.postingModal_MiddleBottom .emojiBox .EmojiPickerReact{
-    width: 260px !important;
-    height: 240px !important;
-    flex-direction: column-reverse !important;
-    border-radius: 0 !important;
-
-    scrollbar-width: thin; /* For Firefox */
-    scrollbar-color: #ccc #f0f0f0; /* Track and thumb colors */
-
-    /* Webkit-based browsers (Chrome, Safari) */
-    &::-webkit-scrollbar {
-        width: 4px !important; /* Width of the scrollbar */
-    }
-}
-
-.EmojiPickerReact .epr-header .epr-header-overlay{
+.EmojiPickerReact .epr-header .epr-header-overlay {
     display: none;
 }
 
-.EmojiPickerReact .epr-category-nav{
-    padding: 5px !important;
+.EmojiPickerReact .epr-category-nav {
+    padding: 3px !important;
     border-top: 1px solid lightgrey;
 }
 
 .EmojiPickerReact li.epr-emoji-category>.epr-emoji-category-content {
-    grid-gap: 0;
-    display: grid;
-    grid-template-columns: repeat(10, 1fr) !important;
+    grid-template-columns: repeat(8, 1fr) !important;
     margin: 0 !important;
-    position: relative;
 }
 
 .EmojiPickerReact button.epr-emoji .epr-emoji-img {
-    max-height: 15px !important;
-    max-width: 15px !important;
-    min-height: 15px !important;
-    min-width: 15px !important;
+    max-height: 35px !important;
+    max-width: 35px !important;
+    min-height: 35px !important;
+    min-width: 35px !important;
     padding: 4px !important;
 }
 
 .EmojiPickerReact button.epr-emoji {
-    height: 15px !important;
-    max-height: 15px !important;
-    max-width: 15px !important;
-    width: 15px !important;
+    height: 35px !important;
+    max-height: 35px !important;
+    max-width: 35px !important;
+    width: 35px !important;
 }
 
 .EmojiPickerReact .epr-preview {
@@ -253,43 +246,28 @@ progress {
 }
 
 .EmojiPickerReact li.epr-emoji-category>.epr-emoji-category-label {
-    align-items: center;
-    -webkit-backdrop-filter: blur(3px);
-    backdrop-filter: blur(3px);
-    background-color: var(--epr-category-label-bg-color);
-    color: var(--epr-category-label-text-color);
-    display: flex;
     font-size: 13px !important;
     font-weight: 500 !important;
     height: min-content !important;
     padding: 0px !important;
-    position: -webkit-sticky;
-    position: sticky;
-    text-transform: capitalize;
-    top: 0;
-    width: 100%;
-    z-index: var(--epr-category-label-z-index);
 }
 
 .EmojiPickerReact .epr-category-nav {
-    display: flex;
-    flex-direction: row;
     justify-content: initial !important;
-    padding: var(--epr-header-padding);
 }
 
 /* HomePage Feed Posting Modal Bottom Section */
-.postingModal_Bottom{
+.postingModal_Bottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
     border: 1px solid lightgray;
     border-radius: 10px;
     margin: 14px 14px 5px 14px;
-    padding: 13px 10px;
+    padding: 12px 10px;
 }
 
-.postingModal_BottomLeft p{
+.postingModal_BottomLeft p {
     font-size: 15px;
     font-weight: 600;
 }

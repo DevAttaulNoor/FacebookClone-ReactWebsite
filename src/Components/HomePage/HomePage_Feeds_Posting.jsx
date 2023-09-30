@@ -5,7 +5,7 @@ import { db, storage } from "../BackendRelated/Firebase";
 import { Avatar, IconButton, Modal } from '@mui/material';
 import firebase from "firebase/compat/app";
 import CloseIcon from '@mui/icons-material/Close';
-import EmojiPicker from 'emoji-picker-react'; // Import the emoji picker component
+import EmojiPicker from 'emoji-picker-react'; 
 import SentimentSatisfiedAltOutlinedIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
 import bgcolorIcon from '../../Imgs/Aa.png'
 
@@ -15,8 +15,7 @@ function HomePage_Feeds_Posting() {
     const [image, setImage] = useState("");
     const [message, setMessage] = useState("");
     const [progress, setProgress] = useState(0);
-    const [selectedEmoji, setSelectedEmoji] = useState(""); // Add this state variable
-    const [showEmojiPicker, setShowEmojiPicker] = useState(false); // Add this state variable
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false); 
     const [isDialogVisible, setIsDialogVisible] = useState(false);
     const dialogBoxRef = useRef(null);
 
@@ -94,10 +93,11 @@ function HomePage_Feeds_Posting() {
         setShowEmojiPicker(!showEmojiPicker); // Toggle the state to show/hide the emoji picker
     };
 
-    const handleEmojiClick = (event, emojiObject) => {
-        setMessage(message + emojiObject.emoji); // Append the selected emoji to the message
-        toggleEmojiPicker(); // Close the emoji picker after selecting an emoji
+    const handleEmojiClick = (event) => {
+        setMessage((prevMessage) => prevMessage + event.emoji);
+        toggleEmojiPicker();
     };
+
 
     const toggleDialog = () => {
         setIsDialogVisible(!isDialogVisible);
@@ -154,18 +154,16 @@ function HomePage_Feeds_Posting() {
                                 <p>{user.displayName}</p>
                             </div>
                             <div className="postingModal_MiddleMiddle">
-                                <textarea cols="5" placeholder="What's on your mind" onChange={e => setMessage(e.target.value)}>{message}</textarea>
+                                <textarea cols="5" placeholder="What's on your mind" value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
                             </div>
                             <div className="postingModal_MiddleBottom">
                                 <img src={bgcolorIcon} alt="" />
                                 <SentimentSatisfiedAltOutlinedIcon onClick={toggleDialog} ref={dialogBoxRef} />
                                 {isDialogVisible && (
-                                    <div className="emojiBox">
-                                        <EmojiPicker onEmojiClick={handleEmojiClick} />
-                                    </div>
+                                    <EmojiPicker onEmojiClick={handleEmojiClick} />
                                 )}
                             </div>
-                            
+
                             <input type="file" id='imageFile' onChange={handleChange} style={{ display: 'none' }} />
                         </div>
 
