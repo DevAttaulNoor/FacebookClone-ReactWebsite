@@ -1,17 +1,24 @@
 import "../../CSS/HomePage/HomePage_Feeds_Posting.css";
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useStateValue } from "../BackendRelated/StateProvider";
 import { db, storage } from "../BackendRelated/Firebase";
 import { Avatar, IconButton, Modal } from '@mui/material';
 import firebase from "firebase/compat/app";
 import CloseIcon from '@mui/icons-material/Close';
+import EmojiPicker from 'emoji-picker-react'; // Import the emoji picker component
+import SentimentSatisfiedAltOutlinedIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
+import bgcolorIcon from '../../Imgs/Aa.png'
 
 function HomePage_Feeds_Posting() {
     const [{ user }, dispatch] = useStateValue();
     const [open, setOpen] = useState(false);
-    const [image, setImage] = useState("")
-    const [message, setMessage] = useState("")
+    const [image, setImage] = useState("");
+    const [message, setMessage] = useState("");
     const [progress, setProgress] = useState(0);
+    const [selectedEmoji, setSelectedEmoji] = useState(""); // Add this state variable
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false); // Add this state variable
+    const [isDialogVisible, setIsDialogVisible] = useState(false);
+    const dialogBoxRef = useRef(null);
 
     const handleClose = () => {
         setOpen(false)
@@ -83,57 +90,93 @@ function HomePage_Feeds_Posting() {
         }
     }
 
+    const toggleEmojiPicker = () => {
+        setShowEmojiPicker(!showEmojiPicker); // Toggle the state to show/hide the emoji picker
+    };
+
+    const handleEmojiClick = (event, emojiObject) => {
+        setMessage(message + emojiObject.emoji); // Append the selected emoji to the message
+        toggleEmojiPicker(); // Close the emoji picker after selecting an emoji
+    };
+
+    const toggleDialog = () => {
+        setIsDialogVisible(!isDialogVisible);
+    };
+
+    useEffect(() => {
+        const handleOutsideClick = (e) => {
+            if (dialogBoxRef.current && !dialogBoxRef.current.contains(e.target)) {
+                setIsDialogVisible(false);
+            }
+        };
+
+        window.addEventListener("click", handleOutsideClick);
+
+        // Cleanup the event listener when the component unmounts
+        return () => {
+            window.removeEventListener("click", handleOutsideClick);
+        };
+    }, []);
+
     return (
         <div className='homepage_feedsPosting'>
             <div className="homepage_feedsPosting_top">
                 <Avatar src={user.photoURL} />
-                <form action="">
-                    <input type="text" placeholder={`What's on your mind ${user.displayName}`} onClick={handleOpen} />
-                </form>
+                <input type="text" placeholder={`What's on your mind ${user.displayName}`} onClick={handleOpen} />
             </div>
-            
+
             <div className="homepage_feedsPosting_bottom">
-                <div className="homepage_feedsPostingOption">
+                <div className="homepage_feedsPosting_bottomOption">
                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/c0dWho49-X3.png?_nc_eui2=AeHnEIjVawZBI76yMIMwddXsVnUPE18ZZ-dWdQ8TXxln51Q2S_zbzfHpnn234I7BWgTtb2IssbzIPCV_o410lzBg" alt="" />
                     <p>Live Video</p>
                 </div>
-                <div className="homepage_feedsPostingOption">
+                <div className="homepage_feedsPosting_bottomOption" onClick={handleOpen}>
                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j" alt="" />
                     <p>Photo/Video</p>
                 </div>
-                <div className="homepage_feedsPostingOption">
+                <div className="homepage_feedsPosting_bottomOption">
                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Y4mYLVOhTwq.png?_nc_eui2=AeHSN24y7ZwUiP0ks-vc5M5LvPIN-OmHLJy88g346YcsnMgGxvtWqzXUT3WG--zLIURpvgdh0oglkNtF3k-n2n77" alt="" />
                     <p>Feeling/Activity</p>
                 </div>
             </div>
 
             <Modal open={open} onClose={handleClose}>
-                <div className="modal_pop">
+                <div className="postingModal">
                     <form action="">
-                        <div className="modalHeading">
-                            <h3>Create Post</h3>
-                            <IconButton onClick={handleClose}>
-                                <CloseIcon />
-                            </IconButton>
+                        <div className="postingModal_Top">
+                            <p>Create Post</p>
+                            <CloseIcon onClick={handleClose} />
                         </div>
-                        <div className="modalHeader_top">
-                            <Avatar src={user.photoURL} />
-                            <h5>{user.displayName}</h5>
-                        </div>
-                        <div className="modalBody">
-                            <textarea cols="5" placeholder="What's on your mind" onChange={e => setMessage(e.target.value)}>{message}</textarea>
-                        </div>
-                        <div className="modalFooter">
-                            <div className="modalFooterLeft">
-                                <h4>Add to your post</h4>
+
+                        <div className="postingModal_Middle">
+                            <div className="postingModal_MiddleTop">
+                                <Avatar src={user.photoURL} />
+                                <p>{user.displayName}</p>
                             </div>
-                            <div className="modalFooterRight">
+                            <div className="postingModal_MiddleMiddle">
+                                <textarea cols="5" placeholder="What's on your mind" onChange={e => setMessage(e.target.value)}>{message}</textarea>
+                            </div>
+                            <div className="postingModal_MiddleBottom">
+                                <img src={bgcolorIcon} alt="" />
+                                <SentimentSatisfiedAltOutlinedIcon onClick={toggleDialog} ref={dialogBoxRef} />
+                                {isDialogVisible && (
+                                    <div className="emojiBox">
+                                        <EmojiPicker onEmojiClick={handleEmojiClick} />
+                                    </div>
+                                )}
+                            </div>
+                            
+                            <input type="file" id='imageFile' onChange={handleChange} style={{ display: 'none' }} />
+                        </div>
+
+                        <div className="postingModal_Bottom">
+                            <div className="postingModal_BottomLeft">
+                                <p>Add to your post</p>
+                            </div>
+                            <div className="postingModal_BottomRight">
                                 <IconButton>
                                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j" alt="" onClick={uploadWithClick} />
                                 </IconButton>
-
-                                <input type="file" id='imageFile' onChange={handleChange} style={{ display: 'none' }} />
-
                                 <IconButton>
                                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/c0dWho49-X3.png?_nc_eui2=AeHnEIjVawZBI76yMIMwddXsVnUPE18ZZ-dWdQ8TXxln51Q2S_zbzfHpnn234I7BWgTtb2IssbzIPCV_o410lzBg" alt="" />
                                 </IconButton>
@@ -142,13 +185,13 @@ function HomePage_Feeds_Posting() {
                                 </IconButton>
                             </div>
                         </div>
-                        {image !== "" && <h2 className='image_progress'>Image is added</h2>}
+                        {image !== "" && <personalbar className='image_progress'>Image is added</personalbar>}
                         {progress != "" && <progress className='post_progress' value={progress} max="100" />}
-                        <input type="submit" className='post_submit' onClick={handleUpload} value="Post" />
+                        <button type="submit" id="submitBtn" onClick={handleUpload}>Post</button>
                     </form>
                 </div>
-            </Modal>
-        </div>
+            </Modal >
+        </div >
     )
 }
 
