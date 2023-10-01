@@ -1,25 +1,18 @@
 import '../../CSS/HomePage/HomePage_StoryReels.css'
-import { NavLink, Route, Routes } from 'react-router-dom';
 import React from 'react'
-import AddIcon from '@mui/icons-material/Add';
-import HomePage_StoryReels_Main from './HomePage_StoryReels_Main';
+import HomePage_StoryReels_Main from './HomePage_StoryReels_Main'
+import HomePage_StoryReels_Leftbar from './HomePage_StoryReels_Leftbar'
 
 function HomePage_StoryReels() {
     return (
-        <div className='homepageStoryReels'>
-            <Routes>
-                <Route path='storyreels' element={<HomePage_StoryReels_Main />} />
-            </Routes>
+        <div className='homepage_StoryReels'>
+            <div className="homepage_StoryReels_Leftbar">
+                <HomePage_StoryReels_Leftbar />
+            </div>
 
-            <NavLink to={'/homepage/storyreels'}>
-                <div className="homepageStoryReels_Inner">
-                    <AddIcon />
-                    <div className='homepageStoryReels_InnerInfo'>
-                        <h2>Create Story</h2>
-                        <p>Share a photo or write something.</p>
-                    </div>
-                </div>
-            </NavLink>
+            <div className="homepage_StoryReels_Main">
+                <HomePage_StoryReels_Main />
+            </div>
         </div>
     )
 }

@@ -4,7 +4,6 @@ import { db } from '../BackendRelated/Firebase'
 import HomePage_Feeds_StoryReels from './HomePage_Feeds_StoryReels'
 import HomePage_Feeds_Posts from './HomePage_Feeds_Posts'
 import HomePage_Feeds_Posting from './HomePage_Feeds_Posting'
-import HomePage_StoryReels from './HomePage_StoryReels'
 
 function HomePage_Feeds() {
     const [posts, setPosts] = useState([]);
@@ -58,8 +57,7 @@ function HomePage_Feeds() {
 
     return (
         <div className='homepage_Feeds'>
-            {/* <HomePage_Feeds_StoryReels/> */}
-            <HomePage_StoryReels/>
+            <HomePage_Feeds_StoryReels/>
             <HomePage_Feeds_Posting/>
             {
                 posts.map(post => {

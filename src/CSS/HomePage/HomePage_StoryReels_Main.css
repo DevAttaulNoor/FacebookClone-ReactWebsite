@@ -4,59 +4,6 @@
     display: flex;
 }
 
-/* HomePage StoryReels Main Sidebar Section */
-.homepage_storyreels_Main_Sidebar{
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 290px;
-    background-color: #fff;
-    padding: 5px;
-    position: sticky;
-    top: 0;
-    padding: 15px;
-    position: relative;
-}
-
-/* HomePage StoryReels Main Sidebar Top Section */
-.homepage_storyreels_Main_SidebarTop{
-}
-
-.homepage_storyreels_Main_SidebarTop_Top{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.homepage_storyreels_Main_SidebarTop_Top p{
-    font-size: 22px;
-    font-weight: 700;
-}
-
-.homepage_storyreels_Main_SidebarTop_Top .MuiSvgIcon-root{
-    padding: 5px;
-    border-radius: 50%;
-    background-color: whitesmoke;
-    position: absolute;
-    right: 10px;
-}
-
-.homepage_storyreels_Main_SidebarTop_Bottom{
-    display: flex;
-    align-items: center;
-    margin: 10px 0 15px 0;
-}
-
-.homepage_storyreels_Main_SidebarTop_Bottom p{
-    font-weight: 600;
-    margin-left: 10px;
-}
-
-.homepage_storyreels_Main_SidebarTop_Top .MuiSvgIcon-root:hover{
-    cursor: pointer;
-    background-color: rgb(167, 167, 167);
-}
-
 /* HomePage StoryReels Main Body Section */
 .homepage_storyreels_Main_Body{
     display: flex;
@@ -74,6 +21,10 @@
     width: 220px;
     height: 330px;
     border-radius: 10px;
+}
+
+.homepage_storyreels_Main_BodyCard:hover{
+    cursor: pointer;
 }
 
 .homepage_storyreels_Main_BodyCard img,

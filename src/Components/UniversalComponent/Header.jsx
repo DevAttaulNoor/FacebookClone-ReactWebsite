@@ -26,8 +26,6 @@ function Header() {
     const pathsToHideHeader = ['/homepage/storyreels'];
     const showHeader = !pathsToHideHeader.includes(location.pathname);
 
-    // Check if the current location matches any of the active pages
-
 
     const handleSignOut = () => {
         sessionStorage.removeItem('userData');

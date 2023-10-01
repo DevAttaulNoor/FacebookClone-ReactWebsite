@@ -1,0 +1,64 @@
+/* HomePage StoryReels Leftbar Section */
+.homepage_storyreels_Leftbar{
+    display: flex;
+    flex-direction: column;
+    height: 86.5vh;
+    width: 320px;
+    background-color: #fff;
+    padding: 5px;
+    position: sticky;
+    top: 0;
+    padding: 15px 0;
+    position: relative;
+}
+
+.homepage_storyreels_Leftbar #line{
+    color: lightgray;
+}
+
+/* HomePage StoryReels Main Sidebar Top Section */
+.homepage_storyreels_LeftbarTop{
+    padding: 0 15px;
+}
+
+.homepage_storyreels_LeftbarTop_Top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.homepage_storyreels_LeftbarTop_Top p{
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.homepage_storyreels_LeftbarTop_Top .MuiSvgIcon-root{
+    padding: 5px;
+    border-radius: 50%;
+    background-color: whitesmoke;
+    position: absolute;
+    right: 10px;
+}
+
+.homepage_storyreels_LeftbarTop_Bottom{
+    display: flex;
+    align-items: center;
+    margin: 20px 0 25px 0;
+}
+
+.homepage_storyreels_LeftbarTop_Bottom img{
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+}
+
+.homepage_storyreels_LeftbarTop_Bottom p{
+    font-weight: 600;
+    font-size: 15px;
+    margin-left: 10px;
+}
+
+.homepage_storyreels_LeftbarTop_Top .MuiSvgIcon-root:hover{
+    cursor: pointer;
+    background-color: rgb(167, 167, 167);
+}
