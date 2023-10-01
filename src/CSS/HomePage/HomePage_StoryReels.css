@@ -2,13 +2,14 @@
 .homepage_StoryReels{
     display: flex;
     align-items: center;
-    overflow-x: hidden;
 }
 
 .homepage_StoryReels_Leftbar{
-    
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .homepage_StoryReels_Main{
-
+    overflow-y: hidden;
+    overflow-x: hidden;
 }

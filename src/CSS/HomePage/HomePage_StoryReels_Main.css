@@ -1,15 +1,15 @@
 /* HomePage StoryReels Main */
 .homepage_storyreels_Main{
-    overflow: hidden;
     display: flex;
 }
 
 /* HomePage StoryReels Main Body Section */
 .homepage_storyreels_Main_Body{
     display: flex;
+    align-items: center;
     justify-content: center;
     align-items: center;
-    width: 1140px;
+    width: 1120px;
 }
 
 .homepage_storyreels_Main_BodyCard{
