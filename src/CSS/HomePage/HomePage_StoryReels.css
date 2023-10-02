@@ -1,15 +1,248 @@
 /* HomePage Story Reels */
-.homepage_StoryReels{
+.homepage_storyreels{
+    display: flex;
+    height: 90vh;
+}
+
+/* HomePage StoryReels Leftbar Section */
+.homepage_storyreels_Leftbar{
+    position: relative;
+    width: 320px;
+    background-color: #fff;
+}
+
+/* HomePage StoryReels Main Sidebar Top Section */
+.homepage_storyreels_Leftbar_Top{
+    display: flex;
+    flex-direction: column;
+}
+
+.homepage_storyreels_Leftbar_Top #line{
+    background-color: whitesmoke;
+}
+
+/* HomePage StoryReels Main Sidebar TopTop Section */
+.homepage_storyreels_Leftbar_TopTop{
+    padding: 0 15px;
+}
+
+.homepage_storyreels_Leftbar_TopTop_heading{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.homepage_storyreels_Leftbar_TopTop_heading p{
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.homepage_storyreels_Leftbar_TopTop_heading .MuiSvgIcon-root{
+    padding: 5px;
+    border-radius: 50%;
+    background-color: whitesmoke;
+    position: absolute;
+    right: 10px;
+}
+
+.homepage_storyreels_Leftbar_TopTop_heading .MuiSvgIcon-root:hover{
+    cursor: pointer;
+    background-color: rgb(167, 167, 167);
+}
+
+.homepage_storyreels_Leftbar_TopTop_userinfo{
+    display: flex;
+    align-items: center;
+    margin: 20px 0 25px 0;
+}
+
+.homepage_storyreels_Leftbar_TopTop_userinfo img{
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+}
+
+.homepage_storyreels_Leftbar_TopTop_userinfo p{
+    font-weight: 600;
+    font-size: 15px;
+    margin-left: 10px;
+}
+
+/* HomePage StoryReels Main Sidebar TopBottom Section */
+.homepage_storyreels_Leftbar_TopBottom{
+    padding: 0 15px;
+    margin: 15px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#showtextForphoto {
+    font-size: 15px;
+    font-weight: 500;
+    padding: 15px 10px;
+    border-radius: 8px;
+    margin: 15px 15px 0 15px;
+}
+
+#showtextForphoto:hover{
+    cursor: pointer;
+    background-color: #E4E6EB;
+}
+
+.homepage_storyreels_Leftbar_TopBottom textarea{
+    margin-bottom: 15px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    resize: none;
+    outline: none;
+    padding: 15px;
+}
+
+.homepage_storyreels_Leftbar_TopBottom select{
+    margin-bottom: 15px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    outline: none;
+    padding: 15px 12px;
+    font-size: 14px;
+}
+
+.homepage_storyreels_Leftbar_TopBottom select option{
+    font-size: 14px;
+}
+
+.homepage_storyreels_Leftbar_TopBottom .bgColors{
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    padding: 12px 15px;
+}
+
+.homepage_storyreels_Leftbar_TopBottom .bgColors p{
+    font-size: 14px;
+    font-weight: 400;
+    color: #65676B;
+    margin-bottom: 10px;
+}
+
+.homepage_storyreels_Leftbar_TopBottom .bgColors .bgColorsInner {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-gap: 5px;
+    justify-items: center;
+    align-items: center;
+}
+
+.homepage_storyreels_Leftbar_TopBottom .bgColors .bgColorsInner .dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 3px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.homepage_storyreels_Leftbar_TopBottom .bgColors .bgColorsInner .dot:hover{
+    cursor: pointer;
+}
+
+.homepage_storyreels_Leftbar_TopBottom .bgColors .bgColorsInner .dot.active {
+    border-color: #0866FF;
+}
+
+.red { background-color: red; }
+.blue { background-color: blue; }
+.green { background-color: green; }
+.yellow { background-color: yellow; }
+.black { background-color:black; }
+.brown { background-color:brown; }
+.blueviolet { background-color:blueviolet; }
+.cyan { background-color:cyan; }
+.gold { background-color:gold; }
+.violet { background-color:violet; }
+.silver { background-color:silver; }
+.purple { background-color:purple; }
+
+/* HomePage StoryReels Main Sidebar Bottom Section */
+.homepage_storyreels_Leftbar_Bottom{
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;
+    gap: 8px;
+    position: fixed;
+    bottom: 0;
+    padding: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    width: 296px;
+    background-color: #fff;
+}
+
+.homepage_storyreels_Leftbar_Bottom button{
+    padding: 8px 12px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.homepage_storyreels_Leftbar_Bottom button:hover{
+    cursor: pointer;
+}
+
+.homepage_storyreels_Leftbar_Bottom #discardBtn{
+    color: #000;
+    background-color: #E4E6EB;
+}
+
+.homepage_storyreels_Leftbar_Bottom #shareBtn{
+    color: #fff;
+    background-color: #0866FF;
+}
+
+/* HomePage StoryReels Main */
+.homepage_storyreels_Main{
     display: flex;
     align-items: center;
 }
 
-.homepage_StoryReels_Leftbar{
-    overflow-y: auto;
-    overflow-x: hidden;
+/* HomePage StoryReels Main Body Section */
+.homepage_storyreels_Main_Body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1120px;
 }
 
-.homepage_StoryReels_Main{
-    overflow-y: hidden;
-    overflow-x: hidden;
+.homepage_storyreels_Main_BodyCard{
+    background: radial-gradient(circle, #003cff, #21e5ff);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 220px;
+    height: 330px;
+    border-radius: 10px;
+}
+
+.homepage_storyreels_Main_BodyCard:hover{
+    cursor: pointer;
+}
+
+.homepage_storyreels_Main_BodyCard img,
+.homepage_storyreels_Main_BodyCard .MuiSvgIcon-root{
+    padding: 8px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0px 0px 3px #ccc;
+    margin-bottom: 5px;
+}
+
+.homepage_storyreels_Main_BodyCard p{
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.homepage_storyreels_Main_BodyCard.Photo{
+    margin-right: 15px;
 }
