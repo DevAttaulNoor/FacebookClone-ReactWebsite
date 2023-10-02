@@ -13,9 +13,10 @@ function HomePage_StoryReels() {
     const [showPhotoContent, setShowPhotoContent] = useState(false);
     const [showAddText, setShowAddText] = useState(false);
     const [showCards, setShowCards] = useState(true);
+    const [textAreaValue, setTextAreaValue] = useState(""); // Added state for textarea value
 
 
-    const colors = ['red', 'blue', 'green', 'black', 'brown', 'yellow', 'blueviolet', 'cyan', 'gold', 'violet', 'silver', 'purple'];
+    const colors = ['blue', 'red', 'green', 'black', 'brown', 'yellow', 'blueviolet', 'cyan', 'gold', 'violet', 'silver', 'purple'];
 
     const handleDotClick = (color) => {
         setActiveDot(color);
@@ -48,6 +49,10 @@ function HomePage_StoryReels() {
         setShowCards(true);
     };
 
+    const handleTextAreaChange = (event) => {
+        setTextAreaValue(event.target.value);
+    };
+
     return (
         <div className="homepage_storyreels">
             <div className='homepage_storyreels_Leftbar'>
@@ -66,7 +71,12 @@ function HomePage_StoryReels() {
                     <hr id='line' />
 
                     <div className="homepage_storyreels_Leftbar_TopBottom forText" style={{ display: showForText ? 'flex' : 'none' }}>
-                        <textarea rows="7" m placeholder='Start typing'></textarea>
+                        <textarea
+                            rows="7"
+                            placeholder='Start typing'
+                            value={textAreaValue}
+                            onChange={handleTextAreaChange}
+                        ></textarea>
 
                         <select name="texts">
                             <option value="Simple">Simple</option>
@@ -158,19 +168,23 @@ function HomePage_StoryReels() {
                         {/* Conditional rendering of content div */}
                         {showTextContent || showPhotoContent ? (
                             <div className="contentDiv">
-                                {/* Content for Text Story */}
                                 {showTextContent && (
                                     <div className="textStoryContent">
-                                        {/* Add your text story content here */}
-                                        Text content
+                                        <p>Preview</p>
+                                        <div className="textStoryContent_Inner">
+                                            <div className="textStoryWindow">
+                                                <p>{textAreaValue}</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 )}
 
                                 {/* Content for Photo Story */}
                                 {showPhotoContent && (
                                     <div className="photoStoryContent">
-                                        {/* Add your photo story content here */}
-                                        Photo content
+                                        <p>Peview</p>
+                                        <div className="photoStoryWindow">
+                                        </div>
                                     </div>
                                 )}
                             </div>
