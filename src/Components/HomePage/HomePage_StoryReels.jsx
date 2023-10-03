@@ -1,5 +1,5 @@
 import '../../CSS/HomePage/HomePage_StoryReels.css'
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useStateValue } from '../BackendRelated/StateProvider';
 import TitleIcon from '@mui/icons-material/Title';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -14,7 +14,8 @@ function HomePage_StoryReels() {
     const [showAddText, setShowAddText] = useState(false);
     const [showCards, setShowCards] = useState(true);
     const [textAreaValue, setTextAreaValue] = useState(""); // Added state for textarea value
-
+    const [selectedImage, setSelectedImage] = useState(null);
+    const inputRef = useRef(null);
 
     const colors = ['blue', 'red', 'green', 'black', 'brown', 'yellow', 'blueviolet', 'cyan', 'gold', 'violet', 'silver', 'purple'];
 
@@ -38,6 +39,7 @@ function HomePage_StoryReels() {
         setShowForPhoto(false);
         setShowPhotoContent(true);
         setShowCards(false);
+        inputRef.current.click();
     };
 
     const handleDiscardClick = () => {
@@ -47,10 +49,16 @@ function HomePage_StoryReels() {
         setShowPhotoContent(false);
         setShowAddText(false);
         setShowCards(true);
+        setSelectedImage(null); // Reset selectedImage to null
     };
 
     const handleTextAreaChange = (event) => {
         setTextAreaValue(event.target.value);
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0]; // Get the selected file
+        setSelectedImage(file); // Store the selected file in state
     };
 
     return (
@@ -115,6 +123,13 @@ function HomePage_StoryReels() {
                     </p>
 
                     <div className="homepage_storyreels_Leftbar_TopBottom forPhoto" style={{ display: showForPhoto ? 'flex' : 'none' }}>
+                        <textarea
+                            rows="7"
+                            placeholder='Start typing'
+                            value={textAreaValue}
+                            onChange={handleTextAreaChange}
+                        ></textarea>
+
                         <select name="texts">
                             <option value="Simple">Simple</option>
                             <option value="Clean">Clean</option>
@@ -151,11 +166,19 @@ function HomePage_StoryReels() {
                             className="homepage_storyreels_Main_BodyCard Photo"
                             style={{ display: showCards ? 'flex' : 'none' }}
                             onClick={handleAddPhotoClick}
+
                         >
                             <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j" alt="" />
                             <p>Create a Photo Story</p>
-                        </div>
 
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                className="hidden-input"
+                                ref={inputRef}
+                            />
+                        </div>
                         <div
                             className="homepage_storyreels_Main_BodyCard Text"
                             style={{ display: showCards ? 'flex' : 'none' }}
@@ -183,7 +206,13 @@ function HomePage_StoryReels() {
                                 {showPhotoContent && (
                                     <div className="photoStoryContent">
                                         <p>Peview</p>
-                                        <div className="photoStoryWindow">
+                                        <div className="photoStoryContent_Inner">
+                                            <div className="photoStoryWindow">
+                                                {selectedImage && (
+                                                    <img src={URL.createObjectURL(selectedImage)} alt="Selected" />
+                                                )}
+                                                <p>{textAreaValue}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 )}

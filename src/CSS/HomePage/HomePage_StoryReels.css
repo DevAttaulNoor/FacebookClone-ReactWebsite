@@ -248,7 +248,8 @@
     width: 1120px;
 }
 
-.homepage_storyreels_Main_Body .contentDiv .textStoryContent {
+.homepage_storyreels_Main_Body .contentDiv .textStoryContent,
+.homepage_storyreels_Main_Body .contentDiv .photoStoryContent {
     padding: 18px;
     width: 885px;
     height: 550px;
@@ -257,12 +258,14 @@
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 }
 
-.homepage_storyreels_Main_Body .contentDiv .textStoryContent p {
+.homepage_storyreels_Main_Body .contentDiv .textStoryContent p,
+.homepage_storyreels_Main_Body .contentDiv .photoStoryContent p {
     font-size: 14px;
     font-weight: 500;
 }
 
-.homepage_storyreels_Main_Body .contentDiv .textStoryContent .textStoryContent_Inner {
+.homepage_storyreels_Main_Body .contentDiv .textStoryContent .textStoryContent_Inner,
+.homepage_storyreels_Main_Body .contentDiv .photoStoryContent .photoStoryContent_Inner {
     margin: 15px 0;
     border-radius: 8px;
     height: -webkit-fill-available;
@@ -284,23 +287,60 @@
     width: 200px;
 }
 
+.homepage_storyreels_Main_Body .contentDiv .photoStoryContent .photoStoryContent_Inner .photoStoryWindow {
+    height: -webkit-fill-available;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+}
+
+.homepage_storyreels_Main_Body .contentDiv .photoStoryContent .photoStoryContent_Inner .photoStoryWindow img{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+}
+
+.homepage_storyreels_Main_Body .contentDiv .photoStoryContent .photoStoryContent_Inner .photoStoryWindow p{
+    text-align: center;
+    color: #fff;
+    font-size: 22px;
+    width: 160px;
+    /* Set to 100% to adapt to the parent div's width */
+    height: auto;
+    /* Allow the height to adjust based on content */
+    overflow-y: auto;
+    /* Enable vertical scrolling if needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: pre-wrap;
+    /* Use pre-wrap to allow wrapping on whitespace */
+    overflow-x: hidden;
+    /* Hide horizontal overflow */
+
+    position: absolute;
+}
+
 .homepage_storyreels_Main_Body .contentDiv .textStoryContent .textStoryContent_Inner .textStoryWindow p {
     text-align: center;
     color: #fff;
     font-size: 22px;
-    width: 100%; /* Set to 100% to adapt to the parent div's width */
-    height: auto; /* Allow the height to adjust based on content */
-    overflow-y: auto; /* Enable vertical scrolling if needed */
+    width: 100%;
+    /* Set to 100% to adapt to the parent div's width */
+    height: auto;
+    /* Allow the height to adjust based on content */
+    overflow-y: auto;
+    /* Enable vertical scrolling if needed */
     display: flex;
     align-items: center;
     justify-content: center;
-
-    white-space: pre-wrap; /* Use pre-wrap to allow wrapping on whitespace */
-    overflow-x: hidden; /* Hide horizontal overflow */
+    white-space: pre-wrap;
+    /* Use pre-wrap to allow wrapping on whitespace */
+    overflow-x: hidden;
+    /* Hide horizontal overflow */
 }
-
-
-
 
 .homepage_storyreels_Main_BodyCard {
     background: radial-gradient(circle, #003cff, #21e5ff);
@@ -311,6 +351,10 @@
     width: 220px;
     height: 330px;
     border-radius: 10px;
+}
+
+.homepage_storyreels_Main_BodyCard .hidden-input {
+    display: none;
 }
 
 .homepage_storyreels_Main_BodyCard:hover {
