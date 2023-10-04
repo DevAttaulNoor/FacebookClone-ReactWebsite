@@ -278,7 +278,7 @@
 
 .homepage_storyreels_Main_Body .contentDiv .textStoryContent .textStoryContent_Inner .textStoryWindow {
     height: -webkit-fill-available;
-    background-color: #003cff;
+    /* background-color: #003cff; */
     border-radius: 8px;
     padding: 50px 40px;
     display: flex;
@@ -289,57 +289,42 @@
 
 .homepage_storyreels_Main_Body .contentDiv .photoStoryContent .photoStoryContent_Inner .photoStoryWindow {
     height: -webkit-fill-available;
+    border-radius: 8px;
+    padding: 50px 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 250px;
+    width: 200px;
+
+    /* Set the background size to cover, which scales the image to cover the entire container */
+    background-size: cover;
+
+    /* Set the background position to center, which centers the image horizontally and vertically */
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.homepage_storyreels_Main_Body .contentDiv .photoStoryContent .photoStoryContent_Inner .photoStoryWindow img{
+/* .homepage_storyreels_Main_Body .contentDiv .photoStoryContent .photoStoryContent_Inner .photoStoryWindow img {
     position: relative;
     height: 100%;
     width: 100%;
     border-radius: 8px;
-}
+} */
 
-.homepage_storyreels_Main_Body .contentDiv .photoStoryContent .photoStoryContent_Inner .photoStoryWindow p{
-    text-align: center;
-    color: #fff;
-    font-size: 22px;
-    width: 160px;
-    /* Set to 100% to adapt to the parent div's width */
-    height: auto;
-    /* Allow the height to adjust based on content */
-    overflow-y: auto;
-    /* Enable vertical scrolling if needed */
+.homepage_storyreels_Main_Body .contentDiv .photoStoryContent .photoStoryContent_Inner .photoStoryWindow p,
+.homepage_storyreels_Main_Body .contentDiv .textStoryContent .textStoryContent_Inner .textStoryWindow p {
     display: flex;
     align-items: center;
-    justify-content: center;
-    white-space: pre-wrap;
-    /* Use pre-wrap to allow wrapping on whitespace */
-    overflow-x: hidden;
-    /* Hide horizontal overflow */
-
-    position: absolute;
-}
-
-.homepage_storyreels_Main_Body .contentDiv .textStoryContent .textStoryContent_Inner .textStoryWindow p {
     text-align: center;
+    justify-content: center;
     color: #fff;
     font-size: 22px;
     width: 100%;
-    /* Set to 100% to adapt to the parent div's width */
-    height: auto;
-    /* Allow the height to adjust based on content */
-    overflow-y: auto;
-    /* Enable vertical scrolling if needed */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    white-space: pre-wrap;
-    /* Use pre-wrap to allow wrapping on whitespace */
+    height: -webkit-fill-available;
+    white-space: normal;
+    overflow-wrap: break-word;
     overflow-x: hidden;
-    /* Hide horizontal overflow */
+    overflow-y: auto;
 }
 
 .homepage_storyreels_Main_BodyCard {

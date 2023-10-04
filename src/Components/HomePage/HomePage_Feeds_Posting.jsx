@@ -98,7 +98,6 @@ function HomePage_Feeds_Posting() {
         toggleEmojiPicker();
     };
 
-
     const toggleDialog = () => {
         setIsDialogVisible(!isDialogVisible);
     };

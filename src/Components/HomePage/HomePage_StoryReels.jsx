@@ -3,21 +3,22 @@ import React, { useState, useRef } from 'react';
 import { useStateValue } from '../BackendRelated/StateProvider';
 import TitleIcon from '@mui/icons-material/Title';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { db } from '../BackendRelated/Firebase';
+import firebase from "firebase/compat/app"
 
 function HomePage_StoryReels() {
+    const colors = ['blue', 'red', 'green', 'black', 'brown', 'yellow', 'blueviolet', 'cyan', 'gold', 'violet', 'silver', 'purple'];
     const [{ user }] = useStateValue()
-    const [activeDot, setActiveDot] = useState(null);
+    const [activeDot, setActiveDot] = useState(colors[0]);
     const [showForText, setShowForText] = useState(false);
     const [showTextContent, setShowTextContent] = useState(false);
     const [showForPhoto, setShowForPhoto] = useState(false);
     const [showPhotoContent, setShowPhotoContent] = useState(false);
     const [showAddText, setShowAddText] = useState(false);
     const [showCards, setShowCards] = useState(true);
-    const [textAreaValue, setTextAreaValue] = useState(""); // Added state for textarea value
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [textAreaValue, setTextAreaValue] = useState("");
     const inputRef = useRef(null);
-
-    const colors = ['blue', 'red', 'green', 'black', 'brown', 'yellow', 'blueviolet', 'cyan', 'gold', 'violet', 'silver', 'purple'];
+    const [imageURL, setImageURL] = useState('');
 
     const handleDotClick = (color) => {
         setActiveDot(color);
@@ -43,13 +44,15 @@ function HomePage_StoryReels() {
     };
 
     const handleDiscardClick = () => {
+        setTextAreaValue("");
+        setImageURL('');
+        setActiveDot(colors[0]);
         setShowForText(false);
         setShowTextContent(false);
         setShowForPhoto(false);
         setShowPhotoContent(false);
         setShowAddText(false);
         setShowCards(true);
-        setSelectedImage(null); // Reset selectedImage to null
     };
 
     const handleTextAreaChange = (event) => {
@@ -57,9 +60,66 @@ function HomePage_StoryReels() {
     };
 
     const handleImageChange = (e) => {
-        const file = e.target.files[0]; // Get the selected file
-        setSelectedImage(file); // Store the selected file in state
+        const file = e.target.files[0];
+        setImageURL(URL.createObjectURL(file));
     };
+
+    const handleUpload = (e) => {
+        e.preventDefault();
+
+        if (showTextContent && textAreaValue) {
+            const activeDotValue = document.querySelector(".textStoryWindow").className.split(" ").find((className) => colors.includes(className));
+
+            db.collection("Reels").add({
+                uid: user.uid,
+                email: user.email,
+                username: user.displayName,
+                photoURL: user.photoURL,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                text: textAreaValue.trim(),
+                background: activeDotValue,
+            });
+            console.log("succesfull")
+
+            // Reset state variables to clear the fields
+            setTextAreaValue("");
+            setActiveDot(colors[0]);
+            setShowTextContent(false);
+            setShowPhotoContent(false);
+            setShowForText(false);
+            setShowAddText(false);
+            setShowForPhoto(false);
+            setShowCards(true);
+        }
+
+        if (showPhotoContent && imageURL) {
+            db.collection("Reels").add({
+                uid: user.uid,
+                email: user.email,
+                username: user.displayName,
+                photoURL: user.photoURL,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                text: textAreaValue.trim(),
+                background: imageURL,
+            });
+            console.log("succesfull")
+
+            // Reset state variables to clear the fields
+            setImageURL('');
+            setTextAreaValue("");
+            setActiveDot(colors[0]);
+            setShowTextContent(false);
+            setShowPhotoContent(false);
+            setShowForText(false);
+            setShowAddText(false);
+            setShowForPhoto(false);
+            setShowCards(true);
+        }
+
+        else {
+            console.log("Content is empty. Cannot share an empty story.");
+        }
+    }
 
     return (
         <div className="homepage_storyreels">
@@ -115,7 +175,7 @@ function HomePage_StoryReels() {
                             setShowForText(false);
                             setShowTextContent(false);
                             setShowAddText(true);
-                            setShowForPhoto((prev) => !prev); // Toggle showForPhoto
+                            setShowForPhoto((prev) => !prev);
                             setShowPhotoContent(true);
                         }}
                     >
@@ -137,25 +197,12 @@ function HomePage_StoryReels() {
                             <option value="Fancy">Fancy</option>
                             <option value="Headline">Headline</option>
                         </select>
-
-                        <div className='bgColors'>
-                            <p>Backgrounds</p>
-                            <div className="bgColorsInner">
-                                {colors.map((color) => (
-                                    <div
-                                        key={color}
-                                        className={`dot ${color} ${activeDot === color ? 'active' : ''}`}
-                                        onClick={() => handleDotClick(color)}
-                                    ></div>
-                                ))}
-                            </div>
-                        </div>
                     </div>
                 </div>
 
                 <div className="homepage_storyreels_Leftbar_Bottom">
                     <button id='discardBtn' onClick={handleDiscardClick}>Discard</button>
-                    <button id='shareBtn'>Share to Story</button>
+                    <button id='shareBtn' onClick={handleUpload}>Share to Story</button>
                 </div>
             </div>
 
@@ -195,7 +242,7 @@ function HomePage_StoryReels() {
                                     <div className="textStoryContent">
                                         <p>Preview</p>
                                         <div className="textStoryContent_Inner">
-                                            <div className="textStoryWindow">
+                                            <div className={`textStoryWindow ${activeDot}`}>
                                                 <p>{textAreaValue}</p>
                                             </div>
                                         </div>
@@ -207,10 +254,8 @@ function HomePage_StoryReels() {
                                     <div className="photoStoryContent">
                                         <p>Peview</p>
                                         <div className="photoStoryContent_Inner">
-                                            <div className="photoStoryWindow">
-                                                {selectedImage && (
-                                                    <img src={URL.createObjectURL(selectedImage)} alt="Selected" />
-                                                )}
+                                            <div className="photoStoryWindow" style={{ backgroundImage: `url(${imageURL})` }}>
+                                                {console.log(imageURL)}
                                                 <p>{textAreaValue}</p>
                                             </div>
                                         </div>
