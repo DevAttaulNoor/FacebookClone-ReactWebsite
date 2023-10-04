@@ -391,8 +391,6 @@ function HomePage_Feeds_Posts({ id, photoURL, image, username, timestamp, messag
         };
     }, [id, user.uid]);
 
-
-
     return (
         <div className='homepage_feedsPosts'>
             {/* Post Top Section */}
