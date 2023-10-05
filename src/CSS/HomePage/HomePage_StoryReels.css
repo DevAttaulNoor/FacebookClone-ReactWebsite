@@ -295,11 +295,7 @@
     align-items: center;
     justify-content: center;
     width: 200px;
-
-    /* Set the background size to cover, which scales the image to cover the entire container */
     background-size: cover;
-
-    /* Set the background position to center, which centers the image horizontally and vertically */
     background-position: center;
     background-repeat: no-repeat;
 }

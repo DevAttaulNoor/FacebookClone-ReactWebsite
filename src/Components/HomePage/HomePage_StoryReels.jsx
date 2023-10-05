@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import { useStateValue } from '../BackendRelated/StateProvider';
 import TitleIcon from '@mui/icons-material/Title';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { db } from '../BackendRelated/Firebase';
+import { db, storage } from '../BackendRelated/Firebase';
 import firebase from "firebase/compat/app"
 
 function HomePage_StoryReels() {
@@ -60,8 +60,9 @@ function HomePage_StoryReels() {
     };
 
     const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        setImageURL(URL.createObjectURL(file));
+        if (e.target.files[0]) {
+            setImageURL(e.target.files[0]);
+        }
     };
 
     const handleUpload = (e) => {
@@ -93,33 +94,58 @@ function HomePage_StoryReels() {
         }
 
         if (showPhotoContent && imageURL) {
-            db.collection("Reels").add({
-                uid: user.uid,
-                email: user.email,
-                username: user.displayName,
-                photoURL: user.photoURL,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                text: textAreaValue.trim(),
-                background: imageURL,
-            });
-            console.log("succesfull")
+            try {
+                // Define an async function to handle the image upload
+                const uploadImage = async () => {
+                    const storageRef = storage.ref(); // Reference to the root of your storage bucket
+                    const imageFileName = `${user.uid}_${Date.now()}_${imageURL.name}`;
+                    const imageRef = storageRef.child(imageFileName);
 
-            // Reset state variables to clear the fields
-            setImageURL('');
-            setTextAreaValue("");
-            setActiveDot(colors[0]);
-            setShowTextContent(false);
-            setShowPhotoContent(false);
-            setShowForText(false);
-            setShowAddText(false);
-            setShowForPhoto(false);
-            setShowCards(true);
-        }
+                    await imageRef.put(imageURL);
 
-        else {
+                    // Get the download URL for the uploaded image
+                    const downloadURL = await imageRef.getDownloadURL();
+
+                    return downloadURL;
+                };
+
+                // Call the async function to upload the image and get the download URL
+                uploadImage().then((downloadURL) => {
+                    // Update Firestore with the image URL
+                    db.collection("Reels").add({
+                        uid: user.uid,
+                        email: user.email,
+                        username: user.displayName,
+                        photoURL: user.photoURL,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        text: textAreaValue.trim(),
+                        background: downloadURL, // Use the download URL as the background attribute
+                    });
+
+                    console.log("Successful");
+
+                    // Reset state variables to clear the fields
+                    setImageURL('');
+                    setTextAreaValue("");
+                    setActiveDot(colors[0]);
+                    setShowTextContent(false);
+                    setShowPhotoContent(false);
+                    setShowForText(false);
+                    setShowAddText(false);
+                    setShowForPhoto(false);
+                    setShowCards(true);
+                })
+                    .catch((error) => {
+                        console.error("Error uploading the image:", error);
+                    });
+            } catch (error) {
+                console.error("Error uploading the image:", error);
+            }
+        } else {
             console.log("Content is empty. Cannot share an empty story.");
         }
-    }
+    };
+
 
     return (
         <div className="homepage_storyreels">
@@ -255,7 +281,6 @@ function HomePage_StoryReels() {
                                         <p>Peview</p>
                                         <div className="photoStoryContent_Inner">
                                             <div className="photoStoryWindow" style={{ backgroundImage: `url(${imageURL})` }}>
-                                                {console.log(imageURL)}
                                                 <p>{textAreaValue}</p>
                                             </div>
                                         </div>

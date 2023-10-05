@@ -13,8 +13,13 @@ function HomePage_Feeds_StoryReels() {
     const containerRef = useRef(null);
     const [{ user }, dispatch] = useStateValue();
     const [reels, setReels] = useState([]);
-    const [showLeftButton, setShowLeftButton] = useState(false);
-    const [showRightButton, setShowRightButton] = useState(false);
+
+    // Get the initial button states from session storage or use default values
+    const initialShowLeftButton = sessionStorage.getItem('showLeftButton') === 'true' || false;
+    const initialShowRightButton = sessionStorage.getItem('showRightButton') === 'true' || false;
+
+    const [showLeftButton, setShowLeftButton] = useState(initialShowLeftButton);
+    const [showRightButton, setShowRightButton] = useState(initialShowRightButton);
 
     useEffect(() => {
         db.collection("Reels")
@@ -30,21 +35,31 @@ function HomePage_Feeds_StoryReels() {
 
     useEffect(() => {
         const container = containerRef.current;
+
+        // Function to check scroll position and update button visibility
         const checkButtons = () => {
             if (container) {
-                setShowLeftButton(container.scrollLeft > 0);
-                setShowRightButton(
-                    container.scrollLeft < container.scrollWidth - container.clientWidth ||
-                    container.scrollWidth === container.clientWidth
-                );
+                const scrollPosition = container.scrollLeft;
+                const maxScroll = container.scrollWidth - container.clientWidth;
+                const newShowLeftButton = scrollPosition > 0;
+                const newShowRightButton = scrollPosition < maxScroll;
+
+                // Update state based on scroll position
+                setShowLeftButton(newShowLeftButton);
+                setShowRightButton(newShowRightButton);
+
+                // Store button states in session storage
+                sessionStorage.setItem('showLeftButton', newShowLeftButton.toString());
+                sessionStorage.setItem('showRightButton', newShowRightButton.toString());
             }
         };
+
+        // Initial check when component mounts
+        checkButtons();
 
         if (container) {
             container.addEventListener('scroll', checkButtons);
         }
-
-        checkButtons();
 
         // Cleanup when component unmounts
         return () => {
@@ -52,7 +67,7 @@ function HomePage_Feeds_StoryReels() {
                 container.removeEventListener('scroll', checkButtons);
             }
         };
-    }, []);
+    }, [showLeftButton, showRightButton]);
 
     const scrollLeft = () => {
         if (containerRef.current) {
@@ -122,23 +137,27 @@ function HomePage_Feeds_StoryReels() {
                                 key={reel.id}
                                 className="homepage_feeds_StoryReels_withReelsStories"
                                 style={{
-                                    background: reel.background.startsWith("http") ? `url(${reel.background})` : reel.background,
+                                    background: reel.background.startsWith("https") ? `url(${reel.background})` : reel.background,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center'
                                 }}
                             >
+
+                                <Avatar src={reel.photoURL} />
                                 <div className="reel-text-overlay">
                                     {reel.text}
                                 </div>
-                                <Avatar src={reel.photoURL} />
                                 <p>{reel.username}</p>
                             </div>
                         ))}
 
                     </div>
-                    {showRightButton && ( <button id='rightScroll' onClick={scrollRight}><KeyboardArrowRightIcon /></button>)}
+                    {showRightButton && (<button id='rightScroll' onClick={scrollRight}><KeyboardArrowRightIcon /></button>)}
                 </div>
             )}
         </>
     )
 }
+
 
 export default HomePage_Feeds_StoryReels;
