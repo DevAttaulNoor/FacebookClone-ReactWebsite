@@ -18,7 +18,9 @@ function HomePage_StoryReels() {
     const [showCards, setShowCards] = useState(true);
     const [textAreaValue, setTextAreaValue] = useState("");
     const inputRef = useRef(null);
-    const [imageURL, setImageURL] = useState('');
+    const [image, setImage] = useState('');
+    const [imageUrl, setImageUrl] = useState(''); // Store the image URL
+
 
     const handleDotClick = (color) => {
         setActiveDot(color);
@@ -45,7 +47,7 @@ function HomePage_StoryReels() {
 
     const handleDiscardClick = () => {
         setTextAreaValue("");
-        setImageURL('');
+        setImage('');
         setActiveDot(colors[0]);
         setShowForText(false);
         setShowTextContent(false);
@@ -53,6 +55,11 @@ function HomePage_StoryReels() {
         setShowPhotoContent(false);
         setShowAddText(false);
         setShowCards(true);
+
+        // Reset the file input
+        if (inputRef.current) {
+            inputRef.current.value = '';
+        }
     };
 
     const handleTextAreaChange = (event) => {
@@ -60,8 +67,15 @@ function HomePage_StoryReels() {
     };
 
     const handleImageChange = (e) => {
-        if (e.target.files[0]) {
-            setImageURL(e.target.files[0]);
+        const selectedImage = e.target.files[0];
+        if (selectedImage && selectedImage.type.includes('image')) {
+            setImage(selectedImage);
+
+            const imageUrl = URL.createObjectURL(selectedImage);
+            setImageUrl(imageUrl);
+        } else {
+            // Handle invalid file type here
+            console.error('Invalid file type. Please select an image.');
         }
     };
 
@@ -93,59 +107,55 @@ function HomePage_StoryReels() {
             setShowCards(true);
         }
 
-        if (showPhotoContent && imageURL) {
-            try {
-                // Define an async function to handle the image upload
-                const uploadImage = async () => {
-                    const storageRef = storage.ref(); // Reference to the root of your storage bucket
-                    const imageFileName = `${user.uid}_${Date.now()}_${imageURL.name}`;
-                    const imageRef = storageRef.child(imageFileName);
+        if (showPhotoContent && image) {
+            const upload = storage.ref(`Images/Reels/${user.uid}/${image.name}`).put(image);
 
-                    await imageRef.put(imageURL);
+            upload.on(
+                "state_changed",
+                (snapshot) => {
+                    // Handle progress or state changes if needed
+                },
+                (error) => {
+                    console.error("Error uploading:", error);
+                },
+                () => {
+                    // Upload completed successfully, get download URL
+                    storage
+                        .ref(`Images/Reels/${user.uid}`)
+                        .child(image.name)
+                        .getDownloadURL()
+                        .then((url) => {
+                            // Add data to Firestore or perform other actions
+                            db.collection("Reels").add({
+                                uid: user.uid,
+                                email: user.email,
+                                username: user.displayName,
+                                photoURL: user.photoURL,
+                                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                                text: textAreaValue.trim(),
+                                background: url,
+                            });
 
-                    // Get the download URL for the uploaded image
-                    const downloadURL = await imageRef.getDownloadURL();
+                            console.log("Successful");
 
-                    return downloadURL;
-                };
-
-                // Call the async function to upload the image and get the download URL
-                uploadImage().then((downloadURL) => {
-                    // Update Firestore with the image URL
-                    db.collection("Reels").add({
-                        uid: user.uid,
-                        email: user.email,
-                        username: user.displayName,
-                        photoURL: user.photoURL,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                        text: textAreaValue.trim(),
-                        background: downloadURL, // Use the download URL as the background attribute
-                    });
-
-                    console.log("Successful");
-
-                    // Reset state variables to clear the fields
-                    setImageURL('');
-                    setTextAreaValue("");
-                    setActiveDot(colors[0]);
-                    setShowTextContent(false);
-                    setShowPhotoContent(false);
-                    setShowForText(false);
-                    setShowAddText(false);
-                    setShowForPhoto(false);
-                    setShowCards(true);
-                })
-                    .catch((error) => {
-                        console.error("Error uploading the image:", error);
-                    });
-            } catch (error) {
-                console.error("Error uploading the image:", error);
-            }
-        } else {
-            console.log("Content is empty. Cannot share an empty story.");
+                            // Reset state variables to clear the fields
+                            setImage('');
+                            setTextAreaValue("");
+                            setActiveDot(colors[0]);
+                            setShowTextContent(false);
+                            setShowPhotoContent(false);
+                            setShowForText(false);
+                            setShowAddText(false);
+                            setShowForPhoto(false);
+                            setShowCards(true);
+                        })
+                        .catch((downloadError) => {
+                            console.error("Error getting download URL:", downloadError);
+                        });
+                }
+            );
         }
     };
-
 
     return (
         <div className="homepage_storyreels">
@@ -280,7 +290,8 @@ function HomePage_StoryReels() {
                                     <div className="photoStoryContent">
                                         <p>Peview</p>
                                         <div className="photoStoryContent_Inner">
-                                            <div className="photoStoryWindow" style={{ backgroundImage: `url(${imageURL})` }}>
+                                            <div className="photoStoryWindow" style={{ backgroundImage: imageUrl ? `url(${imageUrl})` : 'none' }}>
+                                                {image && console.log(imageUrl)}
                                                 <p>{textAreaValue}</p>
                                             </div>
                                         </div>

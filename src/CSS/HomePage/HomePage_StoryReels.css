@@ -278,7 +278,6 @@
 
 .homepage_storyreels_Main_Body .contentDiv .textStoryContent .textStoryContent_Inner .textStoryWindow {
     height: -webkit-fill-available;
-    /* background-color: #003cff; */
     border-radius: 8px;
     padding: 50px 40px;
     display: flex;
@@ -299,13 +298,6 @@
     background-position: center;
     background-repeat: no-repeat;
 }
-
-/* .homepage_storyreels_Main_Body .contentDiv .photoStoryContent .photoStoryContent_Inner .photoStoryWindow img {
-    position: relative;
-    height: 100%;
-    width: 100%;
-    border-radius: 8px;
-} */
 
 .homepage_storyreels_Main_Body .contentDiv .photoStoryContent .photoStoryContent_Inner .photoStoryWindow p,
 .homepage_storyreels_Main_Body .contentDiv .textStoryContent .textStoryContent_Inner .textStoryWindow p {
