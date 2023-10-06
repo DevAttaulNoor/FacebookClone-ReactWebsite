@@ -67,11 +67,17 @@
     z-index: 1;
 }
 
+.headersearch_Dropbox p{
+    padding: 8px;
+    font-weight: 500;
+    font-size: 15px;
+    text-align: center;
+}
+
 .headersearch_Dropbox a{
     color: initial;
     text-decoration: none;
     width: -webkit-fill-available;
-
     display: flex;
     align-items: center;
 }

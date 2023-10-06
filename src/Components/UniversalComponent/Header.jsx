@@ -22,7 +22,6 @@ function Header() {
     const [searchText, setSearchText] = useState('');
     const [matchingUsernames, setMatchingUsernames] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
-
     const dialogBoxRef = useRef(null);
     const location = useLocation();
     const friendPages = ['/friendpage', '/friendpage/', '/friendpage/allFriends', '/friendpage/friendReqs'];
@@ -72,9 +71,6 @@ function Header() {
         setIsSearchBoxVisible(!isSearchBoxVisible);
     };
 
-
-    // ...
-
     useEffect(() => {
         const handleOutsideClick = (e) => {
             if (
@@ -82,7 +78,7 @@ function Header() {
                 !document.querySelector(".header_search").contains(e.target)
             ) {
                 setIsSearchBoxVisible(false);
-                setSearchText(''); // Clear the input when the search box is closed
+                setSearchText('');
             }
         };
 
@@ -93,9 +89,6 @@ function Header() {
             window.removeEventListener("click", handleOutsideClick);
         };
     }, [isSearchBoxVisible]);
-
-    // ...
-
 
     useEffect(() => {
         if (searchText === '') {
