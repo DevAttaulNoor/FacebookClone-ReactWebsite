@@ -1,9 +1,9 @@
 import '../../CSS/UniversalComponent/Header.css'
 import fblogo from '../../Imgs/fblogo.png'
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Avatar } from '@mui/material';
-import { auth } from '../BackendRelated/Firebase';
+import { auth, db } from '../BackendRelated/Firebase';
 import { useStateValue } from '../BackendRelated/StateProvider';
 import SearchIcon from '@mui/icons-material/Search';
 import HomeIcon from '@mui/icons-material/Home';
@@ -18,14 +18,17 @@ import CloseIcon from '@mui/icons-material/Close';
 function Header() {
     const [{ user }, dispatch] = useStateValue();
     const [isDialogVisible, setIsDialogVisible] = useState(false);
+    const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
+    const [searchText, setSearchText] = useState('');
+    const [matchingUsernames, setMatchingUsernames] = useState([]);
+    const [selectedUser, setSelectedUser] = useState(null);
+
     const dialogBoxRef = useRef(null);
     const location = useLocation();
     const friendPages = ['/friendpage', '/friendpage/', '/friendpage/allFriends', '/friendpage/friendReqs'];
     const friendPagesActive = friendPages.some((page) => location.pathname === page);
-
     const pathsToHideHeader = ['/homepage/storyreels'];
     const showHeader = !pathsToHideHeader.includes(location.pathname);
-
 
     const handleSignOut = () => {
         sessionStorage.removeItem('userData');
@@ -65,6 +68,65 @@ function Header() {
         };
     }, []);
 
+    const handleSearchInput = () => {
+        setIsSearchBoxVisible(!isSearchBoxVisible);
+    };
+
+
+    // ...
+
+    useEffect(() => {
+        const handleOutsideClick = (e) => {
+            if (
+                isSearchBoxVisible &&
+                !document.querySelector(".header_search").contains(e.target)
+            ) {
+                setIsSearchBoxVisible(false);
+                setSearchText(''); // Clear the input when the search box is closed
+            }
+        };
+
+        window.addEventListener("click", handleOutsideClick);
+
+        // Cleanup the event listener when the component unmounts
+        return () => {
+            window.removeEventListener("click", handleOutsideClick);
+        };
+    }, [isSearchBoxVisible]);
+
+    // ...
+
+
+    useEffect(() => {
+        if (searchText === '') {
+            // Reset matching usernames when search input is empty
+            setMatchingUsernames([]);
+            return;
+        }
+
+        db.collection("Users")
+            .get()
+            .then((querySnapshot) => {
+                const matchingUsernames = querySnapshot.docs
+                    .map((doc) => {
+                        const data = doc.data();
+                        return {
+                            id: doc.id,
+                            Uid: data.Uid,
+                            username: data.username,
+                            photoURL: data.photoURL,
+                        };
+                    })
+                    .filter((user) =>
+                        user.username.toLowerCase().includes(searchText.toLowerCase())
+                    );
+                setMatchingUsernames(matchingUsernames);
+            })
+            .catch((error) => {
+                console.error('Error getting documents:', error);
+            });
+    }, [searchText]);
+
     return (
         <div className={`header ${showHeader ? '' : 'transformed'}`}>
             <div className='Transformed_header_left'>
@@ -80,7 +142,37 @@ function Header() {
                 </Link>
                 <div className='header_search'>
                     <SearchIcon />
-                    <input type="text" placeholder='Search Facebook' />
+                    <input
+                        type="text"
+                        placeholder='Search Facebook'
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
+                        onClick={handleSearchInput}
+                    />
+                    {isSearchBoxVisible && (
+                        <div className="headersearch_Dropbox">
+                            {matchingUsernames.length === 0 ? (
+                                <p>No matches</p>
+                            ) : (
+                                matchingUsernames.map((user) => (
+                                    <div
+                                        key={user.id}
+                                        className={`headersearch_DropboxResults ${selectedUser === user.id ? "selected" : ""}`}
+                                        onClick={() => {
+                                            setSelectedUser(user.id);
+                                            setIsSearchBoxVisible(false);
+                                            setSearchText('');
+                                        }}
+                                    >
+                                        <NavLink to={`/frienduserpage/${user.id}`}>
+                                            <Avatar src={user.photoURL} />
+                                            <p>{user.username}</p>
+                                        </NavLink>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
 

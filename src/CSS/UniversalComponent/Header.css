@@ -51,6 +51,51 @@
     font-size: 16px;
 }
 
+.headersearch_Dropbox{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    top: 50px;
+    left: 65px;
+    min-width: 220px;
+    background-color: #fff;
+    box-shadow: 0 12px 12px rgba(0, 0, 0, 0.2),inset 0 0 0 0 rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    padding: 8px;
+    z-index: 1;
+}
+
+.headersearch_Dropbox a{
+    color: initial;
+    text-decoration: none;
+    width: -webkit-fill-available;
+
+    display: flex;
+    align-items: center;
+}
+
+.headersearch_DropboxResults{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    width: -webkit-fill-available;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+.headersearch_DropboxResults:hover{
+    cursor: pointer;
+    background-color: rgb(211 211 211/33%);
+}
+
+.headersearch_DropboxResults p{
+    font-weight: 500;
+    padding-left: 8px;
+    font-size: 14px;
+}
+
 /** Header Middle Section */
 .header_middle{
     display: flex;
