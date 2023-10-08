@@ -4,7 +4,7 @@ The Facebook Clone project is a web application created using the React.js libra
 ## Table of Contents
 - [Demo](#demo)
 - [Features](#features)
-- [Technologies Used](#technologies-used)
+- [Technologies Used(#technologies-used)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
@@ -33,7 +33,6 @@ The Facebook Clone project is a web application created using the React.js libra
 
 ## Contributing
 Contributions are welcome! If you want to contribute to this project, follow these steps:
-
 1. Fork the repository.
 2. Create a new branch for your feature or bug fix.
 3. Make your changes and commit them.
