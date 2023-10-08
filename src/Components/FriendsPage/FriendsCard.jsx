@@ -5,7 +5,6 @@ import { auth, db } from '../BackendRelated/Firebase';
 function FriendsCard({ user }) {
     const [friendRequestStatus, setFriendRequestStatus] = useState("not_sent");
     const [isRequestProcessing, setIsRequestProcessing] = useState(false);
-
     const currentUser = auth.currentUser;
     const senderUid = currentUser.uid;
 

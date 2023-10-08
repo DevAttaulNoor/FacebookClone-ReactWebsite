@@ -3,14 +3,14 @@ import { useStateValue } from './Components/BackendRelated/StateProvider';
 import Login from './Components/StartupPage/Login';
 import Header from './Components/UniversalComponent/Header';
 import HomePage from './Components/HomePage/HomePage';
+import HomePage_StoryReels from './Components/HomePage/HomePage_StoryReels';
 import UserPage from './Components/UserPage/UserPage';
 import FriendsPage from './Components/FriendsPage/FriendsPage';
-import FriendUserPage from './Components/FriendUserPage/FriendUserPage';
 import FriendsPage_AllFriends from './Components/FriendsPage/FriendsPage_AllFriends';
-import HomePage_StoryReels from './Components/HomePage/HomePage_StoryReels';
+import FriendUserPage from './Components/FriendUserPage/FriendUserPage';
 
 function App() {
-	const [{ user }, dispatch] = useStateValue();
+	const [{ user }] = useStateValue();
 
 	return (
 		<Router>

@@ -11,15 +11,12 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 function HomePage_Feeds_StoryReels() {
     const containerRef = useRef(null);
-    const [{ user }, dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
     const [reels, setReels] = useState([]);
-
-    // Get the initial button states from session storage or use default values
-    const initialShowLeftButton = sessionStorage.getItem('showLeftButton') === 'true' || false;
-    const initialShowRightButton = sessionStorage.getItem('showRightButton') === 'true' || false;
-
     const [showLeftButton, setShowLeftButton] = useState(initialShowLeftButton);
     const [showRightButton, setShowRightButton] = useState(initialShowRightButton);
+    const initialShowLeftButton = sessionStorage.getItem('showLeftButton') === 'true' || false;
+    const initialShowRightButton = sessionStorage.getItem('showRightButton') === 'true' || false;
 
     useEffect(() => {
         db.collection("Reels")
@@ -72,7 +69,7 @@ function HomePage_Feeds_StoryReels() {
     const scrollLeft = () => {
         if (containerRef.current) {
             const scrollAmount = -240;
-            const scrollDuration = 300; // Duration of the smooth scroll animation (in milliseconds)
+            const scrollDuration = 300;
             const container = containerRef.current;
 
             const startTime = performance.now();

@@ -6,7 +6,7 @@ import HomePage_Leftbar_Options from './HomePage_Leftbar_Options';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 function HomePage_Leftbar() {
-    const [{ user }, dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
 
     return (
         <div className='homepage_Leftbar'>
@@ -38,6 +38,5 @@ function HomePage_Leftbar() {
         </div>
     )
 }
-
 
 export default HomePage_Leftbar 

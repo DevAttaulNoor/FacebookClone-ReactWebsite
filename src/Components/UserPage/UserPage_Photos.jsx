@@ -4,7 +4,7 @@ import { useStateValue } from "../BackendRelated/StateProvider";
 import firebase from "firebase/compat/app";
 
 function UserPage_Photos() {
-    const [{ user }, dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
     const [photoUrls, setPhotoUrls] = useState([]);
 
     useEffect(() => {
@@ -36,11 +36,8 @@ function UserPage_Photos() {
                     console.error(`Error fetching photos from ${storagePath}:`, error);
                 }
             }
-
-            // Update the state with photo URLs
             setPhotoUrls(urls);
         };
-
         fetchImages();
     }, [user]);
 

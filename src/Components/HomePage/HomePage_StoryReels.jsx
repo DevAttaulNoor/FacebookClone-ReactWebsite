@@ -1,9 +1,9 @@
 import '../../CSS/HomePage/HomePage_StoryReels.css'
 import React, { useState, useRef } from 'react';
+import { db, storage } from '../BackendRelated/Firebase';
 import { useStateValue } from '../BackendRelated/StateProvider';
 import TitleIcon from '@mui/icons-material/Title';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { db, storage } from '../BackendRelated/Firebase';
 import firebase from "firebase/compat/app"
 
 function HomePage_StoryReels() {
@@ -19,8 +19,7 @@ function HomePage_StoryReels() {
     const [textAreaValue, setTextAreaValue] = useState("");
     const inputRef = useRef(null);
     const [image, setImage] = useState('');
-    const [imageUrl, setImageUrl] = useState(''); // Store the image URL
-
+    const [imageUrl, setImageUrl] = useState('');
 
     const handleDotClick = (color) => {
         setActiveDot(color);
@@ -74,7 +73,6 @@ function HomePage_StoryReels() {
             const imageUrl = URL.createObjectURL(selectedImage);
             setImageUrl(imageUrl);
         } else {
-            // Handle invalid file type here
             console.error('Invalid file type. Please select an image.');
         }
     };

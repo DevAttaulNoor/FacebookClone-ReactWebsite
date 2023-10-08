@@ -1,14 +1,14 @@
 import '../../CSS/HomePage/HomePage_Rightbar_FriendsList.css'
 import React, { useEffect, useState } from 'react'
 import { Avatar } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 import { useStateValue } from '../BackendRelated/StateProvider'
 import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_AllFriends_Leftbar';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import SearchIcon from '@mui/icons-material/Search';
-import { NavLink } from 'react-router-dom';
 
 function HomePage_Rightbar_FriendsList() {
-    const [{ user }, dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
     const [friends, setFriends] = useState([]);
 
     useEffect(() => {

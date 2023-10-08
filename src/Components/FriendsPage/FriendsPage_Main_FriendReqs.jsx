@@ -4,17 +4,15 @@ import { db } from '../BackendRelated/Firebase'
 import { useStateValue } from '../BackendRelated/StateProvider'
 
 function FriendsPage_Main_FriendReqs() {
-    const [{ user }, dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
     const [friendRequests, setFriendRequests] = useState([]);
     const [isRequestProcessing, setIsRequestProcessing] = useState(false);
 
     useEffect(() => {
         const fetchFriendRequests = async () => {
             try {
-                // Create a reference to the "friendRequests" subcollection within the current user's document
                 const friendRequestsCollection = db.collection("Users").doc(user.uid).collection("friendRequests");
 
-                // Query the friendRequests subcollection
                 const querySnapshot = await friendRequestsCollection.get();
                 const requests = [];
                 querySnapshot.forEach((doc) => {
@@ -25,10 +23,9 @@ function FriendsPage_Main_FriendReqs() {
                         senderName: data.senderName,
                         senderPhotoUrl: data.senderPhotoUrl,
                         status: data.status,
-                        receiverUid: data.receiverUid, // Add receiverUid to the request object
+                        receiverUid: data.receiverUid,
                     });
                 });
-
                 setFriendRequests(requests);
             } catch (error) {
                 console.error("Error fetching friend requests:", error);

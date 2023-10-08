@@ -22,7 +22,7 @@ function Login() {
     const [isLoading, setIsLoading] = useState(true);
     const isUserLoggedOut = sessionStorage.getItem('userLoggedOut');
     const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
-    const [showPassword, setShowPassword] = useState(false); // State to track password visibility
+    const [showPassword, setShowPassword] = useState(false);
     const [isLoginProcessing, setIsLoginProcessing] = useState(false);
     const [isSignupProcessing, setIsSignupProcessing] = useState(false);
     const [loginerror, setLoginError] = useState(null);

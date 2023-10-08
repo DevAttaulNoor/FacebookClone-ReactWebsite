@@ -4,7 +4,7 @@ import { useStateValue } from '../BackendRelated/StateProvider'
 import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_AllFriends_Leftbar';
 
 function UserPage_Friends() {
-    const [{ user }, dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
     const [friends, setFriends] = useState([]);
 
     useEffect(() => {
