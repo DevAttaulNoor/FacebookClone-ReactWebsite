@@ -1,7 +1,7 @@
 import '../../CSS/UniversalComponent/Header.css'
 import fblogo from '../../Imgs/fblogo.png'
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import { auth, db } from '../BackendRelated/Firebase';
 import { useStateValue } from '../BackendRelated/StateProvider';
@@ -123,16 +123,16 @@ function Header() {
     return (
         <div className={`header ${showHeader ? '' : 'transformed'}`}>
             <div className='Transformed_header_left'>
-                <Link to={'/homepage'}>
+                <NavLink to={'/homepage'}>
                     <CloseIcon className='closeIcon' />
                     <img src={fblogo} alt="" />
-                </Link>
+                </NavLink>
             </div>
 
             <div className='header_left'>
-                <Link to={'/homepage'}>
+                <NavLink to={'/homepage'}>
                     <img src={fblogo} alt="" />
-                </Link>
+                </NavLink>
                 <div className='header_search'>
                     <SearchIcon />
                     <input
@@ -170,16 +170,16 @@ function Header() {
             </div>
 
             <div className="header_middle">
-                <Link to="/homepage">
+                <NavLink to="/homepage">
                     <div className={`header_option ${location.pathname === '/homepage' ? 'header_option_active' : ''}`}>
                         <HomeIcon />
                     </div>
-                </Link>
-                <Link to="/friendpage">
+                </NavLink>
+                <NavLink to="/friendpage">
                     <div className={`header_option ${friendPagesActive ? 'header_option_active' : ''}`}>
                         <PeopleIcon />
                     </div>
-                </Link>
+                </NavLink>
                 <div className='header_option'>
                     <SmartDisplayIcon />
                 </div>
@@ -197,9 +197,9 @@ function Header() {
                     <Avatar src={user.photoURL} onClick={toggleDialog} ref={dialogBoxRef} />
                     {isDialogVisible && (
                         <div className="dialogBox">
-                            <Link to="/userhomepage">
+                            <NavLink to="/userhomepage">
                                 <button>Home</button>
-                            </Link>
+                            </NavLink>
                             <button>Settings</button>
                             <button onClick={handleSignOut}>Sign Out</button>
                         </div>
