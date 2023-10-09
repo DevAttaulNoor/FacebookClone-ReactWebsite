@@ -13,10 +13,10 @@ function HomePage_Feeds_StoryReels() {
     const containerRef = useRef(null);
     const [{ user }] = useStateValue();
     const [reels, setReels] = useState([]);
-    const [showLeftButton, setShowLeftButton] = useState(initialShowLeftButton);
-    const [showRightButton, setShowRightButton] = useState(initialShowRightButton);
     const initialShowLeftButton = sessionStorage.getItem('showLeftButton') === 'true' || false;
     const initialShowRightButton = sessionStorage.getItem('showRightButton') === 'true' || false;
+    const [showLeftButton, setShowLeftButton] = useState(initialShowLeftButton);
+    const [showRightButton, setShowRightButton] = useState(initialShowRightButton);
 
     useEffect(() => {
         db.collection("Reels")

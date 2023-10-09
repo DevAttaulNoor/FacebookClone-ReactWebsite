@@ -1,17 +1,35 @@
 import "../../CSS/UserPage/UserPage.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useStateValue } from "../BackendRelated/StateProvider";
 import { db, storage } from "../BackendRelated/Firebase";
+import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_AllFriends_Leftbar';
 import UserPage_Feed from "./UserPage_Feed";
 import UserPage_Info from "./UserPage_Info";
 import UserPage_Friends from "./UserPage_Friends";
 import UserPage_Photos from "./UserPage_Photos";
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import AddIcon from '@mui/icons-material/Add';
+
 function UserPage() {
     const [{ user }, dispatch] = useStateValue();
+    const [friends, setFriends] = useState([]);
     const [profileImage, setProfileImage] = useState(null);
     const [coverImage, setCoverImage] = useState(null);
+
+    useEffect(() => {
+        // Fetch friends data when user.uid changes
+        fetchFriendsData(user.uid, setFriends);
+    }, [user.uid]);
+
+    useEffect(() => {
+        // Fetch friend details when friends array changes
+        if (friends.length > 0) {
+            fetchFriendDetailsData(friends, setFriends);
+        }
+    }, [friends]);
 
     const changeProfileImage = (e) => {
         const file = e.target.files[0];
@@ -101,7 +119,20 @@ function UserPage() {
         <div className="userpage">
             <div className="coverPhotoSection">
                 <img src={user.coverphotoUrl} alt="Cover" />
-                <button>Create with avatar</button>
+                <label htmlFor="coverImageInput" className="coverPhoto">
+                    <button id="coverImageBtn" onClick={() => document.getElementById('coverImageInput').click()}>
+                        <PhotoCameraIcon />
+                        <p>Edit cover photo</p>
+                    </button>
+
+                    <input
+                        type="file"
+                        id="coverImageInput"
+                        accept="image/*"
+                        onChange={changeCoverImage}
+                        style={{ display: "none" }}
+                    />
+                </label>
             </div>
 
             <div className="profileSection">
@@ -122,23 +153,23 @@ function UserPage() {
                         </div>
                         <div className="profileSections_left_right">
                             <h1>{user.displayName}</h1>
-                            <h4>{0} friends</h4>
+                            <h4>{friends.length} friends</h4>
                         </div>
                     </div>
                     <div className="proflieSections_right">
-                        <button>Add to story</button>
-                        <button>Edit profile</button>
-                        <button>Arrow</button>
-                        <label htmlFor="coverImageInput" className="coverPhoto">
-                            <button onClick={() => document.getElementById('coverImageInput').click()}>Edit cover photo</button>
-                            <input
-                                type="file"
-                                id="coverImageInput"
-                                accept="image/*"
-                                onChange={changeCoverImage}
-                                style={{ display: "none" }}
-                            />
-                        </label>
+                        <div id="addStoryBtn">
+                            <AddIcon />
+                            <p>Add to story</p>
+                        </div>
+
+                        <div id="editProfileBtn">
+                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yW/r/OR6SzrfoMFg.png" alt="" />
+                            <p>Edit profile</p>
+                        </div>
+
+                        <div id="arrowBtn">
+                            <KeyboardArrowDownIcon />
+                        </div>
                     </div>
                 </div>
 
@@ -153,9 +184,7 @@ function UserPage() {
                         <div className="component">More</div>
                     </div>
                     <div className="userComponent_right">
-                        <div>
-                            <button>Arrow</button>
-                        </div>
+                        <MoreHorizIcon />
                     </div>
                 </div>
             </div>

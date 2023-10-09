@@ -3,20 +3,18 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: auto; 
-    min-height: 100vh; 
+    height: auto;
+    min-height: 100vh;
 }
 
 /* Cover Photo Section */
 .coverPhotoSection {
-    width: 100%; 
-    max-width: 1090px; 
-    height: auto; 
+    width: 100%;
+    max-width: 1090px;
     position: relative;
 }
 
 .coverPhotoSection img {
-    position: absolute;
     width: 1090px;
     height: 410px;
     border-bottom-left-radius: 8px;
@@ -24,9 +22,20 @@
     object-fit: cover;
 }
 
-.coverPhotoSection button {
+.coverPhotoSection #createAvatarBtn i {
+    background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/yz/r/A-0sOGEvPBj.png");
+    background-position: 0px -84px;
+    background-size: auto;
+    background-color: #fff;
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.coverPhotoSection #coverImageBtn {
     position: absolute;
-    padding: 7px 0;
+    padding: 6px;
     font-size: 15px;
     font-weight: 600;
     color: #fff;
@@ -35,28 +44,22 @@
     outline: none;
     border-radius: 6px;
     width: 165px;
-    top: 315px;
-    right: 32px;
+    top: 350px;
+    right: 34px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 
-.coverPhotoSection .coverPhoto button{
-    position: absolute;
-    padding: 7px 0;
-    font-size: 15px;
-    font-weight: 600;
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.5);
-    border: none;
-    outline: none;
-    border-radius: 6px;
-    width: 165px;
-    right: 32px;
-    top: 360px;
-}
-
-.coverPhotoSection button:hover,
-.coverPhotoSection .coverPhoto button:hover{
+.coverPhotoSection #coverImageBtn:hover {
     cursor: pointer;
+}
+
+.coverPhotoSection #coverImageBtn .MuiSvgIcon-root {
+    color: #fff;
+    width: 22px;
+    height: 22px;
 }
 
 /* Profile Section */
@@ -70,11 +73,10 @@
 .profileSections {
     display: flex;
     justify-content: space-between;
-    width: 100%; 
-    max-width: 1020px; 
-    margin: 0 auto; 
+    width: 100%;
+    max-width: 1020px;
+    margin: 0 auto;
     padding: 20px;
-    height: 490px;
     z-index: 1;
 }
 
@@ -85,7 +87,7 @@
     justify-content: flex-start;
 }
 
-.profileSections_left_left{
+.profileSections_left_left {
     position: relative;
     display: flex;
 }
@@ -117,7 +119,6 @@
     display: flex;
     flex-direction: column;
     padding-left: 12px;
-    margin-top: auto;
     margin-bottom: 20px;
 }
 
@@ -134,44 +135,71 @@
 }
 
 /* Profile Right Section */
-.proflieSections_right{
+.proflieSections_right {
     display: flex;
     align-items: flex-end;
     margin-bottom: 20px;
 }
 
-.proflieSections_right button{
+.proflieSections_right div {
     background-color: #E4E6EB;
-    border: none;
-    outline: none;
     border-radius: 6px;
-    font-size: 15px;
-    font-weight: 600;
     padding: 8px 12px;
     margin: 0 4px;
+    display: flex;
+    align-items: center;
+    height: 22px;
 }
 
-.proflieSections_right button:hover {
-    background-color: lightgrey;
-    cursor: pointer;
+.proflieSections_right div p{
+    font-size: 15px;
+    font-weight: 600;
 }
 
-.proflieSections_right button:last-child {
-    margin-right: 0;
-}
-
-.proflieSections_right button:first-child {
+.proflieSections_right #addStoryBtn{
     background-color: #1B74E4;
     color: #fff;
     margin-left: 0;
+}
+
+.proflieSections_right #addStoryBtn .MuiSvgIcon-root {
+    width: 23px;
+    height: 23px;
+    padding: 0;
+    margin: 0 6px 0 0;
+    color: #fff;
+    background-color: inherit;   
+}
+
+.proflieSections_right #editProfileBtn img{
+    margin: 0 6px 0 0;
+}
+
+.proflieSections_right #arrowBtn{
+    margin: 0 0 0 6px;
+}
+
+.proflieSections_right #arrowBtn .MuiSvgIcon-root {
+    width: 23px;
+    height: 23px;
+    padding: 0;
+    margin: 0;
+    color: initial;
+    background-color: inherit;   
+}
+
+.proflieSections_right #editProfileBtn:hover,
+.proflieSections_right #arrowBtn:hover{
+    background-color: lightgrey;
+    cursor: pointer;
 }
 
 /** User Component Section */
 .userComponents {
     display: flex;
     justify-content: space-between;
-    width: 100%; 
-    max-width: 1020px; 
+    width: 100%;
+    max-width: 1020px;
     border-top: 1px solid rgb(197, 197, 197);
     margin: 0 auto;
 }
@@ -201,24 +229,24 @@
     align-items: center;
 }
 
-.userComponent_right button {
+.userComponent_right .MuiSvgIcon-root {
     background-color: #E4E6EB;
-    border: none;
-    outline: none;
     border-radius: 6px;
     font-size: 15px;
     font-weight: 600;
     padding: 8px 12px;
+    width: 23px;
+    height: 23px;
 }
 
-.userComponent_right button:hover {
+.userComponent_right .MuiSvgIcon-root:hover {
     background-color: lightgrey;
     cursor: pointer;
 }
 
 /* Home Page Bottom */
 .userpage_bottom {
-    width: 100%; 
+    width: 100%;
     max-width: 1020px;
     display: flex;
     justify-content: space-between;
