@@ -8,7 +8,6 @@
     padding: 18px;
 }
 
-
 .userpage_Info button {
     width: 100%;
     background-color: #E4E6EB;
@@ -26,36 +25,58 @@
     cursor: pointer;
 }
 
-.introBio h2 {
-    margin-bottom: 10px;
+/** Bio Section */
+.bioSection{
 }
 
-.introBio #bio {
+.bioSection_Top{
+    padding-top: 10px;
+}
+
+.bioSection_Top textarea{
+    border-radius: 8px;
+    background-color: #F0F2F5;
+    resize: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    border: 1px solid lightgray;
+    height: 70px;
+    width: -webkit-fill-available;
+    white-space: normal;
+    overflow-wrap: break-word;
     text-align: center;
-    font-size: 16px;
-    font-weight: 400;
 }
 
-.introInfo h5 {
-    font-size: 16px;
-    font-weight: 400;
-    margin: 15px 0;
+.bioSection_Bottom{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.introInfo h5:last-child {
-    margin-bottom: 0;
+.bioSection_Bottom .bioSection_BottomLeft{
+    display: flex;
+    align-items: center;
 }
 
-.introInfo h5:first-child {
-    margin-top: 0;
+.bioSection_Bottom .bioSection_BottomLeft p{
+    font-size: 15px;
+    margin-left: 5px;
 }
 
-/* Hobbies Modal Section */
+.bioSection_Bottom .bioSection_BottomRight{
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 6px;
+}
+
+/** Hobbies Modal Section */
 .hobbiesModal {
     position: absolute;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
     inset: 70px 465px 30px 465px;
-    background: #fff;
+    background: #e69b9b;
     border-radius: 8px;
     padding: 0;
     outline: none;
@@ -237,7 +258,7 @@
     background-color: #0866FF;
 }
 
-/* Featured Modal Section */
+/** Featured Modal Section */
 .featuredModal {
     position: absolute;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
@@ -250,7 +271,7 @@
     overflow-x: hidden;
 }
 
-/* Hobbies Modal Top Section */
+/* Featured Modal Top Section */
 .featuredModal_Top {
     text-align: center;
     position: relative;
@@ -276,7 +297,7 @@
     cursor: pointer;
 }
 
-/* Hobbies Modal Middle Section */
+/* Featured Modal Middle Section */
 .featuredModal_Middle {
     display: flex;
     flex-direction: column;
@@ -297,7 +318,7 @@
     padding-top: 16px;
 }
 
-/* Hobbies Modal Bottom Section */
+/* Featured Modal Bottom Section */
 .featuredModal_Bottom {
     padding: 15px;
 }
