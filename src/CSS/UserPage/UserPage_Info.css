@@ -1,5 +1,5 @@
 /* UserPage Info Section */
-.userpage_Info{
+.userpage_Info {
     height: auto;
     width: 400px;
     background-color: #fff;
@@ -8,7 +8,8 @@
     padding: 18px;
 }
 
-.userpage_Info button{
+
+.userpage_Info button {
     width: 100%;
     background-color: #E4E6EB;
     border: none;
@@ -20,31 +21,295 @@
     margin: 12px 0;
 }
 
-.userpage_Info button:hover{
+.userpage_Info button:hover {
     background-color: lightgrey;
     cursor: pointer;
 }
 
-.introBio h2{
+.introBio h2 {
     margin-bottom: 10px;
 }
 
-.introBio #bio{
+.introBio #bio {
     text-align: center;
     font-size: 16px;
     font-weight: 400;
 }
 
-.introInfo h5{
+.introInfo h5 {
     font-size: 16px;
     font-weight: 400;
     margin: 15px 0;
 }
 
-.introInfo h5:last-child{
+.introInfo h5:last-child {
     margin-bottom: 0;
 }
 
-.introInfo h5:first-child{
+.introInfo h5:first-child {
     margin-top: 0;
+}
+
+/* Hobbies Modal Section */
+.hobbiesModal {
+    position: absolute;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+    inset: 70px 465px 30px 465px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 0;
+    outline: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.hobbiesModal hr {
+    margin: 4px 0;
+}
+
+/* Hobbies Modal Top Section */
+.hobbiesModal_Top {
+    position: relative;
+}
+
+.hobbiesModal_Top .MuiSvgIcon-root {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 6px;
+    border-radius: 50%;
+    background-color: #E4E6EB;
+}
+
+.hobbiesModal_Top .MuiSvgIcon-root:hover {
+    cursor: pointer;
+}
+
+.hobbiesModal_Top .hobbiesModal_TopImg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #cbedf9;
+}
+
+.hobbiesModal_Top .hobbiesModal_TopImg img {
+    height: 170px;
+}
+
+.hobbiesModal_Top .hobbiesModal_TopIntro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 15px 24px 15px;
+}
+
+.hobbiesModal_Top .hobbiesModal_TopIntro h2 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.hobbiesModal_Top .hobbiesModal_TopIntro p {
+    font-size: 12px;
+    font-weight: 500;
+    color: #65676B
+}
+
+/* Hobbies Modal Middle Section */
+.hobbiesModal_Middle {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px 15px;
+}
+
+.activeOption {
+    color: #0064d1;
+    background-color: #cbedf9;
+}
+
+.hobbiesModal_Middle #hobbiesModal_MiddleIntro {
+    font-size: 13px;
+    font-weight: 600;
+    color: #65676B;
+    text-transform: uppercase;
+    padding: 8px;
+}
+
+.hobbiesModal_Middle .hobbiesModal_MiddleOptions {
+    padding-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.hobbiesModal_Middle .hobbiesModal_MiddleOptions .hobbiesModal_MiddleOption {
+    display: flex;
+    align-items: center;
+    padding: 8px 14px;
+    margin: 3px;
+    border: 1px solid lightgray;
+    border-radius: 24px;
+}
+
+.hobbiesModal_Middle .hobbiesModal_MiddleOptions .hobbiesModal_MiddleOption:hover {
+    cursor: pointer;
+    background-color: #E4E6EB;
+}
+
+.hobbiesModal_Middle .hobbiesModal_MiddleOptions .hobbiesModal_MiddleOption .hobbiesModal_MiddleOptionInfo {
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+.hobbiesModal_Middle .searchSection {
+    display: flex;
+    align-items: center;
+    padding: 8px 14px;
+    margin: 3px;
+    border: 1px solid lightgray;
+    border-radius: 24px;
+    background-color: #cbedf9;
+}
+
+.hobbiesModal_Middle .searchSection:hover {
+    cursor: pointer;
+    background-color: #E4E6EB;
+}
+
+.hobbiesModal_Middle .searchSection .MuiSvgIcon-root {
+    color: #0064d1;
+    width: 20px;
+    height: 20px;
+}
+
+.hobbiesModal_Middle .searchSection p {
+    color: #0064d1;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+/* Hobbies Modal Bottom Section */
+.hobbiesModal_Bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hobbiesModal_Bottom .hobbiesModal_Bottom_Left {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+
+.hobbiesModal_Bottom .hobbiesModal_Bottom_Left p {
+    font-size: 15px;
+    font-weight: 400;
+    margin-left: 6px;
+}
+
+.hobbiesModal_Bottom .hobbiesModal_Bottom_Right {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 6px;
+    padding-right: 15px;
+}
+
+.hobbiesModal_Bottom .hobbiesModal_Bottom_Right button {
+    background-color: #E4E6EB;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+    padding: 8px 12px;
+    border: none;
+    outline: none;
+}
+
+.hobbiesModal_Bottom .hobbiesModal_Bottom_Right button:hover {
+    cursor: pointer;
+}
+
+.hobbiesModal_Bottom .hobbiesModal_Bottom_Right #saveBtn {
+    color: #fff;
+    background-color: #0866FF;
+}
+
+/* Featured Modal Section */
+.featuredModal {
+    position: absolute;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+    inset: 170px 400px 170px 400px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 0;
+    outline: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Hobbies Modal Top Section */
+.featuredModal_Top {
+    text-align: center;
+    position: relative;
+    padding: 14px 60px;
+}
+
+.featuredModal_Top p {
+    position: relative;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.featuredModal_Top .MuiSvgIcon-root {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px;
+    border-radius: 50%;
+    background-color: #E4E6EB;
+}
+
+.featuredModal_Top .MuiSvgIcon-root:hover {
+    cursor: pointer;
+}
+
+/* Hobbies Modal Middle Section */
+.featuredModal_Middle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 15px 0 15px;
+}
+
+.featuredModal_Middle .imgSection{
+    width: 350px;
+    height: 180px;
+    overflow: hidden;
+}
+
+.featuredModal_Middle p {
+    color: #65676B;
+    font-size: 14px;
+    font-weight: 400;
+    padding-top: 16px;
+}
+
+/* Hobbies Modal Bottom Section */
+.featuredModal_Bottom {
+    padding: 15px;
+}
+
+.featuredModal_Bottom button {
+    color: #0064d1;
+    background-color: #EBF5FF;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 6px;
+    padding: 8px 12px;
+    width: 100%;
 }
