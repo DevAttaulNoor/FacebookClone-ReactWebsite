@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import CloseIcon from '@mui/icons-material/Close';
 import PublicIcon from '@mui/icons-material/Public';
 import SearchIcon from '@mui/icons-material/Search';
+import AddIcon from '@mui/icons-material/Add';
 
 function UserPage_Info() {
     Modal.setAppElement('#root');
@@ -11,6 +12,7 @@ function UserPage_Info() {
     const [bioText, setBioText] = useState('');
     const [savedBioText, setSavedBioText] = useState('');
     const [isBioSectionVisible, setIsBioSectionVisible] = useState(false);
+    const [isdetailsModalOpen, setIsdetailsModalOpen] = useState(false);
     const [ishobbiesModalOpen, setIshobbiesModalOpen] = useState(false);
     const [isfeatureModalOpen, setIsfeatureModalOpen] = useState(false);
     const [activeOptions, setActiveOptions] = useState([]);
@@ -42,7 +44,7 @@ function UserPage_Info() {
     };
 
     return (
-        <div className='userpage_Info'>
+        <div className='userpageInfo'>
             <h2>Intro</h2>
 
             <div className="bioSection">
@@ -62,7 +64,7 @@ function UserPage_Info() {
                         <p>Public</p>
                     </div>
                     <div className="bioSection_BottomRight">
-                        <button id="cancelBtn" onClick={() => setIsBioSectionVisible(false) }>
+                        <button id="cancelBtn" onClick={() => setIsBioSectionVisible(false)}>
                             Cancel
                         </button>
                         <button id="saveBtn" onClick={saveBioText}>
@@ -81,9 +83,98 @@ function UserPage_Info() {
             </div>
 
             <div className='detailsSection'>
-                <Modal>
+                <Modal className="detailsModal" isOpen={isdetailsModalOpen} onRequestClose={() => setIsdetailsModalOpen(false)}>
+                    <div className="detailsModal_Top">
+                        <CloseIcon onClick={() => setIsdetailsModalOpen(false)} />
+                        <p>Edit details</p>
+                    </div>
+
+                    <hr />
+
+                    <div className="detailsModal_Middle">
+                        <div className='detailsModal_MiddleHeading'>
+                            <h3>Customise your Intro</h3>
+                            <p>Details you select will be public.</p>
+                        </div>
+
+                        <div className='detailsModal_MiddleOption'>
+                            <h3>Work</h3>
+                            <div className='detailsModal_MiddleOptionInner'>
+                                <AddIcon />
+                                <p>Add a workplace</p>
+                            </div>
+                        </div>
+
+                        <div className='detailsModal_MiddleOption'>
+                            <h3>Education</h3>
+                            <div className='detailsModal_MiddleOptionInner'>
+                                <AddIcon />
+                                <p>Add secondary school</p>
+                            </div>
+                            <div className='detailsModal_MiddleOptionInner'>
+                                <AddIcon />
+                                <p>Add university</p>
+                            </div>
+                        </div>
+
+                        <div className='detailsModal_MiddleOption'>
+                            <h3>Current town/city</h3>
+                            <div className='detailsModal_MiddleOptionInner'>
+                                <AddIcon />
+                                <p>Add current city</p>
+                            </div>
+                        </div>
+
+                        <div className='detailsModal_MiddleOption'>
+                            <h3>Home town</h3>
+                            <div className='detailsModal_MiddleOptionInner'>
+                                <AddIcon />
+                                <p>Add home town</p>
+                            </div>
+                        </div>
+
+                        <div className='detailsModal_MiddleOption'>
+                            <h3>Relationship</h3>
+                            <div className='detailsModal_MiddleOptionInner'>
+                                <AddIcon />
+                                <p>Add a relationship status</p>
+                            </div>
+                        </div>
+
+                        <div className='detailsModal_MiddleNote'>
+                            <div className='detailsModal_MiddleNote_Left'>
+                                <h3>Websites</h3>
+                                <p>To feature links on your Profile, set the audience to <span>Public.</span></p>
+                            </div>
+                            <button className='detailsModal_MiddleNote_Right'>
+                                <PublicIcon />
+                                <p>Public</p>
+                            </button>
+                        </div>
+
+                        <div className='detailsModal_MiddleNote'>
+                            <div className='detailsModal_MiddleNote_Left'>
+                                <h3>Social links</h3>
+                                <p>To feature links on your Profile, set the audience to <span>Public.</span></p>
+                            </div>
+                            <button className='detailsModal_MiddleNote_Right'>
+                                <PublicIcon />
+                                <p>Public</p>
+                            </button>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div className="detailsModal_Bottom">
+                        <p>Update your information</p>
+                        <div className='detailsModal_Bottom_Right'>
+                            <button onClick={() => setIsdetailsModalOpen(false)}>Cancel</button>
+                            <button id='saveBtn'>Save</button>
+                        </div>
+                    </div>
                 </Modal>
-                <button>Edit Details</button>
+                <button onClick={() => setIsdetailsModalOpen(true)}>Edit Details</button>
             </div>
 
             <div className='hobbieSection'>
@@ -173,7 +264,7 @@ function UserPage_Info() {
             <div className='featuredSection'>
                 <Modal className="featuredModal" isOpen={isfeatureModalOpen} onRequestClose={() => setIsfeatureModalOpen(false)}>
                     <div className="featuredModal_Top">
-                        <CloseIcon onClick={() => setIshobbiesModalOpen(false)} />
+                        <CloseIcon onClick={() => setIsfeatureModalOpen(false)} />
                         <p>Edit Featured</p>
                     </div>
 

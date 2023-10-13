@@ -1,5 +1,5 @@
-/* UserPage Info Section */
-.userpage_Info {
+/** UserPage Info Section */
+.userpageInfo {
     height: auto;
     width: 400px;
     background-color: #fff;
@@ -8,7 +8,7 @@
     padding: 18px;
 }
 
-.userpage_Info button {
+.userpageInfo button {
     width: 100%;
     background-color: #E4E6EB;
     border: none;
@@ -20,7 +20,7 @@
     margin: 12px 0;
 }
 
-.userpage_Info button:hover {
+.userpageInfo button:hover {
     background-color: lightgrey;
     cursor: pointer;
 }
@@ -71,12 +71,200 @@
     gap: 6px;
 }
 
+/** Details Modal Section */
+.detailsModal{
+    position: absolute;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+    inset: 65px 400px 55px 400px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 0;
+    outline: none;
+    overflow-y: unset;
+}
+
+/* Details Modal Top Section */
+.detailsModal_Top {
+    text-align: center;
+    position: relative;
+    padding: 14px 60px;
+}
+
+.detailsModal_Top p {
+    position: relative;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.detailsModal_Top .MuiSvgIcon-root {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px;
+    border-radius: 50%;
+    background-color: #E4E6EB;
+}
+
+.detailsModal_Top .MuiSvgIcon-root:hover {
+    cursor: pointer;
+}
+
+/* Details Modal Middle Section */
+.detailsModal_Middle{
+    padding: 12px 10px 12px 25px;
+    max-height: 412px; /* You can adjust the height as needed */
+    overflow: auto;
+}
+
+.detailsModal_MiddleHeading h3{
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.detailsModal_MiddleHeading p{
+    font-size: 14px;
+    color: #65676B;
+}
+
+.detailsModal_MiddleOption {
+    margin-top: 24px;
+}
+
+.detailsModal_MiddleOption h3{
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.detailsModal_MiddleOptionInner{
+    display: flex;
+    align-items: center;
+    margin-top: 18px;
+    width: fit-content;
+}
+
+.detailsModal_MiddleOptionInner:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: #0866FF;
+}
+
+.detailsModal_MiddleOptionInner .MuiSvgIcon-root{
+    color: #0866FF;
+    padding: 1px;
+    border-radius: 50%;
+    border: 2px solid #0866FF;
+    width: 21px;
+    height: 21px;
+}
+
+.detailsModal_MiddleOptionInner p{
+    font-size: 14px;
+    color: #0866FF;
+    margin-left: 12px;
+}
+
+.detailsModal_MiddleNote {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.detailsModal_MiddleNote_Left h3{
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.detailsModal_MiddleNote_Left p{
+    font-size: 12px;
+    color: #65676B;
+}
+
+.detailsModal_MiddleNote_Left span{
+    font-weight: 500;
+}
+
+.detailsModal_MiddleNote_Right {
+    background-color: #E4E6EB;
+    padding: 7px 10px;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+}
+
+.detailsModal_MiddleNote_Right:hover {
+    cursor: pointer;
+}
+
+.detailsModal_MiddleNote_Right .MuiSvgIcon-root{
+    width: 16px;
+    height: 16px;
+    color: #65676B;
+}
+
+.detailsModal_MiddleNote_Right p{
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 3px;
+}
+
+/* Details Modal Bottom Section */
+.detailsModal_Bottom{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 13px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.detailsModal_Bottom p{
+    color: #0064d1;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 7px 12px;
+    border-radius: 6px;
+}
+
+.detailsModal_Bottom p:hover{
+    cursor: pointer;
+    background-color: #F0F2F5;
+}
+
+.detailsModal_Bottom_Right{
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 6px;
+    padding: 6px;
+}
+
+.detailsModal_Bottom_Right button{
+    background-color: #E4E6EB;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+}
+
+.detailsModal_Bottom_Right button:hover{
+    cursor: pointer;
+}
+
+.detailsModal_Bottom_Right #saveBtn{
+    background-color: #0866FF;
+    color: #fff;
+}
+
 /** Hobbies Modal Section */
 .hobbiesModal {
     position: absolute;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
     inset: 70px 465px 30px 465px;
-    background: #e69b9b;
+    background: #fff;
     border-radius: 8px;
     padding: 0;
     outline: none;

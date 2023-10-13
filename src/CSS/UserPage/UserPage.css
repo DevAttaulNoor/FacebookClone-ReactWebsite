@@ -1,3 +1,4 @@
+/** UserPage Section */
 .userpage {
     display: flex;
     flex-direction: column;
@@ -46,7 +47,7 @@
     width: 165px;
     top: 350px;
     right: 34px;
-    z-index: 999;
+    z-index: 5;
     display: flex;
     align-items: center;
     justify-content: space-around;
