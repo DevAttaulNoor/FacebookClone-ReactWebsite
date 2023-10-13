@@ -20,15 +20,16 @@ function UserPage_Friends() {
     }, [friends]);
 
     return (
-        <div className='userpage_Friends'>
-            <div className="userpage_Friends_top">
-                <h2>Friends</h2>
+        <div className='userpageFriends'>
+            <div className="userpageFriends_Top">
+                <h3>Friends</h3>
                 <a href="#">See all friends</a>
             </div>
-            <div className="userpage_Friends_bottom">
-                <div className="userpage_friendsContainer">
+
+            <div className="userpageFriends_Bottom">
+                <div className="userpageFriends_BottomContainer">
                     {friends.map((friend) => (
-                        <div className="friend">
+                        <div className="userpageFriends_BottomContainerOptions">
                             <img src={friend.photoURL} alt="" />
                             <p>{friend.username}</p>
                         </div>

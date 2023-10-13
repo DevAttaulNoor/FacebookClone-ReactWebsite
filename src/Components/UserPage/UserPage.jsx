@@ -7,11 +7,10 @@ import UserPage_Feed from "./UserPage_Feed";
 import UserPage_Info from "./UserPage_Info";
 import UserPage_Friends from "./UserPage_Friends";
 import UserPage_Photos from "./UserPage_Photos";
-import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
-
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import AddIcon from '@mui/icons-material/Add';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 function UserPage() {
     const [{ user }, dispatch] = useStateValue();
@@ -20,12 +19,10 @@ function UserPage() {
     const [coverImage, setCoverImage] = useState(null);
 
     useEffect(() => {
-        // Fetch friends data when user.uid changes
         fetchFriendsData(user.uid, setFriends);
     }, [user.uid]);
 
     useEffect(() => {
-        // Fetch friend details when friends array changes
         if (friends.length > 0) {
             fetchFriendDetailsData(friends, setFriends);
         }
@@ -117,14 +114,13 @@ function UserPage() {
 
     return (
         <div className="userpage">
-            <div className="coverPhotoSection">
-                <img src={user.coverphotoUrl} alt="Cover" />
-                <label htmlFor="coverImageInput" className="coverPhoto">
-                    <button id="coverImageBtn" onClick={() => document.getElementById('coverImageInput').click()}>
+            <div className="userpage_Top">
+                <div className="userpage_TopCoverSection">
+                    <img src={user.coverphotoUrl} alt="Cover" />
+                    <button onClick={() => document.getElementById('coverImageInput').click()}>
                         <PhotoCameraIcon />
-                        <p>Edit cover photo</p>
+                        <p>Edit Cover Photo</p>
                     </button>
-
                     <input
                         type="file"
                         id="coverImageInput"
@@ -132,65 +128,65 @@ function UserPage() {
                         onChange={changeCoverImage}
                         style={{ display: "none" }}
                     />
-                </label>
-            </div>
+                </div>
 
-            <div className="profileSection">
-                <div className="profileSections">
-                    <div className="profileSections_left">
-                        <div className="profileSections_left_left">
+                <div className="userpage_TopProfileSection">
+                    <div className="userpage_TopProfileSection_Left">
+                        <div className="userpage_TopProfileSection_LeftPhoto">
                             <img src={user.photoURL} alt="Profile" />
-                            <label htmlFor="profileImageInput">
+                            <div onClick={() => document.getElementById('profileImageInput').click()}>
                                 <PhotoCameraIcon />
                                 <input
                                     type="file"
                                     id="profileImageInput"
                                     accept="image/*"
                                     onChange={changeProfileImage}
-                                    style={{ display: "none" }}
+                                    style={{ display: 'none' }}
                                 />
-                            </label>
+                            </div>
                         </div>
-                        <div className="profileSections_left_right">
-                            <h1>{user.displayName}</h1>
-                            <h4>{friends.length} friends</h4>
+
+                        <div className="userpage_TopProfileSection_LeftInfo">
+                            <h3>{user.displayName}</h3>
+                            <p>{friends.length} friends</p>
                         </div>
                     </div>
-                    <div className="proflieSections_right">
-                        <div id="addStoryBtn">
+
+                    <div className="userpage_TopProfileSection_Right">
+                        <div className="userpage_TopProfileSection_RightOption" id="addStoryBtn">
                             <AddIcon />
                             <p>Add to story</p>
                         </div>
 
-                        <div id="editProfileBtn">
+                        <div className="userpage_TopProfileSection_RightOption" id="editProfileBtn">
                             <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yW/r/OR6SzrfoMFg.png" alt="" />
                             <p>Edit profile</p>
                         </div>
 
-                        <div id="arrowBtn">
+                        <div className="userpage_TopProfileSection_RightOption" id="arrowBtn">
                             <KeyboardArrowDownIcon />
                         </div>
                     </div>
                 </div>
 
-                <div className="userComponents">
-                    <div className="userComponent_left">
-                        <div className="component active">Posts</div>
-                        <div className="component">About</div>
-                        <div className="component">Friends</div>
-                        <div className="component">Photos</div>
-                        <div className="component">Videos</div>
-                        <div className="component">Check-ins</div>
-                        <div className="component">More</div>
+                <div className="userpage_TopComponents">
+                    <div className="userpage_TopComponents_Left">
+                        <div className="userpage_TopComponents_LeftOption active">Posts</div>
+                        <div className="userpage_TopComponents_LeftOption">About</div>
+                        <div className="userpage_TopComponents_LeftOption">Friends</div>
+                        <div className="userpage_TopComponents_LeftOption">Photos</div>
+                        <div className="userpage_TopComponents_LeftOption">Videos</div>
+                        <div className="userpage_TopComponents_LeftOption">Check-ins</div>
+                        <div className="userpage_TopComponents_LeftOption">More</div>
                     </div>
-                    <div className="userComponent_right">
+                    <div className="userpage_TopComponents_Right">
                         <MoreHorizIcon />
                     </div>
                 </div>
             </div>
 
-            <div className="userpage_bottom">
-                <div className="userpage_bottom_left">
+            <div className="userpage_Bottom">
+                <div className="userpage_BottomLeft">
                     <div className="userIntro">
                         <UserPage_Info />
                     </div>
@@ -201,7 +197,7 @@ function UserPage() {
                         <UserPage_Friends />
                     </div>
                 </div>
-                <div className="userpage_bottom_right">
+                <div className="userpage_BottomRight">
                     <div className="userFeed">
                         <UserPage_Feed />
                     </div>

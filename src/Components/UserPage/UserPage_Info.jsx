@@ -45,7 +45,7 @@ function UserPage_Info() {
 
     return (
         <div className='userpageInfo'>
-            <h2>Intro</h2>
+            <h3>Intro</h3>
 
             <div className="bioSection">
                 {isBioSectionVisible ? (

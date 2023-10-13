@@ -42,13 +42,14 @@ function UserPage_Photos() {
     }, [user]);
 
     return (
-        <div className='userpage_Photos'>
-            <div className="userpage_Photos_top">
-                <h2>Photos</h2>
+        <div className='userpagePhotos'>
+            <div className="userpagePhotos_Top">
+                <h3>Photos</h3>
                 <a href="#">See all photos</a>
             </div>
-            <div className="userpage_Photos_bottom">
-                <div className="grid-container">
+
+            <div className="userpagePhotos_Bottom">
+                <div className="userpagePhotos_BottomContainer">
                     {photoUrls.map((url, index) => (
                         <img key={index} src={url} alt={`Photo ${index}`} />
                     ))}

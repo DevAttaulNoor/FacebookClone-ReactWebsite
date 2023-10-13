@@ -60,7 +60,7 @@ function UserPage_Feed() {
     };
 
     return (
-        <div className='userpage_Feed'>
+        <div className='userpageFeed'>
             <HomePage_Feeds_Posting />
             {
                 posts.map(post => {
