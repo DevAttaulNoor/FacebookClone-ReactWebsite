@@ -1,12 +1,13 @@
 import '../../CSS/StartupPage/Login.css'
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth, db, provider, storage } from '../BackendRelated/Firebase';
+import { auth, db, provider } from '../BackendRelated/Firebase';
 import { useStateValue } from '../BackendRelated/StateProvider';
 import Loading from "./Loading";
 import Modal from 'react-modal';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import Signup from './Signup';
 
 function Login() {
     Modal.setAppElement('#root');
@@ -14,19 +15,12 @@ function Login() {
     const [{ }, dispatch] = useStateValue();
     const [emailSignIn, setEmailSignIn] = useState('');
     const [passwordSignIn, setPasswordSignIn] = useState('');
-    const [username, setUsername] = useState('');
-    const [profilePicture, setProfilePicture] = useState(null);
-    const [coverPicture, setCoverPicture] = useState(null);
-    const [emailSignUp, setEmailSignUp] = useState('');
-    const [passwordSignUp, setPasswordSignUp] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [isLoginProcessing, setIsLoginProcessing] = useState(false);
+    const [loginerror, setLoginError] = useState(null);
     const isUserLoggedOut = sessionStorage.getItem('userLoggedOut');
     const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
-    const [isLoginProcessing, setIsLoginProcessing] = useState(false);
-    const [isSignupProcessing, setIsSignupProcessing] = useState(false);
-    const [loginerror, setLoginError] = useState(null);
-    const [signuperror, setSignupError] = useState(null);
     const navigate = useNavigate();
 
     if (isUserLoggedOut === 'true') {
@@ -142,86 +136,8 @@ function Login() {
         setIsLoading(false);
     }, []);
 
-    const handleSignup = async (e) => {
-        e.preventDefault();
-        setIsSignupProcessing(true);
-        setSignupError(null);
-
-        try {
-            const userCredential = await auth.createUserWithEmailAndPassword(
-                emailSignUp,
-                passwordSignUp
-            );
-
-            const user = userCredential.user;
-            const uid = user.uid;
-
-            let photoURL = null;
-            if (profilePicture) {
-                const storageRef = storage.ref(`Images/Users/ProfileImage/${userCredential.user.uid}/${profilePicture.name}`);
-                await storageRef.put(profilePicture);
-                const downloadURL = await storageRef.getDownloadURL();
-                photoURL = downloadURL;
-            }
-
-            let coverphotoUrl = null;
-            if (coverPicture) {
-                const storageRef = storage.ref(`Images/Users/CoverImage/${userCredential.user.uid}/${coverPicture.name}`);
-                await storageRef.put(coverPicture);
-                const downloadURL = await storageRef.getDownloadURL();
-                coverphotoUrl = downloadURL;
-            }
-
-            await userCredential.user.updateProfile({
-                displayName: username,
-                photoURL: photoURL,
-            });
-
-            db.collection("Users").doc(uid).set({
-                uid: user.uid,
-                email: user.email,
-                username: user.displayName,
-                photoURL: user.photoURL,
-                coverphotoUrl: coverphotoUrl
-            });
-
-            const userData = {
-                uid: uid,
-                email: emailSignUp,
-                displayName: username,
-                photoURL: photoURL,
-                coverphotoUrl: coverphotoUrl
-            };
-            sessionStorage.setItem('userData', JSON.stringify(userData));
-
-            dispatch({
-                type: "SET_USER",
-                user: userData,
-            });
-
-            navigate('/homepage');
-        }
-
-        catch (error) {
-            console.error('Signup Error:', error.message);
-            setSignupError("Sign up error. Try again");
-        }
-
-        finally {
-            setIsSignupProcessing(false);
-        }
-    };
-
-    const handleProfilePictureChange = (e) => {
-        if (e.target.files[0]) {
-            setProfilePicture(e.target.files[0]);
-        }
-    };
-
-    const handleCoverPictureChange = (e) => {
-        if (e.target.files[0]) {
-            setCoverPicture(e.target.files[0]);
-        }
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
     };
 
     const openSignupModal = () => {
@@ -230,20 +146,6 @@ function Login() {
 
     const closeSignupModal = () => {
         setIsSignupModalOpen(false);
-        resetInputValues();
-    };
-
-    const togglePasswordVisibility = () => {
-        setShowPassword((prevShowPassword) => !prevShowPassword);
-    };
-
-    const resetInputValues = () => {
-        setEmailSignUp('');
-        setPasswordSignUp('');
-        setUsername('');
-        setProfilePicture(null);
-        setCoverPicture(null);
-        setSignupError(null);
     };
 
     if (isLoading) {
@@ -301,77 +203,8 @@ function Login() {
                 </div>
             </div>
 
-            <Modal className="newAccountModal" isOpen={isSignupModalOpen} onRequestClose={closeSignupModal}>
-                <div className="newAccountIntro">
-                    <h1>Sign Up</h1>
-                    <p>It's quick and easy.</p>
-                    <button onClick={closeSignupModal}>Close</button>
-                </div>
-
-                <hr id="line" />
-
-                <div className="newAccountForm">
-                    <form onSubmit={handleSignup}>
-                        <div className="namesContainer">
-                            <input
-                                type="text"
-                                value={username}
-                                placeholder="First name"
-                                onChange={(e) => setUsername(e.target.value)}
-                                required
-                            />
-                            {/* <input
-                                type="text"
-                                value={username}
-                                placeholder="Surname"
-                                onChange={(e) => setUsername(e.target.value)}
-                                required
-                            /> */}
-                        </div>
-                        <input
-                            type="email"
-                            value={emailSignUp}
-                            placeholder="Email address"
-                            onChange={(e) => setEmailSignUp(e.target.value)}
-                            required
-                        />
-                        <div className="passwordContainer">
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                value={passwordSignUp}
-                                placeholder="Password"
-                                onChange={(e) => setPasswordSignUp(e.target.value)}
-                                required
-                            />
-                            <span className="passwordToggle" onClick={togglePasswordVisibility}>
-                                {showPassword ? (
-                                    <VisibilityIcon />
-                                ) : (
-                                    <VisibilityOffIcon />
-                                )}
-                            </span>
-                        </div>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            placeholder="Display photo"
-                            onChange={handleProfilePictureChange}
-                            required
-                        />
-                        <input
-                            type="file"
-                            accept="image/*"
-                            placeholder="Cover photo"
-                            onChange={handleCoverPictureChange}
-                            required
-                        />
-                        <p id="terms">By clicking Sign Up, you agree to our Terms, Privacy Policy and Cookies Policy. You may receive SMS notifications from us and can opt out at any time.</p>
-                        <button type="submit">
-                            {isSignupProcessing ? <div id="signupLoading" class="loadingSpin"></div> : 'Create new account'}
-                        </button>
-                        {signuperror && <p id="signupError" className="errorNote">{signuperror}</p>}
-                    </form>
-                </div>
+            <Modal className="signupModal" isOpen={isSignupModalOpen} onRequestClose={closeSignupModal}>
+                <Signup closeSignupModal={closeSignupModal} />
             </Modal>
         </div>
     )

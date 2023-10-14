@@ -19,7 +19,6 @@ function UserPage() {
     const [coverImage, setCoverImage] = useState(null);
     const [activeOption, setActiveOption] = useState("Posts");
 
-
     useEffect(() => {
         fetchFriendsData(user.uid, setFriends);
     }, [user.uid]);
@@ -153,7 +152,7 @@ function UserPage() {
                         </div>
 
                         <div className="userpage_TopProfileSection_LeftInfo">
-                            <h3>{user.displayName}</h3>
+                            <h3>{`${user.firstname} ${user.lastname}`}</h3>
                             <p>{friends.length} friends</p>
                         </div>
                     </div>

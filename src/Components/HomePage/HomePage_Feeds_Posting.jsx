@@ -121,7 +121,7 @@ function HomePage_Feeds_Posting() {
         <div className='homepage_feedsPosting'>
             <div className="homepage_feedsPosting_top">
                 <Avatar src={user.photoURL} />
-                <input type="text" placeholder={`What's on your mind ${user.displayName}`} onClick={handleOpen} />
+                <input type="text" placeholder={`What's on your mind ${user.firstname}?`} onClick={handleOpen} />
             </div>
 
             <div className="homepage_feedsPosting_bottom">

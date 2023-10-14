@@ -1,0 +1,143 @@
+/** Signup Section */
+.signupModal {
+    position: absolute;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+    inset: 110px 505px 110px 505px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    outline: none;
+    overflow-y: auto;
+}
+
+.signupModal #line {
+    margin: 12px 0 4px 0;
+}
+
+/* Signup Top Section */
+.signupModal_Top {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.signupModal_Top button {
+    position: absolute;
+    top: 10px;
+    right: 0;
+}
+
+/* Signup Middle Section */
+.signupModal_Middle form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signupModal_Middle form input {
+    font-size: 15px;
+    padding: 10px 8px;
+    width: 380px;
+    height: 16px;
+    margin: 8px 0;
+    border: 1px solid lightgray;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    outline: none;
+}
+
+.signupModal_Middle form #termsAndCond {
+    font-size: 10px;
+    width: 395px;
+    padding: 8x 0;
+}
+
+.signupModal_Middle form #submitBtn {
+    position: relative;
+    overflow-y: hidden;
+    height: 36px;
+    width: 194px;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    font-weight: 700;
+    padding: 0 16px;
+    margin: 12px 0 0;
+    color: #fff;
+    background-color: #42b72a;
+}
+
+.signupModal_Middle form .namesContainer {
+    display: flex;
+}
+
+.signupModal_Middle form .namesContainer input {
+    font-size: 15px;
+    padding: 10px;
+    width: 171px;
+    height: 16px;
+}
+
+.signupModal_Middle form .namesContainer input:first-child {
+    margin-right: 6px;
+}
+
+.signupModal_Middle form .namesContainer input:last-child {
+    margin-left: 6px;
+}
+
+.signupModal_Middle .passwordContainer {
+    position: relative;
+}
+
+.signupModal_Middle .passwordToggle {
+    position: absolute;
+    top: 55%;
+    right: 10px;
+    color: gray;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.signupModal_Middle img {
+    width: 395px;
+    height: 220px;
+    border-radius: 5px;
+    object-fit: contain;
+    border: 1px solid lightgray;
+    background-color: #fff;
+}
+
+.signupModal_Middle .loadingSpin {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border: 3px solid #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+
+    top: 17%;
+    left: 45%;
+    border-top: 3px solid #42b72a;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.signupModal_Middle .errorNote{
+    width: 362px;
+    color: red;
+    font-size: 12px;
+    padding: 3px 0 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
