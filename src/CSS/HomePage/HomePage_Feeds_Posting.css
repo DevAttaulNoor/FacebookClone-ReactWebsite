@@ -4,8 +4,7 @@
     flex-direction: column;
     background-color: #fff;
     width: 100%;
-    padding: 15px;
-    padding-bottom: 0;
+    padding: 15px 15px 8px;
     border-radius: 10px;
     margin-top: 15px;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
@@ -21,69 +20,57 @@
 
 .homepage_feedsPosting_top input {
     width: 100%;
-    background-color: transparent;
     border: 0;
     outline: 0;
-
-    background-color: whitesmoke;
     padding: 10px;
-    border-radius: 20px;
     margin-left: 10px;
-    flex: 1;
+    border-radius: 20px;
+    background-color: #F0F2F5;
 }
 
 /* HomePage Feed Posting Bottom Section */
 .homepage_feedsPosting_bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
     border-top: 1px solid lightgray;
-    margin-top: 15px;
+    padding-top: 8px;
+    margin-top: 12px;
 }
 
 .homepage_feedsPosting_bottomOption {
     display: flex;
     align-items: center;
-    padding: 8px 28px;
-    border-radius: 20px;
-    margin: 8px 0;
-    cursor: pointer;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 8px;
 }
 
 .homepage_feedsPosting_bottomOption:hover {
-    border-radius: 8px;
-    background-color: whitesmoke;
+    cursor: pointer;
+    background-color: #E4E6EB;
 }
 
 .homepage_feedsPosting_bottomOption p {
     margin-left: 8px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
-    color: grey;
+    color: #65676B;
 }
 
 .homepage_feedsPosting_bottomOption img {
-    font-size: large;
+    width: 22px;
 }
 
 /** HomePage Feed Posting Modal Section */
 .postingModal {
-    /* top: 50%;
-    background-color: #fff;
-    width: 460px;
-    margin: 0px auto;
-    position: relative;
-    transform: translateY(-50%);
-    padding: 10px;
-    border-radius: 10px; */
-
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #fff;
     width: 470px;
     border-radius: 10px;
+    background-color: #fff;
     z-index: 999;
 }
 

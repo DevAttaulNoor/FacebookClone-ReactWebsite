@@ -529,26 +529,28 @@ function HomePage_Feeds_Posts({ id, photoURL, image, username, timestamp, messag
                 </div>
 
                 {/* Btns for Like, Comment and Share */}
-                <div className='homepage_feedsPosts_bottomOption' onClick={handleLike}>
-                    {currentUserLiked ? (
-                        <>
-                            <ThumbUpIcon style={{ color: 'blue' }} />
-                            <p style={{ color: 'blue' }}>Like</p>
-                        </>
-                    ) : (
-                        <>
-                            <ThumbUpAltOutlinedIcon />
-                            <p>Like</p>
-                        </>
-                    )}
-                </div>
-                <div className='homepage_feedsPosts_bottomOption' onClick={openCommentInput}>
-                    <ChatBubbleOutlineOutlinedIcon />
-                    <p>Comment</p>
-                </div>
-                <div className='homepage_feedsPosts_bottomOption' onClick={openShareDialog}>
-                    <ReplyOutlinedIcon />
-                    <p>Share</p>
+                <div className='homepage_feedsPosts_bottomOptions'>
+                    <div className='homepage_feedsPosts_bottomOption' onClick={handleLike}>
+                        {currentUserLiked ? (
+                            <>
+                                <ThumbUpIcon style={{ color: 'blue' }} />
+                                <p style={{ color: 'blue' }}>Like</p>
+                            </>
+                        ) : (
+                            <>
+                                <ThumbUpAltOutlinedIcon />
+                                <p>Like</p>
+                            </>
+                        )}
+                    </div>
+                    <div className='homepage_feedsPosts_bottomOption' onClick={openCommentInput}>
+                        <ChatBubbleOutlineOutlinedIcon />
+                        <p>Comment</p>
+                    </div>
+                    <div className='homepage_feedsPosts_bottomOption' onClick={openShareDialog}>
+                        <ReplyOutlinedIcon />
+                        <p>Share</p>
+                    </div>
                 </div>
             </div>
         </div >

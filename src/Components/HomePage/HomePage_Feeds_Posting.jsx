@@ -5,17 +5,17 @@ import { db, storage } from "../BackendRelated/Firebase";
 import { Avatar, IconButton, Modal } from '@mui/material';
 import firebase from "firebase/compat/app";
 import CloseIcon from '@mui/icons-material/Close';
-import EmojiPicker from 'emoji-picker-react'; 
+import EmojiPicker from 'emoji-picker-react';
 import SentimentSatisfiedAltOutlinedIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
 import bgcolorIcon from '../../Imgs/Aa.png'
 
 function HomePage_Feeds_Posting() {
-    const [{ user }, dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
     const [open, setOpen] = useState(false);
     const [image, setImage] = useState("");
     const [message, setMessage] = useState("");
     const [progress, setProgress] = useState(0);
-    const [showEmojiPicker, setShowEmojiPicker] = useState(false); 
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [isDialogVisible, setIsDialogVisible] = useState(false);
     const dialogBoxRef = useRef(null);
 
@@ -127,15 +127,15 @@ function HomePage_Feeds_Posting() {
             <div className="homepage_feedsPosting_bottom">
                 <div className="homepage_feedsPosting_bottomOption">
                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/c0dWho49-X3.png?_nc_eui2=AeHnEIjVawZBI76yMIMwddXsVnUPE18ZZ-dWdQ8TXxln51Q2S_zbzfHpnn234I7BWgTtb2IssbzIPCV_o410lzBg" alt="" />
-                    <p>Live Video</p>
+                    <p>Live video</p>
                 </div>
                 <div className="homepage_feedsPosting_bottomOption" onClick={handleOpen}>
                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j" alt="" />
-                    <p>Photo/Video</p>
+                    <p>Photo/video</p>
                 </div>
                 <div className="homepage_feedsPosting_bottomOption">
                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Y4mYLVOhTwq.png?_nc_eui2=AeHSN24y7ZwUiP0ks-vc5M5LvPIN-OmHLJy88g346YcsnMgGxvtWqzXUT3WG--zLIURpvgdh0oglkNtF3k-n2n77" alt="" />
-                    <p>Feeling/Activity</p>
+                    <p>Feeling/activity</p>
                 </div>
             </div>
 

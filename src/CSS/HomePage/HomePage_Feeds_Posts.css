@@ -221,35 +221,38 @@
 }
 
 /** HomePage Feeds Posts Bottom Section */
-.homepage_feedsPosts_bottom {
-    display: flex;
-    justify-content: space-around;
+.homepage_feedsPosts_bottomOptions{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    margin-top: 5px;
     border-top: 1px solid lightgray;
-}
-
-.homepage_feedsPosts_bottom .MuiSvgIcon-root {
-    color: grey;
 }
 
 .homepage_feedsPosts_bottomOption {
     display: flex;
     align-items: center;
-    padding: 7px 50px;
-    border-radius: 20px;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 8px;
     margin: 5px 0;
-    cursor: pointer;
 }
 
 .homepage_feedsPosts_bottomOption:hover {
-    border-radius: 5px;
-    background-color: whitesmoke;
+    cursor: pointer;
+    background-color: #E4E6EB;
 }
 
 .homepage_feedsPosts_bottomOption p {
     margin-left: 10px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
-    color: grey;
+    color: #65676B;
+}
+
+.homepage_feedsPosts_bottomOption .MuiSvgIcon-root {
+    width: 21px;
+    color: #65676B;
 }
 
 /** HomePage Feeds Posts Bottom Modals for Like, Comment and Share */
