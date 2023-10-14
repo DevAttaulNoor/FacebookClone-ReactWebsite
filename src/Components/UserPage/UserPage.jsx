@@ -17,6 +17,8 @@ function UserPage() {
     const [friends, setFriends] = useState([]);
     const [profileImage, setProfileImage] = useState(null);
     const [coverImage, setCoverImage] = useState(null);
+    const [activeOption, setActiveOption] = useState("Posts");
+
 
     useEffect(() => {
         fetchFriendsData(user.uid, setFriends);
@@ -112,6 +114,10 @@ function UserPage() {
         }
     }
 
+    const handleOptionClick = (option) => {
+        setActiveOption(option);
+    };
+
     return (
         <div className="userpage">
             <div className="userpage_Top">
@@ -171,13 +177,13 @@ function UserPage() {
 
                 <div className="userpage_TopComponents">
                     <div className="userpage_TopComponents_Left">
-                        <div className="userpage_TopComponents_LeftOption active">Posts</div>
-                        <div className="userpage_TopComponents_LeftOption">About</div>
-                        <div className="userpage_TopComponents_LeftOption">Friends</div>
-                        <div className="userpage_TopComponents_LeftOption">Photos</div>
-                        <div className="userpage_TopComponents_LeftOption">Videos</div>
-                        <div className="userpage_TopComponents_LeftOption">Check-ins</div>
-                        <div className="userpage_TopComponents_LeftOption">More</div>
+                        <div className={`userpage_TopComponents_LeftOption ${activeOption === 'Posts' ? 'active' : ''}`} onClick={() => handleOptionClick('Posts')}>Posts</div>
+                        <div className={`userpage_TopComponents_LeftOption ${activeOption === 'About' ? 'active' : ''}`} onClick={() => handleOptionClick('About')}>About</div>
+                        <div className={`userpage_TopComponents_LeftOption ${activeOption === 'Friends' ? 'active' : ''}`} onClick={() => handleOptionClick('Friends')}>Friends</div>
+                        <div className={`userpage_TopComponents_LeftOption ${activeOption === 'Photos' ? 'active' : ''}`} onClick={() => handleOptionClick('Photos')}>Photo</div>
+                        <div className={`userpage_TopComponents_LeftOption ${activeOption === 'Videos' ? 'active' : ''}`} onClick={() => handleOptionClick('Videos')}>Videos</div>
+                        <div className={`userpage_TopComponents_LeftOption ${activeOption === 'Check-ins' ? 'active' : ''}`} onClick={() => handleOptionClick('Check-ins')}>Check-ins</div>
+                        <div className={`userpage_TopComponents_LeftOption ${activeOption === 'More' ? 'active' : ''}`} onClick={() => handleOptionClick('More')}>More</div>
                     </div>
                     <div className="userpage_TopComponents_Right">
                         <MoreHorizIcon />
