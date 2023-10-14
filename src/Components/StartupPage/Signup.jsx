@@ -8,7 +8,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 function Signup(props) {
-    const [dispatch] = useStateValue();
+    const [{ user }, dispatch] = useStateValue();
     const [firstname, setFirstName] = useState('');
     const [lastname, setLastName] = useState('');
     const [profilePicture, setProfilePicture] = useState(null);

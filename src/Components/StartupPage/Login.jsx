@@ -12,7 +12,7 @@ import Signup from './Signup';
 function Login() {
     Modal.setAppElement('#root');
 
-    const [{ }, dispatch] = useStateValue();
+    const [{ user }, dispatch] = useStateValue();
     const [emailSignIn, setEmailSignIn] = useState('');
     const [passwordSignIn, setPasswordSignIn] = useState('');
     const [showPassword, setShowPassword] = useState(false);

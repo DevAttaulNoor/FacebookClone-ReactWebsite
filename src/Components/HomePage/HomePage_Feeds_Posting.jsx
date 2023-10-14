@@ -50,7 +50,7 @@ function HomePage_Feeds_Posting() {
             db.collection("Posts").add({
                 uid: user.uid,
                 email: user.email,
-                username: user.displayName,
+                username: `${user.firstname} ${user.lastname}`,
                 photoURL: user.photoURL,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 message: message,
@@ -76,7 +76,7 @@ function HomePage_Feeds_Posting() {
                         db.collection("Posts").add({
                             uid: user.uid,
                             email: user.email,
-                            username: user.displayName,
+                            username: `${user.firstname} ${user.lastname}`,
                             photoURL: user.photoURL,
                             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                             message: message,
@@ -150,7 +150,7 @@ function HomePage_Feeds_Posting() {
                         <div className="postingModal_Middle">
                             <div className="postingModal_MiddleTop">
                                 <Avatar src={user.photoURL} />
-                                <p>{user.displayName}</p>
+                                <p>{`${user.firstname} ${user.lastname}`}</p>
                             </div>
                             <div className="postingModal_MiddleMiddle">
                                 <textarea cols="5" placeholder="What's on your mind" value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
