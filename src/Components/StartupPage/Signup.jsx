@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, db, storage } from '../BackendRelated/Firebase';
 import { useStateValue } from '../BackendRelated/StateProvider';
+import CloseIcon from '@mui/icons-material/Close';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
@@ -11,17 +12,15 @@ function Signup(props) {
     const [firstname, setFirstName] = useState('');
     const [lastname, setLastName] = useState('');
     const [profilePicture, setProfilePicture] = useState(null);
+    const [selectedProfileImage, setSelectedProfileImage] = useState(null);
     const [coverPicture, setCoverPicture] = useState(null);
+    const [selectedCoverImage, setSelectedCoverImage] = useState(null);
     const [emailSignUp, setEmailSignUp] = useState('');
     const [passwordSignUp, setPasswordSignUp] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [isSignupProcessing, setIsSignupProcessing] = useState(false);
     const [signuperror, setSignupError] = useState(null);
     const navigate = useNavigate();
-
-    const [selectedProfileImage, setSelectedProfileImage] = useState(null);
-    const [selectedCoverImage, setSelectedCoverImage] = useState(null);
-
 
     const handleSignup = async (e) => {
         e.preventDefault();
@@ -119,7 +118,7 @@ function Signup(props) {
             <div className="signupModal_Top">
                 <h1>Sign Up</h1>
                 <p>It's quick and easy.</p>
-                <button onClick={props.closeSignupModal}>Close</button>
+                <CloseIcon onClick={props.closeSignupModal}/>
             </div>
 
             <hr id="line" />
@@ -168,7 +167,7 @@ function Signup(props) {
                         </span>
                     </div>
 
-                    <button onClick={() => document.getElementById("profilePictureInput").click()}>Choose Profile Picture</button>
+                    <button className='picturesBtn' onClick={() => document.getElementById("profilePictureInput").click()}>Choose Profile Picture</button>
                     <input
                         type="file"
                         accept="image/*"
@@ -182,7 +181,7 @@ function Signup(props) {
                         <img src={selectedProfileImage} alt="Selected Profile Picture" />
                     )}
 
-                    <button onClick={() => document.getElementById("coverPictureInput").click()}>Choose Cover Picture</button>
+                    <button className='picturesBtn' onClick={() => document.getElementById("coverPictureInput").click()}>Choose Cover Picture</button>
                     <input
                         type="file"
                         accept="image/*"

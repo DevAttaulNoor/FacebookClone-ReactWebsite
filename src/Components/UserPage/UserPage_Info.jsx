@@ -1,10 +1,10 @@
 import '../../CSS/UserPage/UserPage_Info.css';
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import PublicIcon from '@mui/icons-material/Public';
 import SearchIcon from '@mui/icons-material/Search';
-import AddIcon from '@mui/icons-material/Add';
 
 function UserPage_Info() {
     Modal.setAppElement('#root');
