@@ -152,7 +152,7 @@ function UserPage() {
                         </div>
 
                         <div className="userpage_TopProfileSection_LeftInfo">
-                            <h3>{`${user.firstname} ${user.lastname}`}</h3>
+                            <h3>{user.username}</h3>
                             <p>{friends.length} friends</p>
                         </div>
                     </div>

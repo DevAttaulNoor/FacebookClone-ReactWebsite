@@ -11,7 +11,7 @@ function HomePage_Leftbar() {
     return (
         <div className='homepage_Leftbar'>
             <Link to="/userhomepage">
-                <HomePage_Leftbar_Options src={user.photoURL} title={`${user.firstname} ${user.lastname}`} />
+                <HomePage_Leftbar_Options src={user.photoURL} title={user.username} />
             </Link>
             <Link to="/friendpage">
                 <HomePage_Leftbar_Options src='https://static.xx.fbcdn.net/rsrc.php/v3/y6/r/i0pziEs5Wj6.png' title='Friends' />

@@ -121,7 +121,7 @@ function HomePage_Feeds_Posting() {
         <div className='homepage_feedsPosting'>
             <div className="homepage_feedsPosting_top">
                 <Avatar src={user.photoURL} />
-                <input type="text" placeholder={`What's on your mind ${user.firstname}?`} onClick={handleOpen} />
+                <input type="text" placeholder={`What's on your mind ${user.username}?`} onClick={handleOpen} />
             </div>
 
             <div className="homepage_feedsPosting_bottom">
@@ -150,7 +150,7 @@ function HomePage_Feeds_Posting() {
                         <div className="postingModal_Middle">
                             <div className="postingModal_MiddleTop">
                                 <Avatar src={user.photoURL} />
-                                <p>{`${user.firstname} ${user.lastname}`}</p>
+                                <p>{user.username}</p>
                             </div>
                             <div className="postingModal_MiddleMiddle">
                                 <textarea cols="5" placeholder="What's on your mind" value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
