@@ -6,28 +6,25 @@ import { useStateValue } from '../BackendRelated/StateProvider';
 import CloseIcon from '@mui/icons-material/Close';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import AdjustOutlinedIcon from '@mui/icons-material/AdjustOutlined';
 
 function Signup(props) {
-    const [{ user }, dispatch] = useStateValue();
+    const [{ }, dispatch] = useStateValue();
     const [firstname, setFirstName] = useState('');
     const [lastname, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [dob, setDOB] = useState(new Date());
+    const [selectedGender, setSelectedGender] = useState('');
     const [profilePicture, setProfilePicture] = useState(null);
     const [selectedProfileImage, setSelectedProfileImage] = useState(null);
     const [coverPicture, setCoverPicture] = useState(null);
     const [selectedCoverImage, setSelectedCoverImage] = useState(null);
-    const [emailSignUp, setEmailSignUp] = useState('');
-    const [passwordSignUp, setPasswordSignUp] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
     const [isSignupProcessing, setIsSignupProcessing] = useState(false);
     const [signuperror, setSignupError] = useState(null);
     const navigate = useNavigate();
 
-    const [dob, setDOB] = useState(new Date());
-    const [selectedGender, setSelectedGender] = useState('');
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const years = Array.from({ length: 100 }, (_, i) => new Date().getUTCFullYear() - i);
@@ -39,8 +36,8 @@ function Signup(props) {
 
         try {
             const userCredential = await auth.createUserWithEmailAndPassword(
-                emailSignUp,
-                passwordSignUp
+                email,
+                password
             );
 
             const user = userCredential.user;
@@ -68,21 +65,27 @@ function Signup(props) {
             });
 
 
-            db.collection("Users").doc(uid).set({
+            await db.collection("Users").doc(uid).set({
                 uid: user.uid,
                 email: user.email,
+                password: password,
                 username: user.displayName,
+                dob: dob,
+                gender: selectedGender,
                 photoURL: user.photoURL,
-                coverphotoUrl: coverphotoUrl
+                coverphotoUrl: coverphotoUrl,
             });
 
             const userData = {
                 uid: uid,
-                email: emailSignUp,
+                email: email,
+                password: password,
                 firstname: firstname,
                 lastname: lastname,
+                dob: dob,
+                gender: selectedGender,
                 photoURL: photoURL,
-                coverphotoUrl: coverphotoUrl
+                coverphotoUrl: coverphotoUrl,
             };
 
             sessionStorage.setItem('userData', JSON.stringify(userData));
@@ -159,9 +162,9 @@ function Signup(props) {
                     <div className="emailContainer">
                         <input
                             type="email"
-                            value={emailSignUp}
+                            value={email}
                             placeholder="Email address"
-                            onChange={(e) => setEmailSignUp(e.target.value)}
+                            onChange={(e) => setEmail(e.target.value)}
                             required
                         />
                     </div>
@@ -169,9 +172,9 @@ function Signup(props) {
                     <div className="passwordContainer">
                         <input
                             type={showPassword ? "text" : "password"}
-                            value={passwordSignUp}
+                            value={password}
                             placeholder="New password"
-                            onChange={(e) => setPasswordSignUp(e.target.value)}
+                            onChange={(e) => setPassword(e.target.value)}
                             required
                         />
                         <span className="passwordToggle" onClick={togglePasswordVisibility}>
