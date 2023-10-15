@@ -218,7 +218,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, username, timestamp, messag
                 .set({
                     uid: user.uid,
                     photoUrl: user.photoURL,
-                    username: user.displayName,
+                    username: `${user.firstname} ${user.lastname}`,
                     email: user.email,
                 })
                 .catch((error) => {
@@ -281,7 +281,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, username, timestamp, messag
         const newComment = {
             uid: user.uid,
             email: user.email,
-            displayName: user.displayName,
+            username: `${user.firstname} ${user.lastname}`,
             photoURL: user.photoURL,
             text: comment,
             timestamp: new Date(),

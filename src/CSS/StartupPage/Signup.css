@@ -1,8 +1,23 @@
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 8px;
+    /* Color of the scrollbar thumb */
+}
+
+::-webkit-scrollbar-track {
+    background-color: #fff;
+    margin: 8px;
+}
+
 /** Signup Section */
 .signupModal {
     position: absolute;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
-    inset: 115px 505px 115px 505px;
+    inset: 80px 512px 80px 512px;
     background: #fff;
     border-radius: 8px;
     padding: 15px;
@@ -42,7 +57,7 @@
 }
 
 .signupModal_Middle form input {
-    font-size: 15px;
+    font-size: 14px;
     padding: 10px 8px;
     width: 380px;
     height: 16px;
@@ -51,12 +66,6 @@
     background-color: whitesmoke;
     border-radius: 5px;
     outline: none;
-}
-
-.signupModal_Middle form #termsAndCond {
-    font-size: 10px;
-    width: 395px;
-    padding: 8x 0;
 }
 
 .signupModal_Middle form #submitBtn {
@@ -74,23 +83,15 @@
     background-color: #42b72a;
 }
 
-.signupModal_Middle form .namesContainer {
-    display: flex;
+.signupModal_Middle .nameContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 398px;
 }
 
-.signupModal_Middle form .namesContainer input {
-    font-size: 15px;
-    padding: 10px;
-    width: 171px;
-    height: 16px;
-}
-
-.signupModal_Middle form .namesContainer input:first-child {
-    margin-right: 6px;
-}
-
-.signupModal_Middle form .namesContainer input:last-child {
-    margin-left: 6px;
+.signupModal_Middle .nameContainer input {
+    width: -webkit-fill-available;
 }
 
 .signupModal_Middle .passwordContainer {
@@ -106,10 +107,79 @@
     cursor: pointer;
 }
 
-.signupModal_Middle .picturesBtn{
+.signupModal_Middle .dobContainer {
+    width: 398px;
+    margin: 4px 0;
+}
+
+.signupModal_Middle .dobContainer #dobContainerTitle {
+    color: #606770;
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+.signupModal_Middle .dobOptions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.signupModal_Middle .dobOption select {
+    width: 100%;
+    border: 1px solid lightgray;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    outline: none;
+    font-size: 15px;
+    padding: 6px 3px;
+}
+
+.signupModal_Middle .genderContainer {
+    width: 398px;
+    margin: 4px 0;
+}
+
+.signupModal_Middle .genderContainer #genderContainerTitle {
+    color: #606770;
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+.signupModal_Middle .genderOptions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.signupModal_Middle .genderOption {
+    width: -webkit-fill-available;
+    border: 1px solid lightgray;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    padding: 7px 2px 7px 7px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.signupModal_Middle .genderOption p {
+    font-size: 15px;
+}
+
+.signupModal_Middle .genderOption .MuiSvgIcon-root {
+    transition: color 0.1s;
+    width: 20px;
+    height: auto;
+}
+
+.signupModal_Middle .genderOption .MuiSvgIcon-root.active {
+    color: #007bff;
+}
+
+.signupModal_Middle .picturesBtn {
     font-size: 15px;
     padding: 7px;
-    width: 400px;
+    width: 398px;
     margin: 8px 0;
     border: 1px solid lightgray;
     color: gray;
@@ -125,6 +195,26 @@
     object-fit: contain;
     border: 1px solid lightgray;
     background-color: #fff;
+}
+
+.signupModal_Middle .notesContainer {
+    width: 395px;
+}
+
+.signupModal_Middle .notesContainer span {
+    color: #385898;
+}
+
+.signupModal_Middle .notesContainer span:hover {
+    text-decoration: underline;
+}
+
+.signupModal_Middle .notesContainer #learnMoreNote,
+.signupModal_Middle .notesContainer #termCondNote {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 4px 0;
+    color: #777777;
 }
 
 .signupModal_Middle .loadingSpin {
@@ -151,7 +241,7 @@
     }
 }
 
-.signupModal_Middle .errorNote{
+.signupModal_Middle .errorNote {
     width: 362px;
     color: red;
     font-size: 12px;

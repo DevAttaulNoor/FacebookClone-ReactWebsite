@@ -7,6 +7,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import AdjustOutlinedIcon from '@mui/icons-material/AdjustOutlined';
+
 function Signup(props) {
     const [{ user }, dispatch] = useStateValue();
     const [firstname, setFirstName] = useState('');
@@ -21,6 +25,12 @@ function Signup(props) {
     const [isSignupProcessing, setIsSignupProcessing] = useState(false);
     const [signuperror, setSignupError] = useState(null);
     const navigate = useNavigate();
+
+    const [dob, setDOB] = useState(new Date());
+    const [selectedGender, setSelectedGender] = useState('');
+    const days = Array.from({ length: 31 }, (_, i) => i + 1);
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const years = Array.from({ length: 100 }, (_, i) => new Date().getUTCFullYear() - i);
 
     const handleSignup = async (e) => {
         e.preventDefault();
@@ -113,19 +123,23 @@ function Signup(props) {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     };
 
+    const handleGenderClick = (gender) => {
+        setSelectedGender(gender);
+    };
+
     return (
         <div className='signup'>
             <div className="signupModal_Top">
                 <h1>Sign Up</h1>
                 <p>It's quick and easy.</p>
-                <CloseIcon onClick={props.closeSignupModal}/>
+                <CloseIcon onClick={props.closeSignupModal} />
             </div>
 
             <hr id="line" />
 
             <div className="signupModal_Middle">
                 <form onSubmit={handleSignup}>
-                    <div className="namesContainer">
+                    <div className="nameContainer">
                         <input
                             type="text"
                             value={firstname}
@@ -142,19 +156,21 @@ function Signup(props) {
                         />
                     </div>
 
-                    <input
-                        type="email"
-                        value={emailSignUp}
-                        placeholder="Email address"
-                        onChange={(e) => setEmailSignUp(e.target.value)}
-                        required
-                    />
+                    <div className="emailContainer">
+                        <input
+                            type="email"
+                            value={emailSignUp}
+                            placeholder="Email address"
+                            onChange={(e) => setEmailSignUp(e.target.value)}
+                            required
+                        />
+                    </div>
 
                     <div className="passwordContainer">
                         <input
                             type={showPassword ? "text" : "password"}
                             value={passwordSignUp}
-                            placeholder="Password"
+                            placeholder="New password"
                             onChange={(e) => setPasswordSignUp(e.target.value)}
                             required
                         />
@@ -167,43 +183,105 @@ function Signup(props) {
                         </span>
                     </div>
 
-                    <button className='picturesBtn' onClick={() => document.getElementById("profilePictureInput").click()}>Choose Profile Picture</button>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        id="profilePictureInput"
-                        style={{ display: "none" }}
-                        onChange={handleProfilePictureChange}
-                        required
-                    />
+                    <div className="dobContainer">
+                        <p id='dobContainerTitle'>Date of birth</p>
+                        <div className="dobOptions">
+                            <div className="dobOption">
+                                <select value={dob.getDate()} onChange={(e) => setDOB(new Date(dob.setUTCDate(e.target.value)))}>
+                                    {days.map((day) => (
+                                        <option key={day} value={day}>
+                                            {day}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
 
-                    {selectedProfileImage && (
-                        <img src={selectedProfileImage} alt="Selected Profile Picture" />
-                    )}
+                            <div className="dobOption">
+                                <select value={monthNames[dob.getMonth()]} onChange={(e) => {
+                                    const monthIndex = monthNames.indexOf(e.target.value);
+                                    setDOB(new Date(dob.setUTCMonth(monthIndex)));
+                                }}>
+                                    {monthNames.map((monthName) => (
+                                        <option key={monthName} value={monthName}>
+                                            {monthName}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
 
-                    <button className='picturesBtn' onClick={() => document.getElementById("coverPictureInput").click()}>Choose Cover Picture</button>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        id="coverPictureInput"
-                        style={{ display: "none" }}
-                        onChange={handleCoverPictureChange}
-                        required
-                    />
+                            <div className="dobOption">
+                                <select value={dob.getFullYear()} onChange={(e) => setDOB(new Date(dob.setUTCFullYear(e.target.value)))}>
+                                    {years.map((year) => (
+                                        <option key={year} value={year}>
+                                            {year}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
-                    {selectedCoverImage && (
-                        <img src={selectedCoverImage} alt="Selected Cover Picture" />
-                    )}
+                    <div className="genderContainer">
+                        <p id='genderContainerTitle'>Gender</p>
+                        <div className="genderOptions">
+                            <div className={`genderOption ${selectedGender === 'Male' ? 'active' : ''}`} onClick={() => handleGenderClick('Male')}>
+                                <p>Male</p>
+                                <AdjustOutlinedIcon className={`${selectedGender === 'Male' ? 'active' : ''}`} />
+                            </div>
 
-                    <p id="termsAndCond">By clicking Sign Up, you agree to our Terms, Privacy Policy and Cookies Policy. You may receive SMS notifications from us and can opt out at any time.</p>
+                            <div className={`genderOption ${selectedGender === 'Female' ? 'active' : ''}`} onClick={() => handleGenderClick('Female')}>
+                                <p>Female</p>
+                                <AdjustOutlinedIcon className={`${selectedGender === 'Female' ? 'active' : ''}`} />
+                            </div>
 
-                    <button id='submitBtn' type="submit">
-                        {isSignupProcessing ? <div class="loadingSpin"></div> : 'Create new account'}
-                    </button>
+                            <div className={`genderOption ${selectedGender === 'Other' ? 'active' : ''}`} onClick={() => handleGenderClick('Other')}>
+                                <p>Other</p>
+                                <AdjustOutlinedIcon className={`${selectedGender === 'Other' ? 'active' : ''}`} />
+                            </div>
+                        </div>
+                    </div>
 
+                    <div className='profilePicContainer'>
+                        <button className='picturesBtn' onClick={() => document.getElementById("profilePictureInput").click()}>Choose Profile Picture</button>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            id="profilePictureInput"
+                            style={{ display: "none" }}
+                            onChange={handleProfilePictureChange}
+                            required
+                        />
+
+                        {selectedProfileImage && (
+                            <img src={selectedProfileImage} alt="Selected Profile Picture" />
+                        )}
+                    </div>
+
+                    <div className='coverPicContainer'>
+                        <button className='picturesBtn' onClick={() => document.getElementById("coverPictureInput").click()}>Choose Cover Picture</button>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            id="coverPictureInput"
+                            style={{ display: "none" }}
+                            onChange={handleCoverPictureChange}
+                            required
+                        />
+
+                        {selectedCoverImage && (
+                            <img src={selectedCoverImage} alt="Selected Cover Picture" />
+                        )}
+                    </div>
+
+                    <div className='notesContainer'>
+                        <p id='learnMoreNote'>People who use our service may have uploaded your contact information to Facebook. <span>Learn more</span>.</p>
+                        <p id="termCondNote">By clicking Sign Up, you agree to our <span>Terms</span>, <span>Privacy Policy</span> and <span>Cookies Policy</span>. You may receive SMS notifications from us and can opt out at any time.</p>
+                    </div>
+
+                    <button id='submitBtn' type="submit">{isSignupProcessing ? <div class="loadingSpin"></div> : 'Create new account'}</button>
                     {signuperror && <p className="errorNote">{signuperror}</p>}
                 </form>
-            </div>
+            </div >
         </div >
     )
 }

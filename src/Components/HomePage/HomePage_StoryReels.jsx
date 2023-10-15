@@ -86,7 +86,7 @@ function HomePage_StoryReels() {
             db.collection("Reels").add({
                 uid: user.uid,
                 email: user.email,
-                username: user.displayName,
+                username: `${user.firstname} ${user.lastname}`,
                 photoURL: user.photoURL,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 text: textAreaValue.trim(),
@@ -127,7 +127,7 @@ function HomePage_StoryReels() {
                             db.collection("Reels").add({
                                 uid: user.uid,
                                 email: user.email,
-                                username: user.displayName,
+                                username: `${user.firstname} ${user.lastname}`,
                                 photoURL: user.photoURL,
                                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                                 text: textAreaValue.trim(),
@@ -166,7 +166,7 @@ function HomePage_StoryReels() {
                         </div>
                         <div className="homepage_storyreels_Leftbar_TopTop_userinfo">
                             <img src={user.photoURL} alt="" />
-                            <p>{user.displayName}</p>
+                            <p>{`${user.firstname} ${user.lastname}`}</p>
                         </div>
                     </div>
 
