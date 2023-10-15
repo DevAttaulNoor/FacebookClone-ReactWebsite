@@ -284,8 +284,8 @@ function Signup(props) {
                     <button id='submitBtn' type="submit">{isSignupProcessing ? <div class="loadingSpin"></div> : 'Create new account'}</button>
                     {signuperror && <p className="errorNote">{signuperror}</p>}
                 </form>
-            </div >
-        </div >
+            </div>
+        </div>
     )
 }
 

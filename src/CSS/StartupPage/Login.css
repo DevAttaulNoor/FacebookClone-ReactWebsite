@@ -1,64 +1,4 @@
-/* Universal */
-
-/* For Loading the Signing and Logging in */
-.loadingSpin {
-    position: absolute;
-    top: 25%;
-    left: 46%;
-    transform: translate(-50%, -50%);
-    border: 3px solid #fff;
-    border-top: 3px solid #1877f2;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    animation: spin 1s linear infinite;
-}
-
-#signupLoading{
-    top: 17%;
-    left: 45%;
-    border-top: 3px solid #42b72a;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-/* Password toggler */
-.passwordContainer {
-    position: relative;
-}
-
-.passwordToggle {
-    position: absolute;
-    top: 55%;
-    right: 10px;
-    color: gray;
-    transform: translateY(-50%);
-    cursor: pointer;
-}
-
-/* Error Message */
-.errorNote{
-    width: 362px;
-    color: red;
-    font-size: 12px;
-    padding: 3px 0 0 0;
-}
-
-#signupError{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Login */
+/** Login Section */
 .login {
     height: 100vh;
     display: flex;
@@ -66,18 +6,18 @@
     justify-content: center;
 }
 
-/* LoginIntro */
-.loginIntro {
+/* Login Left Section */
+.login_Left {
     margin-right: 50px;
 }
 
-.loginIntro h1 {
+.login_Left h1 {
     font-size: 54px;
     font-weight: 750;
     color: #1877f2;
 }
 
-.loginIntro p {
+.login_Left p {
     font-size: 28px;
     font-weight: normal;
     line-height: 32px;
@@ -85,8 +25,8 @@
     padding: 0 0 20px;
 }
 
-/* LoginForm */
-.loginForm form {
+/* Login Right Section */
+.login_Right .login_RightTop form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -98,7 +38,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
 }
 
-.loginForm form input {
+.login_Right .login_RightTop form input {
     width: 328px;
     height: 20px;
     padding: 15px 16px;
@@ -109,7 +49,7 @@
     border-radius: 6px;
 }
 
-.loginForm form #submitBtn {
+.login_Right .login_RightTop form #submitBtn {
     position: relative;
     overflow-y: hidden;
     width: 362px;
@@ -124,7 +64,7 @@
     border-radius: 6px;
 }
 
-.loginForm form #forgetBtn {
+.login_Right .login_RightTop form #forgetBtn {
     border: none;
     outline: none;
     font-size: 14px;
@@ -135,14 +75,14 @@
     width: max-content;
 }
 
-.loginForm form #line {
+.login_Right .login_RightTop form #line {
     border: none;
     border-top: 1px solid lightgray;
     width: 100%;
     margin: 20px 16px;
 }
 
-.loginForm form #newAccBtn {
+.login_Right .login_RightTop form #newAccBtn {
     height: 48px;
     border: none;
     border-radius: 6px;
@@ -153,18 +93,61 @@
     background-color: #42b72a;
 }
 
-.loginForm button:hover {
+.login_Right .login_RightTop button:hover {
     cursor: pointer;
 }
 
-/* Login with Fb */
-.loginFB {
+.login_Right .login_RightTop .loadingSpin {
+    position: absolute;
+    top: 25%;
+    left: 46%;
+    transform: translate(-50%, -50%);
+    border: 3px solid #fff;
+    border-top: 3px solid #1877f2;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.login_Right .login_RightTop .passwordContainer {
+    position: relative;
+}
+
+.login_Right .login_RightTop .passwordToggle {
+    position: absolute;
+    top: 55%;
+    right: 10px;
+    color: gray;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.login_Right .login_RightTop .errorNote{
+    width: 362px;
+    color: red;
+    font-size: 12px;
+    padding: 3px 0 0 0;
+}
+
+/* Login Right Bottom Section */
+.login_Right .login_RightBottom {
     display: flex;
     justify-content: center;
     margin-top: 28px;
 }
 
-.loginFB button {
+.login_Right .login_RightBottom button {
     border: none;
     outline: none;
     color: #000;
@@ -173,7 +156,7 @@
     font-weight: 600;
 }
 
-.loginFB p {
+.login_Right .login_RightBottom p {
     background-color: inherit;
     font-size: 14px;
     margin-left: 3px;
