@@ -50,7 +50,7 @@ function HomePage_Feeds_Posting() {
             db.collection("Posts").add({
                 uid: user.uid,
                 email: user.email,
-                username: `${user.firstname} ${user.lastname}`,
+                username: user.username,
                 photoURL: user.photoURL,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 message: message,
@@ -76,7 +76,7 @@ function HomePage_Feeds_Posting() {
                         db.collection("Posts").add({
                             uid: user.uid,
                             email: user.email,
-                            username: `${user.firstname} ${user.lastname}`,
+                            username: user.username,
                             photoURL: user.photoURL,
                             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                             message: message,

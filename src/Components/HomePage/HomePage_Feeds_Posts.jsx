@@ -218,7 +218,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, username, timestamp, messag
                 .set({
                     uid: user.uid,
                     photoUrl: user.photoURL,
-                    username: `${user.firstname} ${user.lastname}`,
+                    username: user.username,
                     email: user.email,
                 })
                 .catch((error) => {
@@ -281,7 +281,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, username, timestamp, messag
         const newComment = {
             uid: user.uid,
             email: user.email,
-            username: `${user.firstname} ${user.lastname}`,
+            username: user.username,
             photoURL: user.photoURL,
             text: comment,
             timestamp: new Date(),
@@ -491,7 +491,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, username, timestamp, messag
                                     <Avatar src={comment.photoURL} />
                                     <div className="homepage_feedsPosts_commentInfo">
                                         <div className='homepage_feedsPosts_commentInner'>
-                                            <p className='homepage_feedsPosts_commentUser'>{comment.displayName}</p>
+                                            <p className='homepage_feedsPosts_commentUser'>{comment.username}</p>
                                             <p className='homepage_feedsPosts_commentComment'>{comment.text}</p>
                                         </div>
                                         <div className='homepage_feedsPosts_commentOuter'>

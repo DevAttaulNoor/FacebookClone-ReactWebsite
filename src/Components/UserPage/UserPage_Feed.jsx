@@ -64,23 +64,28 @@ function UserPage_Feed() {
     };
 
     useEffect(() => {
-        const unsubscribeJoined = db.collection("Posts").onSnapshot(snapshot => {
-            setJoinedPosts(
-                snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    data: doc.data()
-                }))
-            );
-        });
-        return () => unsubscribeJoined();
-    }, []);
+        const unsubscribeJoined = db.collection("Posts")
+            .onSnapshot(snapshot => {
+                const filteredJoinedPosts = snapshot.docs
+                    .filter(doc => doc.data().uid === userUid) // Filter posts by userUid
+                    .filter(doc => doc.data().dob) // Filter out posts with a "dob" attribute
+                    .map(doc => ({
+                        id: doc.id,
+                        data: doc.data()
+                    }));
 
-    const formatJoinedDate = (date) => {
-        return date.toLocaleDateString('en-GB', {
-            day: '2-digit',
-            month: 'long', // Change 'long' to 'short' or 'numeric' as needed
-            year: 'numeric'
-        });
+                setJoinedPosts(filteredJoinedPosts);
+            });
+        return () => unsubscribeJoined();
+    }, [userUid]);
+
+    const formatJoinedDate = (timestamp) => {
+        if (!timestamp || !timestamp.toDate) {
+            return "Unknown Date";
+        }
+        const dob = timestamp.toDate();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return dob.toLocaleDateString('en-GB', options);
     };
 
     return (
@@ -105,7 +110,7 @@ function UserPage_Feed() {
 
             {
                 joinedposts.map(joinedpost => {
-                    const dob = joinedpost.data.dob.toDate();
+                    const dob = joinedpost.data.dob;
                     return (
                         <div className="JoinedPost">
                             <HomePage_Feeds_Posts
