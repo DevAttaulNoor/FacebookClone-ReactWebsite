@@ -1,6 +1,6 @@
-import '../../CSS/HomePage/HomePage_Feeds_Posts.css'
+import '../../CSS/HomePage/HomePage_Feeds_Posts.css';
 import React, { useState, useEffect, useRef } from 'react';
-import { Avatar } from '@mui/material'
+import { Avatar } from '@mui/material';
 import { db, storage } from '../BackendRelated/Firebase';
 import { useStateValue } from '../BackendRelated/StateProvider';
 import Modal from 'react-modal';
@@ -13,13 +13,14 @@ import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 
-function HomePage_Feeds_Posts({ id, photoURL, image, username, timestamp, message }) {
+function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp, message }) {
     Modal.setAppElement('#root');
 
     const [{ user }, dispatch] = useStateValue();
     const [isEditing, setIsEditing] = useState(false);
     const [editedMessage, setEditedMessage] = useState(message);
     const [editedImage, setEditedImage] = useState(image);
+    const [editedVideo, setEditedVideo] = useState(video);
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [isDropdownClicked, setIsDropdownClicked] = useState(false);
     const [likesCount, setLikesCount] = useState(0);
@@ -32,41 +33,64 @@ function HomePage_Feeds_Posts({ id, photoURL, image, username, timestamp, messag
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
     const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
     const [imageFile, setImageFile] = useState(null);
+    const [videoFile, setVideoFile] = useState(null);
+    const [mediaType, setMediaType] = useState(null);
+    const videoFileRef = useRef(null);
     const dropdownRef = useRef(null);
 
     const handleEdit = () => {
         setIsEditing(true);
+        setEditedVideo(video); // Set the edited video URL
     };
 
     const handleSave = () => {
-        if (editedImage !== null && editedImage !== undefined) {
-            const uploadTask = storage.ref(`Images/Posts/${user.uid}/${editedImage.name}`).put(editedImage);
+        if (editedVideo !== video && editedVideo !== null) {
+            // If there is a new video, upload it to Firebase Storage and update Firestore
+            const videoFile = videoFileRef.current;
+            if (videoFile) {
+                const uploadTask = storage.ref(`Videos/Posts/${user.uid}/${videoFile.name}`).put(videoFile);
 
-            uploadTask.then((snapshot) => snapshot.ref.getDownloadURL()).then((url) => {
-                const updatedData = {
-                    message: editedMessage,
-                    image: url,
-                };
-
-                // Update the Firestore document with the edited data, including the image URL
-                return db.collection("Posts").doc(id).update(updatedData);
-            })
-                .then(() => {
-                    console.log("Document successfully updated!");
-                    setIsEditing(false);
-                    setIsDropdownVisible(false);
-                })
-                .catch((error) => {
-                    console.error("Error updating document: ", error);
-                });
-        }
-
-        else {
-            // No new image to upload, update the Firestore document with the edited message only
+                uploadTask.on(
+                    "state_changed",
+                    (snapshot) => {
+                        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                    },
+                    (error) => {
+                        console.log(error);
+                        alert(error.message);
+                    },
+                    () => {
+                        storage
+                            .ref(`Videos/Posts/${user.uid}`)
+                            .child(videoFile.name)
+                            .getDownloadURL()
+                            .then((url) => {
+                                const updatedData = {
+                                    message: editedMessage,
+                                    video: url, // Store the video URL in Firestore
+                                };
+                                // Update the Firestore document with the edited data, including the video URL
+                                return db.collection("Posts").doc(id).update(updatedData);
+                            })
+                            .then(() => {
+                                console.log("Document successfully updated!");
+                                setIsEditing(false);
+                                setIsDropdownVisible(false);
+                            })
+                            .catch((error) => {
+                                console.error("Error updating document: ", error);
+                            });
+                    }
+                );
+            }
+        } else {
+            // Handle cases when there is no new video, or no changes were made
             if (editedMessage !== message) {
-                db.collection("Posts").doc(id).update({
-                    message: editedMessage,
-                })
+                db.collection("Posts")
+                    .doc(id)
+                    .update({
+                        message: editedMessage,
+                    })
                     .then(() => {
                         console.log("Document successfully updated!");
                         setIsEditing(false);
@@ -75,8 +99,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, username, timestamp, messag
                     .catch((error) => {
                         console.error("Error updating document: ", error);
                     });
-            }
-            else {
+            } else {
                 // No changes were made, so simply close the editing form
                 setIsEditing(false);
                 setIsDropdownVisible(false);
@@ -446,8 +469,17 @@ function HomePage_Feeds_Posts({ id, photoURL, image, username, timestamp, messag
                     </Modal>
                 ) : (
                     <div>
-                        <p id="homepage_feedsPosts_middleMessage" style={{ fontSize: image ? '15px' : '30px' }}>{editedMessage}</p>
-                        {image && <img id="homepage_feedsPosts_middleImg" src={editedImage} />}
+                        <p id="homepage_feedsPosts_middleMessage" style={{ fontSize: image || editedVideo ? '15px' : '30px' }}>
+                            {editedMessage}
+                        </p>
+                        {image && <img id="homepage_feedsPosts_middleImg" src={editedImage} alt="Image" />}
+                        {editedVideo && (
+                            <div className="homepage_feedsPosts_middleVideo">
+                                <video controls>
+                                    <source src={editedVideo} type="video/mp4" />
+                                </video>
+                            </div>
+                        )}
                     </div>
                 )}
 

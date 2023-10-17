@@ -155,7 +155,7 @@
     font-weight: 600;
 }
 
-.file-input-label:hover{
+.file-input-label:hover {
     background-color: whitesmoke;
     cursor: pointer;
 }
@@ -171,7 +171,12 @@
     border: 1px solid gray;
 }
 
-.noEditedimg{
+.homepage_feedsPosts_middleVideo video {
+    object-fit: cover;
+    width: -webkit-fill-available;
+}
+
+.noEditedimg {
     display: flex;
     justify-content: center;
     font-weight: 600;
@@ -202,26 +207,26 @@
 }
 
 /* HomePage Feeds Posts Middle Reactions */
-.homepage_feedsPosts_ReactInfo{
+.homepage_feedsPosts_ReactInfo {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 6px 0;
 }
 
-.homepage_feedsPosts_ReactInfo p{
+.homepage_feedsPosts_ReactInfo p {
     font-size: 14px;
     font-weight: 450;
     color: gray;
 }
 
-.homepage_feedsPosts_ReactInfo p:hover{
+.homepage_feedsPosts_ReactInfo p:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
 /** HomePage Feeds Posts Bottom Section */
-.homepage_feedsPosts_bottomOptions{
+.homepage_feedsPosts_bottomOptions {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 2px;
@@ -257,7 +262,7 @@
 
 /** HomePage Feeds Posts Bottom Modals for Like, Comment and Share */
 /* Modal of Like, Comment and Share */
-.Modal{
+.Modal {
     position: absolute;
     inset: 150px 450px 150px 450px;
     border: 1px solid rgb(204, 204, 204);
@@ -269,7 +274,7 @@
     overflow-x: hidden;
 }
 
-.modalTop{
+.modalTop {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -277,20 +282,20 @@
     flex-direction: column;
 }
 
-.modalTop .MuiSvgIcon-root{
+.modalTop .MuiSvgIcon-root {
     position: absolute;
     top: -3px;
     right: -9px;
     padding: 5px;
 }
 
-.modalTop .MuiSvgIcon-root:hover{
+.modalTop .MuiSvgIcon-root:hover {
     cursor: pointer;
     background-color: whitesmoke;
     border-radius: 50%;
 }
 
-.modalTop p{
+.modalTop p {
     font-size: 20px;
     font-weight: 600;
 }
@@ -307,29 +312,29 @@
     overflow-y: auto;
 }
 
-.modalBottom{
+.modalBottom {
     position: fixed;
 }
 
 /**  Likes Modal Section */
-.homepage_feedsPosts_likes{
+.homepage_feedsPosts_likes {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.homepage_feedsPosts_likes:last-child{
+.homepage_feedsPosts_likes:last-child {
     margin-bottom: 0px;
 }
 
-.homepage_feedsPosts_likes span{
+.homepage_feedsPosts_likes span {
     font-size: 16px;
     font-weight: 600;
     margin-left: 8px;
 }
 
 /** Comments Modal Section */
-.homepage_feedsPosts_comments{
+.homepage_feedsPosts_comments {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -337,17 +342,17 @@
     width: fit-content;
 }
 
-.homepage_feedsPosts_comments:last-child{
+.homepage_feedsPosts_comments:last-child {
     margin-bottom: 0px;
 }
 
-.homepage_feedsPosts_commentInfo{
+.homepage_feedsPosts_commentInfo {
     display: flex;
     flex-direction: column;
 }
 
 /* Inner Part */
-.homepage_feedsPosts_commentInner{
+.homepage_feedsPosts_commentInner {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -357,12 +362,12 @@
     padding: 6px 14px;
 }
 
-.homepage_feedsPosts_commentInner .homepage_feedsPosts_commentUser{
+.homepage_feedsPosts_commentInner .homepage_feedsPosts_commentUser {
     font-size: 16px;
     font-weight: 600;
 }
 
-.homepage_feedsPosts_commentInner .homepage_feedsPosts_commentComment{
+.homepage_feedsPosts_commentInner .homepage_feedsPosts_commentComment {
     font-weight: 400;
     font-size: 15px;
     max-width: 410px;
@@ -370,21 +375,21 @@
 }
 
 /* Outer Part */
-.homepage_feedsPosts_commentOuter{
+.homepage_feedsPosts_commentOuter {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     margin: 3px 0 0 22px;
 }
 
-.homepage_feedsPosts_commentOuter .homepage_feedsPosts_commentTimestamp{
+.homepage_feedsPosts_commentOuter .homepage_feedsPosts_commentTimestamp {
     font-weight: 500;
     font-size: 12px;
     margin-left: 15px;
     color: #65676B;
 }
 
-.homepage_feedsPosts_commentOuter button{
+.homepage_feedsPosts_commentOuter button {
     font-size: 12px;
     font-weight: 500;
     outline: none;
@@ -394,19 +399,19 @@
 }
 
 .homepage_feedsPosts_commentOuter .homepage_feedsPosts_commentTimestamp:hover,
-.homepage_feedsPosts_commentOuter button:hover{
+.homepage_feedsPosts_commentOuter button:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
 /* Bottom Part of the Comment Model */
-.modalBottom .homepage_feedsPosts_commentInput{
+.modalBottom .homepage_feedsPosts_commentInput {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-.modalBottom .homepage_feedsPosts_commentInput input{
+.modalBottom .homepage_feedsPosts_commentInput input {
     margin: 10px 0;
     font-size: 14px;
     font-weight: 450;
@@ -419,7 +424,7 @@
     padding: 12px 24px 12px 14px;
 }
 
-.modalBottom .homepage_feedsPosts_commentInput .MuiSvgIcon-root{
+.modalBottom .homepage_feedsPosts_commentInput .MuiSvgIcon-root {
     position: absolute;
     right: 4px;
     border: 1px solid transparent;
@@ -430,6 +435,6 @@
     height: 16px;
 }
 
-.modalBottom .homepage_feedsPosts_commentInput .MuiSvgIcon-root:hover{
+.modalBottom .homepage_feedsPosts_commentInput .MuiSvgIcon-root:hover {
     cursor: pointer;
 }

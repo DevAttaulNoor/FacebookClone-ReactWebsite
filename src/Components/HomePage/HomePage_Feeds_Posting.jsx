@@ -12,7 +12,8 @@ import bgcolorIcon from '../../Imgs/Aa.png'
 function HomePage_Feeds_Posting() {
     const [{ user }] = useStateValue();
     const [open, setOpen] = useState(false);
-    const [image, setImage] = useState("");
+    const [media, setMedia] = useState(null);
+    const [mediaType, setMediaType] = useState(null);
     const [message, setMessage] = useState("");
     const [progress, setProgress] = useState(0);
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -22,7 +23,7 @@ function HomePage_Feeds_Posting() {
     const handleClose = () => {
         setOpen(false)
         setMessage("")
-        setImage("")
+        setMedia("")
         setProgress(0)
     }
 
@@ -31,22 +32,32 @@ function HomePage_Feeds_Posting() {
     }
 
     const uploadWithClick = () => {
-        document.getElementById("imageFile").click()
+        document.getElementById("mediaFile").click()
     }
 
-    const handleChange = (e) => {
+    const handleMediaChange = (e) => {
         if (e.target.files[0]) {
-            setImage(e.target.files[0]);
+            const file = e.target.files[0];
+            setMedia(file);
+
+            // Determine the media type (image or video)
+            if (file.type.startsWith("image/")) {
+                setMediaType("image");
+            } else if (file.type.startsWith("video/")) {
+                setMediaType("video");
+            }
         }
-    }
+    };
 
     const handleUpload = (e) => {
         e.preventDefault();
-        if (message === "" && image === "") {
+
+        if (message === "" && media === null) {
             return;
         }
 
-        if (image === "") {
+        if (media === null) {
+            // Handle text-only posts in Firestore
             db.collection("Posts").add({
                 uid: user.uid,
                 email: user.email,
@@ -59,35 +70,69 @@ function HomePage_Feeds_Posting() {
         }
 
         else {
-            const uploadTask = storage.ref(`Images/Posts/${user.uid}/${image.name}`).put(image);
+            // Handle image upload to Firebase Storage
+            if (mediaType === "image") {
+                const uploadTask = storage.ref(`Images/Posts/${user.uid}/${media.name}`).put(media);
 
-            uploadTask.on(
-                "state_changed",
-                (snapshot) => {
-                    const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                    setProgress(progress)
-                },
-                (error) => {
-                    console.log(error);
-                    alert(error.message);
-                },
-                () => {
-                    storage.ref(`Images/Posts/${user.uid}`).child(image.name).getDownloadURL().then(url => {
-                        db.collection("Posts").add({
-                            uid: user.uid,
-                            email: user.email,
-                            username: user.username,
-                            photoURL: user.photoURL,
-                            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                            message: message,
-                            image: url
+                uploadTask.on(
+                    "state_changed",
+                    (snapshot) => {
+                        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                        setProgress(progress);
+                    },
+                    (error) => {
+                        console.log(error);
+                        alert(error.message);
+                    },
+                    () => {
+                        storage.ref(`Images/Posts/${user.uid}`).child(media.name).getDownloadURL().then(url => {
+                            db.collection("Posts").add({
+                                uid: user.uid,
+                                email: user.email,
+                                username: user.username,
+                                photoURL: user.photoURL,
+                                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                                message: message,
+                                image: url // Store the image URL in Firestore
+                            });
+                            handleClose();
                         });
-                        handleClose();
-                    })
-                }
-            )
+                    }
+                );
+            } 
+            
+            else if (mediaType === "video") {
+                // Handle video upload to Firebase Storage
+                const uploadTask = storage.ref(`Videos/Posts/${user.uid}/${media.name}`).put(media);
+
+                uploadTask.on(
+                    "state_changed",
+                    (snapshot) => {
+                        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                        setProgress(progress);
+                    },
+                    (error) => {
+                        console.log(error);
+                        alert(error.message);
+                    },
+                    () => {
+                        storage.ref(`Videos/Posts/${user.uid}`).child(media.name).getDownloadURL().then(url => {
+                            db.collection("Posts").add({
+                                uid: user.uid,
+                                email: user.email,
+                                username: user.username,
+                                photoURL: user.photoURL,
+                                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                                message: message,
+                                video: url // Store the video URL in Firestore
+                            });
+                            handleClose();
+                        });
+                    }
+                );
+            }
         }
-    }
+    };
 
     const toggleEmojiPicker = () => {
         setShowEmojiPicker(!showEmojiPicker); // Toggle the state to show/hide the emoji picker
@@ -163,7 +208,7 @@ function HomePage_Feeds_Posting() {
                                 )}
                             </div>
 
-                            <input type="file" id='imageFile' onChange={handleChange} style={{ display: 'none' }} />
+                            <input type="file" id="mediaFile" accept="image/*,video/*" onChange={handleMediaChange} style={{ display: 'none' }} />
                         </div>
 
                         <div className="postingModal_Bottom">
@@ -182,7 +227,7 @@ function HomePage_Feeds_Posting() {
                                 </IconButton>
                             </div>
                         </div>
-                        {image !== "" && <personalbar className='image_progress'>Image is added</personalbar>}
+                        {media !== "" && <personalbar className='image_progress'>Media is added</personalbar>}
                         {progress != "" && <progress className='post_progress' value={progress} max="100" />}
                         <button type="submit" id="submitBtn" onClick={handleUpload}>Post</button>
                     </form>

@@ -69,6 +69,7 @@ function FriendUserPage_Feed() {
                             id={post.id}
                             photoURL={post.data.photoURL}
                             image={post.data.image}
+                            video={post.data.video}
                             username={post.data.username}
                             timestamp={formattedDate}
                             message={post.data.message}
