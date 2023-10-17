@@ -6,23 +6,27 @@ import HomePage_Feeds_Posts from '../HomePage/HomePage_Feeds_Posts'
 
 function UserPage_Feed() {
     const [posts, setPosts] = useState([]);
+    const [joinedposts, setJoinedPosts] = useState([]);
     const userDataStr = sessionStorage.getItem('userData');
     const userData = JSON.parse(userDataStr);
     const userUid = userData.uid;
 
     useEffect(() => {
-        const unsubscribe = db.collection("Posts").orderBy("timestamp", "desc").onSnapshot(snapshot => {
-            const filteredPosts = snapshot.docs
-                .filter(doc => doc.data().uid === userUid) // Filter posts by userUid
-                .map(doc => ({
-                    id: doc.id,
-                    data: doc.data()
-                }));
+        const unsubscribe = db.collection("Posts")
+            .orderBy("timestamp", "desc")
+            .onSnapshot(snapshot => {
+                const filteredPosts = snapshot.docs
+                    .filter(doc => doc.data().uid === userUid) // Filter posts by userUid
+                    .filter(doc => !doc.data().dob) // Filter out posts with a "dob" attribute
+                    .map(doc => ({
+                        id: doc.id,
+                        data: doc.data()
+                    }));
 
-            setPosts(filteredPosts);
-        });
+                setPosts(filteredPosts);
+            });
         return () => unsubscribe();
-    }, [userUid]); // Add userUid as a dependency to re-run the effect when it changes
+    }, [userUid]);
 
     const timeAgo = (timestamp) => {
         if (!timestamp || !timestamp.toDate) {
@@ -59,6 +63,26 @@ function UserPage_Feed() {
         return `${granularity} ${unit}${granularity > 1 ? 's' : ''} ago`;
     };
 
+    useEffect(() => {
+        const unsubscribeJoined = db.collection("Posts").onSnapshot(snapshot => {
+            setJoinedPosts(
+                snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    data: doc.data()
+                }))
+            );
+        });
+        return () => unsubscribeJoined();
+    }, []);
+
+    const formatJoinedDate = (date) => {
+        return date.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'long', // Change 'long' to 'short' or 'numeric' as needed
+            year: 'numeric'
+        });
+    };
+
     return (
         <div className='userpageFeed'>
             <HomePage_Feeds_Posting />
@@ -75,6 +99,30 @@ function UserPage_Feed() {
                             message={post.data.message}
                             key={post.id}
                         />
+                    );
+                })
+            }
+
+            {
+                joinedposts.map(joinedpost => {
+                    const dob = joinedpost.data.dob.toDate();
+                    return (
+                        <div className="JoinedPost">
+                            <HomePage_Feeds_Posts
+                                id={joinedpost.id}
+                                photoURL={joinedpost.data.photoURL}
+                                image={joinedpost.data.image}
+                                username={joinedpost.data.username}
+                                timestamp={formatJoinedDate(dob)}
+                                message={
+                                    <div className='JoinedPostMsg'>
+                                        <img id='joinedImg' src='https://static.xx.fbcdn.net/rsrc.php/v3/yl/r/1SViyXWaRzP.png' alt="Joined Image" />
+                                        <p id='joinedMsg'>{`Born on ${formatJoinedDate(dob)}`}</p>
+                                    </div>
+                                }
+                                key={joinedpost.id}
+                            />
+                        </div>
                     );
                 })
             }

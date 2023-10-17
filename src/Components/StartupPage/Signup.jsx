@@ -76,6 +76,18 @@ function Signup(props) {
                 coverphotoUrl: coverphotoUrl,
             });
 
+            // Create a post data object
+            const postData = {
+                uid: user.uid,
+                email: user.email,
+                dob: dob,
+                username: user.displayName,
+                photoURL: user.photoURL,
+            };
+
+            // Save the post data to Firestore
+            await db.collection("Posts").add(postData);
+
             const userData = {
                 uid: uid,
                 email: email,

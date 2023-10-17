@@ -9,14 +9,18 @@ function HomePage_Feeds() {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        const unsubscribe = db.collection("Posts").orderBy("timestamp", "desc").onSnapshot(snapshot => {
-            setPosts(
-                snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    data: doc.data()
-                }))
-            );
-        });
+        const unsubscribe = db.collection("Posts")
+            .orderBy("timestamp", "desc")
+            .onSnapshot(snapshot => {
+                const filteredPosts = snapshot.docs
+                    .filter(doc => !doc.data().dob) // Filter out posts with a "dob" attribute
+                    .map(doc => ({
+                        id: doc.id,
+                        data: doc.data()
+                    }));
+
+                setPosts(filteredPosts);
+            });
         return () => unsubscribe();
     }, []);
 
@@ -57,26 +61,25 @@ function HomePage_Feeds() {
 
     return (
         <div className='homepage_Feeds'>
-            <HomePage_Feeds_StoryReels/>
-            <HomePage_Feeds_Posting/>
-            {
-                posts.map(post => {
-                    const formattedDate = timeAgo(post.data.timestamp);
-                    return (
-                        <HomePage_Feeds_Posts
-                            id={post.id}
-                            photoURL={post.data.photoURL}
-                            image={post.data.image}
-                            username={post.data.username}
-                            timestamp={formattedDate}
-                            message={post.data.message}
-                            key={post.id}
-                        />
-                    );
-                })
-            }
+            <HomePage_Feeds_StoryReels />
+            <HomePage_Feeds_Posting />
+
+            {posts.map(post => {
+                const formattedDate = timeAgo(post.data.timestamp);
+                return (
+                    <HomePage_Feeds_Posts
+                        id={post.id}
+                        photoURL={post.data.photoURL}
+                        image={post.data.image}
+                        username={post.data.username}
+                        timestamp={formattedDate}
+                        message={post.data.message}
+                        key={post.id}
+                    />
+                );
+            })}
         </div>
-    )
+    );
 }
 
 export default HomePage_Feeds;
