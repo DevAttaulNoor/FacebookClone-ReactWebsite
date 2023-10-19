@@ -1,0 +1,38 @@
+/** HomePage Feeds Posts Share Modals Section */
+.HomePageFeedsPosts_ShareModal{
+    position: absolute;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+    inset: 150px 450px 150px 450px;
+    background: #fff;
+    border-radius: 8px;
+    outline: none;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.HomePageFeedsPosts_ShareModalTop {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+}
+
+.HomePageFeedsPosts_ShareModalTop .MuiSvgIcon-root {
+    position: absolute;
+    top: 12px;
+    right: 8px;
+    padding: 5px;
+    border-radius: 50%;
+    color: #65676B;
+    background-color: #E4E6EB;
+}
+
+.HomePageFeedsPosts_ShareModalTop .MuiSvgIcon-root:hover {
+    cursor: pointer;
+}
+
+.HomePageFeedsPosts_ShareModalTop p {
+    font-size: 20px;
+    font-weight: 600;
+}

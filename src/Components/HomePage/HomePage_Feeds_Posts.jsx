@@ -10,8 +10,9 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
-import CloseIcon from '@mui/icons-material/Close';
-import SendIcon from '@mui/icons-material/Send';
+import HomePage_Feeds_Posts_ShareModal from './HomePage_Feeds_Posts_ShareModal';
+import HomePage_Feeds_Posts_CommentModal from './HomePage_Feeds_Posts_CommentModal';
+import HomePage_Feeds_Posts_LikeModal from './HomePage_Feeds_Posts_LikeModal';
 
 function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp, message }) {
     Modal.setAppElement('#root');
@@ -31,7 +32,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
     const [comments, setComments] = useState([]);
     const [isCommenting, setIsCommenting] = useState(false);
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
-    const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
+    const [isShareModalOpen, setIsShareModalOpen] = useState(false);
     const [imageFile, setImageFile] = useState(null);
     const [videoFile, setVideoFile] = useState(null);
     const [mediaType, setMediaType] = useState(null);
@@ -304,28 +305,6 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
         setIsCommentModalOpen(false);
     };
 
-    const postComment = async () => {
-        if (comment.trim() === '') {
-            return;
-        }
-
-        const newComment = {
-            uid: user.uid,
-            email: user.email,
-            username: user.username,
-            photoURL: user.photoURL,
-            text: comment,
-            timestamp: new Date(),
-        };
-
-        try {
-            await db.collection("Posts").doc(id).collection("comments").add(newComment);
-            setComment('');
-        } catch (error) {
-            console.error("Error posting comment:", error);
-        }
-    };
-
     useEffect(() => {
         const getRealtimeComments = () => {
             const commentsRef = db.collection("Posts").doc(id).collection("comments");
@@ -347,58 +326,6 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
             unsubscribe();
         };
     }, [id]);
-
-    const deleteComment = (commentId) => {
-        db.collection("Posts").doc(id).collection("comments").doc(commentId).delete().then(() => {
-            console.log("Comment successfully deleted!");
-        })
-            .catch((error) => {
-                console.error("Error removing comment: ", error);
-            });
-    };
-
-    const openShareDialog = () => {
-        setIsShareDialogOpen(true);
-    };
-
-    const closeShareDialog = () => {
-        setIsShareDialogOpen(false);
-    };
-
-    const timeAgowithInitials = (timestamp) => {
-        if (!timestamp || !timestamp.toDate) {
-            return "0s"
-        }
-        const currentDate = new Date();
-        const postDate = timestamp.toDate();
-        const seconds = Math.floor((currentDate - postDate) / 1000);
-        const secondsDifference = Math.max(seconds, 1);
-        const periods = {
-            D: 315360000,
-            Y: 31536000,
-            M: 2628000,
-            w: 604800,
-            d: 86400,
-            h: 3600,
-            m: 60,
-            s: 1,
-        };
-
-        let elapsed = 0;
-        let granularity = 0;
-        let unit = '';
-
-        for (const period in periods) {
-            elapsed = Math.floor(secondsDifference / periods[period]);
-
-            if (elapsed >= 1) {
-                granularity = elapsed;
-                unit = period;
-                break;
-            }
-        }
-        return `${granularity}${unit}${granularity > 1 ? '' : ''}`;
-    };
 
     useEffect(() => {
         const likedUsersRef = db.collection("Posts").doc(id).collection("likes");
@@ -514,7 +441,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
                         <p>Comment</p>
                     </div>
 
-                    <div className='homepageFeedsPosts_BottomOption' onClick={openShareDialog}>
+                    <div className='homepageFeedsPosts_BottomOption' onClick={() => setIsShareModalOpen(true)}>
                         <ReplyOutlinedIcon />
                         <p>Share</p>
                     </div>
@@ -522,65 +449,21 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
 
                 <div className="homepageFeedsPosts_BottomModals">
                     <Modal className="Modal" id="likedUserModal" isOpen={isLikedUsersModalOpen} onRequestClose={() => setIsLikedUsersModalOpen(false)}>
-                        <div className="ModalTop">
-                            <CloseIcon onClick={() => setIsLikedUsersModalOpen(false)} />
-                            <p>Reactions</p>
-                        </div>
-
-                        <hr />
-
-                        <div className="ModalMiddle">
-                            {likedUsers.map((user) => (
-                                <div key={user.uid}>
-                                    <Avatar src={user.photoUrl} />
-                                    <span>{user.username}</span>
-                                </div>
-                            ))}
-                        </div>
+                        <HomePage_Feeds_Posts_LikeModal
+                            id={id}
+                            closeModal={{ closeLikeModal: () => setIsLikedUsersModalOpen(false) }}
+                        />
                     </Modal>
 
                     <Modal className="Modal" id="commentedUserModal" isOpen={isCommentModalOpen} onRequestClose={closeCommentModal}>
-                        <div className="ModalTop">
-                            <CloseIcon onClick={closeCommentModal} />
-                            <p>Comments</p>
-                        </div>
-
-                        <hr />
-
-                        <div className="ModalMiddle">
-                            {comments.map((comment) => (
-                                <div className='comments' key={comment.id}>
-                                    <Avatar src={comment.photoURL} />
-                                    <div className='commentInner'>
-                                        <h4>{comment.username}</h4>
-                                        <p>{comment.text}</p>
-                                    </div>
-                                    <div className='commentOuter'>
-                                        <button onClick={() => deleteComment(comment.id)}>Delete</button>
-                                        <p>{timeAgowithInitials(comment.timestamp)}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="ModalBottom">
-                            {isCommenting && (
-                                <div className='commentInput'>
-                                    <Avatar src={user.photoURL} />
-                                    <input type='text' placeholder='Write a comment...' value={comment} onChange={(e) => setComment(e.target.value)} />
-                                    <SendIcon onClick={postComment} />
-                                </div>
-                            )}
-                        </div>
+                        <HomePage_Feeds_Posts_CommentModal
+                            id={id}
+                            closeModal={{ closeCommentModal: () => setIsCommentModalOpen(false) }}
+                        />
                     </Modal>
 
-                    <Modal className="Modal" id="sharedUserModal" isOpen={isShareDialogOpen} onRequestClose={closeShareDialog}>
-                        <div className="ModalTop">
-                            <CloseIcon onClick={closeShareDialog} />
-                            <p>Shares</p>
-                        </div>
-
-                        <hr />
+                    <Modal className="Modal" id="sharedUserModal" isOpen={isShareModalOpen} onRequestClose={() => setIsShareModalOpen(false)}>
+                        <HomePage_Feeds_Posts_ShareModal closeModal={() => setIsShareModalOpen(false)} />
                     </Modal>
                 </div>
             </div>

@@ -1,0 +1,60 @@
+/** HomePage Feeds Posts Like Modals Section */
+.HomePageFeedsPosts_LikeModal{
+    position: absolute;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+    inset: 150px 450px 150px 450px;
+    background: #fff;
+    border-radius: 8px;
+    outline: none;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.HomePageFeedsPosts_LikeModalTop {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+}
+
+.HomePageFeedsPosts_LikeModalTop .MuiSvgIcon-root {
+    position: absolute;
+    top: 12px;
+    right: 8px;
+    padding: 5px;
+    border-radius: 50%;
+    color: #65676B;
+    background-color: #E4E6EB;
+}
+
+.HomePageFeedsPosts_LikeModalTop .MuiSvgIcon-root:hover {
+    cursor: pointer;
+}
+
+.HomePageFeedsPosts_LikeModalTop p {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+
+.HomePageFeedsPosts_LikeModalMiddle {
+    height: 255px;
+    overflow-y: auto;
+}
+
+.likedUserModal {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.likedUserModal:last-child {
+    margin-bottom: 0px;
+}
+
+.likedUserModal span {
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 8px;
+}
