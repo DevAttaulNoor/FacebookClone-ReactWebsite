@@ -10,7 +10,8 @@
     overflow-x: hidden;
 }
 
-.HomePageFeedsPosts_ShareModalTop {
+/* HomePage Feeds Posts Share Modals Top Section */
+.HomePageFeedsPosts_ShareModal_Top {
     position: relative;
     display: flex;
     align-items: center;
@@ -18,7 +19,7 @@
     padding: 12px;
 }
 
-.HomePageFeedsPosts_ShareModalTop .MuiSvgIcon-root {
+.HomePageFeedsPosts_ShareModal_Top .MuiSvgIcon-root {
     position: absolute;
     top: 12px;
     right: 8px;
@@ -28,11 +29,11 @@
     background-color: #E4E6EB;
 }
 
-.HomePageFeedsPosts_ShareModalTop .MuiSvgIcon-root:hover {
+.HomePageFeedsPosts_ShareModal_Top .MuiSvgIcon-root:hover {
     cursor: pointer;
 }
 
-.HomePageFeedsPosts_ShareModalTop p {
+.HomePageFeedsPosts_ShareModal_Top p {
     font-size: 20px;
     font-weight: 600;
 }

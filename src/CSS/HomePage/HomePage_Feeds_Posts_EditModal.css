@@ -1,0 +1,97 @@
+/** HomePage Feeds Posts Edit Modals Section */
+.HomePageFeedsPosts_EditModal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+/* HomePage Feeds Posts Edit Modals Top Section */
+.HomePageFeedsPosts_EditModal_Top h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* HomePage Feeds Posts Edit Modals Middle Section */
+.HomePageFeedsPosts_EditModal_Middle #msgInput {
+    padding: 10px 5px;
+    font-size: 15px;
+    font-weight: 600;
+    border: 1px solid gray;
+    outline: none;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.HomePageFeedsPosts_EditModal_Middle #mediaInput {
+    width: 240px;
+}
+
+.HomePageFeedsPosts_EditModal_Middle #mediaInputLabel{
+    padding: 10px 5px;
+    background-color: #fff;
+    color: black;
+    border: 1px solid gray;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.HomePageFeedsPosts_EditModal_Middle #mediaInputLabel:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+
+.HomePageFeedsPosts_EditModal_Middle #editedImg,
+.HomePageFeedsPosts_EditModal_Middle #originalImg {
+    width: 348px;
+    height: 220px;
+    object-fit: contain;
+    border: 1px solid gray;
+}
+
+.HomePageFeedsPosts_EditModal_Middle #editedVideo,
+.HomePageFeedsPosts_EditModal_Middle #originalVideo {
+    object-fit: cover;
+    width: -webkit-fill-available;
+}
+
+.HomePageFeedsPosts_EditModal_Middle #noMedia {
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    color: red;
+}
+
+/* HomePage Feeds Posts Edit Modals Bottom Section */
+.HomePageFeedsPosts_EditModal_Bottom{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 10px 0;
+}
+
+.HomePageFeedsPosts_EditModal_Bottom button {
+    padding: 5px;
+    font-size: 15px;
+    font-weight: 600;
+    border: 1px solid gray;
+    outline: none;
+    border-radius: 5px;
+    width: 100px;
+    background-color: #fff;
+}
+
+.HomePageFeedsPosts_EditModal_Bottom button:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+}

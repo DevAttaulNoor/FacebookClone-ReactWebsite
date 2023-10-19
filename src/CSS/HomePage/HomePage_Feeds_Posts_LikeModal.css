@@ -10,7 +10,8 @@
     overflow-x: hidden;
 }
 
-.HomePageFeedsPosts_LikeModalTop {
+/* HomePage Feeds Posts Like Modals Top Section */
+.HomePageFeedsPosts_LikeModal_Top {
     position: relative;
     display: flex;
     align-items: center;
@@ -18,7 +19,7 @@
     padding: 12px;
 }
 
-.HomePageFeedsPosts_LikeModalTop .MuiSvgIcon-root {
+.HomePageFeedsPosts_LikeModal_Top .MuiSvgIcon-root {
     position: absolute;
     top: 12px;
     right: 8px;
@@ -28,32 +29,33 @@
     background-color: #E4E6EB;
 }
 
-.HomePageFeedsPosts_LikeModalTop .MuiSvgIcon-root:hover {
+.HomePageFeedsPosts_LikeModal_Top .MuiSvgIcon-root:hover {
     cursor: pointer;
 }
 
-.HomePageFeedsPosts_LikeModalTop p {
+.HomePageFeedsPosts_LikeModal_Top p {
     font-size: 20px;
     font-weight: 600;
 }
 
-
-.HomePageFeedsPosts_LikeModalMiddle {
+/* HomePage Feeds Posts Like Modals Middle Section */
+.HomePageFeedsPosts_LikeModal_Middle {
     height: 255px;
+    padding: 12px;
     overflow-y: auto;
 }
 
-.likedUserModal {
+.HomePageFeedsPosts_LikeModal_Middle .likedUsersInfo {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.likedUserModal:last-child {
+.HomePageFeedsPosts_LikeModal_Middle .likedUsersInfo:last-child {
     margin-bottom: 0px;
 }
 
-.likedUserModal span {
+.HomePageFeedsPosts_LikeModal_Middle .likedUsersInfo span {
     font-size: 16px;
     font-weight: 600;
     margin-left: 8px;

@@ -3,6 +3,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Avatar } from '@mui/material';
 import { db, storage } from '../BackendRelated/Firebase';
 import { useStateValue } from '../BackendRelated/StateProvider';
+import HomePage_Feeds_Posts_ShareModal from './HomePage_Feeds_Posts_ShareModal';
+import HomePage_Feeds_Posts_CommentModal from './HomePage_Feeds_Posts_CommentModal';
+import HomePage_Feeds_Posts_LikeModal from './HomePage_Feeds_Posts_LikeModal';
 import Modal from 'react-modal';
 import PublicIcon from '@mui/icons-material/Public';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -10,14 +13,12 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
-import HomePage_Feeds_Posts_ShareModal from './HomePage_Feeds_Posts_ShareModal';
-import HomePage_Feeds_Posts_CommentModal from './HomePage_Feeds_Posts_CommentModal';
-import HomePage_Feeds_Posts_LikeModal from './HomePage_Feeds_Posts_LikeModal';
+import HomePage_Feeds_Posts_EditModal from './HomePage_Feeds_Posts_EditModal';
 
 function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp, message }) {
     Modal.setAppElement('#root');
 
-    const [{ user }, dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
     const [isEditing, setIsEditing] = useState(false);
     const [editedMessage, setEditedMessage] = useState(message);
     const [editedImage, setEditedImage] = useState(image);
@@ -28,7 +29,6 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
     const [likedUsers, setLikedUsers] = useState([]);
     const [currentUserLiked, setCurrentUserLiked] = useState(false);
     const [isLikedUsersModalOpen, setIsLikedUsersModalOpen] = useState(false);
-    const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
     const [isCommenting, setIsCommenting] = useState(false);
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
@@ -47,6 +47,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
     };
 
     const handleSave = () => {
+        console.log("Save button clicked");
         if (editedVideo !== video && editedVideo !== null) {
             // If there is a new video, upload it to Firebase Storage and update Firestore
             const videoFile = videoFileRef.current;
@@ -158,41 +159,6 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
         }
     };
 
-    const handleMediaUpload = (e) => {
-        const file = e.target.files[0];
-
-        if (file) {
-            const storageRef = storage.ref(`Media/Posts/${user.uid}/${file.name}`);
-
-            storageRef.put(file).then((snapshot) => {
-                snapshot.ref.getDownloadURL().then((url) => {
-                    if (file.type.startsWith("image/")) {
-                        setEditedImage(url);
-                        setImageFile(file);
-                    } else if (file.type.startsWith("video/")) {
-                        setEditedVideo(url);
-                        setVideoFile(file);
-                    }
-
-                    db.collection("Posts").doc(id).update({
-                        image: file.type.startsWith("image/") ? url : editedImage,
-                        video: file.type.startsWith("video/") ? url : editedVideo
-                    })
-                        .then(() => {
-                            console.log("Media URL in Firestore updated successfully!");
-                        })
-                        .catch((error) => {
-                            console.error("Error updating media URL in Firestore: ", error);
-                        });
-                });
-            });
-        } else {
-            // If no file is selected (e.g., user canceled the upload), reset editedImage and editedVideo to null
-            setEditedImage(null);
-            setEditedVideo(null);
-        }
-    };
-
     const toggleDropdown = () => {
         setIsDropdownVisible(!isDropdownVisible);
         setIsDropdownClicked(!isDropdownClicked);
@@ -291,19 +257,31 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
         setIsLikedUsersModalOpen(true);
     };
 
-    const openCommentInput = () => {
-        setIsCommenting(true);
-        setIsCommentModalOpen(true);
-    };
-
     const openCommentModal = () => {
         setIsCommenting(true);
         setIsCommentModalOpen(true);
     };
 
-    const closeCommentModal = () => {
-        setIsCommentModalOpen(false);
-    };
+    useEffect(() => {
+        const likedUsersRef = db.collection("Posts").doc(id).collection("likes");
+
+        // Add a snapshot listener to listen for changes in the "likes" subcollection
+        const unsubscribe = likedUsersRef.onSnapshot((querySnapshot) => {
+            const likedUsersData = [];
+            querySnapshot.forEach((doc) => {
+                likedUsersData.push(doc.data());
+            });
+            setLikedUsers(likedUsersData);
+
+            // Check if the current user has liked the post and set a flag accordingly
+            const currentUserLiked = likedUsersData.some((likedUser) => likedUser.uid === user.uid);
+            setCurrentUserLiked(currentUserLiked);
+        });
+
+        return () => {
+            unsubscribe();
+        };
+    }, [id, user.uid]);
 
     useEffect(() => {
         const getRealtimeComments = () => {
@@ -327,31 +305,8 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
         };
     }, [id]);
 
-    useEffect(() => {
-        const likedUsersRef = db.collection("Posts").doc(id).collection("likes");
-
-        // Add a snapshot listener to listen for changes in the "likes" subcollection
-        const unsubscribe = likedUsersRef.onSnapshot((querySnapshot) => {
-            const likedUsersData = [];
-            querySnapshot.forEach((doc) => {
-                likedUsersData.push(doc.data());
-            });
-            setLikedUsers(likedUsersData);
-
-            // Check if the current user has liked the post and set a flag accordingly
-            const currentUserLiked = likedUsersData.some((likedUser) => likedUser.uid === user.uid);
-            setCurrentUserLiked(currentUserLiked);
-        });
-
-        return () => {
-            // Unsubscribe from the snapshot listener when the component unmounts
-            unsubscribe();
-        };
-    }, [id, user.uid]);
-
     return (
         <div className='homepageFeedsPosts'>
-            {/* Post Top Section */}
             <div className="homepageFeedsPosts_Top">
                 <div className="homepageFeedsPosts_TopLeft">
                     <Avatar src={photoURL} />
@@ -372,43 +327,23 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
                 </div>
             </div>
 
-            {/* Post Middle Section */}
             <div className="homepageFeedsPosts_Middle">
                 <div className='homepageFeedsPosts_MiddleTop'>
-                    {!isEditing ? (
-                        <div className='homepageFeedsPosts_MiddleTopInner'>
-                            <p id="postMsg" style={{ fontSize: image || editedVideo ? '15px' : '30px' }}> {editedMessage} </p>
-                            {image && <img id="postImg" src={editedImage} alt="Image" />}
-                            {video && (<video id="postVideo" controls> <source src={editedVideo} type="video/mp4" /> </video>)}
-                        </div>
-                    ) : (
+                    <div className='homepageFeedsPosts_MiddleTopInner'>
+                        <p id="postMsg" style={{ fontSize: image || editedVideo ? '15px' : '30px' }}> {editedMessage} </p>
+                        {image && <img id="postImg" src={editedImage} alt="Image" />}
+                        {video && (<video id="postVideo" controls> <source src={editedVideo} type="video/mp4" /> </video>)}
+                    </div>
+
+                    {isEditing && (
                         <Modal className="editModal" isOpen={isEditing} onRequestClose={() => setIsEditing(false)}>
-                            <div className="editModal_Top">
-                                <h2>Edit Post</h2>
-                            </div>
-
-                            <div className="editModal_Middle">
-                                <input id="msgInput" type="text" value={editedMessage} onChange={(e) => setEditedMessage(e.target.value)} />
-                                <input id="mediaInput" type="file" accept="image/*,video/*" onChange={handleMediaUpload} style={{ display: 'none' }} />
-                                <label id="mediaInputLabel" htmlFor="mediaInput">Select Media</label>
-
-                                {editedImage ? (
-                                    <img id="editedImg" src={editedImage} alt="Edited" />
-                                ) : editedVideo ? (
-                                    <video id="editedVideo" controls> <source src={editedVideo} type="video/mp4" /> </video>
-                                ) : image ? (
-                                    <img id="originalImg" src={image} alt="Original" />
-                                ) : video ? (
-                                    <video id="originalVideo" controls> <source src={video} type="video/mp4" /> </video>
-                                ) : (
-                                    <p id='noMedia'>No media selected</p>
-                                )}
-                            </div>
-
-                            <div className="editModal_Bottom">
-                                <button onClick={handleSave}>Save</button>
-                                <button onClick={() => setIsEditing(false)}>Cancel</button>
-                            </div>
+                            <HomePage_Feeds_Posts_EditModal
+                                id={id}
+                                image={image}
+                                video={video}
+                                message={message}
+                                onSave={handleSave} // Pass the save function to the edit modal
+                            />
                         </Modal>
                     )}
                 </div>
@@ -419,7 +354,6 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
                 </div>
             </div>
 
-            {/* Post Bottom Section */}
             <div className="homepageFeedsPosts_Bottom">
                 <div className='homepageFeedsPosts_BottomInner'>
                     <div className='homepageFeedsPosts_BottomOption' onClick={handleLike}>
@@ -436,7 +370,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
                         )}
                     </div>
 
-                    <div className='homepageFeedsPosts_BottomOption' onClick={openCommentInput}>
+                    <div className='homepageFeedsPosts_BottomOption' onClick={openCommentModal}>
                         <ChatBubbleOutlineOutlinedIcon />
                         <p>Comment</p>
                     </div>
@@ -448,21 +382,21 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
                 </div>
 
                 <div className="homepageFeedsPosts_BottomModals">
-                    <Modal className="Modal" id="likedUserModal" isOpen={isLikedUsersModalOpen} onRequestClose={() => setIsLikedUsersModalOpen(false)}>
+                    <Modal className="likedUserModal" isOpen={isLikedUsersModalOpen} onRequestClose={() => setIsLikedUsersModalOpen(false)}>
                         <HomePage_Feeds_Posts_LikeModal
                             id={id}
                             closeModal={{ closeLikeModal: () => setIsLikedUsersModalOpen(false) }}
                         />
                     </Modal>
 
-                    <Modal className="Modal" id="commentedUserModal" isOpen={isCommentModalOpen} onRequestClose={closeCommentModal}>
+                    <Modal className="commentedUserModal" isOpen={isCommentModalOpen} onRequestClose={() => setIsCommentModalOpen(false)}>
                         <HomePage_Feeds_Posts_CommentModal
                             id={id}
                             closeModal={{ closeCommentModal: () => setIsCommentModalOpen(false) }}
                         />
                     </Modal>
 
-                    <Modal className="Modal" id="sharedUserModal" isOpen={isShareModalOpen} onRequestClose={() => setIsShareModalOpen(false)}>
+                    <Modal className="sharedUserModal" isOpen={isShareModalOpen} onRequestClose={() => setIsShareModalOpen(false)}>
                         <HomePage_Feeds_Posts_ShareModal closeModal={() => setIsShareModalOpen(false)} />
                     </Modal>
                 </div>

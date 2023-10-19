@@ -35,28 +35,6 @@ function HomePage_Feeds_Posts_CommentModal({ id, closeModal }) {
         }
     };
 
-    useEffect(() => {
-        const getRealtimeComments = () => {
-            const commentsRef = db.collection("Posts").doc(id).collection("comments");
-
-            // Set up a real-time listener for new comments and changes
-            return commentsRef.orderBy("timestamp", "asc").onSnapshot((querySnapshot) => {
-                const fetchedComments = [];
-                querySnapshot.forEach((doc) => {
-                    fetchedComments.push({ id: doc.id, ...doc.data() });
-                });
-                setComments(fetchedComments);
-            });
-        };
-
-        const unsubscribe = getRealtimeComments();
-
-        // Clean up the listener when the component unmounts
-        return () => {
-            unsubscribe();
-        };
-    }, [id]);
-
     const deleteComment = (commentId) => {
         db.collection("Posts").doc(id).collection("comments").doc(commentId).delete().then(() => {
             console.log("Comment successfully deleted!");
@@ -101,39 +79,61 @@ function HomePage_Feeds_Posts_CommentModal({ id, closeModal }) {
         return `${granularity}${unit}${granularity > 1 ? '' : ''}`;
     };
 
+    useEffect(() => {
+        const getRealtimeComments = () => {
+            const commentsRef = db.collection("Posts").doc(id).collection("comments");
+
+            // Set up a real-time listener for new comments and changes
+            return commentsRef.orderBy("timestamp", "asc").onSnapshot((querySnapshot) => {
+                const fetchedComments = [];
+                querySnapshot.forEach((doc) => {
+                    fetchedComments.push({ id: doc.id, ...doc.data() });
+                });
+                setComments(fetchedComments);
+            });
+        };
+
+        const unsubscribe = getRealtimeComments();
+
+        // Clean up the listener when the component unmounts
+        return () => {
+            unsubscribe();
+        };
+    }, [id]);
+
     return (
         <div className='HomePageFeedsPosts_CommentModal'>
-            <div className="HomePageFeedsPosts_CommentModalTop">
+            <div className="HomePageFeedsPosts_CommentModal_Top">
                 <CloseIcon onClick={closeModal.closeCommentModal} />
                 <p>Comments</p>
             </div>
 
             <hr />
 
-            <div className="HomePageFeedsPosts_CommentModalMiddle">
+            <div className="HomePageFeedsPosts_CommentModal_Middle">
                 {comments.map((comment) => (
                     <div className='comments' key={comment.id}>
                         <Avatar src={comment.photoURL} />
-                        <div className='commentInner'>
-                            <h4>{comment.username}</h4>
-                            <p>{comment.text}</p>
-                        </div>
-                        <div className='commentOuter'>
-                            <button onClick={() => deleteComment(comment.id)}>Delete</button>
-                            <p>{timeAgowithInitials(comment.timestamp)}</p>
+                        <div className="commentInner">
+                            <div className='commentTop'>
+                                <h4>{comment.username}</h4>
+                                <p>{comment.text}</p>
+                            </div>
+                            <div className='commentBottom'>
+                                <button onClick={() => deleteComment(comment.id)}>Delete</button>
+                                <p>{timeAgowithInitials(comment.timestamp)}</p>
+                            </div>
                         </div>
                     </div>
                 ))}
             </div>
 
-            <div className="HomePageFeedsPosts_CommentModalBottom">
-                {isCommenting && (
-                    <div className='commentInput'>
-                        <Avatar src={user.photoURL} />
-                        <input type='text' placeholder='Write a comment...' value={comment} onChange={(e) => setComment(e.target.value)} />
-                        <SendIcon onClick={postComment} />
-                    </div>
-                )}
+            <div className="HomePageFeedsPosts_CommentModal_Bottom">
+                <div className='commentInput'>
+                    <Avatar src={user.photoURL} />
+                    <input type='text' placeholder='Write a comment...' value={comment} onChange={(e) => setComment(e.target.value)} />
+                    <SendIcon onClick={postComment} />
+                </div>
             </div>
         </div>
     )
