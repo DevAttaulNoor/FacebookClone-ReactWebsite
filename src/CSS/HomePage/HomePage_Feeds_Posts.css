@@ -1,5 +1,5 @@
 /** HomePage Feeds Posts Section */
-.homepage_feedsPosts {
+.homepageFeedsPosts {
     background-color: #fff;
     border-radius: 10px;
     margin-top: 15px;
@@ -9,55 +9,55 @@
 }
 
 /** HomePage Feeds Posts Top Section */
-.homepage_feedsPosts_top {
+.homepageFeedsPosts_Top {
     display: flex;
     justify-content: space-between;
     position: relative;
 }
 
 /* HomePage Feeds Posts Top Left Section */
-.homepage_feedsPosts_topleft {
+.homepageFeedsPosts_TopLeft {
     display: flex;
     align-items: center;
 }
 
-.homepage_feedsPostsinfo {
+.homepageFeedsPosts_TopLeft .userpostInfo {
     margin-left: 10px;
 }
 
-.homepage_feedsPostsinfo h4 {
+.homepageFeedsPosts_TopLeft .userpostInfo h4 {
     font-size: 14px;
     font-weight: 600;
 }
 
-.homepage_feedsPostsinfo p {
+.homepageFeedsPosts_TopLeft .userpostInfo p {
     font-size: 12px;
     display: flex;
     align-items: center;
 }
 
-.homepage_feedsPostsinfo p svg {
+.homepageFeedsPosts_TopLeft .userpostInfo p svg {
     font-size: 12px;
     margin-left: 5px;
     margin-top: 3px;
 }
 
 /* HomePage Feeds Posts Top Right Section */
-.homepage_feedsPosts_topright .MuiSvgIcon-root {
+.homepageFeedsPosts_TopRight .MuiSvgIcon-root {
     border-radius: 50%;
     padding: 2px;
 }
 
-.homepage_feedsPosts_topright .MuiSvgIcon-root:hover {
+.homepageFeedsPosts_TopRight .MuiSvgIcon-root:hover {
     background-color: whitesmoke;
     cursor: pointer;
 }
 
-.homepage_feedsPosts_topright.clicked {
+.homepageFeedsPosts_TopRight.clicked {
     background-color: #fff;
 }
 
-.dropdownMenu {
+.homepageFeedsPosts_TopRight .postSetting {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -72,7 +72,7 @@
     z-index: 1;
 }
 
-.dropdownMenu button {
+.homepageFeedsPosts_TopRight .postSetting button {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -85,26 +85,32 @@
     outline: none;
 }
 
-.dropdownMenu button:first-child {
-    border-bottom: 1px solid gray;
-}
-
-.dropdownMenu button:hover {
+.homepageFeedsPosts_TopRight .postSetting button:hover {
     background-color: whitesmoke;
     cursor: pointer;
 }
 
+.homepageFeedsPosts_TopRight .postSetting button:first-child {
+    border-bottom: 1px solid gray;
+}
+
 /** HomePage Feeds Posts Middle Section */
-.homepage_feedsPosts_middle #homepage_feedsPosts_middleMessage {
+
+/* HomePage Feeds Posts Middle Top Section */
+.homepageFeedsPosts_Middle .homepageFeedsPosts_MiddleTop .homepageFeedsPosts_MiddleTopInner #postMsg{
     margin: 15px 0;
     letter-spacing: 0.2px;
 }
 
-.homepage_feedsPosts_middle #homepage_feedsPosts_middleImg {
+.homepageFeedsPosts_Middle .homepageFeedsPosts_MiddleTop .homepageFeedsPosts_MiddleTopInner #postImg {
     width: 100%;
 }
 
-.homepage_feedsPosts_editingModal {
+.homepageFeedsPosts_Middle .homepageFeedsPosts_MiddleTop .homepageFeedsPosts_MiddleTopInner #postVideo {
+    width: 100%;
+}
+
+.homepageFeedsPosts_Middle .editModal {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -119,13 +125,13 @@
     flex-direction: column;
 }
 
-.homepage_feedsPosts_editingModal h2 {
+.editModal .editModal_Top h2 {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.homepage_feedsPosts_editingModal input {
+.editModal .editModal_Middle #msgInput {
     padding: 10px 5px;
     font-size: 15px;
     font-weight: 600;
@@ -135,17 +141,11 @@
     margin: 10px 0;
 }
 
-.file-input-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.file-input-container .image-url-container input {
+.editModal .editModal_Middle #mediaInput {
     width: 240px;
 }
 
-.file-input-label {
+.editModal .editModal_Middle #mediaInputLabel{
     padding: 10px 5px;
     background-color: #fff;
     color: black;
@@ -155,42 +155,40 @@
     font-weight: 600;
 }
 
-.file-input-label:hover {
+.editModal .editModal_Middle #mediaInputLabel:hover {
     background-color: whitesmoke;
     cursor: pointer;
 }
 
-.file-input {
-    display: none;
-}
-
-.edited-image {
+.editModal .editModal_Middle #editedImg,
+.editModal .editModal_Middle #originalImg {
     width: 348px;
     height: 220px;
     object-fit: contain;
     border: 1px solid gray;
 }
 
-.homepage_feedsPosts_middleVideo video {
+.editModal .editModal_Middle #editedVideo,
+.editModal .editModal_Middle #originalVideo {
     object-fit: cover;
     width: -webkit-fill-available;
 }
 
-.noEditedimg {
+.editModal .editModal_Middle #noMedia {
     display: flex;
     justify-content: center;
     font-weight: 600;
     color: red;
 }
 
-.homepage_feedsPosts_editingModal .btns {
+.editModal .editModal_Bottom{
     display: flex;
     align-items: center;
     justify-content: space-around;
     margin: 10px 0;
 }
 
-.btns button {
+.editModal .editModal_Bottom button {
     padding: 5px;
     font-size: 15px;
     font-weight: 600;
@@ -201,40 +199,42 @@
     background-color: #fff;
 }
 
-.btns button:hover {
+.editModal .editModal_Bottom button:hover {
     background-color: whitesmoke;
     cursor: pointer;
 }
 
-/* HomePage Feeds Posts Middle Reactions */
-.homepage_feedsPosts_ReactInfo {
+/* HomePage Feeds Posts Middle Bottom Section */
+.homepageFeedsPosts_MiddleBottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 6px 0;
 }
 
-.homepage_feedsPosts_ReactInfo p {
+.homepageFeedsPosts_MiddleBottom p {
     font-size: 14px;
     font-weight: 450;
     color: gray;
 }
 
-.homepage_feedsPosts_ReactInfo p:hover {
+.homepageFeedsPosts_MiddleBottom p:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
 /** HomePage Feeds Posts Bottom Section */
-.homepage_feedsPosts_bottomOptions {
+
+/* HomePage Feeds Posts Bottom Inner Section */
+.homepageFeedsPosts_Bottom .homepageFeedsPosts_BottomInner{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 2px;
     margin-top: 5px;
     border-top: 1px solid lightgray;
 }
 
-.homepage_feedsPosts_bottomOption {
+.homepageFeedsPosts_BottomInner .homepageFeedsPosts_BottomOption {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -243,26 +243,25 @@
     margin: 5px 0;
 }
 
-.homepage_feedsPosts_bottomOption:hover {
+.homepageFeedsPosts_BottomOption:hover {
     cursor: pointer;
     background-color: #E4E6EB;
 }
 
-.homepage_feedsPosts_bottomOption p {
+.homepageFeedsPosts_BottomOption p {
     margin-left: 10px;
     font-size: 14px;
     font-weight: 500;
     color: #65676B;
 }
 
-.homepage_feedsPosts_bottomOption .MuiSvgIcon-root {
+.homepageFeedsPosts_BottomOption .MuiSvgIcon-root {
     width: 21px;
     color: #65676B;
 }
 
-/** HomePage Feeds Posts Bottom Modals for Like, Comment and Share */
-/* Modal of Like, Comment and Share */
-.Modal {
+/* HomePage Feeds Posts Bottom Modals Section */
+.homepageFeedsPosts_BottomModals .Modal{
     position: absolute;
     inset: 150px 450px 150px 450px;
     border: 1px solid rgb(204, 204, 204);
@@ -274,7 +273,14 @@
     overflow-x: hidden;
 }
 
-.modalTop {
+.Modal hr {
+    border: none;
+    border-top: 1px solid lightgray;
+    width: 100%;
+    margin: 5px 0 10px;
+}
+
+.Modal .ModalTop {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -282,59 +288,52 @@
     flex-direction: column;
 }
 
-.modalTop .MuiSvgIcon-root {
+.ModalTop .MuiSvgIcon-root {
     position: absolute;
     top: -3px;
     right: -9px;
     padding: 5px;
 }
 
-.modalTop .MuiSvgIcon-root:hover {
+.ModalTop .MuiSvgIcon-root:hover {
     cursor: pointer;
     background-color: whitesmoke;
     border-radius: 50%;
 }
 
-.modalTop p {
+.ModalTop p {
     font-size: 20px;
     font-weight: 600;
 }
 
-.modalTop .line {
-    border: none;
-    border-top: 1px solid lightgray;
-    width: 100%;
-    margin: 5px 0 10px;
-}
-
-.modalMiddle {
+.ModalMiddle {
     height: 255px;
     overflow-y: auto;
 }
 
-.modalBottom {
+.ModalBottom {
     position: fixed;
 }
 
-/**  Likes Modal Section */
-.homepage_feedsPosts_likes {
+/* Liked User Modal Section */
+.likedUserModal {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.homepage_feedsPosts_likes:last-child {
+.likedUserModal:last-child {
     margin-bottom: 0px;
 }
 
-.homepage_feedsPosts_likes span {
+.likedUserModal span {
     font-size: 16px;
     font-weight: 600;
     margin-left: 8px;
 }
 
-/** Comments Modal Section */
-.homepage_feedsPosts_comments {
+/* Commented User Modal Section */
+.commentedUserModal {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -342,17 +341,16 @@
     width: fit-content;
 }
 
-.homepage_feedsPosts_comments:last-child {
+.commentedUserModal:last-child {
     margin-bottom: 0px;
 }
 
-.homepage_feedsPosts_commentInfo {
+.comments{
     display: flex;
     flex-direction: column;
 }
 
-/* Inner Part */
-.homepage_feedsPosts_commentInner {
+.comments .commentInner {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -362,34 +360,26 @@
     padding: 6px 14px;
 }
 
-.homepage_feedsPosts_commentInner .homepage_feedsPosts_commentUser {
+.comments .commentInner h4 {
     font-size: 16px;
     font-weight: 600;
 }
 
-.homepage_feedsPosts_commentInner .homepage_feedsPosts_commentComment {
+.comments .commentInner p {
     font-weight: 400;
     font-size: 15px;
     max-width: 410px;
     word-wrap: break-word;
 }
 
-/* Outer Part */
-.homepage_feedsPosts_commentOuter {
+.comments .commentOuter {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     margin: 3px 0 0 22px;
 }
 
-.homepage_feedsPosts_commentOuter .homepage_feedsPosts_commentTimestamp {
-    font-weight: 500;
-    font-size: 12px;
-    margin-left: 15px;
-    color: #65676B;
-}
-
-.homepage_feedsPosts_commentOuter button {
+.comments .commentOuter button {
     font-size: 12px;
     font-weight: 500;
     outline: none;
@@ -398,33 +388,26 @@
     color: #65676B;
 }
 
-.homepage_feedsPosts_commentOuter .homepage_feedsPosts_commentTimestamp:hover,
-.homepage_feedsPosts_commentOuter button:hover {
+.comments .commentOuter p {
+    font-weight: 500;
+    font-size: 12px;
+    margin-left: 15px;
+    color: #65676B;
+}
+
+.comments .commentOuter button:hover,
+.comments .commentOuter p:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
-/* Bottom Part of the Comment Model */
-.modalBottom .homepage_feedsPosts_commentInput {
+.ModalBottom .commentInput {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-.modalBottom .homepage_feedsPosts_commentInput input {
-    margin: 10px 0;
-    font-size: 14px;
-    font-weight: 450;
-    border: 1px solid transparent;
-    border-radius: 12px;
-    outline: 0;
-    width: 425px;
-    margin-left: 8px;
-    background-color: whitesmoke;
-    padding: 12px 24px 12px 14px;
-}
-
-.modalBottom .homepage_feedsPosts_commentInput .MuiSvgIcon-root {
+.ModalBottom .commentInput .MuiSvgIcon-root {
     position: absolute;
     right: 4px;
     border: 1px solid transparent;
@@ -435,6 +418,19 @@
     height: 16px;
 }
 
-.modalBottom .homepage_feedsPosts_commentInput .MuiSvgIcon-root:hover {
+.ModalBottom .commentInput .MuiSvgIcon-root:hover {
     cursor: pointer;
+}
+
+.ModalBottom .commentInput input {
+    margin: 10px 0;
+    font-size: 14px;
+    font-weight: 450;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    outline: 0;
+    width: 425px;
+    margin-left: 8px;
+    background-color: whitesmoke;
+    padding: 12px 24px 12px 14px;
 }
