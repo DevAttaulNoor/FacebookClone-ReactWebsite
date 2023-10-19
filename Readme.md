@@ -18,7 +18,6 @@ The Facebook Clone project is a web application created using the React.js libra
 - Like and comment on posts.
 - Real-time updates for posts and notifications.
 - User profiles with profile pictures.
-- Follow/unfollow other users.
 
 ## Technologies Used
 - **React.js**: A JavaScript library for building user interfaces.
