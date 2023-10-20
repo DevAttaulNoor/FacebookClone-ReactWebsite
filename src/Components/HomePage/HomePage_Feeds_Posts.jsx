@@ -13,7 +13,6 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
-import HomePage_Feeds_Posts_EditModal from './HomePage_Feeds_Posts_EditModal';
 
 function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp, message }) {
     Modal.setAppElement('#root');
@@ -156,7 +155,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
 
     // const handleSave = () => {
     //     const postRef = db.collection("Posts").doc(id);
-    
+
     //     // Check if the message has been edited
     //     if (editedMessage !== message) {
     //         postRef.update({
@@ -169,13 +168,13 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
     //             console.error("Error updating message in Firestore: ", error);
     //         });
     //     }
-    
+
     //     // Check if there is a new image
     //     if (editedImage) {
     //         const imageFile = imageFileRef.current;
     //         if (imageFile) {
     //             const uploadTask = storage.ref(`Images/Posts/${user.uid}/${imageFile.name}`).put(imageFile);
-    
+
     //             uploadTask.on(
     //                 "state_changed",
     //                 (snapshot) => {
@@ -205,7 +204,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
     //             );
     //         }
     //     }
-    
+
     //     // Handle cases when there is no new image or no changes were made to the message
     //     if (!editedMessage && !editedImage) {
     //         // No changes were made, so simply close the editing form
@@ -218,15 +217,15 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
         const postRef = db.collection("Posts").doc(id);
         const imageFile = imageFileRef.current;
         const videoFile = videoFileRef.current;
-    
+
         // Initialize an object to store updated data
         const updatedData = {};
-    
+
         // Check if the message has been edited
         if (editedMessage !== message) {
             updatedData.message = editedMessage;
         }
-    
+
         // Check if there is a new image
         if (imageFile) {
             const uploadTask = storage.ref(`Posts/${user.uid}/${imageFile.name}`).put(imageFile);
@@ -256,7 +255,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
                 }
             );
         }
-    
+
         // Check if there is a new video
         if (videoFile) {
             const uploadTask = storage.ref(`Posts/${user.uid}/${videoFile.name}`).put(videoFile);
@@ -286,7 +285,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
                 }
             );
         }
-    
+
         // Check if any data needs to be updated in Firestore
         if (Object.keys(updatedData).length > 0) {
             postRef.update(updatedData)
@@ -297,27 +296,27 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
                     console.error("Error updating document: ", error);
                 });
         }
-    
+
         // Close the editing form
         setIsEditing(false);
         setIsDropdownVisible(false);
     };
-    
+
     useEffect(() => {
         const postRef = db.collection('Posts').doc(id);
-    
+
         const unsubscribe = postRef.onSnapshot((doc) => {
             if (doc.exists) {
                 setPost(doc.data());
             }
         });
-    
+
         return () => {
             // Unsubscribe from the snapshot listener when the component unmounts
             unsubscribe();
         };
     }, [id]);
-    
+
     const handleDelete = async () => {
         const postRef = db.collection("Posts").doc(id);
 
@@ -469,6 +468,43 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
         setIsCommentModalOpen(true);
     };
 
+    const handleMediaUpload = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            const storageRef = storage.ref(`Posts/${user.uid}/${file.name}`);
+            storageRef.put(file).then((snapshot) => {
+                snapshot.ref.getDownloadURL().then((url) => {
+                    if (file.type.startsWith("image/")) {
+                        setEditedImage(url);
+                        setImageFile(file);
+                    } 
+                    
+                    else if (file.type.startsWith("video/")) {
+                        setEditedVideo(url);
+                        setVideoFile(file);
+                    }
+
+                    db.collection("Posts").doc(id).update({
+                        image: file.type.startsWith("image/") ? url : editedImage,
+                        video: file.type.startsWith("video/") ? url : editedVideo
+                    })
+                        .then(() => {
+                            console.log("Media URL in Firestore updated successfully!");
+                        })
+                        .catch((error) => {
+                            console.error("Error updating media URL in Firestore: ", error);
+                        });
+                });
+            });
+        } 
+        
+        else {
+            setEditedImage(null);
+            setEditedVideo(null);
+        }
+    };
+
     useEffect(() => {
         const likedUsersRef = db.collection("Posts").doc(id).collection("likes");
 
@@ -538,18 +574,38 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
                 <div className='homepageFeedsPosts_MiddleTop'>
                     {isEditing ? (
                         <Modal className="editModal" isOpen={isEditing} onRequestClose={() => setIsEditing(false)}>
-                            <HomePage_Feeds_Posts_EditModal
-                                id={id}
-                                image={image}
-                                video={video}
-                                message={message}
-                                save={{ onSave: handleSave }}
-                                close={{ onClose: () => setIsEditing(false) }}
-                            />
+                            <div className='EditModal'>
+                                <div className="EditModal_Top">
+                                    <h2>Edit Post</h2>
+                                </div>
+
+                                <div className="EditModal_Middle">
+                                    <input id="msgInput" type="text" value={editedMessage} onChange={(e) => setEditedMessage(e.target.value)} />
+                                    <input id="mediaInput" type="file" accept="image/*,video/*" onChange={handleMediaUpload} style={{ display: 'none' }} />
+                                    <label id="mediaInputLabel" htmlFor="mediaInput">Select Media</label>
+
+                                    {editedImage ? (
+                                        <img id="editedImg" src={editedImage} alt="Edited" />
+                                    ) : editedVideo ? (
+                                        <video id="editedVideo" controls> <source src={editedVideo} type="video/mp4" /> </video>
+                                    ) : image ? (
+                                        <img id="originalImg" src={image} alt="Original" />
+                                    ) : video ? (
+                                        <video id="originalVideo" controls> <source src={video} type="video/mp4" /> </video>
+                                    ) : (
+                                        <p id='noMedia'>No media selected</p>
+                                    )}
+                                </div>
+
+                                <div className="EditModal_Bottom">
+                                    <button onClick={handleSave}>Save</button>
+                                    <button onClick={() => setIsEditing(false)}>Cancel</button>
+                                </div>
+                            </div>
                         </Modal>
                     ) : (
                         <div className='homepageFeedsPosts_MiddleTopInner'>
-                            <p id="postMsg" style={{ fontSize: image || video ? '15px' : '30px' }}> {editedMessage} </p>
+                            {message && <p id="postMsg" style={{ fontSize: image || video ? '15px' : '30px' }}> {editedMessage} </p>}
                             {image && <img id="postImg" src={editedImage} alt="Image" />}
                             {video && (<video id="postVideo" controls> <source src={editedVideo} type="video/mp4" /> </video>)}
                         </div>
