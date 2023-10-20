@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import { db, storage } from '../BackendRelated/Firebase';
 import { useStateValue } from '../BackendRelated/StateProvider';
 
-function HomePage_Feeds_Posts_EditModal({id, image, video, message, onSave }){
+function HomePage_Feeds_Posts_EditModal({id, image, video, message, save, close}){
     const [{ user }] = useStateValue();
     const [isEditing, setIsEditing] = useState(false);
     const [editedMessage, setEditedMessage] = useState(message);
@@ -14,85 +14,11 @@ function HomePage_Feeds_Posts_EditModal({id, image, video, message, onSave }){
     const [videoFile, setVideoFile] = useState(null);
     const videoFileRef = useRef(null);
 
-    const handleEdit = () => {
-        setIsEditing(true);
-        setEditedMessage(message); // Set the edited message
-        setEditedImage(image);     // Set the edited image
-        setEditedVideo(video);     // Set the edited video URL
-    };
-
-    const handleSave = () => {
-        if (editedVideo !== video && editedVideo !== null) {
-            // If there is a new video, upload it to Firebase Storage and update Firestore
-            const videoFile = videoFileRef.current;
-            if (videoFile) {
-                const uploadTask = storage.ref(`Videos/Posts/${user.uid}/${videoFile.name}`).put(videoFile);
-
-                uploadTask.on(
-                    "state_changed",
-                    (snapshot) => {
-                        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                    },
-                    (error) => {
-                        console.log(error);
-                        alert(error.message);
-                    },
-                    () => {
-                        storage
-                            .ref(`Videos/Posts/${user.uid}`)
-                            .child(videoFile.name)
-                            .getDownloadURL()
-                            .then((url) => {
-                                const updatedData = {
-                                    message: editedMessage,
-                                    video: url, // Store the video URL in Firestore
-                                };
-                                // Update the Firestore document with the edited data, including the video URL
-                                return db.collection("Posts").doc(id).update(updatedData);
-                            })
-                            .then(() => {
-                                console.log("Document successfully updated!");
-                                setIsEditing(false);
-                                setIsDropdownVisible(false);
-                                onSave(); // Call the onSave function from props
-                            })
-                            .catch((error) => {
-                                console.error("Error updating document: ", error);
-                            });
-                    }
-                );
-            }
-        } else {
-            // Handle cases when there is no new video, or no changes were made
-            if (editedMessage !== message) {
-                db.collection("Posts")
-                    .doc(id)
-                    .update({
-                        message: editedMessage,
-                    })
-                    .then(() => {
-                        console.log("Document successfully updated!");
-                        setIsEditing(false);
-                        setIsDropdownVisible(false);
-                        onSave(); // Call the onSave function from props
-                    })
-                    .catch((error) => {
-                        console.error("Error updating document: ", error);
-                    });
-            } else {
-                // No changes were made, so simply close the editing form
-                setIsEditing(false);
-                setIsDropdownVisible(false);
-                onSave(); // Call the onSave function from props
-            }
-        }
-    };
-
     const handleMediaUpload = (e) => {
         const file = e.target.files[0];
 
         if (file) {
-            const storageRef = storage.ref(`Media/Posts/${user.uid}/${file.name}`);
+            const storageRef = storage.ref(`Posts/${user.uid}/${file.name}`);
             storageRef.put(file).then((snapshot) => {
                 snapshot.ref.getDownloadURL().then((url) => {
                     if (file.type.startsWith("image/")) {
@@ -120,7 +46,6 @@ function HomePage_Feeds_Posts_EditModal({id, image, video, message, onSave }){
         } 
         
         else {
-            // If no file is selected (e.g., user canceled the upload), reset editedImage and editedVideo to null
             setEditedImage(null);
             setEditedVideo(null);
         }
@@ -151,8 +76,8 @@ function HomePage_Feeds_Posts_EditModal({id, image, video, message, onSave }){
             </div>
 
             <div className="HomePageFeedsPosts_EditModal_Bottom">
-                <button onClick={handleSave}>Save</button>
-                <button onClick={() => setIsEditing(false)}>Cancel</button>
+                <button onClick={save.onSave}>Save</button>
+                <button onClick={close.onClose}>Cancel</button>
             </div>
         </div>
     )

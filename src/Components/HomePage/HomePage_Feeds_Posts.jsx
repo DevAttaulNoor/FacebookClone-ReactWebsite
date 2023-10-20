@@ -19,6 +19,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
     Modal.setAppElement('#root');
 
     const [{ user }] = useStateValue();
+    const [post, setPost] = useState({}); // Initialize an empty post object
     const [isEditing, setIsEditing] = useState(false);
     const [editedMessage, setEditedMessage] = useState(message);
     const [editedImage, setEditedImage] = useState(image);
@@ -37,6 +38,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
     const [videoFile, setVideoFile] = useState(null);
     const [mediaType, setMediaType] = useState(null);
     const videoFileRef = useRef(null);
+    const imageFileRef = useRef(null); // Define imageFileRef using useRef
     const dropdownRef = useRef(null);
 
     const handleEdit = () => {
@@ -46,71 +48,276 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
         setEditedVideo(video);     // Set the edited video URL
     };
 
+    // const handleSave = () => {
+    //     const postRef = db.collection("Posts").doc(id);
+
+    //     // Initialize an object to store updated data
+    //     const updatedData = {};
+
+    //     // Check if the message has been edited
+    //     if (editedMessage !== message) {
+    //         updatedData.message = editedMessage;
+    //         console.log("msg edited")
+    //     }
+
+    //     // Check if there is a new image
+    //     if (editedImage !== image) {
+    //         // Upload the new image to Firebase Storage and update the Firestore document
+    //         const imageFile = imageFileRef.current;
+    //         if (imageFile) {
+    //             const uploadTask = storage.ref(`Images/Posts/${user.uid}/${imageFile.name}`).put(imageFile);
+
+    //             uploadTask.on(
+    //                 "state_changed",
+    //                 (snapshot) => {
+    //                     const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+    //                 },
+    //                 (error) => {
+    //                     console.log(error);
+    //                     alert(error.message);
+    //                 },
+    //                 () => {
+    //                     storage
+    //                         .ref(`Images/Posts/${user.uid}`)
+    //                         .child(imageFile.name)
+    //                         .getDownloadURL()
+    //                         .then((url) => {
+    //                             updatedData.image = url; // Store the image URL in Firestore
+    //                             // Update the Firestore document with the edited data, including the image URL
+    //                             return postRef.update(updatedData);
+    //                         })
+    //                         .then(() => {
+    //                             console.log("Document successfully updated!");
+    //                             setIsEditing(false);
+    //                             setIsDropdownVisible(false);
+    //                         })
+    //                         .catch((error) => {
+    //                             console.error("Error updating document: ", error);
+    //                         });
+    //                 }
+    //             );
+    //         }
+    //     }
+
+    //     // Check if there is a new video
+    //     if (editedVideo !== video && editedVideo !== null) {
+    //         // Upload the new video to Firebase Storage and update the Firestore document
+    //         const videoFile = videoFileRef.current;
+    //         if (videoFile) {
+    //             const uploadTask = storage.ref(`Videos/Posts/${user.uid}/${videoFile.name}`).put(videoFile);
+
+    //             uploadTask.on(
+    //                 "state_changed",
+    //                 (snapshot) => {
+    //                     const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+    //                 },
+    //                 (error) => {
+    //                     console.log(error);
+    //                     alert(error.message);
+    //                 },
+    //                 () => {
+    //                     storage
+    //                         .ref(`Videos/Posts/${user.uid}`)
+    //                         .child(videoFile.name)
+    //                         .getDownloadURL()
+    //                         .then((url) => {
+    //                             updatedData.video = url; // Store the video URL in Firestore
+    //                             // Update the Firestore document with the edited data, including the video URL
+    //                             return postRef.update(updatedData);
+    //                         })
+    //                         .then(() => {
+    //                             console.log("Document successfully updated!");
+    //                             setIsEditing(false);
+    //                             setIsDropdownVisible(false);
+    //                         })
+    //                         .catch((error) => {
+    //                             console.error("Error updating document: ", error);
+    //                         });
+    //                 }
+    //             );
+    //         }
+    //     } else if (Object.keys(updatedData).length > 0) {
+    //         // Handle cases when there is no new video, or no changes were made to the image
+    //         postRef.update(updatedData)
+    //             .then(() => {
+    //                 console.log("Document successfully updated!");
+    //                 setIsEditing(false);
+    //                 setIsDropdownVisible(false);
+    //             })
+    //             .catch((error) => {
+    //                 console.error("Error updating document: ", error);
+    //             });
+    //     } else {
+    //         // No changes were made, so simply close the editing form
+    //         setIsEditing(false);
+    //         setIsDropdownVisible(false);
+    //     }
+    // };
+
+    // const handleSave = () => {
+    //     const postRef = db.collection("Posts").doc(id);
+    
+    //     // Check if the message has been edited
+    //     if (editedMessage !== message) {
+    //         postRef.update({
+    //             message: editedMessage
+    //         })
+    //         .then(() => {
+    //             console.log("Message updated in Firestore!");
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error updating message in Firestore: ", error);
+    //         });
+    //     }
+    
+    //     // Check if there is a new image
+    //     if (editedImage) {
+    //         const imageFile = imageFileRef.current;
+    //         if (imageFile) {
+    //             const uploadTask = storage.ref(`Images/Posts/${user.uid}/${imageFile.name}`).put(imageFile);
+    
+    //             uploadTask.on(
+    //                 "state_changed",
+    //                 (snapshot) => {
+    //                     const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+    //                 },
+    //                 (error) => {
+    //                     console.error("Error uploading image: ", error);
+    //                     alert(error.message);
+    //                 },
+    //                 () => {
+    //                     storage
+    //                         .ref(`Images/Posts/${user.uid}`)
+    //                         .child(imageFile.name)
+    //                         .getDownloadURL()
+    //                         .then((url) => {
+    //                             postRef.update({
+    //                                 image: url
+    //                             })
+    //                             .then(() => {
+    //                                 console.log("Image URL updated in Firestore!");
+    //                             })
+    //                             .catch((error) => {
+    //                                 console.error("Error updating image URL in Firestore: ", error);
+    //                             });
+    //                         });
+    //                 }
+    //             );
+    //         }
+    //     }
+    
+    //     // Handle cases when there is no new image or no changes were made to the message
+    //     if (!editedMessage && !editedImage) {
+    //         // No changes were made, so simply close the editing form
+    //         setIsEditing(false);
+    //         setIsDropdownVisible(false);
+    //     }
+    // };
+
     const handleSave = () => {
-        console.log("Save button clicked");
-        if (editedVideo !== video && editedVideo !== null) {
-            // If there is a new video, upload it to Firebase Storage and update Firestore
-            const videoFile = videoFileRef.current;
-            if (videoFile) {
-                const uploadTask = storage.ref(`Videos/Posts/${user.uid}/${videoFile.name}`).put(videoFile);
-
-                uploadTask.on(
-                    "state_changed",
-                    (snapshot) => {
-                        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                    },
-                    (error) => {
-                        console.log(error);
-                        alert(error.message);
-                    },
-                    () => {
-                        storage
-                            .ref(`Videos/Posts/${user.uid}`)
-                            .child(videoFile.name)
-                            .getDownloadURL()
-                            .then((url) => {
-                                const updatedData = {
-                                    message: editedMessage,
-                                    video: url, // Store the video URL in Firestore
-                                };
-                                // Update the Firestore document with the edited data, including the video URL
-                                return db.collection("Posts").doc(id).update(updatedData);
-                            })
-                            .then(() => {
-                                console.log("Document successfully updated!");
-                                setIsEditing(false);
-                                setIsDropdownVisible(false);
-                            })
-                            .catch((error) => {
-                                console.error("Error updating document: ", error);
-                            });
-                    }
-                );
-            }
-        } else {
-            // Handle cases when there is no new video, or no changes were made
-            if (editedMessage !== message) {
-                db.collection("Posts")
-                    .doc(id)
-                    .update({
-                        message: editedMessage,
-                    })
-                    .then(() => {
-                        console.log("Document successfully updated!");
-                        setIsEditing(false);
-                        setIsDropdownVisible(false);
-                    })
-                    .catch((error) => {
-                        console.error("Error updating document: ", error);
-                    });
-            } else {
-                // No changes were made, so simply close the editing form
-                setIsEditing(false);
-                setIsDropdownVisible(false);
-            }
+        const postRef = db.collection("Posts").doc(id);
+        const imageFile = imageFileRef.current;
+        const videoFile = videoFileRef.current;
+    
+        // Initialize an object to store updated data
+        const updatedData = {};
+    
+        // Check if the message has been edited
+        if (editedMessage !== message) {
+            updatedData.message = editedMessage;
         }
+    
+        // Check if there is a new image
+        if (imageFile) {
+            const uploadTask = storage.ref(`Posts/${user.uid}/${imageFile.name}`).put(imageFile);
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                },
+                (error) => {
+                    console.error("Error uploading image: ", error);
+                    alert(error.message);
+                },
+                () => {
+                    storage
+                        .ref(`Posts/${user.uid}`)
+                        .child(imageFile.name)
+                        .getDownloadURL()
+                        .then((url) => {
+                            updatedData.image = url;
+                        })
+                        .then(() => {
+                            console.log("Image URL updated successfully!");
+                        })
+                        .catch((error) => {
+                            console.error("Error updating image URL: ", error);
+                        });
+                }
+            );
+        }
+    
+        // Check if there is a new video
+        if (videoFile) {
+            const uploadTask = storage.ref(`Posts/${user.uid}/${videoFile.name}`).put(videoFile);
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                },
+                (error) => {
+                    console.error("Error uploading video: ", error);
+                    alert(error.message);
+                },
+                () => {
+                    storage
+                        .ref(`Posts/${user.uid}`)
+                        .child(videoFile.name)
+                        .getDownloadURL()
+                        .then((url) => {
+                            updatedData.video = url;
+                        })
+                        .then(() => {
+                            console.log("Video URL updated successfully!");
+                        })
+                        .catch((error) => {
+                            console.error("Error updating video URL: ", error);
+                        });
+                }
+            );
+        }
+    
+        // Check if any data needs to be updated in Firestore
+        if (Object.keys(updatedData).length > 0) {
+            postRef.update(updatedData)
+                .then(() => {
+                    console.log("Document successfully updated!");
+                })
+                .catch((error) => {
+                    console.error("Error updating document: ", error);
+                });
+        }
+    
+        // Close the editing form
+        setIsEditing(false);
+        setIsDropdownVisible(false);
     };
-
+    
+    useEffect(() => {
+        const postRef = db.collection('Posts').doc(id);
+    
+        const unsubscribe = postRef.onSnapshot((doc) => {
+            if (doc.exists) {
+                setPost(doc.data());
+            }
+        });
+    
+        return () => {
+            // Unsubscribe from the snapshot listener when the component unmounts
+            unsubscribe();
+        };
+    }, [id]);
+    
     const handleDelete = async () => {
         const postRef = db.collection("Posts").doc(id);
 
@@ -329,22 +536,23 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
 
             <div className="homepageFeedsPosts_Middle">
                 <div className='homepageFeedsPosts_MiddleTop'>
-                    <div className='homepageFeedsPosts_MiddleTopInner'>
-                        <p id="postMsg" style={{ fontSize: image || editedVideo ? '15px' : '30px' }}> {editedMessage} </p>
-                        {image && <img id="postImg" src={editedImage} alt="Image" />}
-                        {video && (<video id="postVideo" controls> <source src={editedVideo} type="video/mp4" /> </video>)}
-                    </div>
-
-                    {isEditing && (
+                    {isEditing ? (
                         <Modal className="editModal" isOpen={isEditing} onRequestClose={() => setIsEditing(false)}>
                             <HomePage_Feeds_Posts_EditModal
                                 id={id}
                                 image={image}
                                 video={video}
                                 message={message}
-                                onSave={handleSave} // Pass the save function to the edit modal
+                                save={{ onSave: handleSave }}
+                                close={{ onClose: () => setIsEditing(false) }}
                             />
                         </Modal>
+                    ) : (
+                        <div className='homepageFeedsPosts_MiddleTopInner'>
+                            <p id="postMsg" style={{ fontSize: image || video ? '15px' : '30px' }}> {editedMessage} </p>
+                            {image && <img id="postImg" src={editedImage} alt="Image" />}
+                            {video && (<video id="postVideo" controls> <source src={editedVideo} type="video/mp4" /> </video>)}
+                        </div>
                     )}
                 </div>
 

@@ -57,7 +57,6 @@ function HomePage_Feeds_Posting() {
         }
 
         if (media === null) {
-            // Handle text-only posts in Firestore
             db.collection("Posts").add({
                 uid: user.uid,
                 email: user.email,
@@ -70,9 +69,8 @@ function HomePage_Feeds_Posting() {
         }
 
         else {
-            // Handle image upload to Firebase Storage
             if (mediaType === "image") {
-                const uploadTask = storage.ref(`Images/Posts/${user.uid}/${media.name}`).put(media);
+                const uploadTask = storage.ref(`Posts/${user.uid}/${media.name}`).put(media);
 
                 uploadTask.on(
                     "state_changed",
@@ -85,7 +83,7 @@ function HomePage_Feeds_Posting() {
                         alert(error.message);
                     },
                     () => {
-                        storage.ref(`Images/Posts/${user.uid}`).child(media.name).getDownloadURL().then(url => {
+                        storage.ref(`Posts/${user.uid}`).child(media.name).getDownloadURL().then(url => {
                             db.collection("Posts").add({
                                 uid: user.uid,
                                 email: user.email,
@@ -102,8 +100,7 @@ function HomePage_Feeds_Posting() {
             } 
             
             else if (mediaType === "video") {
-                // Handle video upload to Firebase Storage
-                const uploadTask = storage.ref(`Videos/Posts/${user.uid}/${media.name}`).put(media);
+                const uploadTask = storage.ref(`Posts/${user.uid}/${media.name}`).put(media);
 
                 uploadTask.on(
                     "state_changed",
@@ -116,7 +113,7 @@ function HomePage_Feeds_Posting() {
                         alert(error.message);
                     },
                     () => {
-                        storage.ref(`Videos/Posts/${user.uid}`).child(media.name).getDownloadURL().then(url => {
+                        storage.ref(`Posts/${user.uid}`).child(media.name).getDownloadURL().then(url => {
                             db.collection("Posts").add({
                                 uid: user.uid,
                                 email: user.email,
