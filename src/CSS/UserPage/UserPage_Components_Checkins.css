@@ -1,0 +1,9 @@
+/* UserPage Components Checkin Section */
+.UserpageComponents_Checksin{
+    width: 940px;
+    margin: 10px 0;
+    display: flex;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+}

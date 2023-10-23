@@ -1,3 +1,4 @@
+import '../../CSS/UserPage/UserPage_Components_Checkins.css'
 import React from 'react'
 
 function UserPage_Components_Checkins() {

@@ -1,3 +1,4 @@
+import '../../CSS/UserPage/UserPage_Components_Photos.css'
 import React from 'react'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
