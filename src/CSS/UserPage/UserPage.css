@@ -179,6 +179,11 @@
     display: flex;
 }
 
+.userpage_TopComponents_Left a{
+    text-decoration: none;
+    color: initial;
+}
+
 .userpage_TopComponents_LeftOption {
     font-size: 14px;
     font-weight: 600;
