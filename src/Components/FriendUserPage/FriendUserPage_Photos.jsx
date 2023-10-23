@@ -50,6 +50,7 @@ function FriendUserPage_Photos() {
                 <h2>Photos</h2>
                 <a href="#">See all photos</a>
             </div>
+            
             <div className="frienduserpage_PhotoBottom">
                 <div className="grid-container">
                     {photoUrls.map((url, index) => (

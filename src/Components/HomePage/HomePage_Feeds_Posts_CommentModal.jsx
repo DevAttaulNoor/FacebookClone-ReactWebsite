@@ -7,11 +7,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 
 function HomePage_Feeds_Posts_CommentModal({ id, closeModal }) {
-    const [{ user }, dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
-    const [isCommenting, setIsCommenting] = useState(false);
-    const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
 
     const postComment = async () => {
         if (comment.trim() === '') {

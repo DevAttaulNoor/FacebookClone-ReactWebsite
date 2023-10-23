@@ -128,24 +128,17 @@ function FriendsPage_AllFriends_Leftbar() {
     const [dialogVisibility, setDialogVisibility] = useState({});
     const dialogBoxRefs = useRef({});
 
+    // Fetch friends data when user.uid changes
     useEffect(() => {
-        // Fetch friends data when user.uid changes
         fetchFriendsData(user.uid, setFriends);
     }, [user.uid]);
 
+    // Fetch friend details when friends array changes
     useEffect(() => {
-        // Fetch friend details when friends array changes
         if (friends.length > 0) {
             fetchFriendDetailsData(friends, setFriends);
         }
     }, [friends]);
-
-    const toggleDialog = (friendUid) => {
-        setDialogVisibility((prevVisibility) => ({
-            ...prevVisibility,
-            [friendUid]: !prevVisibility[friendUid],
-        }));
-    };
 
     useEffect(() => {
         const handleOutsideClick = (e, friendUid) => {
@@ -175,6 +168,13 @@ function FriendsPage_AllFriends_Leftbar() {
             }
         };
     }, [friends]);
+
+    const toggleDialog = (friendUid) => {
+        setDialogVisibility((prevVisibility) => ({
+            ...prevVisibility,
+            [friendUid]: !prevVisibility[friendUid],
+        }));
+    };
 
     const handleUnfriend = (friendUid) => {
         unfriendUser(user.uid, friendUid);

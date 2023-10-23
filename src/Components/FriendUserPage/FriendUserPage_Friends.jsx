@@ -23,6 +23,7 @@ function FriendUserPage_Friends() {
                 <h2>Friends</h2>
                 <a href="#">See all friends</a>
             </div>
+            
             <div className="frienduserpage_FriendsBottom">
                 <div className="frienduserpage_FriendsContainer">
                     {friends.map((friend) => (

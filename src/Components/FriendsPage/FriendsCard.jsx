@@ -8,8 +8,8 @@ function FriendsCard({ user }) {
     const currentUser = auth.currentUser;
     const senderUid = currentUser.uid;
 
+    // Check if a request from the current user to this friend already exists
     useEffect(() => {
-        // Check if a request from the current user to this friend already exists
         const checkFriendRequestStatus = async () => {
             try {
                 const userDocRef = db.collection('Users').doc(user.uid);
@@ -21,14 +21,17 @@ function FriendsCard({ user }) {
                 if (!existingRequest.empty) {
                     const requestStatus = existingRequest.docs[0].data().status;
                     setFriendRequestStatus(requestStatus);
-                } else {
+                }
+
+                else {
                     setFriendRequestStatus("not_sent");
                 }
-            } catch (error) {
+            }
+
+            catch (error) {
                 console.error('Error checking friend request status:', error);
             }
         };
-
         checkFriendRequestStatus();
     }, [senderUid, user.uid]);
 
@@ -40,7 +43,6 @@ function FriendsCard({ user }) {
                 const senderName = currentUser.displayName;
                 const senderEmail = currentUser.email;
                 const senderPhotoUrl = currentUser.photoURL;
-
                 const userDocRef = db.collection('Users').doc(user.uid);
                 const friendRequestId = db.collection('friendRequests').doc().id;
 
@@ -70,12 +72,15 @@ function FriendsCard({ user }) {
                 });
 
                 setFriendRequestStatus("pending");
-
                 alert('Friend request sent!');
             }
-        } catch (error) {
+        } 
+        
+        catch (error) {
             console.error('Error sending friend request:', error);
-        } finally {
+        } 
+        
+        finally {
             setIsRequestProcessing(false);
         }
     };
@@ -85,6 +90,7 @@ function FriendsCard({ user }) {
             <div className="friendsCard_top">
                 <img src={user.photoURL} alt="" />
             </div>
+            
             <div className="friendsCard_bottom">
                 <p id="friendName">{user.username}</p>
                 <p id="friendMutual">Mutual friends</p>

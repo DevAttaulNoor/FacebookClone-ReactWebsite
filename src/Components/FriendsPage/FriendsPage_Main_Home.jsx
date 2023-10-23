@@ -50,6 +50,7 @@ function FriendsPage_Main_Home() {
             <div className="friendspageMainHome_top">
                 <p>People you may know</p>
             </div>
+            
             <div className="friendspageMainHome_bottom">
                 {filteredUsers.map((friend) => (
                     <FriendsCard key={friend.id} user={friend} />

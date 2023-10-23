@@ -27,7 +27,9 @@ function FriendsPage_Main_FriendReqs() {
                     });
                 });
                 setFriendRequests(requests);
-            } catch (error) {
+            } 
+            
+            catch (error) {
                 console.error("Error fetching friend requests:", error);
             }
         }

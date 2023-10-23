@@ -18,7 +18,7 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
     Modal.setAppElement('#root');
 
     const [{ user }] = useStateValue();
-    const [post, setPost] = useState({}); // Initialize an empty post object
+    const [post, setPost] = useState({});
     const [isEditing, setIsEditing] = useState(false);
     const [editedMessage, setEditedMessage] = useState(message);
     const [editedImage, setEditedImage] = useState(image);
@@ -46,8 +46,6 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
         setEditedImage(image);     // Set the edited image
         setEditedVideo(video);     // Set the edited video URL
     };
-
-    // const handleSave = () => {
     //     const postRef = db.collection("Posts").doc(id);
 
     //     // Initialize an object to store updated data
