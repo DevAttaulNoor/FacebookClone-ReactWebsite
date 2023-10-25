@@ -4,7 +4,7 @@ The Facebook Clone project is a web application created using the React.js libra
 ## Table of Contents
 - [Demo](#demo)
 - [Features](#features)
-- [Technologies Used(#technologies-used)
+- [Technologies Used](#technologies)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
