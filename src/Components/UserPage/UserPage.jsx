@@ -8,6 +8,7 @@ import UserPage_Components from "./UserPage_Components";
 import AddIcon from '@mui/icons-material/Add';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 function UserPage() {
@@ -194,13 +195,10 @@ function UserPage() {
                             <div className={`userpage_TopComponents_LeftOption ${activeOption === 'Videos' ? 'active' : ''}`} onClick={() => handleOptionClick('Videos')}>Videos</div>
                         </NavLink>
 
-                        <NavLink to="/userhomepage/checkin">
-                            <div className={`userpage_TopComponents_LeftOption ${activeOption === 'Check-ins' ? 'active' : ''}`} onClick={() => handleOptionClick('Check-ins')}>Check-ins</div>
-                        </NavLink>
-
-                        <NavLink to="/userhomepage/music"></NavLink>
-                        <NavLink to="/userhomepage/film"></NavLink>
-                        <div className={`userpage_TopComponents_LeftOption ${activeOption === 'More' ? 'active' : ''}`} onClick={() => handleOptionClick('More')}>More</div>
+                        <div className="userpage_TopComponents_LeftOption" id="moreOption">
+                            <p>More</p>
+                            <ArrowDropDownIcon />
+                        </div>
                     </div>
 
                     <div className="userpage_TopComponents_Right">

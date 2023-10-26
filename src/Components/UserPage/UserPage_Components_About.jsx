@@ -4,7 +4,7 @@ import { useStateValue } from '../BackendRelated/StateProvider'
 import AddIcon from '@mui/icons-material/Add';
 
 function UserPage_Components_About() {
-    const [{ user }] = useStateValue()
+    // const [{ user }] = useStateValue()
 
     return (
         <div className="UserpageComponents_About">
@@ -15,7 +15,7 @@ function UserPage_Components_About() {
                 <p>Places lived</p>
                 <p>Contact and basic info</p>
                 <p>Family and relationships</p>
-                <p>`Details About ${user.username}`</p>
+                <p>Details About you</p>
                 <p>Life events</p>
             </div>
 

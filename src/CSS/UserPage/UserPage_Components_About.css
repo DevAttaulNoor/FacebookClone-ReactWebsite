@@ -1,4 +1,4 @@
-/* UserPage Components About Section */
+/** UserPage Components About Section */
 .UserpageComponents_About{
     width: 940px;
     margin: 10px 0;
@@ -10,7 +10,76 @@
 
 /* UserPage Components About Left Section */
 .UserpageComponents_About_Left{
-    padding: 6px;
-    border-right: 1px solid #000;
-    margin: 5px 0;
+    padding: 14px 6px;
+    border-right: 1px solid lightgray;
 }
+
+.UserpageComponents_About_Left h3{
+    color: #000;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 8px 10px;
+}
+
+.UserpageComponents_About_Left h3:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
+.UserpageComponents_About_Left p{
+    min-width: 230px;
+    padding: 8px;
+    margin-bottom: 4px;
+    border-radius: 6px;
+
+    font-size: 14px;
+    font-weight: 500;
+    color: #65676B;
+}
+
+.UserpageComponents_About_Left p:hover{
+    cursor: pointer;
+    background-color: #E4E6EB;
+}
+
+.UserpageComponents_About_Left p .active{
+    color: #0866FF;
+    background-color: #EBF5FF;
+}
+
+/* UserPage Components About Right Section */
+.UserpageComponents_About_Right{
+    width: 100%;
+    padding: 15px;
+}
+
+.UserpageComponents_About_RightOption{
+    display: flex;
+    align-items: center;
+    margin: 16px 0;
+}
+
+.UserpageComponents_About_RightOption:hover{
+    color: #0866FF;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.UserpageComponents_About_RightOption p{
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px;
+    color: #0866FF;
+}
+
+.UserpageComponents_About_RightOption .MuiSvgIcon-root{
+    width: 20px;
+    height: 20px;
+    color: #0866FF;
+    padding: 1px;
+    border-radius: 50%;
+    border: 1px solid #0866FF;
+    margin-right: 8px;
+}
+

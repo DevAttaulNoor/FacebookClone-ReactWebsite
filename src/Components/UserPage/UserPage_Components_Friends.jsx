@@ -1,6 +1,8 @@
 import '../../CSS/UserPage/UserPage_Components_Friends.css'
 import React from 'react'
+import SearchIcon from '@mui/icons-material/Search';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import UserPage_Friends from './UserPage_Friends';
 
 function UserPage_Components_Friends() {
     return (
@@ -9,26 +11,21 @@ function UserPage_Components_Friends() {
                 <div className="UserpageComponents_Friends_TopLeft">
                     <h3>Friends</h3>
                 </div>
+
                 <div className="UserpageComponents_Friends_TopRight">
+                    <div className='searchInp'>
+                        <SearchIcon />
+                        <input type="text" placeholder='Search Friends' />
+                    </div>
+
                     <p>Friends requests</p>
                     <p>Find Friends</p>
-                    <MoreHorizIcon />
+                    <MoreHorizIcon className='moreOptions'/>
                 </div>
             </div>
 
             <div className="UserpageComponents_Friends_Middle">
-                <div className='UserpageComponents_Friends_MiddleOptions'>
-                    <div className='UserpageComponents_Friends_MiddleOption'>
-                        <div className="UserpageComponents_Friends_MiddleOptionLeft">
-                            <img src="" alt="" />
-
-                        </div>
-                        <div className="UserpageComponents_Friends_MiddleOptionRight">
-                            <p>Name</p>
-                            <p>Intro</p>
-                        </div>
-                    </div>
-                </div>
+               <UserPage_Friends />
             </div>
         </div>
     )

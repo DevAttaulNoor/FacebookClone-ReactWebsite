@@ -182,6 +182,7 @@
 .userpage_TopComponents_Left a{
     text-decoration: none;
     color: initial;
+    height: fit-content;
 }
 
 .userpage_TopComponents_LeftOption {
@@ -203,6 +204,10 @@
     color: #2381fa;
 }
 
+.userpage_TopComponents_LeftOption.active:hover{
+    background-color: transparent;
+}
+
 .userpage_TopComponents_LeftOption.active::after{
     content: "";
     position: absolute;
@@ -215,6 +220,19 @@
 
 .userpage_TopComponents_LeftOption.active svg{
     color: #2381fa;
+}
+
+.userpage_TopComponents_LeftOption#moreOption {
+    display: flex;
+    align-items: center;
+    padding: 11px 14px;
+}
+
+.userpage_TopComponents_LeftOption#moreOption svg{
+    color: #65676B;
+    width: 18px;
+    height: 18px;
+    margin-left: 3px;
 }
 
 /* UserPage Top Right Components Section */
