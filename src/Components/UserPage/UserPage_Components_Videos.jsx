@@ -1,7 +1,7 @@
 import '../../CSS/UserPage/UserPage_Components_Videos.css'
 import React from 'react'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import UserPage_Photos from './UserPage_Photos';
+import UserPage_Videos from './UserPage_Videos';
 
 function UserPage_Components_Videos() {
     return (
@@ -18,7 +18,7 @@ function UserPage_Components_Videos() {
             </div>
 
             <div className="UserpageComponents_Videos_Middle">
-                <UserPage_Photos />
+                <UserPage_Videos />
             </div>
         </div>
     )

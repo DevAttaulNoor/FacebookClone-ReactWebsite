@@ -22,16 +22,28 @@ function UserPage_Photos() {
             for (const storagePath of storageRefs) {
                 const storageRef = firebase.storage().ref(storagePath);
 
-                // List items (photos) in the user's folder
+                // List items (files) in the user's folder
                 try {
                     const result = await storageRef.listAll();
 
-                    // Get download URLs for each item (photo)
-                    const urlsForPath = await Promise.all(
-                        result.items.map((itemRef) => itemRef.getDownloadURL())
+                    // Filter items to include only image files (you can adjust the condition as needed)
+                    const imageItems = result.items.filter(itemRef => {
+                        const name = itemRef.name.toLowerCase();
+                        return (
+                            name.endsWith('.jpg') || 
+                            name.endsWith('.jpeg') || 
+                            name.endsWith('.png') || 
+                            name.endsWith('.gif') ||
+                            name.endsWith('.bmp')
+                        );
+                    });
+
+                    // Get download URLs for each image item
+                    const urlsForImages = await Promise.all(
+                        imageItems.map(itemRef => itemRef.getDownloadURL())
                     );
 
-                    urls.push(...urlsForPath);
+                    urls.push(...urlsForImages);
                 } catch (error) {
                     console.error(`Error fetching photos from ${storagePath}:`, error);
                 }

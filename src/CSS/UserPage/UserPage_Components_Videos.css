@@ -64,7 +64,7 @@
     width: 100%;
 }
 
-.UserpageComponents_Videos_Middle .userpagePhotos{
+.UserpageComponents_Videos_Middle .userpageVideos{
     width: 100%;
     padding: 0;
     margin: 0;
@@ -73,22 +73,22 @@
     background-color: transparent;
 }
 
-.UserpageComponents_Videos_Middle .userpagePhotos_Top{
+.UserpageComponents_Videos_Middle .userpageVideos_Top{
     display: none;
 }
 
-.UserpageComponents_Videos_Middle .userpagePhotos_Bottom {
+.UserpageComponents_Videos_Middle .userpageVideos_Bottom {
     display: flex;
     justify-content: flex-start;
 }
 
-.UserpageComponents_Videos_Middle .userpagePhotos_BottomContainer {
+.UserpageComponents_Videos_Middle .userpageVideos_BottomContainer {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 9px;
 }
 
-.UserpageComponents_Videos_Middle .userpagePhotos_BottomContainer img {
+.UserpageComponents_Videos_Middle .userpageVideos_BottomContainer video {
     object-fit: cover;
     width: 175px;
     height: 175px;
