@@ -164,17 +164,13 @@
 }
 
 .EditModal_Middle #editedImg,
-.EditModal_Middle #originalImg {
+.EditModal_Middle #originalImg,
+.EditModal_Middle #editedVideo,
+.EditModal_Middle #originalVideo {
     width: 348px;
     height: 220px;
     object-fit: contain;
     border: 1px solid gray;
-}
-
-.EditModal_Middle #editedVideo,
-.EditModal_Middle #originalVideo {
-    object-fit: cover;
-    width: -webkit-fill-available;
 }
 
 .EditModal_Middle #noMedia {
