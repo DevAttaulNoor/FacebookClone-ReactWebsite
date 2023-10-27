@@ -70,8 +70,8 @@ function HomePage_Feeds() {
                     <HomePage_Feeds_Posts
                         id={post.id}
                         photoURL={post.data.photoURL}
-                        video={post.data.video}
-                        image={post.data.image}
+                        media={post.data.media}
+                        mediaType={post.data.mediaType}
                         username={post.data.username}
                         timestamp={formattedDate}
                         message={post.data.message}

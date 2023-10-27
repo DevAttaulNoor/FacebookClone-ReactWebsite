@@ -22,8 +22,8 @@ function HomePage_Feeds_Posting() {
 
     const handleClose = () => {
         setOpen(false)
+        setMedia(null)
         setMessage("")
-        setMedia("")
         setProgress(0)
     }
 
@@ -91,7 +91,8 @@ function HomePage_Feeds_Posting() {
                                 photoURL: user.photoURL,
                                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                                 message: message,
-                                image: url // Store the image URL in Firestore
+                                media: url,
+                                mediaType: 'image'
                             });
                             handleClose();
                         });
@@ -121,7 +122,8 @@ function HomePage_Feeds_Posting() {
                                 photoURL: user.photoURL,
                                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                                 message: message,
-                                video: url // Store the video URL in Firestore
+                                media: url,
+                                mediaType: 'video'
                             });
                             handleClose();
                         });
@@ -224,8 +226,8 @@ function HomePage_Feeds_Posting() {
                                 </IconButton>
                             </div>
                         </div>
-                        {media !== "" && <personalbar className='image_progress'>Media is added</personalbar>}
-                        {progress != "" && <progress className='post_progress' value={progress} max="100" />}
+                        {media !== null && <personalbar className='image_progress'>Media is added</personalbar>}
+                        {progress != 0 && <progress className='post_progress' value={progress} max="100" />}
                         <button type="submit" id="submitBtn" onClick={handleUpload}>Post</button>
                     </form>
                 </div>

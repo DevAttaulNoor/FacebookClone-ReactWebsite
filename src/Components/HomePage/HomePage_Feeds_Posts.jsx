@@ -14,19 +14,17 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 
-function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp, message }) {
+function HomePage_Feeds_Posts({ id, photoURL, media, mediaType, username, timestamp, message }) {
     Modal.setAppElement('#root');
 
     const [{ user }] = useStateValue();
     const [post, setPost] = useState({});
     const [isEditing, setIsEditing] = useState(false);
-    const [imageFile, setImageFile] = useState(null);
-    const [videoFile, setVideoFile] = useState(null);
     const [editedMessage, setEditedMessage] = useState(message);
-    const [editedImage, setEditedImage] = useState(image);
-    const [editedVideo, setEditedVideo] = useState(video);
-    const [progress, setProgress] = useState(0);
-
+    const [mediaFile, setMediaFile] = useState(null)
+    const [editedMedia, setEditedMedia] = useState(media)
+    const [mediaFileType, setMediaFileType] = useState(null)
+    const [editedMediaFileType, setEditedMediaFileType] = useState(mediaType)
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [isDropdownClicked, setIsDropdownClicked] = useState(false);
     const [likesCount, setLikesCount] = useState(0);
@@ -41,9 +39,9 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
 
     const handleEdit = () => {
         setIsEditing(true);
+        setEditedMedia(media);
         setEditedMessage(message);
-        setEditedImage(image);
-        setEditedVideo(video);
+        setMediaFileType(mediaType);
     };
 
     const handleSave = async () => {
@@ -54,18 +52,56 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
             updateData.message = editedMessage;
         }
 
-        if (imageFile) {
-            const imageStorageRef = storage.ref(`Posts/${user.uid}/${imageFile.name}`);
-            await imageStorageRef.put(imageFile);
-            const imageUrl = await imageStorageRef.getDownloadURL();
-            updateData.image = imageUrl;
+        if (mediaFile) {
+            const StorageRef = storage.ref(`Posts/${user.uid}/${mediaFile.name}`);
+            await StorageRef.put(mediaFile);
+            const mediaUrl = await StorageRef.getDownloadURL();
+            updateData.media = mediaUrl;
+
+            if (mediaFile.type.startsWith("image/")) {
+                setMediaFileType('image')
+                updateData.mediaType = 'image';
+                console.log("Media Type is image!");
+            }
+
+            else if (mediaFile.type.startsWith("video/")) {
+                setMediaFileType('video')
+                updateData.mediaType = 'video';
+                console.log("Media Type is video!");
+            }
+
+            else {
+                setMediaFileType('invalid')
+                updateData.mediaType = 'invalid';
+                console.log("Media Type is invalid!");
+            }
         }
 
-        if (videoFile) {
-            const videoStorageRef = storage.ref(`Posts/${user.uid}/${videoFile.name}`);
-            await videoStorageRef.put(videoFile);
-            const videoUrl = await videoStorageRef.getDownloadURL();
-            updateData.video = videoUrl;
+        else if ((editedMessage !== message) && (mediaFile)) {
+            updateData.message = editedMessage;
+
+            const StorageRef = storage.ref(`Posts/${user.uid}/${mediaFile.name}`);
+            await StorageRef.put(mediaFile);
+            const mediaUrl = await StorageRef.getDownloadURL();
+            updateData.media = mediaUrl;
+
+            if (mediaFile.type.startsWith("image/")) {
+                setMediaFileType('image')
+                updateData.mediaType = 'image';
+                console.log("Media Type is image!");
+            }
+
+            else if (mediaFile.type.startsWith("video/")) {
+                setMediaFileType('video')
+                updateData.mediaType = 'video';
+                console.log("Media Type is video!");
+            }
+
+            else {
+                setMediaFileType('invalid')
+                updateData.mediaType = 'invalid';
+                console.log("Media Type is invalid!");
+            }
         }
 
         if (Object.keys(updateData).length > 0) {
@@ -74,14 +110,14 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
                 console.log("Media URLs in Firestore updated successfully!");
                 setIsEditing(false);
                 setIsDropdownVisible(false);
-            } 
+            }
 
             catch (error) {
                 console.error("Error updating media URLs in Firestore: ", error);
             }
         }
     };
-    
+
     useEffect(() => {
         const postRef = db.collection('Posts').doc(id);
 
@@ -256,21 +292,23 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
             storageRef.put(file).then((snapshot) => {
                 snapshot.ref.getDownloadURL().then((url) => {
                     if (file.type.startsWith("image/")) {
-                        setEditedImage(url);
-                        setImageFile(file);
+                        setEditedMediaFileType('image')
+                        setEditedMedia(url);
+                        setMediaFile(file)
                     }
 
                     else if (file.type.startsWith("video/")) {
-                        setEditedVideo(url);
-                        setVideoFile(file);
+                        setEditedMediaFileType('video')
+                        setEditedMedia(url);
+                        setMediaFile(file)
                     }
                 });
             });
         }
 
         else {
-            setEditedImage(null);
-            setEditedVideo(null);
+            setEditedMedia(null);
+            setEditedMediaFileType(null);
         }
     };
 
@@ -353,20 +391,32 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
                                     <input id="mediaInput" type="file" accept="image/*,video/*" onChange={handleMediaUpload} style={{ display: 'none' }} />
                                     <label id="mediaInputLabel" htmlFor="mediaInput">Select Media</label>
 
-                                    {editedImage ? (
-                                        <img id="editedImg" src={editedImage} alt="Edited" />
-                                    ) : editedVideo ? (
-                                        <video id="editedVideo" controls> <source src={editedVideo} type="video/mp4" /> </video>
-                                    ) : image ? (
-                                        <img id="originalImg" src={image} alt="Original" />
-                                    ) : video ? (
-                                        <video id="originalVideo" controls> <source src={video} type="video/mp4" /> </video>
+                                    {editedMedia ? (
+                                        editedMediaFileType === 'image' ? (
+                                            <img id="editedImg" src={editedMedia} alt="Edited" />
+                                        ) : editedMediaFileType === 'video' ? (
+                                            <video id="editedVideo" controls>
+                                                <source src={editedMedia} type="video/mp4" />
+                                            </video>
+                                        ) : (
+                                            <p id='noMedia'>Invalid media type</p>
+                                        )
                                     ) : (
-                                        <p id='noMedia'>No media selected</p>
+                                        media ? (
+                                            mediaFileType === 'image' ? (
+                                                <img id="originalImg" src={media} alt="Original" />
+                                            ) : mediaFileType === 'video' ? (
+                                                <video id="originalVideo" controls>
+                                                    <source src={media} type="video/mp4" />
+                                                </video>
+                                            ) : (
+                                                <p id='noMedia'>Invalid media type</p>
+                                            )
+                                        ) : (
+                                            <p id='noMedia'>No media selected</p>
+                                        )
                                     )}
                                 </div>
-                                {progress != "" && <progress className='post_progress' value={progress} max="100" />}
-
 
                                 <div className="EditModal_Bottom">
                                     <button onClick={handleSave}>Save</button>
@@ -376,9 +426,13 @@ function HomePage_Feeds_Posts({ id, photoURL, image, video, username, timestamp,
                         </Modal>
                     ) : (
                         <div className='homepageFeedsPosts_MiddleTopInner'>
-                            {message && <p id="postMsg" style={{ fontSize: image || video ? '15px' : '30px' }}> {editedMessage} </p>}
-                            {image && <img id="postImg" src={editedImage} alt="Image" />}
-                            {video && (<video id="postVideo" controls> <source src={editedVideo} type="video/mp4" /> </video>)}
+                            {message && <p id="postMsg" style={{ fontSize: media ? '15px' : '30px' }}> {editedMessage} </p>}
+                            {media && mediaType === 'image' && <img id="postImg" src={editedMedia} alt="Image" />}
+                            {media && mediaType === 'video' && (
+                                <video id="postVideo" controls>
+                                    <source src={editedMedia} type="video/mp4" />
+                                </video>
+                            )}
                         </div>
                     )}
                 </div>

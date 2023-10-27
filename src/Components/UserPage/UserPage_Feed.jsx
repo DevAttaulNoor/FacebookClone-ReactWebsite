@@ -98,8 +98,8 @@ function UserPage_Feed() {
                         <HomePage_Feeds_Posts
                             id={post.id}
                             photoURL={post.data.photoURL}
-                            image={post.data.image}
-                            video={post.data.video}
+                            media={post.data.media}
+                            mediaType={post.data.mediaType}
                             username={post.data.username}
                             timestamp={formattedDate}
                             message={post.data.message}
