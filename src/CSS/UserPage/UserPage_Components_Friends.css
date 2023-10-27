@@ -86,5 +86,52 @@
 
 /* UserPage Components Friends Middle Section */
 .UserpageComponents_Friends_Middle{
+    width: 100%;
+}
+
+.UserpageComponents_Friends_Middle .userpageFriends{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: transparent;
+}
+
+.UserpageComponents_Friends_Middle .userpageFriends_Top{
+    display: none;
+}
+
+.UserpageComponents_Friends_Middle .userpageFriends_Bottom {
     display: flex;
+    justify-content: flex-start;
+}
+
+.UserpageComponents_Friends_Middle .userpageFriends_BottomContainer {
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.UserpageComponents_Friends_Middle .userpageFriends_BottomContainerOptions{
+    width: 412px;
+    display: flex;
+    align-items: center;
+    padding: 18px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+}
+
+.UserpageComponents_Friends_Middle .userpageFriends_BottomContainerOptions p{
+    margin-left: 15px;
+    font-size: 16px;
+}
+
+.UserpageComponents_Friends_Middle .userpageFriends_BottomContainerOptions img {
+    object-fit: cover;
+    width: 75px;
+    height: 75px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
 }

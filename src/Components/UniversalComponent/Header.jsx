@@ -1,9 +1,9 @@
 import '../../CSS/UniversalComponent/Header.css'
 import fblogo from '../../Imgs/fblogo.png'
 import React, { useState, useRef, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, Navigate, useLocation } from 'react-router-dom';
 import { Avatar } from '@mui/material';
-import { auth, db } from '../BackendRelated/Firebase';
+import { auth, db, storage } from '../BackendRelated/Firebase';
 import { useStateValue } from '../BackendRelated/StateProvider';
 import SearchIcon from '@mui/icons-material/Search';
 import HomeIcon from '@mui/icons-material/Home';
@@ -120,6 +120,80 @@ function Header() {
             });
     }, [searchText]);
 
+    const deleteUser = () => {
+        if (auth.currentUser) {
+            // Show a confirmation dialog
+            const confirmed = window.confirm('Are you sure you want to delete your account? This action cannot be undone.');
+
+            if (confirmed) {
+                const userUid = user.uid;
+
+                // Delete user data in Firestore
+                db.collection('Users')
+                    .doc(userUid)
+                    .delete()
+                    .then(() => {
+                        console.log ('User data deleted from Firestore');
+                    })
+                    .catch((error) => {
+                        console.error('Error deleting user data from Firestore:', error);
+                    });
+
+                // Delete user's posts in Firestore
+                db.collection('Posts')
+                    .where('uid', '==', userUid)
+                    .get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            // Delete each post
+                            db.collection('Posts').doc(doc.id).delete();
+                        });
+                    })
+                    .catch((error) => {
+                        console.error('Error deleting user posts in Firestore:', error);
+                    });
+
+                // // Delete the entire subfolder corresponding to the user's UID in Storage
+                // storage.ref(`Users/${user.uid}`).delete()
+                //     .then(() => {
+                //         console.log('User data deleted from Storage');
+                //     })
+                //     .catch((error) => {
+                //         console.error('Error deleting user data from Storage:', error);
+                //     });
+
+                // // Delete the entire subfolder corresponding to the post's UID in Storage
+                // storage.ref(`Posts/${user.uid}`).delete()
+                //     .then(() => {
+                //         console.log('User posts data deleted from Storage');
+                //     })
+                //     .catch((error) => {
+                //         console.error('Error deleting user posts from Storage:', error);
+                //     });
+
+                // Delete the user's authentication account and sign out
+                auth
+                    .currentUser.delete()
+                    .then(() => {
+                        console.log('User authentication account deleted');
+                        // Sign the user out after account deletion
+                        auth.signOut()
+                            .then(() => {
+                                console.log('User signed out');
+                            })
+                            .catch((error) => {
+                                console.error('Error signing the user out:', error);
+                            });
+
+                            handleSignOut();
+                    })
+                    .catch((error) => {
+                        console.error('Error deleting user authentication account:', error);
+                    });
+            }
+        }
+    };
+
     return (
         <div className={`header ${showHeader ? '' : 'transformed'}`}>
             <div className='Transformed_header_left'>
@@ -197,10 +271,10 @@ function Header() {
                     <Avatar src={user.photoURL} onClick={toggleDialog} ref={dialogBoxRef} />
                     {isDialogVisible && (
                         <div className="dialogBox">
-                            <NavLink to="/userhomepage">
+                            <NavLink to="/userhomepage/post">
                                 <button>Home</button>
                             </NavLink>
-                            <button>Settings</button>
+                            <button onClick={deleteUser}>Delete</button>
                             <button onClick={handleSignOut}>Sign Out</button>
                         </div>
                     )}

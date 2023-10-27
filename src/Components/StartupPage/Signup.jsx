@@ -45,7 +45,7 @@ function Signup(props) {
 
             let photoURL = null;
             if (profilePicture) {
-                const storageRef = storage.ref(`Users/ProfileImage/${userCredential.user.uid}/${profilePicture.name}`);
+                const storageRef = storage.ref(`Users/${userCredential.user.uid}/${profilePicture.name}`);
                 await storageRef.put(profilePicture);
                 const downloadURL = await storageRef.getDownloadURL();
                 photoURL = downloadURL;
@@ -53,7 +53,7 @@ function Signup(props) {
 
             let coverphotoUrl = null;
             if (coverPicture) {
-                const storageRef = storage.ref(`Users/CoverImage/${userCredential.user.uid}/${coverPicture.name}`);
+                const storageRef = storage.ref(`Users/${userCredential.user.uid}/${coverPicture.name}`);
                 await storageRef.put(coverPicture);
                 const downloadURL = await storageRef.getDownloadURL();
                 coverphotoUrl = downloadURL;

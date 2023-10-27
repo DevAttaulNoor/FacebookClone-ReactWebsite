@@ -98,15 +98,13 @@
 
 /* HomePage Feeds Posts Middle Top Section */
 .homepageFeedsPosts_Middle .homepageFeedsPosts_MiddleTop .homepageFeedsPosts_MiddleTopInner #postMsg{
-    margin: 15px 0;
+    margin-top: 15px;
     letter-spacing: 0.2px;
 }
 
-.homepageFeedsPosts_Middle .homepageFeedsPosts_MiddleTop .homepageFeedsPosts_MiddleTopInner #postImg {
-    width: 100%;
-}
-
+.homepageFeedsPosts_Middle .homepageFeedsPosts_MiddleTop .homepageFeedsPosts_MiddleTopInner #postImg,
 .homepageFeedsPosts_Middle .homepageFeedsPosts_MiddleTop .homepageFeedsPosts_MiddleTopInner #postVideo {
+    margin-top: 15px;
     width: 100%;
 }
 

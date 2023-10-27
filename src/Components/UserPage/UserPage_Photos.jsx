@@ -11,8 +11,7 @@ function UserPage_Photos() {
         // Reference to the user's folders in Firebase Storage
         const storageRefs = [
             `Posts/${user.uid}`,
-            `Users/CoverImage/${user.uid}`,
-            `Users/ProfileImage/${user.uid}`,
+            `Users/${user.uid}`
         ];
 
         // Fetch images from all specified paths

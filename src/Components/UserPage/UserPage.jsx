@@ -36,7 +36,7 @@ function UserPage() {
         const file = e.target.files[0];
         if (file) {
             setProfileImage(file);
-            const storageRef = storage.ref(`Images/Users/ProfileImage/${user.uid}/${file.name}`);
+            const storageRef = storage.ref(`Users/${user.uid}/${file.name}`);
 
             storageRef.put(file).then((snapshot) => {
                 snapshot.ref.getDownloadURL().then((url) => {
@@ -78,7 +78,7 @@ function UserPage() {
         const coverfile = e.target.files[0];
         if (coverfile) {
             setCoverImage(coverfile);
-            const storageRef = storage.ref(`Images/Users/CoverImage/${user.uid}/${coverfile.name}`);
+            const storageRef = storage.ref(`Users/${user.uid}/${coverfile.name}`);
 
             storageRef.put(coverfile).then((snapshot) => {
                 snapshot.ref.getDownloadURL().then((url) => {
