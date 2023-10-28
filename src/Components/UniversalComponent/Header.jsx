@@ -26,6 +26,8 @@ function Header() {
     const location = useLocation();
     const friendPages = ['/friendpage', '/friendpage/', '/friendpage/allFriends', '/friendpage/friendReqs'];
     const friendPagesActive = friendPages.some((page) => location.pathname === page);
+    const VideosPages = ['/videospage', '/videospage/'];
+    const VideosPagesActive = VideosPages.some((page) => location.pathname === page);
     const pathsToHideHeader = ['/homepage/storyreels'];
     const showHeader = !pathsToHideHeader.includes(location.pathname);
 
@@ -255,7 +257,7 @@ function Header() {
                     </div>
                 </NavLink>
                 <NavLink to="/videospage">
-                    <div className={`header_option ${location.pathname === '/videospage' ? 'header_option_active' : ''}`}>
+                <div className={`header_option ${VideosPagesActive ? 'header_option_active' : ''}`}>
                         <SmartDisplayIcon />
                     </div>
                 </NavLink>

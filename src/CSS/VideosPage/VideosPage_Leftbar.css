@@ -3,19 +3,19 @@
     display: flex;
     flex-direction: column;
     height: 90vh;
-    width: 320px;
+    width: 310px;
     background-color: #fff;
-    padding: 5px;
+    padding: 8px;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
 }
 
 /* Videos Page LeftBar Top Section */
 .videosPageLeftbar_Top{
-    padding: 10px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 5px;
+    justify-content: space-between;
+    margin: 8px 0;
+    padding: 0 2px 0 8px;
 }
 
 .videosPageLeftbar_Top p{
@@ -26,12 +26,11 @@
 .videosPageLeftbar_Top .MuiSvgIcon-root{
     padding: 5px;
     border-radius: 50%;
-    background-color: whitesmoke;
+    background-color: #E4E6EB;
 }
 
 .videosPageLeftbar_Top .MuiSvgIcon-root:hover{
     cursor: pointer;
-    /* background-color: rgb(167, 167, 167); */
     background-color: #F0F2F5;
 }
 
@@ -39,7 +38,7 @@
 .videosPageLeftbar_Bottom{
     display: grid;
     grid-template-rows: repeat(1, 1fr);
-    gap: 5px;
+    gap: 3px;
 }
 
 .videosPageLeftbar_Bottom a{
@@ -51,7 +50,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+    padding: 8px;
     transition: 3ms ease-in-out;
 }
 
@@ -60,7 +59,6 @@
     cursor: pointer;
     border-radius: 8px;
     background-color: #F0F2F5;
-    /* background-color: rgb(211, 211, 211); */
 }
 
 .videosPageLeftbar_Bottom a.active .videosPageLeftbar_BottomOption .MuiSvgIcon-root{
@@ -74,13 +72,13 @@
 }
 
 .videosPageLeftbar_BottomOption p{
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
 }
 
 .videosPageLeftbar_BottomOption .MuiSvgIcon-root{
    border-radius: 50%;
-   padding: 6px;
+   padding: 5px;
    background-color: #E4E6EB;
    margin-right: 10px;
 }

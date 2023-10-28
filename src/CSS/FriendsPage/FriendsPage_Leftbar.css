@@ -1,42 +1,44 @@
-/* Friends LeftBar */
+/** Friends Page Leftbar Section */
 .friendspageLeftbar{
     display: flex;
     flex-direction: column;
     height: 90vh;
-    width: 360px;
+    width: 310px;
     background-color: #fff;
-    padding: 5px;
+    padding: 8px;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
 }
 
+/* Friends Page Leftbar Top Section */
 .friendspageLeftbar_Top{
-    padding: 10px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    justify-content: space-between;
+    margin: 8px 0;
+    padding: 0 2px 0 8px;
 }
 
 .friendspageLeftbar_Top p{
-    font-size: 26px;
+    font-size: 22px;
     font-weight: 700;
 }
 
 .friendspageLeftbar_Top .MuiSvgIcon-root{
     padding: 5px;
     border-radius: 50%;
-    background-color: whitesmoke;
+    background-color: #E4E6EB;
 }
 
 .friendspageLeftbar_Top .MuiSvgIcon-root:hover{
     cursor: pointer;
-    background-color: rgb(167, 167, 167);
+    background-color: #F0F2F5;
 }
 
+/* Friends Page Leftbar Bottom Section */
 .friendspageLeftbar_Bottom{
     display: grid;
     grid-template-rows: repeat(1, 1fr);
-    gap: 5px;
+    gap: 3px;
 }
 
 .friendspageLeftbar_Bottom a{
@@ -48,7 +50,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+    padding: 8px;
     transition: 3ms ease-in-out;
 }
 
@@ -56,7 +58,7 @@
 .friendspageLeftbar_Bottom a.active{
     cursor: pointer;
     border-radius: 8px;
-    background-color: rgb(211, 211, 211);
+    background-color: #F0F2F5;
 }
 
 .friendspageLeftbar_Bottom a.active .friendspageLeftbar_BottomOptionsLeft .MuiSvgIcon-root{
@@ -70,13 +72,18 @@
 }
 
 .friendspageLeftbar_BottomOptionsLeft p{
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 600;
 }
 
 .friendspageLeftbar_BottomOptionsLeft .MuiSvgIcon-root{
    border-radius: 50%;
    padding: 5px;
-   background-color: whitesmoke;
+   background-color: #E4E6EB;
    margin-right: 10px;
+}
+
+.friendspageLeftbar_BottomOptionsRight .MuiSvgIcon-root{
+    width: 20px;
+    color: gray;
 }

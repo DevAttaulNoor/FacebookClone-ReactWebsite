@@ -1,14 +1,16 @@
-/** Videos Page Section */
+/** VideosPage Section */
 .videosPage{
     overflow: hidden;
     display: flex;
 }
 
+/* VideosPage Leftbar Section */
 .videosPage_Leftbar{
     position: sticky;
     top: 0;
 }
 
+/* VideosPage Main Section */
 .videosPage_Main{
     overflow-y: auto;
     overflow-x: hidden;

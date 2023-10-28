@@ -1,15 +1,17 @@
-/* friendspage_Allfriends Allfriends Section */
+/** FriendsPage AllFriends Section */
 .friendspage_Allfriends{
     overflow: hidden;
     display: flex;
     height: 91.5vh;
 }
 
+/* FriendsPage AllFriends Leftbar Section */
 .friendspage_Allfriends_leftbar{
     position: sticky;
     top: 0;
 }
 
+/* FriendsPage AllFriends Main Section */
 .friendspage_Allfriends_Main{
     overflow-y: auto;
     overflow-x: hidden;

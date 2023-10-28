@@ -1,18 +1,20 @@
-/* Freinds Main Requests Page */
+/** FriendsPage Main FriendsReqs Section */
 .friendspageMainReqs {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 1100px;
-    padding: 20px 40px;
+    width: fit-content;
+    padding: 20px 55px;
 }
 
+/* FriendsPage Main FriendsReqs Top Section */
 .friendspageMainReqs .friendspageMainReqs_top p {
     padding: 10px 0 15px;
     font-size: 20px;
     font-weight: 650;
 }
 
+/* FriendsPage Main FriendsReqs Bottom Section */
 .friendspageMainReqs .friendspageMainReqs_bottom {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
