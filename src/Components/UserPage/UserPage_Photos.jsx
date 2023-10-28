@@ -1,7 +1,8 @@
 import "../../CSS/UserPage/UserPage_Photos.css";
 import React, { useEffect, useState } from 'react';
-import { useStateValue } from "../BackendRelated/StateProvider";
 import firebase from "firebase/compat/app";
+import { NavLink } from "react-router-dom";
+import { useStateValue } from "../BackendRelated/StateProvider";
 
 function UserPage_Photos() {
     const [{ user }] = useStateValue();
@@ -29,9 +30,9 @@ function UserPage_Photos() {
                     const imageItems = result.items.filter(itemRef => {
                         const name = itemRef.name.toLowerCase();
                         return (
-                            name.endsWith('.jpg') || 
-                            name.endsWith('.jpeg') || 
-                            name.endsWith('.png') || 
+                            name.endsWith('.jpg') ||
+                            name.endsWith('.jpeg') ||
+                            name.endsWith('.png') ||
                             name.endsWith('.gif') ||
                             name.endsWith('.bmp')
                         );
@@ -55,8 +56,10 @@ function UserPage_Photos() {
     return (
         <div className='userpagePhotos'>
             <div className="userpagePhotos_Top">
-                <h3>Photos</h3>
-                <a href="#">See all photos</a>
+                <NavLink id="navLink" to="/userhomepage/photo" activeClassName="active">
+                    <h3>Photos</h3>
+                </NavLink>
+                <a id="seeAllLink" href="#">See all photos</a>
             </div>
 
             <div className="userpagePhotos_Bottom">

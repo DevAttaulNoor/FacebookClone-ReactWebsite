@@ -16,11 +16,6 @@ function UserPage() {
     const [friends, setFriends] = useState([]);
     const [profileImage, setProfileImage] = useState(null);
     const [coverImage, setCoverImage] = useState(null);
-    const [activeOption, setActiveOption] = useState("Posts");
-
-    const handleOptionClick = (option) => {
-        setActiveOption(option);
-    };
 
     useEffect(() => {
         fetchFriendsData(user.uid, setFriends);
@@ -175,24 +170,24 @@ function UserPage() {
 
                 <div className="userpage_TopComponents">
                     <div className="userpage_TopComponents_Left">
-                        <NavLink to='/userhomepage/post'>
-                            <div className={`userpage_TopComponents_LeftOption ${activeOption === 'Posts' ? 'active' : ''}`} onClick={() => handleOptionClick('Posts')}>Posts</div>
+                        <NavLink to='/userhomepage/post' activeClassName="active">
+                            <div className='userpage_TopComponents_LeftOption'>Posts</div>
                         </NavLink>
 
-                        <NavLink to="/userhomepage/about">
-                            <div className={`userpage_TopComponents_LeftOption ${activeOption === 'About' ? 'active' : ''}`} onClick={() => handleOptionClick('About')}>About</div>
+                        <NavLink to="/userhomepage/about" activeClassName="active">
+                            <div className='userpage_TopComponents_LeftOption'>About</div>
                         </NavLink>
 
-                        <NavLink to="/userhomepage/friend">
-                            <div className={`userpage_TopComponents_LeftOption ${activeOption === 'Friends' ? 'active' : ''}`} onClick={() => handleOptionClick('Friends')}>Friends</div>
+                        <NavLink to="/userhomepage/friend" activeClassName="active">
+                            <div className='userpage_TopComponents_LeftOption'>Friends</div>
                         </NavLink>
 
-                        <NavLink to="/userhomepage/photo">
-                            <div className={`userpage_TopComponents_LeftOption ${activeOption === 'Photos' ? 'active' : ''}`} onClick={() => handleOptionClick('Photos')}>Photo</div>
+                        <NavLink to="/userhomepage/photo" activeClassName="active">
+                            <div className='userpage_TopComponents_LeftOption'>Photos</div>
                         </NavLink>
 
-                        <NavLink to="/userhomepage/video">
-                            <div className={`userpage_TopComponents_LeftOption ${activeOption === 'Videos' ? 'active' : ''}`} onClick={() => handleOptionClick('Videos')}>Videos</div>
+                        <NavLink to="/userhomepage/video" activeClassName="active">
+                            <div className='userpage_TopComponents_LeftOption'>Videos</div>
                         </NavLink>
 
                         <div className="userpage_TopComponents_LeftOption" id="moreOption">

@@ -1,6 +1,7 @@
 import "../../CSS/UserPage/UserPage_Friends.css"
-import React, { useEffect, useState } from 'react'
-import { useStateValue } from '../BackendRelated/StateProvider'
+import React, { useEffect, useState } from 'react';
+import { NavLink } from "react-router-dom";
+import { useStateValue } from "../BackendRelated/StateProvider";
 import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_AllFriends_Leftbar';
 
 function UserPage_Friends() {
@@ -22,8 +23,10 @@ function UserPage_Friends() {
     return (
         <div className='userpageFriends'>
             <div className="userpageFriends_Top">
-                <h3>Friends</h3>
-                <a href="#">See all friends</a>
+                <NavLink id="navLink" to="/userhomepage/friend" activeClassName="active">
+                    <h3>Friends</h3>
+                </NavLink>
+                <a id="seeAllLink" href="#">See all friends</a>
             </div>
 
             <div className="userpageFriends_Bottom">

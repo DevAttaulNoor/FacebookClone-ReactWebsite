@@ -1,17 +1,12 @@
 /** FriendsPage Section */
 .friendspage{
-    overflow: hidden;
+    height: 91.5vh;
     display: flex;
-}
-
-/* FriendsPage Leftbar Section */
-.friendspage_leftbar{
-    position: sticky;
-    top: 0;
+    overflow: hidden;
 }
 
 /* FriendsPage Main Section */
 .friendspage_Main{
+    width: 100%;
     overflow-y: auto;
-    overflow-x: hidden;
 }

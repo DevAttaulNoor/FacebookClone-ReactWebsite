@@ -2,7 +2,7 @@
 .friendspage_allfriends_Leftbar {
     display: flex;
     flex-direction: column;
-    height: 87vh;
+    height: 100%;
     width: 310px;
     background-color: #fff;
     padding: 8px;

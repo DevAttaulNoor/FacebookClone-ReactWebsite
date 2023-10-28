@@ -16,7 +16,17 @@
     margin-bottom: 10px;
 }
 
-.userpageFriends_Top a {
+.userpageFriends_Top #navLink {
+    color: initial;
+    text-decoration: none;
+}
+
+.userpageFriends_Top #navLink:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.userpageFriends_Top #seeAllLink {
     text-decoration: none;
     color: #1B74E4;
     font-size: 15px;
@@ -25,7 +35,7 @@
     border-radius: 6px;
 }
 
-.userpageFriends_Top a:hover{
+.userpageFriends_Top #seeAllLink:hover{
     background-color: whitesmoke;
     cursor: pointer;
 }

@@ -17,19 +17,15 @@ import CloseIcon from '@mui/icons-material/Close';
 
 function Header() {
     const [{ user }, dispatch] = useStateValue();
+    const [searchText, setSearchText] = useState('');
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [matchingUsernames, setMatchingUsernames] = useState([]);
     const [isDialogVisible, setIsDialogVisible] = useState(false);
     const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
-    const [searchText, setSearchText] = useState('');
-    const [matchingUsernames, setMatchingUsernames] = useState([]);
-    const [selectedUser, setSelectedUser] = useState(null);
     const dialogBoxRef = useRef(null);
-    const location = useLocation();
-    const friendPages = ['/friendpage', '/friendpage/', '/friendpage/allFriends', '/friendpage/friendReqs'];
-    const friendPagesActive = friendPages.some((page) => location.pathname === page);
-    const VideosPages = ['/videospage', '/videospage/'];
-    const VideosPagesActive = VideosPages.some((page) => location.pathname === page);
+
     const pathsToHideHeader = ['/homepage/storyreels'];
-    const showHeader = !pathsToHideHeader.includes(location.pathname);
+    const showHeader = !pathsToHideHeader.includes(useLocation().pathname);
 
     const handleSignOut = () => {
         sessionStorage.removeItem('userData');
@@ -246,24 +242,21 @@ function Header() {
             </div>
 
             <div className="header_middle">
-                <NavLink to="/homepage">
-                    <div className={`header_option ${location.pathname === '/homepage' ? 'header_option_active' : ''}`}>
-                        <HomeIcon />
-                    </div>
+                <NavLink to="/homepage" activeClassName="active">
+                    <HomeIcon />
                 </NavLink>
-                <NavLink to="/friendpage">
-                    <div className={`header_option ${friendPagesActive ? 'header_option_active' : ''}`}>
-                        <PeopleIcon />
-                    </div>
+
+                <NavLink to="/friendpage" activeClassName="active">
+                    <PeopleIcon />
                 </NavLink>
-                <NavLink to="/videospage">
-                <div className={`header_option ${VideosPagesActive ? 'header_option_active' : ''}`}>
-                        <SmartDisplayIcon />
-                    </div>
+
+                <NavLink to="/videospage" activeClassName="active">
+                    <SmartDisplayIcon />
                 </NavLink>
-                <div className='header_option'>
+
+                <NavLink to="/grouppage" activeClassName="active">
                     <GroupsIcon />
-                </div>
+                </NavLink>
             </div>
 
             <div className="header_right">
@@ -284,7 +277,7 @@ function Header() {
                     )}
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

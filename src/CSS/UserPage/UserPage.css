@@ -185,6 +185,29 @@
     height: fit-content;
 }
 
+.userpage_TopComponents_Left a.active .userpage_TopComponents_LeftOption{
+    position: relative;
+    color: #2381fa;
+}
+
+.userpage_TopComponents_Left a.active .userpage_TopComponents_LeftOption:hover{
+    background-color: transparent;
+}
+
+.userpage_TopComponents_Left a.active .userpage_TopComponents_LeftOption::after{
+    content: "";
+    position: absolute;
+    height: 2px;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    background-color: #2381fa;
+}
+
+.userpage_TopComponents_Left a.active .userpage_TopComponents_LeftOption svg{
+    color: #2381fa;
+}
+
 .userpage_TopComponents_LeftOption {
     font-size: 14px;
     font-weight: 600;
@@ -197,29 +220,6 @@
 .userpage_TopComponents_LeftOption:hover {
     background-color: whitesmoke;
     cursor: pointer;
-}
-
-.userpage_TopComponents_LeftOption.active{
-    position: relative;
-    color: #2381fa;
-}
-
-.userpage_TopComponents_LeftOption.active:hover{
-    background-color: transparent;
-}
-
-.userpage_TopComponents_LeftOption.active::after{
-    content: "";
-    position: absolute;
-    height: 2px;
-    left: 0;
-    right: 0;
-    bottom: -2px;
-    background-color: #2381fa;
-}
-
-.userpage_TopComponents_LeftOption.active svg{
-    color: #2381fa;
 }
 
 .userpage_TopComponents_LeftOption#moreOption {

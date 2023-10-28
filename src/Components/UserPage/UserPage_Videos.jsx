@@ -1,7 +1,8 @@
 import "../../CSS/UserPage/UserPage_Videos.css";
 import React, { useEffect, useState } from 'react';
-import { useStateValue } from "../BackendRelated/StateProvider";
 import firebase from "firebase/compat/app";
+import { NavLink } from "react-router-dom";
+import { useStateValue } from "../BackendRelated/StateProvider";
 
 function UserPage_Videos() {
     const [{ user }] = useStateValue();
@@ -37,8 +38,10 @@ function UserPage_Videos() {
     return (
         <div className='userpageVideos'>
             <div className="userpageVideos_Top">
-                <h3>Videos</h3>
-                <a href="#">See all Videos</a>
+                <NavLink id="navLink" to="/userhomepage/video" activeClassName="active">
+                    <h3>Videos</h3>
+                </NavLink>
+                <a id="seeAllLink" href="#">See all Videos</a>
             </div>
 
             <div className="userpageVideos_Bottom">
