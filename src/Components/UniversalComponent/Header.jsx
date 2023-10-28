@@ -1,19 +1,19 @@
 import '../../CSS/UniversalComponent/Header.css'
 import fblogo from '../../Imgs/fblogo.png'
 import React, { useState, useRef, useEffect } from 'react';
-import { NavLink, Navigate, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { Avatar } from '@mui/material';
-import { auth, db, storage } from '../BackendRelated/Firebase';
+import { auth, db } from '../BackendRelated/Firebase';
 import { useStateValue } from '../BackendRelated/StateProvider';
 import SearchIcon from '@mui/icons-material/Search';
-import HomeIcon from '@mui/icons-material/Home';
-import PeopleIcon from '@mui/icons-material/People';
-import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
-import GroupsIcon from '@mui/icons-material/Groups';
 import AppsIcon from '@mui/icons-material/Apps';
 import ForumIcon from '@mui/icons-material/Forum';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import CloseIcon from '@mui/icons-material/Close';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
+import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import OndemandVideoOutlinedIcon from '@mui/icons-material/OndemandVideoOutlined';
 
 function Header() {
     const [{ user }, dispatch] = useStateValue();
@@ -243,19 +243,19 @@ function Header() {
 
             <div className="header_middle">
                 <NavLink to="/homepage" activeClassName="active">
-                    <HomeIcon />
+                    <HomeOutlinedIcon />
                 </NavLink>
 
                 <NavLink to="/friendpage" activeClassName="active">
-                    <PeopleIcon />
+                    <GroupOutlinedIcon />
                 </NavLink>
 
                 <NavLink to="/videospage" activeClassName="active">
-                    <SmartDisplayIcon />
+                    <OndemandVideoOutlinedIcon />
                 </NavLink>
 
                 <NavLink to="/grouppage" activeClassName="active">
-                    <GroupsIcon />
+                    <GroupsOutlinedIcon />
                 </NavLink>
             </div>
 

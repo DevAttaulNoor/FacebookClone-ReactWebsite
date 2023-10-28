@@ -166,7 +166,7 @@ function HomePage_StoryReels() {
                         </div>
                         <div className="homepage_storyreels_Leftbar_TopTop_userinfo">
                             <img src={user.photoURL} alt="" />
-                            <p>{`${user.firstname} ${user.lastname}`}</p>
+                            <p>{user.username}</p>
                         </div>
                     </div>
 

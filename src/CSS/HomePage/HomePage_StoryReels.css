@@ -1,4 +1,4 @@
-/* HomePage Story Reels */
+/** HomePage Story Reels Section */
 .homepage_storyreels {
     display: flex;
     height: 90vh;
@@ -9,6 +9,7 @@
     position: relative;
     width: 320px;
     background-color: #fff;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
 }
 
 /* HomePage StoryReels Main Sidebar Top Section */
@@ -54,14 +55,14 @@
 .homepage_storyreels_Leftbar_TopTop_heading .MuiSvgIcon-root {
     padding: 5px;
     border-radius: 50%;
-    background-color: whitesmoke;
+    background-color: #E4E6EB;
     position: absolute;
     right: 10px;
 }
 
 .homepage_storyreels_Leftbar_TopTop_heading .MuiSvgIcon-root:hover {
     cursor: pointer;
-    background-color: rgb(167, 167, 167);
+    background-color: #F0F2F5;
 }
 
 .homepage_storyreels_Leftbar_TopTop_userinfo {
@@ -73,6 +74,7 @@
 .homepage_storyreels_Leftbar_TopTop_userinfo img {
     width: 54px;
     height: 54px;
+    object-fit: cover;
     border-radius: 50%;
 }
 
