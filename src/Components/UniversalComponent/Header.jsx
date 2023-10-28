@@ -133,7 +133,7 @@ function Header() {
                     .doc(userUid)
                     .delete()
                     .then(() => {
-                        console.log ('User data deleted from Firestore');
+                        console.log('User data deleted from Firestore');
                     })
                     .catch((error) => {
                         console.error('Error deleting user data from Firestore:', error);
@@ -185,7 +185,7 @@ function Header() {
                                 console.error('Error signing the user out:', error);
                             });
 
-                            handleSignOut();
+                        handleSignOut();
                     })
                     .catch((error) => {
                         console.error('Error deleting user authentication account:', error);
@@ -254,9 +254,11 @@ function Header() {
                         <PeopleIcon />
                     </div>
                 </NavLink>
-                <div className='header_option'>
-                    <SmartDisplayIcon />
-                </div>
+                <NavLink to="/videospage">
+                    <div className={`header_option ${location.pathname === '/videospage' ? 'header_option_active' : ''}`}>
+                        <SmartDisplayIcon />
+                    </div>
+                </NavLink>
                 <div className='header_option'>
                     <GroupsIcon />
                 </div>

@@ -1,0 +1,15 @@
+/** Videos Page Section */
+.videosPage{
+    overflow: hidden;
+    display: flex;
+}
+
+.videosPage_Leftbar{
+    position: sticky;
+    top: 0;
+}
+
+.videosPage_Main{
+    overflow-y: auto;
+    overflow-x: hidden;
+}

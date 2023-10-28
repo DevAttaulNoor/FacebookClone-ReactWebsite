@@ -1,0 +1,86 @@
+/** Videos Page LeftBar Section */
+.videosPageLeftbar{
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    width: 320px;
+    background-color: #fff;
+    padding: 5px;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+}
+
+/* Videos Page LeftBar Top Section */
+.videosPageLeftbar_Top{
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.videosPageLeftbar_Top p{
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.videosPageLeftbar_Top .MuiSvgIcon-root{
+    padding: 5px;
+    border-radius: 50%;
+    background-color: whitesmoke;
+}
+
+.videosPageLeftbar_Top .MuiSvgIcon-root:hover{
+    cursor: pointer;
+    /* background-color: rgb(167, 167, 167); */
+    background-color: #F0F2F5;
+}
+
+/* Videos Page LeftBar Bottom Section */
+.videosPageLeftbar_Bottom{
+    display: grid;
+    grid-template-rows: repeat(1, 1fr);
+    gap: 5px;
+}
+
+.videosPageLeftbar_Bottom a{
+    color: initial;
+    text-decoration: none;
+}
+
+.videosPageLeftbar_BottomOptions{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    transition: 3ms ease-in-out;
+}
+
+.videosPageLeftbar_BottomOptions:hover,
+.videosPageLeftbar_Bottom a.active{
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: #F0F2F5;
+    /* background-color: rgb(211, 211, 211); */
+}
+
+.videosPageLeftbar_Bottom a.active .videosPageLeftbar_BottomOption .MuiSvgIcon-root{
+    color: #fff;
+    background-color: #1877f2;
+}
+
+.videosPageLeftbar_BottomOption{
+    display: flex;
+    align-items: center;
+}
+
+.videosPageLeftbar_BottomOption p{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.videosPageLeftbar_BottomOption .MuiSvgIcon-root{
+   border-radius: 50%;
+   padding: 6px;
+   background-color: #E4E6EB;
+   margin-right: 10px;
+}
