@@ -5,12 +5,14 @@ import HomePage_Rightbar_FriendsList from './HomePage_Rightbar_FriendsList'
 
 function HomePage_Rightbar() {
     return (
-        <div className='homepage_Rightbar'>
-            <div className="homepage_Rightbar_Top">
+        <div className='homePageRightbar'>
+            <div className="homePageRightbar_Top">
                 <HomePage_Rightbar_FriendsList />
             </div>
+
             <hr id='line'/>
-            <div className="homepage_Rightbar_Bottom">
+
+            <div className="homePageRightbar_Bottom">
                 <HomePage_Rightbar_GroupsList />
             </div>
         </div>

@@ -1,4 +1,4 @@
-/* HomePage Section */
+/** HomePage Section */
 .homepage {
     width: 100%;
     display: flex;
@@ -7,10 +7,44 @@
     margin: 15px 0;
 }
 
-.homepage .homepage_SidebarsLeft,
-.homepage .homepage_SidebarsRight{
-    position: sticky;
-    top: 71px;
-    overflow-y: auto;
+/* HomePage Leftbar Section */
+.homepage_Leftbar{
     width: 320px;
+    top: 71px;
+    position: sticky;
+    overflow-y: auto;
+}
+
+/* HomePage Rightbar Section */
+.homepage_Rightbar{
+    width: 320px;
+    height: 87vh;
+    top: 71px;
+    position: sticky;
+    overflow-y: auto;
+}
+
+.homepage_Rightbar #newMsg{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 5px;
+    right: 15px;
+    padding: 12px;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+}
+
+.homepage_Rightbar #newMsg:hover{
+    cursor: pointer;
+    background-color: #F2F5F7;
+}
+
+.homepage_Rightbar #newMsg i{
+    background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/o5j-s_jHHuo.png");
+    background-position: 0px -255px;
+    background-size: auto;
+    width: 20px;
+    height: 20px;
 }

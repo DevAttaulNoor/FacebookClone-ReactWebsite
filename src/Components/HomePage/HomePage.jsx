@@ -7,14 +7,17 @@ import HomePage_Rightbar from './HomePage_Rightbar'
 function HomePage() {
     return (
         <div className='homepage'>
-            <div className='homepage_SidebarsLeft'>
+            <div className='homepage_Leftbar'>
                 <HomePage_Leftbar />
             </div>
             <div className='homepage_MainFeed'>
                 <HomePage_Feeds />
             </div>
-            <div className='homepage_SidebarsRight'>
+            <div className='homepage_Rightbar'>
                 <HomePage_Rightbar />
+                <div id='newMsg'>
+                    <i></i>
+                </div>
             </div>
         </div>
     )

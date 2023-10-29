@@ -1,9 +1,10 @@
-/* HomePage Rightbar Section */
-.homepage_Rightbar{
+/** HomePage Rightbar Section */
+.homePageRightbar{
+    position: relative;
     margin-right: 8px;
 }
 
-.homepage_Rightbar #line{
+.homePageRightbar #line{
     color: whitesmoke;
     margin-left: 8px;
 }

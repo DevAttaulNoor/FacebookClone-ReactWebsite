@@ -1,6 +1,6 @@
 import '../../CSS/HomePage/HomePage_Leftbar.css'
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useStateValue } from '../BackendRelated/StateProvider';
 import HomePage_Leftbar_Options from './HomePage_Leftbar_Options';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -9,14 +9,19 @@ function HomePage_Leftbar() {
     const [{ user }] = useStateValue();
 
     return (
-        <div className='homepage_Leftbar'>
-            <Link to="/userhomepage">
+        <div className='homePageLeftbar'>
+            <NavLink to="/userhomepage">
                 <HomePage_Leftbar_Options src={user.photoURL} title={user.username} />
-            </Link>
-            <Link to="/friendpage">
+            </NavLink>
+
+            <NavLink to="/friendpage">
                 <HomePage_Leftbar_Options src='https://static.xx.fbcdn.net/rsrc.php/v3/y6/r/i0pziEs5Wj6.png' title='Friends' />
-            </Link>
-            <HomePage_Leftbar_Options src='https://static.xx.fbcdn.net/rsrc.php/v3/yx/r/XNFKm5WC2yS.png' title='Videos' />
+            </NavLink>
+
+            <NavLink to="/videospage">
+                <HomePage_Leftbar_Options src='https://static.xx.fbcdn.net/rsrc.php/v3/yx/r/XNFKm5WC2yS.png' title='Videos' />
+            </NavLink>
+            
             <HomePage_Leftbar_Options src='https://static.xx.fbcdn.net/rsrc.php/v3/yZ/r/MhkwI3R0SHP.png' title='Groups' />
             <HomePage_Leftbar_Options src='https://static.xx.fbcdn.net/rsrc.php/v3/yC/r/G_tsqBLQpdP.png' title='Marketplace' />
             <HomePage_Leftbar_Options src='https://static.xx.fbcdn.net/rsrc.php/v3/yb/r/eECk3ceTaHJ.png' title='Feeds' />
