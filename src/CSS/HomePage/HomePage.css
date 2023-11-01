@@ -24,27 +24,184 @@
     overflow-y: auto;
 }
 
-.homepage_Rightbar #newMsg{
+
+
+
+.msgRelated{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}
+
+
+.msgRelated #newMsg{
+    position: absolute;
+    bottom: 15px;
+    right: 25px;
+
     display: flex;
     align-items: center;
-    position: absolute;
-    bottom: 5px;
-    right: 15px;
     padding: 12px;
     border-radius: 50%;
     background-color: #fff;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
 }
 
-.homepage_Rightbar #newMsg:hover{
+.msgRelated #newMsg:hover{
     cursor: pointer;
     background-color: #F2F5F7;
 }
 
-.homepage_Rightbar #newMsg i{
+.msgRelated #newMsg i{
     background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/o5j-s_jHHuo.png");
     background-position: 0px -255px;
     background-size: auto;
     width: 20px;
     height: 20px;
+}
+
+.msgRelated .newMsgDialog {
+    position: absolute;
+    bottom: 0;
+    right: 85px;
+    width: 300px;
+    height: 410px;        
+    background: #fff;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border: 1px solid rgb(204, 204, 204);
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+}
+
+.msgRelated .newMsgDialog .newMsgDialog_Top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.msgRelated .newMsgDialog .newMsgDialog_Top p{
+    font-size: 14px;
+    font-weight: 500;
+    color: #050505;
+}
+
+.msgRelated .newMsgDialog .newMsgDialog_Top .MuiSvgIcon-root{
+    width: 20px;
+    color: #0866FF;
+}
+
+.msgRelated .newMsgDialog .newMsgDialog_Top .MuiSvgIcon-root:hover{
+    cursor: pointer;
+}
+
+.msgRelated .newMsgDialog .newMsgDialog_Middle{
+    display: flex;
+    align-items: flex-start;
+    padding: 8px 15px;
+    border-bottom: 1px solid lightgray;
+}
+
+.msgRelated .newMsgDialog .newMsgDialog_Middle #toText{
+    font-size: 14px;
+    font-weight: 400;
+    color: #050505;
+    margin-right: 12px;
+}
+
+.newMsgDialog_Middle .newMsgDialog_MiddleRight{
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.msgRelated .newMsgDialog .newMsgDialog_Middle .newMsgDialog_MiddleRight input{
+    width: 100%;
+    font-size: 14px;
+    font-weight: 400;
+    color: #050505;
+    outline: none;
+    border: none;
+}
+
+.selectedUsers {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.selectedUser{
+    width: max-content;
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background-color: #EBF5FF;
+    margin: 0 8px 8px 0;
+}
+
+.selectedUser p{
+    color: #0866FF;
+    font-size: 12px;
+    font-weight: 500;
+    margin-right: 5px;
+}
+
+.selectedUser .MuiSvgIcon-root{
+    width: 14px;
+    height: fit-content;
+    color: #0866FF;
+}
+
+.selectedUser .MuiSvgIcon-root:hover{
+    cursor: pointer;
+}
+
+.msgRelated .newMsgDialog .newMsgDialog_Bottom{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.newMsgDialog_BottomMiddle{
+    width: 100%;
+}
+
+.newMsgDialog_BottomMiddleInner{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px 12px 12px;
+}
+
+.newMsgDialog_BottomMiddleInner .MuiAvatar-root{
+    width: 60px;
+    height: 60px;
+}
+
+.newMsgDialog_BottomMiddleInner p{
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.msgRelated .newMsgDialog .newMsgDialog_BottomResults{
+    display: flex;
+    align-items: center;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+.msgRelated .newMsgDialog .newMsgDialog_BottomResults .MuiAvatar-root{
+    width: 35px;
+    height: 35px;
+}
+
+.msgRelated .newMsgDialog .newMsgDialog_BottomResults p{
+    font-size: 14px;
+    font-weight: 400;
+    margin-left: 12px;
 }

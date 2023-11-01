@@ -10,7 +10,7 @@ function HomePage_Rightbar() {
                 <HomePage_Rightbar_FriendsList />
             </div>
 
-            <hr id='line'/>
+            <hr id='line' />
 
             <div className="homePageRightbar_Bottom">
                 <HomePage_Rightbar_GroupsList />
