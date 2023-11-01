@@ -14,16 +14,17 @@ function HomePage() {
     const [matchingUsernames, setMatchingUsernames] = useState([]);
     const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
 
-    const openNewMessageModal = () => {
-        setIsDialogOpen(true);
-    }
+    const toggleUserSelection = (userId, username, photoURL) => {
+        const isUserSelected = selectedUsers.some(user => user.userId === userId);
+        if (!isUserSelected) {
+            // Select the user and store the username and photoURL
+            setSelectedUsers([...selectedUsers, { userId, username, photoURL }]);
+        }
+        setSearchText('');
+    };
 
-    const closeNewMessageModal = () => {
-        setIsDialogOpen(false);
-    }
-
-    const handleSearchInput = () => {
-        setIsSearchBoxVisible(!isSearchBoxVisible);
+    const deselectUser = (userId) => {
+        setSelectedUsers(selectedUsers.filter(user => user.userId !== userId));
     };
 
     useEffect(() => {
@@ -75,20 +76,6 @@ function HomePage() {
             });
     }, [searchText]);
 
-    const toggleUserSelection = (userId, username, photoURL) => {
-        const isUserSelected = selectedUsers.some(user => user.userId === userId);
-        if (!isUserSelected) {
-            // Select the user and store the username and photoURL
-            setSelectedUsers([...selectedUsers, { userId, username, photoURL }]);
-        }
-        setSearchText('');
-    };
-
-    const deselectUser = (userId) => {
-        setSelectedUsers(selectedUsers.filter(user => user.userId !== userId));
-    };
-
-
     return (
         <div className='homepage'>
             <div className='homepage_Leftbar'>
@@ -103,7 +90,7 @@ function HomePage() {
 
             <div className="msgRelated">
                 <div id='newMsg'>
-                    <i onClick={openNewMessageModal}></i>
+                    <i onClick={() => setIsDialogOpen(true)}></i>
                 </div>
 
                 {isDialogOpen && (
@@ -115,6 +102,7 @@ function HomePage() {
 
                         <div className="newMsgDialog_Middle">
                             <p id='toText'>To: </p>
+
                             <div className="newMsgDialog_MiddleRight">
                                 {selectedUsers.length > 0 && (
                                     <div className="selectedUsers">
@@ -130,7 +118,7 @@ function HomePage() {
                                     type="text"
                                     value={searchText}
                                     onChange={(e) => setSearchText(e.target.value)}
-                                    onClick={handleSearchInput}
+                                    onClick={() => setIsSearchBoxVisible(!isSearchBoxVisible)}
                                 />
                             </div>
                         </div>
@@ -162,10 +150,10 @@ function HomePage() {
                                 ))
                             )}
                         </div>
-                    </div >
+                    </div>
                 )}
-            </div >
-        </div >
+            </div>
+        </div>
     )
 }
 

@@ -24,15 +24,12 @@
     overflow-y: auto;
 }
 
-
-
-
+/** HomePage New Message Section */
 .msgRelated{
     position: fixed;
     right: 0;
     bottom: 0;
 }
-
 
 .msgRelated #newMsg{
     position: absolute;
@@ -60,6 +57,7 @@
     height: 20px;
 }
 
+/* New Message Dialog Section */
 .msgRelated .newMsgDialog {
     position: absolute;
     bottom: 0;
@@ -73,36 +71,38 @@
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
 }
 
-.msgRelated .newMsgDialog .newMsgDialog_Top{
+/* New Message Dialog Top Section */
+.newMsgDialog_Top{
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px;
 }
 
-.msgRelated .newMsgDialog .newMsgDialog_Top p{
+.newMsgDialog_Top p{
     font-size: 14px;
     font-weight: 500;
     color: #050505;
 }
 
-.msgRelated .newMsgDialog .newMsgDialog_Top .MuiSvgIcon-root{
+.newMsgDialog_Top .MuiSvgIcon-root{
     width: 20px;
     color: #0866FF;
 }
 
-.msgRelated .newMsgDialog .newMsgDialog_Top .MuiSvgIcon-root:hover{
+.newMsgDialog_Top .MuiSvgIcon-root:hover{
     cursor: pointer;
 }
 
-.msgRelated .newMsgDialog .newMsgDialog_Middle{
+/* New Message Dialog Middle Section */
+.newMsgDialog_Middle{
     display: flex;
     align-items: flex-start;
     padding: 8px 15px;
     border-bottom: 1px solid lightgray;
 }
 
-.msgRelated .newMsgDialog .newMsgDialog_Middle #toText{
+.newMsgDialog_Middle #toText{
     font-size: 14px;
     font-weight: 400;
     color: #050505;
@@ -115,7 +115,7 @@
     flex-wrap: wrap;
 }
 
-.msgRelated .newMsgDialog .newMsgDialog_Middle .newMsgDialog_MiddleRight input{
+.newMsgDialog_Middle .newMsgDialog_MiddleRight input{
     width: 100%;
     font-size: 14px;
     font-weight: 400;
@@ -158,7 +158,8 @@
     cursor: pointer;
 }
 
-.msgRelated .newMsgDialog .newMsgDialog_Bottom{
+/* New Message Dialog Bottom Section */
+.newMsgDialog_Bottom{
     display: flex;
     align-items: flex-start;
     flex-direction: column;
@@ -188,19 +189,19 @@
     margin-top: 8px;
 }
 
-.msgRelated .newMsgDialog .newMsgDialog_BottomResults{
+.newMsgDialog_BottomResults{
     display: flex;
     align-items: center;
     overflow-y: auto;
     margin-bottom: 15px;
 }
 
-.msgRelated .newMsgDialog .newMsgDialog_BottomResults .MuiAvatar-root{
+.newMsgDialog_BottomResults .MuiAvatar-root{
     width: 35px;
     height: 35px;
 }
 
-.msgRelated .newMsgDialog .newMsgDialog_BottomResults p{
+.newMsgDialog_BottomResults p{
     font-size: 14px;
     font-weight: 400;
     margin-left: 12px;
