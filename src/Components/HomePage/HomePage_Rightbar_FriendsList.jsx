@@ -11,6 +11,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
+import { db } from '../BackendRelated/Firebase';
 
 function HomePage_Rightbar_FriendsList({ close }) {
     const [{ user }] = useStateValue();
@@ -19,6 +20,10 @@ function HomePage_Rightbar_FriendsList({ close }) {
     const [selectedFriend, setSelectedFriend] = useState(null);
     const [isDialogVisible, setIsDialogVisible] = useState(false);
     const [isEmojiPickerVisible, setIsEmojiPickerVisible] = useState(false);
+
+    const [messages, setMessages] = useState([]); // Store messages
+    const [messageInput, setMessageInput] = useState('');
+
 
 
     useEffect(() => {
@@ -37,11 +42,47 @@ function HomePage_Rightbar_FriendsList({ close }) {
         // Set the selected friend when a friend is clicked
         setSelectedFriend(friend);
         setIsDialogVisible(true); // Show the friend's message box
+
+        // Fetch messages for the selected friend and set them in the state
+        db.collection('Messages')
+            .where('recipient', '==', user.uid)
+            .where('sender', '==', friend.id)
+            .onSnapshot((snapshot) => {
+                const messages = [];
+                snapshot.forEach((doc) => {
+                    messages.push(doc.data());
+                });
+                setMessages(messages);
+            });
     };
 
     const handleEmojiIconClick = () => {
         setIsEmojiPickerVisible(!isEmojiPickerVisible); // Toggle EmojiPicker visibility
     };
+
+    // Handle sending a message
+    const sendMessage = () => {
+        if (messageInput.trim() === '') {
+            return;
+        }
+
+        // Update messages state
+        const newMessage = {
+            text: messageInput,
+            sender: user.uid,
+            recipient: selectedFriend.id,
+            timestamp: new Date().toISOString(),
+        };
+
+        setMessages([...messages, newMessage]);
+
+        // Save the message in Firestore
+        db.collection('Messages').add(newMessage);
+
+        // Clear the message input
+        setMessageInput('');
+    };
+
 
     return (
         <div className='homepage_rightbar_friendList'>
@@ -89,16 +130,27 @@ function HomePage_Rightbar_FriendsList({ close }) {
                             <h3>{selectedFriend.username}</h3>
                             <p>Facebook</p>
                             <p>You're friends on Facebook</p>
+
+                            {messages.map((message) => (
+                                <div key={message.timestamp} className={`message ${message.sender === user.uid ? 'sent' : 'received'}`}>
+                                    {message.text}
+                                </div>
+                            ))}
                         </div>
 
                         <div className='FriendMessages_Bottom'>
                             <AddCircleIcon />
                             <div className='inputSection'>
-                                <input type='text' placeholder='Aa'/>
+                                <input
+                                    type='text'
+                                    placeholder='Aa'
+                                    value={messageInput}
+                                    onChange={(e) => setMessageInput(e.target.value)}
+                                />
                                 <EmojiEmotionsIcon className='emojiIcon' onClick={handleEmojiIconClick} />
                             </div>
                             {isEmojiPickerVisible && <EmojiPicker />}
-                            <SendIcon />
+                            <SendIcon onClick={sendMessage} />
                         </div>
                     </div>
                 )}
