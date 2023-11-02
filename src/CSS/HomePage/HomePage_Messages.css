@@ -1,0 +1,210 @@
+/** HomePage Messages Section */
+.HomePageMessages {
+    position: absolute;
+    bottom: 0;
+    right: 85px;
+    width: 300px;
+    height: 410px;        
+    background: #fff;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border: 1px solid rgb(204, 204, 204);
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+}
+
+/* HomePage Messages Top Section */
+.HomePageMessages_Top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.HomePageMessages_TopLeft p{
+    font-size: 14px;
+    font-weight: 500;
+    color: #050505;
+}
+
+.HomePageMessages_TopRight .MuiSvgIcon-root{
+    width: 20px;
+    color: #0866FF;
+}
+
+.HomePageMessages_TopRight .MuiSvgIcon-root:hover{
+    cursor: pointer;
+}
+
+/* HomePage Messages Middle Section */
+.HomePageMessages_Middle{
+    display: flex;
+    align-items: flex-start;
+    padding: 8px 15px;
+    border-bottom: 1px solid lightgray;
+}
+
+.HomePageMessages_Middle #toText{
+    font-size: 14px;
+    font-weight: 400;
+    color: #050505;
+    margin-right: 12px;
+}
+
+.HomePageMessages_MiddleRight{
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.HomePageMessages_MiddleRight input{
+    width: 100%;
+    font-size: 14px;
+    font-weight: 400;
+    color: #050505;
+    outline: none;
+    border: none;
+}
+
+.HomePageMessages_MiddleRight .selectedUserSection{
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.selectedUserSection .selectedUser{
+    width: max-content;
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background-color: #EBF5FF;
+    margin: 0 8px 8px 0;
+}
+
+.selectedUserSection .selectedUser p{
+    color: #0866FF;
+    font-size: 12px;
+    font-weight: 500;
+    margin-right: 5px;
+}
+
+.selectedUserSection .selectedUser .MuiSvgIcon-root{
+    width: 14px;
+    height: fit-content;
+    color: #0866FF;
+}
+
+.selectedUserSection .selectedUser .MuiSvgIcon-root:hover{
+    cursor: pointer;
+}
+
+/* HomePage Messages Bottom Section */
+.HomePageMessages_Bottom{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    height: 40vh;
+    padding: 12px 8px;
+}
+
+.HomePageMessages_Bottom #noMatch {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.HomePageMessages_BottomInner{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+}
+
+.HomePageMessages_BottomInner_Top{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 25px 12px 12px;
+}
+
+.HomePageMessages_BottomInner_Top .MuiAvatar-root{
+    width: 60px;
+    height: 60px;
+}
+
+.HomePageMessages_BottomInner_Top p{
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.HomePageMessages_BottomInner_Bottom {
+    display: flex;
+    align-items: center;
+    width: -webkit-fill-available;
+}
+
+.HomePageMessages_BottomInner_Bottom .MuiSvgIcon-root{
+    color: #0866FF;
+    width: 24px;
+    height: 24px;
+}
+
+.HomePageMessages_BottomInner_Bottom .inputSection{
+    position: relative;
+    width: -webkit-fill-available;
+}
+
+.HomePageMessages_BottomInner_Bottom .inputSection input{
+    width: -webkit-fill-available;
+    font-size: 14px;
+    font-weight: 400;
+    color: #050505;
+    padding: 8px 30px 8px 12px;
+    margin: 0 3px;
+    outline: none;
+    border-radius: 20px;
+    /* background-color: #F0F2F5; */
+    background-color: #F0F0F0;
+    border: none;
+}
+
+.HomePageMessages_BottomInner_Bottom .inputSection .emojiIcon{
+    position: absolute;
+    top: 50%;
+    right: 7px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.HomePageMessages_BottomResults{
+    display: flex;
+    align-items: center;
+    overflow-y: auto;
+    margin-bottom: 3px;
+    padding: 8px 6px;
+    border-radius: 8px;
+    width: -webkit-fill-available;
+}
+
+.HomePageMessages_BottomResults:hover{
+    cursor: pointer;
+    background-color: rgb(211 211 211/33%);
+}
+
+.HomePageMessages_BottomResults .MuiAvatar-root{
+    width: 35px;
+    height: 35px;
+}
+
+.HomePageMessages_BottomResults p{
+    font-size: 14px;
+    font-weight: 400;
+    margin-left: 12px;
+}
