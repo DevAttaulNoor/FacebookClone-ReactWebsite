@@ -34,7 +34,7 @@ function HomePage_Messages({ close }) {
     };
 
     const toggleEmojiPicker = () => {
-        setShowEmojiPicker(!showEmojiPicker); // Toggle the state to show/hide the emoji picker
+        setShowEmojiPicker(!showEmojiPicker);
     };
 
     const handleEmojiClick = (event) => {

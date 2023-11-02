@@ -62,3 +62,121 @@
     display: flex;
     align-items: center;
 }
+
+/** HomePage Messages Section */
+.FriendMessages {
+    position: fixed;
+    bottom: 0;
+    right: 85px;
+    width: 300px;
+    height: 410px;        
+    background: #fff;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border: 1px solid rgb(204, 204, 204);
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+}
+
+/* HomePage Messages Top Section */
+.FriendMessages_Top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+    padding: 8px;
+}
+
+.FriendMessages_TopLeft{
+    display: flex;
+    align-items: center;
+}
+
+.FriendMessages_TopLeft .MuiAvatar-root{
+    width: 35px;
+    height: 35px;
+    margin-right: 6px;
+}
+
+.FriendMessages_TopLeft p{
+    font-size: 14px;
+    font-weight: 500;
+    color: #050505;
+}
+
+.FriendMessages_TopRight .MuiSvgIcon-root{
+    width: 20px;
+    color: #0866FF;
+}
+
+.FriendMessages_TopRight .MuiSvgIcon-root:hover{
+    cursor: pointer;
+}
+
+.FriendMessages_Middle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 25px 12px 12px;
+    /* height: 100%; */
+    overflow-y: auto;
+}
+
+.FriendMessages_Middle .MuiAvatar-root{
+    width: 60px;
+    height: 60px;
+}
+
+.FriendMessages_Middle h3{
+    font-size: 16px;
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+.FriendMessages_Middle p{
+    font-size: 12px;
+    font-weight: 400;
+    color: #65676B;
+    padding-bottom: 6px;
+}
+
+.FriendMessages_Bottom {
+    display: flex;
+    align-items: center;
+    width: inherit;
+    position: fixed;
+    bottom: 8px;
+}
+
+.FriendMessages_Bottom .MuiSvgIcon-root{
+    color: #0866FF;
+    width: 24px;
+    height: 24px;
+}
+
+.FriendMessages_Bottom .inputSection{
+    position: relative;
+    width: -webkit-fill-available;
+}
+
+.FriendMessages_Bottom .inputSection input{
+    width: -webkit-fill-available;
+    font-size: 14px;
+    font-weight: 400;
+    color: #050505;
+    padding: 8px 30px 8px 12px;
+    margin: 0 3px;
+    outline: none;
+    border-radius: 20px;
+    /* background-color: #F0F2F5; */
+    background-color: #F0F0F0;
+    border: none;
+}
+
+.FriendMessages_Bottom .inputSection .emojiIcon{
+    position: absolute;
+    top: 50%;
+    right: 7px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
