@@ -147,29 +147,6 @@
     padding-bottom: 6px;
 }
 
-/* .FriendMessages_Middle .message {
-    width: -webkit-fill-available;
-    padding: 0 10px;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
-.FriendMessages_Middle .message #messageContent{
-    border-radius: 18px;
-    padding: 8px 12px;
-    font-size: 14px;
-    font-weight: 400;
-}
-
-.FriendMessages_Middle .message #messageTimestamp{
-    color: #65676B;
-    font-size: 12px;
-    font-weight: 500;
-    padding: 16px 20px;
-} */
-
 .FriendMessages_Middle .message.sent{
     width: -webkit-fill-available;
     padding: 0 10px;
@@ -242,7 +219,6 @@
     margin: 0 3px;
     outline: none;
     border-radius: 20px;
-    /* background-color: #F0F2F5; */
     background-color: #F0F0F0;
     border: none;
 }
