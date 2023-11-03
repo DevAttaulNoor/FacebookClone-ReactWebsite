@@ -115,29 +115,103 @@
 .FriendMessages_Middle{
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
-    padding: 25px 12px 12px;
-    /* height: 100%; */
+    height: 45vh;
+    width: 100%;
     overflow-y: auto;
 }
 
-.FriendMessages_Middle .MuiAvatar-root{
+.FriendMessages_Middle .friendIntro{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 25px 12px 12px;
+}
+
+.FriendMessages_Middle .friendIntro .MuiAvatar-root{
     width: 60px;
     height: 60px;
 }
 
-.FriendMessages_Middle h3{
+.FriendMessages_Middle .friendIntro h3{
     font-size: 16px;
     font-weight: 600;
     margin: 10px 0;
 }
 
-.FriendMessages_Middle p{
+.FriendMessages_Middle .friendIntro p{
     font-size: 12px;
     font-weight: 400;
     color: #65676B;
     padding-bottom: 6px;
+}
+
+/* .FriendMessages_Middle .message {
+    width: -webkit-fill-available;
+    padding: 0 10px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.FriendMessages_Middle .message #messageContent{
+    border-radius: 18px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.FriendMessages_Middle .message #messageTimestamp{
+    color: #65676B;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 16px 20px;
+} */
+
+.FriendMessages_Middle .message.sent{
+    width: -webkit-fill-available;
+    padding: 0 10px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
+.FriendMessages_Middle .message.received{
+    width: -webkit-fill-available;
+    padding: 0 10px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.FriendMessages_Middle .message.sent #messageTimestamp, 
+.FriendMessages_Middle .message.received #messageTimestamp{
+    color: #65676B;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 12px;
+}
+
+.FriendMessages_Middle .message.sent #messageContent{
+    border-radius: 18px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: #0084FF;
+    color: #fff;
+}
+
+.FriendMessages_Middle .message.received #messageContent{
+    border-radius: 18px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: #F0F0F0;
+    color: #000;
 }
 
 .FriendMessages_Bottom {
