@@ -38,97 +38,181 @@ function HomePage_Rightbar_FriendsList() {
         setIsEmojiPickerVisible(!isEmojiPickerVisible); // Toggle EmojiPicker visibility
     };
 
+    // const handleFriendClick = (friend) => {
+    //     // Set the selected friend when a friend is clicked
+    //     setSelectedFriend(friend);
+    //     setIsDialogVisible(true);
+
+    //     // Fetch messages for the selected friend and set them in the state
+    //     db.collection('Chats')
+    //         .where('sender', '==', user.uid)
+    //         .where('receiver', '==', friend.friendUid)
+    //         .get()
+    //         .then((querySnapshot1) => {
+    //             // Query for messages where user.uid is person1 and friend.friendUid is person2
+
+    //             const messages1 = [];
+    //             querySnapshot1.forEach((doc) => {
+    //                 messages1.push(doc.data());
+    //             });
+
+    //             db.collection('Chats')
+    //                 .where('sender', '==', friend.friendUid)
+    //                 .where('receiver', '==', user.uid)
+    //                 .get()
+    //                 .then((querySnapshot2) => {
+    //                     // Query for messages where friend.friendUid is person1 and user.uid is person2
+
+    //                     const messages2 = [];
+    //                     querySnapshot2.forEach((doc) => {
+    //                         messages2.push(doc.data());
+    //                     });
+
+    //                     // Combine the messages from both queries
+    //                     const combinedMessages = messages1.concat(messages2);
+    //                     setMessages(combinedMessages);
+    //                 })
+    //                 .catch((error) => {
+    //                     console.error('Error getting messages for sender === friendUid: ', error);
+    //                 });
+    //         })
+    //         .catch((error) => {
+    //             console.error('Error getting messages for sender === user.uid: ', error);
+    //         });
+
+    // };
+
+    // const sendMessage = () => {
+    //     if (messageInput.trim() === '') {
+    //         return;
+    //     }
+
+    //     if (!selectedFriend || !selectedFriend.friendUid || !user.uid) {
+    //         // Handle the case where recipient, sender, or selectedFriend is undefined
+    //         console.error('Recipient or sender is undefined');
+    //         return;
+    //     }
+
+    //     // Update messages state
+    //     const newMessage = {
+    //         text: messageInput,
+    //         person1: user.uid,
+    //         person2: selectedFriend.friendUid,
+    //         timestamp: new Date(),
+    //     };
+
+    //     setMessages([...messages, newMessage]);
+
+    //     // Save the message in Firestore
+    //     // db.collection('Messages').collection('conversations').add(newMessage);
+
+    //     db.collection('Messages').add(newMessage);
+
+    //     // Clear the message input
+    //     setMessageInput('');
+    // };
+
     const handleFriendClick = (friend) => {
-        // Set the selected friend when a friend is clicked
         setSelectedFriend(friend);
         setIsDialogVisible(true);
 
-        // Fetch messages for the selected friend and set them in the state
-        db.collection('Messages')
-            .where('person1', '==', user.uid)
-            .where('person2', '==', friend.friendUid)
-            .get()
-            .then((querySnapshot1) => {
-                // Query for messages where user.uid is person1 and friend.friendUid is person2
+        const userUid = user.uid;
+        const friendUid = friend.friendUid;
 
-                const messages1 = [];
-                querySnapshot1.forEach((doc) => {
-                    messages1.push(doc.data());
-                });
+        const chatCollection = db.collection('Chats');
 
-                db.collection('Messages')
-                    .where('person1', '==', friend.friendUid)
-                    .where('person2', '==', user.uid)
-                    .get()
-                    .then((querySnapshot2) => {
-                        // Query for messages where friend.friendUid is person1 and user.uid is person2
+        // Fetch all documents in the Chats collection
+        chatCollection.get().then((querySnapshot) => {
+            const messages = [];
 
-                        const messages2 = [];
-                        querySnapshot2.forEach((doc) => {
-                            messages2.push(doc.data());
-                        });
+            querySnapshot.forEach((doc) => {
+                const chatData = doc.data();
+                if (chatData.messages) {
+                    // Filter messages based on sender and recipient UIDs
+                    const filteredMessages = chatData.messages.filter((message) => (
+                        (message.sender === userUid && message.recipient === friendUid) ||
+                        (message.sender === friendUid && message.recipient === userUid)
+                    ));
+                    console.log('Filtered Messages:', filteredMessages);
 
-                        // Combine the messages from both queries
-                        const combinedMessages = messages1.concat(messages2);
-                        setMessages(combinedMessages);
-                    })
-                    .catch((error) => {
-                        console.error('Error getting messages for person1 === friendUid: ', error);
-                    });
-            })
-            .catch((error) => {
-                console.error('Error getting messages for person1 === user.uid: ', error);
+
+                    // Add the filtered messages to the messages array
+                    messages.push(...filteredMessages);
+                }
+                console.log('Chat Data:', chatData);
+
             });
+
+            console.log('All Messages:', messages);
+
+            // Set the combined messages in the state
+            setMessages(messages);
+        }).catch((error) => {
+            console.error('Error getting messages from Chats collection: ', error);
+        });
+
 
     };
 
-    const sendMessage = () => {
+    const sendMessage = async () => {
         if (messageInput.trim() === '') {
             return;
         }
 
         if (!selectedFriend || !selectedFriend.friendUid || !user.uid) {
-            // Handle the case where recipient, sender, or selectedFriend is undefined
             console.error('Recipient or sender is undefined');
             return;
         }
 
-        // Update messages state
+        const chatId = user.uid < selectedFriend.friendUid
+            ? `${user.uid}_${selectedFriend.friendUid}`
+            : `${selectedFriend.friendUid}_${user.uid}`;
+
         const newMessage = {
             text: messageInput,
-            person1: user.uid,
-            person2: selectedFriend.friendUid,
-            timestamp: new Date().toISOString(),
+            sender: user.uid,
+            recipient: selectedFriend.friendUid,
+            timestamp: new Date(),
         };
 
-        setMessages([...messages, newMessage]);
+        // Retrieve the existing messages for the chat
+        const chatDocRef = db.collection('Chats').doc(chatId);
+        const chatDoc = await chatDocRef.get();
 
-        // Save the message in Firestore
-        // db.collection('Messages').collection('conversations').add(newMessage);
+        if (chatDoc.exists) {
+            const existingMessages = chatDoc.data().messages || [];
+            const updatedMessages = [...existingMessages, newMessage];
 
-        db.collection('Messages').add(newMessage);
+            // Update the messages field in the document
+            await chatDocRef.update({ messages: updatedMessages });
+        }
+
+        else {
+            // If the chat document doesn't exist, create it with the new message
+            await chatDocRef.set({ messages: [newMessage] });
+        }
 
         // Clear the message input
         setMessageInput('');
     };
 
-    const timeAgo = (timestamp) => {
+    const timeAgowithInitials = (timestamp) => {
         if (!timestamp || !timestamp.toDate) {
-            return "0 second ago"
+            return "0s"
         }
         const currentDate = new Date();
         const postDate = timestamp.toDate();
         const seconds = Math.floor((currentDate - postDate) / 1000);
         const secondsDifference = Math.max(seconds, 1);
         const periods = {
-            decade: 315360000,
-            year: 31536000,
-            month: 2628000,
-            week: 604800,
-            day: 86400,
-            hour: 3600,
-            minute: 60,
-            second: 1,
+            D: 315360000,
+            Y: 31536000,
+            M: 2628000,
+            w: 604800,
+            d: 86400,
+            h: 3600,
+            m: 60,
+            s: 1,
         };
 
         let elapsed = 0;
@@ -144,7 +228,7 @@ function HomePage_Rightbar_FriendsList() {
                 break;
             }
         }
-        return `${granularity} ${unit}${granularity > 1 ? 's' : ''} ago`;
+        return `${granularity}${unit}${granularity > 1 ? '' : ''}`;
     };
 
     return (
@@ -197,11 +281,10 @@ function HomePage_Rightbar_FriendsList() {
                                 <p>You're friends on Facebook</p>
                             </div>
 
-
                             {messages.map((message) => (
-                                <div key={timeAgo(message.timestamp)} className={`message ${message.person1 === user.uid ? 'sent' : 'received'}`}>
+                                <div key={message.timestamp} className={`message ${message.sender === user.uid ? 'sent' : 'received'}`}>
                                     <p id='messageContent'>{message.text}</p>
-                                    <p id='messageTimestamp'>{timeAgo(message.timestamp)}</p>
+                                    <p id='messageTimestamp'>{timeAgowithInitials(message.timestamp)}</p>
                                 </div>
                             ))}
                         </div>
