@@ -208,3 +208,178 @@
     font-weight: 400;
     margin-left: 12px;
 }
+
+
+
+
+
+
+
+
+/** HomePage Messages Section */
+.FriendMessages {
+    position: fixed;
+    bottom: 0;
+    right: 85px;
+    width: 300px;
+    height: 410px;        
+    background: #fff;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border: 1px solid rgb(204, 204, 204);
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+}
+
+/* HomePage Messages Top Section */
+.FriendMessages_Top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+    padding: 8px;
+}
+
+.FriendMessages_TopLeft{
+    display: flex;
+    align-items: center;
+}
+
+.FriendMessages_TopLeft .MuiAvatar-root{
+    width: 35px;
+    height: 35px;
+    margin-right: 6px;
+}
+
+.FriendMessages_TopLeft p{
+    font-size: 14px;
+    font-weight: 500;
+    color: #050505;
+}
+
+.FriendMessages_TopRight .MuiSvgIcon-root{
+    width: 20px;
+    color: #0866FF;
+}
+
+.FriendMessages_TopRight .MuiSvgIcon-root:hover{
+    cursor: pointer;
+}
+
+.FriendMessages_Middle{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 45vh;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.FriendMessages_Middle .friendIntro{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 25px 12px 12px;
+}
+
+.FriendMessages_Middle .friendIntro .MuiAvatar-root{
+    width: 60px;
+    height: 60px;
+}
+
+.FriendMessages_Middle .friendIntro h3{
+    font-size: 16px;
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+.FriendMessages_Middle .friendIntro p{
+    font-size: 12px;
+    font-weight: 400;
+    color: #65676B;
+    padding-bottom: 6px;
+}
+
+.FriendMessages_Middle .message.sent{
+    width: -webkit-fill-available;
+    padding: 0 10px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
+.FriendMessages_Middle .message.received{
+    width: -webkit-fill-available;
+    padding: 0 10px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.FriendMessages_Middle .message.sent #messageTimestamp, 
+.FriendMessages_Middle .message.received #messageTimestamp{
+    color: #65676B;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 12px;
+}
+
+.FriendMessages_Middle .message.sent #messageContent{
+    border-radius: 18px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: #0084FF;
+    color: #fff;
+}
+
+.FriendMessages_Middle .message.received #messageContent{
+    border-radius: 18px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: #F0F0F0;
+    color: #000;
+}
+
+.FriendMessages_Bottom {
+    display: flex;
+    align-items: center;
+    width: inherit;
+    position: fixed;
+    bottom: 8px;
+}
+
+.FriendMessages_Bottom .MuiSvgIcon-root{
+    color: #0866FF;
+    width: 24px;
+    height: 24px;
+}
+
+.FriendMessages_Bottom .inputSection{
+    position: relative;
+    width: -webkit-fill-available;
+}
+
+.FriendMessages_Bottom .inputSection input{
+    width: -webkit-fill-available;
+    font-size: 14px;
+    font-weight: 400;
+    color: #050505;
+    padding: 8px 30px 8px 12px;
+    margin: 0 3px;
+    outline: none;
+    border-radius: 20px;
+    background-color: #F0F0F0;
+    border: none;
+}
+
+.FriendMessages_Bottom .inputSection .emojiIcon{
+    position: absolute;
+    top: 50%;
+    right: 7px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
