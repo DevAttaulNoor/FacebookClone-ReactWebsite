@@ -41,43 +41,6 @@ function HomePage_Rightbar_FriendsList() {
     const handleFriendClick = (friend) => {
         setSelectedFriend(friend);
         setIsDialogVisible(true);
-
-        const userUid = user.uid;
-        const friendUid = friend.friendUid;
-
-        const chatCollection = db.collection('Chats');
-
-        // Fetch all documents in the Chats collection
-        chatCollection.get().then((querySnapshot) => {
-            const messages = [];
-
-            querySnapshot.forEach((doc) => {
-                const chatData = doc.data();
-                if (chatData.messages) {
-                    // Filter messages based on sender and recipient UIDs
-                    const filteredMessages = chatData.messages.filter((message) => (
-                        (message.sender === userUid && message.recipient === friendUid) ||
-                        (message.sender === friendUid && message.recipient === userUid)
-                    ));
-                    console.log('Filtered Messages:', filteredMessages);
-
-
-                    // Add the filtered messages to the messages array
-                    messages.push(...filteredMessages);
-                }
-                console.log('Chat Data:', chatData);
-
-            });
-
-            console.log('All Messages:', messages);
-
-            // Set the combined messages in the state
-            setMessages(messages);
-        }).catch((error) => {
-            console.error('Error getting messages from Chats collection: ', error);
-        });
-
-
     };
 
     const sendMessage = async () => {
@@ -157,6 +120,37 @@ function HomePage_Rightbar_FriendsList() {
         return `${granularity}${unit}${granularity > 1 ? '' : ''}`;
     };
 
+    useEffect(() => {
+        if (selectedFriend) {
+            const userUid = user.uid;
+            const friendUid = selectedFriend.friendUid;
+    
+            const chatId = userUid < friendUid
+                ? `${userUid}_${friendUid}`
+                : `${friendUid}_${userUid}`;
+    
+            const chatCollection = db.collection('Chats').doc(chatId);
+    
+            const unsubscribe = chatCollection.onSnapshot((doc) => {
+                if (doc.exists) {
+                    const chatData = doc.data();
+                    if (chatData.messages) {
+                        setMessages(chatData.messages);
+                    } else {
+                        setMessages([]); // No messages available
+                    }
+                } else {
+                    setMessages([]); // Chat document doesn't exist
+                }
+            });
+    
+            return () => {
+                // Unsubscribe from the snapshot listener when the component unmounts.
+                unsubscribe();
+            };
+        }
+    }, [selectedFriend, user.uid]);
+    
     return (
         <div className='homepage_rightbar_friendList'>
             <div className="homepage_rightbar_friendListTop">
