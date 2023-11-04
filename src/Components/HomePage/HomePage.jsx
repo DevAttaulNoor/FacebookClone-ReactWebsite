@@ -6,28 +6,11 @@ import HomePage_Rightbar from './HomePage_Rightbar'
 import HomePage_Messages from './HomePage_Messages';
 
 function HomePage() {
-    const [isMessageBox, setIsMessageBox] = useState(false);
-    const [isDialogVisible, setIsDialogVisible] = useState(false);
-    const dialogBoxRef = useRef(null);
+    const [messageBox, setMessageBox] = useState(false);
 
-    const messageBoxClose = () => {
-        setIsMessageBox(false);
+    const closeMessageBox = () => {
+        setMessageBox(false);
     };
-
-    useEffect(() => {
-        const handleOutsideClick = (e) => {
-            if (dialogBoxRef.current && !dialogBoxRef.current.contains(e.target)) {
-                setIsDialogVisible(false);
-            }
-        };
-
-        window.addEventListener("click", handleOutsideClick);
-
-        // Cleanup the event listener when the component unmounts
-        return () => {
-            window.removeEventListener("click", handleOutsideClick);
-        };
-    }, []);
 
     return (
         <div className='homepage'>
@@ -43,11 +26,11 @@ function HomePage() {
 
             <div className="msgRelated">
                 <div id='newMsg'>
-                    <i onClick={() => setIsMessageBox(true)}></i>
+                    <i onClick={() => setMessageBox(true)}></i>
                 </div>
 
-                {isMessageBox && (
-                    <HomePage_Messages close={messageBoxClose} />
+                {messageBox && (
+                    <HomePage_Messages handleMessageBox={messageBox} closeBox={closeMessageBox} />
                 )}
             </div>
         </div>

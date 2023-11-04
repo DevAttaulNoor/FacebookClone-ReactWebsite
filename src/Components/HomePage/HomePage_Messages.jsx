@@ -10,8 +10,9 @@ import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import { useStateValue } from '../BackendRelated/StateProvider';
 
-function HomePage_Messages({ close, closeBox, handleSelectedFriend }) {
+function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleSelectedFriend }) {
     const [comment, setComment] = useState('');
+    const [message, setMessage] = useState("");
     const [searchText, setSearchText] = useState('');
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [matchingUsernames, setMatchingUsernames] = useState([]);
@@ -201,7 +202,7 @@ function HomePage_Messages({ close, closeBox, handleSelectedFriend }) {
 
     return (
         <>
-            {isDialogVisible && (
+            {handleMessageBox && (
                 <div className='HomePageMessages'>
                     <div className="HomePageMessages_Top">
                         <div className='HomePageMessages_TopLeft'>
@@ -210,7 +211,7 @@ function HomePage_Messages({ close, closeBox, handleSelectedFriend }) {
 
                         <div className='HomePageMessages_TopRight'>
                             <HorizontalRuleIcon />
-                            <CloseIcon onClick={close} />
+                            <CloseIcon onClick={closeBox} />
                         </div>
                     </div>
 
@@ -290,7 +291,7 @@ function HomePage_Messages({ close, closeBox, handleSelectedFriend }) {
 
                         <div className='FriendMessages_TopRight'>
                             <HorizontalRuleIcon />
-                            <CloseIcon onClick={closeBox} />
+                            <CloseIcon onClick={closeFriendBox} />
                         </div>
                     </div>
 

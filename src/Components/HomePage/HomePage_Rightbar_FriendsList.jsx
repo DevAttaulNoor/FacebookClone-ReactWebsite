@@ -10,17 +10,17 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 function HomePage_Rightbar_FriendsList() {
     const [{ user }] = useStateValue();
     const [friends, setFriends] = useState([]);
-    const [messageBox, setMessageBox] = useState(false);
     const [selectedFriend, setSelectedFriend] = useState(null);
+    const [friendMessageBox, setFriendMessageBox] = useState(false);
 
-    const openMessageBox = (friend) => {
-        setMessageBox(true);
+    const openFriendMessageBox = (friend) => {
         setSelectedFriend(friend);
+        setFriendMessageBox(true);
     };
 
-    const closeMessageBox = () => {
-        setMessageBox(false);
+    const closeFriendMessageBox = () => {
         setSelectedFriend(null);
+        setFriendMessageBox(false);
     }
 
     useEffect(() => {
@@ -53,7 +53,7 @@ function HomePage_Rightbar_FriendsList() {
                     <div
                         className="homepageRightbarFriendList_BottomOption"
                         key={friend.id}
-                        onClick={() => openMessageBox(friend)}
+                        onClick={() => openFriendMessageBox(friend)}
                     >
                         <Avatar src={friend.photoURL} />
                         <p>{friend.username}</p>
@@ -61,7 +61,7 @@ function HomePage_Rightbar_FriendsList() {
                 ))}
             </div>
 
-            <HomePage_Messages handleSelectedFriend={selectedFriend} closeBox={closeMessageBox} />
+            <HomePage_Messages handleSelectedFriend={selectedFriend} closeFriendBox={closeFriendMessageBox} />
         </div>
     )
 }
