@@ -11,20 +11,13 @@ import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import { useStateValue } from '../BackendRelated/StateProvider';
 
 function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleSelectedFriend }) {
-    const [comment, setComment] = useState('');
-    const [message, setMessage] = useState("");
+    const [{ user }] = useStateValue();
+    const [messages, setMessages] = useState([]);
+    const [messageInput, setMessageInput] = useState('');
     const [searchText, setSearchText] = useState('');
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [matchingUsernames, setMatchingUsernames] = useState([]);
     const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
-    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-    const [isDialogVisible, setIsDialogVisible] = useState(false);
-    const dialogBoxRef = useRef(null);
-
-
-    const [{ user }] = useStateValue();
-    const [messages, setMessages] = useState([]);
-    const [messageInput, setMessageInput] = useState('');
     const [isEmojiPickerVisible, setIsEmojiPickerVisible] = useState(false);
 
     const toggleUserSelection = (userId, username, photoURL) => {
@@ -40,59 +33,53 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
         setSelectedUsers(selectedUsers.filter(user => user.userId !== userId));
     };
 
-    const toggleEmojiPicker = () => {
-        setShowEmojiPicker(!showEmojiPicker);
-    };
-
-    const handleEmojiClick = (event) => {
-        setMessage((prevMessage) => prevMessage + event.emoji);
-        toggleEmojiPicker();
-    };
-
-    const toggleDialog = () => {
-        setIsDialogVisible(!isDialogVisible);
-    };
-
-    useEffect(() => {
-        if (searchText === '') {
-            // Reset matching usernames when search input is empty
-            setMatchingUsernames([]);
+    const sendMessage = async () => {
+        if (messageInput.trim() === '') {
             return;
         }
 
-        db.collection("Users")
-            .get()
-            .then((querySnapshot) => {
-                const matchingUsernames = querySnapshot.docs
-                    .map((doc) => {
-                        const data = doc.data();
-                        return {
-                            id: doc.id,
-                            Uid: data.Uid,
-                            username: data.username,
-                            photoURL: data.photoURL,
-                        };
-                    })
-                    .filter((user) =>
-                        user.username.toLowerCase().includes(searchText.toLowerCase())
-                    );
-                setMatchingUsernames(matchingUsernames);
-            })
-            .catch((error) => {
-                console.error('Error getting documents:', error);
-            });
-    }, [searchText]);
+        if (!selectedUsers || !selectedUsers[0].userId || !user.uid) {
+            console.error('Recipient or sender is undefined');
+            return;
+        }
 
+        const chatId = user.uid < selectedUsers[0].userId
+            ? `${user.uid}_${selectedUsers[0].userId}`
+            : `${selectedUsers[0].userId}_${user.uid}`;
 
+        const newMessage = {
+            text: messageInput,
+            sender: user.uid,
+            recipient: selectedUsers[0].userId,
+            timestamp: new Date(),
+        };
 
+        // Retrieve the existing messages for the chat
+        const chatDocRef = db.collection('Chats').doc(chatId);
+        const chatDoc = await chatDocRef.get();
 
+        if (chatDoc.exists) {
+            const existingMessages = chatDoc.data().messages || [];
+            const updatedMessages = [...existingMessages, newMessage];
 
+            // Update the messages field in the document
+            await chatDocRef.update({ messages: updatedMessages });
+        }
+
+        else {
+            // If the chat document doesn't exist, create it with the new message
+            await chatDocRef.set({ messages: [newMessage] });
+        }
+
+        // Clear the message input
+        setMessageInput('');
+    };
 
     const handleEmojiIconClick = () => {
         setIsEmojiPickerVisible(!isEmojiPickerVisible); // Toggle EmojiPicker visibility
     };
 
-    const sendMessage = async () => {
+    const sendMessagetoFriend = async () => {
         if (messageInput.trim() === '') {
             return;
         }
@@ -170,6 +157,67 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
     };
 
     useEffect(() => {
+        if (searchText === '') {
+            // Reset matching usernames when search input is empty
+            setMatchingUsernames([]);
+            return;
+        }
+
+        db.collection("Users")
+            .get()
+            .then((querySnapshot) => {
+                const matchingUsernames = querySnapshot.docs
+                    .map((doc) => {
+                        const data = doc.data();
+                        return {
+                            id: doc.id,
+                            Uid: data.Uid,
+                            username: data.username,
+                            photoURL: data.photoURL,
+                        };
+                    })
+                    .filter((user) =>
+                        user.username.toLowerCase().includes(searchText.toLowerCase())
+                    );
+                setMatchingUsernames(matchingUsernames);
+            })
+            .catch((error) => {
+                console.error('Error getting documents:', error);
+            });
+    }, [searchText]);
+
+    useEffect(() => {
+        if (selectedUsers[0]) {
+            const userUid = user.uid;
+            const friendUid = selectedUsers[0].userId;
+
+            const chatId = userUid < friendUid
+                ? `${userUid}_${friendUid}`
+                : `${friendUid}_${userUid}`;
+
+            const chatCollection = db.collection('Chats').doc(chatId);
+
+            const unsubscribe = chatCollection.onSnapshot((doc) => {
+                if (doc.exists) {
+                    const chatData = doc.data();
+                    if (chatData.messages) {
+                        setMessages(chatData.messages);
+                    } else {
+                        setMessages([]); // No messages available
+                    }
+                } else {
+                    setMessages([]); // Chat document doesn't exist
+                }
+            });
+
+            return () => {
+                // Unsubscribe from the snapshot listener when the component unmounts.
+                unsubscribe();
+            };
+        }
+    }, [selectedUsers, user.uid]);
+
+    useEffect(() => {
         if (handleSelectedFriend) {
             const userUid = user.uid;
             const friendUid = handleSelectedFriend.friendUid;
@@ -221,10 +269,10 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
                         <div className="HomePageMessages_MiddleRight">
                             {selectedUsers.length > 0 && (
                                 <div className="selectedUserSection">
-                                    {selectedUsers.map((user) => (
-                                        <div key={user.userId} className="selectedUser">
-                                            <p>{user.username}</p>
-                                            <CloseIcon onClick={() => deselectUser(user.userId)} />
+                                    {selectedUsers.map((userSelected) => (
+                                        <div key={userSelected.userId} className="selectedUser">
+                                            <p>{userSelected.username}</p>
+                                            <CloseIcon onClick={() => deselectUser(userSelected.userId)} />
                                         </div>
                                     ))}
                                 </div>
@@ -239,43 +287,57 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
                     </div>
 
                     <div className="HomePageMessages_Bottom">
-                        {selectedUsers.length > 0 && (
-                            <div className="HomePageMessages_BottomInner">
-                                {selectedUsers.map((user) => (
-                                    <div key={user.userId} className="HomePageMessages_BottomInner_Top">
-                                        <Avatar src={user.photoURL} />
-                                        <p>{user.username}</p>
-                                    </div>
-                                ))}
+                        {searchText === '' ? (
+                            <div className='selectedUserMessagingSection'>
+                                <div className='selectedUserMessagingSection_Top'>
+                                    {selectedUsers.map((userSelected) => (
+                                        <div key={userSelected.userId} className="userInfo">
+                                            <Avatar src={userSelected.photoURL} />
+                                            <p>{userSelected.username}</p>
+                                        </div>
+                                    ))}
 
-                                <div className='HomePageMessages_BottomInner_Bottom'>
+                                    {messages.map((message) => (
+                                        <div key={message.timestamp} className={`message ${message.sender === user.uid ? 'sent' : 'received'}`}>
+                                            <p id='messageContent'>{message.text}</p>
+                                            <p id='messageTimestamp'>{timeAgowithInitials(message.timestamp)}</p>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className='selectedUserMessagingSection_Bottom'>
                                     <AddCircleIcon />
                                     <div className='inputSection'>
-                                        <input type='text' placeholder='Aa' value={comment} onChange={(e) => setComment(e.target.value)} />
-                                        <EmojiEmotionsIcon className='emojiIcon' onClick={toggleDialog} ref={dialogBoxRef} />
-
+                                        <input
+                                            type='text'
+                                            placeholder='Aa'
+                                            value={messageInput}
+                                            onChange={(e) => setMessageInput(e.target.value)}
+                                        />
+                                        <EmojiEmotionsIcon className='emojiIcon' onClick={handleEmojiIconClick} />
                                     </div>
-                                    {isDialogVisible && (
-                                        <EmojiPicker onEmojiClick={handleEmojiClick} />
-                                    )}
-                                    <SendIcon />
+                                    {isEmojiPickerVisible && <EmojiPicker />}
+                                    <SendIcon onClick={sendMessage} />
                                 </div>
                             </div>
-                        )}
-
-                        {searchText !== '' && matchingUsernames.length === 0 ? (
-                            <p id='noMatch'>No matches</p>
                         ) : (
-                            matchingUsernames.map((user) => (
-                                <div
-                                    key={user.id}
-                                    className={`HomePageMessages_BottomResults ${selectedUsers.includes(user.id) ? "selected" : ""}`}
-                                    onClick={() => toggleUserSelection(user.id, user.username, user.photoURL)}
-                                >
-                                    <Avatar src={user.photoURL} />
-                                    <p>{user.username}</p>
-                                </div>
-                            ))
+                            <div className='searchedUserSection'>
+                                {matchingUsernames.length !== 0 ? (
+                                    matchingUsernames.map((user) => (
+                                        <div
+                                            key={user.id}
+                                            className={`searchedUserSectionInner ${selectedUsers.includes(user.id) ? "selected" : ""}`}
+                                            onClick={() => toggleUserSelection(user.id, user.username, user.photoURL)}
+                                        >
+                                            <Avatar src={user.photoURL} />
+                                            <p>{user.username}</p>
+                                        </div>
+                                    ))
+
+                                ) : (
+                                    <p id='noMatch'>No matches</p>
+                                )}
+                            </div>
                         )}
                     </div>
                 </div>
@@ -323,7 +385,7 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
                             <EmojiEmotionsIcon className='emojiIcon' onClick={handleEmojiIconClick} />
                         </div>
                         {isEmojiPickerVisible && <EmojiPicker />}
-                        <SendIcon onClick={sendMessage} />
+                        <SendIcon onClick={sendMessagetoFriend} />
                     </div>
                 </div>
             )}
