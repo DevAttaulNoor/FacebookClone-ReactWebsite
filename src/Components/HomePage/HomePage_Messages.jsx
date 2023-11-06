@@ -1,14 +1,14 @@
 import '../../CSS/HomePage/HomePage_Messages.css'
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { db } from '../BackendRelated/Firebase';
 import { Avatar } from '@mui/material';
+import { useStateValue } from '../BackendRelated/StateProvider';
 import EmojiPicker from 'emoji-picker-react';
 import SendIcon from '@mui/icons-material/Send';
 import CloseIcon from '@mui/icons-material/Close';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
-import { useStateValue } from '../BackendRelated/StateProvider';
 
 function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleSelectedFriend }) {
     const [{ user }] = useStateValue();
@@ -33,70 +33,28 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
         setSelectedUsers(selectedUsers.filter(user => user.userId !== userId));
     };
 
-    const sendMessage = async () => {
-        if (messageInput.trim() === '') {
-            return;
-        }
-
-        if (!selectedUsers || !selectedUsers[0].userId || !user.uid) {
-            console.error('Recipient or sender is undefined');
-            return;
-        }
-
-        const chatId = user.uid < selectedUsers[0].userId
-            ? `${user.uid}_${selectedUsers[0].userId}`
-            : `${selectedUsers[0].userId}_${user.uid}`;
-
-        const newMessage = {
-            text: messageInput,
-            sender: user.uid,
-            recipient: selectedUsers[0].userId,
-            timestamp: new Date(),
-        };
-
-        // Retrieve the existing messages for the chat
-        const chatDocRef = db.collection('Chats').doc(chatId);
-        const chatDoc = await chatDocRef.get();
-
-        if (chatDoc.exists) {
-            const existingMessages = chatDoc.data().messages || [];
-            const updatedMessages = [...existingMessages, newMessage];
-
-            // Update the messages field in the document
-            await chatDocRef.update({ messages: updatedMessages });
-        }
-
-        else {
-            // If the chat document doesn't exist, create it with the new message
-            await chatDocRef.set({ messages: [newMessage] });
-        }
-
-        // Clear the message input
-        setMessageInput('');
-    };
-
     const handleEmojiIconClick = () => {
         setIsEmojiPickerVisible(!isEmojiPickerVisible); // Toggle EmojiPicker visibility
     };
 
-    const sendMessagetoFriend = async () => {
+    const sendMessage = async (recipientUserId) => {
         if (messageInput.trim() === '') {
             return;
         }
 
-        if (!handleSelectedFriend || !handleSelectedFriend.friendUid || !user.uid) {
+        if (!recipientUserId || !user.uid) {
             console.error('Recipient or sender is undefined');
             return;
         }
 
-        const chatId = user.uid < handleSelectedFriend.friendUid
-            ? `${user.uid}_${handleSelectedFriend.friendUid}`
-            : `${handleSelectedFriend.friendUid}_${user.uid}`;
+        const chatId = user.uid < recipientUserId
+            ? `${user.uid}_${recipientUserId}`
+            : `${recipientUserId}_${user.uid}`;
 
         const newMessage = {
             text: messageInput,
             sender: user.uid,
-            recipient: handleSelectedFriend.friendUid,
+            recipient: recipientUserId,
             timestamp: new Date(),
         };
 
@@ -110,9 +68,7 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
 
             // Update the messages field in the document
             await chatDocRef.update({ messages: updatedMessages });
-        }
-
-        else {
+        } else {
             // If the chat document doesn't exist, create it with the new message
             await chatDocRef.set({ messages: [newMessage] });
         }
@@ -187,14 +143,14 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
     }, [searchText]);
 
     useEffect(() => {
-        if (selectedUsers[0]) {
+        let chatId = null;
+        if (selectedUsers[0] || handleSelectedFriend) {
             const userUid = user.uid;
-            const friendUid = selectedUsers[0].userId;
+            const friendUid = selectedUsers[0] ? selectedUsers[0].userId : handleSelectedFriend.friendUid;
+            chatId = userUid < friendUid ? `${userUid}_${friendUid}` : `${friendUid}_${userUid}`;
+        }
 
-            const chatId = userUid < friendUid
-                ? `${userUid}_${friendUid}`
-                : `${friendUid}_${userUid}`;
-
+        if (chatId) {
             const chatCollection = db.collection('Chats').doc(chatId);
 
             const unsubscribe = chatCollection.onSnapshot((doc) => {
@@ -215,38 +171,7 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
                 unsubscribe();
             };
         }
-    }, [selectedUsers, user.uid]);
-
-    useEffect(() => {
-        if (handleSelectedFriend) {
-            const userUid = user.uid;
-            const friendUid = handleSelectedFriend.friendUid;
-
-            const chatId = userUid < friendUid
-                ? `${userUid}_${friendUid}`
-                : `${friendUid}_${userUid}`;
-
-            const chatCollection = db.collection('Chats').doc(chatId);
-
-            const unsubscribe = chatCollection.onSnapshot((doc) => {
-                if (doc.exists) {
-                    const chatData = doc.data();
-                    if (chatData.messages) {
-                        setMessages(chatData.messages);
-                    } else {
-                        setMessages([]); // No messages available
-                    }
-                } else {
-                    setMessages([]); // Chat document doesn't exist
-                }
-            });
-
-            return () => {
-                // Unsubscribe from the snapshot listener when the component unmounts.
-                unsubscribe();
-            };
-        }
-    }, [handleSelectedFriend, user.uid]);
+    }, [selectedUsers, handleSelectedFriend, user.uid]);
 
     return (
         <>
@@ -317,7 +242,7 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
                                         <EmojiEmotionsIcon className='emojiIcon' onClick={handleEmojiIconClick} />
                                     </div>
                                     {isEmojiPickerVisible && <EmojiPicker />}
-                                    <SendIcon onClick={sendMessage} />
+                                    <SendIcon onClick={() => sendMessage(selectedUsers[0].userId)} />
                                 </div>
                             </div>
                         ) : (
@@ -385,7 +310,7 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
                             <EmojiEmotionsIcon className='emojiIcon' onClick={handleEmojiIconClick} />
                         </div>
                         {isEmojiPickerVisible && <EmojiPicker />}
-                        <SendIcon onClick={sendMessagetoFriend} />
+                        <SendIcon onClick={() => sendMessage(handleSelectedFriend.friendUid)} />
                     </div>
                 </div>
             )}
