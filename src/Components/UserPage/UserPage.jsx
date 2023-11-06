@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from 'react-router-dom'
 import { useStateValue } from "../BackendRelated/StateProvider";
 import { db, storage } from "../BackendRelated/Firebase";
+import { Blurhash } from 'react-blurhash';
 import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_AllFriends_Leftbar';
 import UserPage_Components from "./UserPage_Components";
 import AddIcon from '@mui/icons-material/Add';
@@ -16,6 +17,16 @@ function UserPage() {
     const [friends, setFriends] = useState([]);
     const [profileImage, setProfileImage] = useState(null);
     const [coverImage, setCoverImage] = useState(null);
+
+    const [imageLoaded, setImageLoaded] = useState(false);
+
+    useEffect(() => {
+        const img = new Image();
+        img.src = user.coverphotoUrl;
+        img.onload = () => {
+            setImageLoaded(true);
+        };
+    }, [user.coverphotoUrl]);
 
     useEffect(() => {
         fetchFriendsData(user.uid, setFriends);
@@ -115,7 +126,18 @@ function UserPage() {
         <div className="userpage">
             <div className="userpage_Top">
                 <div className="userpage_TopCoverSection">
-                    <img src={user.coverphotoUrl} alt="Cover" />
+                    {imageLoaded ? (
+                        <img
+                            src={user.coverphotoUrl}
+                            alt="Cover"
+                        />
+                    ) : (
+                        <Blurhash
+                            hash={"LEHV6nWB2yk8pyo0adR*.7kCMdnj"}
+                            width={995}
+                            height={370}
+                        />
+                    )}
                     <button onClick={() => document.getElementById('coverImageInput').click()}>
                         <PhotoCameraIcon />
                         <p>Edit Cover Photo</p>
