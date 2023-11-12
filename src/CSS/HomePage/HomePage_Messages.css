@@ -118,29 +118,87 @@
 /* HomePage Messages Bottom Selected User Messaging Top Section */
 .selectedUserMessagingSection .selectedUserMessagingSection_Top {
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     flex-direction: column;
     height: 34vh;
     width: 100%;
     overflow-y: auto;
+    position: relative;
+
 }
 
-.selectedUserMessagingSection_Top .userInfo {
+.selectedUserMessagingSection_TopTop{
+    display: flex;
+    align-items: center;
+    padding: 35px 10px;
+    width: 100%;
+}
+
+.selectedUserMessagingSection_TopTop .singleUserInfo {
     display: flex;
     align-items: center;
     flex-direction: column;
     padding: 20px 12px 18px;
 }
 
-.userInfo .MuiAvatar-root {
+.singleUserInfo .MuiAvatar-root {
     width: 60px;
     height: 60px;
 }
 
-.userInfo p {
+.singleUserInfo p {
     font-size: 16px;
     font-weight: 600;
     margin-top: 8px;
+}
+
+.selectedUserMessagingSection_TopTop .multiUserInfo {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.multiUserInfo:nth-child(1) .MuiAvatar-root {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 10px;
+    right: 48%;
+    z-index: 1111;
+}
+
+.multiUserInfo:nth-child(2) .MuiAvatar-root {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 48%;
+}
+
+.multiUserInfo:nth-child(n+3) .MuiAvatar-root{
+    display: none;
+}
+
+.multiUserInfo:nth-child() .MuiAvatar-root {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 48%;
+}
+
+.multiUserInfo p{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.multiUserInfo:nth-child(1) p {
+    
+}
+
+.multiUserInfo:nth-child(2) p {
+    
 }
 
 .message.sent {
@@ -431,4 +489,68 @@
     right: 7px;
     transform: translateY(-50%);
     cursor: pointer;
+}
+
+/** Emoji Picker Section */
+.selectedUserMessagingSection_Bottom .EmojiPickerReact,
+.FriendMessages_Bottom .EmojiPickerReact {
+    width: 200px !important;
+    height: 220px !important;
+    flex-direction: column-reverse !important;
+    border-radius: 8px !important;
+    position: absolute !important;
+    top: -235px;
+    right: 35px;
+    background-color: #fff;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    padding: 0;
+    z-index: 1;
+}
+
+.EmojiPickerReact .epr-header .epr-header-overlay {
+    display: none;
+}
+
+.EmojiPickerReact .epr-category-nav {
+    padding: 3px !important;
+    border-top: 1px solid lightgrey;
+}
+
+.EmojiPickerReact li.epr-emoji-category>.epr-emoji-category-content {
+    grid-template-columns: repeat(8, 1fr) !important;
+    margin: 0 !important;
+}
+
+.EmojiPickerReact button.epr-emoji .epr-emoji-img {
+    max-height: 23px !important;
+    max-width: 23px !important;
+    min-height: 23px !important;
+    min-width: 23px !important;
+    padding: 2px !important;
+}
+
+.EmojiPickerReact button.epr-emoji {
+    height: 23px !important;
+    max-height: 23px !important;
+    max-width: 23px !important;
+    width: 23px !important;
+}
+
+.EmojiPickerReact .epr-preview {
+    display: none !important;
+}
+
+.EmojiPickerReact li.epr-emoji-category>.epr-emoji-category-label {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    height: min-content !important;
+    padding: 2px !important;
+}
+
+aside.EmojiPickerReact.epr-main:has(input:placeholder-shown) .epr-category-nav {
+    background-position-y: 40px !important;
+}
+
+.EmojiPickerReact .epr-category-nav {
+    justify-content: initial !important;
 }

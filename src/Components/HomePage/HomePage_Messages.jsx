@@ -1,5 +1,5 @@
 import '../../CSS/HomePage/HomePage_Messages.css'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { db } from '../BackendRelated/Firebase';
 import { Avatar } from '@mui/material';
 import { useStateValue } from '../BackendRelated/StateProvider';
@@ -17,8 +17,10 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
     const [searchText, setSearchText] = useState('');
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [matchingUsernames, setMatchingUsernames] = useState([]);
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
     const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
     const [isEmojiPickerVisible, setIsEmojiPickerVisible] = useState(false);
+    const emojiPickerRef = useRef(null);
 
     const toggleUserSelection = (userId, username, photoURL) => {
         const isUserSelected = selectedUsers.some(user => user.userId === userId);
@@ -31,10 +33,6 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
 
     const deselectUser = (userId) => {
         setSelectedUsers(selectedUsers.filter(user => user.userId !== userId));
-    };
-
-    const handleEmojiIconClick = () => {
-        setIsEmojiPickerVisible(!isEmojiPickerVisible); // Toggle EmojiPicker visibility
     };
 
     const sendMessage = async (recipientUserId) => {
@@ -111,6 +109,34 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
         }
         return `${granularity}${unit}${granularity > 1 ? '' : ''}`;
     };
+
+    const toggleEmojiPicker = () => {
+        setShowEmojiPicker(!showEmojiPicker); // Toggle the state to show/hide the emoji picker
+    };
+
+    const handleEmojiClick = (event) => {
+        setMessageInput((prevMessage) => prevMessage + event.emoji);
+        toggleEmojiPicker();
+    };
+
+    const toggleEmojiPickerBox = () => {
+        setIsEmojiPickerVisible(!isEmojiPickerVisible);
+    };
+
+    useEffect(() => {
+        const handleOutsideClick = (e) => {
+            if (emojiPickerRef.current && !emojiPickerRef.current.contains(e.target)) {
+                setIsEmojiPickerVisible(false);
+            }
+        };
+
+        window.addEventListener("click", handleOutsideClick);
+
+        // Cleanup the event listener when the component unmounts
+        return () => {
+            window.removeEventListener("click", handleOutsideClick);
+        };
+    }, []);
 
     useEffect(() => {
         if (searchText === '') {
@@ -215,19 +241,32 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
                         {searchText === '' ? (
                             <div className='selectedUserMessagingSection'>
                                 <div className='selectedUserMessagingSection_Top'>
-                                    {selectedUsers.map((userSelected) => (
-                                        <div key={userSelected.userId} className="userInfo">
-                                            <Avatar src={userSelected.photoURL} />
-                                            <p>{userSelected.username}</p>
-                                        </div>
-                                    ))}
+                                    <div className='selectedUserMessagingSection_TopTop'>
+                                        {selectedUsers.map((userSelected) => (
+                                            <>
+                                                {selectedUsers.length >= 2 ? (
+                                                    <div className="multiUserInfo" key={userSelected.userId}>
+                                                        <Avatar src={userSelected.photoURL} />
+                                                        <p>{userSelected.username}</p>
+                                                    </div>
+                                                ) : (
+                                                    <div className="singleUserInfo" key={userSelected.userId}>
+                                                        <Avatar src={userSelected.photoURL} />
+                                                        <p>{userSelected.username}</p>
+                                                    </div>
+                                                )}
+                                            </>
+                                        ))}
+                                    </div>
 
-                                    {messages.map((message) => (
-                                        <div key={message.timestamp} className={`message ${message.sender === user.uid ? 'sent' : 'received'}`}>
-                                            <p id='messageContent'>{message.text}</p>
-                                            <p id='messageTimestamp'>{timeAgowithInitials(message.timestamp)}</p>
-                                        </div>
-                                    ))}
+                                    <div className='selectedUserMessagingSection_TopBottom'>
+                                        {messages.map((message) => (
+                                            <div key={message.timestamp} className={`message ${message.sender === user.uid ? 'sent' : 'received'}`}>
+                                                <p id='messageContent'>{message.text}</p>
+                                                <p id='messageTimestamp'>{timeAgowithInitials(message.timestamp)}</p>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
 
                                 <div className='selectedUserMessagingSection_Bottom'>
@@ -239,9 +278,11 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
                                             value={messageInput}
                                             onChange={(e) => setMessageInput(e.target.value)}
                                         />
-                                        <EmojiEmotionsIcon className='emojiIcon' onClick={handleEmojiIconClick} />
+                                        <EmojiEmotionsIcon className='emojiIcon' onClick={toggleEmojiPickerBox} ref={emojiPickerRef} />
                                     </div>
-                                    {isEmojiPickerVisible && <EmojiPicker />}
+                                    {isEmojiPickerVisible && (
+                                        <EmojiPicker onEmojiClick={handleEmojiClick} />
+                                    )}
                                     <SendIcon onClick={() => sendMessage(selectedUsers[0].userId)} />
                                 </div>
                             </div>
@@ -307,9 +348,11 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
                                 value={messageInput}
                                 onChange={(e) => setMessageInput(e.target.value)}
                             />
-                            <EmojiEmotionsIcon className='emojiIcon' onClick={handleEmojiIconClick} />
+                            <EmojiEmotionsIcon className='emojiIcon' onClick={toggleEmojiPickerBox} ref={emojiPickerRef} />
                         </div>
-                        {isEmojiPickerVisible && <EmojiPicker />}
+                        {isEmojiPickerVisible && (
+                            <EmojiPicker onEmojiClick={handleEmojiClick} />
+                        )}
                         <SendIcon onClick={() => sendMessage(handleSelectedFriend.friendUid)} />
                     </div>
                 </div>
