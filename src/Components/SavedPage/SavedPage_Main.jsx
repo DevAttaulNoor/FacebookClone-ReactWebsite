@@ -44,7 +44,6 @@ function SavedPage_Main() {
     return (
         <div className='SavedPageMain'>
             <div>
-                {/* Render your saved posts */}
                 {savedPost.map(post => (
                     <div key={post.id}>
                         <p>{post.postid}</p>

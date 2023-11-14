@@ -5,11 +5,12 @@ import Header from './Components/UniversalComponent/Header';
 import HomePage from './Components/HomePage/HomePage';
 import HomePage_StoryReels from './Components/HomePage/HomePage_StoryReels';
 import UserPage from './Components/UserPage/UserPage';
+import SavedPage from './Components/SavedPage/SavedPage';
+import VideosPage from './Components/VideosPage/VideosPage';
 import FriendsPage from './Components/FriendsPage/FriendsPage';
 import FriendsPage_AllFriends from './Components/FriendsPage/FriendsPage_AllFriends';
 import FriendUserPage from './Components/FriendUserPage/FriendUserPage';
-import VideosPage from './Components/VideosPage/VideosPage';
-import SavedPage from './Components/SavedPage/SavedPage';
+
 
 function App() {
 	const [{ user }] = useStateValue();
@@ -27,8 +28,8 @@ function App() {
 							<Route path="homepage/storyreels" element={<HomePage_StoryReels />} />
 							<Route path="friendpage/*" element={<FriendsPage />} />
 							<Route path="friendpage/allFriends/*" element={<FriendsPage_AllFriends />} />
-							<Route path="videospage/*" element={<VideosPage />} />
 							<Route path="savedpage/*" element={<SavedPage />} />
+							<Route path="videospage/*" element={<VideosPage />} />
 							<Route path="userhomepage/*" element={<UserPage />} />
 							<Route path="frienduserpage/:friendUid" element={<FriendUserPage />} />
 						</Routes>
