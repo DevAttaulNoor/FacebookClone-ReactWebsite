@@ -7,6 +7,7 @@ import HomePage_Feeds_Posts_ShareModal from './HomePage_Feeds_Posts_ShareModal';
 import HomePage_Feeds_Posts_CommentModal from './HomePage_Feeds_Posts_CommentModal';
 import HomePage_Feeds_Posts_LikeModal from './HomePage_Feeds_Posts_LikeModal';
 import Modal from 'react-modal';
+import firebase from "firebase/compat/app";
 import PublicIcon from '@mui/icons-material/Public';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -355,6 +356,13 @@ function HomePage_Feeds_Posts({ id, photoURL, media, mediaType, username, timest
         };
     }, [id]);
 
+    const handleSavePost = () => {
+        db.collection("Users").doc(user.uid).collection("SavedPosts").add({
+            postid: id,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+    }
+
     return (
         <div className='homepageFeedsPosts'>
             <div className="homepageFeedsPosts_Top">
@@ -368,10 +376,23 @@ function HomePage_Feeds_Posts({ id, photoURL, media, mediaType, username, timest
 
                 <div className={`homepageFeedsPosts_TopRight ${isDropdownClicked ? 'clicked' : ''}`} onClick={toggleDropdown} ref={dropdownRef}>
                     <MoreHorizIcon />
-                    {isDropdownVisible && (
-                        <div className="postSetting">
-                            <button onClick={handleDelete}>Delete the post</button>
-                            {!isEditing && <button onClick={handleEdit}>Edit the post</button>}
+                    {user.uid == post.uid ? (
+                        <div>
+                            {isDropdownVisible && (
+                                <div className="postSetting">
+                                    <button onClick={handleDelete}>Delete the post</button>
+                                    {!isEditing && <button onClick={handleEdit}>Edit the post</button>}
+                                </div>
+                            )}
+                        </div>
+                    ) : (
+                        <div>
+                            {isDropdownVisible && (
+                                <div className="postSetting">
+                                    <button onClick={handleSavePost}>Save the post</button>
+                                    <button>Report the post</button>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>

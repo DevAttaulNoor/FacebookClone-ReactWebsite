@@ -1,0 +1,11 @@
+/** Saved Page Main Section */
+.SavedPageMain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.SavedPageMain .homepageFeedsPosts_Middle .homepageFeedsPosts_MiddleTop .homepageFeedsPosts_MiddleTopInner #postVideo {
+    width: 750px;
+    height: 400px;
+}
