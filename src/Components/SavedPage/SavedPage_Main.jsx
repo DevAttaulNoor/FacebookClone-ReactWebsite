@@ -1,26 +1,13 @@
 import '../../CSS/SavedPage/SavedPage_Main.css';
 import React, { useEffect, useState } from 'react';
-import { useStateValue } from '../BackendRelated/StateProvider';
 import { db } from '../BackendRelated/Firebase';
+import { useStateValue } from '../BackendRelated/StateProvider';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 function SavedPage_Main() {
     const [{ user }] = useStateValue();
     const [savedPost, setSavedPost] = useState([]);
     const [savedPostItems, setSavedPostItems] = useState([]);
-
-    useEffect(() => {
-        const savedRef = db.collection('Users').doc(user.uid).collection('SavedPosts');
-
-        const unsubscribe = savedRef.onSnapshot((snapshot) => {
-            const savedPostsData = snapshot.docs.map(doc => doc.data());
-            setSavedPost(savedPostsData);
-        });
-
-        return () => {
-            unsubscribe();
-        };
-    }, [user.uid]);
 
     const fetchPostAttributes = async (postId) => {
         try {
@@ -36,6 +23,19 @@ function SavedPage_Main() {
             return null;
         }
     };
+
+    useEffect(() => {
+        const savedRef = db.collection('Users').doc(user.uid).collection('SavedPosts');
+
+        const unsubscribe = savedRef.onSnapshot((snapshot) => {
+            const savedPostsData = snapshot.docs.map(doc => doc.data());
+            setSavedPost(savedPostsData);
+        });
+
+        return () => {
+            unsubscribe();
+        };
+    }, [user.uid]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -59,15 +59,16 @@ function SavedPage_Main() {
                             </video>
                         )}
                     </div>
+
                     <div className='savedPosts_Right'>
                         <div className='savedPosts_RightTop'>
-                            <p>{postitem.message}</p>
-                            <p>Saved from {postitem.username}'s post</p>
+                            <h3>{postitem.message}</h3>
+                            <p>Saved from <span>{postitem.username}'s post</span></p>
                         </div>
 
                         <div className='savedPosts_RightBottom'>
                             <button>Add to collection</button>
-                            <MoreHorizIcon />
+                            <button><MoreHorizIcon /></button>
                         </div>
                     </div>
                 </div>
