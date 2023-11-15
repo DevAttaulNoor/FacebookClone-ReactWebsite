@@ -5,7 +5,22 @@
     align-items: center;
 }
 
-.SavedPageMain .homepageFeedsPosts_Middle .homepageFeedsPosts_MiddleTop .homepageFeedsPosts_MiddleTopInner #postVideo {
-    width: 750px;
-    height: 400px;
+.SavedPageMain .savedPosts {
+    display: flex;
+    /* flex-direction: column; */
+
+    width: 980px;
+    height: 145px;
+    padding: 15px;
 }
+
+.savedPosts_Left img,
+.savedPosts_Left video {
+    width: 145px;
+    height: 145px;
+    object-fit: cover;
+}
+
+/* .savedPosts_Right p{
+
+} */

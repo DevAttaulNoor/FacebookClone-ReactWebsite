@@ -2,11 +2,12 @@ import '../../CSS/SavedPage/SavedPage_Main.css';
 import React, { useEffect, useState } from 'react';
 import { useStateValue } from '../BackendRelated/StateProvider';
 import { db } from '../BackendRelated/Firebase';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 function SavedPage_Main() {
     const [{ user }] = useStateValue();
     const [savedPost, setSavedPost] = useState([]);
-    const [savedPostItems, setSavedPostItems] = useState('')
+    const [savedPostItems, setSavedPostItems] = useState([]);
 
     useEffect(() => {
         const savedRef = db.collection('Users').doc(user.uid).collection('SavedPosts');
@@ -25,42 +26,52 @@ function SavedPage_Main() {
         try {
             const postDoc = await db.collection('Posts').doc(postId).get();
             if (postDoc.exists) {
-                setSavedPostItems(postDoc.data())
+                return postDoc.data(); // Return the data
             } else {
                 console.log('Post not found.');
+                return null;
             }
         } catch (error) {
             console.error('Error fetching post attributes:', error);
+            return null;
         }
     };
 
     useEffect(() => {
-        // Fetch post attributes when savedPost changes
-        savedPost.forEach(post => {
-            fetchPostAttributes(post.postid);
-        });
+        const fetchData = async () => {
+            const postItems = await Promise.all(savedPost.map(post => fetchPostAttributes(post.postid)));
+            setSavedPostItems(postItems.filter(item => item !== null));
+        };
+
+        fetchData();
     }, [savedPost]);
 
     return (
         <div className='SavedPageMain'>
-            <div>
-                {savedPost.map(post => (
-                    <div key={post.id}>
-                        <p>{post.postid}</p>
-                        <p>{post.timestamp.toDate().toLocaleString()}</p>
+            {savedPostItems.map(postitem => (
+                <div key={postitem.id} className='savedPosts'>
+                    <div className='savedPosts_Left'>
+                        {postitem.mediaType == 'image' ? (
+                            <img src={postitem.media} alt="" />
+                        ) : (
+                            <video id="postVideo">
+                                <source src={postitem.media} type="video/mp4" />
+                            </video>
+                        )}
                     </div>
-                ))}
-
-                <div>
-                    {console.log(savedPostItems)}
-                    {savedPostItems && (
-                        <div>
-                            <p>{savedPostItems.message}</p>
-                            <p>{savedPostItems.media}</p>
+                    <div className='savedPosts_Right'>
+                        <div className='savedPosts_RightTop'>
+                            <p>{postitem.message}</p>
+                            <p>Saved from {postitem.username}'s post</p>
                         </div>
-                    )}
+
+                        <div className='savedPosts_RightBottom'>
+                            <button>Add to collection</button>
+                            <MoreHorizIcon />
+                        </div>
+                    </div>
                 </div>
-            </div>
+            ))}
         </div>
     );
 }
