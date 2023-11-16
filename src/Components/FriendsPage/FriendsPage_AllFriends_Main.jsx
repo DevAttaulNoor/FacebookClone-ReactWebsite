@@ -1,14 +1,13 @@
 import '../../CSS/FriendsPage/FriendsPage_AllFriends_Main.css'
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import FriendUserPage from '../FriendUserPage/FriendUserPage'
 
 function FriendsPage_AllFriends_Main() {
     return (
         <div className='friendspage_AllfriendsMain'>
-            <Routes>
+            {/* <Routes>
                 <Route path="frienduserpage/:friendUid" element={<FriendUserPage />} />
-            </Routes>
+            </Routes> */}
         </div>
     )
 }

@@ -9,8 +9,6 @@ import SavedPage from './Components/SavedPage/SavedPage';
 import VideosPage from './Components/VideosPage/VideosPage';
 import FriendsPage from './Components/FriendsPage/FriendsPage';
 import FriendsPage_AllFriends from './Components/FriendsPage/FriendsPage_AllFriends';
-import FriendUserPage from './Components/FriendUserPage/FriendUserPage';
-
 
 function App() {
 	const [{ user }] = useStateValue();
@@ -31,7 +29,6 @@ function App() {
 							<Route path="savedpage/*" element={<SavedPage />} />
 							<Route path="videospage/*" element={<VideosPage />} />
 							<Route path="userhomepage/*" element={<UserPage />} />
-							<Route path="frienduserpage/:friendUid" element={<FriendUserPage />} />
 						</Routes>
 					</div>
 				)}

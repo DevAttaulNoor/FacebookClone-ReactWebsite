@@ -25,6 +25,11 @@
     margin-left: 10px;
 }
 
+.homepageFeedsPosts_TopLeft .userpostInfo a {
+    color: initial;
+    text-decoration: none;
+}
+
 .homepageFeedsPosts_TopLeft .userpostInfo h4 {
     font-size: 14px;
     font-weight: 600;

@@ -14,6 +14,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
+import { NavLink } from 'react-router-dom';
 
 function HomePage_Feeds_Posts({ id, photoURL, media, mediaType, username, timestamp, message }) {
     Modal.setAppElement('#root');
@@ -369,6 +370,9 @@ function HomePage_Feeds_Posts({ id, photoURL, media, mediaType, username, timest
                 <div className="homepageFeedsPosts_TopLeft">
                     <Avatar src={photoURL} />
                     <div className="userpostInfo">
+                        {/* <NavLink to={`/profilepage/${username}`}>
+                            <h4>{username}</h4>
+                        </NavLink> */}
                         <h4>{username}</h4>
                         <p>{timestamp} <PublicIcon /></p>
                     </div>
