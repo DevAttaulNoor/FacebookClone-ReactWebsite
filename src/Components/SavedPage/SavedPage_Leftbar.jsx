@@ -2,7 +2,7 @@ import '../../CSS/SavedPage/SavedPage_Leftbar.css'
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 import SettingsIcon from '@mui/icons-material/Settings';
-import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
+import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined';
 
 function SavedPage_Leftbar() {
     return (
@@ -14,11 +14,9 @@ function SavedPage_Leftbar() {
 
             <div className="savedPageLeftbar_Bottom">
                 <NavLink to="/savedpage/" activeClassName="active">
-                    <div className="savedPageLeftbar_BottomOptions">
-                        <div className="savedPageLeftbar_BottomOption">
-                            <SmartDisplayIcon />
-                            <p>For later</p>
-                        </div>
+                    <div className="savedPageLeftbar_BottomOption">
+                        <BadgeOutlinedIcon/>
+                        <p>Saved items</p>
                     </div>
                 </NavLink>
             </div>

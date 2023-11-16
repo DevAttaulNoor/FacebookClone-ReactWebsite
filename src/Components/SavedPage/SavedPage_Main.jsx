@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { db } from '../BackendRelated/Firebase';
 import { useStateValue } from '../BackendRelated/StateProvider';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import TuneIcon from '@mui/icons-material/Tune';
 
 function SavedPage_Main() {
     const [{ user }] = useStateValue();
@@ -48,31 +49,42 @@ function SavedPage_Main() {
 
     return (
         <div className='SavedPageMain'>
-            {savedPostItems.map(postitem => (
-                <div key={postitem.id} className='savedPosts'>
-                    <div className='savedPosts_Left'>
-                        {postitem.mediaType == 'image' ? (
-                            <img src={postitem.media} alt="" />
-                        ) : (
-                            <video id="postVideo">
-                                <source src={postitem.media} type="video/mp4" />
-                            </video>
-                        )}
-                    </div>
+            <div className='SavedPageMain_Top'>
+                <p>All</p>
+                <TuneIcon />
+            </div>
 
-                    <div className='savedPosts_Right'>
-                        <div className='savedPosts_RightTop'>
-                            <h3>{postitem.message}</h3>
-                            <p>Saved from <span>{postitem.username}'s post</span></p>
+            <div className='SavedPageMain_Bottom'>
+                {savedPostItems.map(postitem => (
+                    <div key={postitem.id} className='savedPosts'>
+                        <div className='savedPosts_Left'>
+                            {console.log(savedPostItems)}
+                            {postitem.mediaType == 'image' ? (
+                                <img src={postitem.media} alt="" />
+                            ) : (
+                                <video id="postVideo">
+                                    <source src={postitem.media} type="video/mp4" />
+                                </video>
+                            )}
                         </div>
 
-                        <div className='savedPosts_RightBottom'>
-                            <button>Add to collection</button>
-                            <button><MoreHorizIcon /></button>
+                        <div className='savedPosts_Right'>
+                            <div className='savedPosts_RightTop'>
+                                <h3>{postitem.message}</h3>
+                                <div className='savedPosts_RightTopBottom'>
+                                    <img src={postitem.photoURL} alt="" />
+                                    <p>Saved from <span>{postitem.username}'s post</span></p>
+                                </div>
+                            </div>
+
+                            <div className='savedPosts_RightBottom'>
+                                <button>Add to collection</button>
+                                <MoreHorizIcon />
+                            </div>
                         </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
         </div>
     );
 }
