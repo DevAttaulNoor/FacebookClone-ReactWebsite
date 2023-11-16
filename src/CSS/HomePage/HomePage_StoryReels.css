@@ -62,7 +62,7 @@
 
 .homepage_storyreels_Leftbar_TopTop_heading .MuiSvgIcon-root:hover {
     cursor: pointer;
-    background-color: #F0F2F5;
+    background-color: rgba(0, 0, 0, 0.15);
 }
 
 .homepage_storyreels_Leftbar_TopTop_userinfo {
