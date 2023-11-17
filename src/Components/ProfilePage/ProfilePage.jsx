@@ -8,10 +8,10 @@ import AddIcon from '@mui/icons-material/Add';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import UserPage_Components from "../UserPage/UserPage_Components";
+import ProfilePage_Components from "./ProfilePage_Components";
 
 function ProfilePage() {
-    const userid = useParams();
+    const { userid } = useParams();
     const [friends, setFriends] = useState([]);
     const [userData, setUserData] = useState('');
     const [imageLoaded, setImageLoaded] = useState(false);
@@ -19,12 +19,10 @@ function ProfilePage() {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const userDoc = await db.collection('Users').doc(userid['*']).get();
+                const userDoc = await db.collection('Users').doc(userid).get();
                 if (userDoc.exists) {
                     const userData = userDoc.data();
-                    setUserData(userData); // Set the userData state
-                    console.log("User Data:", userData);
-                    // Now you can use the userData to update your component state or perform other actions
+                    setUserData(userData);
                 } else {
                     console.log("User not found");
                 }
@@ -103,23 +101,23 @@ function ProfilePage() {
 
                 <div className="ProfilePage_TopComponents">
                     <div className="ProfilePage_TopComponents_Left">
-                        <NavLink to='/userhomepage/post' activeClassName="active">
+                        <NavLink to={`/profilepage/${userid}/post`} activeClassName="active">
                             <div className='ProfilePage_TopComponents_LeftOption'>Posts</div>
                         </NavLink>
 
-                        <NavLink to="/userhomepage/about" activeClassName="active">
+                        <NavLink to={`/profilepage/${userid}/about`} activeClassName="active">
                             <div className='ProfilePage_TopComponents_LeftOption'>About</div>
                         </NavLink>
 
-                        <NavLink to="/userhomepage/friend" activeClassName="active">
+                        <NavLink to={`/profilepage/${userid}/friend`} activeClassName="active">
                             <div className='ProfilePage_TopComponents_LeftOption'>Friends</div>
                         </NavLink>
 
-                        <NavLink to="/userhomepage/photo" activeClassName="active">
+                        <NavLink to={`/profilepage/${userid}/photo`} activeClassName="active">
                             <div className='ProfilePage_TopComponents_LeftOption'>Photos</div>
                         </NavLink>
 
-                        <NavLink to="/userhomepage/video" activeClassName="active">
+                        <NavLink to={`/profilepage/${userid}/video`} activeClassName="active">
                             <div className='ProfilePage_TopComponents_LeftOption'>Videos</div>
                         </NavLink>
 
@@ -136,7 +134,7 @@ function ProfilePage() {
             </div>
 
             <div className="ProfilePage_Bottom">
-                <UserPage_Components />
+                <ProfilePage_Components userData={userData}/>
             </div>
         </div>
     );

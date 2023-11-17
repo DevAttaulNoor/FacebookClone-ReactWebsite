@@ -46,7 +46,7 @@ function ProfilePage_Info() {
 
     return (
         <div className='ProfilePageInfo'>
-            <NavLink id="navLink" to="/userhomepage/about" activeClassName="active">
+            <NavLink id="navLink" to="/profilepage/:userid/about" activeClassName="active">
                 <h3>Intro</h3>
             </NavLink>
 

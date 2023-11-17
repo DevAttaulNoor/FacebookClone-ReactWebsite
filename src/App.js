@@ -30,7 +30,7 @@ function App() {
 							<Route path="savedpage/*" element={<SavedPage />} />
 							<Route path="videospage/*" element={<VideosPage />} />
 							<Route path="userhomepage/*" element={<UserPage />} />
-							<Route path="profilepage/*" element={<ProfilePage />} />
+							<Route path="profilepage/:userid/*" element={<ProfilePage />} />
 						</Routes>
 					</div>
 				)}

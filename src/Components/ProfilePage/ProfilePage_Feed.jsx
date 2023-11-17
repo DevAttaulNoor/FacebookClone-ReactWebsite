@@ -4,7 +4,7 @@ import { db } from '../BackendRelated/Firebase'
 import HomePage_Feeds_Posting from '../HomePage/HomePage_Feeds_Posting'
 import HomePage_Feeds_Posts from '../HomePage/HomePage_Feeds_Posts'
 
-function ProfilePage_Feed() {
+function ProfilePage_Feed({userData}) {
     const [posts, setPosts] = useState([]);
     const [joinedposts, setJoinedPosts] = useState([]);
     // const userDataStr = sessionStorage.getItem('userData');
@@ -12,28 +12,28 @@ function ProfilePage_Feed() {
     // const userUid = userData.uid;
 
 
-    const userid = useParams();
-    const [userData, setUserData] = useState('');
+    // const userid = useParams();
+    // const [userData, setUserData] = useState('');
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const userDoc = await db.collection('Users').doc(userid['*']).get();
-                if (userDoc.exists) {
-                    const userData = userDoc.data();
-                    setUserData(userData); // Set the userData state
-                    console.log("User Data:", userData);
-                    // Now you can use the userData to update your component state or perform other actions
-                } else {
-                    console.log("User not found");
-                }
-            } catch (error) {
-                console.error('Error fetching user:', error);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchUser = async () => {
+    //         try {
+    //             const userDoc = await db.collection('Users').doc(userid['userid']).get();
+    //             if (userDoc.exists) {
+    //                 const userData = userDoc.data();
+    //                 setUserData(userData); // Set the userData state
+    //                 console.log("User Data:", userData);
+    //                 // Now you can use the userData to update your component state or perform other actions
+    //             } else {
+    //                 console.log("User not found");
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching user:', error);
+    //         }
+    //     };
     
-        fetchUser();
-    }, [userid]);
+    //     fetchUser();
+    // }, [userid]);
 
 
 
@@ -42,7 +42,7 @@ function ProfilePage_Feed() {
             .orderBy("timestamp", "desc")
             .onSnapshot(snapshot => {
                 const filteredPosts = snapshot.docs
-                    .filter(doc => doc.data().uid === userid) // Filter posts by userUid
+                    .filter(doc => doc.data().uid === userData.uid) // Filter posts by userUid
                     .filter(doc => !doc.data().dob) // Filter out posts with a "dob" attribute
                     .map(doc => ({
                         id: doc.id,
@@ -52,7 +52,7 @@ function ProfilePage_Feed() {
                 setPosts(filteredPosts);
             });
         return () => unsubscribe();
-    }, [userid]);
+    }, [userData.uid]);
 
     const timeAgo = (timestamp) => {
         if (!timestamp || !timestamp.toDate) {
@@ -93,7 +93,7 @@ function ProfilePage_Feed() {
         const unsubscribeJoined = db.collection("Posts")
             .onSnapshot(snapshot => {
                 const filteredJoinedPosts = snapshot.docs
-                    .filter(doc => doc.data().uid === userid) // Filter posts by userUid
+                    .filter(doc => doc.data().uid === userData.uid) // Filter posts by userUid
                     .filter(doc => doc.data().dob) // Filter out posts with a "dob" attribute
                     .map(doc => ({
                         id: doc.id,
@@ -103,7 +103,7 @@ function ProfilePage_Feed() {
                 setJoinedPosts(filteredJoinedPosts);
             });
         return () => unsubscribeJoined();
-    }, [userid]);
+    }, [userData.uid]);
 
     const formatJoinedDate = (timestamp) => {
         if (!timestamp || !timestamp.toDate) {
@@ -116,6 +116,7 @@ function ProfilePage_Feed() {
 
     return (
         <div className='ProfilePageFeed'>
+            {/* {console.log(userData)} */}
             <HomePage_Feeds_Posting />
             {
                 posts.map(post => {
@@ -123,6 +124,7 @@ function ProfilePage_Feed() {
                     return (
                         <HomePage_Feeds_Posts
                             id={post.id}
+                            userid={post.data.uid}
                             photoURL={post.data.photoURL}
                             media={post.data.media}
                             mediaType={post.data.mediaType}
@@ -142,6 +144,7 @@ function ProfilePage_Feed() {
                         <div className="JoinedPost">
                             <HomePage_Feeds_Posts
                                 id={joinedpost.id}
+                                userid={joinedpost.data.uid}
                                 photoURL={joinedpost.data.photoURL}
                                 image={joinedpost.data.image}
                                 username={joinedpost.data.username}

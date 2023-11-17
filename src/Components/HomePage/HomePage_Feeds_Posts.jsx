@@ -400,7 +400,7 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
                                 <h4>{username}</h4>
                             </NavLink>
                         ) : (
-                            <NavLink to={`/profilepage/${userid}`} userId={userid}>
+                            <NavLink to={`/profilepage/${userid}/post`} userId={userid}>
                                 <h4>{username}</h4>
                             </NavLink>
                         )}

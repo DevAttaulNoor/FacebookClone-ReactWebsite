@@ -9,7 +9,6 @@ import SearchIcon from '@mui/icons-material/Search';
 
 function UserPage_Info() {
     Modal.setAppElement('#root');
-
     const [bioText, setBioText] = useState('');
     const [savedBioText, setSavedBioText] = useState('');
     const [isBioSectionVisible, setIsBioSectionVisible] = useState(false);

@@ -1,10 +1,10 @@
-import "../../CSS/UserPage/ProfilePage_Videos.css";
+import "../../CSS/ProfilePage/ProfilePage_Videos.css";
 import React, { useEffect, useState } from 'react';
 import firebase from "firebase/compat/app";
 import { NavLink } from "react-router-dom";
 import { useStateValue } from "../BackendRelated/StateProvider";
 
-function ProfilePage_Videos() {
+function ProfilePage_Videos({userData}) {
     const [{ user }] = useStateValue();
     const [videoUrls, setVideoUrls] = useState([]);
 
@@ -12,7 +12,7 @@ function ProfilePage_Videos() {
         // Fetch videos from the specified path
         const fetchVideos = async () => {
             const urls = [];
-            const storageRef = firebase.storage().ref(`Posts/${user.uid}`);
+            const storageRef = firebase.storage().ref(`Posts/${userData.uid}`);
 
             // List items (Videos) in the user's folder
             try {
@@ -33,19 +33,19 @@ function ProfilePage_Videos() {
             setVideoUrls(urls);
         };
         fetchVideos();
-    }, [user]);
+    }, [userData]);
 
     return (
-        <div className='userpageVideos'>
-            <div className="userpageVideos_Top">
-                <NavLink id="navLink" to="/userhomepage/video" activeClassName="active">
+        <div className='ProfilePageVideos'>
+            <div className="ProfilePageVideos_Top">
+                <NavLink id="navLink" to="/profilepage/:userid/video" activeClassName="active">
                     <h3>Videos</h3>
                 </NavLink>
                 <a id="seeAllLink" href="#">See all Videos</a>
             </div>
 
-            <div className="userpageVideos_Bottom">
-                <div className="userpageVideos_BottomContainer">
+            <div className="ProfilePageVideos_Bottom">
+                <div className="ProfilePageVideos_BottomContainer">
                     {videoUrls.map((url, index) => (
                         <video controls key={index}>
                             <source src={url} type="video/mp4" />

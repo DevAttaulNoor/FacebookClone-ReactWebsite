@@ -97,6 +97,7 @@ function UserPage_Feed() {
                     return (
                         <HomePage_Feeds_Posts
                             id={post.id}
+                            key={post.id}
                             userid={post.data.uid}
                             photoURL={post.data.photoURL}
                             media={post.data.media}
@@ -104,7 +105,6 @@ function UserPage_Feed() {
                             username={post.data.username}
                             timestamp={formattedDate}
                             message={post.data.message}
-                            key={post.id}
                         />
                     );
                 })
@@ -117,6 +117,7 @@ function UserPage_Feed() {
                         <div className="JoinedPost">
                             <HomePage_Feeds_Posts
                                 id={joinedpost.id}
+                                key={joinedpost.id}
                                 userid={joinedpost.data.uid}
                                 photoURL={joinedpost.data.photoURL}
                                 image={joinedpost.data.image}
@@ -128,7 +129,6 @@ function UserPage_Feed() {
                                         <p id='joinedMsg'>{`Born on ${formatJoinedDate(dob)}`}</p>
                                     </div>
                                 }
-                                key={joinedpost.id}
                             />
                         </div>
                     );

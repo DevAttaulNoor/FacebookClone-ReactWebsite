@@ -4,14 +4,14 @@ import { NavLink } from "react-router-dom";
 import { useStateValue } from "../BackendRelated/StateProvider";
 import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_AllFriends_Leftbar';
 
-function ProfilePage_Friends() {
+function ProfilePage_Friends({userData}) {
     const [{ user }] = useStateValue();
     const [friends, setFriends] = useState([]);
 
     useEffect(() => {
         // Fetch friends data when user.uid changes
-        fetchFriendsData(user.uid, setFriends);
-    }, [user.uid]);
+        fetchFriendsData(userData.uid, setFriends);
+    }, [userData.uid]);
 
     useEffect(() => {
         // Fetch friend details when friends array changes
@@ -23,7 +23,7 @@ function ProfilePage_Friends() {
     return (
         <div className='ProfilePageFriends'>
             <div className="ProfilePageFriends_Top">
-                <NavLink id="navLink" to="/userhomepage/friend" activeClassName="active">
+                <NavLink id="navLink" to="/profilepage/:userid/friend" activeClassName="active">
                     <h3>Friends</h3>
                 </NavLink>
                 <a id="seeAllLink" href="#">See all friends</a>

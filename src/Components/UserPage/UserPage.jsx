@@ -19,24 +19,6 @@ function UserPage() {
     const [coverImage, setCoverImage] = useState(null);
     const [imageLoaded, setImageLoaded] = useState(false);
 
-    useEffect(() => {
-        const img = new Image();
-        img.src = user.coverphotoUrl;
-        img.onload = () => {
-            setImageLoaded(true);
-        };
-    }, [user.coverphotoUrl]);
-
-    useEffect(() => {
-        fetchFriendsData(user.uid, setFriends);
-    }, [user.uid]);
-
-    useEffect(() => {
-        if (friends.length > 0) {
-            fetchFriendDetailsData(friends, setFriends);
-        }
-    }, [friends]);
-
     const changeProfileImage = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -120,6 +102,24 @@ function UserPage() {
             });
         }
     }
+
+    useEffect(() => {
+        const img = new Image();
+        img.src = user.coverphotoUrl;
+        img.onload = () => {
+            setImageLoaded(true);
+        };
+    }, [user.coverphotoUrl]);
+
+    useEffect(() => {
+        fetchFriendsData(user.uid, setFriends);
+    }, [user.uid]);
+
+    useEffect(() => {
+        if (friends.length > 0) {
+            fetchFriendDetailsData(friends, setFriends);
+        }
+    }, [friends]);
 
     return (
         <div className="userpage">

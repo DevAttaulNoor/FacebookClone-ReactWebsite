@@ -4,15 +4,15 @@ import firebase from "firebase/compat/app";
 import { NavLink } from "react-router-dom";
 import { useStateValue } from "../BackendRelated/StateProvider";
 
-function ProfilePage_Photos() {
+function ProfilePage_Photos({userData}) {
     const [{ user }] = useStateValue();
     const [photoUrls, setPhotoUrls] = useState([]);
 
     useEffect(() => {
         // Reference to the user's folders in Firebase Storage
         const storageRefs = [
-            `Posts/${user.uid}`,
-            `Users/${user.uid}`
+            `Posts/${userData.uid}`,
+            `Users/${userData.uid}`
         ];
 
         // Fetch images from all specified paths
@@ -51,12 +51,12 @@ function ProfilePage_Photos() {
             setPhotoUrls(urls);
         };
         fetchImages();
-    }, [user]);
+    }, [userData]);
 
     return (
         <div className='ProfilePagePhotos'>
             <div className="ProfilePagePhotos_Top">
-                <NavLink id="navLink" to="/userhomepage/photo" activeClassName="active">
+                <NavLink id="navLink" to="/profilepage/:userid/photo" activeClassName="active">
                     <h3>Photos</h3>
                 </NavLink>
                 <a id="seeAllLink" href="#">See all photos</a>

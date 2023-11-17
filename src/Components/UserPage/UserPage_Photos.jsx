@@ -9,24 +9,20 @@ function UserPage_Photos() {
     const [photoUrls, setPhotoUrls] = useState([]);
 
     useEffect(() => {
-        // Reference to the user's folders in Firebase Storage
         const storageRefs = [
             `Posts/${user.uid}`,
             `Users/${user.uid}`
         ];
 
-        // Fetch images from all specified paths
         const fetchImages = async () => {
             const urls = [];
 
             for (const storagePath of storageRefs) {
                 const storageRef = firebase.storage().ref(storagePath);
 
-                // List items (files) in the user's folder
                 try {
                     const result = await storageRef.listAll();
 
-                    // Filter items to include only image files (you can adjust the condition as needed)
                     const imageItems = result.items.filter(itemRef => {
                         const name = itemRef.name.toLowerCase();
                         return (
@@ -38,13 +34,14 @@ function UserPage_Photos() {
                         );
                     });
 
-                    // Get download URLs for each image item
                     const urlsForImages = await Promise.all(
                         imageItems.map(itemRef => itemRef.getDownloadURL())
                     );
 
                     urls.push(...urlsForImages);
-                } catch (error) {
+                }
+                
+                catch (error) {
                     console.error(`Error fetching photos from ${storagePath}:`, error);
                 }
             }
