@@ -209,7 +209,7 @@ function FriendsPage_AllFriends_Leftbar() {
                 {friends.map((friend) => (
                     <div className='friendsList' key={friend.friendUid}>
                         <div className='friendsListInfo'>
-                            <NavLink to={`/friendpage/allFriends/frienduserpage/${friend.friendUid}`}>
+                            <NavLink to={`/friendpage/allFriends/profilepage/${friend.friendUid}/post`}>
                                 <Avatar src={friend.photoURL} />
                                 <p id="friendName">{friend.username}</p>
                             </NavLink>
