@@ -7,6 +7,7 @@ import HomePage_StoryReels from './Components/HomePage/HomePage_StoryReels';
 import UserPage from './Components/UserPage/UserPage';
 import SavedPage from './Components/SavedPage/SavedPage';
 import VideosPage from './Components/VideosPage/VideosPage';
+import ProfilePage from './Components/ProfilePage/ProfilePage';
 import FriendsPage from './Components/FriendsPage/FriendsPage';
 import FriendsPage_AllFriends from './Components/FriendsPage/FriendsPage_AllFriends';
 
@@ -29,6 +30,7 @@ function App() {
 							<Route path="savedpage/*" element={<SavedPage />} />
 							<Route path="videospage/*" element={<VideosPage />} />
 							<Route path="userhomepage/*" element={<UserPage />} />
+							<Route path="profilepage/*" element={<ProfilePage />} />
 						</Routes>
 					</div>
 				)}

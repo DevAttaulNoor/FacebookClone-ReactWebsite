@@ -17,7 +17,6 @@ function UserPage() {
     const [friends, setFriends] = useState([]);
     const [profileImage, setProfileImage] = useState(null);
     const [coverImage, setCoverImage] = useState(null);
-
     const [imageLoaded, setImageLoaded] = useState(false);
 
     useEffect(() => {

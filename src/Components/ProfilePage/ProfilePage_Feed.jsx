@@ -1,15 +1,58 @@
-import '../../CSS/UserPage/UserPage_Feed.css'
+import '../../CSS/ProfilePage/ProfilePage_Feed.css'
 import React, { useEffect, useState } from 'react'
 import { db } from '../BackendRelated/Firebase'
 import HomePage_Feeds_Posting from '../HomePage/HomePage_Feeds_Posting'
 import HomePage_Feeds_Posts from '../HomePage/HomePage_Feeds_Posts'
 
-function UserPage_Feed() {
+function ProfilePage_Feed() {
     const [posts, setPosts] = useState([]);
     const [joinedposts, setJoinedPosts] = useState([]);
-    const userDataStr = sessionStorage.getItem('userData');
-    const userData = JSON.parse(userDataStr);
-    const userUid = userData.uid;
+    // const userDataStr = sessionStorage.getItem('userData');
+    // const userData = JSON.parse(userDataStr);
+    // const userUid = userData.uid;
+
+
+    const userid = useParams();
+    const [userData, setUserData] = useState('');
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const userDoc = await db.collection('Users').doc(userid['*']).get();
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    setUserData(userData); // Set the userData state
+                    console.log("User Data:", userData);
+                    // Now you can use the userData to update your component state or perform other actions
+                } else {
+                    console.log("User not found");
+                }
+            } catch (error) {
+                console.error('Error fetching user:', error);
+            }
+        };
+    
+        fetchUser();
+    }, [userid]);
+
+
+
+    useEffect(() => {
+        const unsubscribe = db.collection("Posts")
+            .orderBy("timestamp", "desc")
+            .onSnapshot(snapshot => {
+                const filteredPosts = snapshot.docs
+                    .filter(doc => doc.data().uid === userid) // Filter posts by userUid
+                    .filter(doc => !doc.data().dob) // Filter out posts with a "dob" attribute
+                    .map(doc => ({
+                        id: doc.id,
+                        data: doc.data()
+                    }));
+
+                setPosts(filteredPosts);
+            });
+        return () => unsubscribe();
+    }, [userid]);
 
     const timeAgo = (timestamp) => {
         if (!timestamp || !timestamp.toDate) {
@@ -46,37 +89,11 @@ function UserPage_Feed() {
         return `${granularity} ${unit}${granularity > 1 ? 's' : ''} ago`;
     };
 
-    const formatJoinedDate = (timestamp) => {
-        if (!timestamp || !timestamp.toDate) {
-            return "Unknown Date";
-        }
-        const dob = timestamp.toDate();
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        return dob.toLocaleDateString('en-GB', options);
-    };
-
-    useEffect(() => {
-        const unsubscribe = db.collection("Posts")
-            .orderBy("timestamp", "desc")
-            .onSnapshot(snapshot => {
-                const filteredPosts = snapshot.docs
-                    .filter(doc => doc.data().uid === userUid) // Filter posts by userUid
-                    .filter(doc => !doc.data().dob) // Filter out posts with a "dob" attribute
-                    .map(doc => ({
-                        id: doc.id,
-                        data: doc.data()
-                    }));
-
-                setPosts(filteredPosts);
-            });
-        return () => unsubscribe();
-    }, [userUid]);
-
     useEffect(() => {
         const unsubscribeJoined = db.collection("Posts")
             .onSnapshot(snapshot => {
                 const filteredJoinedPosts = snapshot.docs
-                    .filter(doc => doc.data().uid === userUid) // Filter posts by userUid
+                    .filter(doc => doc.data().uid === userid) // Filter posts by userUid
                     .filter(doc => doc.data().dob) // Filter out posts with a "dob" attribute
                     .map(doc => ({
                         id: doc.id,
@@ -86,10 +103,19 @@ function UserPage_Feed() {
                 setJoinedPosts(filteredJoinedPosts);
             });
         return () => unsubscribeJoined();
-    }, [userUid]);
+    }, [userid]);
+
+    const formatJoinedDate = (timestamp) => {
+        if (!timestamp || !timestamp.toDate) {
+            return "Unknown Date";
+        }
+        const dob = timestamp.toDate();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return dob.toLocaleDateString('en-GB', options);
+    };
 
     return (
-        <div className='userpageFeed'>
+        <div className='ProfilePageFeed'>
             <HomePage_Feeds_Posting />
             {
                 posts.map(post => {
@@ -97,7 +123,6 @@ function UserPage_Feed() {
                     return (
                         <HomePage_Feeds_Posts
                             id={post.id}
-                            userid={post.data.uid}
                             photoURL={post.data.photoURL}
                             media={post.data.media}
                             mediaType={post.data.mediaType}
@@ -117,7 +142,6 @@ function UserPage_Feed() {
                         <div className="JoinedPost">
                             <HomePage_Feeds_Posts
                                 id={joinedpost.id}
-                                userid={joinedpost.data.uid}
                                 photoURL={joinedpost.data.photoURL}
                                 image={joinedpost.data.image}
                                 username={joinedpost.data.username}
@@ -138,4 +162,4 @@ function UserPage_Feed() {
     )
 }
 
-export default UserPage_Feed
+export default ProfilePage_Feed

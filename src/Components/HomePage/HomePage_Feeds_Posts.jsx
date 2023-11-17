@@ -15,8 +15,9 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import { NavLink } from 'react-router-dom';
+import ProfilePage from '../ProfilePage/ProfilePage';
 
-function HomePage_Feeds_Posts({ id, photoURL, media, mediaType, username, timestamp, message }) {
+function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username, timestamp, message }) {
     Modal.setAppElement('#root');
 
     const [{ user }] = useStateValue();
@@ -357,6 +358,10 @@ function HomePage_Feeds_Posts({ id, photoURL, media, mediaType, username, timest
         };
     }, [id]);
 
+
+    const [users, setUsers] = useState([]);
+
+
     const handleSavePost = () => {
         db.collection("Users").doc(user.uid).collection("SavedPosts").add({
             postid: id,
@@ -364,16 +369,41 @@ function HomePage_Feeds_Posts({ id, photoURL, media, mediaType, username, timest
         });
     }
 
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const usersCollection = await db.collection('Users').get();
+                const usersData = usersCollection.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setUsers(usersData);
+            }
+
+            catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+
+        fetchUsers();
+    }, []);
+
     return (
         <div className='homepageFeedsPosts'>
             <div className="homepageFeedsPosts_Top">
                 <div className="homepageFeedsPosts_TopLeft">
                     <Avatar src={photoURL} />
                     <div className="userpostInfo">
-                        {/* <NavLink to={`/profilepage/${username}`}>
-                            <h4>{username}</h4>
-                        </NavLink> */}
-                        <h4>{username}</h4>
+                        {user.uid === userid ? (
+                            <NavLink to="/userhomepage/post">
+                                <h4>{username}</h4>
+                            </NavLink>
+                        ) : (
+                            <NavLink to={`/profilepage/${userid}`} userId={userid}>
+                                <h4>{username}</h4>
+                            </NavLink>
+                        )}
                         <p>{timestamp} <PublicIcon /></p>
                     </div>
                 </div>

@@ -69,6 +69,7 @@ function HomePage_Feeds() {
                 return (
                     <HomePage_Feeds_Posts
                         id={post.id}
+                        userid={post.data.uid}
                         photoURL={post.data.photoURL}
                         media={post.data.media}
                         mediaType={post.data.mediaType}

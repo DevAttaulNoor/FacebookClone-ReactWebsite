@@ -1,0 +1,59 @@
+/** ProfilePage Videos Section */
+.ProfilePageVideos {
+    width: 360px;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* ProfilePage Videos Top Section */
+.ProfilePageVideos_Top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.ProfilePageVideos_Top #navLink {
+    color: initial;
+    text-decoration: none;
+}
+
+.ProfilePageVideos_Top #navLink:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.ProfilePageVideos_Top #seeAllLink {
+    text-decoration: none;
+    color: #1B74E4;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+.ProfilePageVideos_Top #seeAllLink:hover{
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+
+/* ProfilePage Videos Bottom Section */
+.ProfilePageVideos_Bottom {
+    display: flex;
+    justify-content: center;
+}
+
+.ProfilePageVideos_BottomContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+}
+
+.ProfilePageVideos_BottomContainer video {
+    object-fit: cover;
+    width: 116px;
+    height: 116px;
+}
