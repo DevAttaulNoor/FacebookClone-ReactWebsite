@@ -38,7 +38,5 @@ Contributions are welcome! If you want to contribute to this project, follow the
 4. Push your changes to your fork.
 5. Submit a pull request.
 
-Please ensure your code follows the project's coding standards and includes tests when applicable.
-
 ## License
 This project is licensed under DevAttaulNoor.
