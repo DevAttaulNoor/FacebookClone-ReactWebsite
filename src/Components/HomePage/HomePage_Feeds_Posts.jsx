@@ -1,27 +1,26 @@
 import '../../CSS/HomePage/HomePage_Feeds_Posts.css';
 import React, { useState, useEffect, useRef } from 'react';
-import { Avatar } from '@mui/material';
-import { db, storage } from '../BackendRelated/Firebase';
-import { useStateValue } from '../BackendRelated/StateProvider';
-import HomePage_Feeds_Posts_ShareModal from './HomePage_Feeds_Posts_ShareModal';
-import HomePage_Feeds_Posts_CommentModal from './HomePage_Feeds_Posts_CommentModal';
-import HomePage_Feeds_Posts_LikeModal from './HomePage_Feeds_Posts_LikeModal';
 import Modal from 'react-modal';
 import firebase from "firebase/compat/app";
+import { Avatar } from '@mui/material';
+import { NavLink } from 'react-router-dom';
+import { db, storage } from '../BackendRelated/Firebase';
+import { useStateValue } from '../BackendRelated/StateProvider';
 import PublicIcon from '@mui/icons-material/Public';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
-import { NavLink } from 'react-router-dom';
-import ProfilePage from '../ProfilePage/ProfilePage';
+import HomePage_Feeds_Posts_ShareModal from './HomePage_Feeds_Posts_ShareModal';
+import HomePage_Feeds_Posts_CommentModal from './HomePage_Feeds_Posts_CommentModal';
+import HomePage_Feeds_Posts_LikeModal from './HomePage_Feeds_Posts_LikeModal';
 
 function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username, timestamp, message }) {
     Modal.setAppElement('#root');
-
     const [{ user }] = useStateValue();
     const [post, setPost] = useState({});
+    const [users, setUsers] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
     const [editedMessage, setEditedMessage] = useState(message);
     const [mediaFile, setMediaFile] = useState(null)
@@ -121,21 +120,6 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
         }
     };
 
-    useEffect(() => {
-        const postRef = db.collection('Posts').doc(id);
-
-        const unsubscribe = postRef.onSnapshot((doc) => {
-            if (doc.exists) {
-                setPost(doc.data());
-            }
-        });
-
-        return () => {
-            // Unsubscribe from the snapshot listener when the component unmounts
-            unsubscribe();
-        };
-    }, [id]);
-
     const handleDelete = async () => {
         const postRef = db.collection("Posts").doc(id);
 
@@ -188,23 +172,6 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
         setIsDropdownVisible(!isDropdownVisible);
         setIsDropdownClicked(!isDropdownClicked);
     };
-
-    useEffect(() => {
-        // Function to close the dropdown when a click occurs outside of it
-        const handleClickOutside = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setIsDropdownVisible(false);
-            }
-        };
-
-        // Add the event listener when the component mounts
-        document.addEventListener('mousedown', handleClickOutside);
-
-        // Remove the event listener when the component unmounts
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
 
     const handleLike = async () => {
         // Check if the user has already liked the post
@@ -262,21 +229,6 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
         setLikedUsers(likedUsersData);
     };
 
-    useEffect(() => {
-        const postRef = db.collection("Posts").doc(id);
-
-        const unsubscribe = postRef.onSnapshot((doc) => {
-            if (doc.exists) {
-                setLikesCount(doc.data().likesCount || 0);
-            }
-        });
-
-        return () => {
-            // Unsubscribe from the snapshot listener when the component unmounts
-            unsubscribe();
-        };
-    }, [id, user.uid]);
-
     const handleLikedUsersClick = () => {
         getLikedUsers();
         setIsLikedUsersModalOpen(true);
@@ -315,6 +267,64 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
         }
     };
 
+    const handleSavePost = () => {
+        db.collection("Users").doc(user.uid).collection("SavedPosts").add({
+            postid: id,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+    }
+
+    //* useEffect to get all the posts from the firestore
+    useEffect(() => {
+        const postRef = db.collection('Posts').doc(id);
+
+        const unsubscribe = postRef.onSnapshot((doc) => {
+            if (doc.exists) {
+                setPost(doc.data());
+            }
+        });
+
+        return () => {
+            // Unsubscribe from the snapshot listener when the component unmounts
+            unsubscribe();
+        };
+    }, [id]);
+
+    //* useEffect to close the dropdown when a click occurs outside of the area
+    useEffect(() => {
+        // Function to close the dropdown when a click occurs outside of it
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownVisible(false);
+            }
+        };
+
+        // Add the event listener when the component mounts
+        document.addEventListener('mousedown', handleClickOutside);
+
+        // Remove the event listener when the component unmounts
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    //* useEffect to get all the like count on a post from the firestore
+    useEffect(() => {
+        const postRef = db.collection("Posts").doc(id);
+
+        const unsubscribe = postRef.onSnapshot((doc) => {
+            if (doc.exists) {
+                setLikesCount(doc.data().likesCount || 0);
+            }
+        });
+
+        return () => {
+            // Unsubscribe from the snapshot listener when the component unmounts
+            unsubscribe();
+        };
+    }, [id, user.uid]);
+
+    //* useEffect to get all the likes on a post from the firestore
     useEffect(() => {
         const likedUsersRef = db.collection("Posts").doc(id).collection("likes");
 
@@ -336,6 +346,7 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
         };
     }, [id, user.uid]);
 
+    //* useEffect to get all the comments on a post from the firestore
     useEffect(() => {
         const getRealtimeComments = () => {
             const commentsRef = db.collection("Posts").doc(id).collection("comments");
@@ -358,18 +369,7 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
         };
     }, [id]);
 
-
-    const [users, setUsers] = useState([]);
-
-
-    const handleSavePost = () => {
-        db.collection("Users").doc(user.uid).collection("SavedPosts").add({
-            postid: id,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        });
-    }
-
-
+    //* useEffect to get all the users from the firestore
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -388,6 +388,20 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
 
         fetchUsers();
     }, []);
+
+    //* useEffect to prevent background scrolling when popup modal is open
+    useEffect(() => {
+        if (isCommentModalOpen || isShareModalOpen || isLikedUsersModalOpen) {
+            document.body.classList.add('modal-open');
+        } else {
+            document.body.classList.remove('modal-open');
+        }
+
+        // Cleanup function to remove the class when the component unmounts
+        return () => {
+            document.body.classList.remove('modal-open');
+        };
+    }, [isCommentModalOpen, isShareModalOpen, isLikedUsersModalOpen]);
 
     return (
         <div className='homepageFeedsPosts'>

@@ -11,7 +11,6 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 function Login() {
     Modal.setAppElement('#root');
-
     const [{ }, dispatch] = useStateValue();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -125,6 +124,18 @@ function Login() {
         }
     };
 
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    };
+
+    const openSignupModal = () => {
+        setIsSignupModalOpen(true);
+    };
+
+    const closeSignupModal = () => {
+        setIsSignupModalOpen(false);
+    };
+
     useEffect(() => {
         const storedUserData = sessionStorage.getItem('userData');
         if (storedUserData) {
@@ -137,18 +148,6 @@ function Login() {
         }
         setIsLoading(false);
     }, []);
-
-    const togglePasswordVisibility = () => {
-        setShowPassword((prevShowPassword) => !prevShowPassword);
-    };
-
-    const openSignupModal = () => {
-        setIsSignupModalOpen(true);
-    };
-
-    const closeSignupModal = () => {
-        setIsSignupModalOpen(false);
-    };
 
     if (isLoading) {
         return <Loading />;

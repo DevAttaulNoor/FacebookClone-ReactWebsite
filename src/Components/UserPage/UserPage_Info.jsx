@@ -1,5 +1,5 @@
 import '../../CSS/UserPage/UserPage_Info.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom'
 import Modal from 'react-modal';
 import AddIcon from '@mui/icons-material/Add';
@@ -42,6 +42,19 @@ function UserPage_Info() {
     const isOptionActive = (option) => {
         return activeOptions.includes(option) ? 'activeOption' : '';
     };
+
+    useEffect(() => {
+        if (isdetailsModalOpen || ishobbiesModalOpen || isfeatureModalOpen) {
+            document.body.classList.add('modal-open');
+        } else {
+            document.body.classList.remove('modal-open');
+        }
+
+        // Cleanup function to remove the class when the component unmounts
+        return () => {
+            document.body.classList.remove('modal-open');
+        };
+    }, [isdetailsModalOpen, ishobbiesModalOpen, isfeatureModalOpen]);
 
     return (
         <div className='userpageInfo'>
