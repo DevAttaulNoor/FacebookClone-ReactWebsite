@@ -2,10 +2,8 @@ import "../../CSS/ProfilePage/ProfilePage_Photos.css";
 import React, { useEffect, useState } from 'react';
 import firebase from "firebase/compat/app";
 import { NavLink } from "react-router-dom";
-import { useStateValue } from "../BackendRelated/StateProvider";
 
 function ProfilePage_Photos({userData}) {
-    const [{ user }] = useStateValue();
     const [photoUrls, setPhotoUrls] = useState([]);
 
     useEffect(() => {

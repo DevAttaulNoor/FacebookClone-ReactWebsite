@@ -1,7 +1,10 @@
 import '../../CSS/UserPage/UserPage_Info.css';
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom'
 import Modal from 'react-modal';
+import firebase from "firebase/compat/app";
+import { NavLink } from 'react-router-dom'
+import { db } from '../BackendRelated/Firebase';
+import { useStateValue } from '../BackendRelated/StateProvider';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import PublicIcon from '@mui/icons-material/Public';
@@ -9,8 +12,8 @@ import SearchIcon from '@mui/icons-material/Search';
 
 function UserPage_Info() {
     Modal.setAppElement('#root');
+    const [{ user }] = useStateValue()
     const [bioText, setBioText] = useState('');
-    const [savedBioText, setSavedBioText] = useState('');
     const [isBioSectionVisible, setIsBioSectionVisible] = useState(false);
     const [isdetailsModalOpen, setIsdetailsModalOpen] = useState(false);
     const [ishobbiesModalOpen, setIshobbiesModalOpen] = useState(false);
@@ -21,14 +24,28 @@ function UserPage_Info() {
         if (isBioSectionVisible) {
             setBioText('');
         } else {
-            setBioText(savedBioText);
+            setBioText(bioText);
         }
         setIsBioSectionVisible(!isBioSectionVisible);
     };
 
     const saveBioText = () => {
-        setSavedBioText(bioText);
         setIsBioSectionVisible(false);
+
+        db.collection("Users")
+            .doc(user.uid)
+            .collection("Intro")
+            .doc(user.uid)
+            .set({
+                introText: bioText,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            })
+            .then(() => {
+                console.log("Document successfully updated!");
+            })
+            .catch((error) => {
+                console.error("Error updating document: ", error);
+            });
     };
 
     const toggleOption = (option) => {
@@ -42,6 +59,27 @@ function UserPage_Info() {
     const isOptionActive = (option) => {
         return activeOptions.includes(option) ? 'activeOption' : '';
     };
+
+    useEffect(() => {
+        const docRef = db.collection("Users")
+            .doc(user.uid)
+            .collection("Intro")
+            .doc(user.uid);
+
+        const unsubscribe = docRef.onSnapshot((doc) => {
+            if (doc.exists) {
+                setBioText(doc.data().introText);
+            } 
+            
+            else {
+                console.log("No such document!");
+                setBioText('');
+            }
+        });
+
+        // Cleanup the subscription when the component is unmounted
+        return () => unsubscribe();
+    }, [user.uid]);
 
     useEffect(() => {
         if (isdetailsModalOpen || ishobbiesModalOpen || isfeatureModalOpen) {
@@ -65,11 +103,11 @@ function UserPage_Info() {
             <div className="bioSection">
                 {isBioSectionVisible ? (
                     <div className="bioSection_Top" style={{ display: 'flex' }}>
-                        <textarea value={bioText} onChange={(e) => setBioText(e.target.value)}></textarea>
+                        <textarea value={bioText} onChange={(e) => setBioText(e.target.value)} placeholder='Describe who you are'></textarea>
                     </div>
                 ) : (
-                    <p className="savedBioText" style={{ display: savedBioText ? 'block' : 'none' }}>
-                        {savedBioText}
+                    <p className="savedBioText" style={{ display: bioText ? 'block' : 'none' }}>
+                        {bioText}
                     </p>
                 )}
 
@@ -79,12 +117,8 @@ function UserPage_Info() {
                         <p>Public</p>
                     </div>
                     <div className="bioSection_BottomRight">
-                        <button id="cancelBtn" onClick={() => setIsBioSectionVisible(false)}>
-                            Cancel
-                        </button>
-                        <button id="saveBtn" onClick={saveBioText}>
-                            Save
-                        </button>
+                        <button id="cancelBtn" onClick={() => setIsBioSectionVisible(false)}>Cancel</button>
+                        <button id="saveBtn" onClick={saveBioText}>Save</button>
                     </div>
                 </div>
 

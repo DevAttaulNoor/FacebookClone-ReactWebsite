@@ -39,6 +39,13 @@
 .bioSection{
 }
 
+.savedBioText{
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 10px;
+    text-align: center;
+}
+
 .bioSection_Top{
     padding-top: 10px;
 }
@@ -51,7 +58,7 @@
     font-size: 14px;
     font-weight: 500;
     outline: none;
-    border: 1px solid lightgray;
+    border: 1px solid #0866FF;
     height: 70px;
     width: -webkit-fill-available;
     white-space: normal;
@@ -59,26 +66,44 @@
     text-align: center;
 }
 
+.bioSection_Top textarea:focus{
+    background-color: #fff;
+}
+
+.bioSection_Top textarea:hover{
+    background-color: #E4E6EB;
+}
+
 .bioSection_Bottom{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-top: 8px;
 }
 
-.bioSection_Bottom .bioSection_BottomLeft{
+.bioSection_BottomLeft{
     display: flex;
     align-items: center;
 }
 
-.bioSection_Bottom .bioSection_BottomLeft p{
-    font-size: 15px;
+.bioSection_BottomLeft p{
+    font-size: 14px;
     margin-left: 5px;
 }
 
-.bioSection_Bottom .bioSection_BottomRight{
+.bioSection_BottomRight{
     display: grid;
     grid-template-columns: 1.2fr 1fr;
     gap: 6px;
+}
+
+.bioSection_BottomRight button{
+    margin-top: 0;
+}
+
+.bioSection_BottomRight #saveBtn{
+    color: #fff;
+    background-color: #0866FF;
 }
 
 /** Details Modal Section */
