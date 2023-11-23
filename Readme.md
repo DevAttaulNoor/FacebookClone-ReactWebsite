@@ -10,7 +10,6 @@ The Facebook Clone project is a web application created using the React.js libra
 - [License](#license)
 
 ## Demo
-(https://your-demo-link-here.com)
 
 ## Features
 - User authentication with Firebase Authentication.
@@ -37,8 +36,6 @@ Contributions are welcome! If you want to contribute to this project, follow the
 3. Make your changes and commit them.
 4. Push your changes to your fork.
 5. Submit a pull request.
-
-Please ensure your code follows the project's coding standards and includes tests when applicable.
 
 ## License
 This project is licensed under DevAttaulNoor.
