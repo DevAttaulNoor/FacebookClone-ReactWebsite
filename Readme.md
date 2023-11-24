@@ -9,8 +9,6 @@ The Facebook Clone project is a web application created using the React.js libra
 - [Contributing](#contributing)
 - [License](#license)
 
-## Demo
-
 ## Features
 - User authentication with Firebase Authentication.
 - Create, read, update, and delete posts.
