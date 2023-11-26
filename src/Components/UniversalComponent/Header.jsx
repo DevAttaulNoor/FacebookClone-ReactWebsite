@@ -15,14 +15,25 @@ import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import OndemandVideoOutlinedIcon from '@mui/icons-material/OndemandVideoOutlined';
 
+import SettingsIcon from '@mui/icons-material/Settings';
+import HelpIcon from '@mui/icons-material/Help';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import NightlightIcon from '@mui/icons-material/Nightlight';
+import LogoutIcon from '@mui/icons-material/Logout';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
+
+
 function Header() {
     const [{ user }, dispatch] = useStateValue();
     const [searchText, setSearchText] = useState('');
     const [selectedUser, setSelectedUser] = useState(null);
     const [matchingUsernames, setMatchingUsernames] = useState([]);
-    const [isDialogVisible, setIsDialogVisible] = useState(false);
     const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
-    const dialogBoxRef = useRef(null);
+    const [userBoxVisible, setUserBoxVisible] = useState(false);
+    const [notificationBoxVisible, setNotificationBoxVisible] = useState(false);
+    const userBoxRef = useRef(null);
+    const notificationBoxRef = useRef(null);
 
     const pathsToHideHeader = ['/homepage/storyreels'];
     const showHeader = !pathsToHideHeader.includes(useLocation().pathname);
@@ -45,78 +56,6 @@ function Header() {
                 console.error("Sign out error:", error);
             });
     };
-
-    const toggleDialog = () => {
-        setIsDialogVisible(!isDialogVisible);
-    };
-
-    useEffect(() => {
-        const handleOutsideClick = (e) => {
-            if (dialogBoxRef.current && !dialogBoxRef.current.contains(e.target)) {
-                setIsDialogVisible(false);
-            }
-        };
-
-        window.addEventListener("click", handleOutsideClick);
-
-        // Cleanup the event listener when the component unmounts
-        return () => {
-            window.removeEventListener("click", handleOutsideClick);
-        };
-    }, []);
-
-    const handleSearchInput = () => {
-        setIsSearchBoxVisible(!isSearchBoxVisible);
-    };
-
-    useEffect(() => {
-        const handleOutsideClick = (e) => {
-            if (
-                isSearchBoxVisible &&
-                !document.querySelector(".header_search").contains(e.target)
-            ) {
-                setIsSearchBoxVisible(false);
-                setSearchText('');
-            }
-        };
-
-        window.addEventListener("click", handleOutsideClick);
-
-        // Cleanup the event listener when the component unmounts
-        return () => {
-            window.removeEventListener("click", handleOutsideClick);
-        };
-    }, [isSearchBoxVisible]);
-
-    useEffect(() => {
-        if (searchText === '') {
-            // Reset matching usernames when search input is empty
-            setMatchingUsernames([]);
-            return;
-        }
-
-        db.collection("Users")
-            .get()
-            .then((querySnapshot) => {
-                const matchingUsernames = querySnapshot.docs
-                    .map((doc) => {
-                        const data = doc.data();
-                        return {
-                            id: doc.id,
-                            Uid: data.Uid,
-                            username: data.username,
-                            photoURL: data.photoURL,
-                        };
-                    })
-                    .filter((user) =>
-                        user.username.toLowerCase().includes(searchText.toLowerCase())
-                    );
-                setMatchingUsernames(matchingUsernames);
-            })
-            .catch((error) => {
-                console.error('Error getting documents:', error);
-            });
-    }, [searchText]);
 
     const deleteUser = () => {
         if (auth.currentUser) {
@@ -192,6 +131,86 @@ function Header() {
         }
     };
 
+    const handleSearchInput = () => {
+        setIsSearchBoxVisible(!isSearchBoxVisible);
+    };
+
+    const toggleUserBox = () => {
+        setUserBoxVisible(!userBoxVisible);
+    };
+
+    const toggleNotificationBox = () => {
+        setNotificationBoxVisible(!notificationBoxVisible);
+    };
+
+    useEffect(() => {
+        const handleOutsideClick = (e) => {
+            if (userBoxRef.current && !userBoxRef.current.contains(e.target)) {
+                setUserBoxVisible(false);
+            }
+    
+            if (notificationBoxRef.current && !notificationBoxRef.current.contains(e.target)) {
+                setNotificationBoxVisible(false);
+            }
+        };
+    
+        window.addEventListener("click", handleOutsideClick);
+    
+        // Cleanup the event listener when the component unmounts
+        return () => {
+            window.removeEventListener("click", handleOutsideClick);
+        };
+    }, [userBoxRef, notificationBoxRef]);
+
+    useEffect(() => {
+        const handleOutsideClick = (e) => {
+            if (
+                isSearchBoxVisible &&
+                !document.querySelector(".header_search").contains(e.target)
+            ) {
+                setIsSearchBoxVisible(false);
+                setSearchText('');
+            }
+        };
+
+        window.addEventListener("click", handleOutsideClick);
+
+        // Cleanup the event listener when the component unmounts
+        return () => {
+            window.removeEventListener("click", handleOutsideClick);
+        };
+    }, [isSearchBoxVisible]);
+
+    useEffect(() => {
+        if (searchText === '') {
+            // Reset matching usernames when search input is empty
+            setMatchingUsernames([]);
+            return;
+        }
+
+        db.collection("Users")
+            .get()
+            .then((querySnapshot) => {
+                const matchingUsernames = querySnapshot.docs
+                    .map((doc) => {
+                        const data = doc.data();
+                        return {
+                            id: doc.id,
+                            Uid: data.Uid,
+                            username: data.username,
+                            photoURL: data.photoURL,
+                        };
+                    })
+                    .filter((user) =>
+                        user.username.toLowerCase().includes(searchText.toLowerCase())
+                    );
+                setMatchingUsernames(matchingUsernames);
+            })
+            .catch((error) => {
+                console.error('Error getting documents:', error);
+            });
+    }, [searchText]);
+
     return (
         <div className={`header ${showHeader ? '' : 'transformed'}`}>
             <div className='Transformed_header_left'>
@@ -260,19 +279,69 @@ function Header() {
             </div>
 
             <div className="header_right">
-                <AppsIcon />
-                <ForumIcon id='msgIcon' />
-                <NotificationsIcon />
+                <AppsIcon className='header_right_Options'/>
+                <ForumIcon className='header_right_Options' id='msgIcon'/>
 
-                <div className={`header_rightAvatarBox ${isDialogVisible ? 'clicked' : ''}`}>
-                    <Avatar src={user.photoURL} onClick={toggleDialog} ref={dialogBoxRef} />
-                    {isDialogVisible && (
-                        <div className="dialogBox">
+                <div className={`notificationBox ${userBoxVisible ? 'clicked' : ''}`}>
+                    <NotificationsIcon className='header_right_Options' onClick={toggleNotificationBox} ref={notificationBoxRef} />
+                    {notificationBoxVisible && (
+                        <div className="headerBox">
+                            <p>notifications</p>
+                        </div>
+                    )}
+                </div>
+
+                <div className={`userBox ${userBoxVisible ? 'clicked' : ''}`}>
+                    <Avatar src={user.photoURL} onClick={toggleUserBox} ref={userBoxRef} />
+                    {userBoxVisible && (
+                        <div className="headerBox">
                             <NavLink to="/userhomepage/post">
-                                <button>Home</button>
+                                <div className='headerBoxOptions'>
+                                    <div className='headerBoxOptions_Left'>
+                                        <Avatar src={user.photoURL} />
+                                        <p>{user.username}</p>
+                                    </div>
+                                </div>
                             </NavLink>
-                            <button onClick={deleteUser}>Delete</button>
-                            <button onClick={handleSignOut}>Sign Out</button>
+
+                            <div className='headerBoxOptions'>
+                                <div className='headerBoxOptions_Left'>
+                                    <SettingsIcon />
+                                    <p>Setting & privacy</p>
+                                </div>
+                                <div className='headerBoxOptions_Right'>
+                                    <ArrowForwardIosIcon />
+                                </div>
+                            </div>
+
+                            <div className='headerBoxOptions'>
+                                <div className='headerBoxOptions_Left'>
+                                    <HelpIcon />
+                                    <p>Help & support</p>
+                                </div>
+                                <div className='headerBoxOptions_Right'>
+                                    <ArrowForwardIosIcon />
+                                </div>
+                            </div>
+
+                            <div className='headerBoxOptions'>
+                                <div className='headerBoxOptions_Left'>
+                                    <NightlightIcon />
+                                    <p>Display & accessibility</p>
+                                </div>
+                                <div className='headerBoxOptions_Right'>
+                                    <ArrowForwardIosIcon />
+                                </div>
+                            </div>
+
+                            <div className='headerBoxOptions' onClick={handleSignOut}>
+                                <div className='headerBoxOptions_Left'>
+                                    <LogoutIcon />
+                                    <p>Log out</p>
+                                </div>
+                            </div>
+
+                            {/* <button onClick={deleteUser}>Delete</button> */}
                         </div>
                     )}
                 </div>

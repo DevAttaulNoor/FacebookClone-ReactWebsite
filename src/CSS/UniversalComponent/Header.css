@@ -157,63 +157,94 @@
     margin-right: 15px;
 }
 
-.header_right .MuiSvgIcon-root{
+.notificationBox{
+    display: flex;
+}
+
+.header_right_Options{
     width: 26px;
     height: 26px;
     padding: 7px;
-    background-color: #F0F2F5;
-    color: #000;
     border-radius: 50%;
     margin-right: 8px;
+    color: #000;
+    background-color: #E4E6EB;
 }
 
-.header_right .MuiSvgIcon-root:hover,
-.header_right .MuiAvatar-img:hover{
+.header_right_Options:hover,
+.userBox:hover{
     cursor: pointer;
-    background-color: whitesmoke;
 }
 
-.dialogBox {
+.headerBox {
     position: absolute;
+    top: 50px;
+    right: 16px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    top: 100%;
-    right: 20px;
+    width: 320px;
+    padding: 8px 0;
+    border-radius: 7px;
     background-color: #fff;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
-    padding: 8px;
     z-index: 1;
 }
 
-.dialogBox button {
+.headerBox a{
+    color: initial;
+    text-decoration: none;
+    width: -webkit-fill-available;
+}
+
+.headerBoxOptions{
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 15px;
-    font-weight: 500;
-    background-color: #fff;
-    width: 120px;
-    padding: 10px;
-    border: none;
-    outline: none;
-    border-bottom: 1px solid gray;
+    justify-content: space-between;
+    width: -webkit-fill-available;
+    margin: 1px 8px;
+    padding: 6px 8px;
+    transition: 3ms ease-in-out;
 }
 
-.dialogBox button:last-child {
-    border-bottom: none;
+.headerBoxOptions:hover{
+    cursor: pointer;cursor: pointer;
+    border-radius: 8px;
+    background-color: #F0F2F5;
 }
 
-.dialogBox button:hover {
-    background-color: whitesmoke;
-    cursor: pointer;
+.headerBoxOptions_Left{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
-.dialogBox a{
-    text-decoration: none;
-    border-bottom: 1px solid gray;
+.headerBoxOptions_Left p{
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    margin-left: 10px;
+}
+
+.headerBoxOptions_Left .MuiSvgIcon-root{
+    width: 22px;
+    height: 22px;
+    padding: 5px;
+    border-radius: 50%;
+    color: #000;
+    background-color: #E4E6EB;
+}
+
+.headerBoxOptions_Left .MuiAvatar-root{
+    width: 32px;
+    height: 32px;
+}
+
+.headerBoxOptions_Right .MuiSvgIcon-root{
+    width: 22px;
+    height: 22px;
+    color: gray;
 }
 
 /** Header Section Transformed */
