@@ -37,12 +37,7 @@ function HomePage_Leftbar() {
             <HomePage_Leftbar_Options Icon={ArrowDropDownIcon} title='See more' />
 
             <div className='terms'>
-                <p>Privacy</p>
-                <p>Terms</p>
-                <p>Advertising</p>
-                <p>Ad choices</p>
-                <p>Cookies</p>
-                <p>Meta© 2023</p>
+                <p><span>Privacy</span> · <span>Terms</span> · <span>Advertising</span> · <span>Ad choices</span> · <span>Cookies</span> · <span>More</span> · <span>Meta © 2023</span></p>
             </div>
         </div>
     )

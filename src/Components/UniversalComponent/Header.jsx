@@ -148,14 +148,14 @@ function Header() {
             if (userBoxRef.current && !userBoxRef.current.contains(e.target)) {
                 setUserBoxVisible(false);
             }
-    
+
             if (notificationBoxRef.current && !notificationBoxRef.current.contains(e.target)) {
                 setNotificationBoxVisible(false);
             }
         };
-    
+
         window.addEventListener("click", handleOutsideClick);
-    
+
         // Cleanup the event listener when the component unmounts
         return () => {
             window.removeEventListener("click", handleOutsideClick);
@@ -279,8 +279,8 @@ function Header() {
             </div>
 
             <div className="header_right">
-                <AppsIcon className='header_right_Options'/>
-                <ForumIcon className='header_right_Options' id='msgIcon'/>
+                <AppsIcon className='header_right_Options' />
+                <ForumIcon className='header_right_Options' id='msgIcon' />
 
                 <div className={`notificationBox ${userBoxVisible ? 'clicked' : ''}`}>
                     <NotificationsIcon className='header_right_Options' onClick={toggleNotificationBox} ref={notificationBoxRef} />
@@ -339,6 +339,10 @@ function Header() {
                                     <LogoutIcon />
                                     <p>Log out</p>
                                 </div>
+                            </div>
+
+                            <div className='terms'>
+                                <p><span>Privacy</span> · <span>Terms</span> · <span>Advertising</span> · <span>Ad choices</span> · <span>Cookies</span> · <span>More</span> · <span>Meta © 2023</span></p>
                             </div>
 
                             {/* <button onClick={deleteUser}>Delete</button> */}

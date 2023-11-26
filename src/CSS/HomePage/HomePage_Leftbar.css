@@ -11,14 +11,17 @@
 }
 
 .homePageLeftbar .terms{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    margin-left: 15px;
-    font-size: 12px;
-    font-weight: 400;
-    color: gray;
+    margin: 6px 0 0 12px;
 }
 
 .homePageLeftbar .terms p{
-    height: fit-content;
+    font-size: 12px;
+    font-weight: 400;
+    color: gray;
+    white-space: pre-wrap;
+}
+
+.homePageLeftbar .terms p span:hover{
+    cursor: pointer;
+    text-decoration: underline;
 }

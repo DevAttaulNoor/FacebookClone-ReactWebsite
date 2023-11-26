@@ -198,6 +198,22 @@
     width: -webkit-fill-available;
 }
 
+.headerBox .terms{
+    margin: 6px 8px 3px 16px;
+}
+
+.headerBox .terms p{
+    font-size: 12px;
+    font-weight: 400;
+    color: gray;
+    white-space: pre-wrap;
+}
+
+.headerBox .terms p span:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .headerBoxOptions{
     display: flex;
     align-items: center;
