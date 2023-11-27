@@ -22,8 +22,6 @@ import NightlightIcon from '@mui/icons-material/Nightlight';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-
-
 function Header() {
     const [{ user }, dispatch] = useStateValue();
     const [searchText, setSearchText] = useState('');
@@ -37,6 +35,8 @@ function Header() {
 
     const pathsToHideHeader = ['/homepage/storyreels'];
     const showHeader = !pathsToHideHeader.includes(useLocation().pathname);
+
+    const [notifications, setNotifications] = useState([]);
 
     const handleSignOut = () => {
         sessionStorage.removeItem('userData');
@@ -211,6 +211,44 @@ function Header() {
             });
     }, [searchText]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Likes subcollection
+                const likesRef = db.collection('Users').doc(user.uid).collection('Notifications').doc(user.uid).collection('Likes');
+                const likesSnapshot = await likesRef.get();
+
+                // Comments subcollection
+                const commentsRef = db.collection('Users').doc(user.uid).collection('Notifications').doc(user.uid).collection('Comments');
+                const commentsSnapshot = await commentsRef.get();
+
+                // FriendsReqs subcollection
+                const friendsReqsRef = db.collection('Users').doc(user.uid).collection('Notifications').doc(user.uid).collection('FriendsReqs');
+                const friendsReqsSnapshot = await friendsReqsRef.get();
+
+                // Combine data from all subcollections
+                const likesData = likesSnapshot.docs.map(doc => doc.data());
+                const commentsData = commentsSnapshot.docs.map(doc => doc.data());
+                const friendsReqsData = friendsReqsSnapshot.docs.map(doc => doc.data());
+
+                // Combine all data into a single array or object as needed
+                const allNotificationsData = {
+                    likes: likesData,
+                    comments: commentsData,
+                    friendsReqs: friendsReqsData,
+                };
+
+                setNotifications(allNotificationsData);
+                console.log(allNotificationsData);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, [user.uid]);
+
+
     return (
         <div className={`header ${showHeader ? '' : 'transformed'}`}>
             <div className='Transformed_header_left'>
@@ -286,7 +324,23 @@ function Header() {
                     <NotificationsIcon className='header_right_Options' onClick={toggleNotificationBox} ref={notificationBoxRef} />
                     {notificationBoxVisible && (
                         <div className="headerBox">
-                            <p>notifications</p>
+                            {notifications.likes.map((like, index) => (
+                                <div key={index}>
+                                    <p>{like.likedusername} has {like.status} on your post {like.postid}</p>
+                                </div>
+                            ))}
+
+                            {notifications.comments.map((comment, index) => (
+                                <div key={index}>
+                                    <p>{comment.commentusername} has {comment.status} '{comment.commenttext}' on your post {comment.postid}</p>
+                                </div>
+                            ))}
+
+                            {notifications.friendsReqs.map((friendReq, index) => (
+                                <div key={index}>
+                                    {/* <p>{like.likedusername} has {like.status} on your post {like.postid}</p> */}
+                                </div>
+                            ))}
                         </div>
                     )}
                 </div>

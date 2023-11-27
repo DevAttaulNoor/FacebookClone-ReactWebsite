@@ -39,6 +39,8 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
     const dropdownRef = useRef(null);
 
+    const [notification, setNotification] = useState('')
+
     const handleEdit = () => {
         setIsEditing(true);
         setEditedMedia(media);
@@ -188,6 +190,10 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
                     console.error("Error unliking post: ", error);
                 });
 
+            db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('Likes').doc(id).update({
+                status: 'unliked',
+            })
+
             likedUserDoc.ref
                 .delete()
                 .catch((error) => {
@@ -202,6 +208,13 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
                 .catch((error) => {
                     console.error("Error liking post: ", error);
                 });
+
+            db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('Likes').doc(id).set({
+                postid: id,
+                likeduserid: user.uid,
+                likedusername: user.username,
+                status: 'liked',
+            })
 
             likedUsersRef
                 .doc(user.uid)

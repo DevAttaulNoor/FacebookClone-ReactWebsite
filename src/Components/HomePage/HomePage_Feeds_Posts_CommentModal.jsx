@@ -28,6 +28,15 @@ function HomePage_Feeds_Posts_CommentModal({ id, closeModal }) {
         try {
             await db.collection("Posts").doc(id).collection("comments").add(newComment);
             setComment('');
+
+            db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('Comments').doc(id).set({
+                postid: id,
+                commentuserid: user.uid,
+                commentusername: user.username,
+                commenttext: comment,
+                status: 'Comment'
+            });
+
         } catch (error) {
             console.error("Error posting comment:", error);
         }
@@ -40,6 +49,10 @@ function HomePage_Feeds_Posts_CommentModal({ id, closeModal }) {
             .catch((error) => {
                 console.error("Error removing comment: ", error);
             });
+
+        db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('Comments').doc(id).update({
+            status: 'Uncomment'
+        });
     };
 
     const timeAgowithInitials = (timestamp) => {

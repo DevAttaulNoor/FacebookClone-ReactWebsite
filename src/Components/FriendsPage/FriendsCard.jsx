@@ -71,6 +71,15 @@ function FriendsCard({ user }) {
                     status: 'pending',
                 });
 
+                db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('FriendsReqs').doc(user.uid).set({
+                    senderUid: senderUid,
+                    senderName: senderName,
+                    senderPhotoUrl: senderPhotoUrl,
+                    receiverUid: user.uid,
+                    receiverName: user.username,
+                    status: 'friend request sent',
+                });
+
                 setFriendRequestStatus("pending");
                 alert('Friend request sent!');
             }

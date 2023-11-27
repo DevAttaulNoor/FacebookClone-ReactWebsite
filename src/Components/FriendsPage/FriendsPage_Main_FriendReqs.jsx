@@ -89,6 +89,10 @@ function FriendsPage_Main_FriendReqs() {
                     status: "accepted",
                 });
 
+                db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('FriendsReqs').doc(user.uid).update({
+                    status: 'friend request accepted',
+                });
+
                 // After successfully accepting the friend request, update the state
                 setFriendRequests((prevRequests) =>
                     prevRequests.filter((request) => request.id !== friendRequestId)
@@ -122,6 +126,10 @@ function FriendsPage_Main_FriendReqs() {
                 .collection("friendRequests");
 
             await receiverFriendRequestsCollection.doc(friendRequestId).delete();
+
+            db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('FriendsReqs').doc(user.uid).update({
+                status: 'friend request rejected',
+            });
 
             alert("Friend request rejected!");
         } catch (error) {
