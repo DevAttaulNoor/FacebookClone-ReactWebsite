@@ -77,6 +77,7 @@ function FriendsCard({ user }) {
                     senderPhotoUrl: senderPhotoUrl,
                     receiverUid: user.uid,
                     receiverName: user.username,
+                    timestamp: new Date(),
                     status: 'friend request sent',
                 });
 

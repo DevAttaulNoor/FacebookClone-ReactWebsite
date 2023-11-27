@@ -211,8 +211,10 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
 
             db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('Likes').doc(id).set({
                 postid: id,
+                postuserid: userid,
                 likeduserid: user.uid,
                 likedusername: user.username,
+                timestamp: new Date(),
                 status: 'liked',
             })
 
@@ -563,6 +565,7 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
                     <Modal className="commentedUserModal" isOpen={isCommentModalOpen} onRequestClose={() => setIsCommentModalOpen(false)}>
                         <HomePage_Feeds_Posts_CommentModal
                             id={id}
+                            userid={userid}
                             closeModal={{ closeCommentModal: () => setIsCommentModalOpen(false) }}
                         />
                     </Modal>

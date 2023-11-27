@@ -6,7 +6,7 @@ import { Avatar } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 
-function HomePage_Feeds_Posts_CommentModal({ id, closeModal }) {
+function HomePage_Feeds_Posts_CommentModal({ id, userid, closeModal }) {
     const [{ user }] = useStateValue();
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
@@ -33,9 +33,11 @@ function HomePage_Feeds_Posts_CommentModal({ id, closeModal }) {
             // Add a notification to the "Notifications" subcollection
             await db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('Comments').doc(commentRef.id).set({
                 postid: id,
+                postuserid: userid,
                 commentuserid: user.uid,
                 commentusername: user.username,
                 commenttext: comment,
+                timestamp: new Date(),
                 status: 'Comment'
             });
     
