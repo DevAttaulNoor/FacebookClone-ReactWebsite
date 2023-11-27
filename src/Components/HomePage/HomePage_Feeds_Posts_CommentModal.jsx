@@ -31,7 +31,7 @@ function HomePage_Feeds_Posts_CommentModal({ id, userid, closeModal }) {
             setComment('');
     
             // Add a notification to the "Notifications" subcollection
-            await db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('Comments').doc(commentRef.id).set({
+            await db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Comments').doc(commentRef.id).set({
                 postid: id,
                 postuserid: userid,
                 commentuserid: user.uid,
@@ -53,7 +53,7 @@ function HomePage_Feeds_Posts_CommentModal({ id, userid, closeModal }) {
             console.log("Comment successfully deleted!");
     
             // Update the status of the specific comment in the "Notifications" subcollection
-            await db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('Comments').doc(commentId).update({
+            await db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Comments').doc(commentId).update({
                 status: 'Uncomment'
             });
         } catch (error) {

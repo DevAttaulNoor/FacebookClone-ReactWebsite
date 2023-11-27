@@ -332,27 +332,32 @@ function Header() {
                     <NotificationsIcon className='header_right_Options' onClick={toggleNotificationBox} ref={notificationBoxRef} />
                     {notificationBoxVisible && (
                         <div className="headerBox">
-                            {console.log(notifications)}
-                            {notifications == '' ? (
-                                <p>Nothing</p>
+                            {notifications.likes.length === 0 && notifications.comments.length === 0 && notifications.friendsReqs.length === 0 ? (
+                                <p>Nothing new to show</p>
                             ) : (
                                 <div>
                                     {notifications.likes.map((like, index) => (
-                                        <div key={index}>
-                                            <p>{like.likedusername} has {like.status} on your post {like.postid}</p>
-                                        </div>
+                                        like.postuserid === user.uid && (
+                                            <div key={index}>
+                                                <p>{like.likedusername} has {like.status} on your post {like.postid}</p>
+                                            </div>
+                                        )
                                     ))}
 
                                     {notifications.comments.map((comment, index) => (
-                                        <div key={index}>
-                                            <p>{comment.commentusername} has {comment.status} '{comment.commenttext}' on your post {comment.postid}</p>
-                                        </div>
+                                        comment.postuserid === user.uid && (
+                                            <div key={index}>
+                                                <p>{comment.commentusername} has {comment.status} '{comment.commenttext}' on your post {comment.postid}</p>
+                                            </div>
+                                        )
                                     ))}
 
                                     {notifications.friendsReqs.map((friendReq, index) => (
-                                        <div key={index}>
-                                            {/* <p>{like.likedusername} has {like.status} on your post {like.postid}</p> */}
-                                        </div>
+                                        friendReq.postid === user.uid && (
+                                            <div key={index}>
+                                                {/* Render friend request content here */}
+                                            </div>
+                                        )
                                     ))}
                                 </div>
                             )}
