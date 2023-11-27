@@ -36,7 +36,11 @@ function Header() {
     const pathsToHideHeader = ['/homepage/storyreels'];
     const showHeader = !pathsToHideHeader.includes(useLocation().pathname);
 
-    const [notifications, setNotifications] = useState([]);
+    const [notifications, setNotifications] = useState({
+        likes: [],
+        comments: [],
+        friendsReqs: [],
+    });
 
     const handleSignOut = () => {
         sessionStorage.removeItem('userData');
@@ -211,42 +215,46 @@ function Header() {
             });
     }, [searchText]);
 
+
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Likes subcollection
-                const likesRef = db.collection('Users').doc(user.uid).collection('Notifications').doc(user.uid).collection('Likes');
-                const likesSnapshot = await likesRef.get();
+        const unsubscribeLikes = listenToNotifications('Likes', setLikesData);
+        const unsubscribeComments = listenToNotifications('Comments', setCommentsData);
+        const unsubscribeFriendsReqs = listenToNotifications('FriendsReqs', setFriendsReqsData);
 
-                // Comments subcollection
-                const commentsRef = db.collection('Users').doc(user.uid).collection('Notifications').doc(user.uid).collection('Comments');
-                const commentsSnapshot = await commentsRef.get();
-
-                // FriendsReqs subcollection
-                const friendsReqsRef = db.collection('Users').doc(user.uid).collection('Notifications').doc(user.uid).collection('FriendsReqs');
-                const friendsReqsSnapshot = await friendsReqsRef.get();
-
-                // Combine data from all subcollections
-                const likesData = likesSnapshot.docs.map(doc => doc.data());
-                const commentsData = commentsSnapshot.docs.map(doc => doc.data());
-                const friendsReqsData = friendsReqsSnapshot.docs.map(doc => doc.data());
-
-                // Combine all data into a single array or object as needed
-                const allNotificationsData = {
-                    likes: likesData,
-                    comments: commentsData,
-                    friendsReqs: friendsReqsData,
-                };
-
-                setNotifications(allNotificationsData);
-                console.log(allNotificationsData);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
+        // Cleanup function
+        return () => {
+            unsubscribeLikes();
+            unsubscribeComments();
+            unsubscribeFriendsReqs();
         };
-
-        fetchData();
     }, [user.uid]);
+
+    const listenToNotifications = (collectionName, setDataCallback) => {
+        const collectionRef = db
+            .collection('Users')
+            .doc(user.uid)
+            .collection('Notifications')
+            .doc(user.uid)
+            .collection(collectionName);
+
+        return collectionRef.onSnapshot((snapshot) => {
+            const data = snapshot.docs.map((doc) => doc.data());
+            setDataCallback(data);
+        });
+    };
+
+    const setLikesData = (data) => {
+        setNotifications((prevNotifications) => ({ ...prevNotifications, likes: data }));
+    };
+
+    const setCommentsData = (data) => {
+        setNotifications((prevNotifications) => ({ ...prevNotifications, comments: data }));
+    };
+
+    const setFriendsReqsData = (data) => {
+        setNotifications((prevNotifications) => ({ ...prevNotifications, friendsReqs: data }));
+    };
 
 
     return (
@@ -324,23 +332,30 @@ function Header() {
                     <NotificationsIcon className='header_right_Options' onClick={toggleNotificationBox} ref={notificationBoxRef} />
                     {notificationBoxVisible && (
                         <div className="headerBox">
-                            {notifications.likes.map((like, index) => (
-                                <div key={index}>
-                                    <p>{like.likedusername} has {like.status} on your post {like.postid}</p>
-                                </div>
-                            ))}
+                            {console.log(notifications)}
+                            {notifications == '' ? (
+                                <p>Nothing</p>
+                            ) : (
+                                <div>
+                                    {notifications.likes.map((like, index) => (
+                                        <div key={index}>
+                                            <p>{like.likedusername} has {like.status} on your post {like.postid}</p>
+                                        </div>
+                                    ))}
 
-                            {notifications.comments.map((comment, index) => (
-                                <div key={index}>
-                                    <p>{comment.commentusername} has {comment.status} '{comment.commenttext}' on your post {comment.postid}</p>
-                                </div>
-                            ))}
+                                    {notifications.comments.map((comment, index) => (
+                                        <div key={index}>
+                                            <p>{comment.commentusername} has {comment.status} '{comment.commenttext}' on your post {comment.postid}</p>
+                                        </div>
+                                    ))}
 
-                            {notifications.friendsReqs.map((friendReq, index) => (
-                                <div key={index}>
-                                    {/* <p>{like.likedusername} has {like.status} on your post {like.postid}</p> */}
+                                    {notifications.friendsReqs.map((friendReq, index) => (
+                                        <div key={index}>
+                                            {/* <p>{like.likedusername} has {like.status} on your post {like.postid}</p> */}
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
+                            )}
                         </div>
                     )}
                 </div>

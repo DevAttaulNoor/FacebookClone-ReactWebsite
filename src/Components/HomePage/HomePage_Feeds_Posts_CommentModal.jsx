@@ -15,7 +15,7 @@ function HomePage_Feeds_Posts_CommentModal({ id, closeModal }) {
         if (comment.trim() === '') {
             return;
         }
-
+    
         const newComment = {
             uid: user.uid,
             email: user.email,
@@ -24,36 +24,41 @@ function HomePage_Feeds_Posts_CommentModal({ id, closeModal }) {
             text: comment,
             timestamp: new Date(),
         };
-
+    
         try {
-            await db.collection("Posts").doc(id).collection("comments").add(newComment);
+            // Add a comment to the "Posts" collection
+            const commentRef = await db.collection("Posts").doc(id).collection("comments").add(newComment);
             setComment('');
-
-            db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('Comments').doc(id).set({
+    
+            // Add a notification to the "Notifications" subcollection
+            await db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('Comments').doc(commentRef.id).set({
                 postid: id,
                 commentuserid: user.uid,
                 commentusername: user.username,
                 commenttext: comment,
                 status: 'Comment'
             });
-
+    
         } catch (error) {
             console.error("Error posting comment:", error);
         }
     };
-
-    const deleteComment = (commentId) => {
-        db.collection("Posts").doc(id).collection("comments").doc(commentId).delete().then(() => {
+    
+    const deleteComment = async (commentId) => {
+        try {
+            // Delete a comment from the "Posts" collection
+            await db.collection("Posts").doc(id).collection("comments").doc(commentId).delete();
             console.log("Comment successfully deleted!");
-        })
-            .catch((error) => {
-                console.error("Error removing comment: ", error);
+    
+            // Update the status of the specific comment in the "Notifications" subcollection
+            await db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('Comments').doc(commentId).update({
+                status: 'Uncomment'
             });
-
-        db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('Comments').doc(id).update({
-            status: 'Uncomment'
-        });
+        } catch (error) {
+            console.error("Error removing comment: ", error);
+        }
     };
+    
 
     const timeAgowithInitials = (timestamp) => {
         if (!timestamp || !timestamp.toDate) {
