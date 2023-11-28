@@ -90,7 +90,7 @@ function FriendsPage_Main_FriendReqs() {
                 });
 
                 db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('FriendsReqs').doc(user.uid).update({
-                    status: 'friend request accepted',
+                    status: 'accepted',
                     timestamp: new Date(),
                 });
 
@@ -129,7 +129,7 @@ function FriendsPage_Main_FriendReqs() {
             await receiverFriendRequestsCollection.doc(friendRequestId).delete();
 
             db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('FriendsReqs').doc(user.uid).update({
-                status: 'friend request rejected',
+                status: 'removed',
                 timestamp: new Date(),
             });
 

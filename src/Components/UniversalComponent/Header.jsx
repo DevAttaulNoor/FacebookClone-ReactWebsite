@@ -21,6 +21,8 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import NightlightIcon from '@mui/icons-material/Nightlight';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+
 
 function Header() {
     const [{ user }, dispatch] = useStateValue();
@@ -256,6 +258,40 @@ function Header() {
         setNotifications((prevNotifications) => ({ ...prevNotifications, friendsReqs: data }));
     };
 
+    const timeAgo = (timestamp) => {
+        if (!timestamp || !timestamp.toDate) {
+            return "0 second ago"
+        }
+        const currentDate = new Date();
+        const postDate = timestamp.toDate();
+        const seconds = Math.floor((currentDate - postDate) / 1000);
+        const secondsDifference = Math.max(seconds, 1);
+        const periods = {
+            decade: 315360000,
+            year: 31536000,
+            month: 2628000,
+            week: 604800,
+            day: 86400,
+            hour: 3600,
+            minute: 60,
+            second: 1,
+        };
+
+        let elapsed = 0;
+        let granularity = 0;
+        let unit = '';
+
+        for (const period in periods) {
+            elapsed = Math.floor(secondsDifference / periods[period]);
+
+            if (elapsed >= 1) {
+                granularity = elapsed;
+                unit = period;
+                break;
+            }
+        }
+        return `${granularity} ${unit}${granularity > 1 ? 's' : ''} ago`;
+    };
 
     return (
         <div className={`header ${showHeader ? '' : 'transformed'}`}>
@@ -332,35 +368,59 @@ function Header() {
                     <NotificationsIcon className='header_right_Options' onClick={toggleNotificationBox} ref={notificationBoxRef} />
                     {notificationBoxVisible && (
                         <div className="headerBox">
-                            {notifications.likes.length === 0 && notifications.comments.length === 0 && notifications.friendsReqs.length === 0 ? (
-                                <p>Nothing new to show</p>
-                            ) : (
-                                <div>
-                                    {notifications.likes.map((like, index) => (
-                                        like.postuserid === user.uid && (
-                                            <div key={index}>
-                                                <p>{like.likedusername} has {like.status} on your post {like.postid}</p>
-                                            </div>
-                                        )
-                                    ))}
-
-                                    {notifications.comments.map((comment, index) => (
-                                        comment.postuserid === user.uid && (
-                                            <div key={index}>
-                                                <p>{comment.commentusername} has {comment.status} '{comment.commenttext}' on your post {comment.postid}</p>
-                                            </div>
-                                        )
-                                    ))}
-
-                                    {notifications.friendsReqs.map((friendReq, index) => (
-                                        friendReq.postid === user.uid && (
-                                            <div key={index}>
-                                                {/* Render friend request content here */}
-                                            </div>
-                                        )
-                                    ))}
+                            <div className='headerBox_Top'>
+                                <div className='headerBox_TopTop'>
+                                    <h2>Notifications</h2>
+                                    <MoreHorizIcon />
                                 </div>
-                            )}
+
+                                <div className='headerBox_TopBottom'>
+                                    <p>All</p>
+                                    <p>Unread</p>
+                                </div>
+                            </div>
+
+                            <div className='headerBox_Bottom'>
+                                {notifications.likes.length === 0 && notifications.comments.length === 0 && notifications.friendsReqs.length === 0 ? (
+                                    <p>Nothing new to show</p>
+                                ) : (
+                                    <div>
+                                        {notifications.likes.map((like, index) => (
+                                            like.postuserid === user.uid && (
+                                                <div key={index}>
+                                                    <Avatar src={like.likeduserphotoUrl} />
+                                                    <p>{like.likedusername} has {like.status} on your post {like.postid}</p>
+                                                    <p>{timeAgo(like.timestamp)}</p>
+                                                </div>
+                                            )
+                                        ))}
+
+                                        {notifications.comments.map((comment, index) => (
+                                            comment.postuserid === user.uid && (
+                                                <div key={index}>
+                                                    <Avatar src={comment.commentuserphotoUrl} />
+                                                    <p>{comment.commentusername} has {comment.status} '{comment.commenttext}' on your post {comment.postid}</p>
+                                                    <p>{timeAgo(comment.timestamp)}</p>
+                                                </div>
+                                            )
+                                        ))}
+
+                                        {notifications.friendsReqs.map((friendReq, index) => (
+                                            friendReq.receiverUid === user.uid && (
+                                                <div key={index}>
+                                                    <Avatar src={friendReq.senderPhotoUrl} />
+                                                    <p>{friendReq.senderName} has sent you a friend request</p>
+                                                    <p>{timeAgo(friendReq.timestamp)}</p>
+                                                    <button>Accept</button>
+                                                    <button>Delete</button>
+                                                    {/* If delete button is pressed than the buttons are removed and a "Request removed" is shown insted of the buttons */}
+                                                    {/* If Accept button is pressed than the buttons are removed and a "Request accepted" is shown insted of the buttons */}
+                                                </div>
+                                            )
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     )}
                 </div>

@@ -77,8 +77,9 @@ function FriendsCard({ user }) {
                     senderPhotoUrl: senderPhotoUrl,
                     receiverUid: user.uid,
                     receiverName: user.username,
+                    receiverPhotoUrl: user.photoURL,
                     timestamp: new Date(),
-                    status: 'friend request sent',
+                    status: 'sent',
                 });
 
                 setFriendRequestStatus("pending");

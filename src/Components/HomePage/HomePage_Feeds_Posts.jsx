@@ -214,6 +214,7 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
                 postuserid: userid,
                 likeduserid: user.uid,
                 likedusername: user.username,
+                likeduserphotoUrl: user.photoURL,
                 timestamp: new Date(),
                 status: 'liked',
             })

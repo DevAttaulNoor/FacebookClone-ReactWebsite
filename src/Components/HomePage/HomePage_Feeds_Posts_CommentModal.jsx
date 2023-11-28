@@ -36,6 +36,7 @@ function HomePage_Feeds_Posts_CommentModal({ id, userid, closeModal }) {
                 postuserid: userid,
                 commentuserid: user.uid,
                 commentusername: user.username,
+                commentuserphotoUrl: user.photoURL,
                 commenttext: comment,
                 timestamp: new Date(),
                 status: 'Comment'
