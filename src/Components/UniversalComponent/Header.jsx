@@ -392,7 +392,7 @@ function Header() {
                                                         <Avatar src={like.likeduserphotoUrl} />
                                                     </div>
                                                     <div className="headerBox_BottomOption_Right">
-                                                        <p>{like.likedusername} has {like.status} on your post {like.postid}</p>
+                                                        <p><span>{like.likedusername}</span> has {like.status} on your post {like.postid}</p>
                                                         <h5>{timeAgo(like.timestamp)}</h5>
                                                     </div>
                                                 </div>
@@ -406,7 +406,7 @@ function Header() {
                                                         <Avatar src={comment.commentuserphotoUrl} />
                                                     </div>
                                                     <div className="headerBox_BottomOption_Right">
-                                                        <p>{comment.commentusername} has {comment.status} '{comment.commenttext}' on your post {comment.postid}</p>
+                                                        <p><span>{comment.commentusername}</span> has {comment.status} "{comment.commenttext}" on your post {comment.postid}</p>
                                                         <h5>{timeAgo(comment.timestamp)}</h5>
                                                     </div>
                                                 </div>
@@ -420,7 +420,7 @@ function Header() {
                                                         <Avatar src={friendReq.senderPhotoUrl} />
                                                     </div>
                                                     <div className="headerBox_BottomOption_Right">
-                                                        <p>{friendReq.senderName} has sent you a friend request</p>
+                                                        <p><span>{friendReq.senderName}</span> has sent you a friend request</p>
                                                         <h5>{timeAgo(friendReq.timestamp)}</h5>
                                                         <div className="headerBox_BottomOption_RightBottom">
                                                             <button id='confbtn'>Confirm</button>

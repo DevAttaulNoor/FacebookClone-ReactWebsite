@@ -322,6 +322,10 @@
     padding: 12px 8px;
 }
 
+.notificationBox .headerBox_BottomOption span{
+    font-weight: 500;
+}
+
 .notificationBox .headerBox_BottomOption:hover {
     cursor: pointer;
     border-radius: 6px;
