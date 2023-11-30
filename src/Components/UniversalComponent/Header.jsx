@@ -370,13 +370,13 @@ function Header() {
                         <div className="headerBox">
                             <div className='headerBox_Top'>
                                 <div className='headerBox_TopTop'>
-                                    <h2>Notifications</h2>
+                                    <h3>Notifications</h3>
                                     <MoreHorizIcon />
                                 </div>
 
                                 <div className='headerBox_TopBottom'>
-                                    <p>All</p>
-                                    <p>Unread</p>
+                                    <button>All</button>
+                                    <button>Unread</button>
                                 </div>
                             </div>
 
@@ -384,37 +384,51 @@ function Header() {
                                 {notifications.likes.length === 0 && notifications.comments.length === 0 && notifications.friendsReqs.length === 0 ? (
                                     <p>Nothing new to show</p>
                                 ) : (
-                                    <div>
+                                    <div className='headerBox_BottomOptions'>
                                         {notifications.likes.map((like, index) => (
                                             like.postuserid === user.uid && (
-                                                <div key={index}>
-                                                    <Avatar src={like.likeduserphotoUrl} />
-                                                    <p>{like.likedusername} has {like.status} on your post {like.postid}</p>
-                                                    <p>{timeAgo(like.timestamp)}</p>
+                                                <div className='headerBox_BottomOption' key={index}>
+                                                    <div className='headerBox_BottomOption_Left'>
+                                                        <Avatar src={like.likeduserphotoUrl} />
+                                                    </div>
+                                                    <div className="headerBox_BottomOption_Right">
+                                                        <p>{like.likedusername} has {like.status} on your post {like.postid}</p>
+                                                        <h5>{timeAgo(like.timestamp)}</h5>
+                                                    </div>
                                                 </div>
                                             )
                                         ))}
 
                                         {notifications.comments.map((comment, index) => (
                                             comment.postuserid === user.uid && (
-                                                <div key={index}>
-                                                    <Avatar src={comment.commentuserphotoUrl} />
-                                                    <p>{comment.commentusername} has {comment.status} '{comment.commenttext}' on your post {comment.postid}</p>
-                                                    <p>{timeAgo(comment.timestamp)}</p>
+                                                <div className='headerBox_BottomOption' key={index}>
+                                                    <div className='headerBox_BottomOption_Left'>
+                                                        <Avatar src={comment.commentuserphotoUrl} />
+                                                    </div>
+                                                    <div className="headerBox_BottomOption_Right">
+                                                        <p>{comment.commentusername} has {comment.status} '{comment.commenttext}' on your post {comment.postid}</p>
+                                                        <h5>{timeAgo(comment.timestamp)}</h5>
+                                                    </div>
                                                 </div>
                                             )
                                         ))}
 
                                         {notifications.friendsReqs.map((friendReq, index) => (
                                             friendReq.receiverUid === user.uid && (
-                                                <div key={index}>
-                                                    <Avatar src={friendReq.senderPhotoUrl} />
-                                                    <p>{friendReq.senderName} has sent you a friend request</p>
-                                                    <p>{timeAgo(friendReq.timestamp)}</p>
-                                                    <button>Accept</button>
-                                                    <button>Delete</button>
-                                                    {/* If delete button is pressed than the buttons are removed and a "Request removed" is shown insted of the buttons */}
-                                                    {/* If Accept button is pressed than the buttons are removed and a "Request accepted" is shown insted of the buttons */}
+                                                <div className='headerBox_BottomOption' key={index}>
+                                                    <div className='headerBox_BottomOption_Left'>
+                                                        <Avatar src={friendReq.senderPhotoUrl} />
+                                                    </div>
+                                                    <div className="headerBox_BottomOption_Right">
+                                                        <p>{friendReq.senderName} has sent you a friend request</p>
+                                                        <h5>{timeAgo(friendReq.timestamp)}</h5>
+                                                        <div className="headerBox_BottomOption_RightBottom">
+                                                            <button id='confbtn'>Confirm</button>
+                                                            <button id='delbtn'>Delete</button>
+                                                            {/* If delete button is pressed than the buttons are removed and a "Request removed" is shown insted of the buttons */}
+                                                            {/* If Confirm button is pressed than the buttons are removed and a "Request accepted" is shown insted of the buttons */}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             )
                                         ))}
