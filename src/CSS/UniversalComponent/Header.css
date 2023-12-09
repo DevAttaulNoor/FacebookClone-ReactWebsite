@@ -380,6 +380,151 @@
     color: #000;
 }
 
+.messageBox {
+    display: flex;
+}
+
+.messageBox .headerBox{
+    padding: 0;
+}
+
+.messageBox .headerBox_Top {
+    width: -webkit-fill-available;
+    padding: 10px 14px 10px;
+}
+
+.messageBox .headerBox_TopTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.messageBox .headerBox_TopTop h3 {
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.messageBox .headerBox_TopTop .MuiSvgIcon-root {
+    width: 20px;
+}
+
+.messageBox .headerBox_TopMiddle {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.messageBox .headerBox_TopMiddle input{
+    width: 100%;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 8px 12px 8px 32px;
+    border-radius: 18px;
+    outline: none;
+    border: none;
+    color: gray;
+    background-color: #F0F2F5;
+}
+
+.messageBox .headerBox_TopMiddle .MuiSvgIcon-root{
+    position: absolute;
+    left: 22px;
+    width: 20px;
+    color: gray;
+}
+
+.messageBox .headerBox_TopBottom {
+    display: flex;
+    align-items: center;
+}
+
+.messageBox .headerBox_TopBottom button {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 12px;
+    margin-right: 8px;
+    border-radius: 18px;
+    outline: none;
+    border: none;
+    color: #0064D1;
+    background-color: #EBF5FF;
+}
+
+.messageBox .headerBox_TopBottom button:hover {
+    cursor: pointer;
+    background-color: #F0F2F5;
+}
+
+.messageBox .headerBox_Bottom {
+    padding: 0 8px;
+}
+
+.messageBox .headerBox_BottomOption {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 5px;
+    padding: 12px 8px;
+}
+
+.messageBox .headerBox_BottomOption span{
+    font-weight: 500;
+}
+
+.messageBox .headerBox_BottomOption:hover {
+    cursor: pointer;
+    border-radius: 6px;
+    background-color: #F0F2F5;
+}
+
+.messageBox .headerBox_BottomOption_Left .MuiAvatar-root {
+    width: 52px;
+    height: 52px;
+}
+
+.messageBox .headerBox_BottomOption_Right {
+    padding: 0 10px;
+}
+
+.messageBox .headerBox_BottomOption_Right p {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.messageBox .headerBox_BottomOption_Right h5 {
+    font-size: 12px;
+    font-weight: 500;
+    color: #0866FF;
+}
+
+.messageBox .headerBox_BottomOption_RightBottom {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin: 12px 10px 0 0;
+}
+
+.messageBox .headerBox_BottomOption_RightBottom button {
+    padding: 8px 12px;
+    background-color: #0866FF;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+}
+
+.messageBox .headerBox_BottomOption_RightBottom button#confbtn {
+    background-color: #0866FF;
+    color: #fff;
+}
+
+.messageBox .headerBox_BottomOption_RightBottom button#delbtn {
+    background-color: #E4E6EB;
+    color: #000;
+}
+
 /** Header Section Transformed */
 .header.transformed {
     background-color: #f0f2f5;

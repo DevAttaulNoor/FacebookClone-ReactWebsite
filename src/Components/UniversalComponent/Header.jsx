@@ -32,8 +32,10 @@ function Header() {
     const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
     const [userBoxVisible, setUserBoxVisible] = useState(false);
     const [notificationBoxVisible, setNotificationBoxVisible] = useState(false);
+    const [messageBoxVisible, setMessageBoxVisible] = useState(false);
     const userBoxRef = useRef(null);
     const notificationBoxRef = useRef(null);
+    const messageBoxRef = useRef(null);
 
     const pathsToHideHeader = ['/homepage/storyreels'];
     const showHeader = !pathsToHideHeader.includes(useLocation().pathname);
@@ -149,6 +151,10 @@ function Header() {
         setNotificationBoxVisible(!notificationBoxVisible);
     };
 
+    const toggleMessageBox = () => {
+        setMessageBoxVisible(!messageBoxVisible);
+    };
+
     useEffect(() => {
         const handleOutsideClick = (e) => {
             if (userBoxRef.current && !userBoxRef.current.contains(e.target)) {
@@ -158,6 +164,10 @@ function Header() {
             if (notificationBoxRef.current && !notificationBoxRef.current.contains(e.target)) {
                 setNotificationBoxVisible(false);
             }
+
+            if (messageBoxRef.current && !messageBoxRef.current.contains(e.target)) {
+                setMessageBoxVisible(false);
+            }
         };
 
         window.addEventListener("click", handleOutsideClick);
@@ -166,7 +176,7 @@ function Header() {
         return () => {
             window.removeEventListener("click", handleOutsideClick);
         };
-    }, [userBoxRef, notificationBoxRef]);
+    }, [userBoxRef, notificationBoxRef, messageBoxRef]);
 
     useEffect(() => {
         const handleOutsideClick = (e) => {
@@ -216,8 +226,6 @@ function Header() {
                 console.error('Error getting documents:', error);
             });
     }, [searchText]);
-
-
 
     useEffect(() => {
         const unsubscribeLikes = listenToNotifications('Likes', setLikesData);
@@ -362,7 +370,35 @@ function Header() {
 
             <div className="header_right">
                 <AppsIcon className='header_right_Options' />
-                <ForumIcon className='header_right_Options' id='msgIcon' />
+
+                <div className={`messageBox ${userBoxVisible ? 'clicked' : ''}`}>
+                    <ForumIcon className='header_right_Options' id='msgIcon' onClick={toggleMessageBox} ref={messageBoxRef} />
+                    {messageBoxVisible && (
+                        <div className="headerBox">
+                            <div className='headerBox_Top'>
+                                <div className='headerBox_TopTop'>
+                                    <h3>Chats</h3>
+                                    <MoreHorizIcon />
+                                </div>
+
+                                <div className='headerBox_TopMiddle'>
+                                <SearchIcon />
+                                    <input type="text" name="" id="" placeholder='Search Messenger'/>
+                                </div>
+
+                                <div className='headerBox_TopBottom'>
+                                    <button>Inbox</button>
+                                    <button>Communities</button>
+                                </div>
+                            </div>
+
+                            <div className='headerBox_Bottom'>
+                                <p>Hello</p>
+                            </div>
+                        </div>
+                    )}
+
+                </div>
 
                 <div className={`notificationBox ${userBoxVisible ? 'clicked' : ''}`}>
                     <NotificationsIcon className='header_right_Options' onClick={toggleNotificationBox} ref={notificationBoxRef} />
