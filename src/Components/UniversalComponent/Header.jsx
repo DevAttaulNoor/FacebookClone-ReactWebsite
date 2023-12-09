@@ -31,20 +31,19 @@ function Header() {
     const [matchingUsernames, setMatchingUsernames] = useState([]);
     const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
     const [userBoxVisible, setUserBoxVisible] = useState(false);
-    const [notificationBoxVisible, setNotificationBoxVisible] = useState(false);
     const [messageBoxVisible, setMessageBoxVisible] = useState(false);
+    const [notificationBoxVisible, setNotificationBoxVisible] = useState(false);
     const userBoxRef = useRef(null);
-    const notificationBoxRef = useRef(null);
     const messageBoxRef = useRef(null);
-
-    const pathsToHideHeader = ['/homepage/storyreels'];
-    const showHeader = !pathsToHideHeader.includes(useLocation().pathname);
-
+    const notificationBoxRef = useRef(null);
     const [notifications, setNotifications] = useState({
         likes: [],
         comments: [],
         friendsReqs: [],
     });
+
+    const pathsToHideHeader = ['/homepage/storyreels'];
+    const showHeader = !pathsToHideHeader.includes(useLocation().pathname);
 
     const handleSignOut = () => {
         sessionStorage.removeItem('userData');
@@ -155,6 +154,67 @@ function Header() {
         setMessageBoxVisible(!messageBoxVisible);
     };
 
+    const listenToNotifications = (collectionName, setDataCallback) => {
+        const collectionRef = db
+            .collection('Users')
+            .doc(user.uid)
+            .collection('Notifications')
+            .doc(user.uid)
+            .collection(collectionName);
+
+        return collectionRef.onSnapshot((snapshot) => {
+            const data = snapshot.docs.map((doc) => doc.data());
+            setDataCallback(data);
+        });
+    };
+
+    const setLikesData = (data) => {
+        setNotifications((prevNotifications) => ({ ...prevNotifications, likes: data }));
+    };
+
+    const setCommentsData = (data) => {
+        setNotifications((prevNotifications) => ({ ...prevNotifications, comments: data }));
+    };
+
+    const setFriendsReqsData = (data) => {
+        setNotifications((prevNotifications) => ({ ...prevNotifications, friendsReqs: data }));
+    };
+
+    const timeAgo = (timestamp) => {
+        if (!timestamp || !timestamp.toDate) {
+            return "0 second ago"
+        }
+        const currentDate = new Date();
+        const postDate = timestamp.toDate();
+        const seconds = Math.floor((currentDate - postDate) / 1000);
+        const secondsDifference = Math.max(seconds, 1);
+        const periods = {
+            decade: 315360000,
+            year: 31536000,
+            month: 2628000,
+            week: 604800,
+            day: 86400,
+            hour: 3600,
+            minute: 60,
+            second: 1,
+        };
+
+        let elapsed = 0;
+        let granularity = 0;
+        let unit = '';
+
+        for (const period in periods) {
+            elapsed = Math.floor(secondsDifference / periods[period]);
+
+            if (elapsed >= 1) {
+                granularity = elapsed;
+                unit = period;
+                break;
+            }
+        }
+        return `${granularity} ${unit}${granularity > 1 ? 's' : ''} ago`;
+    };
+
     useEffect(() => {
         const handleOutsideClick = (e) => {
             if (userBoxRef.current && !userBoxRef.current.contains(e.target)) {
@@ -240,67 +300,6 @@ function Header() {
         };
     }, [user.uid]);
 
-    const listenToNotifications = (collectionName, setDataCallback) => {
-        const collectionRef = db
-            .collection('Users')
-            .doc(user.uid)
-            .collection('Notifications')
-            .doc(user.uid)
-            .collection(collectionName);
-
-        return collectionRef.onSnapshot((snapshot) => {
-            const data = snapshot.docs.map((doc) => doc.data());
-            setDataCallback(data);
-        });
-    };
-
-    const setLikesData = (data) => {
-        setNotifications((prevNotifications) => ({ ...prevNotifications, likes: data }));
-    };
-
-    const setCommentsData = (data) => {
-        setNotifications((prevNotifications) => ({ ...prevNotifications, comments: data }));
-    };
-
-    const setFriendsReqsData = (data) => {
-        setNotifications((prevNotifications) => ({ ...prevNotifications, friendsReqs: data }));
-    };
-
-    const timeAgo = (timestamp) => {
-        if (!timestamp || !timestamp.toDate) {
-            return "0 second ago"
-        }
-        const currentDate = new Date();
-        const postDate = timestamp.toDate();
-        const seconds = Math.floor((currentDate - postDate) / 1000);
-        const secondsDifference = Math.max(seconds, 1);
-        const periods = {
-            decade: 315360000,
-            year: 31536000,
-            month: 2628000,
-            week: 604800,
-            day: 86400,
-            hour: 3600,
-            minute: 60,
-            second: 1,
-        };
-
-        let elapsed = 0;
-        let granularity = 0;
-        let unit = '';
-
-        for (const period in periods) {
-            elapsed = Math.floor(secondsDifference / periods[period]);
-
-            if (elapsed >= 1) {
-                granularity = elapsed;
-                unit = period;
-                break;
-            }
-        }
-        return `${granularity} ${unit}${granularity > 1 ? 's' : ''} ago`;
-    };
-
     return (
         <div className={`header ${showHeader ? '' : 'transformed'}`}>
             <div className='Transformed_header_left'>
@@ -382,8 +381,8 @@ function Header() {
                                 </div>
 
                                 <div className='headerBox_TopMiddle'>
-                                <SearchIcon />
-                                    <input type="text" name="" id="" placeholder='Search Messenger'/>
+                                    <SearchIcon />
+                                    <input type="text" name="" id="" placeholder='Search Messenger' />
                                 </div>
 
                                 <div className='headerBox_TopBottom'>
