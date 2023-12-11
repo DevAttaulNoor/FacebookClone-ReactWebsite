@@ -14,7 +14,6 @@ import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import OndemandVideoOutlinedIcon from '@mui/icons-material/OndemandVideoOutlined';
-
 import SettingsIcon from '@mui/icons-material/Settings';
 import HelpIcon from '@mui/icons-material/Help';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
@@ -22,7 +21,6 @@ import NightlightIcon from '@mui/icons-material/Nightlight';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-
 
 function Header() {
     const [{ user }, dispatch] = useStateValue();
@@ -96,24 +94,6 @@ function Header() {
                     .catch((error) => {
                         console.error('Error deleting user posts in Firestore:', error);
                     });
-
-                // // Delete the entire subfolder corresponding to the user's UID in Storage
-                // storage.ref(`Users/${user.uid}`).delete()
-                //     .then(() => {
-                //         console.log('User data deleted from Storage');
-                //     })
-                //     .catch((error) => {
-                //         console.error('Error deleting user data from Storage:', error);
-                //     });
-
-                // // Delete the entire subfolder corresponding to the post's UID in Storage
-                // storage.ref(`Posts/${user.uid}`).delete()
-                //     .then(() => {
-                //         console.log('User posts data deleted from Storage');
-                //     })
-                //     .catch((error) => {
-                //         console.error('Error deleting user posts from Storage:', error);
-                //     });
 
                 // Delete the user's authentication account and sign out
                 auth
@@ -441,7 +421,7 @@ function Header() {
                                                         <Avatar src={comment.commentuserphotoUrl} />
                                                     </div>
                                                     <div className="headerBox_BottomOption_Right">
-                                                        <p><span>{comment.commentusername}</span> has {comment.status} "{comment.commenttext}" on your post {comment.postid}</p>
+                                                        <p><span>{comment.commentusername}</span> has {comment.status} <span>"{comment.commenttext}"</span> on your post {comment.postid}</p>
                                                         <h5>{timeAgo(comment.timestamp)}</h5>
                                                     </div>
                                                 </div>
