@@ -37,4 +37,4 @@ Contributions are welcome! If you want to contribute to this project, follow the
 5. Submit a pull request.
 
 ## License
-This project is licensed under DevAttaulNoor.
+This project is licensed under the DevAttaulNoor.
