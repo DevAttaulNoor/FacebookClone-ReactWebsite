@@ -6,8 +6,6 @@ Its purpose is to mimic the fundamental features of Facebook, allowing users to 
 - [Demo](#demo)
 - [Features](#features)
 - [Technologies Used](#technologies)
-- [Usage](#usage)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Features
@@ -27,14 +25,6 @@ Its purpose is to mimic the fundamental features of Facebook, allowing users to 
 3. Explore the real-time updates for posts and notifications.
 4. Update your profile picture and information.
 5. Enjoy your Facebook clone!
-
-## Contributing
-Contributions are welcome! If you want to contribute to this project, follow these steps:
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Make your changes and commit them.
-4. Push your changes to your fork.
-5. Submit a pull request.
 
 ## License
 This project is licensed under the DevAttaulNoor.
