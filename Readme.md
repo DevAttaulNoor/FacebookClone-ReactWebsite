@@ -19,12 +19,5 @@ Its purpose is to mimic the fundamental features of Facebook, allowing users to 
 - **React.js**: A JavaScript library for building user interfaces.
 - **Firebase**: A cloud-based platform for developing web and mobile applications.
 
-## Usage
-1. Register and log in to the application.
-2. Create posts, like posts, comment on posts, and follow other users.
-3. Explore the real-time updates for posts and notifications.
-4. Update your profile picture and information.
-5. Enjoy your Facebook clone!
-
 ## License
 This project is licensed under the DevAttaulNoor.
