@@ -407,7 +407,7 @@ function Header() {
                                                         <Avatar src={like.likeduserphotoUrl} />
                                                     </div>
                                                     <div className="headerBox_BottomOption_Right">
-                                                        <p><span>{like.likedusername}</span> has {like.status} on your post {like.postid}</p>
+                                                        <p><span>{like.likedusername}</span> has {like.status} on your post</p>
                                                         <h5>{timeAgo(like.timestamp)}</h5>
                                                     </div>
                                                 </div>
@@ -417,13 +417,15 @@ function Header() {
                                         {notifications.comments.map((comment, index) => (
                                             comment.postuserid === user.uid && (
                                                 <div className='headerBox_BottomOption' key={index}>
-                                                    <div className='headerBox_BottomOption_Left'>
-                                                        <Avatar src={comment.commentuserphotoUrl} />
-                                                    </div>
-                                                    <div className="headerBox_BottomOption_Right">
-                                                        <p><span>{comment.commentusername}</span> has {comment.status} <span>"{comment.commenttext}"</span> on your post {comment.postid}</p>
-                                                        <h5>{timeAgo(comment.timestamp)}</h5>
-                                                    </div>
+                                                    <NavLink to={{pathname: `/profilepage/${comment.postuserid}/post/${comment.postid}`, state: { postid: comment.postid }}} activeClassName="active">
+                                                        <div className='headerBox_BottomOption_Left'>
+                                                            <Avatar src={comment.commentuserphotoUrl} />
+                                                        </div>
+                                                        <div className="headerBox_BottomOption_Right">
+                                                            <p><span>{comment.commentusername}</span> has {comment.status} <span>"{comment.commenttext}"</span> on your post</p>
+                                                            <h5>{timeAgo(comment.timestamp)}</h5>
+                                                        </div>
+                                                    </NavLink>
                                                 </div>
                                             )
                                         ))}

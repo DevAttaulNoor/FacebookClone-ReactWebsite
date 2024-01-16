@@ -10,6 +10,7 @@ import VideosPage from './Components/VideosPage/VideosPage';
 import ProfilePage from './Components/ProfilePage/ProfilePage';
 import FriendsPage from './Components/FriendsPage/FriendsPage';
 import FriendsPage_AllFriends from './Components/FriendsPage/FriendsPage_AllFriends';
+import PostPage from './Components/UniversalComponent/PostPage';
 
 function App() {
 	const [{ user }] = useStateValue();
@@ -31,6 +32,7 @@ function App() {
 							<Route path="videospage/*" element={<VideosPage />} />
 							<Route path="userhomepage/*" element={<UserPage />} />
 							<Route path="profilepage/:userid/*" element={<ProfilePage />} />
+							<Route path="profilepage/:userid/post/*" element={<PostPage/>} />
 						</Routes>
 					</div>
 				)}
