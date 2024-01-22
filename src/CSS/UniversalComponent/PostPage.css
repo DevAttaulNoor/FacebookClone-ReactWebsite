@@ -1,6 +1,17 @@
+/** Post Page Section */
 .postPage{
-    display: flex;
+    /* display: flex;
     align-items: center;
     flex-direction: column;
-    width: 560px;
+    width: 560px; */
+    background-color: lightcoral;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    overflow-y: auto;
 }
+
+.postPageInner{
+    width: 500px;
+}
+

@@ -417,7 +417,7 @@ function Header() {
                                         {notifications.comments.map((comment, index) => (
                                             comment.postuserid === user.uid && (
                                                 <div className='headerBox_BottomOption' key={index}>
-                                                    <NavLink to={{pathname: `/profilepage/${comment.postuserid}/post/${comment.postid}`, state: { postid: comment.postid }}} activeClassName="active">
+                                                    <NavLink to={`/profilepage/${comment.postuserid}/post/${comment.postid}`} state={{ from: comment.postid }}>
                                                         <div className='headerBox_BottomOption_Left'>
                                                             <Avatar src={comment.commentuserphotoUrl} />
                                                         </div>
