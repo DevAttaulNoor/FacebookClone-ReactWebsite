@@ -34,9 +34,9 @@ function HomePage_Feeds_Posts_CommentModal({ id, userid, closeModal }) {
             await db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Comments').doc(commentRef.id).set({
                 postid: id,
                 postuserid: userid,
-                commentuserid: user.uid,
-                commentusername: user.username,
-                commentuserphotoUrl: user.photoURL,
+                userid: user.uid,
+                username: user.username,
+                userphotoUrl: user.photoURL,
                 commenttext: comment,
                 timestamp: new Date(),
                 status: 'commented'
@@ -49,14 +49,9 @@ function HomePage_Feeds_Posts_CommentModal({ id, userid, closeModal }) {
     
     const deleteComment = async (commentId) => {
         try {
-            // Delete a comment from the "Posts" collection
+            // Delete a comment from the "Posts" and "Notification" collection
             await db.collection("Posts").doc(id).collection("comments").doc(commentId).delete();
-            console.log("Comment successfully deleted!");
-    
-            // Update the status of the specific comment in the "Notifications" subcollection
-            await db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Comments').doc(commentId).update({
-                status: 'Uncommented'
-            });
+            await db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Comments').doc(commentId).delete();
         } catch (error) {
             console.error("Error removing comment: ", error);
         }

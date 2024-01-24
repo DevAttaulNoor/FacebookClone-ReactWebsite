@@ -190,9 +190,7 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
                     console.error("Error unliking post: ", error);
                 });
 
-            db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Likes').doc(id).update({
-                status: 'unliked',
-            })
+            db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Likes').doc(id).delete();
 
             likedUserDoc.ref
                 .delete()
@@ -212,11 +210,11 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
             db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Likes').doc(id).set({
                 postid: id,
                 postuserid: userid,
-                likeduserid: user.uid,
-                likedusername: user.username,
-                likeduserphotoUrl: user.photoURL,
+                userid: user.uid,
+                username: user.username,
+                userphotoUrl: user.photoURL,
                 timestamp: new Date(),
-                status: 'liked',
+                status: 'reacted',
             })
 
             likedUsersRef

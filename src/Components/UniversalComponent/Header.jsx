@@ -26,6 +26,7 @@ function Header() {
     const [{ user }, dispatch] = useStateValue();
     const [searchText, setSearchText] = useState('');
     const [selectedUser, setSelectedUser] = useState(null);
+    const [notifications, setNotifications] = useState([])
     const [matchingUsernames, setMatchingUsernames] = useState([]);
     const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
     const [userBoxVisible, setUserBoxVisible] = useState(false);
@@ -34,12 +35,6 @@ function Header() {
     const userBoxRef = useRef(null);
     const messageBoxRef = useRef(null);
     const notificationBoxRef = useRef(null);
-    const [notifications, setNotifications] = useState({
-        likes: [],
-        comments: [],
-        friendsReqs: [],
-    });
-
     const pathsToHideHeader = ['/homepage/storyreels'];
     const showHeader = !pathsToHideHeader.includes(useLocation().pathname);
 
@@ -132,32 +127,6 @@ function Header() {
 
     const toggleMessageBox = () => {
         setMessageBoxVisible(!messageBoxVisible);
-    };
-
-    const listenToNotifications = (collectionName, setDataCallback) => {
-        const collectionRef = db
-            .collection('Users')
-            .doc(user.uid)
-            .collection('Notifications')
-            .doc(user.uid)
-            .collection(collectionName);
-
-        return collectionRef.onSnapshot((snapshot) => {
-            const data = snapshot.docs.map((doc) => doc.data());
-            setDataCallback(data);
-        });
-    };
-
-    const setLikesData = (data) => {
-        setNotifications((prevNotifications) => ({ ...prevNotifications, likes: data }));
-    };
-
-    const setCommentsData = (data) => {
-        setNotifications((prevNotifications) => ({ ...prevNotifications, comments: data }));
-    };
-
-    const setFriendsReqsData = (data) => {
-        setNotifications((prevNotifications) => ({ ...prevNotifications, friendsReqs: data }));
     };
 
     const timeAgo = (timestamp) => {
@@ -268,16 +237,31 @@ function Header() {
     }, [searchText]);
 
     useEffect(() => {
-        const unsubscribeLikes = listenToNotifications('Likes', setLikesData);
-        const unsubscribeComments = listenToNotifications('Comments', setCommentsData);
-        const unsubscribeFriendsReqs = listenToNotifications('FriendsReqs', setFriendsReqsData);
+        const likesData = db.collection('Users').doc(user.uid).collection('Notifications').doc(user.uid).collection('Likes');
+        const commentData = db.collection('Users').doc(user.uid).collection('Notifications').doc(user.uid).collection('Comments');
+        const friendReqData = db.collection('Users').doc(user.uid).collection('Notifications').doc(user.uid).collection('FriendsReqs');
 
-        // Cleanup function
-        return () => {
-            unsubscribeLikes();
-            unsubscribeComments();
-            unsubscribeFriendsReqs();
-        };
+        // Use Promise.all to wait for all promises to resolve
+        Promise.all([
+            likesData.get(),
+            commentData.get(),
+            friendReqData.get(),
+        ]).then((results) => {
+            const likes = results[0].docs.map((doc) => doc.data());
+            const comments = results[1].docs.map((doc) => doc.data());
+            const friendReqs = results[2].docs.map((doc) => doc.data());
+
+            // Combine data from all collections
+            const notifications = [...likes, ...comments, ...friendReqs];
+
+            // Sort the combined array based on timestamps in ascending order
+            notifications.sort((a, b) => b.timestamp - a.timestamp);
+
+            // Set the combined and sorted data to your state
+            setNotifications(notifications);
+        }).catch((error) => {
+            console.error('Error fetching notifications:', error);
+        });
     }, [user.uid]);
 
     return (
@@ -376,7 +360,6 @@ function Header() {
                             </div>
                         </div>
                     )}
-
                 </div>
 
                 <div className={`notificationBox ${userBoxVisible ? 'clicked' : ''}`}>
@@ -396,58 +379,38 @@ function Header() {
                             </div>
 
                             <div className='headerBox_Bottom'>
-                                {notifications.likes.length === 0 && notifications.comments.length === 0 && notifications.friendsReqs.length === 0 ? (
+                                {notifications.length == 0 ? (
                                     <p>Nothing new to show</p>
                                 ) : (
                                     <div className='headerBox_BottomOptions'>
-                                        {notifications.likes.map((like, index) => (
-                                            like.postuserid === user.uid && (
-                                                <div className='headerBox_BottomOption' key={index}>
-                                                    <div className='headerBox_BottomOption_Left'>
-                                                        <Avatar src={like.likeduserphotoUrl} />
-                                                    </div>
-                                                    <div className="headerBox_BottomOption_Right">
-                                                        <p><span>{like.likedusername}</span> has {like.status} on your post</p>
-                                                        <h5>{timeAgo(like.timestamp)}</h5>
-                                                    </div>
-                                                </div>
-                                            )
-                                        ))}
-
-                                        {notifications.comments.map((comment, index) => (
-                                            comment.postuserid === user.uid && (
-                                                <div className='headerBox_BottomOption' key={index}>
-                                                    <NavLink to={`/profilepage/${comment.postuserid}/post/${comment.postid}`} state={{ from: comment.postid }}>
+                                        {notifications.map((notification, index) => (
+                                            <div className='headerBox_BottomOption' key={index}>
+                                                {(notification.status == 'reacted') || (notification.status == 'commented') ? (
+                                                    <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} state={{ from: notification.postid }}>
                                                         <div className='headerBox_BottomOption_Left'>
-                                                            <Avatar src={comment.commentuserphotoUrl} />
+                                                            <Avatar src={notification.userphotoUrl} />
                                                         </div>
                                                         <div className="headerBox_BottomOption_Right">
-                                                            <p><span>{comment.commentusername}</span> has {comment.status} on your post</p>
-                                                            <h5>{timeAgo(comment.timestamp)}</h5>
+                                                            <p> <span>{notification.username}</span> has {notification.status} on your post</p>
+                                                            <h5>{timeAgo(notification.timestamp)}</h5>
                                                         </div>
                                                     </NavLink>
-                                                </div>
-                                            )
-                                        ))}
-
-                                        {notifications.friendsReqs.map((friendReq, index) => (
-                                            friendReq.receiverUid === user.uid && (
-                                                <div className='headerBox_BottomOption' key={index}>
-                                                    <div className='headerBox_BottomOption_Left'>
-                                                        <Avatar src={friendReq.senderPhotoUrl} />
-                                                    </div>
-                                                    <div className="headerBox_BottomOption_Right">
-                                                        <p><span>{friendReq.senderName}</span> has sent you a friend request</p>
-                                                        <h5>{timeAgo(friendReq.timestamp)}</h5>
-                                                        <div className="headerBox_BottomOption_RightBottom">
-                                                            <button id='confbtn'>Confirm</button>
-                                                            <button id='delbtn'>Delete</button>
-                                                            {/* If delete button is pressed than the buttons are removed and a "Request removed" is shown insted of the buttons */}
-                                                            {/* If Confirm button is pressed than the buttons are removed and a "Request accepted" is shown insted of the buttons */}
+                                                ) : (
+                                                    <>
+                                                        <div className='headerBox_BottomOption_Left'>
+                                                            <Avatar src={notification.senderPhotoUrl} />
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            )
+                                                        <div className="headerBox_BottomOption_Right">
+                                                            <p><span>{notification.senderName}</span> has sent you a friend request</p>
+                                                            <h5>{timeAgo(notification.timestamp)}</h5>
+                                                            <div className="headerBox_BottomOption_RightBottom">
+                                                                <button id='confbtn'>Confirm</button>
+                                                                <button id='delbtn'>Delete</button>
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                )}
+                                            </div>
                                         ))}
                                     </div>
                                 )}
@@ -514,7 +477,7 @@ function Header() {
                         </div>
                     )}
                 </div>
-            </div>
+            </div >
         </div >
     )
 }
