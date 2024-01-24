@@ -162,12 +162,12 @@
     margin-bottom: 0px;
 }
 
-.comments .commentInner{
+.postPageInner_Bottom .comments .commentInner{
     display: flex;
     flex-direction: column;
 }
 
-.commentInner .commentTop {
+.postPageInner_Bottom .commentInner .commentTop {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -177,26 +177,26 @@
     padding: 6px 14px;
 }
 
-.commentInner .commentTop h4 {
+.postPageInner_Bottom .commentInner .commentTop h4 {
     font-size: 14px;
     font-weight: 600;
 }
 
-.commentInner .commentTop p {
+.postPageInner_Bottom .commentInner .commentTop p {
     font-weight: 400;
     font-size: 14px;
     max-width: 410px;
     word-wrap: break-word;
 }
 
-.commentInner .commentBottom {
+.postPageInner_Bottom .commentInner .commentBottom {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     margin: 3px 0 0 22px;
 }
 
-.commentInner .commentBottom button {
+.postPageInner_Bottom .commentInner .commentBottom button {
     font-size: 12px;
     font-weight: 500;
     outline: none;
@@ -205,15 +205,15 @@
     color: #65676B;
 }
 
-.commentInner .commentBottom p {
+.postPageInner_Bottom .commentInner .commentBottom p {
     font-weight: 500;
     font-size: 12px;
     margin-left: 15px;
     color: #65676B;
 }
 
-.commentInner .commentBottom button:hover,
-.commentInner .commentBottom p:hover {
+.postPageInner_Bottom .commentInner .commentBottom button:hover,
+.postPageInner_Bottom .commentInner .commentBottom p:hover {
     cursor: pointer;
     text-decoration: underline;
 }
@@ -230,7 +230,7 @@
     align-items: center;
 }
 
-.commentInput .MuiSvgIcon-root {
+.postPageInner_BottomBottom .commentInput .MuiSvgIcon-root {
     position: absolute;
     right: 6px;
     border: 1px solid transparent;
@@ -241,11 +241,11 @@
     height: 18px;
 }
 
-.commentInput .MuiSvgIcon-root:hover {
+.postPageInner_BottomBottom .commentInput .MuiSvgIcon-root:hover {
     cursor: pointer;
 }
 
-.commentInput input {
+.postPageInner_BottomBottom .commentInput input {
     margin: 10px 0;
     font-size: 14px;
     font-weight: 450;

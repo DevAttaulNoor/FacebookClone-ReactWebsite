@@ -422,7 +422,7 @@ function Header() {
                                                             <Avatar src={comment.commentuserphotoUrl} />
                                                         </div>
                                                         <div className="headerBox_BottomOption_Right">
-                                                            <p><span>{comment.commentusername}</span> has {comment.status} <span>"{comment.commenttext}"</span> on your post</p>
+                                                            <p><span>{comment.commentusername}</span> has {comment.status} on your post</p>
                                                             <h5>{timeAgo(comment.timestamp)}</h5>
                                                         </div>
                                                     </NavLink>

@@ -39,7 +39,7 @@ function HomePage_Feeds_Posts_CommentModal({ id, userid, closeModal }) {
                 commentuserphotoUrl: user.photoURL,
                 commenttext: comment,
                 timestamp: new Date(),
-                status: 'Comment'
+                status: 'commented'
             });
     
         } catch (error) {
@@ -55,7 +55,7 @@ function HomePage_Feeds_Posts_CommentModal({ id, userid, closeModal }) {
     
             // Update the status of the specific comment in the "Notifications" subcollection
             await db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Comments').doc(commentId).update({
-                status: 'Uncomment'
+                status: 'Uncommented'
             });
         } catch (error) {
             console.error("Error removing comment: ", error);

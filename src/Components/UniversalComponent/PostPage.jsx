@@ -13,67 +13,12 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
 function PostPage({ id, userid }) {
-    let location = useLocation();
-    let postId = location.state.from;
-    const [post, setPost] = useState(null);
-    const [commentss, setCommentss] = useState([])
-
+    const postId = useLocation().state.from;
     const [{ user }] = useStateValue();
+    const [post, setPost] = useState('');
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
-
-    useEffect(() => {
-        const postRef = db.collection('Posts').doc(postId);
-
-        const unsubscribe = postRef.onSnapshot((doc) => {
-            if (doc.exists) {
-                setPost(doc.data());
-            }
-        });
-
-        return () => {
-            // Unsubscribe from the snapshot listener when the component unmounts
-            unsubscribe();
-        };
-    }, [postId]);
-
-    useEffect(() => {
-        const unsubscribe = db.collection('Posts').doc(postId).collection('comments').onSnapshot((snapshot) => {
-            const commentsData = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-
-            setCommentss(commentsData);
-        });
-
-        return () => {
-            // Unsubscribe from the snapshot listener when the component unmounts
-            unsubscribe();
-        };
-    }, [postId]);
-
-    useEffect(() => {
-        const getRealtimeComments = () => {
-            const commentsRef = db.collection("Posts").doc(id).collection("comments");
-
-            // Set up a real-time listener for new comments and changes
-            return commentsRef.orderBy("timestamp", "asc").onSnapshot((querySnapshot) => {
-                const fetchedComments = [];
-                querySnapshot.forEach((doc) => {
-                    fetchedComments.push({ id: doc.id, ...doc.data() });
-                });
-                setComments(fetchedComments);
-            });
-        };
-
-        const unsubscribe = getRealtimeComments();
-
-        // Clean up the listener when the component unmounts
-        return () => {
-            unsubscribe();
-        };
-    }, [id]);
+    const [commentss, setCommentss] = useState([])
 
     const postComment = async () => {
         if (comment.trim() === '') {
@@ -196,11 +141,62 @@ function PostPage({ id, userid }) {
         return `${granularity}${unit}${granularity > 1 ? '' : ''}`;
     };
 
+    useEffect(() => {
+        const unsubscribe = db.collection('Posts').doc(postId).onSnapshot((doc) => {
+            if (doc.exists) {
+                setPost(doc.data());
+            }
+        });
+        return () => {
+            // Unsubscribe from the snapshot listener when the component unmounts
+            unsubscribe();
+        };
+    }, [postId]);
+
+    useEffect(() => {
+        console.log(postId)
+
+        const unsubscribe = db.collection('Posts').doc(postId).collection('comments').onSnapshot((snapshot) => {
+            const commentsData = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+
+            setCommentss(commentsData);
+        });
+
+        return () => {
+            // Unsubscribe from the snapshot listener when the component unmounts
+            unsubscribe();
+        };
+    }, [postId]);
+
+    useEffect(() => {
+        console.log(postId)
+
+        const getRealtimeComments = () => {
+            const commentsRef = db.collection("Posts").doc(id).collection("comments");
+
+            // Set up a real-time listener for new comments and changes
+            return commentsRef.orderBy("timestamp", "asc").onSnapshot((querySnapshot) => {
+                const fetchedComments = [];
+                querySnapshot.forEach((doc) => {
+                    fetchedComments.push({ id: doc.id, ...doc.data() });
+                });
+                setComments(fetchedComments);
+            });
+        };
+
+        const unsubscribe = getRealtimeComments();
+
+        // Clean up the listener when the component unmounts
+        return () => {
+            unsubscribe();
+        };
+    }, [id]);
+
     return (
         <div className="postPage">
-            {console.log(post)}
-            {console.log(commentss)}
-
             <div className="postPageInner">
                 <div className="postPageInner_Top">
                     <div className="postPageInner_TopLeft">
@@ -239,16 +235,24 @@ function PostPage({ id, userid }) {
 
                     <div className="postPageInner_MiddleBottom">
                         <div className="postPageInner_MiddleBottom_Top">
-                            {post.likesCount >= 1 ? (
-                                <p>{post.likesCount} like</p>
+                            {post.likesCount != 0 ? (
+                                post.likesCount >= 1 ? (
+                                    <p>{post.likesCount} like</p>
+                                ) : (
+                                    <p>{post.likesCount} likes</p>
+                                )
                             ) : (
-                                <p>{post.likesCount} likes</p>
+                                <p></p>
                             )}
 
-                            {commentss.length >= 1 ? (
-                                <p>{commentss.length} comment</p>
+                            {commentss.length != 0 ? (
+                                commentss.length >= 1 ? (
+                                    <p>{commentss.length} comment</p>
+                                ) : (
+                                    <p>{commentss.length} comments</p>
+                                )
                             ) : (
-                                <p>{commentss.length} comments</p>
+                                <p></p>
                             )}
                         </div>
 

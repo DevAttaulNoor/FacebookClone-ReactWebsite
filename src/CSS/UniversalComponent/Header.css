@@ -322,6 +322,11 @@
     padding: 12px 8px;
 }
 
+.notificationBox .headerBox_BottomOption a {
+    display: flex;
+    align-items: flex-start;
+}
+
 .notificationBox .headerBox_BottomOption span{
     font-weight: 500;
 }
