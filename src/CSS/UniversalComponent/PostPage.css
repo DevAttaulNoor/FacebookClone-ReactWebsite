@@ -1,16 +1,259 @@
-/** Post Page Section */
+/** PostPage Section */
 .postPage{
     display: flex;
     justify-content: center;
     overflow-y: auto;
 }
 
-.postPageInner{
-    width: 560px;
+.postPageInner {
+    width: 580px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin: 15px 0 50px 0;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
 }
 
-.postPageInner 
+/* PostPage Top Section */
+.postPageInner_Top {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding: 15px;
+}
 
-.postPageInner_Bottom{
-    background-color: #fff;
+.postPageInner_TopLeft {
+    display: flex;
+    align-items: center;
+}
+
+.postPageInner_TopLeftMain{
+    margin-left: 10px;
+}
+
+.postPageInner_TopLeftMain h4 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.postPageInner_TopLeftMain p {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    color: #65676B;
+}
+
+.postPageInner_TopLeftMain p svg {
+    font-size: 12px;
+    margin-left: 5px;
+    margin-top: 3px;
+}
+
+.postPageInner_TopLeftMain h4:hover,
+.postPageInner_TopLeftMain p:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: inherit;
+}
+
+.postPageInner_TopRight{
+    display: flex;
+    align-items: center;
+}
+
+.postPageInner_TopRight .MuiSvgIcon-root {
+    border-radius: 50%;
+    padding: 2px;
+}
+
+.postPageInner_TopRight .MuiSvgIcon-root:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+
+/* PostPage Middle Section */
+.postPageInner_MiddleTop p{
+    padding: 0 15px 15px;
+    letter-spacing: 0.2px;
+}
+
+.postPageInner_MiddleMiddle img,
+.postPageInner_MiddleMiddle video{
+    width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+    background-color: #000;
+}
+
+.postPageInner_MiddleBottom_Top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 15px;
+}
+
+.postPageInner_MiddleBottom_Top p {
+    font-size: 14px;
+    font-weight: 450;
+    color: gray;
+}
+
+.postPageInner_MiddleBottom_Top p:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.postPageInner_MiddleBottom_Bottom{
+    margin: 0 15px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+}
+
+.postPageInner_MiddleBottom_BottomOption {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+.postPageInner_MiddleBottom_BottomOption:hover {
+    cursor: pointer;
+    background-color: #E4E6EB;
+}
+
+.postPageInner_MiddleBottom_BottomOption p {
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #65676B;
+}
+
+.postPageInner_MiddleBottom_BottomOption .MuiSvgIcon-root {
+    width: 21px;
+    color: #65676B;
+}
+
+/* HomePage Feeds Posts Comment Modals Middle Section */
+.postPageInner_Bottom {
+    width: 100%;
+    height: 225px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow-y: hidden;
+    /* position: relative; */
+}
+
+.postPageInner_Bottom:last-child {
+    margin-bottom: 0px;
+}
+
+.postPageInner_Bottom .comments{
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.postPageInner_Bottom .comments:last-child {
+    margin-bottom: 0px;
+}
+
+.comments .commentInner{
+    display: flex;
+    flex-direction: column;
+}
+
+.commentInner .commentTop {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 8px;
+    background-color: whitesmoke;
+    border-radius: 18px;
+    padding: 6px 14px;
+}
+
+.commentInner .commentTop h4 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.commentInner .commentTop p {
+    font-weight: 400;
+    font-size: 14px;
+    max-width: 410px;
+    word-wrap: break-word;
+}
+
+.commentInner .commentBottom {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 3px 0 0 22px;
+}
+
+.commentInner .commentBottom button {
+    font-size: 12px;
+    font-weight: 500;
+    outline: none;
+    border: none;
+    background-color: initial;
+    color: #65676B;
+}
+
+.commentInner .commentBottom p {
+    font-weight: 500;
+    font-size: 12px;
+    margin-left: 15px;
+    color: #65676B;
+}
+
+.commentInner .commentBottom button:hover,
+.commentInner .commentBottom p:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* HomePage Feeds Posts Comment Modals Bottom Section */
+/* .postPageInner_BottomBottom {
+    position: fixed;
+    padding: 0 12px;
+} */
+
+.postPageInner_BottomBottom .commentInput {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.commentInput .MuiSvgIcon-root {
+    position: absolute;
+    right: 6px;
+    border: 1px solid transparent;
+    outline: 0;
+    background-color: whitesmoke;
+    color: gray;
+    width: 18px;
+    height: 18px;
+}
+
+.commentInput .MuiSvgIcon-root:hover {
+    cursor: pointer;
+}
+
+.commentInput input {
+    margin: 10px 0;
+    font-size: 14px;
+    font-weight: 450;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    outline: 0;
+    width: max-content;
+    margin-left: 8px;
+    background-color: whitesmoke;
+    padding: 12px 24px 12px 14px;
 }

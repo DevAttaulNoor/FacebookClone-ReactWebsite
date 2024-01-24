@@ -2,11 +2,15 @@ import "../../CSS/UniversalComponent/PostPage.css"
 import React, { useEffect, useState } from 'react'
 import { useLocation } from "react-router-dom"
 import { db } from "../BackendRelated/Firebase";
-import HomePage_Feeds_Posts from "../HomePage/HomePage_Feeds_Posts";
-
 import { useStateValue } from '../BackendRelated/StateProvider';
 import { Avatar } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import PublicIcon from '@mui/icons-material/Public';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
+import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
+import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
 function PostPage({ id, userid }) {
     let location = useLocation();
@@ -198,38 +202,100 @@ function PostPage({ id, userid }) {
             {console.log(commentss)}
 
             <div className="postPageInner">
-                <HomePage_Feeds_Posts
-                    id={postId}
-                    userid={post.uid}
-                    photoURL={post.photoURL}
-                    media={post.media}
-                    mediaType={post.mediaType}
-                    username={post.username}
-                    timestamp={timeAgo(post.timestamp)}
-                    message={post.message}
-                />
+                <div className="postPageInner_Top">
+                    <div className="postPageInner_TopLeft">
+                        <Avatar src={post.photoURL} />
+                        <div className="postPageInner_TopLeftMain">
+                            <h4>{post.username}</h4>
+                            <p>{timeAgo(post.timestamp)} <PublicIcon /> </p>
+                        </div>
+                    </div>
 
-                <div className="postPageInner_Bottom">
-                    {commentss.map((comment) => (
-                        <div className='comments' key={comment.id}>
-                            <Avatar src={comment.photoURL} />
-                            <div className="commentInner">
-                                <div className='commentTop'>
-                                    <h4>{comment.username}</h4>
-                                    <p>{comment.text}</p>
-                                </div>
-                                <div className='commentBottom'>
-                                    <button onClick={() => deleteComment(comment.id)}>Delete</button>
-                                    <p>{timeAgowithInitials(comment.timestamp)}</p>
-                                </div>
+                    <div className="postPageInner_TopRight">
+                        <MoreHorizIcon />
+                    </div>
+                </div>
+
+                <div className="postPageInner_Middle">
+                    <div className="postPageInner_MiddleTop">
+                        <p>{post.message}</p>
+                    </div>
+
+                    <div className="postPageInner_MiddleMiddle">
+                        {post.media == '' ? (
+                            <p></p>
+                        ) : (
+                            post.mediaType == 'image' ? (
+                                <img src={post.media} />
+                            ) : post.mediaType == 'video' ? (
+                                <video controls>
+                                    <source src={post.media} type="video/mp4" />
+                                </video>
+                            ) : (
+                                <p></p>
+                            )
+                        )}
+                    </div>
+
+                    <div className="postPageInner_MiddleBottom">
+                        <div className="postPageInner_MiddleBottom_Top">
+                            {post.likesCount >= 1 ? (
+                                <p>{post.likesCount} like</p>
+                            ) : (
+                                <p>{post.likesCount} likes</p>
+                            )}
+
+                            {commentss.length >= 1 ? (
+                                <p>{commentss.length} comment</p>
+                            ) : (
+                                <p>{commentss.length} comments</p>
+                            )}
+                        </div>
+
+                        <div className="postPageInner_MiddleBottom_Bottom">
+                            <div className='postPageInner_MiddleBottom_BottomOption'>
+                                <ThumbUpAltOutlinedIcon />
+                                <p>Like</p>
+                            </div>
+
+                            <div className='postPageInner_MiddleBottom_BottomOption'>
+                                <ChatBubbleOutlineOutlinedIcon />
+                                <p>Comment</p>
+                            </div>
+
+                            <div className='postPageInner_MiddleBottom_BottomOption'>
+                                <ReplyOutlinedIcon />
+                                <p>Share</p>
                             </div>
                         </div>
-                    ))}
+                    </div>
+                </div>
 
-                    <div className='commentInput'>
-                        <Avatar src={user.photoURL} />
-                        <input type='text' placeholder='Write a comment...' value={comment} onChange={(e) => setComment(e.target.value)} />
-                        <SendIcon onClick={postComment} />
+                <div className="postPageInner_Bottom">
+                    <div className="postPageInner_BottomTop">
+                        {commentss.map((comment) => (
+                            <div className='comments' key={comment.id}>
+                                <Avatar src={comment.photoURL} />
+                                <div className="commentInner">
+                                    <div className='commentTop'>
+                                        <h4>{comment.username}</h4>
+                                        <p>{comment.text}</p>
+                                    </div>
+                                    <div className='commentBottom'>
+                                        <button onClick={() => deleteComment(comment.id)}>Delete</button>
+                                        <p>{timeAgowithInitials(comment.timestamp)}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className='postPageInner_BottomBottom'>
+                        <div className='commentInput'>
+                            <Avatar src={user.photoURL} />
+                            <input type='text' placeholder='Write a comment...' value={comment} onChange={(e) => setComment(e.target.value)} />
+                            <SendIcon onClick={postComment} />
+                        </div>
                     </div>
                 </div>
             </div>
