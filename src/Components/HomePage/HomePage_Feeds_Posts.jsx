@@ -39,8 +39,6 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
     const dropdownRef = useRef(null);
 
-    const [notification, setNotification] = useState('')
-
     const handleEdit = () => {
         setIsEditing(true);
         setEditedMedia(media);

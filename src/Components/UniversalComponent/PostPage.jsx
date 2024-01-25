@@ -1,6 +1,6 @@
 import "../../CSS/UniversalComponent/PostPage.css"
 import React, { useEffect, useState } from 'react'
-import { useLocation } from "react-router-dom"
+import { NavLink, useLocation } from "react-router-dom"
 import { db } from "../BackendRelated/Firebase";
 import { useStateValue } from '../BackendRelated/StateProvider';
 import { Avatar } from '@mui/material';
@@ -12,7 +12,7 @@ import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
-function PostPage({ userid }) {
+function PostPage() {
     const postId = useLocation().state.from;
     const [{ user }] = useStateValue();
     const [post, setPost] = useState('');
@@ -20,6 +20,80 @@ function PostPage({ userid }) {
     const [comments, setComments] = useState([]);
     const [showAllComments, setShowAllComments] = useState(false)
     const visibleComments = showAllComments ? comments : comments.slice(0, 5);
+
+    const [likesCount, setLikesCount] = useState(0);
+
+    const handleLike = async () => {
+        // Check if the user has already liked the post
+        const likedUsersRef = db.collection("Posts").doc(postId).collection("likes");
+        const likedUserDoc = await likedUsersRef.doc(user.uid).get();
+
+        if (likedUserDoc.exists) {
+            // User has previously liked the post, so we should unlike it
+            // Update the likes count in Firestore and remove the user's like information
+            db.collection("Posts")
+                .doc(postId)
+                .update({ likesCount: Math.max(likesCount - 1, 0) })
+                .catch((error) => {
+                    console.error("Error unliking post: ", error);
+                });
+
+            db.collection("Users").doc(post.uid).collection("Notifications").doc(post.uid).collection('Likes').doc().delete();
+
+            likedUserDoc.ref
+                .delete()
+                .catch((error) => {
+                    console.error("Error removing like information: ", error);
+                });
+        } else {
+            // User has not liked the post before, so we should like it
+            // Update the likes count in Firestore and add the user's like information
+            db.collection("Posts")
+                .doc(postId)
+                .update({ likesCount: likesCount + 1 })
+                .catch((error) => {
+                    console.error("Error liking post: ", error);
+                });
+
+            db.collection("Users").doc(post.uid).collection("Notifications").doc(post.uid).collection('Likes').doc().set({
+                postid: postId,
+                postuserid: post.uid,
+                userid: user.uid,
+                username: user.username,
+                userphotoUrl: user.photoURL,
+                timestamp: new Date(),
+                status: 'reacted',
+            })
+
+            likedUsersRef
+                .doc(user.uid)
+                .set({
+                    uid: user.uid,
+                    photoUrl: user.photoURL,
+                    username: user.username,
+                    email: user.email,
+                })
+                .catch((error) => {
+                    console.error("Error adding like information: ", error);
+                });
+        }
+    };
+
+    //* useEffect to get all the like count on a post from the firestore
+    useEffect(() => {
+        const postRef = db.collection("Posts").doc(postId);
+
+        const unsubscribe = postRef.onSnapshot((doc) => {
+            if (doc.exists) {
+                setLikesCount(doc.data().likesCount || 0);
+            }
+        });
+
+        return () => {
+            // Unsubscribe from the snapshot listener when the component unmounts
+            unsubscribe();
+        };
+    }, [postId, user.uid]);
 
     const postComment = async () => {
         if (comment.trim() === '') {
@@ -41,10 +115,10 @@ function PostPage({ userid }) {
             setComment('');
 
             // Add a notification to the "Notifications" subcollection
-            if (userid !== user.uid) {
-                await db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Comments').doc(commentRef.id).set({
+            if (post.uid !== user.uid) {
+                await db.collection("Users").doc(post.uid).collection("Notifications").doc(post.uid).collection('Comments').doc(commentRef.id).set({
                     postid: postId,
-                    postuserid: userid,
+                    postuserid: post.uid,
                     commentuserid: user.uid,
                     commentusername: user.username,
                     commentuserphotoUrl: user.photoURL,
@@ -183,7 +257,15 @@ function PostPage({ userid }) {
                     <div className="postPageInner_TopLeft">
                         <Avatar src={post.photoURL} />
                         <div className="postPageInner_TopLeftMain">
-                            <h4>{post.username}</h4>
+                            {user.uid === post.uid ? (
+                                <NavLink to="/userhomepage/post">
+                                    <h4>{post.username}</h4>
+                                </NavLink>
+                            ) : (
+                                <NavLink to={`/profilepage/${post.uid}/post`} userId={post.uid}>
+                                    <h4>{post.username}</h4>
+                                </NavLink>
+                            )}
                             <p>{timeAgo(post.timestamp)} <PublicIcon /> </p>
                         </div>
                     </div>
@@ -239,7 +321,7 @@ function PostPage({ userid }) {
 
                         <div className="postPageInner_MiddleBottom_Bottom">
                             <div className='postPageInner_MiddleBottom_BottomOption'>
-                                <ThumbUpAltOutlinedIcon />
+                                <ThumbUpAltOutlinedIcon onClick={handleLike}/>
                                 <p>Like</p>
                             </div>
 
