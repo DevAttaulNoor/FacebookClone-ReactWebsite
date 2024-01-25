@@ -15,7 +15,7 @@ function HomePage_Feeds_Posts_CommentModal({ id, userid, closeModal }) {
         if (comment.trim() === '') {
             return;
         }
-    
+
         const newComment = {
             uid: user.uid,
             email: user.email,
@@ -24,29 +24,31 @@ function HomePage_Feeds_Posts_CommentModal({ id, userid, closeModal }) {
             text: comment,
             timestamp: new Date(),
         };
-    
+
         try {
             // Add a comment to the "Posts" collection
             const commentRef = await db.collection("Posts").doc(id).collection("comments").add(newComment);
             setComment('');
-    
+
             // Add a notification to the "Notifications" subcollection
-            await db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Comments').doc(commentRef.id).set({
-                postid: id,
-                postuserid: userid,
-                userid: user.uid,
-                username: user.username,
-                userphotoUrl: user.photoURL,
-                commenttext: comment,
-                timestamp: new Date(),
-                status: 'commented'
-            });
-    
+            if (userid !== user.uid) {
+                await db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Comments').doc(commentRef.id).set({
+                    postid: id,
+                    postuserid: userid,
+                    userid: user.uid,
+                    username: user.username,
+                    userphotoUrl: user.photoURL,
+                    commenttext: comment,
+                    timestamp: new Date(),
+                    status: 'commented'
+                });
+            }
+
         } catch (error) {
             console.error("Error posting comment:", error);
         }
     };
-    
+
     const deleteComment = async (commentId) => {
         try {
             // Delete a comment from the "Posts" and "Notification" collection
@@ -56,7 +58,7 @@ function HomePage_Feeds_Posts_CommentModal({ id, userid, closeModal }) {
             console.error("Error removing comment: ", error);
         }
     };
-    
+
     const timeAgowithInitials = (timestamp) => {
         if (!timestamp || !timestamp.toDate) {
             return "0s"

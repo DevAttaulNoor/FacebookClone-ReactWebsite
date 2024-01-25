@@ -12,13 +12,14 @@ import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
-function PostPage({ id, userid }) {
+function PostPage({ userid }) {
     const postId = useLocation().state.from;
     const [{ user }] = useStateValue();
     const [post, setPost] = useState('');
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
-    const [commentss, setCommentss] = useState([])
+    const [showAllComments, setShowAllComments] = useState(false)
+    const visibleComments = showAllComments ? comments : comments.slice(0, 5);
 
     const postComment = async () => {
         if (comment.trim() === '') {
@@ -36,20 +37,22 @@ function PostPage({ id, userid }) {
 
         try {
             // Add a comment to the "Posts" collection
-            const commentRef = await db.collection("Posts").doc(id).collection("comments").add(newComment);
+            const commentRef = await db.collection("Posts").doc(postId).collection("comments").add(newComment);
             setComment('');
 
             // Add a notification to the "Notifications" subcollection
-            await db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Comments').doc(commentRef.id).set({
-                postid: id,
-                postuserid: userid,
-                commentuserid: user.uid,
-                commentusername: user.username,
-                commentuserphotoUrl: user.photoURL,
-                commenttext: comment,
-                timestamp: new Date(),
-                status: 'Comment'
-            });
+            if (userid !== user.uid) {
+                await db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Comments').doc(commentRef.id).set({
+                    postid: postId,
+                    postuserid: userid,
+                    commentuserid: user.uid,
+                    commentusername: user.username,
+                    commentuserphotoUrl: user.photoURL,
+                    commenttext: comment,
+                    timestamp: new Date(),
+                    status: 'commented'
+                });
+            }
 
         } catch (error) {
             console.error("Error posting comment:", error);
@@ -58,15 +61,12 @@ function PostPage({ id, userid }) {
 
     const deleteComment = async (commentId) => {
         try {
-            // Delete a comment from the "Posts" collection
-            await db.collection("Posts").doc(id).collection("comments").doc(commentId).delete();
-            console.log("Comment successfully deleted!");
+            // Delete a comment from the "Posts" and "Notifications" collection
+            await db.collection("Posts").doc(postId).collection("comments").doc(commentId).delete();
+            await db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('Comments').doc(commentId).delete();
+        }
 
-            // Update the status of the specific comment in the "Notifications" subcollection
-            await db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Comments').doc(commentId).update({
-                status: 'Uncomment'
-            });
-        } catch (error) {
+        catch (error) {
             console.error("Error removing comment: ", error);
         }
     };
@@ -141,6 +141,10 @@ function PostPage({ id, userid }) {
         return `${granularity}${unit}${granularity > 1 ? '' : ''}`;
     };
 
+    const handleShowComments = () => {
+        setShowAllComments(true);
+    };
+
     useEffect(() => {
         const unsubscribe = db.collection('Posts').doc(postId).onSnapshot((doc) => {
             if (doc.exists) {
@@ -154,46 +158,23 @@ function PostPage({ id, userid }) {
     }, [postId]);
 
     useEffect(() => {
-        console.log(postId)
-
-        const unsubscribe = db.collection('Posts').doc(postId).collection('comments').onSnapshot((snapshot) => {
-            const commentsData = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-
-            setCommentss(commentsData);
-        });
-
-        return () => {
-            // Unsubscribe from the snapshot listener when the component unmounts
-            unsubscribe();
-        };
-    }, [postId]);
-
-    useEffect(() => {
-        console.log(postId)
-
         const getRealtimeComments = () => {
-            const commentsRef = db.collection("Posts").doc(id).collection("comments");
-
-            // Set up a real-time listener for new comments and changes
-            return commentsRef.orderBy("timestamp", "asc").onSnapshot((querySnapshot) => {
+            const commentsRef = db.collection("Posts").doc(postId).collection("comments").orderBy("timestamp", "asc").onSnapshot((querySnapshot) => {
                 const fetchedComments = [];
                 querySnapshot.forEach((doc) => {
                     fetchedComments.push({ id: doc.id, ...doc.data() });
                 });
                 setComments(fetchedComments);
             });
+            // Return the unsubscribe function to clean up the listener
+            return () => {
+                commentsRef(); // Unsubscribe the listener
+            };
         };
 
-        const unsubscribe = getRealtimeComments();
-
-        // Clean up the listener when the component unmounts
-        return () => {
-            unsubscribe();
-        };
-    }, [id]);
+        // Call the function to set up the listener
+        getRealtimeComments();
+    }, [postId]);
 
     return (
         <div className="postPage">
@@ -236,20 +217,20 @@ function PostPage({ id, userid }) {
                     <div className="postPageInner_MiddleBottom">
                         <div className="postPageInner_MiddleBottom_Top">
                             {post.likesCount != 0 ? (
-                                post.likesCount >= 1 ? (
-                                    <p>{post.likesCount} like</p>
-                                ) : (
+                                post.likesCount > 1 ? (
                                     <p>{post.likesCount} likes</p>
+                                ) : (
+                                    <p>{post.likesCount} like</p>
                                 )
                             ) : (
                                 <p></p>
                             )}
 
-                            {commentss.length != 0 ? (
-                                commentss.length >= 1 ? (
-                                    <p>{commentss.length} comment</p>
+                            {comments.length != 0 ? (
+                                comments.length > 1 ? (
+                                    <p>{comments.length} comments</p>
                                 ) : (
-                                    <p>{commentss.length} comments</p>
+                                    <p>{comments.length} comment</p>
                                 )
                             ) : (
                                 <p></p>
@@ -277,7 +258,7 @@ function PostPage({ id, userid }) {
 
                 <div className="postPageInner_Bottom">
                     <div className="postPageInner_BottomTop">
-                        {commentss.map((comment) => (
+                        {visibleComments.map((comment) => (
                             <div className='comments' key={comment.id}>
                                 <Avatar src={comment.photoURL} />
                                 <div className="commentInner">
@@ -292,6 +273,14 @@ function PostPage({ id, userid }) {
                                 </div>
                             </div>
                         ))}
+
+                        {!showAllComments && comments.length > 5 && (
+                            <button id="showAllBtn" onClick={handleShowComments}>View {comments.length - 5} more comments</button>
+                        )}
+
+                        {/* {showAllComments && comments.length > 5 && (
+                            <button onClick={handleHideComments}>Show less</button>
+                        )} */}
                     </div>
 
                     <div className='postPageInner_BottomBottom'>

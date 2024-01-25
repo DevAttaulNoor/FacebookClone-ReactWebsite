@@ -139,35 +139,28 @@
 
 /* HomePage Feeds Posts Comment Modals Middle Section */
 .postPageInner_Bottom {
-    width: 100%;
-    height: 225px;
     padding: 12px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    overflow-y: hidden;
-    /* position: relative; */
+    overflow-y: auto;
 }
 
-.postPageInner_Bottom:last-child {
-    margin-bottom: 0px;
+.postPageInner_BottomTop {
+    width: 100%;
 }
 
-.postPageInner_Bottom .comments{
+.postPageInner_BottomTop .comments{
     display: flex;
     margin-bottom: 15px;
 }
 
-.postPageInner_Bottom .comments:last-child {
-    margin-bottom: 0px;
-}
-
-.postPageInner_Bottom .comments .commentInner{
+.postPageInner_BottomTop .comments .commentInner{
     display: flex;
     flex-direction: column;
 }
 
-.postPageInner_Bottom .commentInner .commentTop {
+.postPageInner_BottomTop .commentInner .commentTop {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -177,26 +170,26 @@
     padding: 6px 14px;
 }
 
-.postPageInner_Bottom .commentInner .commentTop h4 {
+.postPageInner_BottomTop .commentInner .commentTop h4 {
     font-size: 14px;
     font-weight: 600;
 }
 
-.postPageInner_Bottom .commentInner .commentTop p {
+.postPageInner_BottomTop .commentInner .commentTop p {
     font-weight: 400;
     font-size: 14px;
     max-width: 410px;
     word-wrap: break-word;
 }
 
-.postPageInner_Bottom .commentInner .commentBottom {
+.postPageInner_BottomTop .commentInner .commentBottom {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     margin: 3px 0 0 22px;
 }
 
-.postPageInner_Bottom .commentInner .commentBottom button {
+.postPageInner_BottomTop .commentInner .commentBottom button {
     font-size: 12px;
     font-weight: 500;
     outline: none;
@@ -205,24 +198,33 @@
     color: #65676B;
 }
 
-.postPageInner_Bottom .commentInner .commentBottom p {
+.postPageInner_BottomTop .commentInner .commentBottom p {
     font-weight: 500;
     font-size: 12px;
     margin-left: 15px;
     color: #65676B;
 }
 
-.postPageInner_Bottom .commentInner .commentBottom button:hover,
-.postPageInner_Bottom .commentInner .commentBottom p:hover {
+.postPageInner_BottomTop .commentInner .commentBottom button:hover,
+.postPageInner_BottomTop .commentInner .commentBottom p:hover,
+.postPageInner_BottomTop #showAllBtn:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
-/* HomePage Feeds Posts Comment Modals Bottom Section */
-/* .postPageInner_BottomBottom {
-    position: fixed;
-    padding: 0 12px;
-} */
+.postPageInner_BottomTop #showAllBtn{
+    font-size: 15px;
+    font-weight: 600;
+    outline: none;
+    border: none;
+    background-color: initial;
+    color: #65676B;
+    margin-bottom: 8px;
+}
+
+.postPageInner_BottomBottom {
+    width: 100%;
+}
 
 .postPageInner_BottomBottom .commentInput {
     position: relative;
@@ -246,14 +248,13 @@
 }
 
 .postPageInner_BottomBottom .commentInput input {
-    margin: 10px 0;
+    margin: 0 0 0 8px;
     font-size: 14px;
     font-weight: 450;
     border: 1px solid transparent;
     border-radius: 12px;
     outline: 0;
-    width: max-content;
-    margin-left: 8px;
     background-color: whitesmoke;
-    padding: 12px 24px 12px 14px;
+    padding: 12px 28px 12px 14px;
+    width: 100%;
 }

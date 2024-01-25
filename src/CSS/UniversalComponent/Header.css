@@ -312,7 +312,9 @@
 }
 
 .notificationBox .headerBox_Bottom {
+    max-height: 580px;
     padding: 0 8px;
+    overflow-y: auto;
 }
 
 .notificationBox .headerBox_BottomOption {
