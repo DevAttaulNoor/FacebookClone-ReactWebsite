@@ -26,6 +26,7 @@ function Header() {
     const [{ user }, dispatch] = useStateValue();
     const [searchText, setSearchText] = useState('');
     const [selectedUser, setSelectedUser] = useState(null);
+    const [chats, setChats] = useState([])
     const [notifications, setNotifications] = useState([])
     const [matchingUsernames, setMatchingUsernames] = useState([]);
     const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
@@ -264,6 +265,35 @@ function Header() {
         });
     }, [user.uid]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const querySnapshot = await db.collection('Chats').get();
+
+                if (!querySnapshot.empty) {
+                    const chatsData = [];
+
+                    querySnapshot.forEach(doc => {
+                        const chatData = doc.data();
+                        // Retrieve the messages list from the chatData
+                        const messagesData = chatData.messages || []; // Ensure messagesData is an array
+                        chatData.messages = messagesData;
+                        chatsData.push(chatData);
+                    });
+
+                    setChats(chatsData);
+                } else {
+                    setChats([]);
+                }
+            } catch (error) {
+                console.error('Error fetching chat data:', error);
+                setChats([]);
+            }
+        };
+        fetchData();
+
+    }, [user.uid]);
+
     return (
         <div className={`header ${showHeader ? '' : 'transformed'}`}>
             <div className='Transformed_header_left'>
@@ -356,7 +386,21 @@ function Header() {
                             </div>
 
                             <div className='headerBox_Bottom'>
-                                <p>Hello</p>
+                                {chats.map((chat) => (
+                                    <div key={chat.id}>
+                                        <h3>Chat ID: {chat.id}</h3>
+                                        <ul>
+                                            {chat.messages.map((message, index) => (
+                                                <li key={index}>
+                                                    <p>Sender: {message.sender}</p>
+                                                    <p>Recipient: {message.recipient}</p>
+                                                    <p>Timestamp: {timeAgo(message.timestamp)}</p>
+                                                    <p>Text: {message.text}</p>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     )}
@@ -364,7 +408,7 @@ function Header() {
 
                 <div className={`notificationBox ${userBoxVisible ? 'clicked' : ''}`}>
                     <p id='notiLengthIcon'>{notifications.length}</p>
-                    
+
                     <NotificationsIcon className='header_right_Options' onClick={toggleNotificationBox} ref={notificationBoxRef} />
                     {notificationBoxVisible && (
                         <div className="headerBox">
