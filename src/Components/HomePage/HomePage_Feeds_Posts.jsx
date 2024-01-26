@@ -30,7 +30,6 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [isDropdownClicked, setIsDropdownClicked] = useState(false);
     const [likesCount, setLikesCount] = useState(0);
-    const [likedUsers, setLikedUsers] = useState([]);
     const [currentUserLiked, setCurrentUserLiked] = useState(false);
     const [isLikedUsersModalOpen, setIsLikedUsersModalOpen] = useState(false);
     const [comments, setComments] = useState([]);
@@ -205,15 +204,17 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
                     console.error("Error liking post: ", error);
                 });
 
-            db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Likes').doc(id).set({
-                postid: id,
-                postuserid: userid,
-                userid: user.uid,
-                username: user.username,
-                userphotoUrl: user.photoURL,
-                timestamp: new Date(),
-                status: 'reacted',
-            })
+            if (user.uid !== userid) {
+                db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Likes').doc(id).set({
+                    postid: id,
+                    postuserid: userid,
+                    userid: user.uid,
+                    username: user.username,
+                    userphotoUrl: user.photoURL,
+                    timestamp: new Date(),
+                    status: 'reacted',
+                })
+            }
 
             likedUsersRef
                 .doc(user.uid)
@@ -229,20 +230,7 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
         }
     };
 
-    const getLikedUsers = async () => {
-        const likedUsersRef = db.collection("Posts").doc(id).collection("likes");
-        const querySnapshot = await likedUsersRef.get();
-
-        const likedUsersData = [];
-        querySnapshot.forEach((doc) => {
-            likedUsersData.push(doc.data());
-        });
-
-        setLikedUsers(likedUsersData);
-    };
-
     const handleLikedUsersClick = () => {
-        getLikedUsers();
         setIsLikedUsersModalOpen(true);
     };
 
@@ -338,19 +326,12 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
 
     //* useEffect to get all the likes on a post from the firestore
     useEffect(() => {
-        const likedUsersRef = db.collection("Posts").doc(id).collection("likes");
-
-        // Add a snapshot listener to listen for changes in the "likes" subcollection
-        const unsubscribe = likedUsersRef.onSnapshot((querySnapshot) => {
+        const unsubscribe = db.collection("Posts").doc(id).collection("likes").onSnapshot((querySnapshot) => {
             const likedUsersData = [];
             querySnapshot.forEach((doc) => {
                 likedUsersData.push(doc.data());
             });
-            setLikedUsers(likedUsersData);
-
-            // Check if the current user has liked the post and set a flag accordingly
-            const currentUserLiked = likedUsersData.some((likedUser) => likedUser.uid === user.uid);
-            setCurrentUserLiked(currentUserLiked);
+            setCurrentUserLiked(likedUsersData.some((likedUser) => likedUser.uid === user.uid));
         });
 
         return () => {

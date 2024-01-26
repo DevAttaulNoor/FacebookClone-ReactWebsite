@@ -8,22 +8,14 @@ import CloseIcon from '@mui/icons-material/Close';
 function HomePage_Feeds_Posts_LikeModal({ id, closeModal }) {
     const [{ user }] = useStateValue();
     const [likedUsers, setLikedUsers] = useState([]);
-    const [currentUserLiked, setCurrentUserLiked] = useState(false);
 
     useEffect(() => {
-        const likedUsersRef = db.collection("Posts").doc(id).collection("likes");
-
-        // Add a snapshot listener to listen for changes in the "likes" subcollection
-        const unsubscribe = likedUsersRef.onSnapshot((querySnapshot) => {
+        const unsubscribe = db.collection("Posts").doc(id).collection("likes").onSnapshot((querySnapshot) => {
             const likedUsersData = [];
             querySnapshot.forEach((doc) => {
                 likedUsersData.push(doc.data());
             });
             setLikedUsers(likedUsersData);
-
-            // Check if the current user has liked the post and set a flag accordingly
-            const currentUserLiked = likedUsersData.some((likedUser) => likedUser.uid === user.uid);
-            setCurrentUserLiked(currentUserLiked);
         });
 
         return () => {

@@ -13,87 +13,15 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
 function PostPage() {
-    const postId = useLocation().state.from;
     const [{ user }] = useStateValue();
+    const postId = useLocation().state.from;
     const [post, setPost] = useState('');
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
     const [showAllComments, setShowAllComments] = useState(false)
     const visibleComments = showAllComments ? comments : comments.slice(0, 5);
-
     const [likesCount, setLikesCount] = useState(0);
-
-    const handleLike = async () => {
-        // Check if the user has already liked the post
-        const likedUsersRef = db.collection("Posts").doc(postId).collection("likes");
-        const likedUserDoc = await likedUsersRef.doc(user.uid).get();
-
-        if (likedUserDoc.exists) {
-            // User has previously liked the post, so we should unlike it
-            // Update the likes count in Firestore and remove the user's like information
-            db.collection("Posts")
-                .doc(postId)
-                .update({ likesCount: Math.max(likesCount - 1, 0) })
-                .catch((error) => {
-                    console.error("Error unliking post: ", error);
-                });
-
-            db.collection("Users").doc(post.uid).collection("Notifications").doc(post.uid).collection('Likes').doc().delete();
-
-            likedUserDoc.ref
-                .delete()
-                .catch((error) => {
-                    console.error("Error removing like information: ", error);
-                });
-        } else {
-            // User has not liked the post before, so we should like it
-            // Update the likes count in Firestore and add the user's like information
-            db.collection("Posts")
-                .doc(postId)
-                .update({ likesCount: likesCount + 1 })
-                .catch((error) => {
-                    console.error("Error liking post: ", error);
-                });
-
-            db.collection("Users").doc(post.uid).collection("Notifications").doc(post.uid).collection('Likes').doc().set({
-                postid: postId,
-                postuserid: post.uid,
-                userid: user.uid,
-                username: user.username,
-                userphotoUrl: user.photoURL,
-                timestamp: new Date(),
-                status: 'reacted',
-            })
-
-            likedUsersRef
-                .doc(user.uid)
-                .set({
-                    uid: user.uid,
-                    photoUrl: user.photoURL,
-                    username: user.username,
-                    email: user.email,
-                })
-                .catch((error) => {
-                    console.error("Error adding like information: ", error);
-                });
-        }
-    };
-
-    //* useEffect to get all the like count on a post from the firestore
-    useEffect(() => {
-        const postRef = db.collection("Posts").doc(postId);
-
-        const unsubscribe = postRef.onSnapshot((doc) => {
-            if (doc.exists) {
-                setLikesCount(doc.data().likesCount || 0);
-            }
-        });
-
-        return () => {
-            // Unsubscribe from the snapshot listener when the component unmounts
-            unsubscribe();
-        };
-    }, [postId, user.uid]);
+    const [currentUserLiked, setCurrentUserLiked] = useState(false);
 
     const postComment = async () => {
         if (comment.trim() === '') {
@@ -142,6 +70,68 @@ function PostPage() {
 
         catch (error) {
             console.error("Error removing comment: ", error);
+        }
+    };
+
+    const handleShowComments = () => {
+        setShowAllComments(true);
+    };
+
+    const handleLike = async () => {
+        // Check if the user has already liked the post
+        const likedUsersRef = db.collection("Posts").doc(postId).collection("likes");
+        const likedUserDoc = await likedUsersRef.doc(user.uid).get();
+
+        if (likedUserDoc.exists) {
+            // User has previously liked the post, so we should unlike it
+            // Update the likes count in Firestore and remove the user's like information
+            db.collection("Posts")
+                .doc(postId)
+                .update({ likesCount: Math.max(likesCount - 1, 0) })
+                .catch((error) => {
+                    console.error("Error unliking post: ", error);
+                });
+
+            db.collection("Users").doc(post.uid).collection("Notifications").doc(post.uid).collection('Likes').doc(postId).delete();
+
+            likedUserDoc.ref
+                .delete()
+                .catch((error) => {
+                    console.error("Error removing like information: ", error);
+                });
+        } else {
+            // User has not liked the post before, so we should like it
+            // Update the likes count in Firestore and add the user's like information
+            db.collection("Posts")
+                .doc(postId)
+                .update({ likesCount: likesCount + 1 })
+                .catch((error) => {
+                    console.error("Error liking post: ", error);
+                });
+
+            if (post.uid !== user.uid) {
+                db.collection("Users").doc(post.uid).collection("Notifications").doc(post.uid).collection('Likes').doc(postId).set({
+                    postid: postId,
+                    postuserid: post.uid,
+                    userid: user.uid,
+                    username: user.username,
+                    userphotoUrl: user.photoURL,
+                    timestamp: new Date(),
+                    status: 'reacted',
+                })
+            }
+
+            likedUsersRef
+                .doc(user.uid)
+                .set({
+                    uid: user.uid,
+                    photoUrl: user.photoURL,
+                    username: user.username,
+                    email: user.email,
+                })
+                .catch((error) => {
+                    console.error("Error adding like information: ", error);
+                });
         }
     };
 
@@ -215,10 +205,6 @@ function PostPage() {
         return `${granularity}${unit}${granularity > 1 ? '' : ''}`;
     };
 
-    const handleShowComments = () => {
-        setShowAllComments(true);
-    };
-
     useEffect(() => {
         const unsubscribe = db.collection('Posts').doc(postId).onSnapshot((doc) => {
             if (doc.exists) {
@@ -249,6 +235,37 @@ function PostPage() {
         // Call the function to set up the listener
         getRealtimeComments();
     }, [postId]);
+
+    //* useEffect to get all the like count on a post from the firestore
+    useEffect(() => {
+        const postRef = db.collection("Posts").doc(postId);
+
+        const unsubscribe = postRef.onSnapshot((doc) => {
+            if (doc.exists) {
+                setLikesCount(doc.data().likesCount || 0);
+            }
+        });
+
+        return () => {
+            // Unsubscribe from the snapshot listener when the component unmounts
+            unsubscribe();
+        };
+    }, [postId, user.uid]);
+
+    //* useEffect to get all the likes on a post from the firestore
+    useEffect(() => {
+        const unsubscribe = db.collection("Posts").doc(postId).collection("likes").onSnapshot((querySnapshot) => {
+            const likedUsersData = [];
+            querySnapshot.forEach((doc) => {
+                likedUsersData.push(doc.data());
+            });
+            setCurrentUserLiked(likedUsersData.some((likedUser) => likedUser.uid === user.uid));
+        });
+
+        return () => {
+            unsubscribe();
+        };
+    }, [postId, user.uid]);
 
     return (
         <div className="postPage">
@@ -320,9 +337,18 @@ function PostPage() {
                         </div>
 
                         <div className="postPageInner_MiddleBottom_Bottom">
-                            <div className='postPageInner_MiddleBottom_BottomOption'>
-                                <ThumbUpAltOutlinedIcon onClick={handleLike}/>
-                                <p>Like</p>
+                            <div className='postPageInner_MiddleBottom_BottomOption' onClick={handleLike}>
+                                { currentUserLiked ? (
+                                    <>
+                                        <ThumbUpIcon style={{ color: 'blue' }} />
+                                        <p style={{ color: 'blue' }}>Like</p>
+                                    </>
+                                ) : (
+                                    <>
+                                        <ThumbUpAltOutlinedIcon />
+                                        <p>Like</p>
+                                    </>
+                                )}
                             </div>
 
                             <div className='postPageInner_MiddleBottom_BottomOption'>
