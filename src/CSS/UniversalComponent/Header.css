@@ -165,6 +165,7 @@
     margin-right: 8px;
     color: #000;
     background-color: #E4E6EB;
+    position: relative;
 }
 
 .header_right_Options:hover,
@@ -264,6 +265,24 @@
     display: flex;
 }
 
+.notificationBox #notiLengthIcon {
+    position: absolute;
+    right: 57px;
+    top: 1px;
+    height: 10px;
+    width: 10px;
+    padding: 4px;
+    border-radius: 50%;
+    background-color: #e41e3f;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9;
+}
+
 .notificationBox .headerBox{
     padding: 0;
 }
@@ -320,7 +339,7 @@
 .notificationBox .headerBox_BottomOption {
     display: flex;
     align-items: flex-start;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     padding: 12px 8px;
 }
 

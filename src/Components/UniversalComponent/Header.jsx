@@ -363,6 +363,8 @@ function Header() {
                 </div>
 
                 <div className={`notificationBox ${userBoxVisible ? 'clicked' : ''}`}>
+                    <p id='notiLengthIcon'>{notifications.length}</p>
+                    
                     <NotificationsIcon className='header_right_Options' onClick={toggleNotificationBox} ref={notificationBoxRef} />
                     {notificationBoxVisible && (
                         <div className="headerBox">
