@@ -35,7 +35,7 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
         setSelectedUsers(selectedUsers.filter(user => user.userId !== userId));
     };
 
-    const sendMessage = async (recipientUserId) => {
+    const sendMessage = async (recipientUserId, recipientUserName, recipientUserPhotoUrl) => {
         if (messageInput.trim() === '') {
             return;
         }
@@ -52,7 +52,11 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
         const newMessage = {
             text: messageInput,
             sender: user.uid,
+            senderName: user.username,
+            senderPhotoUrl: user.photoURL,
             recipient: recipientUserId,
+            recipientName: recipientUserName,
+            recipientPhotoUrl: recipientUserPhotoUrl,
             timestamp: new Date(),
         };
 
@@ -283,7 +287,7 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
                                     {isEmojiPickerVisible && (
                                         <EmojiPicker onEmojiClick={handleEmojiClick} />
                                     )}
-                                    <SendIcon onClick={() => sendMessage(selectedUsers[0].userId)} />
+                                    <SendIcon onClick={() => sendMessage(selectedUsers[0].userId, selectedUsers[0].username, selectedUsers[0].photoURL)} />
                                 </div>
                             </div>
                         ) : (
@@ -353,7 +357,7 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
                         {isEmojiPickerVisible && (
                             <EmojiPicker onEmojiClick={handleEmojiClick} />
                         )}
-                        <SendIcon onClick={() => sendMessage(handleSelectedFriend.friendUid)} />
+                        <SendIcon onClick={() => sendMessage(handleSelectedFriend.friendUid, handleSelectedFriend.username, handleSelectedFriend.photoURL)} />
                     </div>
                 </div>
             )}

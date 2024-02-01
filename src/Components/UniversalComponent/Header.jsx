@@ -388,17 +388,23 @@ function Header() {
                             <div className='headerBox_Bottom'>
                                 {chats.map((chat) => (
                                     <div key={chat.id}>
-                                        <h3>Chat ID: {chat.id}</h3>
-                                        <ul>
-                                            {chat.messages.map((message, index) => (
-                                                <li key={index}>
-                                                    <p>Sender: {message.sender}</p>
-                                                    <p>Recipient: {message.recipient}</p>
-                                                    <p>Timestamp: {timeAgo(message.timestamp)}</p>
-                                                    <p>Text: {message.text}</p>
-                                                </li>
-                                            ))}
-                                        </ul>
+                                        {chat.messages.slice(-1).map((message, index) => (
+                                            <div key={index}>
+                                                {message.sender !== user.uid ? (
+                                                    <>
+                                                        <Avatar src={message.senderPhotoUrl} />
+                                                        <p>{message.senderName}</p>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <Avatar src={message.recipientPhotoUrl} />
+                                                        <p>{message.recipientName}</p>
+                                                    </>
+                                                )}
+                                                <p>Timestamp: {timeAgo(message.timestamp)}</p>
+                                                <p>Text: {message.text}</p>
+                                            </div>
+                                        ))}
                                     </div>
                                 ))}
                             </div>
@@ -523,8 +529,8 @@ function Header() {
                         </div>
                     )}
                 </div>
-            </div >
-        </div >
+            </div>
+        </div>
     )
 }
 
