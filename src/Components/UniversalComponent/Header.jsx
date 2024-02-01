@@ -386,27 +386,34 @@ function Header() {
                             </div>
 
                             <div className='headerBox_Bottom'>
-                                {chats.map((chat) => (
-                                    <div key={chat.id}>
-                                        {chat.messages.slice(-1).map((message, index) => (
-                                            <div key={index}>
-                                                {message.sender !== user.uid ? (
-                                                    <>
-                                                        <Avatar src={message.senderPhotoUrl} />
-                                                        <p>{message.senderName}</p>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <Avatar src={message.recipientPhotoUrl} />
-                                                        <p>{message.recipientName}</p>
-                                                    </>
-                                                )}
-                                                <p>Timestamp: {timeAgo(message.timestamp)}</p>
-                                                <p>Text: {message.text}</p>
+                                {chats.map((chat) => {
+                                    // Check if the current user is either the sender or recipient of the chat
+                                    if (chat.senderUid === user.uid || chat.recipientUid === user.uid) {
+                                        return (
+                                            <div key={chat.id}>
+                                                {/* Rendering only the last message in the chat */}
+                                                {chat.messages.slice(-1).map((message, index) => (
+                                                    <div key={index}>
+                                                        {message.sender !== user.uid ? (
+                                                            <>
+                                                                <Avatar src={message.senderPhotoUrl} />
+                                                                <p>{message.senderName}</p>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <Avatar src={message.recipientPhotoUrl} />
+                                                                <p>{message.recipientName}</p>
+                                                            </>
+                                                        )}
+                                                        <p>Timestamp: {timeAgo(message.timestamp)}</p>
+                                                        <p>Text: {message.text}</p>
+                                                    </div>
+                                                ))}
                                             </div>
-                                        ))}
-                                    </div>
-                                ))}
+                                        );
+                                    }
+                                    return null; // Return null for chats that don't match the current user
+                                })}
                             </div>
                         </div>
                     )}

@@ -72,7 +72,11 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
             await chatDocRef.update({ messages: updatedMessages });
         } else {
             // If the chat document doesn't exist, create it with the new message
-            await chatDocRef.set({ messages: [newMessage] });
+            await chatDocRef.set({ 
+                senderUid: user.uid,
+                recipientUid: recipientUserId,
+                messages: [newMessage] 
+            });
         }
 
         // Clear the message input
