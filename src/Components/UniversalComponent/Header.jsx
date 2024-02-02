@@ -38,6 +38,7 @@ function Header() {
     const notificationBoxRef = useRef(null);
     const pathsToHideHeader = ['/homepage/storyreels'];
     const showHeader = !pathsToHideHeader.includes(useLocation().pathname);
+    const relevantChats = chats.map((chat) => (chat.recipientUid === user.uid || chat.senderUid === user.uid));
 
     const handleSignOut = () => {
         sessionStorage.removeItem('userData');
@@ -400,6 +401,8 @@ function Header() {
                 <AppsIcon className='header_right_Options' />
 
                 <div className={`messageBox ${userBoxVisible ? 'clicked' : ''}`}>
+                    <p id='msgLengthIcon'>{relevantChats.length}</p>
+
                     <ForumIcon className='header_right_Options' id='msgIcon' onClick={toggleMessageBox} ref={messageBoxRef} />
                     {messageBoxVisible && (
                         <div className="headerBox">
