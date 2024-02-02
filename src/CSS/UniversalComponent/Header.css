@@ -189,6 +189,15 @@
     z-index: 1;
 }
 
+.headerBox #noMsg, 
+.headerBox #noNoti {
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+    padding: 8px;
+    margin-bottom: 8px;
+}
+
 .headerBox a {
     color: initial;
     text-decoration: none;
@@ -332,6 +341,7 @@
 
 .notificationBox .headerBox_Bottom {
     max-height: 580px;
+    width: -webkit-fill-available;
     padding: 0 8px;
     overflow-y: auto;
 }
@@ -478,11 +488,11 @@
     color: gray;
 }
 
-.messageBox .headerBox_Bottom{
+.messageBox .headerBox_Bottom {
     width: -webkit-fill-available;
 }
 
-.messageBox .headerBox_Bottom .headerBox_BottomOption{
+.messageBox .headerBox_Bottom .headerBox_BottomOption {
     display: flex;
     align-items: center;
     width: -webkit-fill-available;
@@ -490,42 +500,42 @@
     padding: 8px 8px;
 }
 
-.messageBox .headerBox_Bottom .headerBox_BottomOption:last-child{
+.messageBox .headerBox_Bottom .headerBox_BottomOption:last-child {
     margin-bottom: 8px;
 }
 
 .messageBox .headerBox_BottomOption {
     display: flex;
     align-items: flex-start;
-    
+
 }
 
-.messageBox .headerBox_Bottom .headerBox_BottomOption .MuiAvatar-root{
+.messageBox .headerBox_Bottom .headerBox_BottomOption .MuiAvatar-root {
     width: 52px;
     height: 52px;
 }
 
-.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent{
+.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent {
     margin-left: 12px;
 }
 
-.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent p{
+.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent p {
     font-size: 14px;
     font-weight: 500;
     margin-bottom: 3px;
 }
 
-.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom{
+.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom {
     display: flex;
 }
 
-.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom p{
+.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom p {
     white-space: pre-wrap;
     display: flex;
 }
 
 .messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom p span,
-.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom p h5{
+.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom p h5 {
     color: #65676B;
     font-size: 14px;
     font-weight: 400;

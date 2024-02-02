@@ -27,6 +27,7 @@ function Header() {
     const [searchText, setSearchText] = useState('');
     const [selectedUser, setSelectedUser] = useState(null);
     const [chats, setChats] = useState([])
+    const [userChats, setUserChats] = useState('')
     const [notifications, setNotifications] = useState([])
     const [matchingUsernames, setMatchingUsernames] = useState([]);
     const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
@@ -38,7 +39,6 @@ function Header() {
     const notificationBoxRef = useRef(null);
     const pathsToHideHeader = ['/homepage/storyreels'];
     const showHeader = !pathsToHideHeader.includes(useLocation().pathname);
-    const relevantChats = chats.map((chat) => (chat.recipientUid === user.uid || chat.senderUid === user.uid));
 
     const handleSignOut = () => {
         sessionStorage.removeItem('userData');
@@ -330,6 +330,13 @@ function Header() {
 
     }, [user.uid]);
 
+    useEffect(() => {
+        const relevantChats = chats
+            .map(chat => (chat.recipientUid === user.uid || chat.senderUid === user.uid) ? chat : null)
+            .filter(Boolean);
+        setUserChats(relevantChats)
+    }, [chats, user.uid]);
+
     return (
         <div className={`header ${showHeader ? '' : 'transformed'}`}>
             <div className='Transformed_header_left'>
@@ -401,7 +408,7 @@ function Header() {
                 <AppsIcon className='header_right_Options' />
 
                 <div className={`messageBox ${userBoxVisible ? 'clicked' : ''}`}>
-                    <p id='msgLengthIcon'>{relevantChats.length}</p>
+                    {userChats.length > 0 && <p id='msgLengthIcon'>{userChats.length}</p>}
 
                     <ForumIcon className='header_right_Options' id='msgIcon' onClick={toggleMessageBox} ref={messageBoxRef} />
                     {messageBoxVisible && (
@@ -424,49 +431,55 @@ function Header() {
                             </div>
 
                             <div className='headerBox_Bottom'>
-                                {chats.map((chat) => {
-                                    // Check if the current user is either the sender or recipient of the chat
-                                    if (chat.senderUid === user.uid || chat.recipientUid === user.uid) {
-                                        return (
-                                            <div key={chat.id}>
-                                                {/* Rendering only the last message in the chat */}
-                                                {chat.messages.slice(-1).map((message, index) => (
-                                                    <div key={index}>
-                                                        {message.sender !== user.uid ? (
-                                                            <div className='headerBox_BottomOption'>
-                                                                <Avatar src={message.senderPhotoUrl} />
-                                                                <div className='headerBox_BottomOptionContent'>
-                                                                    <p>{message.senderName}</p>
-                                                                    <div className='headerBox_BottomOptionContentBottom'>
-                                                                        <p> <span>{message.text}</span> · <h5>{timeAgowithInitials(message.timestamp)}</h5> </p>
+                                {userChats.length == 0 ? (
+                                    <p id='noMsg'>No messages found.</p>
+                                ) : (
+                                    <>
+                                        {chats.map((chat) => {
+                                            // Check if the current user is either the sender or recipient of the chat
+                                            if (chat.senderUid === user.uid || chat.recipientUid === user.uid) {
+                                                return (
+                                                    <div key={chat.id}>
+                                                        {/* Rendering only the last message in the chat */}
+                                                        {chat.messages.slice(-1).map((message, index) => (
+                                                            <div key={index}>
+                                                                {message.sender !== user.uid ? (
+                                                                    <div className='headerBox_BottomOption'>
+                                                                        <Avatar src={message.senderPhotoUrl} />
+                                                                        <div className='headerBox_BottomOptionContent'>
+                                                                            <p>{message.senderName}</p>
+                                                                            <div className='headerBox_BottomOptionContentBottom'>
+                                                                                <p> <span>{message.text}</span> · <h5>{timeAgowithInitials(message.timestamp)}</h5> </p>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </div>
-                                                        ) : (
-                                                            <div className='headerBox_BottomOption'>
-                                                                <Avatar src={message.recipientPhotoUrl} />
-                                                                <div className='headerBox_BottomOptionContent'>
-                                                                    <p>{message.recipientName}</p>
-                                                                    <div className='headerBox_BottomOptionContentBottom'>
-                                                                        <p> <span>{message.text}</span> · <h5>{timeAgowithInitials(message.timestamp)}</h5> </p>
+                                                                ) : (
+                                                                    <div className='headerBox_BottomOption'>
+                                                                        <Avatar src={message.recipientPhotoUrl} />
+                                                                        <div className='headerBox_BottomOptionContent'>
+                                                                            <p>{message.recipientName}</p>
+                                                                            <div className='headerBox_BottomOptionContentBottom'>
+                                                                                <p> <span>{message.text}</span> · <h5>{timeAgowithInitials(message.timestamp)}</h5> </p>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
+                                                                )}
                                                             </div>
-                                                        )}
+                                                        ))}
                                                     </div>
-                                                ))}
-                                            </div>
-                                        );
-                                    }
-                                    return null;
-                                })}
+                                                );
+                                            }
+                                            return null;
+                                        })}
+                                    </>
+                                )}
                             </div>
                         </div>
                     )}
                 </div>
 
                 <div className={`notificationBox ${userBoxVisible ? 'clicked' : ''}`}>
-                    <p id='notiLengthIcon'>{notifications.length}</p>
+                    {notifications.length > 0 && <p id='notiLengthIcon'>{notifications.length}</p>}
 
                     <NotificationsIcon className='header_right_Options' onClick={toggleNotificationBox} ref={notificationBoxRef} />
                     {notificationBoxVisible && (
@@ -485,7 +498,7 @@ function Header() {
 
                             <div className='headerBox_Bottom'>
                                 {notifications.length == 0 ? (
-                                    <p>Nothing new to show</p>
+                                    <p id='noNoti'>No notifications found.</p>
                                 ) : (
                                     <div className='headerBox_BottomOptions'>
                                         {notifications.map((notification, index) => (
