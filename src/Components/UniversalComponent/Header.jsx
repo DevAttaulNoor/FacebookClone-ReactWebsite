@@ -435,8 +435,7 @@ function Header() {
                                                                 <div className='headerBox_BottomOptionContent'>
                                                                     <p>{message.senderName}</p>
                                                                     <div className='headerBox_BottomOptionContentBottom'>
-                                                                        <p>{message.text}</p>
-                                                                        <h5>{timeAgowithInitials(message.timestamp)}</h5>
+                                                                        <p> <span>{message.text}</span> · <h5>{timeAgowithInitials(message.timestamp)}</h5> </p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -446,8 +445,7 @@ function Header() {
                                                                 <div className='headerBox_BottomOptionContent'>
                                                                     <p>{message.recipientName}</p>
                                                                     <div className='headerBox_BottomOptionContentBottom'>
-                                                                        <p>{message.text}</p>
-                                                                        <h5>{timeAgowithInitials(message.timestamp)}</h5>
+                                                                        <p> <span>{message.text}</span> · <h5>{timeAgowithInitials(message.timestamp)}</h5> </p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -457,7 +455,7 @@ function Header() {
                                             </div>
                                         );
                                     }
-                                    return null; // Return null for chats that don't match the current user
+                                    return null;
                                 })}
                             </div>
                         </div>
