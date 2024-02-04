@@ -1,0 +1,13 @@
+/** Skeleton UserInfo */
+.skeletonsUserInfo{
+    display: flex;
+    align-items: center;
+}
+
+.skeletonsUserInfo_Left{
+    margin: 0 10px 0 0;
+}
+
+.skeletonsUserInfo_Right{
+    width: 100%;
+}
