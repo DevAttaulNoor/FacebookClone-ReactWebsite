@@ -4,7 +4,6 @@ import { db } from '../BackendRelated/Firebase'
 import HomePage_Feeds_StoryReels from './HomePage_Feeds_StoryReels'
 import HomePage_Feeds_Posts from './HomePage_Feeds_Posts'
 import HomePage_Feeds_Posting from './HomePage_Feeds_Posting'
-import Skeleton_Post from '../Skeletons/Skeleton_Post'
 
 function HomePage_Feeds() {
     const [posts, setPosts] = useState([]);
@@ -60,48 +59,27 @@ function HomePage_Feeds() {
         return `${granularity} ${unit}${granularity > 1 ? 's' : ''} ago`;
     };
 
-
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        // Simulating loading delay
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-        return () => clearTimeout(timer);
-    }, []);
-
     return (
         <div className='homepage_Feeds'>
-            {isLoading ? (
-                <div>
-                    <Skeleton_Post />
-                    <Skeleton_Post />
-                </div>
-            ) : (
-                <>
-                    <HomePage_Feeds_StoryReels />
-                    <HomePage_Feeds_Posting />
+            <HomePage_Feeds_StoryReels />
+            <HomePage_Feeds_Posting />
 
-                    {posts.map(post => {
-                        const formattedDate = timeAgo(post.data.timestamp);
-                        return (
-                            <HomePage_Feeds_Posts
-                                id={post.id}
-                                userid={post.data.uid}
-                                photoURL={post.data.photoURL}
-                                media={post.data.media}
-                                mediaType={post.data.mediaType}
-                                username={post.data.username}
-                                timestamp={formattedDate}
-                                message={post.data.message}
-                                key={post.id}
-                            />
-                        );
-                    })}
-
-                </>
-            )}
+            {posts.map(post => {
+                const formattedDate = timeAgo(post.data.timestamp);
+                return (
+                    <HomePage_Feeds_Posts
+                        id={post.id}
+                        userid={post.data.uid}
+                        photoURL={post.data.photoURL}
+                        media={post.data.media}
+                        mediaType={post.data.mediaType}
+                        username={post.data.username}
+                        timestamp={formattedDate}
+                        message={post.data.message}
+                        key={post.id}
+                    />
+                );
+            })}
         </div>
     );
 }

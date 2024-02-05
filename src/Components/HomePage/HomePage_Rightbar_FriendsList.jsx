@@ -6,8 +6,6 @@ import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/Friends
 import HomePage_Messages from '../HomePage/HomePage_Messages';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import Skeleton from '../Skeletons/Skeleton';
-import Skeleton_Option from '../Skeletons/Skeleton_Option';
 
 function HomePage_Rightbar_FriendsList() {
     const [{ user }] = useStateValue();
@@ -37,57 +35,33 @@ function HomePage_Rightbar_FriendsList() {
         }
     }, [friends]);
 
-
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        // Simulating loading delay
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-        return () => clearTimeout(timer);
-    }, []);
-
     return (
         <div className='homepageRightbarFriendList'>
-            {isLoading ? (
-                <div>
-                    <Skeleton type='fullText' />
-                    <Skeleton_Option />
-                    <Skeleton_Option />
-                    <Skeleton_Option />
-                    <Skeleton_Option />
-                    <Skeleton_Option />
+            <div className="homepageRightbarFriendList_Top">
+                <div className="homepageRightbarFriendList_TopLeft">
+                    <h4>Contacts</h4>
                 </div>
-            ) : (
-                <>
-                    <div className="homepageRightbarFriendList_Top">
-                        <div className="homepageRightbarFriendList_TopLeft">
-                            <h4>Contacts</h4>
-                        </div>
 
-                        <div className="homepageRightbarFriendList_TopRight">
-                            <SearchIcon />
-                            <MoreHorizIcon />
-                        </div>
+                <div className="homepageRightbarFriendList_TopRight">
+                    <SearchIcon />
+                    <MoreHorizIcon />
+                </div>
+            </div>
+
+            <div className="homepageRightbarFriendList_Bottom">
+                {friends.map((friend) => (
+                    <div
+                        className="homepageRightbarFriendList_BottomOption"
+                        key={friend.id}
+                        onClick={() => openFriendMessageBox(friend)}
+                    >
+                        <Avatar src={friend.photoURL} />
+                        <p>{friend.username}</p>
                     </div>
+                ))}
+            </div>
 
-                    <div className="homepageRightbarFriendList_Bottom">
-                        {friends.map((friend) => (
-                            <div
-                                className="homepageRightbarFriendList_BottomOption"
-                                key={friend.id}
-                                onClick={() => openFriendMessageBox(friend)}
-                            >
-                                <Avatar src={friend.photoURL} />
-                                <p>{friend.username}</p>
-                            </div>
-                        ))}
-                    </div>
-
-                    <HomePage_Messages handleSelectedFriend={selectedFriend} closeFriendBox={closeFriendMessageBox} />
-                </>
-            )}
+            <HomePage_Messages handleSelectedFriend={selectedFriend} closeFriendBox={closeFriendMessageBox} />
         </div>
     )
 }

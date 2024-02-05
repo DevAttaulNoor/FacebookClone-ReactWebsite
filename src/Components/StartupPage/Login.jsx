@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { auth, db, provider } from '../BackendRelated/Firebase';
 import { useStateValue } from '../BackendRelated/StateProvider';
 import Modal from 'react-modal';
-import Loading from "./Loading";
 import Signup from './Signup';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import Skeleton_HomePage from '../Skeletons/Skeleton_HomePage';
 
 function Login() {
     Modal.setAppElement('#root');
@@ -150,7 +150,7 @@ function Login() {
     }, []);
 
     if (isLoading) {
-        return <Loading />;
+        return <Skeleton_HomePage />;
     }
 
     return (
