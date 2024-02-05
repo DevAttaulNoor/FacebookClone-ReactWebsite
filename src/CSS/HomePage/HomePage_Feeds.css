@@ -3,3 +3,7 @@
     flex-direction: column;
     width: 560px;
 }
+
+.postSkeleton .skeletonPost{
+    margin: 15px 0 0 0;
+}

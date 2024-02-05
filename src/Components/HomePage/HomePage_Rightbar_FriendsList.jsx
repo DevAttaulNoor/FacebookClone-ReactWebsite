@@ -6,10 +6,12 @@ import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/Friends
 import HomePage_Messages from '../HomePage/HomePage_Messages';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import Skeleton from '../Skeletons/Skeleton';
 
 function HomePage_Rightbar_FriendsList() {
     const [{ user }] = useStateValue();
     const [friends, setFriends] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [selectedFriend, setSelectedFriend] = useState();
     const [friendMessageBox, setFriendMessageBox] = useState(false);
 
@@ -31,7 +33,7 @@ function HomePage_Rightbar_FriendsList() {
     useEffect(() => {
         // Fetch friend details when friends array changes
         if (friends.length > 0) {
-            fetchFriendDetailsData(friends, setFriends);
+            fetchFriendDetailsData(friends, setFriends).then(() => setLoading(false));
         }
     }, [friends]);
 
@@ -49,16 +51,25 @@ function HomePage_Rightbar_FriendsList() {
             </div>
 
             <div className="homepageRightbarFriendList_Bottom">
-                {friends.map((friend) => (
-                    <div
-                        className="homepageRightbarFriendList_BottomOption"
-                        key={friend.id}
-                        onClick={() => openFriendMessageBox(friend)}
-                    >
-                        <Avatar src={friend.photoURL} />
-                        <p>{friend.username}</p>
-                    </div>
-                ))}
+                {loading ? (
+                    Array.from({ length: 3 }).map((_, index) => (
+                        <div className="homepageRightbarFriendList_BottomOption" key={index}>
+                            <Skeleton type='avatar'/>
+                            <Skeleton type='halfhalfText'/>
+                        </div>
+                    ))
+                ) : (
+                    friends.map((friend) => (
+                        <div
+                            className="homepageRightbarFriendList_BottomOption"
+                            key={friend.id}
+                            onClick={() => openFriendMessageBox(friend)}
+                        >
+                            <Avatar src={friend.photoURL} />
+                            <p>{friend.username}</p>
+                        </div>
+                    ))
+                )}
             </div>
 
             <HomePage_Messages handleSelectedFriend={selectedFriend} closeFriendBox={closeFriendMessageBox} />

@@ -15,6 +15,8 @@ import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import HomePage_Feeds_Posts_ShareModal from './HomePage_Feeds_Posts_ShareModal';
 import HomePage_Feeds_Posts_CommentModal from './HomePage_Feeds_Posts_CommentModal';
 import HomePage_Feeds_Posts_LikeModal from './HomePage_Feeds_Posts_LikeModal';
+import Skeleton from '../Skeletons/Skeleton';
+import Skeleton_UserInfo from '../Skeletons/Skeleton_UserInfo';
 
 function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username, timestamp, message }) {
     Modal.setAppElement('#root');
@@ -36,6 +38,7 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
     const [isCommenting, setIsCommenting] = useState(false);
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
     const dropdownRef = useRef(null);
 
     const handleEdit = () => {
@@ -276,11 +279,13 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
 
     //* useEffect to get all the posts from the firestore
     useEffect(() => {
+        setLoading(true);
         const postRef = db.collection('Posts').doc(id);
 
         const unsubscribe = postRef.onSnapshot((doc) => {
             if (doc.exists) {
                 setPost(doc.data());
+                setLoading(false);
             }
         });
 
@@ -364,6 +369,7 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
 
     //* useEffect to get all the users from the firestore
     useEffect(() => {
+        setLoading(true);
         const fetchUsers = async () => {
             try {
                 const usersCollection = await db.collection('Users').get();
@@ -380,6 +386,7 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
         };
 
         fetchUsers();
+        setLoading(false);
     }, []);
 
     //* useEffect to prevent background scrolling when popup modal is open
@@ -399,161 +406,183 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
     return (
         <div className='homepageFeedsPosts'>
             <div className="homepageFeedsPosts_Top">
-                <div className="homepageFeedsPosts_TopLeft">
-                    <Avatar src={photoURL} />
-                    <div className="userpostInfo">
-                        {user.uid === userid ? (
-                            <NavLink to="/userhomepage/post">
-                                <h4>{username}</h4>
-                            </NavLink>
-                        ) : (
-                            <NavLink to={`/profilepage/${userid}/post`} userId={userid}>
-                                <h4>{username}</h4>
-                            </NavLink>
-                        )}
-                        <p>{timestamp} <PublicIcon /></p>
-                    </div>
-                </div>
+                {loading ? (
+                    <Skeleton_UserInfo />
+                ) : (
+                    <>
+                        <div className="homepageFeedsPosts_TopLeft">
+                            <Avatar src={photoURL} />
+                            <div className="userpostInfo">
+                                {user.uid === userid ? (
+                                    <NavLink to="/userhomepage/post">
+                                        <h4>{username}</h4>
+                                    </NavLink>
+                                ) : (
+                                    <NavLink to={`/profilepage/${userid}/post`} userId={userid}>
+                                        <h4>{username}</h4>
+                                    </NavLink>
+                                )}
+                                <p>{timestamp} <PublicIcon /></p>
+                            </div>
+                        </div>
 
-                <div className={`homepageFeedsPosts_TopRight ${isDropdownClicked ? 'clicked' : ''}`} onClick={toggleDropdown} ref={dropdownRef}>
-                    <MoreHorizIcon />
-                    {user.uid == post.uid ? (
-                        <div>
-                            {isDropdownVisible && (
-                                <div className="postSetting">
-                                    <button onClick={handleDelete}>Delete the post</button>
-                                    {!isEditing && <button onClick={handleEdit}>Edit the post</button>}
+                        <div className={`homepageFeedsPosts_TopRight ${isDropdownClicked ? 'clicked' : ''}`} onClick={toggleDropdown} ref={dropdownRef}>
+                            <MoreHorizIcon />
+                            {user.uid == post.uid ? (
+                                <div>
+                                    {isDropdownVisible && (
+                                        <div className="postSetting">
+                                            <button onClick={handleDelete}>Delete the post</button>
+                                            {!isEditing && <button onClick={handleEdit}>Edit the post</button>}
+                                        </div>
+                                    )}
+                                </div>
+                            ) : (
+                                <div>
+                                    {isDropdownVisible && (
+                                        <div className="postSetting">
+                                            <button onClick={handleSavePost}>Save the post</button>
+                                            <button>Report the post</button>
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>
-                    ) : (
-                        <div>
-                            {isDropdownVisible && (
-                                <div className="postSetting">
-                                    <button onClick={handleSavePost}>Save the post</button>
-                                    <button>Report the post</button>
-                                </div>
-                            )}
-                        </div>
-                    )}
-                </div>
+                    </>
+                )}
             </div>
 
             <div className="homepageFeedsPosts_Middle">
-                <div className='homepageFeedsPosts_MiddleTop'>
-                    {isEditing ? (
-                        <Modal className="editModal" isOpen={isEditing} onRequestClose={() => setIsEditing(false)}>
-                            <div className='EditModal'>
-                                <div className="EditModal_Top">
-                                    <h2>Edit Post</h2>
-                                </div>
+                {loading ? (
+                    <Skeleton type='square' />
+                ) : (
+                    <>
+                        <div className='homepageFeedsPosts_MiddleTop'>
+                            {isEditing ? (
+                                <Modal className="editModal" isOpen={isEditing} onRequestClose={() => setIsEditing(false)}>
+                                    <div className='EditModal'>
+                                        <div className="EditModal_Top">
+                                            <h2>Edit Post</h2>
+                                        </div>
 
-                                <div className="EditModal_Middle">
-                                    <input id="msgInput" type="text" value={editedMessage} onChange={(e) => setEditedMessage(e.target.value)} />
-                                    <input id="mediaInput" type="file" accept="image/*,video/*" onChange={handleMediaUpload} style={{ display: 'none' }} />
-                                    <label id="mediaInputLabel" htmlFor="mediaInput">Select Media</label>
+                                        <div className="EditModal_Middle">
+                                            <input id="msgInput" type="text" value={editedMessage} onChange={(e) => setEditedMessage(e.target.value)} />
+                                            <input id="mediaInput" type="file" accept="image/*,video/*" onChange={handleMediaUpload} style={{ display: 'none' }} />
+                                            <label id="mediaInputLabel" htmlFor="mediaInput">Select Media</label>
 
-                                    {editedMedia ? (
-                                        editedMediaFileType === 'image' ? (
-                                            <img id="editedImg" src={editedMedia} alt="Edited" />
-                                        ) : editedMediaFileType === 'video' ? (
-                                            <video id="editedVideo" controls>
-                                                <source src={editedMedia} type="video/mp4" />
-                                            </video>
-                                        ) : (
-                                            <p id='noMedia'>Invalid media type</p>
-                                        )
-                                    ) : (
-                                        media ? (
-                                            mediaFileType === 'image' ? (
-                                                <img id="originalImg" src={media} alt="Original" />
-                                            ) : mediaFileType === 'video' ? (
-                                                <video id="originalVideo" controls>
-                                                    <source src={media} type="video/mp4" />
-                                                </video>
+                                            {editedMedia ? (
+                                                editedMediaFileType === 'image' ? (
+                                                    <img id="editedImg" src={editedMedia} alt="Edited" />
+                                                ) : editedMediaFileType === 'video' ? (
+                                                    <video id="editedVideo" controls>
+                                                        <source src={editedMedia} type="video/mp4" />
+                                                    </video>
+                                                ) : (
+                                                    <p id='noMedia'>Invalid media type</p>
+                                                )
                                             ) : (
-                                                <p id='noMedia'>Invalid media type</p>
-                                            )
-                                        ) : (
-                                            <p id='noMedia'>No media selected</p>
-                                        )
+                                                media ? (
+                                                    mediaFileType === 'image' ? (
+                                                        <img id="originalImg" src={media} alt="Original" />
+                                                    ) : mediaFileType === 'video' ? (
+                                                        <video id="originalVideo" controls>
+                                                            <source src={media} type="video/mp4" />
+                                                        </video>
+                                                    ) : (
+                                                        <p id='noMedia'>Invalid media type</p>
+                                                    )
+                                                ) : (
+                                                    <p id='noMedia'>No media selected</p>
+                                                )
+                                            )}
+                                        </div>
+
+                                        <div className="EditModal_Bottom">
+                                            <button onClick={handleSave}>Save</button>
+                                            <button onClick={() => setIsEditing(false)}>Cancel</button>
+                                        </div>
+                                    </div>
+                                </Modal>
+                            ) : (
+                                <div className='homepageFeedsPosts_MiddleTopInner'>
+                                    {message && <p id="postMsg" style={{ fontSize: media ? '15px' : '30px' }}> {editedMessage} </p>}
+                                    {media && mediaType === 'image' && <img id="postImg" src={editedMedia} alt="Image" />}
+                                    {media && mediaType === 'video' && (
+                                        <video id="postVideo" controls>
+                                            <source src={editedMedia} type="video/mp4" />
+                                        </video>
                                     )}
                                 </div>
-
-                                <div className="EditModal_Bottom">
-                                    <button onClick={handleSave}>Save</button>
-                                    <button onClick={() => setIsEditing(false)}>Cancel</button>
-                                </div>
-                            </div>
-                        </Modal>
-                    ) : (
-                        <div className='homepageFeedsPosts_MiddleTopInner'>
-                            {message && <p id="postMsg" style={{ fontSize: media ? '15px' : '30px' }}> {editedMessage} </p>}
-                            {media && mediaType === 'image' && <img id="postImg" src={editedMedia} alt="Image" />}
-                            {media && mediaType === 'video' && (
-                                <video id="postVideo" controls>
-                                    <source src={editedMedia} type="video/mp4" />
-                                </video>
                             )}
                         </div>
-                    )}
-                </div>
 
-                <div className="homepageFeedsPosts_MiddleBottom">
-                    {likesCount >= 1 && <p onClick={handleLikedUsersClick}> {likesCount} {likesCount === 1 ? 'Like' : 'Likes'} </p>}
-                    {comments.length >= 1 && <p onClick={openCommentModal}> {comments.length} {comments.length === 1 ? 'comment' : 'comments'} </p>}
-                </div>
+                        <div className="homepageFeedsPosts_MiddleBottom">
+                            {likesCount >= 1 && <p onClick={handleLikedUsersClick}> {likesCount} {likesCount === 1 ? 'Like' : 'Likes'} </p>}
+                            {comments.length >= 1 && <p onClick={openCommentModal}> {comments.length} {comments.length === 1 ? 'comment' : 'comments'} </p>}
+                        </div>
+                    </>
+                )}
             </div>
 
             <div className="homepageFeedsPosts_Bottom">
-                <div className='homepageFeedsPosts_BottomInner'>
-                    <div className='homepageFeedsPosts_BottomOption' onClick={handleLike}>
-                        {currentUserLiked ? (
-                            <>
-                                <ThumbUpIcon style={{ color: 'blue' }} />
-                                <p style={{ color: 'blue' }}>Like</p>
-                            </>
-                        ) : (
-                            <>
-                                <ThumbUpAltOutlinedIcon />
-                                <p>Like</p>
-                            </>
-                        )}
+                {loading ? (
+                    <div className='skeletonPost_Bottom'>
+                        <Skeleton type='halfText' />
+                        <Skeleton type='halfText' />
+                        <Skeleton type='halfText' />
                     </div>
+                ) : (
+                    <>
+                        <div className='homepageFeedsPosts_BottomInner'>
+                            <div className='homepageFeedsPosts_BottomOption' onClick={handleLike}>
+                                {currentUserLiked ? (
+                                    <>
+                                        <ThumbUpIcon style={{ color: 'blue' }} />
+                                        <p style={{ color: 'blue' }}>Like</p>
+                                    </>
+                                ) : (
+                                    <>
+                                        <ThumbUpAltOutlinedIcon />
+                                        <p>Like</p>
+                                    </>
+                                )}
+                            </div>
 
-                    <div className='homepageFeedsPosts_BottomOption' onClick={openCommentModal}>
-                        <ChatBubbleOutlineOutlinedIcon />
-                        <p>Comment</p>
-                    </div>
+                            <div className='homepageFeedsPosts_BottomOption' onClick={openCommentModal}>
+                                <ChatBubbleOutlineOutlinedIcon />
+                                <p>Comment</p>
+                            </div>
 
-                    <div className='homepageFeedsPosts_BottomOption' onClick={() => setIsShareModalOpen(true)}>
-                        <ReplyOutlinedIcon />
-                        <p>Share</p>
-                    </div>
-                </div>
+                            <div className='homepageFeedsPosts_BottomOption' onClick={() => setIsShareModalOpen(true)}>
+                                <ReplyOutlinedIcon />
+                                <p>Share</p>
+                            </div>
+                        </div>
 
-                <div className="homepageFeedsPosts_BottomModals">
-                    <Modal className="likedUserModal" isOpen={isLikedUsersModalOpen} onRequestClose={() => setIsLikedUsersModalOpen(false)}>
-                        <HomePage_Feeds_Posts_LikeModal
-                            id={id}
-                            closeModal={{ closeLikeModal: () => setIsLikedUsersModalOpen(false) }}
-                        />
-                    </Modal>
+                        <div className="homepageFeedsPosts_BottomModals">
+                            <Modal className="likedUserModal" isOpen={isLikedUsersModalOpen} onRequestClose={() => setIsLikedUsersModalOpen(false)}>
+                                <HomePage_Feeds_Posts_LikeModal
+                                    id={id}
+                                    closeModal={{ closeLikeModal: () => setIsLikedUsersModalOpen(false) }}
+                                />
+                            </Modal>
 
-                    <Modal className="commentedUserModal" isOpen={isCommentModalOpen} onRequestClose={() => setIsCommentModalOpen(false)}>
-                        <HomePage_Feeds_Posts_CommentModal
-                            id={id}
-                            userid={userid}
-                            closeModal={{ closeCommentModal: () => setIsCommentModalOpen(false) }}
-                        />
-                    </Modal>
+                            <Modal className="commentedUserModal" isOpen={isCommentModalOpen} onRequestClose={() => setIsCommentModalOpen(false)}>
+                                <HomePage_Feeds_Posts_CommentModal
+                                    id={id}
+                                    userid={userid}
+                                    closeModal={{ closeCommentModal: () => setIsCommentModalOpen(false) }}
+                                />
+                            </Modal>
 
-                    <Modal className="sharedUserModal" isOpen={isShareModalOpen} onRequestClose={() => setIsShareModalOpen(false)}>
-                        <HomePage_Feeds_Posts_ShareModal closeModal={() => setIsShareModalOpen(false)} />
-                    </Modal>
-                </div>
+                            <Modal className="sharedUserModal" isOpen={isShareModalOpen} onRequestClose={() => setIsShareModalOpen(false)}>
+                                <HomePage_Feeds_Posts_ShareModal closeModal={() => setIsShareModalOpen(false)} />
+                            </Modal>
+                        </div>
+                    </>
+                )}
             </div>
-        </div >
+        </div>
     )
 }
 

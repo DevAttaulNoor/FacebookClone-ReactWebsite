@@ -16,8 +16,8 @@ function Login() {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [loginerror, setLoginError] = useState(null);
+    const [Loading, setLoading] = useState(true);
     const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
     const [isLoginProcessing, setIsLoginProcessing] = useState(false);
     const isUserLoggedOut = sessionStorage.getItem('userLoggedOut');
     const navigate = useNavigate();
@@ -70,6 +70,7 @@ function Login() {
     }
 
     const signInWithEmailAndPassword = async () => {
+        setLoading(true);
         setIsLoginProcessing(true);
         setLoginError(null);
 
@@ -105,7 +106,6 @@ function Login() {
                     type: "SET_USER",
                     user: updatedUserData
                 });
-
                 navigate('/homepage');
             }
 
@@ -146,71 +146,73 @@ function Login() {
                 user: userData
             });
         }
-        setIsLoading(false);
+        setLoading(false);
     }, []);
 
-    if (isLoading) {
-        return <Skeleton_HomePage />;
-    }
-
     return (
-        <div className='login'>
-            <div className="login_Left">
-                <h1>facebook</h1>
-                <p>Facebook helps you connect and share with the people in your life.</p>
-            </div>
+        <>
+            {Loading ? (
+                <Skeleton_HomePage />
+            ) : (
+                <div className='login'>
+                    <div className="login_Left">
+                        <h1>facebook</h1>
+                        <p>Facebook helps you connect and share with the people in your life.</p>
+                    </div>
 
-            <div className="login_Right">
-                <div className='login_RightTop'>
-                    <form onSubmit={(e) => {
-                        e.preventDefault();
-                        signInWithEmailAndPassword();
-                    }}>
-                        <div className='emailContainer'>
-                            <input
-                                type="email"
-                                value={email}
-                                placeholder="Email address"
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
+                    <div className="login_Right">
+                        <div className='login_RightTop'>
+                            <form onSubmit={(e) => {
+                                e.preventDefault();
+                                signInWithEmailAndPassword();
+                            }}>
+                                <div className='emailContainer'>
+                                    <input
+                                        type="email"
+                                        value={email}
+                                        placeholder="Email address"
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required
+                                    />
+                                </div>
+
+                                <div className="passwordContainer">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        value={password}
+                                        placeholder="Password"
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        required
+                                    />
+                                    <span className="passwordToggle" onClick={togglePasswordVisibility}>
+                                        {showPassword ? (
+                                            <VisibilityIcon />
+                                        ) : (
+                                            <VisibilityOffIcon />
+                                        )}
+                                    </span>
+                                </div>
+
+                                <button type="submit" id="submitBtn">{isLoginProcessing ? <div class="loadingSpin"></div> : 'Log in'}</button>
+                                {loginerror && <p className="errorNote">{loginerror}</p>}
+                                <button id="forgetBtn" type="button">Forgotten password?</button>
+                                <hr id="line" />
+                                <button id="newAccBtn" type="button" onClick={openSignupModal}>Create new account</button>
+                            </form>
                         </div>
 
-                        <div className="passwordContainer">
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                value={password}
-                                placeholder="Password"
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                            <span className="passwordToggle" onClick={togglePasswordVisibility}>
-                                {showPassword ? (
-                                    <VisibilityIcon />
-                                ) : (
-                                    <VisibilityOffIcon />
-                                )}
-                            </span>
+                        <div className='login_RightBottom'>
+                            <button onClick={signInWithFacebook}>Log in</button>
+                            <p>with existing FB account</p>
                         </div>
+                    </div>
 
-                        <button type="submit" id="submitBtn">{isLoginProcessing ? <div class="loadingSpin"></div> : 'Log in'}</button>
-                        {loginerror && <p className="errorNote">{loginerror}</p>}
-                        <button id="forgetBtn" type="button">Forgotten password?</button>
-                        <hr id="line" />
-                        <button id="newAccBtn" type="button" onClick={openSignupModal}>Create new account</button>
-                    </form>
+                    <Modal className="signupModal" isOpen={isSignupModalOpen} onRequestClose={closeSignupModal}>
+                        <Signup closeSignupModal={closeSignupModal} />
+                    </Modal>
                 </div>
-
-                <div className='login_RightBottom'>
-                    <button onClick={signInWithFacebook}>Log in</button>
-                    <p>with existing FB account</p>
-                </div>
-            </div>
-
-            <Modal className="signupModal" isOpen={isSignupModalOpen} onRequestClose={closeSignupModal}>
-                <Signup closeSignupModal={closeSignupModal} />
-            </Modal>
-        </div>
+            )}
+        </>
     )
 }
 

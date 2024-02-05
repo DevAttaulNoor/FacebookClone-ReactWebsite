@@ -2,6 +2,7 @@
 .skeletonsUserInfo{
     display: flex;
     align-items: center;
+    width: -webkit-fill-available;
 }
 
 .skeletonsUserInfo_Left{
