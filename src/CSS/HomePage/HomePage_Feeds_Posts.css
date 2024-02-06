@@ -119,6 +119,9 @@
 }
 
 /** HomePage Feeds Posts Middle Section */
+.homepageFeedsPosts_Middle .square{
+    margin: 0;
+}
 
 /* HomePage Feeds Posts Middle Top Section */
 .homepageFeedsPosts_Middle .homepageFeedsPosts_MiddleTop .homepageFeedsPosts_MiddleTopInner #postMsg{
@@ -250,6 +253,10 @@
 /** HomePage Feeds Posts Bottom Section */
 .homepageFeedsPosts_Bottom{
     padding: 0 15px;
+}
+
+.homepageFeedsPosts_Bottom .skeletonPost_Bottom {
+    padding: 15px 0;
 }
 
 /* HomePage Feeds Posts Bottom Inner Section */

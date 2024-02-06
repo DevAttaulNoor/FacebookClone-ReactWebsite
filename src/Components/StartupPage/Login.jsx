@@ -7,7 +7,7 @@ import Modal from 'react-modal';
 import Signup from './Signup';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import Skeleton_HomePage from '../Skeletons/Skeleton_HomePage';
+import LoadingLine from '../UniversalComponent/LoadingLine';
 
 function Login() {
     Modal.setAppElement('#root');
@@ -24,6 +24,7 @@ function Login() {
 
     if (isUserLoggedOut === 'true') {
         sessionStorage.removeItem('userLoggedOut');
+        navigate('/');
     }
 
     const signInWithFacebook = () => {
@@ -152,7 +153,7 @@ function Login() {
     return (
         <>
             {Loading ? (
-                <Skeleton_HomePage />
+                <LoadingLine progress={Loading} />
             ) : (
                 <div className='login'>
                     <div className="login_Left">

@@ -19,7 +19,9 @@ function App() {
 		<Router>
 			<>
 				{!user ? (
-					<Login />
+					<Routes>
+						<Route path='/' element={<Login />} />
+					</Routes>
 				) : (
 					<div className="App">
 						<Header />
@@ -32,7 +34,7 @@ function App() {
 							<Route path="videospage/*" element={<VideosPage />} />
 							<Route path="userhomepage/*" element={<UserPage />} />
 							<Route path="profilepage/:userid/*" element={<ProfilePage />} />
-							<Route path="profilepage/:userid/post/*" element={<PostPage/>} />
+							<Route path="profilepage/:userid/post/*" element={<PostPage />} />
 						</Routes>
 					</div>
 				)}

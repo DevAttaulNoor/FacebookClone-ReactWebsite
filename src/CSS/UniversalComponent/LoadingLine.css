@@ -1,0 +1,15 @@
+/** Loading Line Section */
+.loadingLine {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.loadingLinefill {
+    height: 100%;
+    background-color: #2381fa;
+    transition: width 0.3s ease-in-out;
+}

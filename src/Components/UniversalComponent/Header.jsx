@@ -1,7 +1,7 @@
 import '../../CSS/UniversalComponent/Header.css'
 import fblogo from '../../Imgs/fblogo.png'
 import React, { useState, useRef, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import { auth, db } from '../BackendRelated/Firebase';
 import { useStateValue } from '../BackendRelated/StateProvider';
@@ -39,6 +39,7 @@ function Header() {
     const notificationBoxRef = useRef(null);
     const pathsToHideHeader = ['/homepage/storyreels'];
     const showHeader = !pathsToHideHeader.includes(useLocation().pathname);
+    const navigate = useNavigate();
 
     const handleSignOut = () => {
         sessionStorage.removeItem('userData');
@@ -57,6 +58,8 @@ function Header() {
             .catch((error) => {
                 console.error("Sign out error:", error);
             });
+
+        navigate('/');
     };
 
     const deleteUser = () => {
