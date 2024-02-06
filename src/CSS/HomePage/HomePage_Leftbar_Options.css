@@ -10,10 +10,10 @@
     cursor: pointer;
 }
 
-.homepage_leftbarOptions p{
+.homepage_leftbarOptions p {
     font-weight: 500;
-    padding-left: 8px;
-    font-size: 14px;
+    padding-left: 12px;
+    font-size: 15px;
 }
 
 .homepage_leftbarOptions .MuiAvatar-root{
