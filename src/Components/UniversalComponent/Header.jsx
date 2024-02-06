@@ -10,17 +10,20 @@ import AppsIcon from '@mui/icons-material/Apps';
 import ForumIcon from '@mui/icons-material/Forum';
 import CloseIcon from '@mui/icons-material/Close';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import OndemandVideoOutlinedIcon from '@mui/icons-material/OndemandVideoOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HelpIcon from '@mui/icons-material/Help';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import NightlightIcon from '@mui/icons-material/Nightlight';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import HomeIcon from '@mui/icons-material/Home';
+import GroupsIcon from '@mui/icons-material/Groups';
+import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
+import SmartDisplayOutlinedIcon from '@mui/icons-material/SmartDisplayOutlined';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 
 function Header() {
     const [{ user }, dispatch] = useStateValue();
@@ -391,19 +394,27 @@ function Header() {
 
             <div className="header_middle">
                 <NavLink to="/homepage" activeClassName="active">
-                    <HomeOutlinedIcon />
+                    {({ isActive }) => (
+                        isActive ? <HomeIcon /> : <HomeOutlinedIcon />
+                    )}
                 </NavLink>
 
                 <NavLink to="/friendpage" activeClassName="active">
-                    <GroupOutlinedIcon />
+                {({ isActive }) => (
+                        isActive ? <PeopleAltIcon /> : <PeopleAltOutlinedIcon />
+                    )}
                 </NavLink>
 
                 <NavLink to="/videospage" activeClassName="active">
-                    <OndemandVideoOutlinedIcon />
+                {({ isActive }) => (
+                        isActive ? <SmartDisplayIcon /> : <SmartDisplayOutlinedIcon />
+                    )}
                 </NavLink>
 
                 <NavLink to="/grouppage" activeClassName="active">
-                    <GroupsOutlinedIcon />
+                {({ isActive }) => (
+                        isActive ? <GroupsIcon /> : <GroupsOutlinedIcon />
+                    )}
                 </NavLink>
             </div>
 

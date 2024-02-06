@@ -40,7 +40,8 @@
 .header_search .MuiSvgIcon-root {
     color: gray;
     height: 20px;
-    padding: 0px 3px 0 0;
+    width: 20px;
+    padding: 1px 5px 0;
 }
 
 .header_search input {
@@ -110,15 +111,16 @@
 }
 
 .header_middle a {
-    padding: 8px 34px;
+    padding: 6px 38px;
     margin: 0 3px;
-    border-radius: 8px;
+    border-radius: 6px;
     color: initial;
     text-decoration: none;
 }
 
 .header_middle a svg {
-    width: 30px;
+    width: 28px;
+    height: 28px;
     color: #65676B;
 }
 
