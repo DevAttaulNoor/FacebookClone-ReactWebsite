@@ -4,7 +4,7 @@
     bottom: 0;
     right: 85px;
     width: 300px;
-    height: 410px;
+    height: 440px;
     background: #fff;
     border-top-right-radius: 6px;
     border-top-left-radius: 6px;
@@ -125,7 +125,6 @@
 }
 
 .selectedUserMessagingSection_TopTop{
-    display: flex;
     align-items: center;
     padding: 35px 10px;
 }
@@ -311,7 +310,7 @@
     bottom: 0;
     right: 85px;
     width: 300px;
-    height: 410px;
+    height: 440px;
     background: #fff;
     border-top-right-radius: 6px;
     border-top-left-radius: 6px;
@@ -447,6 +446,10 @@
     color: #0866FF;
     width: 24px;
     height: 24px;
+}
+
+.FriendMessages_Bottom .MuiSvgIcon-root:hover {
+    cursor: pointer;
 }
 
 .FriendMessages_Bottom .inputSection {

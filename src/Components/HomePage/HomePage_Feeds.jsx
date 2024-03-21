@@ -75,19 +75,19 @@ function HomePage_Feeds() {
             ) : (
                 <>
                     {posts.map(post => {
-                        const formattedDate = timeAgo(post.data.timestamp);
                         return (
-                            <HomePage_Feeds_Posts
-                                id={post.id}
-                                userid={post.data.uid}
-                                photoURL={post.data.photoURL}
-                                media={post.data.media}
-                                mediaType={post.data.mediaType}
-                                username={post.data.username}
-                                timestamp={formattedDate}
-                                message={post.data.message}
-                                key={post.id}
-                            />
+                            <div key={post.id}>
+                                <HomePage_Feeds_Posts
+                                    id={post.id}
+                                    userid={post.data.uid}
+                                    photoURL={post.data.photoURL}
+                                    media={post.data.media}
+                                    mediaType={post.data.mediaType}
+                                    username={post.data.username}
+                                    timestamp={timeAgo(post.data.timestamp)}
+                                    message={post.data.message}
+                                />
+                            </div>
                         );
                     })}
                 </>

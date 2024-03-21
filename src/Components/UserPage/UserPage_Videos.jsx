@@ -31,7 +31,7 @@ function UserPage_Videos() {
     return (
         <div className='userpageVideos'>
             <div className="userpageVideos_Top">
-                <NavLink id="navLink" to="/userhomepage/video" activeClassName="active">
+                <NavLink id="navLink" to="/userhomepage/video" activeclassname="active">
                     <h3>Videos</h3>
                 </NavLink>
                 <a id="seeAllLink" href="#">See all Videos</a>

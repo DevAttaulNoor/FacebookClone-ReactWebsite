@@ -414,15 +414,15 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
                             <Avatar src={photoURL} />
                             <div className="userpostInfo">
                                 {user.uid === userid ? (
-                                    <NavLink to="/userhomepage/post">
+                                    <NavLink to={`/profilepage/${user.uid}/post/${id}`}>
                                         <h4>{username}</h4>
                                     </NavLink>
                                 ) : (
-                                    <NavLink to={`/profilepage/${userid}/post`} userId={userid}>
+                                    <NavLink to={`/profilepage/${userid}/post/${id}`}>
                                         <h4>{username}</h4>
                                     </NavLink>
                                 )}
-                                <p>{timestamp} <PublicIcon /></p>
+                                <p>{timestamp} <span><PublicIcon /></span></p>
                             </div>
                         </div>
 
@@ -505,7 +505,7 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
                                 </Modal>
                             ) : (
                                 <div className='homepageFeedsPosts_MiddleTopInner'>
-                                    {message && <p id="postMsg" style={{ fontSize: media ? '15px' : '30px' }}> {editedMessage} </p>}
+                                    {message && <div id="postMsg" style={{ fontSize: media ? '15px' : '30px' }}> {editedMessage} </div>}
                                     {media && mediaType === 'image' && <img id="postImg" src={editedMedia} alt="Image" />}
                                     {media && mediaType === 'video' && (
                                         <video id="postVideo" controls>

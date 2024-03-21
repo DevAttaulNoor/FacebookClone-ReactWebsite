@@ -529,15 +529,16 @@
 
 .messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom {
     display: flex;
+    white-space: pre-wrap;
 }
 
-.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom p {
+/* .messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom p {
     white-space: pre-wrap;
     display: flex;
-}
+} */
 
-.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom p span,
-.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom p h5 {
+.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom span,
+.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom h5 {
     color: #65676B;
     font-size: 14px;
     font-weight: 400;
@@ -642,7 +643,7 @@
     padding: 10px 0;
     box-shadow: none;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
 }
 

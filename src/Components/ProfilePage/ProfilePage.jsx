@@ -101,23 +101,23 @@ function ProfilePage() {
 
                 <div className="ProfilePage_TopComponents">
                     <div className="ProfilePage_TopComponents_Left">
-                        <NavLink to={`/profilepage/${userid}/post`} activeClassName="active">
+                        <NavLink to={`/profilepage/${userid}/post`} activeclassname="active">
                             <div className='ProfilePage_TopComponents_LeftOption'>Posts</div>
                         </NavLink>
 
-                        <NavLink to={`/profilepage/${userid}/about`} activeClassName="active">
+                        <NavLink to={`/profilepage/${userid}/about`} activeclassname="active">
                             <div className='ProfilePage_TopComponents_LeftOption'>About</div>
                         </NavLink>
 
-                        <NavLink to={`/profilepage/${userid}/friend`} activeClassName="active">
+                        <NavLink to={`/profilepage/${userid}/friend`} activeclassname="active">
                             <div className='ProfilePage_TopComponents_LeftOption'>Friends</div>
                         </NavLink>
 
-                        <NavLink to={`/profilepage/${userid}/photo`} activeClassName="active">
+                        <NavLink to={`/profilepage/${userid}/photo`} activeclassname="active">
                             <div className='ProfilePage_TopComponents_LeftOption'>Photos</div>
                         </NavLink>
 
-                        <NavLink to={`/profilepage/${userid}/video`} activeClassName="active">
+                        <NavLink to={`/profilepage/${userid}/video`} activeclassname="active">
                             <div className='ProfilePage_TopComponents_LeftOption'>Videos</div>
                         </NavLink>
 

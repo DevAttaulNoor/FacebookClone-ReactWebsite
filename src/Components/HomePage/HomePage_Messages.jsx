@@ -21,6 +21,7 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
     const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
     const [isEmojiPickerVisible, setIsEmojiPickerVisible] = useState(false);
     const emojiPickerRef = useRef(null);
+    const messageContainerRef = useRef(null);
 
     const toggleUserSelection = (userId, username, photoURL) => {
         const isUserSelected = selectedUsers.some(user => user.userId === userId);
@@ -65,6 +66,8 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
         const chatDoc = await chatDocRef.get();
 
         if (chatDoc.exists) {
+            setMessageInput('');
+            
             const existingMessages = chatDoc.data().messages || [];
             const updatedMessages = [...existingMessages, newMessage];
 
@@ -72,15 +75,12 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
             await chatDocRef.update({ messages: updatedMessages });
         } else {
             // If the chat document doesn't exist, create it with the new message
-            await chatDocRef.set({ 
+            await chatDocRef.set({
                 senderUid: user.uid,
                 recipientUid: recipientUserId,
-                messages: [newMessage] 
+                messages: [newMessage]
             });
         }
-
-        // Clear the message input
-        setMessageInput('');
     };
 
     const timeAgowithInitials = (timestamp) => {
@@ -207,6 +207,15 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
         }
     }, [selectedUsers, handleSelectedFriend, user.uid]);
 
+    useEffect(() => {
+        if (messageContainerRef.current) {
+            const lastChild = messageContainerRef.current.lastChild;
+            if (lastChild) {
+                lastChild.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+    }, [messages]);
+
     return (
         <>
             {handleMessageBox && (
@@ -248,34 +257,36 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
                     <div className="HomePageMessages_Bottom">
                         {searchText === '' ? (
                             <div className='selectedUserMessagingSection'>
-                                <div className='selectedUserMessagingSection_Top'>
-                                    <div className='selectedUserMessagingSection_TopTop'>
-                                        {selectedUsers.map((userSelected) => (
-                                            <>
-                                                {selectedUsers.length >= 2 ? (
-                                                    <div className="multiUserInfo" key={userSelected.userId}>
-                                                        <Avatar src={userSelected.photoURL} />
-                                                        <p>{userSelected.username}</p>
-                                                    </div>
-                                                ) : (
-                                                    <div className="singleUserInfo" key={userSelected.userId}>
-                                                        <Avatar src={userSelected.photoURL} />
-                                                        <p>{userSelected.username}</p>
-                                                    </div>
-                                                )}
-                                            </>
-                                        ))}
-                                    </div>
+                                {(selectedUsers.length > 0) &&
+                                    <div className='selectedUserMessagingSection_Top'>
+                                        <div className='selectedUserMessagingSection_TopTop'>
+                                            {selectedUsers.map((userSelected, index) => (
+                                                <div key={index}>
+                                                    {selectedUsers.length >= 2 ? (
+                                                        <div className="multiUserInfo" key={userSelected.userId}>
+                                                            <Avatar src={userSelected.photoURL} />
+                                                            <p>{userSelected.username}</p>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="singleUserInfo" key={userSelected.userId}>
+                                                            <Avatar src={userSelected.photoURL} />
+                                                            <p>{userSelected.username}</p>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
 
-                                    <div className='selectedUserMessagingSection_TopBottom'>
-                                        {messages.map((message) => (
-                                            <div key={message.timestamp} className={`message ${message.sender === user.uid ? 'sent' : 'received'}`}>
-                                                <p id='messageContent'>{message.text}</p>
-                                                <p id='messageTimestamp'>{timeAgowithInitials(message.timestamp)}</p>
-                                            </div>
-                                        ))}
+                                        <div className='selectedUserMessagingSection_TopBottom' ref={messageContainerRef}>
+                                            {messages.map((message, index) => (
+                                                <div key={index} className={`message ${message.sender === user.uid ? 'sent' : 'received'}`}>
+                                                    <p id='messageContent'>{message.text}</p>
+                                                    <p id='messageTimestamp'>{timeAgowithInitials(message.timestamp)}</p>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
+                                }
 
                                 <div className='selectedUserMessagingSection_Bottom'>
                                     <AddCircleIcon />
@@ -307,7 +318,6 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
                                             <p>{user.username}</p>
                                         </div>
                                     ))
-
                                 ) : (
                                     <p id='noMatch'>No matches</p>
                                 )}
@@ -331,7 +341,7 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
                         </div>
                     </div>
 
-                    <div className="FriendMessages_Middle">
+                    <div className="FriendMessages_Middle" ref={messageContainerRef}>
                         <div className='friendIntro'>
                             <Avatar src={handleSelectedFriend.photoURL} />
                             <h3>{handleSelectedFriend.username}</h3>

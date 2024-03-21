@@ -1,6 +1,6 @@
 import "../../CSS/UniversalComponent/PostPage.css"
 import React, { useEffect, useState } from 'react'
-import { NavLink, useLocation } from "react-router-dom"
+import { NavLink, useParams } from "react-router-dom"
 import { db } from "../BackendRelated/Firebase";
 import { useStateValue } from '../BackendRelated/StateProvider';
 import { Avatar } from '@mui/material';
@@ -14,7 +14,7 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 
 function PostPage() {
     const [{ user }] = useStateValue();
-    const postId = useLocation().state.from;
+    const {postid} = useParams();
     const [post, setPost] = useState('');
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
@@ -39,13 +39,13 @@ function PostPage() {
 
         try {
             // Add a comment to the "Posts" collection
-            const commentRef = await db.collection("Posts").doc(postId).collection("comments").add(newComment);
+            const commentRef = await db.collection("Posts").doc(postid).collection("comments").add(newComment);
             setComment('');
 
             // Add a notification to the "Notifications" subcollection
             if (post.uid !== user.uid) {
                 await db.collection("Users").doc(post.uid).collection("Notifications").doc(post.uid).collection('Comments').doc(commentRef.id).set({
-                    postid: postId,
+                    postid: postid,
                     postuserid: post.uid,
                     commentuserid: user.uid,
                     commentusername: user.username,
@@ -64,7 +64,7 @@ function PostPage() {
     const deleteComment = async (commentId) => {
         try {
             // Delete a comment from the "Posts" and "Notifications" collection
-            await db.collection("Posts").doc(postId).collection("comments").doc(commentId).delete();
+            await db.collection("Posts").doc(postid).collection("comments").doc(commentId).delete();
             await db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('Comments').doc(commentId).delete();
         }
 
@@ -79,20 +79,20 @@ function PostPage() {
 
     const handleLike = async () => {
         // Check if the user has already liked the post
-        const likedUsersRef = db.collection("Posts").doc(postId).collection("likes");
+        const likedUsersRef = db.collection("Posts").doc(postid).collection("likes");
         const likedUserDoc = await likedUsersRef.doc(user.uid).get();
 
         if (likedUserDoc.exists) {
             // User has previously liked the post, so we should unlike it
             // Update the likes count in Firestore and remove the user's like information
             db.collection("Posts")
-                .doc(postId)
+                .doc(postid)
                 .update({ likesCount: Math.max(likesCount - 1, 0) })
                 .catch((error) => {
                     console.error("Error unliking post: ", error);
                 });
 
-            db.collection("Users").doc(post.uid).collection("Notifications").doc(post.uid).collection('Likes').doc(postId).delete();
+            db.collection("Users").doc(post.uid).collection("Notifications").doc(post.uid).collection('Likes').doc(postid).delete();
 
             likedUserDoc.ref
                 .delete()
@@ -103,15 +103,15 @@ function PostPage() {
             // User has not liked the post before, so we should like it
             // Update the likes count in Firestore and add the user's like information
             db.collection("Posts")
-                .doc(postId)
+                .doc(postid)
                 .update({ likesCount: likesCount + 1 })
                 .catch((error) => {
                     console.error("Error liking post: ", error);
                 });
 
             if (post.uid !== user.uid) {
-                db.collection("Users").doc(post.uid).collection("Notifications").doc(post.uid).collection('Likes').doc(postId).set({
-                    postid: postId,
+                db.collection("Users").doc(post.uid).collection("Notifications").doc(post.uid).collection('Likes').doc(postid).set({
+                    postid: postid,
                     postuserid: post.uid,
                     userid: user.uid,
                     username: user.username,
@@ -206,7 +206,7 @@ function PostPage() {
     };
 
     useEffect(() => {
-        const unsubscribe = db.collection('Posts').doc(postId).onSnapshot((doc) => {
+        const unsubscribe = db.collection('Posts').doc(postid).onSnapshot((doc) => {
             if (doc.exists) {
                 setPost(doc.data());
             }
@@ -215,11 +215,11 @@ function PostPage() {
             // Unsubscribe from the snapshot listener when the component unmounts
             unsubscribe();
         };
-    }, [postId]);
+    }, [postid]);
 
     useEffect(() => {
         const getRealtimeComments = () => {
-            const commentsRef = db.collection("Posts").doc(postId).collection("comments").orderBy("timestamp", "asc").onSnapshot((querySnapshot) => {
+            const commentsRef = db.collection("Posts").doc(postid).collection("comments").orderBy("timestamp", "asc").onSnapshot((querySnapshot) => {
                 const fetchedComments = [];
                 querySnapshot.forEach((doc) => {
                     fetchedComments.push({ id: doc.id, ...doc.data() });
@@ -234,11 +234,11 @@ function PostPage() {
 
         // Call the function to set up the listener
         getRealtimeComments();
-    }, [postId]);
+    }, [postid]);
 
     //* useEffect to get all the like count on a post from the firestore
     useEffect(() => {
-        const postRef = db.collection("Posts").doc(postId);
+        const postRef = db.collection("Posts").doc(postid);
 
         const unsubscribe = postRef.onSnapshot((doc) => {
             if (doc.exists) {
@@ -250,11 +250,11 @@ function PostPage() {
             // Unsubscribe from the snapshot listener when the component unmounts
             unsubscribe();
         };
-    }, [postId, user.uid]);
+    }, [postid, user.uid]);
 
     //* useEffect to get all the likes on a post from the firestore
     useEffect(() => {
-        const unsubscribe = db.collection("Posts").doc(postId).collection("likes").onSnapshot((querySnapshot) => {
+        const unsubscribe = db.collection("Posts").doc(postid).collection("likes").onSnapshot((querySnapshot) => {
             const likedUsersData = [];
             querySnapshot.forEach((doc) => {
                 likedUsersData.push(doc.data());
@@ -265,7 +265,7 @@ function PostPage() {
         return () => {
             unsubscribe();
         };
-    }, [postId, user.uid]);
+    }, [postid, user.uid]);
 
     return (
         <div className="postPage">
@@ -279,7 +279,7 @@ function PostPage() {
                                     <h4>{post.username}</h4>
                                 </NavLink>
                             ) : (
-                                <NavLink to={`/profilepage/${post.uid}/post`} userId={post.uid}>
+                                <NavLink to={`/profilepage/${post.uid}/post`}>
                                     <h4>{post.username}</h4>
                                 </NavLink>
                             )}

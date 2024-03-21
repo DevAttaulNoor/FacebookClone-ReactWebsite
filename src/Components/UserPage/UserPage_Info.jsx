@@ -96,7 +96,7 @@ function UserPage_Info() {
 
     return (
         <div className='userpageInfo'>
-            <NavLink id="navLink" to="/userhomepage/about" activeClassName="active">
+            <NavLink id="navLink" to="/userhomepage/about" activeclassname="active">
                 <h3>Intro</h3>
             </NavLink>
 

@@ -23,7 +23,7 @@ function UserPage_Friends() {
     return (
         <div className='userpageFriends'>
             <div className="userpageFriends_Top">
-                <NavLink id="navLink" to="/userhomepage/friend" activeClassName="active">
+                <NavLink id="navLink" to="/userhomepage/friend" activeclassname="active">
                     <h3>Friends</h3>
                 </NavLink>
                 <a id="seeAllLink" href="#">See all friends</a>
@@ -31,8 +31,8 @@ function UserPage_Friends() {
 
             <div className="userpageFriends_Bottom">
                 <div className="userpageFriends_BottomContainer">
-                    {friends.map((friend) => (
-                        <div className="userpageFriends_BottomContainerOptions">
+                    {friends.map((friend, index) => (
+                        <div key={index} className="userpageFriends_BottomContainerOptions">
                             <img src={friend.photoURL} alt="" />
                             <p>{friend.username}</p>
                         </div>

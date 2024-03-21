@@ -393,26 +393,26 @@ function Header() {
             </div>
 
             <div className="header_middle">
-                <NavLink to="/homepage" activeClassName="active">
+                <NavLink to="/homepage" activeclassname="active">
                     {({ isActive }) => (
                         isActive ? <HomeIcon /> : <HomeOutlinedIcon />
                     )}
                 </NavLink>
 
-                <NavLink to="/friendpage" activeClassName="active">
-                {({ isActive }) => (
+                <NavLink to="/friendpage" activeclassname="active">
+                    {({ isActive }) => (
                         isActive ? <PeopleAltIcon /> : <PeopleAltOutlinedIcon />
                     )}
                 </NavLink>
 
-                <NavLink to="/videospage" activeClassName="active">
-                {({ isActive }) => (
+                <NavLink to="/videospage" activeclassname="active">
+                    {({ isActive }) => (
                         isActive ? <SmartDisplayIcon /> : <SmartDisplayOutlinedIcon />
                     )}
                 </NavLink>
 
-                <NavLink to="/grouppage" activeClassName="active">
-                {({ isActive }) => (
+                <NavLink to="/grouppage" activeclassname="active">
+                    {({ isActive }) => (
                         isActive ? <GroupsIcon /> : <GroupsOutlinedIcon />
                     )}
                 </NavLink>
@@ -449,11 +449,11 @@ function Header() {
                                     <p id='noMsg'>No messages found.</p>
                                 ) : (
                                     <>
-                                        {chats.map((chat) => {
+                                        {chats.map((chat, index) => {
                                             // Check if the current user is either the sender or recipient of the chat
                                             if (chat.senderUid === user.uid || chat.recipientUid === user.uid) {
                                                 return (
-                                                    <div key={chat.id}>
+                                                    <div key={index}>
                                                         {/* Rendering only the last message in the chat */}
                                                         {chat.messages.slice(-1).map((message, index) => (
                                                             <div key={index}>
@@ -463,7 +463,9 @@ function Header() {
                                                                         <div className='headerBox_BottomOptionContent'>
                                                                             <p>{message.senderName}</p>
                                                                             <div className='headerBox_BottomOptionContentBottom'>
-                                                                                <p> <span>{message.text}</span> · <h5>{timeAgowithInitials(message.timestamp)}</h5> </p>
+                                                                                <span>{message.text}</span>
+                                                                                <p> · </p>
+                                                                                <h5>{timeAgowithInitials(message.timestamp)}</h5>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -473,7 +475,9 @@ function Header() {
                                                                         <div className='headerBox_BottomOptionContent'>
                                                                             <p>{message.recipientName}</p>
                                                                             <div className='headerBox_BottomOptionContentBottom'>
-                                                                                <p> <span>{message.text}</span> · <h5>{timeAgowithInitials(message.timestamp)}</h5> </p>
+                                                                                <span>{message.text}</span>
+                                                                                <p> · </p>
+                                                                                <h5>{timeAgowithInitials(message.timestamp)}</h5>
                                                                             </div>
                                                                         </div>
                                                                     </div>

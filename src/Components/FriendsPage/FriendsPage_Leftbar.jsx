@@ -16,7 +16,7 @@ function FriendsPage_Leftbar() {
             </div>
 
             <div className="friendspageLeftbar_Bottom">
-                <NavLink to="/friendpage/" activeClassName="active">
+                <NavLink to="/friendpage/" activeclassname="active">
                     <div className="friendspageLeftbar_BottomOptions">
                         <div className="friendspageLeftbar_BottomOptionsLeft">
                             <SupervisorAccountIcon />
@@ -28,7 +28,7 @@ function FriendsPage_Leftbar() {
                     </div>
                 </NavLink>
 
-                <NavLink to="/friendpage/friendReqs" activeClassName="active">
+                <NavLink to="/friendpage/friendReqs" activeclassname="active">
                     <div className="friendspageLeftbar_BottomOptions">
                         <div className="friendspageLeftbar_BottomOptionsLeft">
                             <PersonAddAlt1Icon />

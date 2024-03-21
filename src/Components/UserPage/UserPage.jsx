@@ -191,23 +191,23 @@ function UserPage() {
 
                 <div className="userpage_TopComponents">
                     <div className="userpage_TopComponents_Left">
-                        <NavLink to='/userhomepage/post' activeClassName="active">
+                        <NavLink to='/userhomepage/post' activeclassname="active">
                             <div className='userpage_TopComponents_LeftOption'>Posts</div>
                         </NavLink>
 
-                        <NavLink to="/userhomepage/about" activeClassName="active">
+                        <NavLink to="/userhomepage/about" activeclassname="active">
                             <div className='userpage_TopComponents_LeftOption'>About</div>
                         </NavLink>
 
-                        <NavLink to="/userhomepage/friend" activeClassName="active">
+                        <NavLink to="/userhomepage/friend" activeclassname="active">
                             <div className='userpage_TopComponents_LeftOption'>Friends</div>
                         </NavLink>
 
-                        <NavLink to="/userhomepage/photo" activeClassName="active">
+                        <NavLink to="/userhomepage/photo" activeclassname="active">
                             <div className='userpage_TopComponents_LeftOption'>Photos</div>
                         </NavLink>
 
-                        <NavLink to="/userhomepage/video" activeClassName="active">
+                        <NavLink to="/userhomepage/video" activeclassname="active">
                             <div className='userpage_TopComponents_LeftOption'>Videos</div>
                         </NavLink>
 

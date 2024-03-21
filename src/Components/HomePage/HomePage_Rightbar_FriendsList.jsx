@@ -54,15 +54,15 @@ function HomePage_Rightbar_FriendsList() {
                 {loading ? (
                     Array.from({ length: 3 }).map((_, index) => (
                         <div className="homepageRightbarFriendList_BottomOption" key={index}>
-                            <Skeleton type='avatar'/>
-                            <Skeleton type='halfhalfText'/>
+                            <Skeleton type='avatar' />
+                            <Skeleton type='halfhalfText' />
                         </div>
                     ))
                 ) : (
-                    friends.map((friend) => (
+                    friends.map((friend, index) => (
                         <div
                             className="homepageRightbarFriendList_BottomOption"
-                            key={friend.id}
+                            key={index}
                             onClick={() => openFriendMessageBox(friend)}
                         >
                             <Avatar src={friend.photoURL} />

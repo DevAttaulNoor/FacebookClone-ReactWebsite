@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useStateValue } from './Components/BackendRelated/StateProvider';
 import Login from './Components/StartupPage/Login';
 import Header from './Components/UniversalComponent/Header';
@@ -16,7 +16,7 @@ function App() {
 	const [{ user }] = useStateValue();
 
 	return (
-		<Router>
+		<BrowserRouter>
 			<>
 				{!user ? (
 					<Routes>
@@ -34,12 +34,12 @@ function App() {
 							<Route path="videospage/*" element={<VideosPage />} />
 							<Route path="userhomepage/*" element={<UserPage />} />
 							<Route path="profilepage/:userid/*" element={<ProfilePage />} />
-							<Route path="profilepage/:userid/post/*" element={<PostPage />} />
+							<Route path="profilepage/:userid/post/:postid/*" element={<PostPage />} />
 						</Routes>
 					</div>
 				)}
 			</>
-		</Router>
+		</BrowserRouter>
 	);
 }
 

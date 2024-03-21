@@ -13,7 +13,7 @@ function VideosPage_Leftbar() {
             </div>
 
             <div className="videosPageLeftbar_Bottom">
-                <NavLink to="/videospage/" activeClassName="active">
+                <NavLink to="/videospage/" activeclassname="active">
                     <div className="videosPageLeftbar_BottomOptions">
                         <div className="videosPageLeftbar_BottomOption">
                             <SmartDisplayIcon />

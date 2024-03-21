@@ -53,7 +53,7 @@ function UserPage_Photos() {
     return (
         <div className='userpagePhotos'>
             <div className="userpagePhotos_Top">
-                <NavLink id="navLink" to="/userhomepage/photo" activeClassName="active">
+                <NavLink id="navLink" to="/userhomepage/photo" activeclassname="active">
                     <h3>Photos</h3>
                 </NavLink>
                 <a id="seeAllLink" href="#">See all photos</a>
