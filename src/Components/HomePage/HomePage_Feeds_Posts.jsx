@@ -41,6 +41,8 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
     const [loading, setLoading] = useState(true);
     const dropdownRef = useRef(null);
 
+    const [savedPost, setSavedPost] = useState(false)
+
     const handleEdit = () => {
         setIsEditing(true);
         setEditedMedia(media);
@@ -277,6 +279,33 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
         });
     }
 
+    const handleDelSavePost = () => {
+        db.collection("Users").doc(user.uid).collection("SavedPosts").doc(id).delete()
+            .then(() => {
+                console.log("Document successfully deleted");
+            })
+            .catch((error) => {
+                console.error("Error deleting document: ", error);
+            });
+    }
+
+    //* useEffect to get all the savedposts from the firestore
+    useEffect(() => {
+        if (user && user.uid && id) {
+            const checkIfPostExists = async () => {
+                const savedPostsRef = db.collection("Users").doc(user.uid).collection("SavedPosts");
+                const snapshot = await savedPostsRef.where("postid", "==", id).get();
+
+                if (!snapshot.empty) {
+                    setSavedPost(true);
+                } else {
+                    setSavedPost(false);
+                }
+            };
+            checkIfPostExists();
+        }
+    }, [user, savedPost]);
+
     //* useEffect to get all the posts from the firestore
     useEffect(() => {
         setLoading(true);
@@ -441,7 +470,11 @@ function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username
                                 <div>
                                     {isDropdownVisible && (
                                         <div className="postSetting">
-                                            <button onClick={handleSavePost}>Save the post</button>
+                                            {savedPost == false ? (
+                                                <button onClick={handleSavePost}>Save the post</button>
+                                            ) : (
+                                                <button onClick={handleDelSavePost}>Unsave the post</button>
+                                            )}
                                             <button>Report the post</button>
                                         </div>
                                     )}
