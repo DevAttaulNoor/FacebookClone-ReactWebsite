@@ -12,11 +12,3 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background-color: #f0f2f5;
 }
-
-body.modal-open {
-    overflow: hidden;
-}
-
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-}

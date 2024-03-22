@@ -23,10 +23,10 @@ function UserPage_Friends() {
     return (
         <div className='userpageFriends'>
             <div className="userpageFriends_Top">
-                <NavLink id="navLink" to="/userhomepage/friend" activeclassname="active">
-                    <h3>Friends</h3>
+                <h3>Friends</h3>
+                <NavLink to="/userhomepage/friend" activeclassname="active">
+                    See all friends
                 </NavLink>
-                <a id="seeAllLink" href="#">See all friends</a>
             </div>
 
             <div className="userpageFriends_Bottom">

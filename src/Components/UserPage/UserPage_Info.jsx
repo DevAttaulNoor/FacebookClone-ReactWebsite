@@ -138,8 +138,6 @@ function UserPage_Info() {
                         <p>Edit details</p>
                     </div>
 
-                    <hr />
-
                     <div className="detailsModal_Middle">
                         <div className='detailsModal_MiddleHeading'>
                             <h3>Customise your Intro</h3>
@@ -213,8 +211,6 @@ function UserPage_Info() {
                         </div>
                     </div>
 
-                    <hr />
-
                     <div className="detailsModal_Bottom">
                         <p>Update your information</p>
                         <div className='detailsModal_Bottom_Right'>
@@ -238,8 +234,6 @@ function UserPage_Info() {
                             <p>What do you love to do? Choose from the popular hobbies below or add others.</p>
                         </div>
                     </div>
-
-                    <hr />
 
                     <div className="hobbiesModal_Middle">
                         <p id='hobbiesModal_MiddleIntro'>Recommended Hobbies</p>
@@ -291,8 +285,6 @@ function UserPage_Info() {
                         </div>
                     </div>
 
-                    <hr />
-
                     <div className="hobbiesModal_Bottom">
                         <div className="hobbiesModal_Bottom_Left">
                             <PublicIcon />
@@ -316,8 +308,6 @@ function UserPage_Info() {
                         <CloseIcon onClick={() => setIsfeatureModalOpen(false)} />
                         <p>Edit Featured</p>
                     </div>
-
-                    <hr />
 
                     <div className="featuredModal_Middle">
                         <div className="imgSection">

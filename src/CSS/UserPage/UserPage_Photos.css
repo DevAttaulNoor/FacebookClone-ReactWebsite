@@ -9,24 +9,24 @@
 }
 
 /* UserPage Photos Top Section */
-.userpagePhotos_Top {
+.userpagePhotos_Top{
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.userpagePhotos_Top #navLink {
+.userpagePhotos_Top h3 {
     color: initial;
     text-decoration: none;
 }
 
-.userpagePhotos_Top #navLink:hover {
+.userpagePhotos_Top h3:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
-.userpagePhotos_Top #seeAllLink {
+.userpagePhotos_Top a {
     text-decoration: none;
     color: #1B74E4;
     font-size: 15px;
@@ -35,7 +35,7 @@
     border-radius: 6px;
 }
 
-.userpagePhotos_Top #seeAllLink:hover{
+.userpagePhotos_Top a:hover{
     background-color: whitesmoke;
     cursor: pointer;
 }

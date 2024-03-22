@@ -2,8 +2,9 @@ import '../../CSS/UserPage/UserPage_Components_Post.css'
 import React from 'react'
 import UserPage_Feed from "./UserPage_Feed";
 import UserPage_Info from "./UserPage_Info";
-import UserPage_Friends from "./UserPage_Friends";
 import UserPage_Photos from "./UserPage_Photos";
+import UserPage_Videos from './UserPage_Videos';
+import UserPage_Friends from "./UserPage_Friends";
 
 function UserPage_Components_Post() {
     return (
@@ -14,6 +15,9 @@ function UserPage_Components_Post() {
                     </div>
                     <div className="userPhotos">
                         <UserPage_Photos />
+                    </div>
+                    <div className="userVideos">
+                        <UserPage_Videos />
                     </div>
                     <div className="userFriends">
                         <UserPage_Friends />

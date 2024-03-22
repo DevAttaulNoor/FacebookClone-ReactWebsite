@@ -40,7 +40,7 @@ function UserPage_Photos() {
 
                     urls.push(...urlsForImages);
                 }
-                
+
                 catch (error) {
                     console.error(`Error fetching photos from ${storagePath}:`, error);
                 }
@@ -53,10 +53,10 @@ function UserPage_Photos() {
     return (
         <div className='userpagePhotos'>
             <div className="userpagePhotos_Top">
-                <NavLink id="navLink" to="/userhomepage/photo" activeclassname="active">
-                    <h3>Photos</h3>
+                <h3>Photos</h3>
+                <NavLink to="/userhomepage/photo" activeclassname="active">
+                    See all photos
                 </NavLink>
-                <a id="seeAllLink" href="#">See all photos</a>
             </div>
 
             <div className="userpagePhotos_Bottom">

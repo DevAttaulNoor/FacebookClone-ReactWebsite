@@ -26,11 +26,9 @@ function HomePage_Feeds_Posts_LikeModal({ id, closeModal }) {
     return (
         <div className='HomePageFeedsPosts_LikeModal'>
             <div className="HomePageFeedsPosts_LikeModal_Top">
-                <CloseIcon onClick={closeModal.closeLikeModal} />
                 <p>Reactions</p>
+                <CloseIcon onClick={closeModal.closeLikeModal} />
             </div>
-
-            <hr />
 
             <div className="HomePageFeedsPosts_LikeModal_Middle">
                 {likedUsers.map((user) => (
@@ -40,7 +38,7 @@ function HomePage_Feeds_Posts_LikeModal({ id, closeModal }) {
                     </div>
                 ))}
             </div>
-        </div >
+        </div>
     )
 }
 

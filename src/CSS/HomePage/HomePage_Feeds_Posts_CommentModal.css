@@ -1,34 +1,38 @@
 /** HomePage Feeds Posts Comment Modals Section */
 .HomePageFeedsPosts_CommentModal {
+    width: 560px;
+    height: 460px;
     position: absolute;
-    width: 520px;
-    height: 380px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
-    background: #fff;
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
     border-radius: 8px;
-    outline: none;
-    overflow: hidden;
+    box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+    background: #fff;
 }
 
 /* HomePage Feeds Posts Comment Modals Top Section */
 .HomePageFeedsPosts_CommentModal_Top {
     position: relative;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 12px;
+    border-bottom: 1px solid #CED0D4;
+    box-sizing: border-box;
 }
 
 .HomePageFeedsPosts_CommentModal_Top .MuiSvgIcon-root {
     position: absolute;
-    top: 12px;
-    right: 8px;
-    padding: 5px;
+    right: 10px;
+    padding: 4px;
     border-radius: 50%;
-    color: #65676B;
+    color: #050505;
     background-color: #E4E6EB;
 }
 
@@ -43,13 +47,14 @@
 
 /* HomePage Feeds Posts Comment Modals Middle Section */
 .HomePageFeedsPosts_CommentModal_Middle {
-    /* width: 100%; */
-    height: 225px;
+    width: 100%;
+    height: 360px;
     padding: 12px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .HomePageFeedsPosts_CommentModal_Middle:last-child {
@@ -86,9 +91,9 @@
 }
 
 .commentInner .commentTop p {
-    font-weight: 400;
     font-size: 15px;
-    max-width: 410px;
+    font-weight: 400;
+    max-width: 460px;
     word-wrap: break-word;
 }
 
@@ -104,8 +109,8 @@
     font-weight: 500;
     outline: none;
     border: none;
-    background-color: initial;
     color: #65676B;
+    background-color: initial;
 }
 
 .commentInner .commentBottom p {
@@ -123,8 +128,10 @@
 
 /* HomePage Feeds Posts Comment Modals Bottom Section */
 .HomePageFeedsPosts_CommentModal_Bottom {
-    position: fixed;
+    width: 100%;
     padding: 0 12px;
+    border-top: 1px solid #CED0D4;
+    box-sizing: border-box;
 }
 
 .HomePageFeedsPosts_CommentModal_Bottom .commentInput {
@@ -136,12 +143,12 @@
 .commentInput .MuiSvgIcon-root {
     position: absolute;
     right: 6px;
-    border: 1px solid transparent;
-    outline: 0;
-    background-color: whitesmoke;
-    color: gray;
     width: 18px;
     height: 18px;
+    outline: 0;
+    border: 1px solid transparent;
+    color: gray;
+    background-color: whitesmoke;
 }
 
 .commentInput .MuiSvgIcon-root:hover {
@@ -149,14 +156,13 @@
 }
 
 .commentInput input {
-    margin: 10px 0;
+    width: 100%;
     font-size: 14px;
     font-weight: 450;
-    border: 1px solid transparent;
-    border-radius: 12px;
     outline: 0;
-    width: 408px;
-    margin-left: 8px;
-    background-color: whitesmoke;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    margin: 10px 0 10px 8px;
     padding: 12px 24px 12px 14px;
+    background-color: whitesmoke;
 }

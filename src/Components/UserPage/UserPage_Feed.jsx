@@ -91,47 +91,43 @@ function UserPage_Feed() {
     return (
         <div className='userpageFeed'>
             <HomePage_Feeds_Posting />
-            {
-                posts.map((post, index) => {
-                    return (
-                        <div key={index}>
-                            <HomePage_Feeds_Posts
-                                id={post.id}
-                                userid={post.data.uid}
-                                photoURL={post.data.photoURL}
-                                media={post.data.media}
-                                mediaType={post.data.mediaType}
-                                username={post.data.username}
-                                timestamp={timeAgo(post.data.timestamp)}
-                                message={post.data.message}
-                            />
-                        </div>
-                    );
-                })
-            }
+            {posts.map((post, index) => {
+                return (
+                    <div key={index}>
+                        <HomePage_Feeds_Posts
+                            id={post.id}
+                            userid={post.data.uid}
+                            photoURL={post.data.photoURL}
+                            media={post.data.media}
+                            mediaType={post.data.mediaType}
+                            username={post.data.username}
+                            timestamp={timeAgo(post.data.timestamp)}
+                            message={post.data.message}
+                        />
+                    </div>
+                );
+            })}
 
-            {
-                joinedposts.map((joinedpost, index) => {
-                    return (
-                        <div key={index} className="JoinedPost">
-                            <HomePage_Feeds_Posts
-                                id={joinedpost.id}
-                                userid={joinedpost.data.uid}
-                                photoURL={joinedpost.data.photoURL}
-                                image={joinedpost.data.image}
-                                username={joinedpost.data.username}
-                                timestamp={formatJoinedDate(joinedpost.data.dob)}
-                                message={
-                                    <div className='JoinedPostMsg'>
-                                        <img id='joinedImg' src='https://static.xx.fbcdn.net/rsrc.php/v3/yl/r/1SViyXWaRzP.png' alt="Joined Image" />
-                                        <p id='joinedMsg'>{`Born on ${formatJoinedDate(joinedpost.data.dob)}`}</p>
-                                    </div>
-                                }
-                            />
-                        </div>
-                    );
-                })
-            }
+            {joinedposts.map((joinedpost, index) => {
+                return (
+                    <div key={index} className="JoinedPost">
+                        <HomePage_Feeds_Posts
+                            id={joinedpost.id}
+                            userid={joinedpost.data.uid}
+                            photoURL={joinedpost.data.photoURL}
+                            image={joinedpost.data.image}
+                            username={joinedpost.data.username}
+                            timestamp={formatJoinedDate(joinedpost.data.dob)}
+                            message={
+                                <div className='JoinedPostMsg'>
+                                    <img id='joinedImg' src='https://static.xx.fbcdn.net/rsrc.php/v3/yl/r/1SViyXWaRzP.png' alt="Joined Image" />
+                                    <p id='joinedMsg'>{`Born on ${formatJoinedDate(joinedpost.data.dob)}`}</p>
+                                </div>
+                            }
+                        />
+                    </div>
+                );
+            })}
         </div>
     )
 }

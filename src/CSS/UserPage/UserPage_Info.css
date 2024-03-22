@@ -108,35 +108,43 @@
 
 /** Details Modal Section */
 .detailsModal{
+    width: 700px;
+    height: 660px;
     position: absolute;
-    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
-    inset: 65px 400px 55px 400px;
-    background: #fff;
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
     border-radius: 8px;
-    padding: 0;
-    outline: none;
-    overflow-y: unset;
+    box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+    background: #fff;
 }
 
 /* Details Modal Top Section */
 .detailsModal_Top {
-    text-align: center;
     position: relative;
-    padding: 14px 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 12px;
+    border-bottom: 1px solid #CED0D4;
+    box-sizing: border-box;
 }
 
 .detailsModal_Top p {
-    position: relative;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
 }
 
 .detailsModal_Top .MuiSvgIcon-root {
     position: absolute;
-    top: 10px;
     right: 10px;
-    padding: 5px;
+    padding: 4px;
     border-radius: 50%;
+    color: #050505;
     background-color: #E4E6EB;
 }
 
@@ -146,9 +154,14 @@
 
 /* Details Modal Middle Section */
 .detailsModal_Middle{
-    padding: 12px 10px 12px 25px;
-    max-height: 412px; /* You can adjust the height as needed */
-    overflow: auto;
+    width: 100%;
+    height: 510px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 12px 12px 12px 26px;
 }
 
 .detailsModal_MiddleHeading h3{
@@ -199,6 +212,7 @@
 }
 
 .detailsModal_MiddleNote {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -247,19 +261,22 @@
 
 /* Details Modal Bottom Section */
 .detailsModal_Bottom{
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 13px;
-    border-bottom-left-radius: 8px;
+    padding: 20px 12px;
+    border-top: 1px solid #CED0D4;
     border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    box-sizing: border-box;
 }
 
 .detailsModal_Bottom p{
     color: #0064d1;
     font-size: 15px;
     font-weight: 500;
-    padding: 7px 12px;
+    padding: 8px 14px;
     border-radius: 6px;
 }
 
@@ -296,32 +313,33 @@
 
 /** Hobbies Modal Section */
 .hobbiesModal {
+    width: 640px;
+    height: 570px;
     position: absolute;
-    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
-    inset: 70px 465px 30px 465px;
-    background: #fff;
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
     border-radius: 8px;
-    padding: 0;
-    outline: none;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.hobbiesModal hr {
-    margin: 4px 0;
+    box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+    background: #fff;
 }
 
 /* Hobbies Modal Top Section */
 .hobbiesModal_Top {
     position: relative;
+    width: 100%;
 }
 
 .hobbiesModal_Top .MuiSvgIcon-root {
     position: absolute;
     top: 10px;
     right: 10px;
-    padding: 6px;
+    padding: 4px;
     border-radius: 50%;
+    color: #050505;
     background-color: #E4E6EB;
 }
 
@@ -343,9 +361,10 @@
 .hobbiesModal_Top .hobbiesModal_TopIntro {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     padding: 8px 15px 24px 15px;
+    border-bottom: 1px solid #CED0D4;
 }
 
 .hobbiesModal_Top .hobbiesModal_TopIntro h2 {
@@ -438,9 +457,14 @@
 
 /* Hobbies Modal Bottom Section */
 .hobbiesModal_Bottom {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-top: 1px solid #CED0D4;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    box-sizing: border-box;
 }
 
 .hobbiesModal_Bottom .hobbiesModal_Bottom_Left {
@@ -483,22 +507,27 @@
 
 /** Featured Modal Section */
 .featuredModal {
+    width: 720px;
+    height: 360px;
     position: absolute;
-    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
-    inset: 170px 400px 170px 400px;
-    background: #fff;
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 8px;
-    padding: 0;
-    outline: none;
-    overflow-y: auto;
-    overflow-x: hidden;
+    box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+    background: #fff;
 }
 
 /* Featured Modal Top Section */
 .featuredModal_Top {
-    text-align: center;
     position: relative;
-    padding: 14px 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 12px;
+    border-bottom: 1px solid #CED0D4;
+    box-sizing: border-box;
 }
 
 .featuredModal_Top p {
@@ -509,10 +538,10 @@
 
 .featuredModal_Top .MuiSvgIcon-root {
     position: absolute;
-    top: 10px;
     right: 10px;
-    padding: 5px;
+    padding: 4px;
     border-radius: 50%;
+    color: #050505;
     background-color: #E4E6EB;
 }
 
@@ -525,7 +554,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 8px 15px 0 15px;
+    padding: 24px 15px 0 15px;
 }
 
 .featuredModal_Middle .imgSection{

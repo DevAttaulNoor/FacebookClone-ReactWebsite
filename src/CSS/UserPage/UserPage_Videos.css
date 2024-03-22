@@ -9,24 +9,24 @@
 }
 
 /* UserPage Videos Top Section */
-.userpageVideos_Top {
+.userpageVideos_Top{
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.userpageVideos_Top #navLink {
+.userpageVideos_Top h3 {
     color: initial;
     text-decoration: none;
 }
 
-.userpageVideos_Top #navLink:hover {
+.userpageVideos_Top h3:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
-.userpageVideos_Top #seeAllLink {
+.userpageVideos_Top a {
     text-decoration: none;
     color: #1B74E4;
     font-size: 15px;
@@ -35,7 +35,7 @@
     border-radius: 6px;
 }
 
-.userpageVideos_Top #seeAllLink:hover{
+.userpageVideos_Top a:hover{
     background-color: whitesmoke;
     cursor: pointer;
 }

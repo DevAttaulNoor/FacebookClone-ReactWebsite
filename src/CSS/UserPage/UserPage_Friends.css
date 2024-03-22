@@ -9,24 +9,24 @@
 }
 
 /* UserPage Friends Top Section */
-.userpageFriends_Top {
+.userpageFriends_Top{
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.userpageFriends_Top #navLink {
+.userpageFriends_Top h3 {
     color: initial;
     text-decoration: none;
 }
 
-.userpageFriends_Top #navLink:hover {
+.userpageFriends_Top h3:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
-.userpageFriends_Top #seeAllLink {
+.userpageFriends_Top a {
     text-decoration: none;
     color: #1B74E4;
     font-size: 15px;
@@ -35,7 +35,7 @@
     border-radius: 6px;
 }
 
-.userpageFriends_Top #seeAllLink:hover{
+.userpageFriends_Top a:hover{
     background-color: whitesmoke;
     cursor: pointer;
 }

@@ -1,5 +1,5 @@
 import '../../CSS/HomePage/HomePage_Feeds_Posts_CommentModal.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { db } from '../BackendRelated/Firebase';
 import { useStateValue } from '../BackendRelated/StateProvider';
 import { Avatar } from '@mui/material';
@@ -10,6 +10,7 @@ function HomePage_Feeds_Posts_CommentModal({ id, userid, closeModal }) {
     const [{ user }] = useStateValue();
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
+    const commentsContainerRef = useRef(null)
 
     const postComment = async () => {
         if (comment.trim() === '') {
@@ -25,10 +26,19 @@ function HomePage_Feeds_Posts_CommentModal({ id, userid, closeModal }) {
             timestamp: new Date(),
         };
 
+        setComment('');
+
+        // To scroll to the latest typed comment
+        if (commentsContainerRef.current) {
+            const lastChild = commentsContainerRef.current.lastChild;
+            if (lastChild) {
+                lastChild.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+
         try {
             // Add a comment to the "Posts" collection
             const commentRef = await db.collection("Posts").doc(id).collection("comments").add(newComment);
-            setComment('');
 
             // Add a notification to the "Notifications" subcollection
             if (userid !== user.uid) {
@@ -119,13 +129,11 @@ function HomePage_Feeds_Posts_CommentModal({ id, userid, closeModal }) {
     return (
         <div className='HomePageFeedsPosts_CommentModal'>
             <div className="HomePageFeedsPosts_CommentModal_Top">
-                <CloseIcon onClick={closeModal.closeCommentModal} />
                 <p>Comments</p>
+                <CloseIcon onClick={closeModal.closeCommentModal} />
             </div>
 
-            <hr />
-
-            <div className="HomePageFeedsPosts_CommentModal_Middle">
+            <div className="HomePageFeedsPosts_CommentModal_Middle" ref={commentsContainerRef}>
                 {comments.map((comment) => (
                     <div className='comments' key={comment.id}>
                         <Avatar src={comment.photoURL} />

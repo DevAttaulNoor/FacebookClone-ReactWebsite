@@ -6,11 +6,9 @@ function HomePage_Feeds_Posts_ShareModal(close) {
     return (
         <div className='HomePageFeedsPosts_ShareModal'>
             <div className="HomePageFeedsPosts_ShareModal_Top">
-                <CloseIcon onClick={close.closeModal} />
                 <p>Shares</p>
+                <CloseIcon onClick={close.closeModal} />
             </div>
-
-            <hr />
         </div>
     )
 }
