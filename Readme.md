@@ -12,6 +12,3 @@ Its purpose is to mimic the fundamental features of Facebook, allowing users to 
 ## Technologies Used
 - **React.js**: A JavaScript library for building user interfaces.
 - **Firebase**: A cloud-based platform for developing web and mobile applications.
-
-## License
-This project is licensed under the DevAttaulNoor.
