@@ -1,6 +1,6 @@
 import '../../CSS/FriendsPage/FriendsCard.css';
 import React, { useState, useEffect } from 'react';
-import { auth, db } from '../BackendRelated/Firebase';
+import { auth, db } from '../../Firebase/firebase';
 
 function FriendsCard({ user }) {
     const [friendRequestStatus, setFriendRequestStatus] = useState("not_sent");

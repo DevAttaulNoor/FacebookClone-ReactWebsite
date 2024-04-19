@@ -1,14 +1,14 @@
 import '../../CSS/HomePage/HomePage_StoryReels.css'
 import React, { useState, useRef } from 'react';
-import { db, storage } from '../BackendRelated/Firebase';
-import { useStateValue } from '../BackendRelated/StateProvider';
+import { useSelector } from 'react-redux';
+import { db, storage } from '../../Firebase/firebase';
 import TitleIcon from '@mui/icons-material/Title';
 import SettingsIcon from '@mui/icons-material/Settings';
 import firebase from "firebase/compat/app"
 
 function HomePage_StoryReels() {
     const colors = ['blue', 'red', 'green', 'black', 'brown', 'yellow', 'blueviolet', 'cyan', 'gold', 'violet', 'silver', 'purple'];
-    const [{ user }] = useStateValue()
+    const user = useSelector((state) => state.data.user.user);
     const [activeDot, setActiveDot] = useState(colors[0]);
     const [showForText, setShowForText] = useState(false);
     const [showTextContent, setShowTextContent] = useState(false);

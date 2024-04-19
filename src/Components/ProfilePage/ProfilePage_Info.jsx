@@ -1,6 +1,6 @@
 import '../../CSS/ProfilePage/ProfilePage_Info.css';
 import React, { useEffect, useState } from 'react';
-import { db } from '../BackendRelated/Firebase';
+import { db } from '../../Firebase/firebase';
 
 function ProfilePage_Info({ userData }) {
     const [bio, setBio] = useState('');

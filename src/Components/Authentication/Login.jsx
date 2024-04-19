@@ -1,17 +1,17 @@
 import '../../CSS/StartupPage/Login.css'
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { auth, db, provider } from '../BackendRelated/Firebase';
-import { useStateValue } from '../BackendRelated/StateProvider';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../Redux/userSlice';
+import { auth, db, provider } from '../../Firebase/firebase';
 import Modal from 'react-modal';
 import Signup from './Signup';
+import LoadingLine from '../UniversalComponent/LoadingLine';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import LoadingLine from '../UniversalComponent/LoadingLine';
 
 function Login() {
     Modal.setAppElement('#root');
-    const [{ }, dispatch] = useStateValue();
+    const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -19,13 +19,6 @@ function Login() {
     const [Loading, setLoading] = useState(true);
     const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
     const [isLoginProcessing, setIsLoginProcessing] = useState(false);
-    const isUserLoggedOut = sessionStorage.getItem('userLoggedOut');
-    const navigate = useNavigate();
-
-    if (isUserLoggedOut === 'true') {
-        sessionStorage.removeItem('userLoggedOut');
-        navigate('/');
-    }
 
     const signInWithFacebook = () => {
         auth.signInWithPopup(provider).then((result) => {
@@ -45,12 +38,9 @@ function Login() {
                 coverphotoUrl: coverphotoUrl
             };
 
+            dispatch(loginUser(userData))
             sessionStorage.setItem('userData', JSON.stringify(userData));
 
-            dispatch({
-                type: "SET_USER",
-                user: userData
-            });
 
             db.collection("Users").doc(uid).set({
                 uid: user.uid,
@@ -59,7 +49,6 @@ function Login() {
                 photoURL: user.photoURL,
                 coverphotoUrl: coverphotoUrl
             });
-            navigate('/homepage');
         })
             .catch((error) => {
                 if (error.code === 'auth/popup-closed-by-user') {
@@ -101,13 +90,8 @@ function Login() {
                     coverphotoUrl: userData.coverphotoUrl
                 };
 
+                dispatch(loginUser(updatedUserData))
                 sessionStorage.setItem('userData', JSON.stringify(updatedUserData));
-
-                dispatch({
-                    type: "SET_USER",
-                    user: updatedUserData
-                });
-                navigate('/homepage');
             }
 
             else {
@@ -142,10 +126,7 @@ function Login() {
         if (storedUserData) {
             // If user data is found in session storage, parse it and set it in the context
             const userData = JSON.parse(storedUserData);
-            dispatch({
-                type: "SET_USER",
-                user: userData
-            });
+            dispatch(loginUser(userData))
         }
         setLoading(false);
     }, []);

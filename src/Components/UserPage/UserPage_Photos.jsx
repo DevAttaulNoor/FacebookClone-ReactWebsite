@@ -1,11 +1,11 @@
 import "../../CSS/UserPage/UserPage_Photos.css";
 import React, { useEffect, useState } from 'react';
-import firebase from "firebase/compat/app";
+import { useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
-import { useStateValue } from "../BackendRelated/StateProvider";
+import firebase from "firebase/compat/app";
 
 function UserPage_Photos() {
-    const [{ user }] = useStateValue();
+    const user = useSelector((state) => state.data.user.user);
     const [photoUrls, setPhotoUrls] = useState([]);
 
     useEffect(() => {

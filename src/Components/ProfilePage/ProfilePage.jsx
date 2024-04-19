@@ -1,7 +1,7 @@
 import "../../CSS/ProfilePage/ProfilePage.css";
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from 'react-router-dom'
-import { db } from "../BackendRelated/Firebase";
+import { db } from "../../Firebase/firebase";
 import { Blurhash } from 'react-blurhash';
 import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_AllFriends_Leftbar';
 import AddIcon from '@mui/icons-material/Add';

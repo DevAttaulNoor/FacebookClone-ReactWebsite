@@ -4,8 +4,8 @@ import Modal from 'react-modal';
 import firebase from "firebase/compat/app";
 import { Avatar } from '@mui/material';
 import { NavLink } from 'react-router-dom';
-import { db, storage } from '../BackendRelated/Firebase';
-import { useStateValue } from '../BackendRelated/StateProvider';
+import { useSelector } from 'react-redux';
+import { auth, db, storage } from '../../Firebase/firebase';
 import PublicIcon from '@mui/icons-material/Public';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -20,7 +20,7 @@ import Skeleton_UserInfo from '../Skeletons/Skeleton_UserInfo';
 
 function HomePage_Feeds_Posts({ id, userid, photoURL, media, mediaType, username, timestamp, message }) {
     Modal.setAppElement('#root');
-    const [{ user }] = useStateValue();
+    const user = useSelector((state) => state.data.user.user);
     const [post, setPost] = useState({});
     const [users, setUsers] = useState([]);
     const [isEditing, setIsEditing] = useState(false);

@@ -1,42 +1,13 @@
 import '../../CSS/ProfilePage/ProfilePage_Feed.css'
 import React, { useEffect, useState } from 'react'
-import { db } from '../BackendRelated/Firebase'
+import { db } from '../../Firebase/firebase'
 import HomePage_Feeds_Posting from '../HomePage/HomePage_Feeds_Posting'
 import HomePage_Feeds_Posts from '../HomePage/HomePage_Feeds_Posts'
 
 function ProfilePage_Feed({userData}) {
     const [posts, setPosts] = useState([]);
     const [joinedposts, setJoinedPosts] = useState([]);
-    // const userDataStr = sessionStorage.getItem('userData');
-    // const userData = JSON.parse(userDataStr);
-    // const userUid = userData.uid;
-
-
-    // const userid = useParams();
-    // const [userData, setUserData] = useState('');
-
-    // useEffect(() => {
-    //     const fetchUser = async () => {
-    //         try {
-    //             const userDoc = await db.collection('Users').doc(userid['userid']).get();
-    //             if (userDoc.exists) {
-    //                 const userData = userDoc.data();
-    //                 setUserData(userData); // Set the userData state
-    //                 console.log("User Data:", userData);
-    //                 // Now you can use the userData to update your component state or perform other actions
-    //             } else {
-    //                 console.log("User not found");
-    //             }
-    //         } catch (error) {
-    //             console.error('Error fetching user:', error);
-    //         }
-    //     };
     
-    //     fetchUser();
-    // }, [userid]);
-
-
-
     useEffect(() => {
         const unsubscribe = db.collection("Posts")
             .orderBy("timestamp", "desc")

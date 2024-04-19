@@ -1,7 +1,7 @@
 import '../../CSS/HomePage/HomePage_Rightbar_FriendsList.css'
 import React, { useEffect, useState } from 'react'
 import { Avatar } from '@mui/material';
-import { useStateValue } from '../BackendRelated/StateProvider'
+import { useSelector } from 'react-redux'
 import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_AllFriends_Leftbar';
 import HomePage_Messages from '../HomePage/HomePage_Messages';
 import SearchIcon from '@mui/icons-material/Search';
@@ -9,7 +9,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Skeleton from '../Skeletons/Skeleton';
 
 function HomePage_Rightbar_FriendsList() {
-    const [{ user }] = useStateValue();
+    const user = useSelector((state) => state.data.user.user);
     const [friends, setFriends] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedFriend, setSelectedFriend] = useState();

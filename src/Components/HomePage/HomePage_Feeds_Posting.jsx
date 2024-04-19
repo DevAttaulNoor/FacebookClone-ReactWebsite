@@ -1,16 +1,16 @@
 import "../../CSS/HomePage/HomePage_Feeds_Posting.css";
 import React, { useState, useRef, useEffect } from 'react';
-import { useStateValue } from "../BackendRelated/StateProvider";
-import { db, storage } from "../BackendRelated/Firebase";
+import { useSelector } from 'react-redux';
+import { db, storage } from '../../Firebase/firebase';
 import { Avatar, IconButton, Modal } from '@mui/material';
 import firebase from "firebase/compat/app";
-import CloseIcon from '@mui/icons-material/Close';
 import EmojiPicker from 'emoji-picker-react';
+import CloseIcon from '@mui/icons-material/Close';
 import SentimentSatisfiedAltOutlinedIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
-import bgcolorIcon from '../../Imgs/Aa.png'
+import bgcolorIcon from '../../Assets/Images/Aa.png'
 
 function HomePage_Feeds_Posting() {
-    const [{ user }] = useStateValue();
+    const user = useSelector((state) => state.data.user.user);
     const [open, setOpen] = useState(false);
     const [media, setMedia] = useState(null);
     const [mediaType, setMediaType] = useState(null);

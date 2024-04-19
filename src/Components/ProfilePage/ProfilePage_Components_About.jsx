@@ -1,11 +1,8 @@
 import '../../CSS/ProfilePage/ProfilePage_Components_About.css'
 import React from 'react'
-import { useStateValue } from '../BackendRelated/StateProvider'
 import AddIcon from '@mui/icons-material/Add';
 
 function ProfilePage_Components_About() {
-    // const [{ user }] = useStateValue()
-
     return (
         <div className="ProfilePageComponents_About">
             <div className="ProfilePageComponents_About_Left">

@@ -1,11 +1,11 @@
 import "../../CSS/UserPage/UserPage_Videos.css";
 import React, { useEffect, useState } from 'react';
-import firebase from "firebase/compat/app";
+import { useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
-import { useStateValue } from "../BackendRelated/StateProvider";
+import firebase from "firebase/compat/app";
 
 function UserPage_Videos() {
-    const [{ user }] = useStateValue();
+    const user = useSelector((state) => state.data.user.user);
     const [videoUrls, setVideoUrls] = useState([]);
 
     useEffect(() => {

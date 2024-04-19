@@ -1,6 +1,6 @@
 import '../../CSS/HomePage/HomePage_Feeds.css'
-import React, { useEffect, useState } from 'react'
-import { db } from '../BackendRelated/Firebase'
+import React, { useEffect, useState } from 'react';
+import { db } from '../../Firebase/firebase';
 import HomePage_Feeds_StoryReels from './HomePage_Feeds_StoryReels'
 import HomePage_Feeds_Posts from './HomePage_Feeds_Posts'
 import HomePage_Feeds_Posting from './HomePage_Feeds_Posting'

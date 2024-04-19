@@ -1,10 +1,10 @@
 import '../../CSS/FriendsPage/FriendsPage_Main_FriendReqs.css'
 import React, { useEffect, useState } from "react";
-import { db } from '../BackendRelated/Firebase'
-import { useStateValue } from '../BackendRelated/StateProvider'
+import { useSelector } from 'react-redux';
+import { db } from '../../Firebase/firebase';
 
 function FriendsPage_Main_FriendReqs() {
-    const [{ user }] = useStateValue();
+    const user = useSelector((state) => state.data.user.user);
     const [friendRequests, setFriendRequests] = useState([]);
     const [isRequestProcessing, setIsRequestProcessing] = useState(false);
 

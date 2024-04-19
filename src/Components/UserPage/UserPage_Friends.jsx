@@ -1,11 +1,11 @@
 import "../../CSS/UserPage/UserPage_Friends.css"
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
-import { useStateValue } from "../BackendRelated/StateProvider";
 import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_AllFriends_Leftbar';
 
 function UserPage_Friends() {
-    const [{ user }] = useStateValue();
+    const user = useSelector((state) => state.data.user.user);
     const [friends, setFriends] = useState([]);
 
     useEffect(() => {

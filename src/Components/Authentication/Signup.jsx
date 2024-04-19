@@ -1,15 +1,15 @@
 import '../../CSS/StartupPage/Signup.css'
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { auth, db, storage } from '../BackendRelated/Firebase';
-import { useStateValue } from '../BackendRelated/StateProvider';
+import { useDispatch } from 'react-redux'
+import { loginUser } from '../../Redux/userSlice';
+import { auth, db, storage } from '../../Firebase/firebase';
 import CloseIcon from '@mui/icons-material/Close';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import AdjustOutlinedIcon from '@mui/icons-material/AdjustOutlined';
 
 function Signup(props) {
-    const [{ }, dispatch] = useStateValue();
+    const dispatch = useDispatch();
     const [firstname, setFirstName] = useState('');
     const [lastname, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -23,7 +23,6 @@ function Signup(props) {
     const [selectedCoverImage, setSelectedCoverImage] = useState(null);
     const [isSignupProcessing, setIsSignupProcessing] = useState(false);
     const [signuperror, setSignupError] = useState(null);
-    const navigate = useNavigate();
 
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -99,14 +98,8 @@ function Signup(props) {
                 coverphotoUrl: coverphotoUrl,
             };
 
+            dispatch(loginUser(userData));
             sessionStorage.setItem('userData', JSON.stringify(userData));
-
-            dispatch({
-                type: "SET_USER",
-                user: userData,
-            });
-
-            navigate('/homepage');
         }
 
         catch (error) {

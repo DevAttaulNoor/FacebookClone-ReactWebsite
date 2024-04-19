@@ -1,6 +1,6 @@
 import '../../CSS/UserPage/UserPage_Feed.css'
 import React, { useEffect, useState } from 'react'
-import { db } from '../BackendRelated/Firebase'
+import { db } from '../../Firebase/firebase'
 import HomePage_Feeds_Posting from '../HomePage/HomePage_Feeds_Posting'
 import HomePage_Feeds_Posts from '../HomePage/HomePage_Feeds_Posts'
 

@@ -1,11 +1,11 @@
 import '../../CSS/FriendsPage/FriendsPage_Main_Home.css'
 import React, { useEffect, useState } from "react";
-import { db } from '../BackendRelated/Firebase'
-import { useStateValue } from '../BackendRelated/StateProvider'
+import { useSelector } from 'react-redux';
+import { db } from '../../Firebase/firebase';
 import FriendsCard from './FriendsCard';
 
 function FriendsPage_Main_Home() {
-    const [{ user }] = useStateValue();
+    const user = useSelector((state) => state.data.user.user);
     const [filteredUsers, setFilteredUsers] = useState([]);
 
     useEffect(() => {

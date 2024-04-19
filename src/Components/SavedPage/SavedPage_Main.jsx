@@ -1,12 +1,12 @@
 import '../../CSS/SavedPage/SavedPage_Main.css';
 import React, { useEffect, useState } from 'react';
-import { db } from '../BackendRelated/Firebase';
-import { useStateValue } from '../BackendRelated/StateProvider';
+import { useSelector } from 'react-redux';
+import { db } from '../../Firebase/firebase';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import TuneIcon from '@mui/icons-material/Tune';
 
 function SavedPage_Main() {
-    const [{ user }] = useStateValue();
+    const user = useSelector((state) => state.data.user.user);
     const [savedPost, setSavedPost] = useState([]);
     const [savedPostItems, setSavedPostItems] = useState([]);
 

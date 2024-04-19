@@ -2,9 +2,9 @@ import '../../CSS/UserPage/UserPage_Info.css';
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import firebase from "firebase/compat/app";
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom'
-import { db } from '../BackendRelated/Firebase';
-import { useStateValue } from '../BackendRelated/StateProvider';
+import { db } from '../../Firebase/firebase';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import PublicIcon from '@mui/icons-material/Public';
@@ -12,7 +12,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 function UserPage_Info() {
     Modal.setAppElement('#root');
-    const [{ user }] = useStateValue()
+    const user = useSelector((state) => state.data.user.user);
     const [bioText, setBioText] = useState('');
     const [isBioSectionVisible, setIsBioSectionVisible] = useState(false);
     const [isdetailsModalOpen, setIsdetailsModalOpen] = useState(false);

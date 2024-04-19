@@ -1,8 +1,9 @@
 import "../../CSS/UserPage/UserPage.css";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom'
-import { useStateValue } from "../BackendRelated/StateProvider";
-import { db, storage } from "../BackendRelated/Firebase";
+import { loginUser } from "../../Redux/userSlice";
+import { db, storage } from '../../Firebase/firebase';
 import { Blurhash } from 'react-blurhash';
 import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_AllFriends_Leftbar';
 import UserPage_Components from "./UserPage_Components";
@@ -13,7 +14,8 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 function UserPage() {
-    const [{ user }, dispatch] = useStateValue();
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.data.user.user);
     const [friends, setFriends] = useState([]);
     const [profileImage, setProfileImage] = useState(null);
     const [coverImage, setCoverImage] = useState(null);
@@ -42,17 +44,8 @@ function UserPage() {
                         }
 
                         userData.photoURL = url;
+                        dispatch(loginUser(userData))
                         sessionStorage.setItem('userData', JSON.stringify(userData));
-
-                        // Update the user object in state with the new photoURL
-                        dispatch({
-                            type: "SET_USER",
-                            user: {
-                                ...user,
-                                photoURL: url,
-                            },
-                        });
-
                     }).catch((error) => {
                         console.error("Error updating user's photoURL: ", error);
                     });
@@ -84,16 +77,8 @@ function UserPage() {
                         }
 
                         userData.coverphotoUrl = url;
+                        dispatch(loginUser(userData))
                         sessionStorage.setItem('userData', JSON.stringify(userData));
-
-                        // Update the user object in state with the new photoURL
-                        dispatch({
-                            type: "SET_USER",
-                            user: {
-                                ...user,
-                                coverphotoUrl: url,
-                            },
-                        });
 
                     }).catch((error) => {
                         console.error("Error updating user's coverphotoUrl: ", error);

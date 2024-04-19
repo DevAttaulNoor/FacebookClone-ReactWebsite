@@ -1,11 +1,9 @@
 import "../../CSS/ProfilePage/ProfilePage_Friends.css"
 import React, { useEffect, useState } from 'react';
 import { NavLink } from "react-router-dom";
-import { useStateValue } from "../BackendRelated/StateProvider";
 import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_AllFriends_Leftbar';
 
 function ProfilePage_Friends({userData}) {
-    const [{ user }] = useStateValue();
     const [friends, setFriends] = useState([]);
 
     useEffect(() => {

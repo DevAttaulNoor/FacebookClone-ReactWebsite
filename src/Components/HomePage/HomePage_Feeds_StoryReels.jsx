@@ -1,17 +1,17 @@
 import '../../CSS/HomePage/HomePage_Feeds_StoryReels.css'
 import React, { useState, useEffect, useRef } from 'react';
 import { Avatar } from '@mui/material';
+import { useSelector } from 'react-redux';
 import { NavLink, Route, Routes } from 'react-router-dom';
-import { useStateValue } from '../BackendRelated/StateProvider';
-import { db } from '../BackendRelated/Firebase';
-import AddIcon from '@mui/icons-material/Add';
+import { db } from '../../Firebase/firebase';
 import HomePage_StoryReels from './HomePage_StoryReels';
+import AddIcon from '@mui/icons-material/Add';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 function HomePage_Feeds_StoryReels() {
     const containerRef = useRef(null);
-    const [{ user }] = useStateValue();
+    const user = useSelector((state) => state.data.user.user);
     const [reels, setReels] = useState([]);
     const initialShowLeftButton = sessionStorage.getItem('showLeftButton') === 'true' || false;
     const initialShowRightButton = sessionStorage.getItem('showRightButton') === 'true' || false;

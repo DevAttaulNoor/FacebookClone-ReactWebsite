@@ -1,12 +1,12 @@
 import '../../CSS/HomePage/HomePage_Feeds_Posts_LikeModal.css';
 import React, { useState, useEffect } from 'react';
-import { useStateValue } from '../BackendRelated/StateProvider';
-import { db } from '../BackendRelated/Firebase';
+import { useSelector } from 'react-redux';
+import { db } from '../../Firebase/firebase';
 import { Avatar } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 function HomePage_Feeds_Posts_LikeModal({ id, closeModal }) {
-    const [{ user }] = useStateValue();
+    const user = useSelector((state) => state.data.user.user);
     const [likedUsers, setLikedUsers] = useState([]);
 
     useEffect(() => {

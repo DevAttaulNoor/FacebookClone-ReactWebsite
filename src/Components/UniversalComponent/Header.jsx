@@ -1,10 +1,11 @@
 import '../../CSS/UniversalComponent/Header.css'
-import fblogo from '../../Imgs/fblogo.png'
+import fblogo from '../../Assets/Images/fblogo.png'
 import React, { useState, useRef, useEffect } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Avatar } from '@mui/material';
-import { auth, db } from '../BackendRelated/Firebase';
-import { useStateValue } from '../BackendRelated/StateProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../../Redux/userSlice';
+import { auth, db } from '../../Firebase/firebase';
 import SearchIcon from '@mui/icons-material/Search';
 import AppsIcon from '@mui/icons-material/Apps';
 import ForumIcon from '@mui/icons-material/Forum';
@@ -26,7 +27,8 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 
 function Header() {
-    const [{ user }, dispatch] = useStateValue();
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.data.user.user);
     const [searchText, setSearchText] = useState('');
     const [selectedUser, setSelectedUser] = useState(null);
     const [chats, setChats] = useState([])
@@ -42,27 +44,18 @@ function Header() {
     const notificationBoxRef = useRef(null);
     const pathsToHideHeader = ['/homepage/storyreels'];
     const showHeader = !pathsToHideHeader.includes(useLocation().pathname);
-    const navigate = useNavigate();
 
     const handleSignOut = () => {
         sessionStorage.removeItem('userData');
-        sessionStorage.setItem('userLoggedOut', 'true');
 
         auth.signOut()
             .then(() => {
                 sessionStorage.removeItem('userData');
-
-                // Set the user to null to indicate they are signed out
-                dispatch({
-                    type: "SET_USER",
-                    user: null,
-                });
+                dispatch(logoutUser())
             })
             .catch((error) => {
                 console.error("Sign out error:", error);
             });
-
-        navigate('/');
     };
 
     const deleteUser = () => {

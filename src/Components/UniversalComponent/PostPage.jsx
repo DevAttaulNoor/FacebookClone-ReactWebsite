@@ -1,9 +1,9 @@
-import "../../CSS/UniversalComponent/PostPage.css"
-import React, { useEffect, useState } from 'react'
-import { NavLink, useParams } from "react-router-dom"
-import { db } from "../BackendRelated/Firebase";
-import { useStateValue } from '../BackendRelated/StateProvider';
+import "../../CSS/UniversalComponent/PostPage.css";
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Avatar } from '@mui/material';
+import { NavLink, useParams } from "react-router-dom";
+import { db } from "../../Firebase/firebase";
 import SendIcon from '@mui/icons-material/Send';
 import PublicIcon from '@mui/icons-material/Public';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -13,7 +13,7 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
 function PostPage() {
-    const [{ user }] = useStateValue();
+    const user = useSelector((state) => state.data.user.user);
     const {postid} = useParams();
     const [post, setPost] = useState('');
     const [comment, setComment] = useState('');

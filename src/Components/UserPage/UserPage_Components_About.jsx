@@ -1,11 +1,8 @@
 import '../../CSS/UserPage/UserPage_Components_About.css'
 import React from 'react'
-import { useStateValue } from '../BackendRelated/StateProvider'
 import AddIcon from '@mui/icons-material/Add';
 
 function UserPage_Components_About() {
-    // const [{ user }] = useStateValue()
-
     return (
         <div className="UserpageComponents_About">
             <div className="UserpageComponents_About_Left">

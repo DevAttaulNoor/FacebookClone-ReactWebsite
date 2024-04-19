@@ -2,12 +2,12 @@ import './index.css';
 import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { StateProvider } from './Components/BackendRelated/StateProvider';
-import reducer, { initialState } from './Components/BackendRelated/Reducer'
+import { Provider } from 'react-redux';
+import { store } from './Redux/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <StateProvider initialState={initialState} reducer={reducer}>
-        <App />
-    </StateProvider>
+	<Provider store={store}>
+		<App />
+	</Provider>
 );

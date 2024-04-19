@@ -1,13 +1,13 @@
 import '../../CSS/HomePage/HomePage_Feeds_Posts_CommentModal.css';
 import React, { useState, useEffect, useRef } from 'react';
-import { db } from '../BackendRelated/Firebase';
-import { useStateValue } from '../BackendRelated/StateProvider';
+import { useSelector } from 'react-redux';
+import { db } from '../../Firebase/firebase';
 import { Avatar } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 
 function HomePage_Feeds_Posts_CommentModal({ id, userid, closeModal }) {
-    const [{ user }] = useStateValue();
+    const user = useSelector((state) => state.data.user.user);
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
     const commentsContainerRef = useRef(null)

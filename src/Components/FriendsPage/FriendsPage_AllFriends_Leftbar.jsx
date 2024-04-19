@@ -1,9 +1,9 @@
 import '../../CSS/FriendsPage/FriendsPage_AllFriends_Leftbar.css'
 import React, { useState, useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { Avatar } from '@mui/material';
-import { db } from '../BackendRelated/Firebase';
-import { useStateValue } from '../BackendRelated/StateProvider';
+import { db } from '../../Firebase/firebase';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
@@ -123,7 +123,7 @@ async function unfriendUser(loggedInUserUid, friendUid) {
 }
 
 function FriendsPage_AllFriends_Leftbar() {
-    const [{ user }, dispatch] = useStateValue();
+    const user = useSelector((state) => state.data.user.user);
     const [friends, setFriends] = useState([]);
     const [dialogVisibility, setDialogVisibility] = useState({});
     const dialogBoxRefs = useRef({});

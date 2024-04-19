@@ -1,8 +1,8 @@
 import '../../CSS/HomePage/HomePage_Messages.css'
 import React, { useState, useEffect, useRef } from 'react';
-import { db } from '../BackendRelated/Firebase';
+import { useSelector } from 'react-redux';
 import { Avatar } from '@mui/material';
-import { useStateValue } from '../BackendRelated/StateProvider';
+import { db } from '../../Firebase/firebase';
 import EmojiPicker from 'emoji-picker-react';
 import SendIcon from '@mui/icons-material/Send';
 import CloseIcon from '@mui/icons-material/Close';
@@ -11,7 +11,7 @@ import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 
 function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleSelectedFriend }) {
-    const [{ user }] = useStateValue();
+    const user = useSelector((state) => state.data.user.user);
     const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
     const [searchText, setSearchText] = useState('');
@@ -67,7 +67,7 @@ function HomePage_Messages({ closeBox, handleMessageBox, closeFriendBox, handleS
 
         if (chatDoc.exists) {
             setMessageInput('');
-            
+
             const existingMessages = chatDoc.data().messages || [];
             const updatedMessages = [...existingMessages, newMessage];
 
