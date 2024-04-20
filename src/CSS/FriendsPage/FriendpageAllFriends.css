@@ -1,0 +1,192 @@
+/** FriendsPage AllFriends Section */
+.friendspage_Allfriends{
+    height: 92vh;
+    display: flex;
+    overflow: hidden;
+}
+
+/* FriendsPage AllFriends Main Section */
+/* .friendspage_Allfriends_Main{
+    width: 100%;
+    overflow-y: auto;
+} */
+
+
+
+
+
+/** Friends All friends Leftbar Section*/
+.friendspage_allfriends_Leftbar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 310px;
+    background-color: #fff;
+    padding: 8px;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+}
+
+/* Friends All friends Leftbar Top Section*/
+.friendspage_allfriends_LeftbarTop {
+    display: flex;
+    flex-direction: column;
+}
+
+.friendspage_allfriends_LeftbarTop_Top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.friendspage_allfriends_LeftbarTop_Top .MuiSvgIcon-root a {
+    color: initial;
+}
+
+.friendspage_allfriends_LeftbarTop_Top .MuiSvgIcon-root {
+    padding: 6px;
+    color: #000;
+}
+
+.friendspage_allfriends_LeftbarTop_Top .MuiSvgIcon-root:hover {
+    border-radius: 50%;
+    background-color: whitesmoke;
+}
+
+.friendspage_allfriends_LeftbarTop_Top .texts {
+    margin-left: 15px
+}
+
+.friendspage_allfriends_LeftbarTop_Top .texts #mainText {
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.friendspage_allfriends_LeftbarTop_Top .texts #sideText {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.friendspage_allfriends_LeftbarTop_Bottom {
+    margin-bottom: 15px;
+}
+
+.friendspage_allfriends_LeftbarTop_Bottom .searchInp {
+    display: flex;
+    align-items: center;
+    background-color: #F0F2F5;
+    border-radius: 20px;
+    padding: 0px 8px;
+    height: 35px;
+}
+
+.friendspage_allfriends_LeftbarTop_Bottom .searchInp .MuiSvgIcon-root {
+    color: gray;
+    height: 20px;
+    padding: 0px 3px 0 0;
+}
+
+.friendspage_allfriends_LeftbarTop_Bottom .searchInp input {
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    min-width: 195px;
+    font-size: 16px;
+}
+
+/* Friends All friends Leftbar Bottom Section*/
+.friendspage_allfriends_LeftbarBottom {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.friendspage_allfriends_LeftbarBottom #friendsCount {
+    margin: 0 0 8px 8px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.friendspage_allfriends_LeftbarBottom .friendsList {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 8px;
+    position: relative;
+}
+
+.friendspage_allfriends_LeftbarBottom .friendsList:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.friendspage_allfriends_LeftbarBottom .friendsList .MuiSvgIcon-root {
+    padding: 5px;
+}
+
+.friendspage_allfriends_LeftbarBottom .friendsList .MuiSvgIcon-root:hover {
+    border-radius: 50%;
+    background-color: rgb(202, 202, 202);
+    cursor: pointer;
+}
+
+.friendspage_allfriends_LeftbarBottom .friendsList .friendsListInfo {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.friendspage_allfriends_LeftbarBottom .friendsList .friendsListInfo a {
+    display: flex;
+    align-items: center;
+    color: initial;
+    text-decoration: none;
+}
+
+.friendspage_allfriends_LeftbarBottom .friendsList .friendsListInfo p {
+    margin-left: 8px;
+}
+
+/* Dialog Box */
+.dialogBox {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    top: 50px;
+    right: 20px;
+    background-color: #fff;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    padding: 8px;
+    z-index: 1;
+}
+
+.dialogBox button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: #fff;
+    width: 120px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid gray;
+}
+
+
+
+
+/** FriendsPage AllFriends Main Section */
+.friendspage_AllfriendsMain {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* width: fit-content; */
+
+    width: 100%;
+    overflow-y: auto;
+}

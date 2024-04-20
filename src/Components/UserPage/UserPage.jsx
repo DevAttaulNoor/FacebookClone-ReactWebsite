@@ -5,8 +5,8 @@ import { NavLink } from 'react-router-dom'
 import { loginUser } from "../../Redux/userSlice";
 import { db, storage } from '../../Firebase/firebase';
 import { Blurhash } from 'react-blurhash';
-import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_AllFriends_Leftbar';
-import UserPage_Components from "./UserPage_Components";
+import { fetchFriendsData, fetchFriendDetailsData } from '../FriendPage/FriendpageAllFriends';
+import UserPage_Components from "./UserpageComponents";
 import AddIcon from '@mui/icons-material/Add';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';

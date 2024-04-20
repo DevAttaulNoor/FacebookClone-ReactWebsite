@@ -1,0 +1,137 @@
+/** ProfilePage Components Friends Section */
+.ProfilePageComponents_Friends{
+    width: 910px;
+    padding: 16px;
+    margin: 10px 0;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+}
+
+/* ProfilePage Components Friends Top Section */
+.ProfilePageComponents_Friends_Top{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ProfilePageComponents_Friends_TopLeft h3{
+    color: #000;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.ProfilePageComponents_Friends_TopLeft h3:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
+.ProfilePageComponents_Friends_TopRight{
+    display: flex;
+    align-items: center;
+}
+
+.ProfilePageComponents_Friends_TopRight p{
+    font-size: 14px;
+    font-weight: 500;
+    color: #0065D1;
+    padding: 8px;
+    margin: 0 4px;
+    border-radius: 4px;
+}
+
+.ProfilePageComponents_Friends_TopRight p:hover{
+    cursor: pointer;
+    background-color: #E4E6EB;
+}
+
+.ProfilePageComponents_Friends_TopRight .moreOptions{
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-left: 6px;
+    width: 16px;
+    height: 18px;
+    background-color: #E4E6EB;
+}
+
+.ProfilePageComponents_Friends_TopRight .searchInp {
+    display: flex;
+    align-items: center;
+    padding: 6px;
+    margin: 0 4px;
+    border-radius: 20px;
+    background-color: #E4E6EB;
+}
+
+.ProfilePageComponents_Friends_TopRight .searchInp .MuiSvgIcon-root {
+    width: 20px;
+    margin-left: 4px;
+    color: #606770;
+    background-color: transparent;
+}
+
+.ProfilePageComponents_Friends_TopRight .searchInp input {
+    border: 0;
+    outline: 0;
+    width: 135px;
+    padding: 0 5px;
+    font-size: 13px;
+    color: #606770;
+    background-color: transparent;
+}
+
+/* ProfilePage Components Friends Middle Section */
+.ProfilePageComponents_Friends_Middle{
+    width: 100%;
+}
+
+.ProfilePageComponents_Friends_Middle .ProfilePageFriends{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: transparent;
+}
+
+.ProfilePageComponents_Friends_Middle .ProfilePageFriends_Top{
+    display: none;
+}
+
+.ProfilePageComponents_Friends_Middle .ProfilePageFriends_Bottom {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.ProfilePageComponents_Friends_Middle .ProfilePageFriends_BottomContainer {
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.ProfilePageComponents_Friends_Middle .ProfilePageFriends_BottomContainerOptions{
+    width: 412px;
+    display: flex;
+    align-items: center;
+    padding: 18px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+}
+
+.ProfilePageComponents_Friends_Middle .ProfilePageFriends_BottomContainerOptions p{
+    margin-left: 15px;
+    font-size: 16px;
+}
+
+.ProfilePageComponents_Friends_Middle .ProfilePageFriends_BottomContainerOptions img {
+    object-fit: cover;
+    width: 75px;
+    height: 75px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+}

@@ -7,8 +7,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import AdjustOutlinedIcon from '@mui/icons-material/AdjustOutlined';
+import { useNavigate } from 'react-router-dom';
 
 function Signup(props) {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [firstname, setFirstName] = useState('');
     const [lastname, setLastName] = useState('');
@@ -100,6 +102,7 @@ function Signup(props) {
 
             dispatch(loginUser(userData));
             sessionStorage.setItem('userData', JSON.stringify(userData));
+            navigate('/homepage');
         }
 
         catch (error) {

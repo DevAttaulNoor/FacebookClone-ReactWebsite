@@ -1,14 +1,14 @@
 import "../../CSS/ProfilePage/ProfilePage.css";
 import React, { useEffect, useState } from "react";
-import { NavLink, useParams } from 'react-router-dom'
-import { db } from "../../Firebase/firebase";
+import { NavLink, useParams } from 'react-router-dom';
 import { Blurhash } from 'react-blurhash';
-import { fetchFriendsData, fetchFriendDetailsData } from '../FriendsPage/FriendsPage_AllFriends_Leftbar';
+import { db } from "../../Firebase/firebase";
+import { fetchFriendsData, fetchFriendDetailsData } from '../FriendPage/FriendpageAllFriends';
+import ProfilepageComponents from "./ProfilepageComponents";
 import AddIcon from '@mui/icons-material/Add';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import ProfilePage_Components from "./ProfilePage_Components";
 
 function ProfilePage() {
     const { userid } = useParams();
@@ -30,7 +30,7 @@ function ProfilePage() {
                 console.error('Error fetching user:', error);
             }
         };
-    
+
         fetchUser();
     }, [userid]);
 
@@ -134,7 +134,7 @@ function ProfilePage() {
             </div>
 
             <div className="ProfilePage_Bottom">
-                <ProfilePage_Components userData={userData}/>
+                <ProfilepageComponents userData={userData} />
             </div>
         </div>
     );

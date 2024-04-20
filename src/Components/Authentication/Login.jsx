@@ -8,9 +8,11 @@ import Signup from './Signup';
 import LoadingLine from '../UniversalComponent/LoadingLine';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
     Modal.setAppElement('#root');
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -38,10 +40,6 @@ function Login() {
                 coverphotoUrl: coverphotoUrl
             };
 
-            dispatch(loginUser(userData))
-            sessionStorage.setItem('userData', JSON.stringify(userData));
-
-
             db.collection("Users").doc(uid).set({
                 uid: user.uid,
                 email: user.email,
@@ -49,6 +47,10 @@ function Login() {
                 photoURL: user.photoURL,
                 coverphotoUrl: coverphotoUrl
             });
+
+            dispatch(loginUser(userData));
+            sessionStorage.setItem('userData', JSON.stringify(userData));
+            navigate('/homepage');
         })
             .catch((error) => {
                 if (error.code === 'auth/popup-closed-by-user') {
@@ -92,6 +94,7 @@ function Login() {
 
                 dispatch(loginUser(updatedUserData))
                 sessionStorage.setItem('userData', JSON.stringify(updatedUserData));
+                navigate('/homepage');
             }
 
             else {
@@ -126,7 +129,8 @@ function Login() {
         if (storedUserData) {
             // If user data is found in session storage, parse it and set it in the context
             const userData = JSON.parse(storedUserData);
-            dispatch(loginUser(userData))
+            dispatch(loginUser(userData));
+            navigate('/homepage')
         }
         setLoading(false);
     }, []);

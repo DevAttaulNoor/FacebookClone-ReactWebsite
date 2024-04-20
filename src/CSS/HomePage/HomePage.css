@@ -55,3 +55,49 @@
     width: 20px;
     height: 20px;
 }
+
+
+/** HomePage Leftbar Section */
+.homePageLeftbar{
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-left: 8px;
+}
+
+.homePageLeftbar a{
+    text-decoration: none;
+    color: initial;
+}
+
+.homePageLeftbar .terms{
+    margin: 6px 0 0 12px;
+}
+
+.homePageLeftbar .terms p{
+    font-size: 12px;
+    font-weight: 400;
+    color: gray;
+    white-space: pre-wrap;
+}
+
+.homePageLeftbar .terms p span:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.homepage_Feeds{
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+}
+
+/** HomePage Rightbar Section */
+.homePageRightbar{
+    position: relative;
+    margin-right: 8px;
+}
+
+.homePageRightbar #line{
+    color: whitesmoke;
+    margin-left: 8px;
+}

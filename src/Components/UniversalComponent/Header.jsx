@@ -27,6 +27,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 
 function Header() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
     const [searchText, setSearchText] = useState('');
@@ -52,6 +53,7 @@ function Header() {
             .then(() => {
                 sessionStorage.removeItem('userData');
                 dispatch(logoutUser())
+                navigate('/')
             })
             .catch((error) => {
                 console.error("Sign out error:", error);
