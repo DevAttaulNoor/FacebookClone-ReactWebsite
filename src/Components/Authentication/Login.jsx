@@ -1,14 +1,13 @@
-import '../../CSS/StartupPage/Login.css'
+import '../../CSS/Authentication/Login.css'
 import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../Redux/userSlice';
+import { setAuthForm } from '../../Redux/authSlice';
 import { auth, db, provider } from '../../Firebase/firebase';
-import Modal from 'react-modal';
-import Signup from './Signup';
-import LoadingLine from '../UniversalComponent/LoadingLine';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { useNavigate } from 'react-router-dom';
 
 function Login() {
     Modal.setAppElement('#root');
@@ -16,10 +15,8 @@ function Login() {
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
     const [loginerror, setLoginError] = useState(null);
-    const [Loading, setLoading] = useState(true);
-    const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const [isLoginProcessing, setIsLoginProcessing] = useState(false);
 
     const signInWithFacebook = () => {
@@ -62,7 +59,6 @@ function Login() {
     }
 
     const signInWithEmailAndPassword = async () => {
-        setLoading(true);
         setIsLoginProcessing(true);
         setLoginError(null);
 
@@ -116,14 +112,6 @@ function Login() {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     };
 
-    const openSignupModal = () => {
-        setIsSignupModalOpen(true);
-    };
-
-    const closeSignupModal = () => {
-        setIsSignupModalOpen(false);
-    };
-
     useEffect(() => {
         const storedUserData = sessionStorage.getItem('userData');
         if (storedUserData) {
@@ -132,73 +120,53 @@ function Login() {
             dispatch(loginUser(userData));
             navigate('/homepage')
         }
-        setLoading(false);
     }, []);
 
     return (
-        <>
-            {Loading ? (
-                <LoadingLine progress={Loading} />
-            ) : (
-                <div className='login'>
-                    <div className="login_Left">
-                        <h1>facebook</h1>
-                        <p>Facebook helps you connect and share with the people in your life.</p>
-                    </div>
-
-                    <div className="login_Right">
-                        <div className='login_RightTop'>
-                            <form onSubmit={(e) => {
-                                e.preventDefault();
-                                signInWithEmailAndPassword();
-                            }}>
-                                <div className='emailContainer'>
-                                    <input
-                                        type="email"
-                                        value={email}
-                                        placeholder="Email address"
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        required
-                                    />
-                                </div>
-
-                                <div className="passwordContainer">
-                                    <input
-                                        type={showPassword ? "text" : "password"}
-                                        value={password}
-                                        placeholder="Password"
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        required
-                                    />
-                                    <span className="passwordToggle" onClick={togglePasswordVisibility}>
-                                        {showPassword ? (
-                                            <VisibilityIcon />
-                                        ) : (
-                                            <VisibilityOffIcon />
-                                        )}
-                                    </span>
-                                </div>
-
-                                <button type="submit" id="submitBtn">{isLoginProcessing ? <div class="loadingSpin"></div> : 'Log in'}</button>
-                                {loginerror && <p className="errorNote">{loginerror}</p>}
-                                <button id="forgetBtn" type="button">Forgotten password?</button>
-                                <hr id="line" />
-                                <button id="newAccBtn" type="button" onClick={openSignupModal}>Create new account</button>
-                            </form>
-                        </div>
-
-                        <div className='login_RightBottom'>
-                            <button onClick={signInWithFacebook}>Log in</button>
-                            <p>with existing FB account</p>
-                        </div>
-                    </div>
-
-                    <Modal className="signupModal" isOpen={isSignupModalOpen} onRequestClose={closeSignupModal}>
-                        <Signup closeSignupModal={closeSignupModal} />
-                    </Modal>
+        <div className='login'>
+            <form className='loginTop' onSubmit={(e) => {
+                e.preventDefault();
+                signInWithEmailAndPassword();
+            }}>
+                <div className='emailContainer'>
+                    <input
+                        type="email"
+                        value={email}
+                        placeholder="Email address"
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
                 </div>
-            )}
-        </>
+
+                <div className="passwordContainer">
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        value={password}
+                        placeholder="Password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                    <span className="passwordToggle" onClick={togglePasswordVisibility}>
+                        {showPassword ? (
+                            <VisibilityIcon />
+                        ) : (
+                            <VisibilityOffIcon />
+                        )}
+                    </span>
+                </div>
+
+                <button type="submit" id="submitBtn">{isLoginProcessing ? <div class="loadingSpin"></div> : 'Log in'}</button>
+                {loginerror && <p className="errorNote">{loginerror}</p>}
+                <button id="forgetBtn" type="button">Forgotten password?</button>
+                <hr id="line" />
+                <button id="newAccBtn" type="button" onClick={() => dispatch(setAuthForm('signup'))}>Create new account</button>
+            </form>
+
+            <div className='loginBottom'>
+                <button onClick={signInWithFacebook}>Log in</button>
+                <p>with existing FB account</p>
+            </div>
+        </div>
     )
 }
 

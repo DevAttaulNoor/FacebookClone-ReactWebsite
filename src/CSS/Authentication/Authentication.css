@@ -1,0 +1,41 @@
+/** Authentication Section */
+.authentication {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px 0;
+    gap: 10px;
+    overflow-y: auto;
+}
+
+/* Authentication Top Section */
+.authenticationTop {
+    width: 440px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.authenticationTop h1 {
+    font-size: 54px;
+    font-weight: 750;
+    color: #1877f2;
+}
+
+.authenticationTop p {
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 32px;
+    margin-bottom: 30px;
+}
+
+/* Authentication Bottom Section */
+.authenticationBottom .login {
+    width: 360px;
+}
+
+.authenticationBottom .signup {
+    width: 420px;
+}

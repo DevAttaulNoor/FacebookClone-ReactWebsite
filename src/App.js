@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Login from './Components/Authentication/Login';
+// import Login from './Components/Authentication/Login';
+import Authentication from './Components/Authentication/Authentication';
 import Header from './Components/UniversalComponent/Header';
 import HomePage from './Components/HomePage/HomePage';
 import HomePage_StoryReels from './Components/HomePage/HomepageReels';
@@ -19,7 +20,8 @@ function App() {
 		<Router>
 			<>
 				{!user ? (
-					<Login/>
+					// <Login/>
+					<Authentication/>
 				) : (
 					<div className="App">
 						<Header />

@@ -1,15 +1,15 @@
-import '../../CSS/StartupPage/Signup.css'
+import '../../CSS/Authentication/Signup.css'
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../../Redux/userSlice';
+import { setAuthForm } from '../../Redux/authSlice';
 import { auth, db, storage } from '../../Firebase/firebase';
-import CloseIcon from '@mui/icons-material/Close';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import AdjustOutlinedIcon from '@mui/icons-material/AdjustOutlined';
-import { useNavigate } from 'react-router-dom';
 
-function Signup(props) {
+function Signup() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [firstname, setFirstName] = useState('');
@@ -25,7 +25,6 @@ function Signup(props) {
     const [selectedCoverImage, setSelectedCoverImage] = useState(null);
     const [isSignupProcessing, setIsSignupProcessing] = useState(false);
     const [signuperror, setSignupError] = useState(null);
-
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const years = Array.from({ length: 100 }, (_, i) => new Date().getUTCFullYear() - i);
@@ -139,161 +138,159 @@ function Signup(props) {
 
     return (
         <div className='signup'>
-            <div className="signupModal_Top">
-                <h1>Sign Up</h1>
+            <div className="signupTop">
+                <h1>Create a new account</h1>
                 <p>It's quick and easy.</p>
-                <CloseIcon onClick={props.closeSignupModal} />
             </div>
 
-            <hr id="line" />
+            <form className='signupMiddle' onSubmit={handleSignup}>
+                <div className="nameContainer">
+                    <input
+                        type="text"
+                        value={firstname}
+                        placeholder="First name"
+                        onChange={(e) => setFirstName(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="text"
+                        value={lastname}
+                        placeholder="Last name"
+                        onChange={(e) => setLastName(e.target.value)}
+                        required
+                    />
+                </div>
 
-            <div className="signupModal_Middle">
-                <form onSubmit={handleSignup}>
-                    <div className="nameContainer">
-                        <input
-                            type="text"
-                            value={firstname}
-                            placeholder="First name"
-                            onChange={(e) => setFirstName(e.target.value)}
-                            required
-                        />
-                        <input
-                            type="text"
-                            value={lastname}
-                            placeholder="Last name"
-                            onChange={(e) => setLastName(e.target.value)}
-                            required
-                        />
-                    </div>
+                <div className="emailContainer">
+                    <input
+                        type="email"
+                        value={email}
+                        placeholder="Email address"
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
 
-                    <div className="emailContainer">
-                        <input
-                            type="email"
-                            value={email}
-                            placeholder="Email address"
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
+                <div className="passwordContainer">
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        value={password}
+                        placeholder="New password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                    <span className="passwordToggle" onClick={togglePasswordVisibility}>
+                        {showPassword ? (
+                            <VisibilityIcon />
+                        ) : (
+                            <VisibilityOffIcon />
+                        )}
+                    </span>
+                </div>
 
-                    <div className="passwordContainer">
-                        <input
-                            type={showPassword ? "text" : "password"}
-                            value={password}
-                            placeholder="New password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                        <span className="passwordToggle" onClick={togglePasswordVisibility}>
-                            {showPassword ? (
-                                <VisibilityIcon />
-                            ) : (
-                                <VisibilityOffIcon />
-                            )}
-                        </span>
-                    </div>
+                <div className="dobContainer">
+                    <h5>Date of birth</h5>
+                    
+                    <div className="dobOptions">
+                        <div className="dobOption">
+                            <select value={dob.getDate()} onChange={(e) => setDOB(new Date(dob.setUTCDate(e.target.value)))}>
+                                {days.map((day) => (
+                                    <option key={day} value={day}>
+                                        {day}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
 
-                    <div className="dobContainer">
-                        <p id='dobContainerTitle'>Date of birth</p>
-                        <div className="dobOptions">
-                            <div className="dobOption">
-                                <select value={dob.getDate()} onChange={(e) => setDOB(new Date(dob.setUTCDate(e.target.value)))}>
-                                    {days.map((day) => (
-                                        <option key={day} value={day}>
-                                            {day}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
+                        <div className="dobOption">
+                            <select value={monthNames[dob.getMonth()]} onChange={(e) => {
+                                const monthIndex = monthNames.indexOf(e.target.value);
+                                setDOB(new Date(dob.setUTCMonth(monthIndex)));
+                            }}>
+                                {monthNames.map((monthName) => (
+                                    <option key={monthName} value={monthName}>
+                                        {monthName}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
 
-                            <div className="dobOption">
-                                <select value={monthNames[dob.getMonth()]} onChange={(e) => {
-                                    const monthIndex = monthNames.indexOf(e.target.value);
-                                    setDOB(new Date(dob.setUTCMonth(monthIndex)));
-                                }}>
-                                    {monthNames.map((monthName) => (
-                                        <option key={monthName} value={monthName}>
-                                            {monthName}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div className="dobOption">
-                                <select value={dob.getFullYear()} onChange={(e) => setDOB(new Date(dob.setUTCFullYear(e.target.value)))}>
-                                    {years.map((year) => (
-                                        <option key={year} value={year}>
-                                            {year}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
+                        <div className="dobOption">
+                            <select value={dob.getFullYear()} onChange={(e) => setDOB(new Date(dob.setUTCFullYear(e.target.value)))}>
+                                {years.map((year) => (
+                                    <option key={year} value={year}>
+                                        {year}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                     </div>
+                </div>
 
-                    <div className="genderContainer">
-                        <p id='genderContainerTitle'>Gender</p>
-                        <div className="genderOptions">
-                            <div className={`genderOption ${selectedGender === 'Male' ? 'active' : ''}`} onClick={() => handleGenderClick('Male')}>
-                                <p>Male</p>
-                                <AdjustOutlinedIcon className={`${selectedGender === 'Male' ? 'active' : ''}`} />
-                            </div>
+                <div className="genderContainer">
+                    <h5>Gender</h5>
+                    
+                    <div className="genderOptions">
+                        <div className={`genderOption ${selectedGender === 'Male' ? 'active' : ''}`} onClick={() => handleGenderClick('Male')}>
+                            <p>Male</p>
+                            <AdjustOutlinedIcon className={`${selectedGender === 'Male' ? 'active' : ''}`} />
+                        </div>
 
-                            <div className={`genderOption ${selectedGender === 'Female' ? 'active' : ''}`} onClick={() => handleGenderClick('Female')}>
-                                <p>Female</p>
-                                <AdjustOutlinedIcon className={`${selectedGender === 'Female' ? 'active' : ''}`} />
-                            </div>
+                        <div className={`genderOption ${selectedGender === 'Female' ? 'active' : ''}`} onClick={() => handleGenderClick('Female')}>
+                            <p>Female</p>
+                            <AdjustOutlinedIcon className={`${selectedGender === 'Female' ? 'active' : ''}`} />
+                        </div>
 
-                            <div className={`genderOption ${selectedGender === 'Other' ? 'active' : ''}`} onClick={() => handleGenderClick('Other')}>
-                                <p>Other</p>
-                                <AdjustOutlinedIcon className={`${selectedGender === 'Other' ? 'active' : ''}`} />
-                            </div>
+                        <div className={`genderOption ${selectedGender === 'Other' ? 'active' : ''}`} onClick={() => handleGenderClick('Other')}>
+                            <p>Other</p>
+                            <AdjustOutlinedIcon className={`${selectedGender === 'Other' ? 'active' : ''}`} />
                         </div>
                     </div>
+                </div>
 
-                    <div className='profilePicContainer'>
-                        <button className='picturesBtn' onClick={() => document.getElementById("profilePictureInput").click()}>Choose Profile Picture</button>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            id="profilePictureInput"
-                            style={{ display: "none" }}
-                            onChange={handleProfilePictureChange}
-                            required
-                        />
+                <div className='profilePicContainer'>
+                    <button className='picturesBtn' onClick={() => document.getElementById("profilePictureInput").click()}>Choose Profile Picture</button>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        id="profilePictureInput"
+                        style={{ display: "none" }}
+                        onChange={handleProfilePictureChange}
+                        required
+                    />
 
-                        {selectedProfileImage && (
-                            <img src={selectedProfileImage} alt="Selected Profile Picture" />
-                        )}
-                    </div>
+                    {selectedProfileImage && (
+                        <img src={selectedProfileImage} alt="Selected Profile Picture" />
+                    )}
+                </div>
 
-                    <div className='coverPicContainer'>
-                        <button className='picturesBtn' onClick={() => document.getElementById("coverPictureInput").click()}>Choose Cover Picture</button>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            id="coverPictureInput"
-                            style={{ display: "none" }}
-                            onChange={handleCoverPictureChange}
-                            required
-                        />
+                <div className='coverPicContainer'>
+                    <button className='picturesBtn' onClick={() => document.getElementById("coverPictureInput").click()}>Choose Cover Picture</button>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        id="coverPictureInput"
+                        style={{ display: "none" }}
+                        onChange={handleCoverPictureChange}
+                        required
+                    />
 
-                        {selectedCoverImage && (
-                            <img src={selectedCoverImage} alt="Selected Cover Picture" />
-                        )}
-                    </div>
+                    {selectedCoverImage && (
+                        <img src={selectedCoverImage} alt="Selected Cover Picture" />
+                    )}
+                </div>
 
-                    <div className='notesContainer'>
-                        <p id='learnMoreNote'>People who use our service may have uploaded your contact information to Facebook. <span>Learn more</span>.</p>
-                        <p id="termCondNote">By clicking Sign Up, you agree to our <span>Terms</span>, <span>Privacy Policy</span> and <span>Cookies Policy</span>. You may receive SMS notifications from us and can opt out at any time.</p>
-                    </div>
+                <div className='notesContainer'>
+                    <p id='learnMoreNote'>People who use our service may have uploaded your contact information to Facebook. <span>Learn more</span>.</p>
+                    <p id="termCondNote">By clicking Sign Up, you agree to our <span>Terms</span>, <span>Privacy Policy</span> and <span>Cookies Policy</span>. You may receive SMS notifications from us and can opt out at any time.</p>
+                </div>
 
-                    <button id='submitBtn' type="submit">{isSignupProcessing ? <div class="loadingSpin"></div> : 'Create new account'}</button>
-                    {signuperror && <p className="errorNote">{signuperror}</p>}
-                </form>
-            </div>
+                <button id='submitBtn' type="submit">{isSignupProcessing ? <div class="loadingSpin"></div> : 'Sign Up'}</button>
+                {signuperror && <p className="errorNote">{signuperror}</p>}
+                <button id='switchFormBtn' onClick={() => dispatch(setAuthForm('login'))}>Already have an account?</button>
+            </form>
         </div>
     )
 }
 
-export default Signup
+export default Signup;
