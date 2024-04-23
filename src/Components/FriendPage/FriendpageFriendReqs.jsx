@@ -1,41 +1,15 @@
-import '../../CSS/FriendsPage/FriendpageFriendReqs.css'
+import '../../CSS/FriendPage/FriendpageFriendReqs.css'
 import React, { useEffect, useState } from "react";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { db } from '../../Firebase/firebase';
+import { setFriends } from '../../Redux/friendSlice';
 
 function FriendpageFriendReqs() {
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
     const [friendRequests, setFriendRequests] = useState([]);
     const [isRequestProcessing, setIsRequestProcessing] = useState(false);
-
-    useEffect(() => {
-        const fetchFriendRequests = async () => {
-            try {
-                const friendRequestsCollection = db.collection("Users").doc(user.uid).collection("friendRequests");
-
-                const querySnapshot = await friendRequestsCollection.get();
-                const requests = [];
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    requests.push({
-                        id: doc.id,
-                        senderUid: data.senderUid,
-                        senderName: data.senderName,
-                        senderPhotoUrl: data.senderPhotoUrl,
-                        status: data.status,
-                        receiverUid: data.receiverUid,
-                    });
-                });
-                setFriendRequests(requests);
-            } 
-            
-            catch (error) {
-                console.error("Error fetching friend requests:", error);
-            }
-        }
-        fetchFriendRequests()
-    }, [user.uid]);
-
+    
     const acceptFriendRequest = async (friendRequestId, senderUid) => {
         try {
             // Check if the request is already being processed
@@ -100,6 +74,7 @@ function FriendpageFriendReqs() {
                 );
 
                 alert("Friend request accepted!");
+                dispatch(setFriends(friendRequestId))
             } else {
                 alert("You are already friends with this user.");
             }
@@ -139,15 +114,42 @@ function FriendpageFriendReqs() {
         }
     };
 
+    useEffect(() => {
+        const fetchFriendRequests = async () => {
+            try {
+                const friendRequestsCollection = db.collection("Users").doc(user.uid).collection("friendRequests");
+
+                const querySnapshot = await friendRequestsCollection.get();
+                const requests = [];
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    requests.push({
+                        id: doc.id,
+                        senderUid: data.senderUid,
+                        senderName: data.senderName,
+                        senderPhotoUrl: data.senderPhotoUrl,
+                        status: data.status,
+                        receiverUid: data.receiverUid,
+                    });
+                });
+                setFriendRequests(requests);
+            } 
+            
+            catch (error) {
+                console.error("Error fetching friend requests:", error);
+            }
+        }
+        fetchFriendRequests()
+    }, [user.uid]);
+
     return (
-        <div className="friendspageMainReqs">
-            <div className="friendspageMainReqs_top">
+        <div className="friendpageFriendReqs">
+            <div className="friendpageFriendReqsTop">
                 <p>Friends Requests</p>
             </div>
 
-            <div className="friendspageMainReqs_bottom">
+            <div className="friendpageFriendReqsBottom">
                 {friendRequests.map((request) => {
-                    // Check if the request is for the current user
                     if (request.status !== "accepted" && request.receiverUid === user.uid) {
                         return (
                             <div key={request.id} className="friendsCard">

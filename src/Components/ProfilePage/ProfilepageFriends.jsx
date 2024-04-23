@@ -1,22 +1,10 @@
 import "../../CSS/ProfilePage/ProfilepageFriends.css"
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { fetchFriendsData, fetchFriendDetailsData } from '../FriendPage/FriendpageAllFriends';
 
-function ProfilepageFriends({userData}) {
-    const [friends, setFriends] = useState([]);
-
-    useEffect(() => {
-        // Fetch friends data when user.uid changes
-        fetchFriendsData(userData.uid, setFriends);
-    }, [userData.uid]);
-
-    useEffect(() => {
-        // Fetch friend details when friends array changes
-        if (friends.length > 0) {
-            fetchFriendDetailsData(friends, setFriends);
-        }
-    }, [friends]);
+function ProfilepageFriends({ userData }) {
+    const friendFriendsData = useSelector((state) => state.data.friends.friendFriendsData);
 
     return (
         <div className='ProfilePageFriends'>
@@ -29,7 +17,7 @@ function ProfilepageFriends({userData}) {
 
             <div className="ProfilePageFriends_Bottom">
                 <div className="ProfilePageFriends_BottomContainer">
-                    {friends.map((friend) => (
+                    {friendFriendsData.map((friend) => (
                         <div className="ProfilePageFriends_BottomContainerOptions">
                             <img src={friend.photoURL} alt="" />
                             <p>{friend.username}</p>

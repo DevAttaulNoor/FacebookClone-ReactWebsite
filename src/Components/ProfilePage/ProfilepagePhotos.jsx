@@ -2,15 +2,17 @@ import "../../CSS/ProfilePage/ProfilepagePhotos.css";
 import React, { useEffect, useState } from 'react';
 import firebase from "firebase/compat/app";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function ProfilepagePhotos({userData}) {
+    const friendFriends = useSelector((state) => state.data.friends.friendFriends);
     const [photoUrls, setPhotoUrls] = useState([]);
 
     useEffect(() => {
         // Reference to the user's folders in Firebase Storage
         const storageRefs = [
-            `Posts/${userData.uid}`,
-            `Users/${userData.uid}`
+            `Posts/${friendFriends.friendUid}`,
+            `Users/${friendFriends.friendUid}`
         ];
 
         // Fetch images from all specified paths
@@ -49,7 +51,7 @@ function ProfilepagePhotos({userData}) {
             setPhotoUrls(urls);
         };
         fetchImages();
-    }, [userData]);
+    }, [friendFriends]);
 
     return (
         <div className='ProfilePagePhotos'>

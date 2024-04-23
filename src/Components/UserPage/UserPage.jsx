@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom'
 import { loginUser } from "../../Redux/userSlice";
 import { db, storage } from '../../Firebase/firebase';
 import { Blurhash } from 'react-blurhash';
-import { fetchFriendsData, fetchFriendDetailsData } from '../FriendPage/FriendpageAllFriends';
 import UserPage_Components from "./UserpageComponents";
 import AddIcon from '@mui/icons-material/Add';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -16,7 +15,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 function UserPage() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
-    const [friends, setFriends] = useState([]);
+    const friends = useSelector((state) => state.data.friends.friends);
     const [profileImage, setProfileImage] = useState(null);
     const [coverImage, setCoverImage] = useState(null);
     const [imageLoaded, setImageLoaded] = useState(false);
@@ -95,16 +94,6 @@ function UserPage() {
             setImageLoaded(true);
         };
     }, [user.coverphotoUrl]);
-
-    useEffect(() => {
-        fetchFriendsData(user.uid, setFriends);
-    }, [user.uid]);
-
-    useEffect(() => {
-        if (friends.length > 0) {
-            fetchFriendDetailsData(friends, setFriends);
-        }
-    }, [friends]);
 
     return (
         <div className="userpage">

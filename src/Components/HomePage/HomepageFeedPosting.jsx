@@ -1,13 +1,13 @@
 import "../../CSS/HomePage/HomepageFeedPosting.css";
 import React, { useState, useRef, useEffect } from 'react';
+import firebase from "firebase/compat/app";
+import EmojiPicker from 'emoji-picker-react';
 import { useSelector } from 'react-redux';
 import { db, storage } from '../../Firebase/firebase';
 import { Avatar, IconButton, Modal } from '@mui/material';
-import firebase from "firebase/compat/app";
-import EmojiPicker from 'emoji-picker-react';
+import bgcolorIcon from '../../Assets/Images/Aa.png'
 import CloseIcon from '@mui/icons-material/Close';
 import SentimentSatisfiedAltOutlinedIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
-import bgcolorIcon from '../../Assets/Images/Aa.png'
 
 function HomepageFeedPosting() {
     const user = useSelector((state) => state.data.user.user);
@@ -98,8 +98,8 @@ function HomepageFeedPosting() {
                         });
                     }
                 );
-            } 
-            
+            }
+
             else if (mediaType === "video") {
                 const uploadTask = storage.ref(`Posts/${user.uid}/${media.name}`).put(media);
 
@@ -162,75 +162,74 @@ function HomepageFeedPosting() {
     }, []);
 
     return (
-        <div className='homepage_feedsPosting'>
-            <div className="homepage_feedsPosting_top">
+        <div className='homepageFeedPosting'>
+            <div className="homepageFeedPostingTop">
                 <Avatar src={user.photoURL} />
                 <input type="text" placeholder={`What's on your mind ${user.username}?`} onClick={handleOpen} />
             </div>
 
-            <div className="homepage_feedsPosting_bottom">
-                <div className="homepage_feedsPosting_bottomOption">
+            <div className="homepageFeedPostingBottom">
+                <div className="homepageFeedPostingBottomOption">
                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/c0dWho49-X3.png?_nc_eui2=AeHnEIjVawZBI76yMIMwddXsVnUPE18ZZ-dWdQ8TXxln51Q2S_zbzfHpnn234I7BWgTtb2IssbzIPCV_o410lzBg" alt="" />
                     <p>Live video</p>
                 </div>
-                <div className="homepage_feedsPosting_bottomOption" onClick={handleOpen}>
+                <div className="homepageFeedPostingBottomOption" onClick={handleOpen}>
                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j" alt="" />
                     <p>Photo/video</p>
                 </div>
-                <div className="homepage_feedsPosting_bottomOption">
+                <div className="homepageFeedPostingBottomOption">
                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Y4mYLVOhTwq.png?_nc_eui2=AeHSN24y7ZwUiP0ks-vc5M5LvPIN-OmHLJy88g346YcsnMgGxvtWqzXUT3WG--zLIURpvgdh0oglkNtF3k-n2n77" alt="" />
                     <p>Feeling/activity</p>
                 </div>
             </div>
 
             <Modal open={open} onClose={handleClose}>
-                <div className="postingModal">
-                    <form action="">
-                        <div className="postingModal_Top">
-                            <p>Create Post</p>
-                            <CloseIcon onClick={handleClose} />
+                <form className="postingModal">
+                    <div className="postingModal_Top">
+                        <p>Create Post</p>
+                        <CloseIcon onClick={handleClose} />
+                    </div>
+
+                    <div className="postingModal_Middle">
+                        <div className="postingModal_MiddleTop">
+                            <Avatar src={user.photoURL} />
+                            <p>{user.username}</p>
+                        </div>
+                        <div className="postingModal_MiddleMiddle">
+                            <textarea cols="5" placeholder="What's on your mind" value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
+                        </div>
+                        <div className="postingModal_MiddleBottom">
+                            <img src={bgcolorIcon} alt="" />
+                            <SentimentSatisfiedAltOutlinedIcon onClick={toggleDialog} ref={dialogBoxRef} />
+                            {isDialogVisible && (
+                                <EmojiPicker onEmojiClick={handleEmojiClick} />
+                            )}
                         </div>
 
-                        <div className="postingModal_Middle">
-                            <div className="postingModal_MiddleTop">
-                                <Avatar src={user.photoURL} />
-                                <p>{user.username}</p>
-                            </div>
-                            <div className="postingModal_MiddleMiddle">
-                                <textarea cols="5" placeholder="What's on your mind" value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
-                            </div>
-                            <div className="postingModal_MiddleBottom">
-                                <img src={bgcolorIcon} alt="" />
-                                <SentimentSatisfiedAltOutlinedIcon onClick={toggleDialog} ref={dialogBoxRef} />
-                                {isDialogVisible && (
-                                    <EmojiPicker onEmojiClick={handleEmojiClick} />
-                                )}
-                            </div>
+                        <input type="file" id="mediaFile" accept="image/*,video/*" onChange={handleMediaChange} style={{ display: 'none' }} />
+                    </div>
 
-                            <input type="file" id="mediaFile" accept="image/*,video/*" onChange={handleMediaChange} style={{ display: 'none' }} />
+                    <div className="postingModal_Bottom">
+                        <div className="postingModal_BottomLeft">
+                            <p>Add to your post</p>
                         </div>
+                        <div className="postingModal_BottomRight">
+                            <IconButton onClick={uploadWithClick}>
+                                <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j" alt="" />
+                            </IconButton>
+                            <IconButton>
+                                <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/c0dWho49-X3.png?_nc_eui2=AeHnEIjVawZBI76yMIMwddXsVnUPE18ZZ-dWdQ8TXxln51Q2S_zbzfHpnn234I7BWgTtb2IssbzIPCV_o410lzBg" alt="" />
+                            </IconButton>
+                            <IconButton>
+                                <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Y4mYLVOhTwq.png?_nc_eui2=AeHSN24y7ZwUiP0ks-vc5M5LvPIN-OmHLJy88g346YcsnMgGxvtWqzXUT3WG--zLIURpvgdh0oglkNtF3k-n2n77" alt="" />
+                            </IconButton>
+                        </div>
+                    </div>
 
-                        <div className="postingModal_Bottom">
-                            <div className="postingModal_BottomLeft">
-                                <p>Add to your post</p>
-                            </div>
-                            <div className="postingModal_BottomRight">
-                                <IconButton onClick={uploadWithClick}>
-                                    <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j" alt="" />
-                                </IconButton>
-                                <IconButton>
-                                    <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/c0dWho49-X3.png?_nc_eui2=AeHnEIjVawZBI76yMIMwddXsVnUPE18ZZ-dWdQ8TXxln51Q2S_zbzfHpnn234I7BWgTtb2IssbzIPCV_o410lzBg" alt="" />
-                                </IconButton>
-                                <IconButton>
-                                    <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Y4mYLVOhTwq.png?_nc_eui2=AeHSN24y7ZwUiP0ks-vc5M5LvPIN-OmHLJy88g346YcsnMgGxvtWqzXUT3WG--zLIURpvgdh0oglkNtF3k-n2n77" alt="" />
-                                </IconButton>
-                            </div>
-                        </div>
-                        {media !== null && <personalbar className='image_progress'>Media is added</personalbar>}
-                        {progress != 0 && <progress className='post_progress' value={progress} max="100" />}
-                        <button type="submit" id="submitBtn" onClick={handleUpload}>Post</button>
-                    </form>
-                </div>
+                    {media !== null && <personalbar className='image_progress'>Media is added</personalbar>}
+                    {progress != 0 && <progress className='post_progress' value={progress} max="100" />}
+                    <button type="submit" id="submitBtn" onClick={handleUpload}>Post</button>
+                </form>
             </Modal >
         </div >
     )

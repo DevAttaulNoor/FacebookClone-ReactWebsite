@@ -5,18 +5,18 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 function HomepageRightbarGroupsList() {
     return (
-        <div className='homepage_rightbar_groupslist'>
-            <div className="homepage_rightbar_groupslistTop">
-                <div className="homepage_rightbar_groupslistTopLeft">
+        <div className='homepageRightbarGroupsList'>
+            <div className="homepageRightbarGroupsList_Top">
+                <div className="homepageRightbarGroupsList_TopLeft">
                     <h4>Group conversations</h4>
                 </div>
-                <div className="homepage_rightbar_groupslistTopRight">
+                <div className="homepageRightbarGroupsList_TopRight">
                     <MoreHorizIcon />
                 </div>
             </div>
 
-            <div className="homepage_rightbar_groupslistBody">
-                <div className="homepage_rightbar_groupslistBodyOptions">
+            <div className="homepageRightbarGroupsList_Body">
+                <div className="homepageRightbarGroupsList_BodyOptions">
                     <AddIcon />
                     <p>Create New Group</p>
                 </div>

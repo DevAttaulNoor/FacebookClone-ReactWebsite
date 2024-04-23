@@ -1,15 +1,17 @@
 import '../../CSS/ProfilePage/ProfilepageInfo.css';
 import React, { useEffect, useState } from 'react';
 import { db } from '../../Firebase/firebase';
+import { useSelector } from 'react-redux';
 
 function ProfilepageInfo({ userData }) {
+    const friendFriends = useSelector((state) => state.data.friends.friendFriends);
     const [bio, setBio] = useState('');
 
     useEffect(() => {
         const docRef = db.collection("Users")
-            .doc(userData.uid)
+            .doc(friendFriends.friendUid)
             .collection("Intro")
-            .doc(userData.uid);
+            .doc(friendFriends.friendUid);
 
         const unsubscribe = docRef.onSnapshot((doc) => {
             if (doc.exists) {
@@ -23,7 +25,7 @@ function ProfilepageInfo({ userData }) {
 
         // Cleanup the subscription when the component is unmounted
         return () => unsubscribe();
-    }, [userData.uid]);
+    }, [friendFriends.friendUid]);
 
     return (
         <div className='ProfilePageInfo'>

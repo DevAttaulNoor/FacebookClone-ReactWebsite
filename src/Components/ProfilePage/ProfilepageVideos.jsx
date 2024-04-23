@@ -2,15 +2,17 @@ import "../../CSS/ProfilePage/ProfilepageVideos.css";
 import React, { useEffect, useState } from 'react';
 import { NavLink } from "react-router-dom";
 import firebase from "firebase/compat/app";
+import { useSelector } from "react-redux";
 
 function ProfilepageVideos({userData}) {
+    const friendFriends = useSelector((state) => state.data.friends.friendFriends);
     const [videoUrls, setVideoUrls] = useState([]);
 
     useEffect(() => {
         // Fetch videos from the specified path
         const fetchVideos = async () => {
             const urls = [];
-            const storageRef = firebase.storage().ref(`Posts/${userData.uid}`);
+            const storageRef = firebase.storage().ref(`Posts/${friendFriends.friendUid}`);
 
             // List items (Videos) in the user's folder
             try {
@@ -31,7 +33,7 @@ function ProfilepageVideos({userData}) {
             setVideoUrls(urls);
         };
         fetchVideos();
-    }, [userData]);
+    }, [friendFriends]);
 
     return (
         <div className='ProfilePageVideos'>

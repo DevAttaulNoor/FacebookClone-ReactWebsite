@@ -1,43 +1,43 @@
 /** HomePage Rightbar FriendsList Section */
 
 /* HomePage Rightbar FriendsList Top Section */
-.homepageRightbarFriendList_Top{
+.homepageRightbarFriendsList_Top {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     margin: 0 0 2px 10px;
 }
 
-.homepageRightbarFriendList_TopLeft h4{
-    color: #65676B;
+.homepageRightbarFriendsList_TopLeft h4 {
     font-size: 15px;
     font-weight: 500;
+    color: #65676B;
 }
 
-.homepageRightbarFriendList_TopRight{
+.homepageRightbarFriendsList_TopRight {
     display: flex;
     align-items: center;
 }
 
-.homepageRightbarFriendList_TopRight svg{
-    color: #65676B;
-    width: 22px;
-    height: 22px;
+.homepageRightbarFriendsList_TopRight svg {
+    width: 32px;
+    height: 32px;
     padding: 6px;
     border-radius: 50%;
+    color: #65676B;
 }
 
-.homepageRightbarFriendList_TopRight svg:first-child{
+.homepageRightbarFriendsList_TopRight svg:first-child {
     margin-right: 4px;
 }
 
-.homepageRightbarFriendList_TopRight svg:hover{
+.homepageRightbarFriendsList_TopRight svg:hover {
     cursor: pointer;
     background-color: rgb(211 211 211/33%);
 }
 
 /* HomePage Rightbar FriendsList Body Section */
-.homepageRightbarFriendList_BottomOption{
+.homepageRightbarFriendsList_BottomOption {
     display: flex;
     align-items: center;
     padding: 8px;
@@ -45,26 +45,25 @@
     border-radius: 8px;
 }
 
-.homepageRightbarFriendList_BottomOption .avatar{
-    margin: 0 10px 0 0;
-    width: 40px;
-    height: 40px;
+.homepageRightbarFriendsList_BottomOption .MuiAvatar-root {
+    width: 38px;
+    height: 38px;
 }
 
-.homepageRightbarFriendList_BottomOption:hover{
+.homepageRightbarFriendsList_BottomOption:hover {
     cursor: pointer;
     background-color: rgb(211 211 211/33%);
 }
 
-.homepageRightbarFriendList_BottomOption p{
-    margin-left: 10px;
+.homepageRightbarFriendsList_BottomOption p {
     font-size: 14px;
     font-weight: 600;
+    margin-left: 10px;
 }
 
-.homepageRightbarFriendList_BottomOption a{
-    color: initial;
-    text-decoration: none;
+.homepageRightbarFriendsList_BottomOption a {
     display: flex;
     align-items: center;
+    text-decoration: none;
+    color: initial;
 }

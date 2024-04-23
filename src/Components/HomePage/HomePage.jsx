@@ -77,7 +77,7 @@ function HomePage() {
 
     return (
         <div className='homepage'>
-            <div className='homePageLeftbar'>
+            <div className='homepageLeftbar'>
                 <NavLink to="/userhomepage">
                     <HomepageLeftbarOptions src={user.photoURL} title={user.username} />
                 </NavLink>
@@ -103,7 +103,7 @@ function HomePage() {
                 </div>
             </div>
 
-            <div className='homepage_Feeds'>
+            <div className='homepageFeed'>
                 <HomepageFeedReels />
                 <HomepageFeedPosting />
 
@@ -134,19 +134,19 @@ function HomePage() {
                 )}
             </div>
 
-            <div className='homePageRightbar'>
-                <div className="homePageRightbar_Top">
+            <div className='homepageRightbar'>
+                <div className="homepageRightbarTop">
                     <HomepageRightbarFriendsList />
                 </div>
 
                 <hr id='line' />
 
-                <div className="homePageRightbar_Bottom">
+                <div className="homepageRightbarBottom">
                     <HomepageRightbarGroupsList />
                 </div>
             </div>
 
-            <div className="msgRelated">
+            <div className="newMsgContainer">
                 <div id='newMsg'>
                     <i onClick={() => setMessageBox(true)}></i>
                 </div>

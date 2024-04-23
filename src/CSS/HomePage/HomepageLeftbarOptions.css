@@ -1,30 +1,31 @@
-.homepage_leftbarOptions{
+/** Homepage Leftbar Options Section */
+.homepageLeftbarOptions{
     display: flex;
     align-items: center;
     padding: 8px 10px;
     border-radius: 8px;
 }
 
-.homepage_leftbarOptions:hover{
-    background-color: rgb(211 211 211/33%);
+.homepageLeftbarOptions:hover{
     cursor: pointer;
+    background-color: rgb(211 211 211/33%);
 }
 
-.homepage_leftbarOptions p {
+.homepageLeftbarOptions p {
+    font-size: 15px;
     font-weight: 500;
     padding-left: 12px;
-    font-size: 15px;
 }
 
-.homepage_leftbarOptions .MuiAvatar-root{
-    height: 36px;
+.homepageLeftbarOptions .MuiAvatar-root{
     width: 36px;
+    height: 36px;
 }
 
-.homepage_leftbarOptions .MuiSvgIcon-root{
-    height: 26px;
-    width: 26px;
-    padding: 5px;
+.homepageLeftbarOptions .MuiSvgIcon-root{
+    width: 36px;
+    height: 36px;
+    padding: 4px;
     border-radius: 50%;
     background-color: #E4E6EB;
 }

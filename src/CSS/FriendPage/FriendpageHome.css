@@ -1,0 +1,22 @@
+/** FriendPage Home Section */
+.friendpageHome {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
+    padding: 20px 55px;
+}
+
+/* FriendPage Home Top Section */
+.friendpageHomeTop p {
+    font-size: 20px;
+    font-weight: 650;
+    padding: 10px 0 15px;
+}
+
+/* FriendPage Home Bottom Section */
+.friendpageHomeBottom {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}

@@ -1,185 +1,180 @@
-/* HomePage Feeds StoryReels Section */
-.homepage_feeds_StoryReels {
-    background-color: #fff;
+/** HomePage Feeds Reels Section */
+.homepageFeedReels {
     width: 100%;
     padding: 8px;
     border-radius: 10px;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
-    box-sizing: border-box;
+    background-color: #fff;    
 }
 
-.homepage_feeds_StoryReels a {
-    color: initial;
+.homepageFeedReels a {
     text-decoration: none;
+    color: initial;
 }
 
-/* HomePage Feeds StoryReels Inner Section */
-.homepage_feeds_StoryReels_Inner {
-    padding: 8px;
+/* HomePage Feeds Reels Inner Section */
+.homepageFeedReelsInner {
     display: flex;
     align-items: center;
+    padding: 8px;
     border-radius: 10px;
 }
 
-.homepage_feeds_StoryReels_Inner:hover {
+.homepageFeedReelsInner:hover {
     cursor: pointer;
     background-color: whitesmoke;
 }
 
-.homepage_feeds_StoryReels_Inner .MuiSvgIcon-root {
-    background-color: #EBF5FF;
+.homepageFeedReelsInner .MuiSvgIcon-root {
+    width: 36px;
+    height: 36px;
+    padding: 8px;
     border-radius: 50%;
     color: #1877F2;
-    padding: 8px;
+    background-color: #EBF5FF;
 }
 
-.homepage_feeds_StoryReels_Inner .homepage_feeds_StoryReels_InnerInfo {
+.homepageFeedReelsInner .homepageFeedReelsInnerInfo {
     display: flex;
     flex-direction: column;
     margin-left: 12px;
 }
 
-.homepage_feeds_StoryReels_Inner h2 {
+.homepageFeedReelsInner h2 {
     font-size: 18px;
     font-weight: 600;
 }
 
-.homepage_feeds_StoryReels_Inner p {
+.homepageFeedReelsInner p {
     font-size: 14px;
     font-weight: 400;
     color: gray;
 }
 
-/* HomePage Feeds StoryReels With Reels Section */
-.scroll-container {
+/* HomePage Feeds Reels Scroll Section */
+.homepageFeedReels_Scroll {
     position: relative;
     overflow: auto;
 }
 
-.scroll-container button {
+.homepageFeedReels_Scroll button {
     position: absolute;
-    border-radius: 50%;
-    padding: 8px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    border: none;
+    justify-content: center;
+    padding: 8px;
     outline: none;
-    background-color: #fff;
+    border: none;
+    border-radius: 50%;
     z-index: 999;
+    background-color: #fff;
 }
 
-.scroll-container #leftScroll {
+.homepageFeedReels_Scroll #leftScroll {
     top: 45%;
     left: 20px;
 }
 
-.scroll-container #rightScroll {
+.homepageFeedReels_Scroll #rightScroll {
     top: 45%;
     right: 20px;
 }
 
-.reel-text-overlay {
-    background-color: transparent;
-    color: white;
-    text-align: center;
-    font-size: 12px;
-}
-
-.homepage_feeds_StoryReels_withReels {
+/* HomePage Feeds Reels Scroll Reels Section */
+.homepageFeedReels_ScrollReels {
     display: flex;
     overflow-x: auto;
     scroll-behavior: smooth;
 }
 
-.homepage_feeds_StoryReels_withReels::-webkit-scrollbar {
+.homepageFeedReels_ScrollReels::-webkit-scrollbar {
     display: none;
 }
 
-.homepage_feeds_StoryReels_withReels a {
-    color: initial;
-    text-decoration: none;
+.homepageFeedReels_ScrollReels a {
     height: fit-content;
+    text-decoration: none;
+    color: initial;
 }
 
-/* HomePage Feeds StoryReels With Reels Inner Section */
-.homepage_feeds_StoryReels_withReelsInner {
+.homepageFeedReels_ScrollReelsInner {
     position: relative;
-    box-shadow: 0px 5px 5px -7px rgb(0, 0, 0, 0.75);
-    border-radius: 10px;
+    width: 133px;
+    height: 244px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 244px;
-    width: 133px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 5px -7px rgb(0, 0, 0, 0.75);
 }
 
-.homepage_feeds_StoryReels_withReelsInner img {
+.homepageFeedReels_ScrollReelsInner img {
+    height: 142px;
     flex: 1;
     object-fit: cover;
-    height: 142px;
     border-radius: 10px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-.createStory {
+.homepageFeedReels_ScrollReelsInner .ScrollReelsCreate {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: #fff;
     flex: 0.25;
     border-radius: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    background-color: #fff;
 }
 
-.createStory h3 {
+.homepageFeedReels_ScrollReelsInner .ScrollReelsCreate h3 {
     font-size: 14px;
     font-weight: 550;
     padding-top: 8px;
 }
 
-.createStory .MuiSvgIcon-root {
-    background-color: #1877F2;
-    border: 3px solid #fff;
-    border-radius: 50%;
-    color: #fff;
-    padding: 3px;
+.homepageFeedReels_ScrollReelsInner .ScrollReelsCreate .MuiSvgIcon-root {
     position: absolute;
     bottom: 32px;
     left: 51px;
+    padding: 3px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    color: #fff;
+    background-color: #1877F2;
 }
 
-/* HomePage Feeds StoryReels With Reels Stories Section */
-.homepage_feeds_StoryReels_withReelsStories {
+.homepageFeedReels_ScrollReelsStories {
     position: relative;
-    box-shadow: 0px 5px 5px -7px rgb(0, 0, 0, 0.75);
-    border-radius: 10px;
+    width: 110px;
+    height: 220px;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 220px;
-    width: 110px;
     padding: 12px;
-    flex-shrink: 0;
     margin-left: 8px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 5px -7px rgb(0, 0, 0, 0.75);
 }
 
-.homepage_feeds_StoryReels_withReelsStories .MuiAvatar-root {
-    border: 3px solid #2381fa;
+.homepageFeedReels_ScrollReelsStories .MuiAvatar-root {
     width: 35px;
     height: 35px;
+    border: 3px solid #2381fa;
 }
 
-.homepage_feeds_StoryReels_withReelsStories p {
+.homepageFeedReels_ScrollReelsStories p {
     font-size: 13px;
     font-weight: 500;
     color: #fff;
 }
 
-.homepage_feeds_StoryReels_withReelsInner {
-    display: flex;
-    flex-direction: column;
+.ReelsStoriesTextOverlay {
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    background-color: transparent;
 }

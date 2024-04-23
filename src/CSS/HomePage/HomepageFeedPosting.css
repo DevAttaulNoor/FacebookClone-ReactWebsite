@@ -1,5 +1,5 @@
 /** HomePage Feed Posting Section */
-.homepage_feedsPosting {
+.homepageFeedPosting {
     display: flex;
     flex-direction: column;
     background-color: #fff;
@@ -12,13 +12,13 @@
 }
 
 /* HomePage Feed Posting Top Section */
-.homepage_feedsPosting_top {
+.homepageFeedPostingTop {
     display: flex;
     align-items: center;
     flex: 1;
 }
 
-.homepage_feedsPosting_top input {
+.homepageFeedPostingTop input {
     width: 100%;
     border: 0;
     outline: 0;
@@ -29,7 +29,7 @@
 }
 
 /* HomePage Feed Posting Bottom Section */
-.homepage_feedsPosting_bottom {
+.homepageFeedPostingBottom {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2px;
@@ -38,7 +38,7 @@
     margin-top: 12px;
 }
 
-.homepage_feedsPosting_bottomOption {
+.homepageFeedPostingBottomOption {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -46,19 +46,19 @@
     border-radius: 8px;
 }
 
-.homepage_feedsPosting_bottomOption:hover {
+.homepageFeedPostingBottomOption:hover {
     cursor: pointer;
     background-color: #E4E6EB;
 }
 
-.homepage_feedsPosting_bottomOption p {
+.homepageFeedPostingBottomOption p {
     margin-left: 8px;
     font-size: 14px;
     font-weight: 500;
     color: #65676B;
 }
 
-.homepage_feedsPosting_bottomOption img {
+.homepageFeedPostingBottomOption img {
     width: 22px;
 }
 
@@ -90,7 +90,7 @@ progress {
     color: green;
 }
 
-.postingModal form #submitBtn {
+.postingModal #submitBtn {
     font-size: 14px;
     font-weight: 600;
     color: #fff;
@@ -122,6 +122,8 @@ progress {
     position: absolute;
     top: 11px;
     right: 12px;
+    width: 32px;
+    height: 32px;
     padding: 6px;
     border-radius: 50%;
     background-color: #E4E6EB;

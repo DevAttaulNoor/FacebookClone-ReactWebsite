@@ -1,76 +1,75 @@
-/** FriendsPage AllFriends Section */
-.friendspage_Allfriends{
+/** FriendPage AllFriends Section */
+.friendpageAllFriends{
     height: 92vh;
     display: flex;
     overflow: hidden;
 }
 
-/* FriendsPage AllFriends Main Section */
-/* .friendspage_Allfriends_Main{
+/* FriendPage AllFriends Main Section */
+.friendpageAllFriendsMain {
     width: 100%;
-    overflow-y: auto;
-} */
-
-
-
-
-
-/** Friends All friends Leftbar Section*/
-.friendspage_allfriends_Leftbar {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    align-items: flex-start;
+    overflow-y: auto;
+}
+
+/* FriendPage AllFriends Leftbar Section */
+.friendpageAllFriendsLeftbar {
     width: 310px;
-    background-color: #fff;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     padding: 8px;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+    background-color: #fff;
 }
 
-/* Friends All friends Leftbar Top Section*/
-.friendspage_allfriends_LeftbarTop {
+/* FriendPage AllFriends Leftbar Top Section */
+.friendpageAllFriendsLeftbarTop {
     display: flex;
     flex-direction: column;
 }
 
-.friendspage_allfriends_LeftbarTop_Top {
+.friendpageAllFriendsLeftbarTop_Top {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.friendspage_allfriends_LeftbarTop_Top .MuiSvgIcon-root a {
+.friendpageAllFriendsLeftbarTop_Top .MuiSvgIcon-root a {
     color: initial;
 }
 
-.friendspage_allfriends_LeftbarTop_Top .MuiSvgIcon-root {
+.friendpageAllFriendsLeftbarTop_Top .MuiSvgIcon-root {
     padding: 6px;
     color: #000;
 }
 
-.friendspage_allfriends_LeftbarTop_Top .MuiSvgIcon-root:hover {
+.friendpageAllFriendsLeftbarTop_Top .MuiSvgIcon-root:hover {
     border-radius: 50%;
     background-color: whitesmoke;
 }
 
-.friendspage_allfriends_LeftbarTop_Top .texts {
+.friendpageAllFriendsLeftbarTop_Top .texts {
     margin-left: 15px
 }
 
-.friendspage_allfriends_LeftbarTop_Top .texts #mainText {
+.friendpageAllFriendsLeftbarTop_Top .texts #mainText {
     font-size: 10px;
     font-weight: 500;
 }
 
-.friendspage_allfriends_LeftbarTop_Top .texts #sideText {
+.friendpageAllFriendsLeftbarTop_Top .texts #sideText {
     font-size: 24px;
     font-weight: 600;
 }
 
-.friendspage_allfriends_LeftbarTop_Bottom {
+.friendpageAllFriendsLeftbarTop_Bottom {
     margin-bottom: 15px;
 }
 
-.friendspage_allfriends_LeftbarTop_Bottom .searchInp {
+.friendpageAllFriendsLeftbarTop_Bottom .searchInp {
     display: flex;
     align-items: center;
     background-color: #F0F2F5;
@@ -79,13 +78,13 @@
     height: 35px;
 }
 
-.friendspage_allfriends_LeftbarTop_Bottom .searchInp .MuiSvgIcon-root {
+.friendpageAllFriendsLeftbarTop_Bottom .searchInp .MuiSvgIcon-root {
     color: gray;
     height: 20px;
     padding: 0px 3px 0 0;
 }
 
-.friendspage_allfriends_LeftbarTop_Bottom .searchInp input {
+.friendpageAllFriendsLeftbarTop_Bottom .searchInp input {
     border: 0;
     outline: 0;
     background-color: transparent;
@@ -94,19 +93,19 @@
 }
 
 /* Friends All friends Leftbar Bottom Section*/
-.friendspage_allfriends_LeftbarBottom {
+.friendpageAllFriendsLeftbarBottom {
     display: flex;
     flex-direction: column;
     margin-top: 10px;
 }
 
-.friendspage_allfriends_LeftbarBottom #friendsCount {
+.friendpageAllFriendsLeftbarBottom #friendsCount {
     margin: 0 0 8px 8px;
     font-size: 15px;
     font-weight: 600;
 }
 
-.friendspage_allfriends_LeftbarBottom .friendsList {
+.friendpageAllFriendsLeftbarBottom .friendsList {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -114,36 +113,36 @@
     position: relative;
 }
 
-.friendspage_allfriends_LeftbarBottom .friendsList:hover {
+.friendpageAllFriendsLeftbarBottom .friendsList:hover {
     background-color: whitesmoke;
     cursor: pointer;
     border-radius: 8px;
 }
 
-.friendspage_allfriends_LeftbarBottom .friendsList .MuiSvgIcon-root {
+.friendpageAllFriendsLeftbarBottom .friendsList .MuiSvgIcon-root {
     padding: 5px;
 }
 
-.friendspage_allfriends_LeftbarBottom .friendsList .MuiSvgIcon-root:hover {
+.friendpageAllFriendsLeftbarBottom .friendsList .MuiSvgIcon-root:hover {
     border-radius: 50%;
     background-color: rgb(202, 202, 202);
     cursor: pointer;
 }
 
-.friendspage_allfriends_LeftbarBottom .friendsList .friendsListInfo {
+.friendpageAllFriendsLeftbarBottom .friendsList .friendsListInfo {
     display: flex;
     align-items: center;
     margin: 8px 0;
 }
 
-.friendspage_allfriends_LeftbarBottom .friendsList .friendsListInfo a {
+.friendpageAllFriendsLeftbarBottom .friendsList .friendsListInfo a {
     display: flex;
     align-items: center;
     color: initial;
     text-decoration: none;
 }
 
-.friendspage_allfriends_LeftbarBottom .friendsList .friendsListInfo p {
+.friendpageAllFriendsLeftbarBottom .friendsList .friendsListInfo p {
     margin-left: 8px;
 }
 
@@ -175,18 +174,4 @@
     border: none;
     outline: none;
     border-bottom: 1px solid gray;
-}
-
-
-
-
-/** FriendsPage AllFriends Main Section */
-.friendspage_AllfriendsMain {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    /* width: fit-content; */
-
-    width: 100%;
-    overflow-y: auto;
 }

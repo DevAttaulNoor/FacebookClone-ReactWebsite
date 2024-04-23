@@ -1,103 +1,97 @@
-/** HomePage Section */
+/** Homepage Section */
 .homepage {
     width: 100%;
+    height: 93vh;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    justify-items: center;
+    gap: 80px;
+    overflow-y: auto;
+}
+
+/* Homepage Leftbar Section */
+.homepageLeftbar{
+    position: sticky;
+    top: 0px;
+    width: 100%;
+    height: 93vh;
+    padding: 16px 0 0 8px;
+    overflow-y: auto;
+}
+
+.homepageLeftbar a{
+    text-decoration: none;
+    color: initial;
+}
+
+.homepageLeftbar .terms{
+    margin: 6px 0 0 12px;
+}
+
+.homepageLeftbar .terms p{
+    font-size: 12px;
+    font-weight: 400;
+    white-space: pre-wrap;
+    color: gray;
+}
+
+.homepageLeftbar .terms p span:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.homepageFeed{
+    width: 600px;
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin: 15px 0;
+    flex-direction: column;
+    padding: 16px 0;
 }
 
-/* HomePage Leftbar Section */
-.homepage_Leftbar{
-    width: 320px;
-    top: 71px;
+/** HomePage Rightbar Section */
+.homepageRightbar{
     position: sticky;
+    top: 0px;
+    width: 100%;
+    height: 93vh;
+    padding: 16px 8px 0 0;
     overflow-y: auto;
+    /* position: relative; */
 }
 
-/* HomePage Rightbar Section */
-.homepage_Rightbar{
-    width: 320px;
-    height: 87vh;
-    top: 71px;
-    position: sticky;
-    overflow-y: auto;
+.homepageRightbar #line{
+    color: whitesmoke;
+    margin-left: 8px;
 }
+
 
 /* HomePage New Message Section */
-.msgRelated{
+.newMsgContainer{
     position: fixed;
-    right: 0;
-    bottom: 0;
+    right: 6px;
+    bottom: 0px;
 }
 
-.msgRelated #newMsg{
+.newMsgContainer #newMsg{
     position: absolute;
     bottom: 15px;
     right: 25px;
     display: flex;
     align-items: center;
-    padding: 12px;
+    padding: 14px;
     border-radius: 50%;
-    background-color: #fff;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+    background-color: #fff;
 }
 
-.msgRelated #newMsg:hover{
+.newMsgContainer #newMsg:hover{
     cursor: pointer;
     background-color: #F2F5F7;
 }
 
-.msgRelated #newMsg i{
+.newMsgContainer #newMsg i{
+    width: 20px;
+    height: 20px;
     background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/yN/r/x0nBY5aSKtI.png");
     background-position: 0px -172px;
     background-size: auto;
-    width: 20px;
-    height: 20px;
-}
-
-
-/** HomePage Leftbar Section */
-.homePageLeftbar{
-    overflow-y: auto;
-    overflow-x: hidden;
-    margin-left: 8px;
-}
-
-.homePageLeftbar a{
-    text-decoration: none;
-    color: initial;
-}
-
-.homePageLeftbar .terms{
-    margin: 6px 0 0 12px;
-}
-
-.homePageLeftbar .terms p{
-    font-size: 12px;
-    font-weight: 400;
-    color: gray;
-    white-space: pre-wrap;
-}
-
-.homePageLeftbar .terms p span:hover{
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-.homepage_Feeds{
-    display: flex;
-    flex-direction: column;
-    width: 600px;
-}
-
-/** HomePage Rightbar Section */
-.homePageRightbar{
-    position: relative;
-    margin-right: 8px;
-}
-
-.homePageRightbar #line{
-    color: whitesmoke;
-    margin-left: 8px;
 }

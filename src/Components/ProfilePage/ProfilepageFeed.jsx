@@ -3,17 +3,23 @@ import React, { useEffect, useState } from 'react';
 import { db } from '../../Firebase/firebase';
 import HomepageFeedPosts from '../HomePage/HomepageFeedPosts';
 import HomepageFeedPosting from '../HomePage/HomepageFeedPosting';
+import { useSelector } from 'react-redux';
 
 function ProfilepageFeed({ userData }) {
     const [posts, setPosts] = useState([]);
     const [joinedposts, setJoinedPosts] = useState([]);
+
+    const friendFriends = useSelector((state) => state.data.friends.friendFriends);
+    // const friendFriendsData = useSelector((state) => state.data.friends.friendFriendsData);
+    console.log(friendFriends)
+
 
     useEffect(() => {
         const unsubscribe = db.collection("Posts")
             .orderBy("timestamp", "desc")
             .onSnapshot(snapshot => {
                 const filteredPosts = snapshot.docs
-                    .filter(doc => doc.data().uid === userData.uid) // Filter posts by userUid
+                    .filter(doc => doc.data().uid === friendFriends.friendUid) // Filter posts by userUid
                     .filter(doc => !doc.data().dob) // Filter out posts with a "dob" attribute
                     .map(doc => ({
                         id: doc.id,
@@ -23,7 +29,7 @@ function ProfilepageFeed({ userData }) {
                 setPosts(filteredPosts);
             });
         return () => unsubscribe();
-    }, [userData.uid]);
+    }, [friendFriends.friendUid]);
 
     const timeAgo = (timestamp) => {
         if (!timestamp || !timestamp.toDate) {
@@ -64,7 +70,7 @@ function ProfilepageFeed({ userData }) {
         const unsubscribeJoined = db.collection("Posts")
             .onSnapshot(snapshot => {
                 const filteredJoinedPosts = snapshot.docs
-                    .filter(doc => doc.data().uid === userData.uid) // Filter posts by userUid
+                    .filter(doc => doc.data().uid === friendFriends.friendUid) // Filter posts by userUid
                     .filter(doc => doc.data().dob) // Filter out posts with a "dob" attribute
                     .map(doc => ({
                         id: doc.id,
@@ -74,7 +80,7 @@ function ProfilepageFeed({ userData }) {
                 setJoinedPosts(filteredJoinedPosts);
             });
         return () => unsubscribeJoined();
-    }, [userData.uid]);
+    }, [friendFriends.friendUid]);
 
     const formatJoinedDate = (timestamp) => {
         if (!timestamp || !timestamp.toDate) {

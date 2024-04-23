@@ -1,0 +1,22 @@
+/** Friendpage FriendReqs Section */
+.friendpageFriendReqs {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
+    padding: 20px 55px;
+}
+
+/* Friendpage FriendReqs Top Section */
+.friendpageFriendReqsTop p {
+    font-size: 20px;
+    font-weight: 650;
+    padding: 10px 0 15px;
+}
+
+/* Friendpage FriendReqs Bottom Section */
+.friendpageFriendReqsBottom {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}

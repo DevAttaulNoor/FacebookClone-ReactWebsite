@@ -1,4 +1,4 @@
-import '../../CSS/FriendsPage/FriendpageHome.css'
+import '../../CSS/FriendPage/FriendpageHome.css'
 import React, { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import { db } from '../../Firebase/firebase';
@@ -11,8 +11,8 @@ function FriendpageHome() {
     useEffect(() => {
         const fetchFilteredUsers = async () => {
             try {
-                const friendsCollection = db.collection('Users').doc(user?.uid).collection('Friends');
-                const friendRequestsCollection = db.collection('Users').doc(user?.uid).collection('friendRequests');
+                const friendsCollection = db.collection('Users').doc(user.uid).collection('Friends');
+                const friendRequestsCollection = db.collection('Users').doc(user.uid).collection('friendRequests');
 
                 const [friendsSnapshot, friendRequestsSnapshot] = await Promise.all([
                     friendsCollection.get(),
@@ -30,10 +30,11 @@ function FriendpageHome() {
                 }));
 
                 const filteredUsers = userData.filter(friend => (
-                    friend.id !== user?.uid &&
+                    friend.id !== user.uid &&
                     !friendUids.includes(friend.id) &&
                     !pendingRequests.includes(friend.id)
                 ));
+
                 setFilteredUsers(filteredUsers);
             }
 
@@ -46,12 +47,12 @@ function FriendpageHome() {
     }, [user?.uid]);
 
     return (
-        <div className="friendspageMainHome">
-            <div className="friendspageMainHome_top">
+        <div className="friendpageHome">
+            <div className="friendpageHomeTop">
                 <p>People you may know</p>
             </div>
             
-            <div className="friendspageMainHome_bottom">
+            <div className="friendpageHomeBottom">
                 {filteredUsers.map((friend) => (
                     <FriendCard key={friend.id} user={friend} />
                 ))}

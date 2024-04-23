@@ -1,43 +1,16 @@
-import '../../CSS/FriendsPage/FriendCard.css';
+import '../../CSS/FriendPage/FriendCard.css';
 import React, { useState, useEffect } from 'react';
 import { auth, db } from '../../Firebase/firebase';
 
 function FriendCard({ user }) {
-    const [friendRequestStatus, setFriendRequestStatus] = useState("not_sent");
+    const [friendRequestStatus, setFriendRequestStatus] = useState('');
     const [isRequestProcessing, setIsRequestProcessing] = useState(false);
     const currentUser = auth.currentUser;
     const senderUid = currentUser.uid;
 
-    // Check if a request from the current user to this friend already exists
-    useEffect(() => {
-        const checkFriendRequestStatus = async () => {
-            try {
-                const userDocRef = db.collection('Users').doc(user.uid);
-                const existingRequest = await userDocRef.collection('friendRequests')
-                    .where('senderUid', '==', senderUid)
-                    .where('receiverUid', '==', user.uid)
-                    .get();
-
-                if (!existingRequest.empty) {
-                    const requestStatus = existingRequest.docs[0].data().status;
-                    setFriendRequestStatus(requestStatus);
-                }
-
-                else {
-                    setFriendRequestStatus("not_sent");
-                }
-            }
-
-            catch (error) {
-                console.error('Error checking friend request status:', error);
-            }
-        };
-        checkFriendRequestStatus();
-    }, [senderUid, user.uid]);
-
     const sendFriendRequest = async () => {
         try {
-            if (friendRequestStatus === "not_sent" && !isRequestProcessing) {
+            if (friendRequestStatus === '' && !isRequestProcessing) {
                 setIsRequestProcessing(true);
 
                 const senderName = currentUser.displayName;
@@ -85,27 +58,54 @@ function FriendCard({ user }) {
                 setFriendRequestStatus("pending");
                 alert('Friend request sent!');
             }
-        } 
-        
+        }
+
         catch (error) {
             console.error('Error sending friend request:', error);
-        } 
-        
+        }
+
         finally {
             setIsRequestProcessing(false);
         }
     };
 
+    // Check if a request from the current user to this friend already exists
+    useEffect(() => {
+        const checkFriendRequestStatus = async () => {
+            try {
+                const userDocRef = db.collection('Users').doc(user.uid);
+                const existingRequest = await userDocRef.collection('friendRequests')
+                    .where('senderUid', '==', senderUid)
+                    .where('receiverUid', '==', user.uid)
+                    .get();
+
+                if (!existingRequest.empty) {
+                    const requestStatus = existingRequest.docs[0].data().status;
+                    setFriendRequestStatus(requestStatus);
+                }
+
+                else {
+                    setFriendRequestStatus('');
+                }
+            }
+
+            catch (error) {
+                console.error('Error checking friend request status:', error);
+            }
+        };
+        checkFriendRequestStatus();
+    }, [senderUid, user.uid]);
+    
     return (
-        <div className='friendsCard'>
-            <div className="friendsCard_top">
+        <div className='friendCard'>
+            <div className="friendCardTop">
                 <img src={user.photoURL} alt="" />
             </div>
-            
-            <div className="friendsCard_bottom">
+
+            <div className="friendCardBottom">
                 <p id="friendName">{user.username}</p>
                 <p id="friendMutual">Mutual friends</p>
-                {friendRequestStatus === "not_sent" && (
+                {friendRequestStatus === '' && (
                     <button
                         id="addBtn"
                         onClick={sendFriendRequest}

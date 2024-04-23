@@ -1,9 +1,9 @@
 import "../../CSS/ProfilePage/ProfilePage.css";
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import { Blurhash } from 'react-blurhash';
 import { db } from "../../Firebase/firebase";
-import { fetchFriendsData, fetchFriendDetailsData } from '../FriendPage/FriendpageAllFriends';
 import ProfilepageComponents from "./ProfilepageComponents";
 import AddIcon from '@mui/icons-material/Add';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -12,73 +12,30 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 function ProfilePage() {
     const { userid } = useParams();
-    const [friends, setFriends] = useState([]);
-    const [userData, setUserData] = useState('');
-    const [imageLoaded, setImageLoaded] = useState(false);
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const userDoc = await db.collection('Users').doc(userid).get();
-                if (userDoc.exists) {
-                    const userData = userDoc.data();
-                    setUserData(userData);
-                } else {
-                    console.log("User not found");
-                }
-            } catch (error) {
-                console.error('Error fetching user:', error);
-            }
-        };
-
-        fetchUser();
-    }, [userid]);
-
-    useEffect(() => {
-        fetchFriendsData(userData.uid, setFriends);
-    }, [userData.uid]);
-
-    useEffect(() => {
-        if (friends.length > 0) {
-            fetchFriendDetailsData(friends, setFriends);
-        }
-    }, [friends]);
-
-    useEffect(() => {
-        const img = new Image();
-        img.src = userData.coverphotoUrl;
-        img.onload = () => {
-            setImageLoaded(true);
-        };
-    }, [userData.coverphotoUrl]);
+    const friendFriends = useSelector((state) => state.data.friends.friendFriends);
+    const friendFriendsData = useSelector((state) => state.data.friends.friendFriendsData);
+    const selectedFriendFriends = friendFriends.filter(friend => friend.friendUid !== userid);
+    console.log(selectedFriendFriends)
 
     return (
         <div className="ProfilePage">
             <div className="ProfilePage_Top">
                 <div className="ProfilePage_TopCoverSection">
-                    {imageLoaded ? (
-                        <img
-                            src={userData.coverphotoUrl}
-                            alt="Cover"
-                        />
-                    ) : (
-                        <Blurhash
-                            hash={"LEHV6nWB2yk8pyo0adR*.7kCMdnj"}
-                            width={995}
-                            height={370}
-                        />
-                    )}
+                    <img
+                        src={friendFriendsData.coverphotoUrl}
+                        alt="Cover"
+                    />
                 </div>
 
                 <div className="ProfilePage_TopProfileSection">
                     <div className="ProfilePage_TopProfileSection_Left">
                         <div className="ProfilePage_TopProfileSection_LeftPhoto">
-                            <img src={userData.photoURL} alt="Profile" />
+                            <img src={friendFriendsData.photoURL} alt="Profile" />
                         </div>
 
                         <div className="ProfilePage_TopProfileSection_LeftInfo">
-                            <h3>{userData.username}</h3>
-                            <p>{friends.length} friends</p>
+                            <h3>{friendFriendsData.username}</h3>
+                            <p>{friendFriends.length} friends</p>
                         </div>
                     </div>
 
@@ -134,7 +91,7 @@ function ProfilePage() {
             </div>
 
             <div className="ProfilePage_Bottom">
-                <ProfilepageComponents userData={userData} />
+                <ProfilepageComponents />
             </div>
         </div>
     );

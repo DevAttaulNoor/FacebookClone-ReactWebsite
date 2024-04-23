@@ -10,13 +10,13 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 function HomepageFeedReels() {
-    const containerRef = useRef(null);
     const user = useSelector((state) => state.data.user.user);
     const [reels, setReels] = useState([]);
     const initialShowLeftButton = sessionStorage.getItem('showLeftButton') === 'true' || false;
     const initialShowRightButton = sessionStorage.getItem('showRightButton') === 'true' || false;
     const [showLeftButton, setShowLeftButton] = useState(initialShowLeftButton);
     const [showRightButton, setShowRightButton] = useState(initialShowRightButton);
+    const containerRef = useRef(null);
 
     const scrollLeft = () => {
         if (containerRef.current) {
@@ -100,15 +100,15 @@ function HomepageFeedReels() {
     return (
         <>
             {reels.length === 0 ? (
-                <div className='homepage_feeds_StoryReels'>
+                <div className='homepageFeedReels'>
                     <Routes>
                         <Route path='storyreels' element={<HomepageReels />} />
                     </Routes>
 
                     <NavLink to={'/homepage/storyreels'}>
-                        <div className="homepage_feeds_StoryReels_Inner">
+                        <div className="homepageFeedReelsInner">
                             <AddIcon />
-                            <div className='homepage_feeds_StoryReels_InnerInfo'>
+                            <div className='homepageFeedReelsInnerInfo'>
                                 <h2>Create Story</h2>
                                 <p>Share a photo or write something.</p>
                             </div>
@@ -116,13 +116,14 @@ function HomepageFeedReels() {
                     </NavLink >
                 </div >
             ) : (
-                <div className="scroll-container">
+                <div className="homepageFeedReels_Scroll">
                     {showLeftButton && (<button id='leftScroll' onClick={scrollLeft}><KeyboardArrowLeftIcon /></button>)}
-                    <div className='homepage_feeds_StoryReels_withReels' ref={containerRef}>
+
+                    <div className='homepageFeedReels_ScrollReels' ref={containerRef}>
                         <NavLink to={'/homepage/storyreels'}>
-                            <div className="homepage_feeds_StoryReels_withReelsInner">
+                            <div className="homepageFeedReels_ScrollReelsInner">
                                 <img src={user.photoURL} alt="" />
-                                <div className='createStory'>
+                                <div className='ScrollReelsCreate'>
                                     <AddIcon />
                                     <h3>Create story</h3>
                                 </div>
@@ -132,7 +133,7 @@ function HomepageFeedReels() {
                         {reels.map((reel) => (
                             <div
                                 key={reel.id}
-                                className="homepage_feeds_StoryReels_withReelsStories"
+                                className="homepageFeedReels_ScrollReelsStories"
                                 style={{
                                     background: reel.background.startsWith("https") ? `url(${reel.background})` : reel.background,
                                     backgroundSize: 'cover',
@@ -141,20 +142,19 @@ function HomepageFeedReels() {
                             >
 
                                 <Avatar src={reel.photoURL} />
-                                <div className="reel-text-overlay">
+                                <div className="ReelsStoriesTextOverlay">
                                     {reel.text}
                                 </div>
                                 <p>{reel.username}</p>
                             </div>
                         ))}
-
                     </div>
+
                     {showRightButton && (<button id='rightScroll' onClick={scrollRight}><KeyboardArrowRightIcon /></button>)}
                 </div>
             )}
         </>
     )
 }
-
 
 export default HomepageFeedReels;

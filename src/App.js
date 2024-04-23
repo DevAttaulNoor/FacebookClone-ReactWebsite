@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-// import Login from './Components/Authentication/Login';
 import Authentication from './Components/Authentication/Authentication';
 import Header from './Components/UniversalComponent/Header';
+import Friends from './Components/UniversalComponent/Friends';
 import HomePage from './Components/HomePage/HomePage';
-import HomePage_StoryReels from './Components/HomePage/HomepageReels';
+import HomepageReels from './Components/HomePage/HomepageReels';
 import UserPage from './Components/UserPage/UserPage';
 import SavedPage from './Components/UniversalComponent/SavedPage';
 import VideosPage from './Components/UniversalComponent/VideosPage';
@@ -20,14 +20,14 @@ function App() {
 		<Router>
 			<>
 				{!user ? (
-					// <Login/>
 					<Authentication/>
 				) : (
 					<div className="App">
 						<Header />
+						<Friends/>
 						<Routes>
 							<Route path="homepage/*" element={<HomePage />} />
-							<Route path="homepage/storyreels" element={<HomePage_StoryReels />} />
+							<Route path="homepage/storyreels" element={<HomepageReels />} />
 							<Route path="friendpage/*" element={<FriendPage />} />
 							<Route path="friendpage/allFriends/*" element={<FriendpageAllFriends />} />
 							<Route path="savedpage/*" element={<SavedPage />} />

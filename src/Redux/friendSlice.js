@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    friends: '',
-    friendsData: null,
-    isLoading: true,
+    friends: [],
+    friendsData: [],
+    friendFriends: '',
+    friendFriendsData: [],
+    selectedfriendFriend: ''
 }
 
 export const friendSlice = createSlice({
@@ -17,11 +19,25 @@ export const friendSlice = createSlice({
         setFriendsData: (state, action) => {
             state.friendsData = action.payload;
         },
+        
+        removeFriend: (state, action) => {
+            const unfriend = action.payload;
+            state.friends = state.friends.filter(friend => friend.friendUid !== unfriend);
+            state.friendsData = state.friendsData.filter(friend => friend.friendUid !== unfriend);
+        },
 
-        setLoading: (state, action) => {
-            state.isLoading = action.payload;
+        setFriendFriends: (state, action) => {
+            state.friendFriends = action.payload;
+        },
+
+        setFriendFriendsData: (state, action) => {
+            state.friendFriendsData = action.payload;
+        },
+
+        setSelectedFriendFriends: (state, action) => {
+            state.selectedfriendFriend = action.payload;
         },
     }
 })
 
-export const { setFriends, setFriendsData, setLoading } = friendSlice.actions;
+export const { setFriends, setFriendsData, removeFriend, setFriendFriends, setFriendFriendsData } = friendSlice.actions;
