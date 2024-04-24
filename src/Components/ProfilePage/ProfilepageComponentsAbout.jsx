@@ -4,8 +4,8 @@ import AddIcon from '@mui/icons-material/Add';
 
 function ProfilepageComponentsAbout() {
     return (
-        <div className="ProfilePageComponents_About">
-            <div className="ProfilePageComponents_About_Left">
+        <div className="profilePageComponentsAbout">
+            <div className="profilePageComponentsAbout_Left">
                 <h3>About</h3>
                 <p>Overview</p>
                 <p>Work and education</p>
@@ -16,28 +16,28 @@ function ProfilepageComponentsAbout() {
                 <p>Life events</p>
             </div>
 
-            <div className="ProfilePageComponents_About_Right">
-                <div className='ProfilePageComponents_About_RightOption'>
+            <div className="profilePageComponentsAbout_Right">
+                <div className='profilePageComponentsAbout_RightOption'>
                     <AddIcon />
                     <p>Add a workplace</p>
                 </div>
-                <div className='ProfilePageComponents_About_RightOption'>
+                <div className='profilePageComponentsAbout_RightOption'>
                     <AddIcon />
                     <p>Add secondary school</p>
                 </div>
-                <div className='ProfilePageComponents_About_RightOption'>
+                <div className='profilePageComponentsAbout_RightOption'>
                     <AddIcon />
                     <p>Add university</p>
                 </div>
-                <div className='ProfilePageComponents_About_RightOption'>
+                <div className='profilePageComponentsAbout_RightOption'>
                     <AddIcon />
                     <p>Add current city</p>
                 </div>
-                <div className='ProfilePageComponents_About_RightOption'>
+                <div className='profilePageComponentsAbout_RightOption'>
                     <AddIcon />
                     <p>Add home town</p>
                 </div>
-                <div className='ProfilePageComponents_About_RightOption'>
+                <div className='profilePageComponentsAbout_RightOption'>
                     <AddIcon />
                     <p>Add a relationship status</p>
                 </div>

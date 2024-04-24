@@ -1,5 +1,5 @@
 /** ProfilePage Photos Section */
-.ProfilePagePhotos {
+.profilePagePhotos {
     width: 360px;
     padding: 15px;
     margin: 15px 0;
@@ -9,24 +9,24 @@
 }
 
 /* ProfilePage Photos Top Section */
-.ProfilePagePhotos_Top {
+.profilePagePhotos_Top {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.ProfilePagePhotos_Top #navLink {
+.profilePagePhotos_Top #navLink {
     color: initial;
     text-decoration: none;
 }
 
-.ProfilePagePhotos_Top #navLink:hover {
+.profilePagePhotos_Top #navLink:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
-.ProfilePagePhotos_Top #seeAllLink {
+.profilePagePhotos_Top #seeAllLink {
     text-decoration: none;
     color: #1B74E4;
     font-size: 15px;
@@ -35,24 +35,24 @@
     border-radius: 6px;
 }
 
-.ProfilePagePhotos_Top #seeAllLink:hover {
+.profilePagePhotos_Top #seeAllLink:hover {
     background-color: whitesmoke;
     cursor: pointer;
 }
 
 /* ProfilePage Photos Bottom Section */
-.ProfilePagePhotos_Bottom {
+.profilePagePhotos_Bottom {
     display: flex;
     justify-content: center;
 }
 
-.ProfilePagePhotos_BottomContainer {
+.profilePagePhotos_BottomContainer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 4px;
 }
 
-.ProfilePagePhotos_BottomContainer img {
+.profilePagePhotos_BottomContainer img {
     object-fit: cover;
     width: 116px;
     height: 116px;

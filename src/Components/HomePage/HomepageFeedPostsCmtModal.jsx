@@ -127,13 +127,13 @@ function HomepageFeedPostsCmtModal({ id, userid, closeModal }) {
     }, [id]);
 
     return (
-        <div className='HomePageFeedsPosts_CommentModal'>
-            <div className="HomePageFeedsPosts_CommentModal_Top">
+        <div className='homepageFeedPosts_CommentModal'>
+            <div className="homepageFeedPosts_CommentModalTop">
                 <p>Comments</p>
                 <CloseIcon onClick={closeModal.closeCommentModal} />
             </div>
 
-            <div className="HomePageFeedsPosts_CommentModal_Middle" ref={commentsContainerRef}>
+            <div className="homepageFeedPosts_CommentModalMiddle" ref={commentsContainerRef}>
                 {comments.map((comment) => (
                     <div className='comments' key={comment.id}>
                         <Avatar src={comment.photoURL} />
@@ -151,7 +151,7 @@ function HomepageFeedPostsCmtModal({ id, userid, closeModal }) {
                 ))}
             </div>
 
-            <div className="HomePageFeedsPosts_CommentModal_Bottom">
+            <div className="homepageFeedPosts_CommentModalBottom">
                 <div className='commentInput'>
                     <Avatar src={user.photoURL} />
                     <input type='text' placeholder='Write a comment...' value={comment} onChange={(e) => setComment(e.target.value)} />

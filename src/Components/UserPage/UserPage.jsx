@@ -1,11 +1,11 @@
 import "../../CSS/UserPage/UserPage.css";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { Blurhash } from 'react-blurhash';
 import { NavLink } from 'react-router-dom'
 import { loginUser } from "../../Redux/userSlice";
 import { db, storage } from '../../Firebase/firebase';
-import { Blurhash } from 'react-blurhash';
-import UserPage_Components from "./UserpageComponents";
+import UserpageComponents from "./UserpageComponents";
 import AddIcon from '@mui/icons-material/Add';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
@@ -97,8 +97,8 @@ function UserPage() {
 
     return (
         <div className="userpage">
-            <div className="userpage_Top">
-                <div className="userpage_TopCoverSection">
+            <div className="userpageTop">
+                <div className="userpageTop_CoverSection">
                     {imageLoaded ? (
                         <img
                             src={user.coverphotoUrl}
@@ -124,9 +124,9 @@ function UserPage() {
                     />
                 </div>
 
-                <div className="userpage_TopProfileSection">
-                    <div className="userpage_TopProfileSection_Left">
-                        <div className="userpage_TopProfileSection_LeftPhoto">
+                <div className="userpageTop_ProfileSection">
+                    <div className="userpageTop_ProfileSectionLeft">
+                        <div className="userpageTop_ProfileSectionLeftPhoto">
                             <img src={user.photoURL} alt="Profile" />
                             <div onClick={() => document.getElementById('profileImageInput').click()}>
                                 <PhotoCameraIcon />
@@ -140,65 +140,65 @@ function UserPage() {
                             </div>
                         </div>
 
-                        <div className="userpage_TopProfileSection_LeftInfo">
+                        <div className="userpageTop_ProfileSectionLeftInfo">
                             <h3>{user.username}</h3>
                             <p>{friends.length} friends</p>
                         </div>
                     </div>
 
-                    <div className="userpage_TopProfileSection_Right">
-                        <div className="userpage_TopProfileSection_RightOption" id="addStoryBtn">
+                    <div className="userpageTop_ProfileSectionRight">
+                        <div className="userpageTop_ProfileSectionRightOption" id="addStoryBtn">
                             <AddIcon />
                             <p>Add to story</p>
                         </div>
 
-                        <div className="userpage_TopProfileSection_RightOption" id="editProfileBtn">
+                        <div className="userpageTop_ProfileSectionRightOption" id="editProfileBtn">
                             <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yW/r/OR6SzrfoMFg.png" alt="" />
                             <p>Edit profile</p>
                         </div>
 
-                        <div className="userpage_TopProfileSection_RightOption" id="arrowBtn">
+                        <div className="userpageTop_ProfileSectionRightOption" id="arrowBtn">
                             <KeyboardArrowDownIcon />
                         </div>
                     </div>
                 </div>
 
-                <div className="userpage_TopComponents">
-                    <div className="userpage_TopComponents_Left">
+                <div className="userpageTop_Components">
+                    <div className="userpageTop_ComponentsLeft">
                         <NavLink to='/userhomepage/post' activeclassname="active">
-                            <div className='userpage_TopComponents_LeftOption'>Posts</div>
+                            <div className='userpageTop_ComponentsLeftOption'>Posts</div>
                         </NavLink>
 
                         <NavLink to="/userhomepage/about" activeclassname="active">
-                            <div className='userpage_TopComponents_LeftOption'>About</div>
+                            <div className='userpageTop_ComponentsLeftOption'>About</div>
                         </NavLink>
 
                         <NavLink to="/userhomepage/friend" activeclassname="active">
-                            <div className='userpage_TopComponents_LeftOption'>Friends</div>
+                            <div className='userpageTop_ComponentsLeftOption'>Friends</div>
                         </NavLink>
 
                         <NavLink to="/userhomepage/photo" activeclassname="active">
-                            <div className='userpage_TopComponents_LeftOption'>Photos</div>
+                            <div className='userpageTop_ComponentsLeftOption'>Photos</div>
                         </NavLink>
 
                         <NavLink to="/userhomepage/video" activeclassname="active">
-                            <div className='userpage_TopComponents_LeftOption'>Videos</div>
+                            <div className='userpageTop_ComponentsLeftOption'>Videos</div>
                         </NavLink>
 
-                        <div className="userpage_TopComponents_LeftOption" id="moreOption">
+                        <div className="userpageTop_ComponentsLeftOption" id="moreOption">
                             <p>More</p>
                             <ArrowDropDownIcon />
                         </div>
                     </div>
 
-                    <div className="userpage_TopComponents_Right">
+                    <div className="userpageTop_ComponentsRight">
                         <MoreHorizIcon />
                     </div>
                 </div>
             </div>
 
-            <div className="userpage_Bottom">
-                <UserPage_Components />
+            <div className="userpageBottom">
+                <UserpageComponents />
             </div>
         </div>
     );

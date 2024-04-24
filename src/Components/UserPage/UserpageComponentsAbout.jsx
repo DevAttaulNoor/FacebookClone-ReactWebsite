@@ -4,8 +4,8 @@ import AddIcon from '@mui/icons-material/Add';
 
 function UserpageComponentsAbout() {
     return (
-        <div className="UserpageComponents_About">
-            <div className="UserpageComponents_About_Left">
+        <div className="userpageComponentsAbout">
+            <div className="userpageComponentsAbout_Left">
                 <h3>About</h3>
                 <p>Overview</p>
                 <p>Work and education</p>
@@ -16,28 +16,28 @@ function UserpageComponentsAbout() {
                 <p>Life events</p>
             </div>
 
-            <div className="UserpageComponents_About_Right">
-                <div className='UserpageComponents_About_RightOption'>
+            <div className="userpageComponentsAbout_Right">
+                <div className='userpageComponentsAbout_RightOption'>
                     <AddIcon />
                     <p>Add a workplace</p>
                 </div>
-                <div className='UserpageComponents_About_RightOption'>
+                <div className='userpageComponentsAbout_RightOption'>
                     <AddIcon />
                     <p>Add secondary school</p>
                 </div>
-                <div className='UserpageComponents_About_RightOption'>
+                <div className='userpageComponentsAbout_RightOption'>
                     <AddIcon />
                     <p>Add university</p>
                 </div>
-                <div className='UserpageComponents_About_RightOption'>
+                <div className='userpageComponentsAbout_RightOption'>
                     <AddIcon />
                     <p>Add current city</p>
                 </div>
-                <div className='UserpageComponents_About_RightOption'>
+                <div className='userpageComponentsAbout_RightOption'>
                     <AddIcon />
                     <p>Add home town</p>
                 </div>
-                <div className='UserpageComponents_About_RightOption'>
+                <div className='userpageComponentsAbout_RightOption'>
                     <AddIcon />
                     <p>Add a relationship status</p>
                 </div>

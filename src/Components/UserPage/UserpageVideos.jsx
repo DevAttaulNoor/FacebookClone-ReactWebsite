@@ -30,15 +30,15 @@ function UserpageVideos() {
 
     return (
         <div className='userpageVideos'>
-            <div className="userpageVideos_Top">
+            <div className="userpageVideosTop">
                 <h3>Videos</h3>
                 <NavLink to="/userhomepage/video" activeclassname="active">
                     See all videos
                 </NavLink>
             </div>
 
-            <div className="userpageVideos_Bottom">
-                <div className="userpageVideos_BottomContainer">
+            <div className="userpageVideosBottom">
+                <div className="userpageVideosBottomContainer">
                     {videoUrls.map((url, index) => (
                         <video controls key={index}>
                             <source src={url} type="video/mp4" />

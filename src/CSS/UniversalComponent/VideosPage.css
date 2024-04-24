@@ -1,33 +1,12 @@
 /** VideosPage Section */
-.videosPage{
-    height: 92vh;
+.videospage {
+    height: 93vh;
     display: flex;
     overflow: hidden;
 }
 
-/* VideosPage Main Section */
-/* .videosPage_Main{
-    padding: 0 0 15px 0;
-    width: 100%;
-    overflow-y: auto;
-} */
-
-
-/** Videos Main Page Section */
-.videosPageMain {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.videosPageMain .homepageFeedsPosts_Middle .homepageFeedsPosts_MiddleTop .homepageFeedsPosts_MiddleTopInner #postVideo {
-    width: 750px;
-    height: 400px;
-}
-
-
-/** Videos Page LeftBar Section */
-.videosPageLeftbar{
+/* VideosPage LeftBar Section */
+.videosageLeftbar {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -37,8 +16,7 @@
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
 }
 
-/* Videos Page LeftBar Top Section */
-.videosPageLeftbar_Top{
+.videosageLeftbarTop {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -46,12 +24,12 @@
     padding: 0 2px 0 8px;
 }
 
-.videosPageLeftbar_Top p{
+.videosageLeftbarTop p {
     font-size: 22px;
     font-weight: 700;
 }
 
-.videosPageLeftbar_Top .MuiSvgIcon-root{
+.videosageLeftbarTop .MuiSvgIcon-root {
     width: 22px;
     height: 22px;
     padding: 5px;
@@ -60,24 +38,23 @@
     background-color: #E4E6EB;
 }
 
-.videosPageLeftbar_Top .MuiSvgIcon-root:hover{
+.videosageLeftbarTop .MuiSvgIcon-root:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.15);
 }
 
-/* Videos Page LeftBar Bottom Section */
-.videosPageLeftbar_Bottom{
+.videosageLeftbarBottom {
     display: grid;
     grid-template-rows: repeat(1, 1fr);
     gap: 3px;
 }
 
-.videosPageLeftbar_Bottom a{
+.videosageLeftbarBottom a {
     color: initial;
     text-decoration: none;
 }
 
-.videosPageLeftbar_BottomOptions{
+.videosageLeftbarBottomOptions {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -85,31 +62,46 @@
     transition: 3ms ease-in-out;
 }
 
-.videosPageLeftbar_BottomOptions:hover,
-.videosPageLeftbar_Bottom a.active{
+.videosageLeftbarBottomOptions:hover,
+.videosageLeftbarBottom a.active {
     cursor: pointer;
     border-radius: 8px;
     background-color: #F0F2F5;
 }
 
-.videosPageLeftbar_Bottom a.active .videosPageLeftbar_BottomOption .MuiSvgIcon-root{
+.videosageLeftbarBottom a.active .videosageLeftbarBottomOption .MuiSvgIcon-root {
     color: #fff;
     background-color: #1877f2;
 }
 
-.videosPageLeftbar_BottomOption{
+.videosageLeftbarBottomOption {
     display: flex;
     align-items: center;
 }
 
-.videosPageLeftbar_BottomOption p{
+.videosageLeftbarBottomOption p {
     font-size: 15px;
     font-weight: 600;
 }
 
-.videosPageLeftbar_BottomOption .MuiSvgIcon-root{
-   border-radius: 50%;
-   padding: 5px;
-   background-color: #E4E6EB;
-   margin-right: 10px;
+.videosageLeftbarBottomOption .MuiSvgIcon-root {
+    border-radius: 50%;
+    padding: 5px;
+    background-color: #E4E6EB;
+    margin-right: 10px;
+}
+
+/* VideosPage Main Section */
+.videospageMain {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 0 15px 0;
+    overflow-y: auto;
+}
+
+.videospageMain .homepageFeedsPosts_Middle .homepageFeedsPosts_MiddleTop .homepageFeedsPosts_MiddleTopInner #postVideo {
+    width: 750px;
+    height: 400px;
 }

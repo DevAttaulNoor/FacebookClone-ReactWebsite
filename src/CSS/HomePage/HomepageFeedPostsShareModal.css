@@ -1,12 +1,12 @@
 /** HomePage Feeds Posts Share Modals Section */
-.HomePageFeedsPosts_ShareModal{
+.homepageFeedPosts_ShareModal {
     width: 560px;
     height: 460px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
@@ -16,7 +16,7 @@
 }
 
 /* HomePage Feeds Posts Share Modals Top Section */
-.HomePageFeedsPosts_ShareModal_Top {
+.homepageFeedPosts_ShareModalTop {
     position: relative;
     width: 100%;
     display: flex;
@@ -27,7 +27,7 @@
     box-sizing: border-box;
 }
 
-.HomePageFeedsPosts_ShareModal_Top .MuiSvgIcon-root {
+.homepageFeedPosts_ShareModalTop .MuiSvgIcon-root {
     position: absolute;
     right: 10px;
     padding: 4px;
@@ -36,11 +36,11 @@
     background-color: #E4E6EB;
 }
 
-.HomePageFeedsPosts_ShareModal_Top .MuiSvgIcon-root:hover {
+.homepageFeedPosts_ShareModalTop .MuiSvgIcon-root:hover {
     cursor: pointer;
 }
 
-.HomePageFeedsPosts_ShareModal_Top p {
+.homepageFeedPosts_ShareModalTop p {
     font-size: 20px;
     font-weight: 600;
 }

@@ -1,5 +1,5 @@
 /** HomePage Messages Section */
-.HomePageMessages {
+.homepageMessages {
     position: absolute;
     bottom: 0;
     right: 85px;
@@ -13,50 +13,50 @@
 }
 
 /* HomePage Messages Top Section */
-.HomePageMessages_Top {
+.homepageMessagesTop {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px;
 }
 
-.HomePageMessages_TopLeft p {
+.homepageMessagesTopLeft p {
     font-size: 14px;
     font-weight: 500;
     color: #050505;
 }
 
-.HomePageMessages_TopRight .MuiSvgIcon-root {
+.homepageMessagesTopRight .MuiSvgIcon-root {
     width: 20px;
     color: #0866FF;
 }
 
-.HomePageMessages_TopRight .MuiSvgIcon-root:hover {
+.homepageMessagesTopRight .MuiSvgIcon-root:hover {
     cursor: pointer;
 }
 
 /* HomePage Messages Middle Section */
-.HomePageMessages_Middle {
+.homepageMessagesMiddle {
     display: flex;
     align-items: flex-start;
     padding: 8px 15px;
     border-bottom: 1px solid lightgray;
 }
 
-.HomePageMessages_Middle #toText {
+.homepageMessagesMiddle #toText {
     font-size: 14px;
     font-weight: 400;
     color: #050505;
     margin-right: 12px;
 }
 
-.HomePageMessages_MiddleRight {
+.homepageMessagesMiddleRight {
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;
 }
 
-.HomePageMessages_MiddleRight input {
+.homepageMessagesMiddleRight input {
     width: 100%;
     font-size: 14px;
     font-weight: 400;
@@ -65,7 +65,7 @@
     border: none;
 }
 
-.HomePageMessages_MiddleRight .selectedUserSection {
+.homepageMessagesMiddleRight .selectedUserSection {
     display: flex;
     align-items: flex-start;
     width: 100%;
@@ -100,7 +100,7 @@
 }
 
 /* HomePage Messages Bottom Section */
-.HomePageMessages_Bottom {
+.homepageMessagesBottom {
     display: flex;
     align-items: flex-start;
     flex-direction: column;
@@ -111,7 +111,7 @@
 }
 
 /* HomePage Messages Bottom Selected User Messaging Section */
-.HomePageMessages_Bottom .selectedUserMessagingSection {
+.homepageMessagesBottom .selectedUserMessagingSection {
     width: -webkit-fill-available;
 }
 
@@ -124,7 +124,7 @@
     position: relative;
 }
 
-.selectedUserMessagingSection_TopTop{
+.selectedUserMessagingSection_TopTop {
     align-items: center;
     padding: 35px 10px;
 }
@@ -174,11 +174,11 @@
     left: 130px;
 }
 
-.multiUserInfo:nth-child(n+3) .MuiAvatar-root{
+.multiUserInfo:nth-child(n+3) .MuiAvatar-root {
     display: none;
 }
 
-.multiUserInfo p{
+.multiUserInfo p {
     font-size: 16px;
     font-weight: 600;
     padding: 35px 8px 0 0;
@@ -274,7 +274,7 @@
 }
 
 /* HomePage Messages Bottom Searched User Section */
-.HomePageMessages_Bottom .searchedUserSection {
+.homepageMessagesBottom .searchedUserSection {
     width: -webkit-fill-available;
 }
 

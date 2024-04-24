@@ -1,5 +1,5 @@
 /** ProfilePage Friends Section */
-.ProfilePageFriends {
+.profilePageFriends {
     width: 360px;
     padding: 15px;
     margin: 15px 0;
@@ -9,24 +9,24 @@
 }
 
 /* ProfilePage Friends Top Section */
-.ProfilePageFriends_Top {
+.profilePageFriends_Top {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.ProfilePageFriends_Top #navLink {
+.profilePageFriends_Top #navLink {
     color: initial;
     text-decoration: none;
 }
 
-.ProfilePageFriends_Top #navLink:hover {
+.profilePageFriends_Top #navLink:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
-.ProfilePageFriends_Top #seeAllLink {
+.profilePageFriends_Top #seeAllLink {
     text-decoration: none;
     color: #1B74E4;
     font-size: 15px;
@@ -35,30 +35,30 @@
     border-radius: 6px;
 }
 
-.ProfilePageFriends_Top #seeAllLink:hover{
+.profilePageFriends_Top #seeAllLink:hover{
     background-color: whitesmoke;
     cursor: pointer;
 }
 
 /* ProfilePage Friends Bottom Section */
-.ProfilePageFriends_Bottom {
+.profilePageFriends_Bottom {
     display: flex;
 }
 
-.ProfilePageFriends_BottomContainer {
+.profilePageFriends_BottomContainer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
 }
 
-.ProfilePageFriends_BottomContainerOptions img {
+.profilePageFriends_BottomContainerOptions img {
     object-fit: cover;
     width: 112px;
     height: 112px;
     border-radius: 6px
 }
 
-.ProfilePageFriends_BottomContainerOptions p {
+.profilePageFriends_BottomContainerOptions p {
     font-size: 13px;
     font-weight: 500;
 }

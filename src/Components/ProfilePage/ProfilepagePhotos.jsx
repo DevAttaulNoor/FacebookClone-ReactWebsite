@@ -4,15 +4,15 @@ import firebase from "firebase/compat/app";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-function ProfilepagePhotos({userData}) {
-    const friendFriends = useSelector((state) => state.data.friends.friendFriends);
+function ProfilepagePhotos() {
+    const selectedFriend = useSelector((state) => state.data.friends.selectedFriend);
     const [photoUrls, setPhotoUrls] = useState([]);
 
     useEffect(() => {
         // Reference to the user's folders in Firebase Storage
         const storageRefs = [
-            `Posts/${friendFriends.friendUid}`,
-            `Users/${friendFriends.friendUid}`
+            `Posts/${selectedFriend}`,
+            `Users/${selectedFriend}`
         ];
 
         // Fetch images from all specified paths
@@ -51,19 +51,19 @@ function ProfilepagePhotos({userData}) {
             setPhotoUrls(urls);
         };
         fetchImages();
-    }, [friendFriends]);
+    }, [selectedFriend]);
 
     return (
-        <div className='ProfilePagePhotos'>
-            <div className="ProfilePagePhotos_Top">
+        <div className='profilePagePhotos'>
+            <div className="profilePagePhotos_Top">
                 <NavLink id="navLink" to="/profilepage/:userid/photo" activeClassName="active">
                     <h3>Photos</h3>
                 </NavLink>
                 <a id="seeAllLink" href="#">See all photos</a>
             </div>
 
-            <div className="ProfilePagePhotos_Bottom">
-                <div className="ProfilePagePhotos_BottomContainer">
+            <div className="profilePagePhotos_Bottom">
+                <div className="profilePagePhotos_BottomContainer">
                     {photoUrls.map((url, index) => (
                         <img key={index} src={url} alt={`Photo ${index}`} />
                     ))}

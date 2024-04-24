@@ -8,8 +8,8 @@ import UserpageFriends from './UserpageFriends'
 
 function UserpageComponentsPost() {
     return (
-        <div className='UserPageComponentsPost'>
-                <div className="UserPageComponentsPost_Left">
+        <div className='userpageComponentsPost'>
+                <div className="userpageComponentsPost_Left">
                     <div className="userIntro">
                         <UserpageInfo />
                     </div>
@@ -23,7 +23,7 @@ function UserpageComponentsPost() {
                         <UserpageFriends />
                     </div>
                 </div>
-                <div className="UserPageComponentsPost_Right">
+                <div className="userpageComponentsPost_Right">
                     <div className="userFeed">
                         <UserpageFeed />
                     </div>

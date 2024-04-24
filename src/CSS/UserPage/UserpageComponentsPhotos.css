@@ -1,5 +1,5 @@
 /** UserPage Components Photos Section */
-.UserpageComponents_Photos{
+.userpageComponentsPhotos {
     width: 910px;
     padding: 16px;
     margin: 10px 0;
@@ -9,7 +9,7 @@
 }
 
 /* UserPage Components Photos Top Section */
-.UserpageComponents_Photos_Top{
+.userpageComponentsPhotos_Top {
     width: 100%;
     display: flex;
     align-items: center;
@@ -17,24 +17,24 @@
     margin-bottom: 20px;
 }
 
-.UserpageComponents_Photos_Top h3{
+.userpageComponentsPhotos_Top h3 {
     color: #000;
     font-size: 18px;
     font-weight: 700;
 }
 
-.UserpageComponents_Photos_Top h3:hover{
+.userpageComponentsPhotos_Top h3:hover {
     cursor: pointer;
     text-decoration: underline;
     text-decoration-thickness: 2px;
 }
 
-.UserpageComponents_Photos_TopRight{
+.userpageComponentsPhotos_TopRight {
     display: flex;
     align-items: center;
 }
 
-.UserpageComponents_Photos_TopRight p{
+.userpageComponentsPhotos_TopRight p {
     font-size: 14px;
     font-weight: 500;
     color: #0065D1;
@@ -43,12 +43,12 @@
     border-radius: 4px;
 }
 
-.UserpageComponents_Photos_TopRight p:hover{
+.userpageComponentsPhotos_TopRight p:hover {
     cursor: pointer;
     background-color: #E4E6EB;
 }
 
-.UserpageComponents_Photos_TopRight .moreOptions{
+.userpageComponentsPhotos_TopRight .moreOptions {
     display: flex;
     align-items: center;
     border-radius: 6px;
@@ -60,11 +60,11 @@
 }
 
 /* UserPage Components Photos Middle Section */
-.UserpageComponents_Photos_Middle{
+.userpageComponentsPhotos_Middle {
     width: 100%;
 }
 
-.UserpageComponents_Photos_Middle .userpagePhotos{
+.userpageComponentsPhotos_Middle .userpagePhotos {
     width: 100%;
     padding: 0;
     margin: 0;
@@ -73,22 +73,22 @@
     background-color: transparent;
 }
 
-.UserpageComponents_Photos_Middle .userpagePhotos_Top{
+.userpageComponentsPhotos_Middle .userpagePhotosTop {
     display: none;
 }
 
-.UserpageComponents_Photos_Middle .userpagePhotos_Bottom {
+.userpageComponentsPhotos_Middle .userpagePhotosBottom {
     display: flex;
     justify-content: flex-start;
 }
 
-.UserpageComponents_Photos_Middle .userpagePhotos_BottomContainer {
+.userpageComponentsPhotos_Middle .userpagePhotosBottomContainer {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 9px;
 }
 
-.UserpageComponents_Photos_Middle .userpagePhotos_BottomContainer img {
+.userpageComponentsPhotos_Middle .userpagePhotosBottomContainer img {
     object-fit: cover;
     width: 175px;
     height: 175px;

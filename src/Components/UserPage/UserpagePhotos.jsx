@@ -52,15 +52,15 @@ function UserpagePhotos() {
 
     return (
         <div className='userpagePhotos'>
-            <div className="userpagePhotos_Top">
+            <div className="userpagePhotosTop">
                 <h3>Photos</h3>
                 <NavLink to="/userhomepage/photo" activeclassname="active">
                     See all photos
                 </NavLink>
             </div>
 
-            <div className="userpagePhotos_Bottom">
-                <div className="userpagePhotos_BottomContainer">
+            <div className="userpagePhotosBottom">
+                <div className="userpagePhotosBottomContainer">
                     {photoUrls.map((url, index) => (
                         <img key={index} src={url} alt={`Photo ${index}`} />
                     ))}

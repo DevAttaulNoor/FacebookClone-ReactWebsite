@@ -1,5 +1,5 @@
 /** UserPage Photos Section */
-.userpagePhotos {
+.userpagePhotos{
     width: 360px;
     padding: 15px;
     margin: 15px 0;
@@ -9,24 +9,24 @@
 }
 
 /* UserPage Photos Top Section */
-.userpagePhotos_Top{
+.userpagePhotosTop{
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.userpagePhotos_Top h3 {
+.userpagePhotosTop h3 {
     color: initial;
     text-decoration: none;
 }
 
-.userpagePhotos_Top h3:hover {
+.userpagePhotosTop h3:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
-.userpagePhotos_Top a {
+.userpagePhotosTop a {
     text-decoration: none;
     color: #1B74E4;
     font-size: 15px;
@@ -35,24 +35,24 @@
     border-radius: 6px;
 }
 
-.userpagePhotos_Top a:hover{
+.userpagePhotosTop a:hover{
     background-color: whitesmoke;
     cursor: pointer;
 }
 
 /* UserPage Photos Bottom Section */
-.userpagePhotos_Bottom {
+.userpagePhotosBottom {
     display: flex;
     justify-content: center;
 }
 
-.userpagePhotos_BottomContainer {
+.userpagePhotosBottomContainer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 4px;
 }
 
-.userpagePhotos_BottomContainer img {
+.userpagePhotosBottomContainer img {
     object-fit: cover;
     width: 116px;
     height: 116px;

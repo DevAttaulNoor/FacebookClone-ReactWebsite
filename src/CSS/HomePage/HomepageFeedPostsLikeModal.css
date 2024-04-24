@@ -1,12 +1,12 @@
 /** HomePage Feeds Posts Like Modals Section */
-.HomePageFeedsPosts_LikeModal{
+.homepageFeedPosts_LikeModal {
     width: 560px;
     height: 460px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
@@ -16,7 +16,7 @@
 }
 
 /* HomePage Feeds Posts Like Modals Top Section */
-.HomePageFeedsPosts_LikeModal_Top {
+.homepageFeedPosts_LikeModalTop {
     position: relative;
     width: 100%;
     display: flex;
@@ -27,7 +27,7 @@
     box-sizing: border-box;
 }
 
-.HomePageFeedsPosts_LikeModal_Top .MuiSvgIcon-root {
+.homepageFeedPosts_LikeModalTop .MuiSvgIcon-root {
     position: absolute;
     right: 10px;
     padding: 4px;
@@ -36,17 +36,17 @@
     background-color: #E4E6EB;
 }
 
-.HomePageFeedsPosts_LikeModal_Top .MuiSvgIcon-root:hover {
+.homepageFeedPosts_LikeModalTop .MuiSvgIcon-root:hover {
     cursor: pointer;
 }
 
-.HomePageFeedsPosts_LikeModal_Top p {
+.homepageFeedPosts_LikeModalTop p {
     font-size: 20px;
     font-weight: 600;
 }
 
 /* HomePage Feeds Posts Like Modals Middle Section */
-.HomePageFeedsPosts_LikeModal_Middle {
+.homepageFeedPosts_LikeModalMiddle {
     width: 100%;
     height: 410px;
     padding: 12px;
@@ -57,17 +57,17 @@
     box-sizing: border-box;
 }
 
-.HomePageFeedsPosts_LikeModal_Middle .likedUsersInfo {
+.homepageFeedPosts_LikeModalMiddle .likedUsersInfo {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.HomePageFeedsPosts_LikeModal_Middle .likedUsersInfo:last-child {
+.homepageFeedPosts_LikeModalMiddle .likedUsersInfo:last-child {
     margin-bottom: 0px;
 }
 
-.HomePageFeedsPosts_LikeModal_Middle .likedUsersInfo span {
+.homepageFeedPosts_LikeModalMiddle .likedUsersInfo span {
     font-size: 16px;
     font-weight: 600;
     margin-left: 8px;

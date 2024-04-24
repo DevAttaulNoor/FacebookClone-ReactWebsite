@@ -3,9 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     friends: [],
     friendsData: [],
+    selectedFriend: '',
+    selectedFriendData: '',
     friendFriends: '',
     friendFriendsData: [],
-    selectedfriendFriend: ''
 }
 
 export const friendSlice = createSlice({
@@ -19,11 +20,19 @@ export const friendSlice = createSlice({
         setFriendsData: (state, action) => {
             state.friendsData = action.payload;
         },
-        
+
         removeFriend: (state, action) => {
             const unfriend = action.payload;
             state.friends = state.friends.filter(friend => friend.friendUid !== unfriend);
             state.friendsData = state.friendsData.filter(friend => friend.friendUid !== unfriend);
+        },
+
+        setSelectedFriend: (state, action) => {
+            state.selectedFriend = action.payload;
+        },
+
+        setSelectedFriendData: (state, action) => {
+            state.selectedFriendData = action.payload;
         },
 
         setFriendFriends: (state, action) => {
@@ -33,11 +42,7 @@ export const friendSlice = createSlice({
         setFriendFriendsData: (state, action) => {
             state.friendFriendsData = action.payload;
         },
-
-        setSelectedFriendFriends: (state, action) => {
-            state.selectedfriendFriend = action.payload;
-        },
     }
 })
 
-export const { setFriends, setFriendsData, removeFriend, setFriendFriends, setFriendFriendsData } = friendSlice.actions;
+export const { setFriends, setFriendsData, removeFriend, setSelectedFriend, setSelectedFriendData, setFriendFriends, setFriendFriendsData } = friendSlice.actions;

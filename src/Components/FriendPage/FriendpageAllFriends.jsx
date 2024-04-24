@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Route, Routes } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import { db } from '../../Firebase/firebase';
-import { removeFriend } from '../../Redux/friendSlice';
+import { removeFriend, setSelectedFriend } from '../../Redux/friendSlice';
 import ProfilePage from '../ProfilePage/ProfilePage'
 import SearchIcon from '@mui/icons-material/Search';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -156,7 +156,7 @@ function FriendpageAllFriends() {
                     {friendsData.map((friend) => (
                         <div className='friendsList' key={friend.friendUid}>
                             <div className='friendsListInfo'>
-                                <NavLink to={`/friendpage/allFriends/profilepage/${friend.friendUid}/post`}>
+                                <NavLink to={`/friendpage/allFriends/profilepage/${friend.friendUid}/post`} onClick={() => dispatch(setSelectedFriend(friend.friendUid))}>
                                     <Avatar src={friend.photoURL} />
                                     <p id="friendName">{friend.username}</p>
                                 </NavLink>
@@ -181,7 +181,7 @@ function FriendpageAllFriends() {
 
             <div className='friendpageAllFriendsMain'>
                 <Routes>
-                    <Route path="profilepage/:userid/*" element={<ProfilePage />} />
+                    <Route path="profilepage/:selectedFriend/*" element={<ProfilePage />} />
                 </Routes>
             </div>
         </div>

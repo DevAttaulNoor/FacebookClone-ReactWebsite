@@ -33,8 +33,8 @@ function App() {
 							<Route path="savedpage/*" element={<SavedPage />} />
 							<Route path="videospage/*" element={<VideosPage />} />
 							<Route path="userhomepage/*" element={<UserPage />} />
-							<Route path="profilepage/:userid/*" element={<ProfilePage />} />
-							<Route path="profilepage/:userid/post/*" element={<PostPage/>} />
+							<Route path="profilepage/:selectedFriend/*" element={<ProfilePage />} />
+							<Route path="profilepage/:selectedFriend/post/:postId" element={<PostPage/>} />
 						</Routes>
 					</div>
 				)}

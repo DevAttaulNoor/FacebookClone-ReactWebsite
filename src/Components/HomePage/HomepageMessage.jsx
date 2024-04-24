@@ -219,22 +219,22 @@ function HomepageMessage({ closeBox, handleMessageBox, closeFriendBox, handleSel
     return (
         <>
             {handleMessageBox && (
-                <div className='HomePageMessages'>
-                    <div className="HomePageMessages_Top">
-                        <div className='HomePageMessages_TopLeft'>
+                <div className='homepageMessages'>
+                    <div className="homepageMessagesTop">
+                        <div className='homepageMessagesTopLeft'>
                             <p>New message</p>
                         </div>
 
-                        <div className='HomePageMessages_TopRight'>
+                        <div className='homepageMessagesTopRight'>
                             <HorizontalRuleIcon />
                             <CloseIcon onClick={closeBox} />
                         </div>
                     </div>
 
-                    <div className="HomePageMessages_Middle">
+                    <div className="homepageMessagesMiddle">
                         <p id='toText'>To: </p>
 
-                        <div className="HomePageMessages_MiddleRight">
+                        <div className="homepageMessagesMiddleRight">
                             {selectedUsers.length > 0 && (
                                 <div className="selectedUserSection">
                                     {selectedUsers.map((userSelected) => (
@@ -254,7 +254,7 @@ function HomepageMessage({ closeBox, handleMessageBox, closeFriendBox, handleSel
                         </div>
                     </div>
 
-                    <div className="HomePageMessages_Bottom">
+                    <div className="homepageMessagesBottom">
                         {searchText === '' ? (
                             <div className='selectedUserMessagingSection'>
                                 {(selectedUsers.length > 0) &&

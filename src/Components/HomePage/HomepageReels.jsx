@@ -156,15 +156,15 @@ function HomepageReels() {
     };
 
     return (
-        <div className="homepage_storyreels">
-            <div className='homepage_storyreels_Leftbar'>
-                <div className='homepage_storyreels_Leftbar_Top'>
-                    <div className='homepage_storyreels_Leftbar_TopTop'>
-                        <div className="homepage_storyreels_Leftbar_TopTop_heading">
+        <div className="homepageReels">
+            <div className='homepageReelsLeftbar'>
+                <div className='homepageReelsLeftbar_Top'>
+                    <div className='homepageReelsLeftbar_TopTop'>
+                        <div className="homepageReelsLeftbar_TopTop_heading">
                             <p>Your story</p>
                             <SettingsIcon />
                         </div>
-                        <div className="homepage_storyreels_Leftbar_TopTop_userinfo">
+                        <div className="homepageReelsLeftbar_TopTop_userinfo">
                             <img src={user.photoURL} alt="" />
                             <p>{user.username}</p>
                         </div>
@@ -172,7 +172,7 @@ function HomepageReels() {
 
                     <hr id='line' />
 
-                    <div className="homepage_storyreels_Leftbar_TopBottom forText" style={{ display: showForText ? 'flex' : 'none' }}>
+                    <div className="homepageReelsLeftbar_TopBottom forText" style={{ display: showForText ? 'flex' : 'none' }}>
                         <textarea
                             rows="7"
                             placeholder='Start typing'
@@ -216,7 +216,7 @@ function HomepageReels() {
                         Add Text
                     </p>
 
-                    <div className="homepage_storyreels_Leftbar_TopBottom forPhoto" style={{ display: showForPhoto ? 'flex' : 'none' }}>
+                    <div className="homepageReelsLeftbar_TopBottom forPhoto" style={{ display: showForPhoto ? 'flex' : 'none' }}>
                         <textarea
                             rows="7"
                             placeholder='Start typing'
@@ -234,17 +234,17 @@ function HomepageReels() {
                     </div>
                 </div>
 
-                <div className="homepage_storyreels_Leftbar_Bottom">
+                <div className="homepageReelsLeftbar_Bottom">
                     <button id='discardBtn' onClick={handleDiscardClick}>Discard</button>
                     <button id='shareBtn' onClick={handleUpload}>Share to Story</button>
                 </div>
             </div>
 
-            <div className='homepage_storyreels_Main'>
-                <div className="homepage_storyreels_Main_Body">
-                    <div className="homepage_storyreels_Main_Body">
+            <div className='homepageReelsMain'>
+                <div className="homepageReelsMain_Body">
+                    <div className="homepageReelsMain_Body">
                         <div
-                            className="homepage_storyreels_Main_BodyCard Photo"
+                            className="homepageReelsMain_BodyCard Photo"
                             style={{ display: showCards ? 'flex' : 'none' }}
                             onClick={handleAddPhotoClick}
 
@@ -261,7 +261,7 @@ function HomepageReels() {
                             />
                         </div>
                         <div
-                            className="homepage_storyreels_Main_BodyCard Text"
+                            className="homepageReelsMain_BodyCard Text"
                             style={{ display: showCards ? 'flex' : 'none' }}
                             onClick={handleAddTextClick}
                         >

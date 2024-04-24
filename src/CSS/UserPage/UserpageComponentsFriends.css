@@ -1,5 +1,5 @@
 /** UserPage Components Friends Section */
-.UserpageComponents_Friends{
+.userpageComponentsFriends {
     width: 910px;
     padding: 16px;
     margin: 10px 0;
@@ -9,31 +9,31 @@
 }
 
 /* UserPage Components Friends Top Section */
-.UserpageComponents_Friends_Top{
+.userpageComponentsFriends_Top {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.UserpageComponents_Friends_TopLeft h3{
+.userpageComponentsFriends_TopLeft h3 {
     color: #000;
     font-size: 18px;
     font-weight: 700;
 }
 
-.UserpageComponents_Friends_TopLeft h3:hover{
+.userpageComponentsFriends_TopLeft h3:hover {
     cursor: pointer;
     text-decoration: underline;
     text-decoration-thickness: 2px;
 }
 
-.UserpageComponents_Friends_TopRight{
+.userpageComponentsFriends_TopRight {
     display: flex;
     align-items: center;
 }
 
-.UserpageComponents_Friends_TopRight p{
+.userpageComponentsFriends_TopRight p {
     font-size: 14px;
     font-weight: 500;
     color: #0065D1;
@@ -42,12 +42,12 @@
     border-radius: 4px;
 }
 
-.UserpageComponents_Friends_TopRight p:hover{
+.userpageComponentsFriends_TopRight p:hover {
     cursor: pointer;
     background-color: #E4E6EB;
 }
 
-.UserpageComponents_Friends_TopRight .moreOptions{
+.userpageComponentsFriends_TopRight .moreOptions {
     display: flex;
     align-items: center;
     border-radius: 6px;
@@ -58,7 +58,7 @@
     background-color: #E4E6EB;
 }
 
-.UserpageComponents_Friends_TopRight .searchInp {
+.userpageComponentsFriends_TopRight .searchInp {
     display: flex;
     align-items: center;
     padding: 6px;
@@ -67,14 +67,14 @@
     background-color: #E4E6EB;
 }
 
-.UserpageComponents_Friends_TopRight .searchInp .MuiSvgIcon-root {
+.userpageComponentsFriends_TopRight .searchInp .MuiSvgIcon-root {
     width: 20px;
     margin-left: 4px;
     color: #606770;
     background-color: transparent;
 }
 
-.UserpageComponents_Friends_TopRight .searchInp input {
+.userpageComponentsFriends_TopRight .searchInp input {
     border: 0;
     outline: 0;
     width: 135px;
@@ -85,11 +85,11 @@
 }
 
 /* UserPage Components Friends Middle Section */
-.UserpageComponents_Friends_Middle{
+.userpageComponentsFriends_Middle {
     width: 100%;
 }
 
-.UserpageComponents_Friends_Middle .userpageFriends{
+.userpageComponentsFriends_Middle .userpageFriends {
     width: 100%;
     padding: 0;
     margin: 0;
@@ -98,23 +98,23 @@
     background-color: transparent;
 }
 
-.UserpageComponents_Friends_Middle .userpageFriends_Top{
+.userpageComponentsFriends_Middle .userpageFriendsTop {
     display: none;
 }
 
-.UserpageComponents_Friends_Middle .userpageFriends_Bottom {
+.userpageComponentsFriends_Middle .userpageFriendsBottom {
     display: flex;
     justify-content: flex-start;
 }
 
-.UserpageComponents_Friends_Middle .userpageFriends_BottomContainer {
+.userpageComponentsFriends_Middle .userpageFriendsBottomContainer {
     margin-top: 15px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
 }
 
-.UserpageComponents_Friends_Middle .userpageFriends_BottomContainerOptions{
+.userpageComponentsFriends_Middle .userpageFriendsBottomContainerOptions {
     width: 412px;
     display: flex;
     align-items: center;
@@ -123,12 +123,12 @@
     border: 1px solid lightgray;
 }
 
-.UserpageComponents_Friends_Middle .userpageFriends_BottomContainerOptions p{
+.userpageComponentsFriends_Middle .userpageFriendsBottomContainerOptions p {
     margin-left: 15px;
     font-size: 16px;
 }
 
-.UserpageComponents_Friends_Middle .userpageFriends_BottomContainerOptions img {
+.userpageComponentsFriends_Middle .userpageFriendsBottomContainerOptions img {
     object-fit: cover;
     width: 75px;
     height: 75px;

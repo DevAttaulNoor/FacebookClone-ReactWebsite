@@ -8,8 +8,8 @@
     min-height: 100vh;
 }
 
-/** UserPage Top Section */
-.userpage_Top {
+/* UserPage Top Section */
+.userpageTop {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -17,14 +17,14 @@
     width: 100%;
 }
 
-/* UserPage Top Cover Section */
-.userpage_TopCoverSection {
+/* userpage Top Cover Section */
+.userpageTop_CoverSection {
     position: relative;
     width: 100%;
     max-width: 995px;
 }
 
-.userpage_TopCoverSection img {
+.userpageTop_CoverSection img {
     width: 995px;
     height: 370px;
     border-bottom-left-radius: 8px;
@@ -32,7 +32,7 @@
     object-fit: cover;
 }
 
-.userpage_TopCoverSection button {
+.userpageTop_CoverSection button {
     position: absolute;
     top: 320px;
     right: 27px;
@@ -46,23 +46,23 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.userpage_TopCoverSection button:hover {
+.userpageTop_CoverSection button:hover {
     cursor: pointer;
 }
 
-.userpage_TopCoverSection p {
+.userpageTop_CoverSection p {
     font-size: 14px;
     font-weight: 500;
     margin-left: 5px;
 }
 
-.userpage_TopCoverSection .MuiSvgIcon-root {
+.userpageTop_CoverSection .MuiSvgIcon-root {
     width: 16px;
     height: 20px;
 }
 
 /* UserPage Top Profile Section */
-.userpage_TopProfileSection {
+.userpageTop_ProfileSection{
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -71,17 +71,16 @@
     margin-bottom: 12px;
 }
 
-/* UserPage Top Left Profile Section */
-.userpage_TopProfileSection_Left {
+.userpageTop_ProfileSectionLeft {
     display: flex;
     align-items: flex-end;
 }
 
-.userpage_TopProfileSection_LeftPhoto {
+.userpageTop_ProfileSectionLeftPhoto {
     position: relative;
 }
 
-.userpage_TopProfileSection_LeftPhoto img {
+.userpageTop_ProfileSectionLeftPhoto img {
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -89,54 +88,53 @@
     border: 4px solid #fff;
 }
 
-.userpage_TopProfileSection_LeftPhoto .MuiSvgIcon-root {
-    color: black;
-    background-color: #E4E6EB;
-    border-radius: 50%;
-    padding: 6px;
+.userpageTop_ProfileSectionLeftPhoto .MuiSvgIcon-root {
     position: absolute;
     bottom: 12px;
     right: 12px;
-    width: 20px;
-    height: 20px;
+    width: 28px;
+    height: 28px;
+    padding: 6px;
+    border-radius: 50%;
+    color: black;
+    background-color: #E4E6EB;
 }
 
-.userpage_TopProfileSection_LeftPhoto .MuiSvgIcon-root:hover {
+.userpageTop_ProfileSectionLeftPhoto .MuiSvgIcon-root:hover {
     background-color: lightgray;
     cursor: pointer;
 }
 
-.userpage_TopProfileSection_LeftInfo {
+.userpageTop_ProfileSectionLeftInfo {
     display: flex;
     flex-direction: column;
     padding-left: 14px;
     margin-bottom: 25px;
 }
 
-.userpage_TopProfileSection_LeftInfo h3 {
+.userpageTop_ProfileSectionLeftInfo h3 {
     font-size: 28px;
     font-weight: 700;
     margin-bottom: 2px;
 }
 
-.userpage_TopProfileSection_LeftInfo p {
+.userpageTop_ProfileSectionLeftInfo p {
     font-size: 14px;
     font-weight: 500;
     color: gray;
 }
 
-/* UserPage Top Right Profile Section */
-.userpage_TopProfileSection_Right {
+.userpageTop_ProfileSectionRight {
     display: flex;
     margin-bottom: 25px;
 }
 
-.userpage_TopProfileSection_Right .MuiSvgIcon-root {
+.userpageTop_ProfileSectionRight .MuiSvgIcon-root {
     width: 20px;
     height: 22px;
 }
 
-.userpage_TopProfileSection_RightOption {
+.userpageTop_ProfileSectionRightOption {
     background-color: #E4E6EB;
     border-radius: 6px;
     padding: 5px 10px;
@@ -145,27 +143,27 @@
     align-items: center;
 }
 
-.userpage_TopProfileSection_RightOption:hover {
+.userpageTop_ProfileSectionRightOption:hover {
     cursor: pointer;
 }
 
-.userpage_TopProfileSection_RightOption p {
+.userpageTop_ProfileSectionRightOption p {
     font-size: 14px;
     font-weight: 600;
     margin-left: 5px;
 }
 
-.userpage_TopProfileSection_Right #addStoryBtn {
+.userpageTop_ProfileSectionRight #addStoryBtn {
     background-color: #1B74E4;
     color: #fff;
 }
 
-.userpage_TopProfileSection_Right #editProfileBtn img {
+.userpageTop_ProfileSectionRight #editProfileBtn img {
     width: 14px;
 }
 
 /* UserPage Top Components Section */
-.userpage_TopComponents {
+.userpageTop_Components{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -174,27 +172,27 @@
     border-top: 1px solid rgb(197, 197, 197);
 }
 
-/* UserPage Top Left Components Section */
-.userpage_TopComponents_Left {
+/* userpage Top Left Components Section */
+.userpageTop_ComponentsLeft {
     display: flex;
 }
 
-.userpage_TopComponents_Left a{
+.userpageTop_ComponentsLeft a{
     text-decoration: none;
     color: initial;
     height: fit-content;
 }
 
-.userpage_TopComponents_Left a.active .userpage_TopComponents_LeftOption{
+.userpageTop_ComponentsLeft a.active .userpageTop_ComponentsLeftOption{
     position: relative;
     color: #2381fa;
 }
 
-.userpage_TopComponents_Left a.active .userpage_TopComponents_LeftOption:hover{
+.userpageTop_ComponentsLeft a.active .userpageTop_ComponentsLeftOption:hover{
     background-color: transparent;
 }
 
-.userpage_TopComponents_Left a.active .userpage_TopComponents_LeftOption::after{
+.userpageTop_ComponentsLeft a.active .userpageTop_ComponentsLeftOption::after{
     content: "";
     position: absolute;
     height: 2px;
@@ -204,11 +202,11 @@
     background-color: #2381fa;
 }
 
-.userpage_TopComponents_Left a.active .userpage_TopComponents_LeftOption svg{
+.userpageTop_ComponentsLeft a.active .userpageTop_ComponentsLeftOption svg{
     color: #2381fa;
 }
 
-.userpage_TopComponents_LeftOption {
+.userpageTop_ComponentsLeftOption {
     font-size: 14px;
     font-weight: 600;
     padding: 14px;
@@ -217,26 +215,25 @@
     color: #65676B;
 }
 
-.userpage_TopComponents_LeftOption:hover {
+.userpageTop_ComponentsLeftOption:hover {
     background-color: whitesmoke;
     cursor: pointer;
 }
 
-.userpage_TopComponents_LeftOption#moreOption {
+.userpageTop_ComponentsLeftOption#moreOption {
     display: flex;
     align-items: center;
     padding: 11px 14px;
 }
 
-.userpage_TopComponents_LeftOption#moreOption svg{
+.userpageTop_ComponentsLeftOption#moreOption svg{
     color: #65676B;
     width: 18px;
     height: 18px;
     margin-left: 3px;
 }
 
-/* UserPage Top Right Components Section */
-.userpage_TopComponents_Right {
+.userpageTop_ComponentsRight {
     background-color: #E4E6EB;
     border-radius: 6px;
     padding: 5px 10px;
@@ -245,25 +242,25 @@
     align-items: center;
 }
 
-.userpage_TopComponents_Right .MuiSvgIcon-root {
+.userpageTop_ComponentsRight .MuiSvgIcon-root {
     width: 20px;
     height: 22px;
 }
 
-.userpage_TopComponents_Right .MuiSvgIcon-root:hover {
+.userpageTop_ComponentsRight .MuiSvgIcon-root:hover {
     cursor: pointer;
 }
 
-/** UserPage Bottom Section */
-.userpage_Bottom {
+/* UserPage Bottom Section */
+.userpageBottom {
     display: flex;
     justify-content: space-between;
     width: 100%;
     max-width: 940px;    
 }
 
-.userpage_BottomLeft,
-.userpage_BottomRight {
+.userpageBottomLeft,
+.userpageBottomRight {
     margin: 0;
     padding: 0;
 }

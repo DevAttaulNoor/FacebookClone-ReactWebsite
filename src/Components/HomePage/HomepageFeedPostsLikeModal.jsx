@@ -24,13 +24,13 @@ function HomepageFeedPostsLikeModal({ id, closeModal }) {
     }, [id, user.uid]);
 
     return (
-        <div className='HomePageFeedsPosts_LikeModal'>
-            <div className="HomePageFeedsPosts_LikeModal_Top">
+        <div className='homepageFeedPosts_LikeModal'>
+            <div className="homepageFeedPosts_LikeModalTop">
                 <p>Reactions</p>
                 <CloseIcon onClick={closeModal.closeLikeModal} />
             </div>
 
-            <div className="HomePageFeedsPosts_LikeModal_Middle">
+            <div className="homepageFeedPosts_LikeModalMiddle">
                 {likedUsers.map((user) => (
                     <div key={user.uid} className='likedUsersInfo'>
                         <Avatar src={user.photoUrl} />

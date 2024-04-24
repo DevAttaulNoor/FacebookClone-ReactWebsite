@@ -4,8 +4,8 @@ import CloseIcon from '@mui/icons-material/Close';
 
 function HomepageFeedPostsShareModal(close) {
     return (
-        <div className='HomePageFeedsPosts_ShareModal'>
-            <div className="HomePageFeedsPosts_ShareModal_Top">
+        <div className='homepageFeedPosts_ShareModal'>
+            <div className="homepageFeedPosts_ShareModalTop">
                 <p>Shares</p>
                 <CloseIcon onClick={close.closeModal} />
             </div>

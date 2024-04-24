@@ -4,15 +4,15 @@ import ProfilepageFriends from './ProfilepageFriends';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
-function ProfilepageComponentsFriends({userData}) {
+function ProfilepageComponentsFriends() {
     return (
-        <div className="ProfilePageComponents_Friends">
-            <div className="ProfilePageComponents_Friends_Top">
-                <div className="ProfilePageComponents_Friends_TopLeft">
+        <div className="profilePageComponentsFriends">
+            <div className="profilePageComponentsFriends_Top">
+                <div className="profilePageComponentsFriends_TopLeft">
                     <h3>Friends</h3>
                 </div>
 
-                <div className="ProfilePageComponents_Friends_TopRight">
+                <div className="profilePageComponentsFriends_TopRight">
                     <div className='searchInp'>
                         <SearchIcon />
                         <input type="text" placeholder='Search Friends' />
@@ -24,8 +24,8 @@ function ProfilepageComponentsFriends({userData}) {
                 </div>
             </div>
 
-            <div className="ProfilePageComponents_Friends_Middle">
-               <ProfilepageFriends userData={userData}/>
+            <div className="profilePageComponentsFriends_Middle">
+               <ProfilepageFriends />
             </div>
         </div>
     )

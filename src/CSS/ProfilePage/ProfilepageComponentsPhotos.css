@@ -1,5 +1,5 @@
 /** ProfilePage Components Photos Section */
-.ProfilePageComponents_Photos{
+.profilePageComponentsPhotos{
     width: 910px;
     padding: 16px;
     margin: 10px 0;
@@ -9,7 +9,7 @@
 }
 
 /* ProfilePage Components Photos Top Section */
-.ProfilePageComponents_Photos_Top{
+.profilePageComponentsPhotos_Top{
     width: 100%;
     display: flex;
     align-items: center;
@@ -17,24 +17,24 @@
     margin-bottom: 20px;
 }
 
-.ProfilePageComponents_Photos_Top h3{
+.profilePageComponentsPhotos_Top h3{
     color: #000;
     font-size: 18px;
     font-weight: 700;
 }
 
-.ProfilePageComponents_Photos_Top h3:hover{
+.profilePageComponentsPhotos_Top h3:hover{
     cursor: pointer;
     text-decoration: underline;
     text-decoration-thickness: 2px;
 }
 
-.ProfilePageComponents_Photos_TopRight{
+.profilePageComponentsPhotos_TopRight{
     display: flex;
     align-items: center;
 }
 
-.ProfilePageComponents_Photos_TopRight p{
+.profilePageComponentsPhotos_TopRight p{
     font-size: 14px;
     font-weight: 500;
     color: #0065D1;
@@ -43,12 +43,12 @@
     border-radius: 4px;
 }
 
-.ProfilePageComponents_Photos_TopRight p:hover{
+.profilePageComponentsPhotos_TopRight p:hover{
     cursor: pointer;
     background-color: #E4E6EB;
 }
 
-.ProfilePageComponents_Photos_TopRight .moreOptions{
+.profilePageComponentsPhotos_TopRight .moreOptions{
     display: flex;
     align-items: center;
     border-radius: 6px;
@@ -60,11 +60,11 @@
 }
 
 /* ProfilePage Components Photos Middle Section */
-.ProfilePageComponents_Photos_Middle{
+.profilePageComponentsPhotos_Middle{
     width: 100%;
 }
 
-.ProfilePageComponents_Photos_Middle .ProfilePagePhotos{
+.profilePageComponentsPhotos_Middle .profilePagePhotos{
     width: 100%;
     padding: 0;
     margin: 0;
@@ -73,22 +73,22 @@
     background-color: transparent;
 }
 
-.ProfilePageComponents_Photos_Middle .ProfilePagePhotos_Top{
+.profilePageComponentsPhotos_Middle .profilePagePhotos_Top{
     display: none;
 }
 
-.ProfilePageComponents_Photos_Middle .ProfilePagePhotos_Bottom {
+.profilePageComponentsPhotos_Middle .profilePagePhotos_Bottom {
     display: flex;
     justify-content: flex-start;
 }
 
-.ProfilePageComponents_Photos_Middle .ProfilePagePhotos_BottomContainer {
+.profilePageComponentsPhotos_Middle .profilePagePhotos_BottomContainer {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 9px;
 }
 
-.ProfilePageComponents_Photos_Middle .ProfilePagePhotos_BottomContainer img {
+.profilePageComponentsPhotos_Middle .profilePagePhotos_BottomContainer img {
     object-fit: cover;
     width: 175px;
     height: 175px;

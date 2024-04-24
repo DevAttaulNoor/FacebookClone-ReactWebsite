@@ -1,5 +1,5 @@
 /** UserPage Friends Section */
-.userpageFriends {
+.userpageFriends{
     width: 360px;
     padding: 15px;
     margin: 15px 0;
@@ -9,24 +9,24 @@
 }
 
 /* UserPage Friends Top Section */
-.userpageFriends_Top{
+.userpageFriendsTop{
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.userpageFriends_Top h3 {
+.userpageFriendsTop h3 {
     color: initial;
     text-decoration: none;
 }
 
-.userpageFriends_Top h3:hover {
+.userpageFriendsTop h3:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
-.userpageFriends_Top a {
+.userpageFriendsTop a {
     text-decoration: none;
     color: #1B74E4;
     font-size: 15px;
@@ -35,30 +35,30 @@
     border-radius: 6px;
 }
 
-.userpageFriends_Top a:hover{
+.userpageFriendsTop a:hover{
     background-color: whitesmoke;
     cursor: pointer;
 }
 
 /* UserPage Friends Bottom Section */
-.userpageFriends_Bottom {
+.userpageFriendsBottom {
     display: flex;
 }
 
-.userpageFriends_BottomContainer {
+.userpageFriendsBottomContainer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
 }
 
-.userpageFriends_BottomContainerOptions img {
+.userpageFriendsBottomContainerOptions img {
     object-fit: cover;
     width: 112px;
     height: 112px;
     border-radius: 6px
 }
 
-.userpageFriends_BottomContainerOptions p {
+.userpageFriendsBottomContainerOptions p {
     font-size: 13px;
     font-weight: 500;
 }

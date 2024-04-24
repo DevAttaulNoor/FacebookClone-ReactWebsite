@@ -1,5 +1,5 @@
-/** ProfilePage Components About Section */
-.ProfilePageComponents_About{
+/** Profile Page Components About Section */
+.profilePageComponentsAbout{
     width: 940px;
     margin: 10px 0;
     display: flex;
@@ -9,25 +9,25 @@
 }
 
 /* ProfilePage Components About Left Section */
-.ProfilePageComponents_About_Left{
+.profilePageComponentsAbout_Left{
     padding: 14px 6px;
     border-right: 1px solid lightgray;
 }
 
-.ProfilePageComponents_About_Left h3{
+.profilePageComponentsAbout_Left h3{
     color: #000;
     font-size: 18px;
     font-weight: 700;
     margin: 0 8px 10px;
 }
 
-.ProfilePageComponents_About_Left h3:hover{
+.profilePageComponentsAbout_Left h3:hover{
     cursor: pointer;
     text-decoration: underline;
     text-decoration-thickness: 2px;
 }
 
-.ProfilePageComponents_About_Left p{
+.profilePageComponentsAbout_Left p{
     min-width: 230px;
     padding: 8px;
     margin-bottom: 4px;
@@ -38,42 +38,42 @@
     color: #65676B;
 }
 
-.ProfilePageComponents_About_Left p:hover{
+.profilePageComponentsAbout_Left p:hover{
     cursor: pointer;
     background-color: #E4E6EB;
 }
 
-.ProfilePageComponents_About_Left p .active{
+.profilePageComponentsAbout_Left p .active{
     color: #0866FF;
     background-color: #EBF5FF;
 }
 
 /* ProfilePage Components About Right Section */
-.ProfilePageComponents_About_Right{
+.profilePageComponentsAbout_Right{
     width: 100%;
     padding: 15px;
 }
 
-.ProfilePageComponents_About_RightOption{
+.profilePageComponentsAbout_RightOption{
     display: flex;
     align-items: center;
     margin: 16px 0;
 }
 
-.ProfilePageComponents_About_RightOption:hover{
+.profilePageComponentsAbout_RightOption:hover{
     color: #0866FF;
     cursor: pointer;
     text-decoration: underline;
 }
 
-.ProfilePageComponents_About_RightOption p{
+.profilePageComponentsAbout_RightOption p{
     font-size: 14px;
     font-weight: 500;
     padding: 6px;
     color: #0866FF;
 }
 
-.ProfilePageComponents_About_RightOption .MuiSvgIcon-root{
+.profilePageComponentsAbout_RightOption .MuiSvgIcon-root{
     width: 20px;
     height: 20px;
     color: #0866FF;

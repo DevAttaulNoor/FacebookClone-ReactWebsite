@@ -6,13 +6,13 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 function UserpageComponentsFriends() {
     return (
-        <div className="UserpageComponents_Friends">
-            <div className="UserpageComponents_Friends_Top">
-                <div className="UserpageComponents_Friends_TopLeft">
+        <div className="userpageComponentsFriends">
+            <div className="userpageComponentsFriends_Top">
+                <div className="userpageComponentsFriends_TopLeft">
                     <h3>Friends</h3>
                 </div>
 
-                <div className="UserpageComponents_Friends_TopRight">
+                <div className="userpageComponentsFriends_TopRight">
                     <div className='searchInp'>
                         <SearchIcon />
                         <input type="text" placeholder='Search Friends' />
@@ -24,7 +24,7 @@ function UserpageComponentsFriends() {
                 </div>
             </div>
 
-            <div className="UserpageComponents_Friends_Middle">
+            <div className="userpageComponentsFriends_Middle">
                <UserpageFriends />
             </div>
         </div>

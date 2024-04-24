@@ -1,5 +1,5 @@
 /** UserPage Videos Section */
-.userpageVideos {
+.userpageVideos{
     width: 360px;
     padding: 15px;
     margin: 15px 0;
@@ -9,24 +9,24 @@
 }
 
 /* UserPage Videos Top Section */
-.userpageVideos_Top{
+.userpageVideosTop{
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.userpageVideos_Top h3 {
+.userpageVideosTop h3 {
     color: initial;
     text-decoration: none;
 }
 
-.userpageVideos_Top h3:hover {
+.userpageVideosTop h3:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
-.userpageVideos_Top a {
+.userpageVideosTop a {
     text-decoration: none;
     color: #1B74E4;
     font-size: 15px;
@@ -35,24 +35,24 @@
     border-radius: 6px;
 }
 
-.userpageVideos_Top a:hover{
+.userpageVideosTop a:hover{
     background-color: whitesmoke;
     cursor: pointer;
 }
 
 /* UserPage Videos Bottom Section */
-.userpageVideos_Bottom {
+.userpageVideosBottom {
     display: flex;
     justify-content: center;
 }
 
-.userpageVideos_BottomContainer {
+.userpageVideosBottomContainer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 4px;
 }
 
-.userpageVideos_BottomContainer video {
+.userpageVideosBottomContainer video {
     object-fit: cover;
     width: 116px;
     height: 116px;

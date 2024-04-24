@@ -1,9 +1,7 @@
 import "../../CSS/ProfilePage/ProfilePage.css";
-import React, { useEffect, useState } from "react";
-import { NavLink, useParams } from 'react-router-dom';
+import React from "react";
 import { useSelector } from "react-redux";
-import { Blurhash } from 'react-blurhash';
-import { db } from "../../Firebase/firebase";
+import { NavLink } from 'react-router-dom';
 import ProfilepageComponents from "./ProfilepageComponents";
 import AddIcon from '@mui/icons-material/Add';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -11,86 +9,84 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 function ProfilePage() {
-    const { userid } = useParams();
     const friendFriends = useSelector((state) => state.data.friends.friendFriends);
-    const friendFriendsData = useSelector((state) => state.data.friends.friendFriendsData);
-    const selectedFriendFriends = friendFriends.filter(friend => friend.friendUid !== userid);
-    console.log(selectedFriendFriends)
+    const selectedFriend = useSelector((state) => state.data.friends.selectedFriend);
+    const selectedFriendData = useSelector((state) => state.data.friends.selectedFriendData);
 
     return (
-        <div className="ProfilePage">
-            <div className="ProfilePage_Top">
-                <div className="ProfilePage_TopCoverSection">
+        <div className="profilePage">
+            <div className="profilePageTop">
+                <div className="profilePageTop_CoverSection">
                     <img
-                        src={friendFriendsData.coverphotoUrl}
+                        src={selectedFriendData.coverphotoUrl}
                         alt="Cover"
                     />
                 </div>
 
-                <div className="ProfilePage_TopProfileSection">
-                    <div className="ProfilePage_TopProfileSection_Left">
-                        <div className="ProfilePage_TopProfileSection_LeftPhoto">
-                            <img src={friendFriendsData.photoURL} alt="Profile" />
+                <div className="profilePageTop_ProfileSection">
+                    <div className="profilePageTop_ProfileSectionLeft">
+                        <div className="profilePageTop_ProfileSectionLeftPhoto">
+                            <img src={selectedFriendData.photoURL} alt="Profile" />
                         </div>
 
-                        <div className="ProfilePage_TopProfileSection_LeftInfo">
-                            <h3>{friendFriendsData.username}</h3>
+                        <div className="profilePageTop_ProfileSectionLeftInfo">
+                            <h3>{selectedFriendData.username}</h3>
                             <p>{friendFriends.length} friends</p>
                         </div>
                     </div>
 
-                    <div className="ProfilePage_TopProfileSection_Right">
-                        <div className="ProfilePage_TopProfileSection_RightOption" id="addStoryBtn">
+                    <div className="profilePageTop_ProfileSectionRight">
+                        <div className="profilePageTop_ProfileSectionRightOption" id="addStoryBtn">
                             <AddIcon />
                             <p>Message</p>
                         </div>
 
-                        <div className="ProfilePage_TopProfileSection_RightOption" id="editProfileBtn">
+                        <div className="profilePageTop_ProfileSectionRightOption" id="editProfileBtn">
                             <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yW/r/OR6SzrfoMFg.png" alt="" />
                             <p>Add friend</p>
                         </div>
 
-                        <div className="ProfilePage_TopProfileSection_RightOption" id="arrowBtn">
+                        <div className="profilePageTop_ProfileSectionRightOption" id="arrowBtn">
                             <KeyboardArrowDownIcon />
                         </div>
                     </div>
                 </div>
 
-                <div className="ProfilePage_TopComponents">
-                    <div className="ProfilePage_TopComponents_Left">
-                        <NavLink to={`/profilepage/${userid}/post`} activeclassname="active">
-                            <div className='ProfilePage_TopComponents_LeftOption'>Posts</div>
+                <div className="profilePageTop_Components">
+                    <div className="profilePageTop_ComponentsLeft">
+                        <NavLink to={`/friendpage/allFriends/profilepage/${selectedFriend}/post`} activeclassname="active">
+                            <div className='profilePageTop_ComponentsLeftOption'>Posts</div>
                         </NavLink>
 
-                        <NavLink to={`/profilepage/${userid}/about`} activeclassname="active">
-                            <div className='ProfilePage_TopComponents_LeftOption'>About</div>
+                        <NavLink to={`/friendpage/allFriends/profilepage/${selectedFriend}/about`} activeclassname="active">
+                            <div className='profilePageTop_ComponentsLeftOption'>About</div>
                         </NavLink>
 
-                        <NavLink to={`/profilepage/${userid}/friend`} activeclassname="active">
-                            <div className='ProfilePage_TopComponents_LeftOption'>Friends</div>
+                        <NavLink to={`/friendpage/allFriends/profilepage/${selectedFriend}/friend`} activeclassname="active">
+                            <div className='profilePageTop_ComponentsLeftOption'>Friends</div>
                         </NavLink>
 
-                        <NavLink to={`/profilepage/${userid}/photo`} activeclassname="active">
-                            <div className='ProfilePage_TopComponents_LeftOption'>Photos</div>
+                        <NavLink to={`/friendpage/allFriends/profilepage/${selectedFriend}/photo`} activeclassname="active">
+                            <div className='profilePageTop_ComponentsLeftOption'>Photos</div>
                         </NavLink>
 
-                        <NavLink to={`/profilepage/${userid}/video`} activeclassname="active">
-                            <div className='ProfilePage_TopComponents_LeftOption'>Videos</div>
+                        <NavLink to={`/friendpage/allFriends/profilepage/${selectedFriend}/video`} activeclassname="active">
+                            <div className='profilePageTop_ComponentsLeftOption'>Videos</div>
                         </NavLink>
 
-                        <div className="ProfilePage_TopComponents_LeftOption" id="moreOption">
+                        <div className="profilePageTop_ComponentsLeftOption" id="moreOption">
                             <p>More</p>
                             <ArrowDropDownIcon />
                         </div>
                     </div>
 
-                    <div className="ProfilePage_TopComponents_Right">
+                    <div className="profilePageTop_ComponentsRight">
                         <MoreHorizIcon />
                     </div>
                 </div>
             </div>
 
-            <div className="ProfilePage_Bottom">
+            <div className="profilePageBottom">
                 <ProfilepageComponents />
             </div>
         </div>

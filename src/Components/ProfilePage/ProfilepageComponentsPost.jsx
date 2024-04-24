@@ -4,24 +4,28 @@ import ProfilepageFeed from './ProfilepageFeed';
 import ProfilepageInfo from './ProfilepageInfo';
 import ProfilepagePhotos from './ProfilepagePhotos';
 import ProfilepageFriends from './ProfilepageFriends';
+import ProfilepageVideos from './ProfilepageVideos';
 
-function ProfilepageComponentsPost({userData}) {
+function ProfilepageComponentsPost() {
     return (
-        <div className='ProfilePageComponentsPost'>
-            <div className="ProfilePageComponentsPost_Left">
+        <div className='profilePageComponentsPost'>
+            <div className="profilePageComponentsPost_Left">
                 <div className="userIntro">
-                    <ProfilepageInfo userData={userData} />
+                    <ProfilepageInfo />
                 </div>
                 <div className="userPhotos">
-                    <ProfilepagePhotos userData={userData} />
+                    <ProfilepagePhotos />
+                </div>
+                <div className="userVideos">
+                    <ProfilepageVideos />
                 </div>
                 <div className="userFriends">
-                    <ProfilepageFriends userData={userData} />
+                    <ProfilepageFriends />
                 </div>
             </div>
-            <div className="ProfilePageComponentsPost_Right">
+            <div className="profilePageComponentsPost_Right">
                 <div className="userFeed">
-                    <ProfilepageFeed userData={userData} />
+                    <ProfilepageFeed />
                 </div>
             </div>
         </div>

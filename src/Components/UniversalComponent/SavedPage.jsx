@@ -1,16 +1,12 @@
 import '../../CSS/UniversalComponent/SavedPage.css'
-
-
-import { NavLink } from 'react-router-dom';
-import SettingsIcon from '@mui/icons-material/Settings';
-import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined';
-
-
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { db } from '../../Firebase/firebase';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import TuneIcon from '@mui/icons-material/Tune';
+import SettingsIcon from '@mui/icons-material/Settings';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined';
 
 function SavedPage() {
     const user = useSelector((state) => state.data.user.user);
@@ -55,20 +51,16 @@ function SavedPage() {
     }, [savedPost]);
 
     return (
-        <div className='savedPage'>
-            {/* <div className="savedPage_leftbar">
-                <SavedPage_Leftbar />
-            </div> */}
-
-            <div className='savedPageLeftbar'>
-                <div className="savedPageLeftbar_Top">
+        <div className='savedpage'>
+            <div className='savedpageLeftbar'>
+                <div className="savedpageLeftbarTop">
                     <p>Saved</p>
                     <SettingsIcon />
                 </div>
 
-                <div className="savedPageLeftbar_Bottom">
+                <div className="savedpageLeftbarBottom">
                     <NavLink to="/savedpage/" activeClassName="active">
-                        <div className="savedPageLeftbar_BottomOption">
+                        <div className="savedpageLeftbarBottomOption">
                             <BadgeOutlinedIcon />
                             <p>Saved items</p>
                         </div>
@@ -76,21 +68,16 @@ function SavedPage() {
                 </div>
             </div>
 
-            {/* <div className='savedPage_Main'>
-                <SavedPage_Main />
-            </div> */}
-
-            <div className='SavedPageMain'>
-                <div className='SavedPageMain_Top'>
+            <div className='savedpageMain'>
+                <div className='savedpageMainTop'>
                     <p>All</p>
                     <TuneIcon />
                 </div>
 
-                <div className='SavedPageMain_Bottom'>
+                <div className='savedpageMainBottom'>
                     {savedPostItems.map(postitem => (
                         <div key={postitem.id} className='savedPosts'>
                             <div className='savedPosts_Left'>
-                                {console.log(savedPostItems)}
                                 {postitem.mediaType == 'image' ? (
                                     <img src={postitem.media} alt="" />
                                 ) : (

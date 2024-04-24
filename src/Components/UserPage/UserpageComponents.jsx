@@ -8,7 +8,7 @@ import UserpageComponentsVideos from './UserpageComponentsVideos'
 
 function UserpageComponents() {
     return (
-        <div className='UserpageComponents'>
+        <div className='userpageComponents'>
             <Routes>
                 <Route path="/post" element={<UserpageComponentsPost />} />
                 <Route path="/about" element={<UserpageComponentsAbout />} />

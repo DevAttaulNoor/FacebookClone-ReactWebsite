@@ -1,18 +1,18 @@
 import "../../CSS/ProfilePage/ProfilepageVideos.css";
 import React, { useEffect, useState } from 'react';
-import { NavLink } from "react-router-dom";
 import firebase from "firebase/compat/app";
+import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-function ProfilepageVideos({userData}) {
-    const friendFriends = useSelector((state) => state.data.friends.friendFriends);
+function ProfilepageVideos() {
+    const selectedFriend = useSelector((state) => state.data.friends.selectedFriend);
     const [videoUrls, setVideoUrls] = useState([]);
 
     useEffect(() => {
         // Fetch videos from the specified path
         const fetchVideos = async () => {
             const urls = [];
-            const storageRef = firebase.storage().ref(`Posts/${friendFriends.friendUid}`);
+            const storageRef = firebase.storage().ref(`Posts/${selectedFriend}`);
 
             // List items (Videos) in the user's folder
             try {
@@ -33,19 +33,19 @@ function ProfilepageVideos({userData}) {
             setVideoUrls(urls);
         };
         fetchVideos();
-    }, [friendFriends]);
+    }, [selectedFriend]);
 
     return (
-        <div className='ProfilePageVideos'>
-            <div className="ProfilePageVideos_Top">
+        <div className='profilePageVideos'>
+            <div className="profilePageVideos_Top">
                 <NavLink id="navLink" to="/profilepage/:userid/video" activeClassName="active">
                     <h3>Videos</h3>
                 </NavLink>
                 <a id="seeAllLink" href="#">See all Videos</a>
             </div>
 
-            <div className="ProfilePageVideos_Bottom">
-                <div className="ProfilePageVideos_BottomContainer">
+            <div className="profilePageVideos_Bottom">
+                <div className="profilePageVideos_BottomContainer">
                     {videoUrls.map((url, index) => (
                         <video controls key={index}>
                             <source src={url} type="video/mp4" />

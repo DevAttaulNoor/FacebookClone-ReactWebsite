@@ -25,6 +25,7 @@ import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
 import SmartDisplayOutlinedIcon from '@mui/icons-material/SmartDisplayOutlined';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
+import { setSelectedPost } from '../../Redux/postSlice';
 
 function Header() {
     const navigate = useNavigate();
@@ -340,18 +341,19 @@ function Header() {
 
     return (
         <div className={`header ${showHeader ? '' : 'transformed'}`}>
-            <div className='Transformed_header_left'>
+            <div className='headerTransformedLeft'>
                 <NavLink to={'/homepage'}>
                     <CloseIcon className='closeIcon' />
                     <img src={fblogo} alt="" />
                 </NavLink>
             </div>
 
-            <div className='header_left'>
+            <div className='headerLeft'>
                 <NavLink to={'/homepage'}>
                     <img src={fblogo} alt="" />
                 </NavLink>
-                <div className='header_search'>
+                
+                <div className='searchContainer'>
                     <SearchIcon />
                     <input
                         type="text"
@@ -361,14 +363,14 @@ function Header() {
                         onClick={handleSearchInput}
                     />
                     {isSearchBoxVisible && (
-                        <div className="headersearch_Dropbox">
+                        <div className="searchContainerDropbox">
                             {matchingUsernames.length === 0 ? (
                                 <p>No matches</p>
                             ) : (
                                 matchingUsernames.map((user) => (
                                     <div
                                         key={user.id}
-                                        className={`headersearch_DropboxResults ${selectedUser === user.id ? "selected" : ""}`}
+                                        className={`searchContainerDropboxResults ${selectedUser === user.id ? "selected" : ""}`}
                                         onClick={() => {
                                             setSelectedUser(user.id);
                                             setIsSearchBoxVisible(false);
@@ -387,7 +389,7 @@ function Header() {
                 </div>
             </div>
 
-            <div className="header_middle">
+            <div className="headerMiddle">
                 <NavLink to="/homepage" activeclassname="active">
                     {({ isActive }) => (
                         isActive ? <HomeIcon /> : <HomeOutlinedIcon />
@@ -413,13 +415,13 @@ function Header() {
                 </NavLink>
             </div>
 
-            <div className="header_right">
-                <AppsIcon className='header_right_Options' />
+            <div className="headerRight">
+                <AppsIcon className='headerRight_Options' />
 
                 <div className={`messageBox ${userBoxVisible ? 'clicked' : ''}`}>
                     {userChats.length > 0 && <p id='msgLengthIcon'>{userChats.length}</p>}
 
-                    <ForumIcon className='header_right_Options' id='msgIcon' onClick={toggleMessageBox} ref={messageBoxRef} />
+                    <ForumIcon className='headerRight_Options' id='msgIcon' onClick={toggleMessageBox} ref={messageBoxRef} />
                     {messageBoxVisible && (
                         <div className="headerBox">
                             <div className='headerBox_Top'>
@@ -494,7 +496,7 @@ function Header() {
                 <div className={`notificationBox ${userBoxVisible ? 'clicked' : ''}`}>
                     {notifications.length > 0 && <p id='notiLengthIcon'>{notifications.length}</p>}
 
-                    <NotificationsIcon className='header_right_Options' onClick={toggleNotificationBox} ref={notificationBoxRef} />
+                    <NotificationsIcon className='headerRight_Options' onClick={toggleNotificationBox} ref={notificationBoxRef} />
                     {notificationBoxVisible && (
                         <div className="headerBox">
                             <div className='headerBox_Top'>
@@ -517,7 +519,7 @@ function Header() {
                                         {notifications.map((notification, index) => (
                                             <div className='headerBox_BottomOption' key={index}>
                                                 {(notification.status == 'reacted') || (notification.status == 'commented') ? (
-                                                    <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} state={{ from: notification.postid }}>
+                                                    <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} onClick={() => dispatch(setSelectedPost(notification.postid))}>
                                                         <div className='headerBox_BottomOption_Left'>
                                                             <Avatar src={notification.userphotoUrl} />
                                                         </div>
@@ -603,7 +605,6 @@ function Header() {
                             <div className='terms'>
                                 <p><span>Privacy</span> · <span>Terms</span> · <span>Advertising</span> · <span>Ad choices</span> · <span>Cookies</span> · <span>More</span> · <span>Meta © 2023</span></p>
                             </div>
-
                             {/* <button onClick={deleteUser}>Delete</button> */}
                         </div>
                     )}

@@ -1,5 +1,5 @@
-/** ProfilePage Section */
-.ProfilePage {
+/** Profile Page Section */
+.profilePage {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,8 +8,8 @@
     min-height: 100vh;
 }
 
-/** ProfilePage Top Section */
-.ProfilePage_Top {
+/* Profile Page Top Section */
+.profilePageTop {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -17,14 +17,14 @@
     width: 100%;
 }
 
-/* ProfilePage Top Cover Section */
-.ProfilePage_TopCoverSection {
+/* Profile Page Top Cover Section */
+.profilePageTop_CoverSection {
     position: relative;
     width: 100%;
     max-width: 995px;
 }
 
-.ProfilePage_TopCoverSection img {
+.profilePageTop_CoverSection img {
     width: 995px;
     height: 370px;
     border-bottom-left-radius: 8px;
@@ -32,7 +32,7 @@
     object-fit: cover;
 }
 
-.ProfilePage_TopCoverSection button {
+.profilePageTop_CoverSection button {
     position: absolute;
     top: 320px;
     right: 27px;
@@ -46,23 +46,23 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.ProfilePage_TopCoverSection button:hover {
+.profilePageTop_CoverSection button:hover {
     cursor: pointer;
 }
 
-.ProfilePage_TopCoverSection p {
+.profilePageTop_CoverSection p {
     font-size: 14px;
     font-weight: 500;
     margin-left: 5px;
 }
 
-.ProfilePage_TopCoverSection .MuiSvgIcon-root {
+.profilePageTop_CoverSection .MuiSvgIcon-root {
     width: 16px;
     height: 20px;
 }
 
-/* ProfilePage Top Profile Section */
-.ProfilePage_TopProfileSection {
+/* Profile Page Top Profile Section */
+.profilePageTop_ProfileSection {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -71,17 +71,16 @@
     margin-bottom: 12px;
 }
 
-/* ProfilePage Top Left Profile Section */
-.ProfilePage_TopProfileSection_Left {
+.profilePageTop_ProfileSectionLeft {
     display: flex;
     align-items: flex-end;
 }
 
-.ProfilePage_TopProfileSection_LeftPhoto {
+.profilePageTop_ProfileSectionLeftPhoto {
     position: relative;
 }
 
-.ProfilePage_TopProfileSection_LeftPhoto img {
+.profilePageTop_ProfileSectionLeftPhoto img {
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -89,7 +88,7 @@
     border: 4px solid #fff;
 }
 
-.ProfilePage_TopProfileSection_LeftPhoto .MuiSvgIcon-root {
+.profilePageTop_ProfileSectionLeftPhoto .MuiSvgIcon-root {
     color: black;
     background-color: #E4E6EB;
     border-radius: 50%;
@@ -101,42 +100,41 @@
     height: 20px;
 }
 
-.ProfilePage_TopProfileSection_LeftPhoto .MuiSvgIcon-root:hover {
+.profilePageTop_ProfileSectionLeftPhoto .MuiSvgIcon-root:hover {
     background-color: lightgray;
     cursor: pointer;
 }
 
-.ProfilePage_TopProfileSection_LeftInfo {
+.profilePageTop_ProfileSectionLeftInfo {
     display: flex;
     flex-direction: column;
     padding-left: 14px;
     margin-bottom: 25px;
 }
 
-.ProfilePage_TopProfileSection_LeftInfo h3 {
+.profilePageTop_ProfileSectionLeftInfo h3 {
     font-size: 28px;
     font-weight: 700;
     margin-bottom: 2px;
 }
 
-.ProfilePage_TopProfileSection_LeftInfo p {
+.profilePageTop_ProfileSectionLeftInfo p {
     font-size: 14px;
     font-weight: 500;
     color: gray;
 }
 
-/* ProfilePage Top Right Profile Section */
-.ProfilePage_TopProfileSection_Right {
+.profilePageTop_ProfileSectionRight {
     display: flex;
     margin-bottom: 25px;
 }
 
-.ProfilePage_TopProfileSection_Right .MuiSvgIcon-root {
+.profilePageTop_ProfileSectionRight .MuiSvgIcon-root {
     width: 20px;
     height: 22px;
 }
 
-.ProfilePage_TopProfileSection_RightOption {
+.profilePageTop_ProfileSectionRightOption {
     background-color: #E4E6EB;
     border-radius: 6px;
     padding: 5px 10px;
@@ -145,27 +143,27 @@
     align-items: center;
 }
 
-.ProfilePage_TopProfileSection_RightOption:hover {
+.profilePageTop_ProfileSectionRightOption:hover {
     cursor: pointer;
 }
 
-.ProfilePage_TopProfileSection_RightOption p {
+.profilePageTop_ProfileSectionRightOption p {
     font-size: 14px;
     font-weight: 600;
     margin-left: 5px;
 }
 
-.ProfilePage_TopProfileSection_Right #addStoryBtn {
+.profilePageTop_ProfileSectionRight #addStoryBtn {
     background-color: #1B74E4;
     color: #fff;
 }
 
-.ProfilePage_TopProfileSection_Right #editProfileBtn img {
+.profilePageTop_ProfileSectionRight #editProfileBtn img {
     width: 14px;
 }
 
-/* ProfilePage Top Components Section */
-.ProfilePage_TopComponents {
+/* Profile Page Top Components Section */
+.profilePageTop_Components {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -174,27 +172,26 @@
     border-top: 1px solid rgb(197, 197, 197);
 }
 
-/* ProfilePage Top Left Components Section */
-.ProfilePage_TopComponents_Left {
+.profilePageTop_ComponentsLeft {
     display: flex;
 }
 
-.ProfilePage_TopComponents_Left a{
+.profilePageTop_ComponentsLeft a {
     text-decoration: none;
     color: initial;
     height: fit-content;
 }
 
-.ProfilePage_TopComponents_Left a.active .ProfilePage_TopComponents_LeftOption{
+.profilePageTop_ComponentsLeft a.active .profilePageTop_ComponentsLeftOption {
     position: relative;
     color: #2381fa;
 }
 
-.ProfilePage_TopComponents_Left a.active .ProfilePage_TopComponents_LeftOption:hover{
+.profilePageTop_ComponentsLeft a.active .profilePageTop_ComponentsLeftOption:hover {
     background-color: transparent;
 }
 
-.ProfilePage_TopComponents_Left a.active .ProfilePage_TopComponents_LeftOption::after{
+.profilePageTop_ComponentsLeft a.active .profilePageTop_ComponentsLeftOption::after {
     content: "";
     position: absolute;
     height: 2px;
@@ -204,11 +201,11 @@
     background-color: #2381fa;
 }
 
-.ProfilePage_TopComponents_Left a.active .ProfilePage_TopComponents_LeftOption svg{
+.profilePageTop_ComponentsLeft a.active .profilePageTop_ComponentsLeftOption svg {
     color: #2381fa;
 }
 
-.ProfilePage_TopComponents_LeftOption {
+.profilePageTop_ComponentsLeftOption {
     font-size: 14px;
     font-weight: 600;
     padding: 14px;
@@ -217,26 +214,25 @@
     color: #65676B;
 }
 
-.ProfilePage_TopComponents_LeftOption:hover {
+.profilePageTop_ComponentsLeftOption:hover {
     background-color: whitesmoke;
     cursor: pointer;
 }
 
-.ProfilePage_TopComponents_LeftOption#moreOption {
+.profilePageTop_ComponentsLeftOption#moreOption {
     display: flex;
     align-items: center;
     padding: 11px 14px;
 }
 
-.ProfilePage_TopComponents_LeftOption#moreOption svg{
+.profilePageTop_ComponentsLeftOption#moreOption svg {
     color: #65676B;
     width: 18px;
     height: 18px;
     margin-left: 3px;
 }
 
-/* ProfilePage Top Right Components Section */
-.ProfilePage_TopComponents_Right {
+.profilePageTop_ComponentsRight {
     background-color: #E4E6EB;
     border-radius: 6px;
     padding: 5px 10px;
@@ -245,25 +241,25 @@
     align-items: center;
 }
 
-.ProfilePage_TopComponents_Right .MuiSvgIcon-root {
+.profilePageTop_ComponentsRight .MuiSvgIcon-root {
     width: 20px;
     height: 22px;
 }
 
-.ProfilePage_TopComponents_Right .MuiSvgIcon-root:hover {
+.profilePageTop_ComponentsRight .MuiSvgIcon-root:hover {
     cursor: pointer;
 }
 
-/** ProfilePage Bottom Section */
-.ProfilePage_Bottom {
+/* Profile Page Bottom Section */
+.profilePageBottom {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    max-width: 940px;    
+    max-width: 940px;
 }
 
-.ProfilePage_BottomLeft,
-.ProfilePage_BottomRight {
+.profilePageBottomLeft,
+.profilePageBottomRight {
     margin: 0;
     padding: 0;
 }

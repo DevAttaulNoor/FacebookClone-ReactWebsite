@@ -1,5 +1,5 @@
 /** ProfilePage Components Videos Section */
-.ProfilePageComponents_Videos{
+.profilePageComponentsVideos{
     width: 910px;
     padding: 16px;
     margin: 10px 0;
@@ -9,7 +9,7 @@
 }
 
 /* ProfilePage Components Videos Top Section */
-.ProfilePageComponents_Videos_Top{
+.profilePageComponentsVideos_Top{
     width: 100%;
     display: flex;
     align-items: center;
@@ -17,24 +17,24 @@
     margin-bottom: 20px;
 }
 
-.ProfilePageComponents_Videos_Top h3{
+.profilePageComponentsVideos_Top h3{
     color: #000;
     font-size: 18px;
     font-weight: 700;
 }
 
-.ProfilePageComponents_Videos_Top h3:hover{
+.profilePageComponentsVideos_Top h3:hover{
     cursor: pointer;
     text-decoration: underline;
     text-decoration-thickness: 2px;
 }
 
-.ProfilePageComponents_Videos_TopRight{
+.profilePageComponentsVideos_TopRight{
     display: flex;
     align-items: center;
 }
 
-.ProfilePageComponents_Videos_TopRight p{
+.profilePageComponentsVideos_TopRight p{
     font-size: 14px;
     font-weight: 500;
     color: #0065D1;
@@ -43,12 +43,12 @@
     border-radius: 4px;
 }
 
-.ProfilePageComponents_Videos_TopRight p:hover{
+.profilePageComponentsVideos_TopRight p:hover{
     cursor: pointer;
     background-color: #E4E6EB;
 }
 
-.ProfilePageComponents_Videos_TopRight .moreOptions{
+.profilePageComponentsVideos_TopRight .moreOptions{
     display: flex;
     align-items: center;
     border-radius: 6px;
@@ -60,11 +60,11 @@
 }
 
 /* ProfilePage Components Videos Middle Section */
-.ProfilePageComponents_Videos_Middle{
+.profilePageComponentsVideos_Middle{
     width: 100%;
 }
 
-.ProfilePageComponents_Videos_Middle .ProfilePageVideos{
+.profilePageComponentsVideos_Middle .profilePageVideos{
     width: 100%;
     padding: 0;
     margin: 0;
@@ -73,22 +73,22 @@
     background-color: transparent;
 }
 
-.ProfilePageComponents_Videos_Middle .ProfilePageVideos_Top{
+.profilePageComponentsVideos_Middle .profilePageVideos_Top{
     display: none;
 }
 
-.ProfilePageComponents_Videos_Middle .ProfilePageVideos_Bottom {
+.profilePageComponentsVideos_Middle .profilePageVideos_Bottom {
     display: flex;
     justify-content: flex-start;
 }
 
-.ProfilePageComponents_Videos_Middle .ProfilePageVideos_BottomContainer {
+.profilePageComponentsVideos_Middle .profilePageVideos_BottomContainer {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 9px;
 }
 
-.ProfilePageComponents_Videos_Middle .ProfilePageVideos_BottomContainer video {
+.profilePageComponentsVideos_Middle .profilePageVideos_BottomContainer video {
     object-fit: cover;
     width: 175px;
     height: 175px;

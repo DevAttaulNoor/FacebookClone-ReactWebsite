@@ -6,15 +6,15 @@ import ProfilepageComponentsPhotos from './ProfilepageComponentsPhotos';
 import ProfilepageComponentsVideos from './ProfilepageComponentsVideos';
 import ProfilepageComponentsFriends from './ProfilepageComponentsFriends';
 
-function ProfilepageComponents({userData}) {
+function ProfilepageComponents() {
     return (
-        <div className='ProfilePageComponents'>
+        <div className='profilePageComponents'>
             <Routes>
-                <Route path="/post" element={<ProfilepageComponentsPost userData={userData} />} />
-                <Route path="/about" element={<ProfilepageComponentsAbout userData={userData} />} />
-                <Route path="/friend" element={<ProfilepageComponentsFriends userData={userData} />} />
-                <Route path="/photo" element={<ProfilepageComponentsPhotos userData={userData} />} />
-                <Route path="/video" element={<ProfilepageComponentsVideos userData={userData} />} />
+                <Route path="/post" element={<ProfilepageComponentsPost />} />
+                <Route path="/about" element={<ProfilepageComponentsAbout />} />
+                <Route path="/friend" element={<ProfilepageComponentsFriends />} />
+                <Route path="/photo" element={<ProfilepageComponentsPhotos />} />
+                <Route path="/video" element={<ProfilepageComponentsVideos />} />
             </Routes>
         </div>
     )

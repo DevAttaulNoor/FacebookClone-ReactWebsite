@@ -8,17 +8,17 @@ function UserpageFriends() {
 
     return (
         <div className='userpageFriends'>
-            <div className="userpageFriends_Top">
+            <div className="userpageFriendsTop">
                 <h3>Friends</h3>
                 <NavLink to="/userhomepage/friend" activeclassname="active">
                     See all friends
                 </NavLink>
             </div>
 
-            <div className="userpageFriends_Bottom">
-                <div className="userpageFriends_BottomContainer">
+            <div className="userpageFriendsBottom">
+                <div className="userpageFriendsBottomContainer">
                     {friendsData.map((friend, index) => (
-                        <div key={index} className="userpageFriends_BottomContainerOptions">
+                        <div key={index} className="userpageFriendsBottomContainerOptions">
                             <img src={friend.photoURL} alt="" />
                             <p>{friend.username}</p>
                         </div>

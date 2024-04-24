@@ -1,11 +1,8 @@
 import '../../CSS/UniversalComponent/VideosPage.css'
-
-
 import React, { useEffect, useState } from 'react'
-import { db } from '../../Firebase/firebase';
-import HomePage_Feeds_Posts from '../HomePage/HomepageFeedPosts';
-
 import { NavLink } from 'react-router-dom';
+import { db } from '../../Firebase/firebase';
+import HomepageFeedPosts from '../HomePage/HomepageFeedPosts';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
 
@@ -65,17 +62,17 @@ function VideosPage() {
     };
 
     return (
-        <div className='videosPage'>
-            <div className='videosPageLeftbar'>
-                <div className="videosPageLeftbar_Top">
+        <div className='videospage'>
+            <div className='videosageLeftbar'>
+                <div className="videosageLeftbarTop">
                     <p>Video</p>
                     <SettingsIcon />
                 </div>
 
-                <div className="videosPageLeftbar_Bottom">
+                <div className="videosageLeftbarBottom">
                     <NavLink to="/videospage/" activeclassname="active">
-                        <div className="videosPageLeftbar_BottomOptions">
-                            <div className="videosPageLeftbar_BottomOption">
+                        <div className="videosageLeftbarBottomOptions">
+                            <div className="videosageLeftbarBottomOption">
                                 <SmartDisplayIcon />
                                 <p>Home</p>
                             </div>
@@ -84,11 +81,11 @@ function VideosPage() {
                 </div>
             </div>
 
-            <div className='videosPageMain'>
+            <div className='videospageMain'>
                 {posts.map(post => {
                     const formattedDate = timeAgo(post.data.timestamp);
                     return (
-                        <HomePage_Feeds_Posts
+                        <HomepageFeedPosts
                             id={post.id}
                             photoURL={post.data.photoURL}
                             media={post.data.media}

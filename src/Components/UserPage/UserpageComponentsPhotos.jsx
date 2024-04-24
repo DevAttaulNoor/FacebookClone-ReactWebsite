@@ -5,19 +5,19 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 function UserpageComponentsPhotos() {
     return (
-        <div className="UserpageComponents_Photos">
-            <div className="UserpageComponents_Photos_Top">
-                <div className="UserpageComponents_Photos_TopLeft">
+        <div className="userpageComponentsPhotos">
+            <div className="userpageComponentsPhotos_Top">
+                <div className="userpageComponentsPhotos_TopLeft">
                     <h3>Photos</h3>
                 </div>
 
-                <div className="UserpageComponents_Photos_TopRight">
+                <div className="userpageComponentsPhotos_TopRight">
                     <p>Add photos</p>
                     <MoreHorizIcon className='moreOptions'/>
                 </div>
             </div>
 
-            <div className="UserpageComponents_Photos_Middle">
+            <div className="userpageComponentsPhotos_Middle">
                 <UserpagePhotos />
             </div>
         </div>
