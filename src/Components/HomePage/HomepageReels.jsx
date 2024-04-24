@@ -242,64 +242,63 @@ function HomepageReels() {
 
             <div className='homepageReelsMain'>
                 <div className="homepageReelsMain_Body">
-                    <div className="homepageReelsMain_Body">
-                        <div
-                            className="homepageReelsMain_BodyCard Photo"
-                            style={{ display: showCards ? 'flex' : 'none' }}
-                            onClick={handleAddPhotoClick}
+                    <div
+                        className="homepageReelsMain_BodyCard Photo"
+                        style={{ display: showCards ? 'flex' : 'none' }}
+                        onClick={handleAddPhotoClick}
 
-                        >
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j" alt="" />
-                            <p>Create a Photo Story</p>
+                    >
+                        <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j" alt="" />
+                        <p>Create a Photo Story</p>
 
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={handleImageChange}
-                                className="hidden-input"
-                                ref={inputRef}
-                            />
-                        </div>
-                        <div
-                            className="homepageReelsMain_BodyCard Text"
-                            style={{ display: showCards ? 'flex' : 'none' }}
-                            onClick={handleAddTextClick}
-                        >
-                            <TitleIcon />
-                            <p>Create a Text Story</p>
-                        </div>
-
-                        {/* Conditional rendering of content div */}
-                        {showTextContent || showPhotoContent ? (
-                            <div className="contentDiv">
-                                {showTextContent && (
-                                    <div className="textStoryContent">
-                                        <p>Preview</p>
-                                        <div className="textStoryContent_Inner">
-                                            <div className={`textStoryWindow ${activeDot}`}>
-                                                <p>{textAreaValue}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-
-                                {/* Content for Photo Story */}
-                                {showPhotoContent && (
-                                    <div className="photoStoryContent">
-                                        <p>Peview</p>
-                                        <div className="photoStoryContent_Inner">
-                                            <div className="photoStoryWindow" style={{ backgroundImage: imageUrl ? `url(${imageUrl})` : 'none' }}>
-                                                {image && console.log(imageUrl)}
-                                                <p>{textAreaValue}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        ) : null}
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            className="hidden-input"
+                            ref={inputRef}
+                        />
                     </div>
+                    
+                    <div
+                        className="homepageReelsMain_BodyCard Text"
+                        style={{ display: showCards ? 'flex' : 'none' }}
+                        onClick={handleAddTextClick}
+                    >
+                        <TitleIcon />
+                        <p>Create a Text Story</p>
+                    </div>
+
+                    {/* Conditional rendering of content div */}
+                    {showTextContent || showPhotoContent ? (
+                        <div className="contentDiv">
+                            {showTextContent && (
+                                <div className="textStoryContent">
+                                    <p>Preview</p>
+                                    <div className="textStoryContent_Inner">
+                                        <div className={`textStoryWindow ${activeDot}`}>
+                                            <p>{textAreaValue}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Content for Photo Story */}
+                            {showPhotoContent && (
+                                <div className="photoStoryContent">
+                                    <p>Peview</p>
+                                    <div className="photoStoryContent_Inner">
+                                        <div className="photoStoryWindow" style={{ backgroundImage: imageUrl ? `url(${imageUrl})` : 'none' }}>
+                                            {image && console.log(imageUrl)}
+                                            <p>{textAreaValue}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    ) : null}
                 </div>
-            </div >
+            </div>
         </div >
     )
 }

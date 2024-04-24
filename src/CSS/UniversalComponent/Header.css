@@ -659,7 +659,7 @@
     align-items: center;
     position: absolute;
     left: 0;
-    width: 300px;
+    width: 360px;
     height: 60px;
     padding: 0 10px;
     background-color: #fff;
@@ -672,11 +672,13 @@
 }
 
 .header.transformed .headerTransformedLeft .MuiSvgIcon-root {
+    width: 40px;
+    height: 40px;
     padding: 8px;
-    background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 50%;
     margin-right: 5px;
+    border-radius: 50%;
     color: #fff;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .header.transformed .headerTransformedLeft .MuiSvgIcon-root:hover {

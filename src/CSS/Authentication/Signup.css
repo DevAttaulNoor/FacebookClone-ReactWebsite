@@ -183,11 +183,11 @@
 
 @keyframes spin {
     0% {
-        tran: rotate(0deg);
+        transform: rotate(0deg);
     }
 
     100% {
-        tran: rotate(360deg);
+        transform: rotate(360deg);
     }
 }
 

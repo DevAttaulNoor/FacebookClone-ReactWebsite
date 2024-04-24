@@ -1,6 +1,6 @@
 /** FriendPage AllFriends Section */
 .friendpageAllFriends{
-    height: 92vh;
+    height: 93vh;
     display: flex;
     overflow: hidden;
 }
@@ -16,8 +16,8 @@
 
 /* FriendPage AllFriends Leftbar Section */
 .friendpageAllFriendsLeftbar {
-    width: 310px;
     height: 100%;
+    width: 460px;
     display: flex;
     flex-direction: column;
     padding: 8px;
@@ -42,6 +42,8 @@
 }
 
 .friendpageAllFriendsLeftbarTop_Top .MuiSvgIcon-root {
+    width: 32px;
+    height: 32px;
     padding: 6px;
     color: #000;
 }

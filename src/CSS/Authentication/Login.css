@@ -1,5 +1,5 @@
 /** Login Section */
-.login{
+.login {
     display: flex;
     flex-direction: column;
 }
@@ -68,8 +68,8 @@
 }
 
 .loginTop .loadingSpin {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     border: 3px solid #fff;
     border-top: 3px solid #1877f2;
     border-radius: 50%;
@@ -99,7 +99,7 @@
     color: gray;
 }
 
-.loginTop .errorNote{
+.loginTop .errorNote {
     text-align: center;
     font-size: 12px;
     padding: 3px 0 0 0;

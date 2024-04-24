@@ -1,20 +1,20 @@
 /** FriendPage Section */
-.friendpage{
-    height: 92vh;
+.friendpage {
+    height: 93vh;
     display: flex;
     overflow: hidden;
 }
 
 /* FriendPage Main Section */
-.friendpageMain{
+.friendpageMain {
     width: 100%;
     overflow-y: auto;
 }
 
 /* Friend Page Leftbar Section */
-.friendpageLeftbar{
+.friendpageLeftbar {
     height: 100%;
-    width: 310px;
+    width: 460px;
     display: flex;
     flex-direction: column;
     padding: 8px;
@@ -23,7 +23,7 @@
 }
 
 /* Friend Page Leftbar Top Section */
-.friendpageLeftbarTop{
+.friendpageLeftbarTop {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -31,38 +31,38 @@
     margin: 2px 0 10px;
 }
 
-.friendpageLeftbarTop p{
+.friendpageLeftbarTop p {
     font-size: 22px;
     font-weight: 700;
 }
 
-.friendpageLeftbarTop .MuiSvgIcon-root{
-    width: 22px;
-    height: 22px;
-    padding: 5px;
+.friendpageLeftbarTop .MuiSvgIcon-root {
+    width: 32px;
+    height: 32px;
+    padding: 6px;
     margin-right: 3px;
     border-radius: 50%;
     background-color: #E4E6EB;
 }
 
-.friendpageLeftbarTop .MuiSvgIcon-root:hover{
+.friendpageLeftbarTop .MuiSvgIcon-root:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.15);
 }
 
 /* Friend Page Leftbar Bottom Section */
-.friendpageLeftbarBottom{
+.friendpageLeftbarBottom {
     display: grid;
     grid-template-rows: repeat(1, 1fr);
     gap: 3px;
 }
 
-.friendpageLeftbarBottom a{
+.friendpageLeftbarBottom a {
     color: initial;
     text-decoration: none;
 }
 
-.friendpageLeftbarBottomOptions{
+.friendpageLeftbarBottomOptions {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -71,35 +71,38 @@
 }
 
 .friendpageLeftbarBottomOptions:hover,
-.friendpageLeftbarBottom a.active{
+.friendpageLeftbarBottom a.active {
     cursor: pointer;
     border-radius: 8px;
     background-color: #F0F2F5;
 }
 
-.friendpageLeftbarBottom a.active .friendpageLeftbarBottomOptionsLeft .MuiSvgIcon-root{
+.friendpageLeftbarBottom a.active .friendpageLeftbarBottomOptionsLeft .MuiSvgIcon-root {
     color: #fff;
     background-color: #1877f2;
 }
 
-.friendpageLeftbarBottomOptionsLeft{
+.friendpageLeftbarBottomOptionsLeft {
     display: flex;
     align-items: center;
 }
 
-.friendpageLeftbarBottomOptionsLeft p{
-    font-size: 15px;
+.friendpageLeftbarBottomOptionsLeft p {
+    font-size: 16px;
     font-weight: 600;
 }
 
-.friendpageLeftbarBottomOptionsLeft .MuiSvgIcon-root{
-   border-radius: 50%;
-   padding: 5px;
-   background-color: #E4E6EB;
-   margin-right: 10px;
+.friendpageLeftbarBottomOptionsLeft .MuiSvgIcon-root {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background-color: #E4E6EB;
 }
 
-.friendpageLeftbarBottomOptionsRight .MuiSvgIcon-root{
-    width: 20px;
+.friendpageLeftbarBottomOptionsRight .MuiSvgIcon-root {
+    width: 18px;
+    height: 18px;
     color: gray;
 }
