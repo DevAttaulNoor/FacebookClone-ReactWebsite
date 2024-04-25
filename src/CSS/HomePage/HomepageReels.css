@@ -1,60 +1,43 @@
-/** HomePage Story Reels Section */
+/** HomePage Reels Section */
 .homepageReels {
     width: 100%;
     height: 92vh;
     display: flex;
 }
 
-/* HomePage StoryReels Leftbar Section */
+/* HomePage Reels Leftbar Section */
 .homepageReelsLeftbar {
     position: relative;
     width: 460px;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
     background-color: #fff;
 }
 
-/* HomePage StoryReels Main Sidebar Top Section */
+/* HomePage Reels Leftbar Top Section */
 .homepageReelsLeftbar_Top {
     display: flex;
     flex-direction: column;
-}
-
-.homepageReelsLeftbar_Top #line {
-    background-color: whitesmoke;
-}
-
-.homepageReelsLeftbar_Top #showtextForphoto {
-    font-size: 15px;
-    font-weight: 500;
-    padding: 15px 10px;
-    border-radius: 8px;
-    margin: 15px 15px 0 15px;
-}
-
-.homepageReelsLeftbar_Top #showtextForphoto:hover {
-    cursor: pointer;
-    background-color: #E4E6EB;
-}
-
-/* HomePage StoryReels Main Sidebar TopTop Section */
-.homepageReelsLeftbar_TopTop {
     padding: 0 15px;
+    border-bottom: 1px solid #E4E6EB;
 }
 
-.homepageReelsLeftbar_TopTop_heading {
+.homepageReelsLeftbar_TopHeading {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-top: 15px;
 }
 
-.homepageReelsLeftbar_TopTop_heading p {
+.homepageReelsLeftbar_TopHeading p {
     font-size: 22px;
     font-weight: 700;
 }
 
-.homepageReelsLeftbar_TopTop_heading .MuiSvgIcon-root {
+.homepageReelsLeftbar_TopHeading .MuiSvgIcon-root {
     width: 32px;
     height: 32px;
     padding: 6px;
@@ -62,82 +45,88 @@
     background-color: #E4E6EB;
 }
 
-.homepageReelsLeftbar_TopTop_heading .MuiSvgIcon-root:hover {
+.homepageReelsLeftbar_TopHeading .MuiSvgIcon-root:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.15);
 }
 
-.homepageReelsLeftbar_TopTop_userinfo {
+.homepageReelsLeftbar_TopUserinfo {
     display: flex;
     align-items: center;
     margin: 20px 0 25px 0;
 }
 
-.homepageReelsLeftbar_TopTop_userinfo img {
+.homepageReelsLeftbar_TopUserinfo img {
     width: 54px;
     height: 54px;
     object-fit: cover;
     border-radius: 50%;
 }
 
-.homepageReelsLeftbar_TopTop_userinfo p {
+.homepageReelsLeftbar_TopUserinfo p {
     font-weight: 600;
     font-size: 15px;
     margin-left: 10px;
 }
 
-/* HomePage StoryReels Main Sidebar TopBottom Section */
-.homepageReelsLeftbar_TopBottom {
+/* HomePage Reels Leftbar Middle Section */
+.homepageReelsLeftbar_Middle {
+    display: flex;
+    flex-direction: column;
     padding: 0 15px;
     margin: 15px 0;
+}
+
+.homepageReelsLeftbar_Middle textarea {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    outline: none;
+    resize: none;
+}
+
+.homepageReelsLeftbar_Middle select {
+    font-size: 14px;
+    padding: 15px 12px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    outline: none;
+}
+
+.homepageReelsLeftbar_Middle select option {
+    font-size: 14px;
+}
+
+/* HomePage Reels Leftbar Middle TextContainer Section */
+.homepageReelsLeftbar_Middle .textReelContainer {
     display: flex;
     flex-direction: column;
 }
 
-.homepageReelsLeftbar_TopBottom textarea {
-    margin-bottom: 15px;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    resize: none;
-    outline: none;
-    padding: 15px;
-}
-
-.homepageReelsLeftbar_TopBottom select {
-    margin-bottom: 15px;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    outline: none;
-    padding: 15px 12px;
-    font-size: 14px;
-}
-
-.homepageReelsLeftbar_TopBottom select option {
-    font-size: 14px;
-}
-
-.homepageReelsLeftbar_TopBottom .bgColors {
-    border-radius: 5px;
-    border: 1px solid lightgray;
+.textReelContainer .bgColors {
     padding: 12px 15px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
 }
 
-.homepageReelsLeftbar_TopBottom .bgColors p {
+.textReelContainer .bgColors p {
     font-size: 14px;
     font-weight: 400;
-    color: #65676B;
     margin-bottom: 10px;
+    color: #65676B;
 }
 
-.homepageReelsLeftbar_TopBottom .bgColors .bgColorsInner {
+.textReelContainer .bgColors .bgColorsInner {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-gap: 5px;
-    justify-items: center;
     align-items: center;
+    justify-items: center;
 }
 
-.homepageReelsLeftbar_TopBottom .bgColors .bgColorsInner .dot {
+.textReelContainer .bgColors .bgColorsInner .dot {
     width: 22px;
     height: 22px;
     border-radius: 50%;
@@ -146,11 +135,11 @@
     transition: border-color 0.3s ease;
 }
 
-.homepageReelsLeftbar_TopBottom .bgColors .bgColorsInner .dot:hover {
+.textReelContainer .bgColors .bgColorsInner .dot:hover {
     cursor: pointer;
 }
 
-.homepageReelsLeftbar_TopBottom .bgColors .bgColorsInner .dot.active {
+.textReelContainer .bgColors .bgColorsInner .dot.active {
     border-color: #0866FF;
 }
 
@@ -202,13 +191,32 @@
     background-color: purple;
 }
 
-/* HomePage StoryReels Main Sidebar Bottom Section */
+/* HomePage Reels Leftbar Middle PhotoContainer Section */
+.homepageReelsLeftbar_Middle .photoReelContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.homepageReelsLeftbar_Middle .photoReelContainer .textInPhotoReel p {
+    font-size: 15px;
+    font-weight: 500;
+    padding: 15px 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+.photoReelContainer .textInPhotoReel p:hover {
+    cursor: pointer;
+    background-color: #E4E6EB;
+}
+
+.photoReelContainer .photoReel {
+    display: flex;
+    flex-direction: column;
+}
+
+/* HomePage Reels Leftbar Bottom Section */
 .homepageReelsLeftbar_Bottom {
-    /* position: fixed;
-    bottom: 0;
-    width: 360px; */
-    position: sticky;
-    bottom: 0px;
     display: grid;
     grid-template-columns: 1.5fr 2fr;
     gap: 8px;
@@ -218,15 +226,12 @@
 }
 
 .homepageReelsLeftbar_Bottom button {
-    padding: 8px 12px;
-    border: none;
-    outline: none;
-    border-radius: 5px;
     font-size: 14px;
     font-weight: 600;
-}
-
-.homepageReelsLeftbar_Bottom button:hover {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
     cursor: pointer;
 }
 
@@ -240,122 +245,131 @@
     background-color: #0866FF;
 }
 
-/* HomePage StoryReels Main */
+
+/* HomePage Reels Main Section */
 .homepageReelsMain {
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
+    margin: 20px 0 80px 0;
 }
 
-/* HomePage StoryReels Main Body Section */
-.homepageReelsMain_Body {
+/* HomePage Reels Main Card Section */
+.homepageReelsMainCards {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.homepageReelsMain_Body .contentDiv .textStoryContent,
-.homepageReelsMain_Body .contentDiv .photoStoryContent {
-    padding: 18px;
-    width: 885px;
-    height: 550px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-}
-
-.homepageReelsMain_Body .contentDiv .textStoryContent p,
-.homepageReelsMain_Body .contentDiv .photoStoryContent p {
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.homepageReelsMain_Body .contentDiv .textStoryContent .textStoryContent_Inner,
-.homepageReelsMain_Body .contentDiv .photoStoryContent .photoStoryContent_Inner {
-    margin: 15px 0;
-    border-radius: 8px;
-    height: -webkit-fill-available;
-    background-color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 0;
-}
-
-.homepageReelsMain_Body .contentDiv .textStoryContent .textStoryContent_Inner .textStoryWindow {
-    height: -webkit-fill-available;
-    border-radius: 8px;
-    padding: 50px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 200px;
-}
-
-.homepageReelsMain_Body .contentDiv .photoStoryContent .photoStoryContent_Inner .photoStoryWindow {
-    height: -webkit-fill-available;
-    border-radius: 8px;
-    padding: 50px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 200px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.homepageReelsMain_Body .contentDiv .photoStoryContent .photoStoryContent_Inner .photoStoryWindow p,
-.homepageReelsMain_Body .contentDiv .textStoryContent .textStoryContent_Inner .textStoryWindow p {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 22px;
-    width: 100%;
-    height: -webkit-fill-available;
-    white-space: normal;
-    overflow-wrap: break-word;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-.homepageReelsMain_BodyCard {
-    background: radial-gradient(circle, #003cff, #21e5ff);
+.cardContainer {
+    width: 220px;
+    height: 330px;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    width: 220px;
-    height: 330px;
     border-radius: 10px;
+    cursor: pointer;
+    background: radial-gradient(circle, #003cff, #21e5ff);
 }
 
-.homepageReelsMain_BodyCard .hidden-input {
+.cardContainer .hidden-input {
     display: none;
 }
 
-.homepageReelsMain_BodyCard:hover {
-    cursor: pointer;
-}
-
-.homepageReelsMain_BodyCard img,
-.homepageReelsMain_BodyCard .MuiSvgIcon-root {
+.cardContainer img {
     padding: 8px;
-    background-color: #fff;
+    margin-bottom: 5px;
     border-radius: 50%;
     box-shadow: 0px 0px 3px #ccc;
-    margin-bottom: 5px;
+    background-color: #fff;
 }
 
-.homepageReelsMain_BodyCard p {
+.cardContainer .MuiSvgIcon-root {
+    width: 40px;
+    height: 40px;
+    padding: 6px;
+    margin-bottom: 5px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 3px #ccc;
+    background-color: #fff;
+}
+
+.cardContainer p {
     font-size: 13px;
     font-weight: 700;
     color: #fff;
 }
 
-.homepageReelsMain_BodyCard.Photo {
+.cardContainer.photoCard {
     margin-right: 15px;
+}
+
+/* HomePage Reels Main Card Content Section */
+.homepageReelsMain .textReelContent,
+.homepageReelsMain .photoReelContent {
+    width: 80%;
+    height: 100%;
+    padding: 18px;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+}
+
+.textReelContent p,
+.photoReelContent p {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.textReelContent .textReelContentInner,
+.photoReelContent .photoReelContentInner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 0;
+    margin-top: 15px;
+    border-radius: 8px;
+    background-color: #000;
+}
+
+.textReelContentInner .textStoryWindow {
+    width: 35%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 30px;
+    border-radius: 8px;
+}
+
+.photoReelContentInner .photoStoryWindow {
+    width: 35%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 30px;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.photoReelContentInner .photoStoryWindow p,
+.textReelContentInner .textStoryWindow p {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+    white-space: normal;
+    overflow-wrap: break-word;
+    overflow-x: hidden;
+    overflow-y: auto;
+    color: #fff;
 }

@@ -21,6 +21,10 @@ function HomepageReels() {
     const [image, setImage] = useState('');
     const [imageUrl, setImageUrl] = useState('');
 
+    const handleTextAreaChange = (event) => {
+        setTextAreaValue(event.target.value);
+    };
+
     const handleDotClick = (color) => {
         setActiveDot(color);
     };
@@ -44,25 +48,12 @@ function HomepageReels() {
         inputRef.current.click();
     };
 
-    const handleDiscardClick = () => {
-        setTextAreaValue("");
-        setImage('');
-        setActiveDot(colors[0]);
+    const handleTextInPhoto = () => {
         setShowForText(false);
         setShowTextContent(false);
-        setShowForPhoto(false);
-        setShowPhotoContent(false);
-        setShowAddText(false);
-        setShowCards(true);
-
-        // Reset the file input
-        if (inputRef.current) {
-            inputRef.current.value = '';
-        }
-    };
-
-    const handleTextAreaChange = (event) => {
-        setTextAreaValue(event.target.value);
+        setShowAddText(true);
+        setShowForPhoto((prev) => !prev);
+        setShowPhotoContent(true);
     };
 
     const handleImageChange = (e) => {
@@ -74,6 +65,24 @@ function HomepageReels() {
             setImageUrl(imageUrl);
         } else {
             console.error('Invalid file type. Please select an image.');
+        }
+    };
+
+    const handleDiscardClick = () => {
+        setTextAreaValue("");
+        setImage('');
+        setImageUrl('');
+        setActiveDot(colors[0]);
+        setShowForText(false);
+        setShowTextContent(false);
+        setShowForPhoto(false);
+        setShowPhotoContent(false);
+        setShowAddText(false);
+        setShowCards(true);
+
+        // Reset the file input
+        if (inputRef.current) {
+            inputRef.current.value = '';
         }
     };
 
@@ -138,6 +147,7 @@ function HomepageReels() {
 
                             // Reset state variables to clear the fields
                             setImage('');
+                            setImageUrl('');
                             setTextAreaValue("");
                             setActiveDot(colors[0]);
                             setShowTextContent(false);
@@ -158,89 +168,135 @@ function HomepageReels() {
     return (
         <div className="homepageReels">
             <div className='homepageReelsLeftbar'>
-                <div className='homepageReelsLeftbar_Top'>
-                    <div className='homepageReelsLeftbar_TopTop'>
-                        <div className="homepageReelsLeftbar_TopTop_heading">
+                <div>
+                    <div className='homepageReelsLeftbar_Top'>
+                        <div className="homepageReelsLeftbar_TopHeading">
                             <p>Your story</p>
                             <SettingsIcon />
                         </div>
-                        <div className="homepageReelsLeftbar_TopTop_userinfo">
+
+                        <div className="homepageReelsLeftbar_TopUserinfo">
                             <img src={user.photoURL} alt="" />
                             <p>{user.username}</p>
                         </div>
                     </div>
 
-                    <hr id='line' />
+                    <div className="homepageReelsLeftbar_Middle">
+                        {showForText && (
+                            <div className='textReelContainer'>
+                                <textarea
+                                    rows="7"
+                                    placeholder='Start typing'
+                                    value={textAreaValue}
+                                    onChange={handleTextAreaChange}
+                                ></textarea>
 
-                    <div className="homepageReelsLeftbar_TopBottom forText" style={{ display: showForText ? 'flex' : 'none' }}>
-                        <textarea
-                            rows="7"
-                            placeholder='Start typing'
-                            value={textAreaValue}
-                            onChange={handleTextAreaChange}
-                        ></textarea>
+                                <select name="texts">
+                                    <option value="Simple">Simple</option>
+                                    <option value="Clean">Clean</option>
+                                    <option value="Causal">Causal</option>
+                                    <option value="Fancy">Fancy</option>
+                                    <option value="Headline">Headline</option>
+                                </select>
 
-                        <select name="texts">
-                            <option value="Simple">Simple</option>
-                            <option value="Clean">Clean</option>
-                            <option value="Causal">Causal</option>
-                            <option value="Fancy">Fancy</option>
-                            <option value="Headline">Headline</option>
-                        </select>
-
-                        <div className='bgColors'>
-                            <p>Backgrounds</p>
-                            <div className="bgColorsInner">
-                                {colors.map((color) => (
-                                    <div
-                                        key={color}
-                                        className={`dot ${color} ${activeDot === color ? 'active' : ''}`}
-                                        onClick={() => handleDotClick(color)}
-                                    ></div>
-                                ))}
+                                <div className='bgColors'>
+                                    <p>Backgrounds</p>
+                                    <div className="bgColorsInner">
+                                        {colors.map((color) => (
+                                            <div
+                                                key={color}
+                                                className={`dot ${color} ${activeDot === color ? 'active' : ''}`}
+                                                onClick={() => handleDotClick(color)}
+                                            ></div>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
+                        )}
+
+                        <div className='photoReelContainer'>
+                            {showAddText && (
+                                <div className='textInPhotoReel' onClick={handleTextInPhoto}>
+                                    <p>Add Text</p>
+                                </div>
+                            )}
+
+                            {showForPhoto && (
+                                <div className='photoReel'>
+                                    <textarea
+                                        rows="7"
+                                        placeholder='Start typing'
+                                        value={textAreaValue}
+                                        onChange={handleTextAreaChange}
+                                    ></textarea>
+
+                                    <select name="texts">
+                                        <option value="Simple">Simple</option>
+                                        <option value="Clean">Clean</option>
+                                        <option value="Causal">Causal</option>
+                                        <option value="Fancy">Fancy</option>
+                                        <option value="Headline">Headline</option>
+                                    </select>
+                                </div>
+                            )}
                         </div>
                     </div>
+                </div>
 
-                    <p
-                        id='showtextForphoto'
-                        style={{ display: showAddText ? 'block' : 'none' }}
-                        onClick={() => {
-                            setShowForText(false);
-                            setShowTextContent(false);
-                            setShowAddText(true);
-                            setShowForPhoto((prev) => !prev);
-                            setShowPhotoContent(true);
-                        }}
-                    >
-                        Add Text
-                    </p>
-
-                    <div className="homepageReelsLeftbar_TopBottom forPhoto" style={{ display: showForPhoto ? 'flex' : 'none' }}>
-                        <textarea
-                            rows="7"
-                            placeholder='Start typing'
-                            value={textAreaValue}
-                            onChange={handleTextAreaChange}
-                        ></textarea>
-
-                        <select name="texts">
-                            <option value="Simple">Simple</option>
-                            <option value="Clean">Clean</option>
-                            <option value="Causal">Causal</option>
-                            <option value="Fancy">Fancy</option>
-                            <option value="Headline">Headline</option>
-                        </select>
+                {(showTextContent || showPhotoContent) && (
+                    <div className="homepageReelsLeftbar_Bottom">
+                        <button id='discardBtn' onClick={handleDiscardClick}>Discard</button>
+                        <button id='shareBtn' onClick={handleUpload}>Share to Story</button>
                     </div>
-                </div>
-
-                <div className="homepageReelsLeftbar_Bottom">
-                    <button id='discardBtn' onClick={handleDiscardClick}>Discard</button>
-                    <button id='shareBtn' onClick={handleUpload}>Share to Story</button>
-                </div>
+                )}
             </div>
 
             <div className='homepageReelsMain'>
+                {showCards && (
+                    <div className='homepageReelsMainCards'>
+                        <div className="cardContainer photoCard" onClick={handleAddPhotoClick}>
+                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j" alt="" />
+                            <p>Create a Photo Story</p>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                className="hidden-input"
+                                ref={inputRef}
+                            />
+                        </div>
+
+                        <div className="cardContainer textCard" onClick={handleAddTextClick}>
+                            <TitleIcon />
+                            <p>Create a Text Story</p>
+                        </div>
+                    </div>
+                )}
+
+                {showTextContent && (
+                    <div className="textReelContent">
+                        <p>Preview</p>
+                        <div className="textReelContentInner">
+                            <div className={`textStoryWindow ${activeDot}`}>
+                                <p>{textAreaValue}</p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {showPhotoContent && (
+                    <div className="photoReelContent">
+                        <p>Peview</p>
+                        <div className="photoReelContentInner">
+                            <div className="photoStoryWindow" style={{ backgroundImage: imageUrl ? `url(${imageUrl})` : 'none' }}>
+                                <p>{textAreaValue}</p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* <div className='homepageReelsMain'>
                 <div className="homepageReelsMain_Body">
                     <div
                         className="homepageReelsMain_BodyCard Photo"
@@ -259,7 +315,7 @@ function HomepageReels() {
                             ref={inputRef}
                         />
                     </div>
-                    
+
                     <div
                         className="homepageReelsMain_BodyCard Text"
                         style={{ display: showCards ? 'flex' : 'none' }}
@@ -269,7 +325,6 @@ function HomepageReels() {
                         <p>Create a Text Story</p>
                     </div>
 
-                    {/* Conditional rendering of content div */}
                     {showTextContent || showPhotoContent ? (
                         <div className="contentDiv">
                             {showTextContent && (
@@ -283,7 +338,6 @@ function HomepageReels() {
                                 </div>
                             )}
 
-                            {/* Content for Photo Story */}
                             {showPhotoContent && (
                                 <div className="photoStoryContent">
                                     <p>Peview</p>
@@ -298,7 +352,7 @@ function HomepageReels() {
                         </div>
                     ) : null}
                 </div>
-            </div>
+            </div> */}
         </div >
     )
 }
