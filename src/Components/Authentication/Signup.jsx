@@ -99,8 +99,8 @@ function Signup() {
                 coverphotoUrl: coverphotoUrl,
             };
 
-            dispatch(loginUser(userData));
             sessionStorage.setItem('userData', JSON.stringify(userData));
+            dispatch(loginUser(userData));
             navigate('/homepage');
         }
 
@@ -190,7 +190,7 @@ function Signup() {
 
                 <div className="dobContainer">
                     <h5>Date of birth</h5>
-                    
+
                     <div className="dobOptions">
                         <div className="dobOption">
                             <select value={dob.getDate()} onChange={(e) => setDOB(new Date(dob.setUTCDate(e.target.value)))}>
@@ -229,7 +229,7 @@ function Signup() {
 
                 <div className="genderContainer">
                     <h5>Gender</h5>
-                    
+
                     <div className="genderOptions">
                         <div className={`genderOption ${selectedGender === 'Male' ? 'active' : ''}`} onClick={() => handleGenderClick('Male')}>
                             <p>Male</p>
@@ -260,7 +260,7 @@ function Signup() {
                     />
 
                     {selectedProfileImage && (
-                        <img src={selectedProfileImage} alt="Selected Profile Picture" />
+                        <img src={selectedProfileImage} alt="profilePicture" />
                     )}
                 </div>
 
@@ -276,7 +276,7 @@ function Signup() {
                     />
 
                     {selectedCoverImage && (
-                        <img src={selectedCoverImage} alt="Selected Cover Picture" />
+                        <img src={selectedCoverImage} alt="coverPicture" />
                     )}
                 </div>
 

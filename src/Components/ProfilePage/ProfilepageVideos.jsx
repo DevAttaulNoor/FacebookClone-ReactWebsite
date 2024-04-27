@@ -38,7 +38,7 @@ function ProfilepageVideos() {
     return (
         <div className='profilePageVideos'>
             <div className="profilePageVideos_Top">
-                <NavLink id="navLink" to="/profilepage/:userid/video" activeClassName="active">
+                <NavLink id="navLink" to="/profilepage/:userid/video" activeclassname="active">
                     <h3>Videos</h3>
                 </NavLink>
                 <a id="seeAllLink" href="#">See all Videos</a>

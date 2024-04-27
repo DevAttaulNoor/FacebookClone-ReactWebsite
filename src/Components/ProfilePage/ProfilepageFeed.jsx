@@ -120,7 +120,7 @@ function ProfilepageFeed() {
                             timestamp={formatJoinedDate(dob)}
                             message={
                                 <div className='JoinedPostMsg'>
-                                    <img id='joinedImg' src='https://static.xx.fbcdn.net/rsrc.php/v3/yl/r/1SViyXWaRzP.png' alt="Joined Image" />
+                                    <img id='joinedImg' src='https://static.xx.fbcdn.net/rsrc.php/v3/yl/r/1SViyXWaRzP.png' alt="joinedImage" />
                                     <p id='joinedMsg'>{`Born on ${formatJoinedDate(dob)}`}</p>
                                 </div>
                             }

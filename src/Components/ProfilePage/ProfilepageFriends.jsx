@@ -18,7 +18,7 @@ function ProfilepageFriends() {
             <div className="profilePageFriends_Bottom">
                 <div className="profilePageFriends_BottomContainer">
                     {friendFriendsData.map((friend) => (
-                        <div className="profilePageFriends_BottomContainerOptions">
+                        <div className="profilePageFriends_BottomContainerOptions" key={friend.friendUid}>
                             <img src={friend.photoURL} alt="" />
                             <p>{friend.username}</p>
                         </div>

@@ -14,7 +14,7 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 
 function PostPage() {
     const user = useSelector((state) => state.data.user.user);
-    const selectedPost = useSelector((state) => state.data.post.selectedPost)
+    const selectedPost = useSelector((state) => state.data.post.selectedPost);
     const [post, setPost] = useState('');
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
@@ -22,6 +22,8 @@ function PostPage() {
     const visibleComments = showAllComments ? comments : comments.slice(0, 5);
     const [likesCount, setLikesCount] = useState(0);
     const [currentUserLiked, setCurrentUserLiked] = useState(false);
+
+    console.log(selectedPost)
 
     const postComment = async () => {
         if (comment.trim() === '') {
@@ -296,12 +298,12 @@ function PostPage() {
                     </div>
 
                     <div className="postPageInner_MiddleMiddle">
-                        {post.media == '' ? (
+                        {post.media === '' ? (
                             <p></p>
                         ) : (
-                            post.mediaType == 'image' ? (
-                                <img src={post.media} />
-                            ) : post.mediaType == 'video' ? (
+                            post.mediaType === 'image' ? (
+                                <img src={post.media} alt="postMedia"/>
+                            ) : post.mediaType === 'video' ? (
                                 <video controls>
                                     <source src={post.media} type="video/mp4" />
                                 </video>
@@ -313,7 +315,7 @@ function PostPage() {
 
                     <div className="postPageInner_MiddleBottom">
                         <div className="postPageInner_MiddleBottom_Top">
-                            {post.likesCount != 0 ? (
+                            {post.likesCount !== 0 ? (
                                 post.likesCount > 1 ? (
                                     <p>{post.likesCount} likes</p>
                                 ) : (
@@ -323,7 +325,7 @@ function PostPage() {
                                 <p></p>
                             )}
 
-                            {comments.length != 0 ? (
+                            {comments.length !== 0 ? (
                                 comments.length > 1 ? (
                                     <p>{comments.length} comments</p>
                                 ) : (

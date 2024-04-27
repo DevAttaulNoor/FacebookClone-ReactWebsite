@@ -1,5 +1,5 @@
 import '../../CSS/Authentication/Login.css'
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -45,8 +45,8 @@ function Login() {
                 coverphotoUrl: coverphotoUrl
             });
 
-            dispatch(loginUser(userData));
             sessionStorage.setItem('userData', JSON.stringify(userData));
+            dispatch(loginUser(userData));
             navigate('/homepage');
         })
             .catch((error) => {
@@ -88,8 +88,8 @@ function Login() {
                     coverphotoUrl: userData.coverphotoUrl
                 };
 
-                dispatch(loginUser(updatedUserData))
                 sessionStorage.setItem('userData', JSON.stringify(updatedUserData));
+                dispatch(loginUser(updatedUserData));
                 navigate('/homepage');
             }
 
@@ -111,16 +111,6 @@ function Login() {
     const togglePasswordVisibility = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     };
-
-    useEffect(() => {
-        const storedUserData = sessionStorage.getItem('userData');
-        if (storedUserData) {
-            // If user data is found in session storage, parse it and set it in the context
-            const userData = JSON.parse(storedUserData);
-            dispatch(loginUser(userData));
-            navigate('/homepage')
-        }
-    }, []);
 
     return (
         <div className='login'>
@@ -155,7 +145,7 @@ function Login() {
                     </span>
                 </div>
 
-                <button type="submit" id="submitBtn">{isLoginProcessing ? <div class="loadingSpin"></div> : 'Log in'}</button>
+                <button type="submit" id="submitBtn">{isLoginProcessing ? <div className="loadingSpin"></div> : 'Log in'}</button>
                 {loginerror && <p className="errorNote">{loginerror}</p>}
                 <button id="forgetBtn" type="button">Forgotten password?</button>
                 <hr id="line" />

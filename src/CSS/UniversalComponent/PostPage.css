@@ -77,8 +77,9 @@
 
 /* PostPage Middle Section */
 .postPageInner_MiddleTop p{
-    padding: 0 15px 15px;
+    font-size: 15px;
     letter-spacing: 0.2px;
+    padding: 0 15px 15px;
 }
 
 .postPageInner_MiddleMiddle img,

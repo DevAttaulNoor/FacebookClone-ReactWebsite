@@ -4,7 +4,8 @@ import Modal from 'react-modal';
 import firebase from "firebase/compat/app";
 import { Avatar } from '@mui/material';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedPost } from '../../Redux/postSlice';
 import { db, storage } from '../../Firebase/firebase';
 import Skeleton from '../Skeletons/Skeleton';
 import Skeleton_UserInfo from '../Skeletons/Skeleton_UserInfo';
@@ -20,6 +21,7 @@ import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 
 function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, timestamp, message }) {
     Modal.setAppElement('#root');
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
     const [post, setPost] = useState({});
     const [users, setUsers] = useState([]);
@@ -39,9 +41,9 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [savedPost, setSavedPost] = useState(false);
     const dropdownRef = useRef(null);
 
-    const [savedPost, setSavedPost] = useState(false)
 
     const handleEdit = () => {
         setIsEditing(true);
@@ -304,7 +306,7 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
             };
             checkIfPostExists();
         }
-    }, [user, savedPost]);
+    }, [user, savedPost, id]);
 
     //* useEffect to get all the posts from the firestore
     useEffect(() => {
@@ -443,11 +445,11 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
                             <Avatar src={photoURL} />
                             <div className="userpostInfo">
                                 {user.uid === userid ? (
-                                    <NavLink to={`/profilepage/${user.uid}/post/${id}`}>
+                                    <NavLink to={`/profilepage/${user.uid}/post/${id}`} onClick={() => dispatch(setSelectedPost(id))}>
                                         <h4>{username}</h4>
                                     </NavLink>
                                 ) : (
-                                    <NavLink to={`/profilepage/${userid}/post/${id}`}>
+                                    <NavLink to={`/profilepage/${userid}/post/${id}`} onClick={() => dispatch(setSelectedPost(id))}>
                                         <h4>{username}</h4>
                                     </NavLink>
                                 )}
@@ -457,7 +459,7 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
 
                         <div className={`homepageFeedsPosts_TopRight ${isDropdownClicked ? 'clicked' : ''}`} onClick={toggleDropdown} ref={dropdownRef}>
                             <MoreHorizIcon />
-                            {user.uid == post.uid ? (
+                            {user.uid === post.uid ? (
                                 <div>
                                     {isDropdownVisible && (
                                         <div className="postSetting">
@@ -470,7 +472,7 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
                                 <div>
                                     {isDropdownVisible && (
                                         <div className="postSetting">
-                                            {savedPost == false ? (
+                                            {savedPost === false ? (
                                                 <button onClick={handleSavePost}>Save the post</button>
                                             ) : (
                                                 <button onClick={handleDelSavePost}>Unsave the post</button>
@@ -539,7 +541,7 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
                             ) : (
                                 <div className='homepageFeedsPosts_MiddleTopInner'>
                                     {message && <div id="postMsg" style={{ fontSize: media ? '15px' : '30px' }}> {editedMessage} </div>}
-                                    {media && mediaType === 'image' && <img id="postImg" src={editedMedia} alt="Image" />}
+                                    {media && mediaType === 'image' && <img id="postImg" src={editedMedia} alt="postImage" />}
                                     {media && mediaType === 'video' && (
                                         <video id="postVideo" controls>
                                             <source src={editedMedia} type="video/mp4" />

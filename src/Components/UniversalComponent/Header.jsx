@@ -53,69 +53,69 @@ function Header() {
         auth.signOut()
             .then(() => {
                 sessionStorage.removeItem('userData');
-                dispatch(logoutUser())
-                navigate('/')
+                dispatch(logoutUser());
+                navigate('/');
             })
             .catch((error) => {
                 console.error("Sign out error:", error);
             });
     };
 
-    const deleteUser = () => {
-        if (auth.currentUser) {
-            // Show a confirmation dialog
-            const confirmed = window.confirm('Are you sure you want to delete your account? This action cannot be undone.');
+    // const deleteUser = () => {
+    //     if (auth.currentUser) {
+    //         // Show a confirmation dialog
+    //         const confirmed = window.confirm('Are you sure you want to delete your account? This action cannot be undone.');
 
-            if (confirmed) {
-                const userUid = user.uid;
+    //         if (confirmed) {
+    //             const userUid = user.uid;
 
-                // Delete user data in Firestore
-                db.collection('Users')
-                    .doc(userUid)
-                    .delete()
-                    .then(() => {
-                        console.log('User data deleted from Firestore');
-                    })
-                    .catch((error) => {
-                        console.error('Error deleting user data from Firestore:', error);
-                    });
+    //             // Delete user data in Firestore
+    //             db.collection('Users')
+    //                 .doc(userUid)
+    //                 .delete()
+    //                 .then(() => {
+    //                     console.log('User data deleted from Firestore');
+    //                 })
+    //                 .catch((error) => {
+    //                     console.error('Error deleting user data from Firestore:', error);
+    //                 });
 
-                // Delete user's posts in Firestore
-                db.collection('Posts')
-                    .where('uid', '==', userUid)
-                    .get()
-                    .then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                            // Delete each post
-                            db.collection('Posts').doc(doc.id).delete();
-                        });
-                    })
-                    .catch((error) => {
-                        console.error('Error deleting user posts in Firestore:', error);
-                    });
+    //             // Delete user's posts in Firestore
+    //             db.collection('Posts')
+    //                 .where('uid', '==', userUid)
+    //                 .get()
+    //                 .then((querySnapshot) => {
+    //                     querySnapshot.forEach((doc) => {
+    //                         // Delete each post
+    //                         db.collection('Posts').doc(doc.id).delete();
+    //                     });
+    //                 })
+    //                 .catch((error) => {
+    //                     console.error('Error deleting user posts in Firestore:', error);
+    //                 });
 
-                // Delete the user's authentication account and sign out
-                auth
-                    .currentUser.delete()
-                    .then(() => {
-                        console.log('User authentication account deleted');
-                        // Sign the user out after account deletion
-                        auth.signOut()
-                            .then(() => {
-                                console.log('User signed out');
-                            })
-                            .catch((error) => {
-                                console.error('Error signing the user out:', error);
-                            });
+    //             // Delete the user's authentication account and sign out
+    //             auth
+    //                 .currentUser.delete()
+    //                 .then(() => {
+    //                     console.log('User authentication account deleted');
+    //                     // Sign the user out after account deletion
+    //                     auth.signOut()
+    //                         .then(() => {
+    //                             console.log('User signed out');
+    //                         })
+    //                         .catch((error) => {
+    //                             console.error('Error signing the user out:', error);
+    //                         });
 
-                        handleSignOut();
-                    })
-                    .catch((error) => {
-                        console.error('Error deleting user authentication account:', error);
-                    });
-            }
-        }
-    };
+    //                     handleSignOut();
+    //                 })
+    //                 .catch((error) => {
+    //                     console.error('Error deleting user authentication account:', error);
+    //                 });
+    //         }
+    //     }
+    // };
 
     const handleSearchInput = () => {
         setIsSearchBoxVisible(!isSearchBoxVisible);
@@ -230,7 +230,7 @@ function Header() {
         const handleOutsideClick = (e) => {
             if (
                 isSearchBoxVisible &&
-                !document.querySelector(".header_search").contains(e.target)
+                !document.querySelector(".searchContainer").contains(e.target)
             ) {
                 setIsSearchBoxVisible(false);
                 setSearchText('');
@@ -442,7 +442,7 @@ function Header() {
                             </div>
 
                             <div className='headerBox_Bottom'>
-                                {userChats.length == 0 ? (
+                                {userChats.length === 0 ? (
                                     <p id='noMsg'>No messages found.</p>
                                 ) : (
                                     <>
@@ -512,13 +512,13 @@ function Header() {
                             </div>
 
                             <div className='headerBox_Bottom'>
-                                {notifications.length == 0 ? (
+                                {notifications.length === 0 ? (
                                     <p id='noNoti'>No notifications found.</p>
                                 ) : (
                                     <div className='headerBox_BottomOptions'>
                                         {notifications.map((notification, index) => (
                                             <div className='headerBox_BottomOption' key={index}>
-                                                {(notification.status == 'reacted') || (notification.status == 'commented') ? (
+                                                {(notification.status === 'reacted') || (notification.status === 'commented') ? (
                                                     <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} onClick={() => dispatch(setSelectedPost(notification.postid))}>
                                                         <div className='headerBox_BottomOption_Left'>
                                                             <Avatar src={notification.userphotoUrl} />

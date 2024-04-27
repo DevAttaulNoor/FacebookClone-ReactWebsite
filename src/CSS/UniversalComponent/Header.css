@@ -283,8 +283,8 @@
     position: absolute;
     right: 57px;
     top: 1px;
-    height: 10px;
-    width: 10px;
+    width: 15px;
+    height: 15px;
     padding: 4px;
     border-radius: 50%;
     background-color: #e41e3f;
@@ -429,8 +429,8 @@
     position: absolute;
     right: 104px;
     top: 1px;
-    height: 10px;
-    width: 10px;
+    width: 15px;
+    height: 15px;
     padding: 4px;
     border-radius: 50%;
     background-color: #e41e3f;
@@ -512,7 +512,6 @@
 .messageBox .headerBox_BottomOption {
     display: flex;
     align-items: flex-start;
-
 }
 
 .messageBox .headerBox_Bottom .headerBox_BottomOption .MuiAvatar-root {

@@ -78,7 +78,7 @@ function HomePage() {
     return (
         <div className='homepage'>
             <div className='homepageLeftbar'>
-                <NavLink to="/userhomepage">
+                <NavLink to="/userhomepage/post">
                     <HomepageLeftbarOptions src={user.photoURL} title={user.username} />
                 </NavLink>
 

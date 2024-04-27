@@ -36,14 +36,13 @@
 }
 
 .userpagePhotosTop a:hover{
-    background-color: whitesmoke;
     cursor: pointer;
+    background-color: whitesmoke;
 }
 
 /* UserPage Photos Bottom Section */
 .userpagePhotosBottom {
     display: flex;
-    justify-content: center;
 }
 
 .userpagePhotosBottomContainer {
@@ -53,7 +52,7 @@
 }
 
 .userpagePhotosBottomContainer img {
+    width: 100%;
+    height: 115px;
     object-fit: cover;
-    width: 116px;
-    height: 116px;
 }

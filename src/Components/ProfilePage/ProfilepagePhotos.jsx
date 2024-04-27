@@ -56,7 +56,7 @@ function ProfilepagePhotos() {
     return (
         <div className='profilePagePhotos'>
             <div className="profilePagePhotos_Top">
-                <NavLink id="navLink" to="/profilepage/:userid/photo" activeClassName="active">
+                <NavLink id="navLink" to="/profilepage/:userid/photo" activeclassname="active">
                     <h3>Photos</h3>
                 </NavLink>
                 <a id="seeAllLink" href="#">See all photos</a>
@@ -65,7 +65,7 @@ function ProfilepagePhotos() {
             <div className="profilePagePhotos_Bottom">
                 <div className="profilePagePhotos_BottomContainer">
                     {photoUrls.map((url, index) => (
-                        <img key={index} src={url} alt={`Photo ${index}`} />
+                        <img key={index} src={url} alt={`userPhoto${index}`}/>
                     ))}
                 </div>
             </div>

@@ -53,7 +53,7 @@
 }
 
 .userpageVideosBottomContainer video {
+    width: 115px;
+    height: 115px;
     object-fit: cover;
-    width: 116px;
-    height: 116px;
 }

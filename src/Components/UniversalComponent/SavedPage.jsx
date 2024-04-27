@@ -59,7 +59,7 @@ function SavedPage() {
                 </div>
 
                 <div className="savedpageLeftbarBottom">
-                    <NavLink to="/savedpage/" activeClassName="active">
+                    <NavLink to="/savedpage/" activeclassname="active">
                         <div className="savedpageLeftbarBottomOption">
                             <BadgeOutlinedIcon />
                             <p>Saved items</p>
@@ -75,10 +75,10 @@ function SavedPage() {
                 </div>
 
                 <div className='savedpageMainBottom'>
-                    {savedPostItems.map(postitem => (
-                        <div key={postitem.id} className='savedPosts'>
+                    {savedPostItems.map((postitem, index) => (
+                        <div className='savedPosts' key={index}>
                             <div className='savedPosts_Left'>
-                                {postitem.mediaType == 'image' ? (
+                                {postitem.mediaType === 'image' ? (
                                     <img src={postitem.media} alt="" />
                                 ) : (
                                     <video id="postVideo">

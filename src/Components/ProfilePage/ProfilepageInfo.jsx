@@ -17,10 +17,6 @@ function ProfilepageInfo() {
             if (doc.exists) {
                 setBio(doc.data());
             }
-
-            else {
-                console.log("No such document!");
-            }
         });
 
         // Cleanup the subscription when the component is unmounted
