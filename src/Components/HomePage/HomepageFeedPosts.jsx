@@ -5,7 +5,6 @@ import firebase from "firebase/compat/app";
 import { Avatar } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedPost } from '../../Redux/postSlice';
 import { db, storage } from '../../Firebase/firebase';
 import Skeleton from '../Skeletons/Skeleton';
 import Skeleton_UserInfo from '../Skeletons/Skeleton_UserInfo';
@@ -18,6 +17,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
+import { setSelectedFriend } from '../../Redux/friendSlice';
 
 function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, timestamp, message }) {
     Modal.setAppElement('#root');
@@ -43,7 +43,6 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
     const [loading, setLoading] = useState(true);
     const [savedPost, setSavedPost] = useState(false);
     const dropdownRef = useRef(null);
-
 
     const handleEdit = () => {
         setIsEditing(true);
@@ -444,16 +443,23 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
                         <div className="homepageFeedsPosts_TopLeft">
                             <Avatar src={photoURL} />
                             <div className="userpostInfo">
-                                {user.uid === userid ? (
-                                    <NavLink to={`/profilepage/${user.uid}/post/${id}`} onClick={() => dispatch(setSelectedPost(id))}>
-                                        <h4>{username}</h4>
-                                    </NavLink>
-                                ) : (
-                                    <NavLink to={`/profilepage/${userid}/post/${id}`} onClick={() => dispatch(setSelectedPost(id))}>
-                                        <h4>{username}</h4>
-                                    </NavLink>
-                                )}
-                                <p>{timestamp} <span><PublicIcon /></span></p>
+                                <div className='userpostInfoTop'>
+                                    {user.uid === userid ? (
+                                        <NavLink to={`/userhomepage/post`}>
+                                            <h4>{username}</h4>
+                                        </NavLink>
+                                    ) : (
+                                        <NavLink to={`/profilepage/${userid}/post`} onClick={() => dispatch(setSelectedFriend(userid))}>
+                                            <h4>{username}</h4>
+                                        </NavLink>
+                                    )}
+                                </div>
+
+                                <div className='userpostInfoBottom'>
+                                    <p>{timestamp}</p>
+                                    <span>·</span>
+                                    <PublicIcon />
+                                </div>
                             </div>
                         </div>
 

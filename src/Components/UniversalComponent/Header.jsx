@@ -352,7 +352,7 @@ function Header() {
                 <NavLink to={'/homepage'}>
                     <img src={fblogo} alt="" />
                 </NavLink>
-                
+
                 <div className='searchContainer'>
                     <SearchIcon />
                     <input
@@ -517,33 +517,39 @@ function Header() {
                                 ) : (
                                     <div className='headerBox_BottomOptions'>
                                         {notifications.map((notification, index) => (
-                                            <div className='headerBox_BottomOption' key={index}>
+                                            <>
                                                 {(notification.status === 'reacted') || (notification.status === 'commented') ? (
-                                                    <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} onClick={() => dispatch(setSelectedPost(notification.postid))}>
-                                                        <div className='headerBox_BottomOption_Left'>
-                                                            <Avatar src={notification.userphotoUrl} />
-                                                        </div>
-                                                        <div className="headerBox_BottomOption_Right">
-                                                            <p> <span>{notification.username}</span> has {notification.status} on your post</p>
-                                                            <h5>{timeAgo(notification.timestamp)}</h5>
-                                                        </div>
-                                                    </NavLink>
+                                                    <div className='headerBox_BottomOption' key={index}>
+                                                        <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} onClick={() => dispatch(setSelectedPost(notification.postid))}>
+                                                            <div className='headerBox_BottomOption_Left'>
+                                                                <Avatar src={notification.userphotoUrl} />
+                                                            </div>
+                                                            <div className="headerBox_BottomOption_Right">
+                                                                <p> <span>{notification.username}</span> has {notification.status} on your post</p>
+                                                                <h5>{timeAgo(notification.timestamp)}</h5>
+                                                            </div>
+                                                        </NavLink>
+                                                    </div>
                                                 ) : (
                                                     <>
-                                                        <div className='headerBox_BottomOption_Left'>
-                                                            <Avatar src={notification.senderPhotoUrl} />
-                                                        </div>
-                                                        <div className="headerBox_BottomOption_Right">
-                                                            <p><span>{notification.senderName}</span> has sent you a friend request</p>
-                                                            <h5>{timeAgo(notification.timestamp)}</h5>
-                                                            <div className="headerBox_BottomOption_RightBottom">
-                                                                <button id='confbtn'>Confirm</button>
-                                                                <button id='delbtn'>Delete</button>
+                                                        {notification.status === 'sent' && (
+                                                            <div className='headerBox_BottomOption' key={index}>
+                                                                <div className='headerBox_BottomOption_Left'>
+                                                                    <Avatar src={notification.senderPhotoUrl} />
+                                                                </div>
+                                                                <div className="headerBox_BottomOption_Right">
+                                                                    <p><span>{notification.senderName}</span> has sent you a friend request</p>
+                                                                    <h5>{timeAgo(notification.timestamp)}</h5>
+                                                                    <div className="headerBox_BottomOption_RightBottom">
+                                                                        <button id='confbtn'>Confirm</button>
+                                                                        <button id='delbtn'>Delete</button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        )}
                                                     </>
                                                 )}
-                                            </div>
+                                            </>
                                         ))}
                                     </div>
                                 )}
@@ -611,7 +617,7 @@ function Header() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default Header;
+export default Header

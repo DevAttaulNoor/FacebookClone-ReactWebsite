@@ -1,4 +1,4 @@
-import '../../CSS/FriendPage/FriendCard.css';
+import '../../CSS/FriendPage/FriendCard.css'
 import React, { useState, useEffect } from 'react';
 import { auth, db } from '../../Firebase/firebase';
 

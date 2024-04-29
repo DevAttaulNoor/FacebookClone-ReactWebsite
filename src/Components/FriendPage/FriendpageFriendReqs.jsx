@@ -152,11 +152,11 @@ function FriendpageFriendReqs() {
                 {friendRequests.map((request) => {
                     if (request.status !== "accepted" && request.receiverUid === user.uid) {
                         return (
-                            <div key={request.id} className="friendsCard">
-                                <div className="friendsCard_top">
+                            <div key={request.id} className="friendCard">
+                                <div className="friendCardTop">
                                     <img src={request.senderPhotoUrl} alt="" />
                                 </div>
-                                <div className="friendsCard_bottom">
+                                <div className="friendCardBottom">
                                     <p id="friendName">{request.senderName}</p>
                                     <p id="friendMutual">Mutual friends</p>
                                     {isRequestProcessing ? (

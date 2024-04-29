@@ -23,8 +23,6 @@ function PostPage() {
     const [likesCount, setLikesCount] = useState(0);
     const [currentUserLiked, setCurrentUserLiked] = useState(false);
 
-    console.log(selectedPost)
-
     const postComment = async () => {
         if (comment.trim() === '') {
             return;
@@ -273,17 +271,24 @@ function PostPage() {
                 <div className="postPageInner_Top">
                     <div className="postPageInner_TopLeft">
                         <Avatar src={post.photoURL} />
-                        <div className="postPageInner_TopLeftMain">
-                            {user.uid === post.uid ? (
-                                <NavLink to="/userhomepage/post">
-                                    <h4>{post.username}</h4>
-                                </NavLink>
-                            ) : (
-                                <NavLink to={`/profilepage/${post.uid}/post`}>
-                                    <h4>{post.username}</h4>
-                                </NavLink>
-                            )}
-                            <p>{timeAgo(post.timestamp)} <PublicIcon /> </p>
+                        <div className="userpostInfo">
+                            <div className='userpostInfoTop'>
+                                {user.uid === post.uid ? (
+                                    <NavLink to="/userhomepage/post">
+                                        <h4>{post.username}</h4>
+                                    </NavLink>
+                                ) : (
+                                    <NavLink to={`/profilepage/${post.uid}/post`}>
+                                        <h4>{post.username}</h4>
+                                    </NavLink>
+                                )}
+                            </div>
+
+                            <div className='userpostInfoBottom'>
+                                <p>{timeAgo(post.timestamp)}</p>
+                                <span>·</span>
+                                <PublicIcon />
+                            </div>
                         </div>
                     </div>
 
@@ -302,7 +307,7 @@ function PostPage() {
                             <p></p>
                         ) : (
                             post.mediaType === 'image' ? (
-                                <img src={post.media} alt="postMedia"/>
+                                <img src={post.media} alt="postMedia" />
                             ) : post.mediaType === 'video' ? (
                                 <video controls>
                                     <source src={post.media} type="video/mp4" />
@@ -338,7 +343,7 @@ function PostPage() {
 
                         <div className="postPageInner_MiddleBottom_Bottom">
                             <div className='postPageInner_MiddleBottom_BottomOption' onClick={handleLike}>
-                                { currentUserLiked ? (
+                                {currentUserLiked ? (
                                     <>
                                         <ThumbUpIcon style={{ color: 'blue' }} />
                                         <p style={{ color: 'blue' }}>Like</p>

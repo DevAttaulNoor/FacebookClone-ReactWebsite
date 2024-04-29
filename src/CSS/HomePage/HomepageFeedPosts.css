@@ -25,51 +25,60 @@
     margin-left: 10px;
 }
 
-.homepageFeedsPosts_TopLeft .userpostInfo a {
+.userpostInfo .userpostInfoTop a {
     color: initial;
     text-decoration: none;
 }
 
-.homepageFeedsPosts_TopLeft .userpostInfo h4 {
+.userpostInfo .userpostInfoTop h4 {
     font-size: 14px;
     font-weight: 600;
 }
 
-.homepageFeedsPosts_TopLeft .userpostInfo p {
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    color: #65676B;
-}
-
-.homepageFeedsPosts_TopLeft .userpostInfo h4:hover,
-.homepageFeedsPosts_TopLeft .userpostInfo p:hover {
+.userpostInfo .userpostInfoTop h4:hover {
     cursor: pointer;
     text-decoration: underline;
     text-decoration-color: inherit;
 }
 
-.homepageFeedsPosts_TopLeft .userpostInfo p {
-    font-size: 12px;
+.userpostInfo .userpostInfoBottom {
     display: flex;
     align-items: center;
+    margin-top: 2px;
+    color: #65676B;
 }
 
-.homepageFeedsPosts_TopLeft .userpostInfo p svg {
+.userpostInfo .userpostInfoBottom{
     font-size: 12px;
-    margin-left: 5px;
-    margin-top: 3px;
+}
+
+.userpostInfo .userpostInfoBottom p:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: inherit;
+}
+
+.userpostInfo .userpostInfoBottom span {
+    margin: 0 4px 0 5px;
+}
+
+.userpostInfo .userpostInfoBottom svg {
+    width: 14px;
+    height: 14px;
 }
 
 /* HomePage Feeds Posts Top Right Section */
-.homepageFeedsPosts_TopRight{
+.homepageFeedsPosts_TopRight {
     display: flex;
     align-items: center;
 }
 
 .homepageFeedsPosts_TopRight .MuiSvgIcon-root {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
     border-radius: 50%;
-    padding: 2px;
+    color: #65676B;
 }
 
 .homepageFeedsPosts_TopRight .MuiSvgIcon-root:hover {
@@ -119,12 +128,12 @@
 }
 
 /** HomePage Feeds Posts Middle Section */
-.homepageFeedsPosts_Middle .square{
+.homepageFeedsPosts_Middle .square {
     margin: 0;
 }
 
 /* HomePage Feeds Posts Middle Top Section */
-.homepageFeedsPosts_Middle .homepageFeedsPosts_MiddleTop .homepageFeedsPosts_MiddleTopInner #postMsg{
+.homepageFeedsPosts_Middle .homepageFeedsPosts_MiddleTop .homepageFeedsPosts_MiddleTopInner #postMsg {
     padding: 0 15px 15px;
     letter-spacing: 0.2px;
 }
@@ -138,7 +147,7 @@
 }
 
 /** HomePage Feeds Posts Edit Modals Section */
-.EditModal{
+.EditModal {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -175,7 +184,7 @@
     width: 240px;
 }
 
-.EditModal_Middle #mediaInputLabel{
+.EditModal_Middle #mediaInputLabel {
     padding: 10px 5px;
     background-color: #fff;
     color: black;
@@ -208,7 +217,7 @@
 }
 
 /* HomePage Feeds Posts Edit Modals Bottom Section */
-.EditModal_Bottom{
+.EditModal_Bottom {
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -251,7 +260,7 @@
 }
 
 /** HomePage Feeds Posts Bottom Section */
-.homepageFeedsPosts_Bottom{
+.homepageFeedsPosts_Bottom {
     padding: 0 15px;
 }
 
@@ -260,7 +269,7 @@
 }
 
 /* HomePage Feeds Posts Bottom Inner Section */
-.homepageFeedsPosts_Bottom .homepageFeedsPosts_BottomInner{
+.homepageFeedsPosts_Bottom .homepageFeedsPosts_BottomInner {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2px;

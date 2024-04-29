@@ -51,22 +51,26 @@ function UserpagePhotos() {
     }, [user]);
 
     return (
-        <div className='userpagePhotos'>
-            <div className="userpagePhotosTop">
-                <h3>Photos</h3>
-                <NavLink to="/userhomepage/photo" activeclassname="active">
-                    See all photos
-                </NavLink>
-            </div>
+        <>
+            {photoUrls.length > 0 && (
+                <div className='userpagePhotos'>
+                    <div className="userpagePhotosTop">
+                        <h3>Photos</h3>
+                        <NavLink to="/userhomepage/photo" activeclassname="active">
+                            See all photos
+                        </NavLink>
+                    </div>
 
-            <div className="userpagePhotosBottom">
-                <div className="userpagePhotosBottomContainer">
-                    {photoUrls.map((url, index) => (
-                        <img key={index} src={url} alt={`Photo ${index}`} />
-                    ))}
+                    <div className="userpagePhotosBottom">
+                        <div className="userpagePhotosBottomContainer">
+                            {photoUrls.map((url, index) => (
+                                <img key={index} src={url} alt={`Photo ${index}`} />
+                            ))}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            )}
+        </>
     );
 }
 

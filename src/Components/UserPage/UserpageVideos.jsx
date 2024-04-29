@@ -18,8 +18,8 @@ function UserpageVideos() {
                 const videoItems = result.items.filter(itemRef => itemRef.name.endsWith('.mp4'));
                 const urlsForVideos = await Promise.all(videoItems.map(itemRef => itemRef.getDownloadURL()));
                 urls.push(...urlsForVideos);
-            } 
-            
+            }
+
             catch (error) {
                 console.error("Error fetching Videos:", error);
             }
@@ -29,25 +29,29 @@ function UserpageVideos() {
     }, [user]);
 
     return (
-        <div className='userpageVideos'>
-            <div className="userpageVideosTop">
-                <h3>Videos</h3>
-                <NavLink to="/userhomepage/video" activeclassname="active">
-                    See all videos
-                </NavLink>
-            </div>
+        <>
+            {videoUrls.length > 0 && (
+                <div className='userpageVideos'>
+                    <div className="userpageVideosTop">
+                        <h3>Videos</h3>
+                        <NavLink to="/userhomepage/video" activeclassname="active">
+                            See all videos
+                        </NavLink>
+                    </div>
 
-            <div className="userpageVideosBottom">
-                <div className="userpageVideosBottomContainer">
-                    {videoUrls.map((url, index) => (
-                        <video controls key={index}>
-                            <source src={url} type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                    ))}
+                    <div className="userpageVideosBottom">
+                        <div className="userpageVideosBottomContainer">
+                            {videoUrls.map((url, index) => (
+                                <video controls key={index}>
+                                    <source src={url} type="video/mp4" />
+                                    Your browser does not support the video tag.
+                                </video>
+                            ))}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            )}
+        </>
     );
 }
 

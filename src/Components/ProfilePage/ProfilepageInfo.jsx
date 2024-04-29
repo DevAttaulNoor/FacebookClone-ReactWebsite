@@ -24,10 +24,14 @@ function ProfilepageInfo() {
     }, [selectedFriend]);
 
     return (
-        <div className='profilePageInfo'>
-            <h3>Intro</h3>
-            <p id='bioText'>{bio.introText}</p>
-        </div >
+        <>
+            {bio && (
+                <div className='profilePageInfo'>
+                    <h3>Intro</h3>
+                    <p id='bioText'>{bio.introText}</p>
+                </div >
+            )}
+        </>
     )
 }
 

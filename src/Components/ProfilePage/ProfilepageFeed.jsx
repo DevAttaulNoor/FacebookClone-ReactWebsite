@@ -110,7 +110,7 @@ function ProfilepageFeed() {
             {joinedposts.map(joinedpost => {
                 const dob = joinedpost.data.dob;
                 return (
-                    <div className="JoinedPost">
+                    <div className="JoinedPost" key={joinedpost.id}>
                         <HomepageFeedPosts
                             id={joinedpost.id}
                             userid={joinedpost.data.uid}

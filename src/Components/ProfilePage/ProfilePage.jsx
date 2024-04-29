@@ -1,7 +1,7 @@
 import "../../CSS/ProfilePage/ProfilePage.css";
 import React from "react";
 import { useSelector } from "react-redux";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import ProfilepageComponents from "./ProfilepageComponents";
 import AddIcon from '@mui/icons-material/Add';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -9,9 +9,11 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 function ProfilePage() {
+    const location = useLocation();
     const friendFriends = useSelector((state) => state.data.friends.friendFriends);
     const selectedFriend = useSelector((state) => state.data.friends.selectedFriend);
     const selectedFriendData = useSelector((state) => state.data.friends.selectedFriendData);
+    const baseUrl = location.pathname.includes('/friendpage/allFriends') ? '/friendpage/allFriends/profilepage' : '/profilepage';
 
     return (
         <div className="profilePage">
@@ -54,23 +56,23 @@ function ProfilePage() {
 
                 <div className="profilePageTop_Components">
                     <div className="profilePageTop_ComponentsLeft">
-                        <NavLink to={`/friendpage/allFriends/profilepage/${selectedFriend}/post`} activeclassname="active">
+                        <NavLink to={`${baseUrl}/${selectedFriend}/post`} activeclassname="active">
                             <div className='profilePageTop_ComponentsLeftOption'>Posts</div>
                         </NavLink>
 
-                        <NavLink to={`/friendpage/allFriends/profilepage/${selectedFriend}/about`} activeclassname="active">
+                        <NavLink to={`${baseUrl}/${selectedFriend}/about`} activeclassname="active">
                             <div className='profilePageTop_ComponentsLeftOption'>About</div>
                         </NavLink>
 
-                        <NavLink to={`/friendpage/allFriends/profilepage/${selectedFriend}/friend`} activeclassname="active">
+                        <NavLink to={`${baseUrl}/${selectedFriend}/friend`} activeclassname="active">
                             <div className='profilePageTop_ComponentsLeftOption'>Friends</div>
                         </NavLink>
 
-                        <NavLink to={`/friendpage/allFriends/profilepage/${selectedFriend}/photo`} activeclassname="active">
+                        <NavLink to={`${baseUrl}/${selectedFriend}/photo`} activeclassname="active">
                             <div className='profilePageTop_ComponentsLeftOption'>Photos</div>
                         </NavLink>
 
-                        <NavLink to={`/friendpage/allFriends/profilepage/${selectedFriend}/video`} activeclassname="active">
+                        <NavLink to={`${baseUrl}/${selectedFriend}/video`} activeclassname="active">
                             <div className='profilePageTop_ComponentsLeftOption'>Videos</div>
                         </NavLink>
 

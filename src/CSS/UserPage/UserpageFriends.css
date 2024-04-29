@@ -1,5 +1,5 @@
 /** UserPage Friends Section */
-.userpageFriends{
+.userpageFriends {
     width: 360px;
     padding: 15px;
     margin: 15px 0;
@@ -9,7 +9,7 @@
 }
 
 /* UserPage Friends Top Section */
-.userpageFriendsTop{
+.userpageFriendsTop {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -35,7 +35,7 @@
     border-radius: 6px;
 }
 
-.userpageFriendsTop a:hover{
+.userpageFriendsTop a:hover {
     background-color: whitesmoke;
     cursor: pointer;
 }
@@ -51,6 +51,11 @@
     gap: 10px;
 }
 
+.userpageFriendsBottomContainer a {
+    text-decoration: none;
+    color: initial;
+}
+
 .userpageFriendsBottomContainerOptions img {
     width: 100%;
     height: 110px;
@@ -61,4 +66,8 @@
 .userpageFriendsBottomContainerOptions p {
     font-size: 12px;
     font-weight: 500;
+}
+
+.userpageFriendsBottomContainerOptions:hover {
+    text-decoration: underline;
 }

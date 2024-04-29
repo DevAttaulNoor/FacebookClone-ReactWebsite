@@ -36,25 +36,29 @@ function ProfilepageVideos() {
     }, [selectedFriend]);
 
     return (
-        <div className='profilePageVideos'>
-            <div className="profilePageVideos_Top">
-                <NavLink id="navLink" to="/profilepage/:userid/video" activeclassname="active">
-                    <h3>Videos</h3>
-                </NavLink>
-                <a id="seeAllLink" href="#">See all Videos</a>
-            </div>
+        <>
+            {videoUrls.length > 0 && (
+                <div className='profilePageVideos'>
+                    <div className="profilePageVideos_Top">
+                        <NavLink id="navLink" to="/profilepage/:userid/video" activeclassname="active">
+                            <h3>Videos</h3>
+                        </NavLink>
+                        <a id="seeAllLink" href="#">See all Videos</a>
+                    </div>
 
-            <div className="profilePageVideos_Bottom">
-                <div className="profilePageVideos_BottomContainer">
-                    {videoUrls.map((url, index) => (
-                        <video controls key={index}>
-                            <source src={url} type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                    ))}
+                    <div className="profilePageVideos_Bottom">
+                        <div className="profilePageVideos_BottomContainer">
+                            {videoUrls.map((url, index) => (
+                                <video controls key={index}>
+                                    <source src={url} type="video/mp4" />
+                                    Your browser does not support the video tag.
+                                </video>
+                            ))}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            )}
+        </>
     );
 }
 

@@ -1,7 +1,7 @@
 import '../../CSS/HomePage/HomePage.css'
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import { db } from '../../Firebase/firebase';
 import HomepageMessage from './HomepageMessage';
 import HomepageFeedReels from './HomepageFeedReels';

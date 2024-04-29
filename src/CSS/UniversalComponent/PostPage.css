@@ -26,7 +26,11 @@
     align-items: center;
 }
 
-.postPageInner_TopLeftMain{
+.postPageInner_TopLeft .userpostInfo {
+    margin-left: 10px;
+}
+
+/* .postPageInner_TopLeftMain{
     margin-left: 10px;
 }
 
@@ -58,7 +62,7 @@
     cursor: pointer;
     text-decoration: underline;
     text-decoration-color: inherit;
-}
+} */
 
 .postPageInner_TopRight{
     display: flex;
@@ -66,8 +70,11 @@
 }
 
 .postPageInner_TopRight .MuiSvgIcon-root {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
     border-radius: 50%;
-    padding: 2px;
+    color: #65676B;
 }
 
 .postPageInner_TopRight .MuiSvgIcon-root:hover {

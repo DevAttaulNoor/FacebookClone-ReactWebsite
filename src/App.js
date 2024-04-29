@@ -53,7 +53,9 @@ function App() {
 								</Routes>
 							</div>
 						) : (
-							<Authentication />
+							<Routes>
+								<Route path="/" element={<Authentication />} />
+							</Routes>
 						)}
 					</>
 				)}
