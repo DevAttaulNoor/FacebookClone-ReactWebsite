@@ -1,0 +1,164 @@
+/** NotificationBox Section */
+.notificationBox {
+    position: absolute;
+    top: 50px;
+    right: 16px;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    border-radius: 7px;
+    z-index: 1;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+}
+
+.notificationBox #noNoti {
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+    padding: 8px;
+    margin-bottom: 8px;
+}
+
+.notificationBox a {
+    color: initial;
+    text-decoration: none;
+    width: -webkit-fill-available;
+}
+
+/* NotificationBox Top Section */
+.notificationBoxTop {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px 0px;
+    margin-bottom: 6px;    
+}
+
+.notificationBoxTop h3 {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.notificationBoxTop .MuiSvgIcon-root {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+    border-radius: 50%;
+    color: #65676B;
+}
+
+.notificationBoxTop .MuiSvgIcon-root:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+
+/* NotificationBox Top Section */
+.notificationBoxMiddle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0px 14px 10px;
+}
+
+.notificationBoxMiddle button {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 12px;
+    margin-right: 8px;
+    border-radius: 18px;
+    outline: none;
+    border: none;
+    color: #050505;
+    background-color: transparent;
+}
+
+.notificationBoxMiddle button:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.notificationBoxMiddle button.active {
+    color: #0064D1;
+    background-color: #EBF5FF;
+}
+
+.notificationBoxBottom {
+    max-height: 580px;
+    width: -webkit-fill-available;
+    padding: 0 8px;
+    overflow-y: auto;
+}
+
+.notificationBoxBottomOption {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    padding: 12px 8px;
+}
+
+.notificationBoxBottomOption a {
+    display: flex;
+    align-items: flex-start;
+}
+
+.notificationBoxBottomOption span {
+    font-weight: 500;
+}
+
+.notificationBoxBottomOption:hover {
+    cursor: pointer;
+    border-radius: 6px;
+    background-color: #F0F2F5;
+}
+
+.notificationBoxBottomOption_Left .MuiAvatar-root {
+    width: 52px;
+    height: 52px;
+}
+
+.notificationBoxBottomOption_Right {
+    padding: 0 10px;
+}
+
+.notificationBoxBottomOption_Right p {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.notificationBoxBottomOption_Right h5 {
+    font-size: 12px;
+    font-weight: 500;
+    color: #0866FF;
+}
+
+.notificationBoxBottomOption_RightBottom {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin: 12px 10px 0 0;
+}
+
+.notificationBoxBottomOption_RightBottom button {
+    padding: 8px 12px;
+    background-color: #0866FF;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+}
+
+.notificationBoxBottomOption_RightBottom button#confbtn {
+    background-color: #0866FF;
+    color: #fff;
+}
+
+.notificationBoxBottomOption_RightBottom button#delbtn {
+    background-color: #E4E6EB;
+    color: #000;
+}

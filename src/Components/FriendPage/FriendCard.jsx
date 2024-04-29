@@ -53,6 +53,7 @@ function FriendCard({ user }) {
                     receiverPhotoUrl: user.photoURL,
                     timestamp: new Date(),
                     status: 'sent',
+                    notificationStatus: 'notseen',
                 });
 
                 setFriendRequestStatus("pending");

@@ -219,6 +219,7 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
                     userphotoUrl: user.photoURL,
                     timestamp: new Date(),
                     status: 'reacted',
+                    notificationStatus: 'notseen',
                 })
             }
 

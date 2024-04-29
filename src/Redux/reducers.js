@@ -5,8 +5,8 @@ import { friendSlice } from "./friendSlice";
 import { authSlice } from "./authSlice";
 
 export const rootReducer = combineReducers({
+    authForm: authSlice.reducer,
     user: userSlice.reducer,
     post: postSlice.reducer,
     friends: friendSlice.reducer,
-    authForm: authSlice.reducer,
 })

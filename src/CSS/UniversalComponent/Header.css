@@ -275,11 +275,11 @@
     color: gray;
 }
 
-.notificationBox {
+.notificationContainer {
     display: flex;
 }
 
-.notificationBox #notiLengthIcon {
+.notificationContainer #notiLengthIcon {
     position: absolute;
     right: 57px;
     top: 1px;
@@ -297,110 +297,115 @@
     z-index: 9;
 }
 
-.notificationBox .headerBox {
+.notificationContainer .headerBox {
     padding: 0;
 }
 
-.notificationBox .headerBox_Top {
+.notificationContainer .headerBox_Top {
     width: -webkit-fill-available;
     padding: 10px 14px 10px;
 }
 
-.notificationBox .headerBox_TopTop {
+.notificationContainer .headerBox_TopTop {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 6px;
 }
 
-.notificationBox .headerBox_TopTop h3 {
+.notificationContainer .headerBox_TopTop h3 {
     font-size: 23px;
     font-weight: 700;
 }
 
-.notificationBox .headerBox_TopTop .MuiSvgIcon-root {
+.notificationContainer .headerBox_TopTop .MuiSvgIcon-root {
     width: 20px;
 }
 
-.notificationBox .headerBox_TopBottom {
+.notificationContainer .headerBox_TopBottom {
     display: flex;
     align-items: center;
 }
 
-.notificationBox .headerBox_TopBottom button {
+.notificationContainer .headerBox_TopBottom button {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     padding: 8px 12px;
     margin-right: 8px;
     border-radius: 18px;
     outline: none;
     border: none;
+    color: #050505;
+    background-color: transparent;
+}
+
+.notificationContainer .headerBox_TopBottom button:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.notificationContainer .headerBox_TopBottom button.active {
     color: #0064D1;
     background-color: #EBF5FF;
 }
 
-.notificationBox .headerBox_TopBottom button:hover {
-    cursor: pointer;
-    background-color: #F0F2F5;
-}
-
-.notificationBox .headerBox_Bottom {
+.notificationContainer .headerBox_Bottom {
     max-height: 580px;
     width: -webkit-fill-available;
     padding: 0 8px;
     overflow-y: auto;
 }
 
-.notificationBox .headerBox_BottomOption {
+.notificationContainer .headerBox_BottomOption {
     display: flex;
     align-items: flex-start;
     margin-bottom: 8px;
     padding: 12px 8px;
 }
 
-.notificationBox .headerBox_BottomOption a {
+.notificationContainer .headerBox_BottomOption a {
     display: flex;
     align-items: flex-start;
 }
 
-.notificationBox .headerBox_BottomOption span {
+.notificationContainer .headerBox_BottomOption span {
     font-weight: 500;
 }
 
-.notificationBox .headerBox_BottomOption:hover {
+.notificationContainer .headerBox_BottomOption:hover {
     cursor: pointer;
     border-radius: 6px;
     background-color: #F0F2F5;
 }
 
-.notificationBox .headerBox_BottomOption_Left .MuiAvatar-root {
+.notificationContainer .headerBox_BottomOption_Left .MuiAvatar-root {
     width: 52px;
     height: 52px;
 }
 
-.notificationBox .headerBox_BottomOption_Right {
+.notificationContainer .headerBox_BottomOption_Right {
     padding: 0 10px;
 }
 
-.notificationBox .headerBox_BottomOption_Right p {
+.notificationContainer .headerBox_BottomOption_Right p {
     font-size: 14px;
     font-weight: 400;
 }
 
-.notificationBox .headerBox_BottomOption_Right h5 {
+.notificationContainer .headerBox_BottomOption_Right h5 {
     font-size: 12px;
     font-weight: 500;
     color: #0866FF;
 }
 
-.notificationBox .headerBox_BottomOption_RightBottom {
+.notificationContainer .headerBox_BottomOption_RightBottom {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
     margin: 12px 10px 0 0;
 }
 
-.notificationBox .headerBox_BottomOption_RightBottom button {
+.notificationContainer .headerBox_BottomOption_RightBottom button {
     padding: 8px 12px;
     background-color: #0866FF;
     color: #fff;
@@ -411,12 +416,12 @@
     border-radius: 8px;
 }
 
-.notificationBox .headerBox_BottomOption_RightBottom button#confbtn {
+.notificationContainer .headerBox_BottomOption_RightBottom button#confbtn {
     background-color: #0866FF;
     color: #fff;
 }
 
-.notificationBox .headerBox_BottomOption_RightBottom button#delbtn {
+.notificationContainer .headerBox_BottomOption_RightBottom button#delbtn {
     background-color: #E4E6EB;
     color: #000;
 }

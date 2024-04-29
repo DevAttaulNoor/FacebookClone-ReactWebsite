@@ -6,6 +6,7 @@ import { Avatar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../Redux/userSlice';
 import { auth, db } from '../../Firebase/firebase';
+import NotificationBox from './NotificationBox';
 import SearchIcon from '@mui/icons-material/Search';
 import AppsIcon from '@mui/icons-material/Apps';
 import ForumIcon from '@mui/icons-material/Forum';
@@ -25,7 +26,6 @@ import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
 import SmartDisplayOutlinedIcon from '@mui/icons-material/SmartDisplayOutlined';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
-import { setSelectedPost } from '../../Redux/postSlice';
 
 function Header() {
     const navigate = useNavigate();
@@ -35,7 +35,8 @@ function Header() {
     const [selectedUser, setSelectedUser] = useState(null);
     const [chats, setChats] = useState([])
     const [userChats, setUserChats] = useState('')
-    const [notifications, setNotifications] = useState([])
+    const [notifications, setNotifications] = useState([]);
+    const allNotification = notifications.filter(notification => notification.notificationStatus === 'notseen');
     const [matchingUsernames, setMatchingUsernames] = useState([]);
     const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
     const [userBoxVisible, setUserBoxVisible] = useState(false);
@@ -61,62 +62,6 @@ function Header() {
             });
     };
 
-    // const deleteUser = () => {
-    //     if (auth.currentUser) {
-    //         // Show a confirmation dialog
-    //         const confirmed = window.confirm('Are you sure you want to delete your account? This action cannot be undone.');
-
-    //         if (confirmed) {
-    //             const userUid = user.uid;
-
-    //             // Delete user data in Firestore
-    //             db.collection('Users')
-    //                 .doc(userUid)
-    //                 .delete()
-    //                 .then(() => {
-    //                     console.log('User data deleted from Firestore');
-    //                 })
-    //                 .catch((error) => {
-    //                     console.error('Error deleting user data from Firestore:', error);
-    //                 });
-
-    //             // Delete user's posts in Firestore
-    //             db.collection('Posts')
-    //                 .where('uid', '==', userUid)
-    //                 .get()
-    //                 .then((querySnapshot) => {
-    //                     querySnapshot.forEach((doc) => {
-    //                         // Delete each post
-    //                         db.collection('Posts').doc(doc.id).delete();
-    //                     });
-    //                 })
-    //                 .catch((error) => {
-    //                     console.error('Error deleting user posts in Firestore:', error);
-    //                 });
-
-    //             // Delete the user's authentication account and sign out
-    //             auth
-    //                 .currentUser.delete()
-    //                 .then(() => {
-    //                     console.log('User authentication account deleted');
-    //                     // Sign the user out after account deletion
-    //                     auth.signOut()
-    //                         .then(() => {
-    //                             console.log('User signed out');
-    //                         })
-    //                         .catch((error) => {
-    //                             console.error('Error signing the user out:', error);
-    //                         });
-
-    //                     handleSignOut();
-    //                 })
-    //                 .catch((error) => {
-    //                     console.error('Error deleting user authentication account:', error);
-    //                 });
-    //         }
-    //     }
-    // };
-
     const handleSearchInput = () => {
         setIsSearchBoxVisible(!isSearchBoxVisible);
     };
@@ -131,41 +76,6 @@ function Header() {
 
     const toggleMessageBox = () => {
         setMessageBoxVisible(!messageBoxVisible);
-    };
-
-    const timeAgo = (timestamp) => {
-        if (!timestamp || !timestamp.toDate) {
-            return "0 second ago"
-        }
-        const currentDate = new Date();
-        const postDate = timestamp.toDate();
-        const seconds = Math.floor((currentDate - postDate) / 1000);
-        const secondsDifference = Math.max(seconds, 1);
-        const periods = {
-            decade: 315360000,
-            year: 31536000,
-            month: 2628000,
-            week: 604800,
-            day: 86400,
-            hour: 3600,
-            minute: 60,
-            second: 1,
-        };
-
-        let elapsed = 0;
-        let granularity = 0;
-        let unit = '';
-
-        for (const period in periods) {
-            elapsed = Math.floor(secondsDifference / periods[period]);
-
-            if (elapsed >= 1) {
-                granularity = elapsed;
-                unit = period;
-                break;
-            }
-        }
-        return `${granularity} ${unit}${granularity > 1 ? 's' : ''} ago`;
     };
 
     const timeAgowithInitials = (timestamp) => {
@@ -418,7 +328,7 @@ function Header() {
             <div className="headerRight">
                 <AppsIcon className='headerRight_Options' />
 
-                <div className={`messageBox ${userBoxVisible ? 'clicked' : ''}`}>
+                <div className={`messageBox ${messageBoxVisible ? 'clicked' : ''}`}>
                     {userChats.length > 0 && <p id='msgLengthIcon'>{userChats.length}</p>}
 
                     <ForumIcon className='headerRight_Options' id='msgIcon' onClick={toggleMessageBox} ref={messageBoxRef} />
@@ -493,68 +403,14 @@ function Header() {
                     )}
                 </div>
 
-                <div className={`notificationBox ${userBoxVisible ? 'clicked' : ''}`}>
-                    {notifications.length > 0 && <p id='notiLengthIcon'>{notifications.length}</p>}
+                <div className={`notificationContainer ${notificationBoxVisible ? 'clicked' : ''}`}>
+                    {allNotification.length > 0 && (
+                        <p id='notiLengthIcon'>{allNotification.length}</p>
+                    )}
 
                     <NotificationsIcon className='headerRight_Options' onClick={toggleNotificationBox} ref={notificationBoxRef} />
                     {notificationBoxVisible && (
-                        <div className="headerBox">
-                            <div className='headerBox_Top'>
-                                <div className='headerBox_TopTop'>
-                                    <h3>Notifications</h3>
-                                    <MoreHorizIcon />
-                                </div>
-
-                                <div className='headerBox_TopBottom'>
-                                    <button>All</button>
-                                    <button>Unread</button>
-                                </div>
-                            </div>
-
-                            <div className='headerBox_Bottom'>
-                                {notifications.length === 0 ? (
-                                    <p id='noNoti'>No notifications found.</p>
-                                ) : (
-                                    <div className='headerBox_BottomOptions'>
-                                        {notifications.map((notification, index) => (
-                                            <>
-                                                {(notification.status === 'reacted') || (notification.status === 'commented') ? (
-                                                    <div className='headerBox_BottomOption' key={index}>
-                                                        <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} onClick={() => dispatch(setSelectedPost(notification.postid))}>
-                                                            <div className='headerBox_BottomOption_Left'>
-                                                                <Avatar src={notification.userphotoUrl} />
-                                                            </div>
-                                                            <div className="headerBox_BottomOption_Right">
-                                                                <p> <span>{notification.username}</span> has {notification.status} on your post</p>
-                                                                <h5>{timeAgo(notification.timestamp)}</h5>
-                                                            </div>
-                                                        </NavLink>
-                                                    </div>
-                                                ) : (
-                                                    <>
-                                                        {notification.status === 'sent' && (
-                                                            <div className='headerBox_BottomOption' key={index}>
-                                                                <div className='headerBox_BottomOption_Left'>
-                                                                    <Avatar src={notification.senderPhotoUrl} />
-                                                                </div>
-                                                                <div className="headerBox_BottomOption_Right">
-                                                                    <p><span>{notification.senderName}</span> has sent you a friend request</p>
-                                                                    <h5>{timeAgo(notification.timestamp)}</h5>
-                                                                    <div className="headerBox_BottomOption_RightBottom">
-                                                                        <button id='confbtn'>Confirm</button>
-                                                                        <button id='delbtn'>Delete</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        )}
-                                                    </>
-                                                )}
-                                            </>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
+                        <NotificationBox/>
                     )}
                 </div>
 

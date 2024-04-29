@@ -48,9 +48,11 @@ function HomepageFeedPostsCmtModal({ id, userid, closeModal }) {
                     userid: user.uid,
                     username: user.username,
                     userphotoUrl: user.photoURL,
+                    commentid: commentRef.id,
                     commenttext: comment,
                     timestamp: new Date(),
-                    status: 'commented'
+                    status: 'commented',
+                    notificationStatus: 'notseen',
                 });
             }
 
