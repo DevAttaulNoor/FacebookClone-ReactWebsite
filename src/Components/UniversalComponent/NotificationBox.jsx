@@ -15,15 +15,26 @@ function NotificationBox() {
     const notSeenNotification = notification.filter(notification => notification.notificationStatus === 'notseen');
     const [activeButton, setActiveButton] = useState('All');
 
-    const handleButtonClick = (buttonName) => {
-        setActiveButton(buttonName);
+    const handleCategory = (category) => {
+        setActiveButton(category);
     };
 
     const handleNotificationClicked = async (id, type) => {
         try {
-            await db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection(type).doc(id).update({
-                notificationStatus: 'seen',
-            });
+            const notificationRef = db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection(type).doc(id);
+            const notificationDoc = await notificationRef.get();
+
+            if (notificationDoc.exists) {
+                const { notificationStatus } = notificationDoc.data();
+
+                // Check if notificationStatus is not already 'seen'
+                if (notificationStatus === 'notseen') {
+                    await notificationRef.update({
+                        notificationStatus: 'seen',
+                    });
+                }
+            }
+
             dispatch(setSelectedPost(id));
         } catch (error) {
             console.error("Error updating notification status: ", error);
@@ -104,8 +115,8 @@ function NotificationBox() {
             </div>
 
             <div className='notificationBoxMiddle'>
-                <button className={activeButton === 'All' ? 'active' : ''} onClick={() => handleButtonClick('All')}>All</button>
-                <button className={activeButton === 'Unread' ? 'active' : ''} onClick={() => handleButtonClick('Unread')}>Unread</button>
+                <button className={activeButton === 'All' ? 'active' : ''} onClick={() => handleCategory('All')}>All</button>
+                <button className={activeButton === 'Unread' ? 'active' : ''} onClick={() => handleCategory('Unread')}>Unread</button>
             </div>
 
             <div className='notificationBoxBottom'>
@@ -131,7 +142,7 @@ function NotificationBox() {
 
                                         {notification.status === 'commented' && (
                                             <div className='notificationBoxBottomOption' key={index}>
-                                                <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} onClick={() => handleNotificationClicked(notification.commentid, "Comments")}>
+                                                <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} onClick={() => handleNotificationClicked(notification.postid, "Comments")}>
                                                     <div className='notificationBoxBottomOption_Left'>
                                                         <Avatar src={notification.userphotoUrl} />
                                                     </div>

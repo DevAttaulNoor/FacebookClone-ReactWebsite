@@ -1,0 +1,91 @@
+/** UserBox Section */
+.userBox {
+    position: absolute;
+    top: 52px;
+    right: 5px;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8px 0;
+    border-radius: 7px;
+    z-index: 1;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+}
+
+/* UserBox Options Section */
+.userBoxOptions{
+    width: 100%;
+}
+
+.userBoxOptions a{
+    width: 100%;
+    text-decoration: none;
+    color: initial;
+}
+
+.userBoxOption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 8px;
+    margin: 0 8px;
+    transition: 3ms ease-in-out;
+}
+
+.userBoxOption:hover {
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: #F0F2F5;
+}
+
+.userBoxOptionLeft {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.userBoxOptionLeft p {
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 12px;
+}
+
+.userBoxOptionLeft .MuiSvgIcon-root {
+    width: 38px;
+    height: 38px;
+    padding: 6px;
+    border-radius: 50%;
+    color: #000;
+    background-color: #E4E6EB;
+}
+
+.userBoxOptionLeft .MuiAvatar-root {
+    width: 38px;
+    height: 38px;
+}
+
+.userBoxOptionRight .MuiSvgIcon-root {
+    width: 24px;
+    height: 24px;
+    color: gray;
+}
+
+/* UserBox Terms Section */
+.userBoxTerms {
+    margin: 6px 8px 3px 16px;
+}
+
+.userBoxTerms p {
+    font-size: 12px;
+    font-weight: 400;
+    white-space: pre-wrap;
+    color: #65676B;
+}
+
+.userBoxTerms p span:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}

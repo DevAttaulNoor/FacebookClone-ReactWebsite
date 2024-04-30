@@ -1,8 +1,8 @@
 /** MessageBox Section */
 .messageBox {
     position: absolute;
-    top: 50px;
-    right: 16px;
+    top: 52px;
+    right: 5px;
     width: 320px;
     display: flex;
     flex-direction: column;
@@ -43,6 +43,11 @@
     padding: 6px;
     border-radius: 50%;
     color: #65676B;
+}
+
+.messageBoxTopTop .MuiSvgIcon-root:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
 }
 
 .messageBoxTopBottom {

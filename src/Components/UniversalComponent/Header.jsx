@@ -7,6 +7,7 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../Redux/userSlice';
 import { setChatNotiBoxVisible, setNotiBoxVisible } from '../../Redux/notificationSlice';
 import { auth, db } from '../../Firebase/firebase';
+import UserBox from './UserBox';
 import MessageBox from './MessageBox';
 import NotificationBox from './NotificationBox';
 import SearchIcon from '@mui/icons-material/Search';
@@ -16,11 +17,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import SettingsIcon from '@mui/icons-material/Settings';
-import HelpIcon from '@mui/icons-material/Help';
-import NightlightIcon from '@mui/icons-material/Nightlight';
-import LogoutIcon from '@mui/icons-material/Logout';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import HomeIcon from '@mui/icons-material/Home';
 import GroupsIcon from '@mui/icons-material/Groups';
 import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
@@ -48,24 +44,6 @@ function Header() {
     const pathsToHideHeader = ['/homepage/storyreels'];
     const showHeader = !pathsToHideHeader.includes(useLocation().pathname);
 
-    const handleSignOut = () => {
-        sessionStorage.removeItem('userData');
-
-        auth.signOut()
-            .then(() => {
-                sessionStorage.removeItem('userData');
-                dispatch(logoutUser());
-                navigate('/');
-            })
-            .catch((error) => {
-                console.error("Sign out error:", error);
-            });
-    };
-
-    const handleSearchInput = () => {
-        setIsSearchBoxVisible(!isSearchBoxVisible);
-    };
-
     const toggleUserBox = () => {
         setUserBoxVisible(!userBoxVisible);
     };
@@ -76,6 +54,10 @@ function Header() {
 
     const toggleMessageBox = () => {
         dispatch(setChatNotiBoxVisible(!chatNotiBoxVisible));
+    };
+
+    const handleSearchInput = () => {
+        setIsSearchBoxVisible(!isSearchBoxVisible);
     };
 
     useEffect(() => {
@@ -227,76 +209,25 @@ function Header() {
             </div>
 
             <div className="headerRight">
-                <AppsIcon className='headerRight_Options' />
+                <div className='headerRightOption'>
+                    <AppsIcon className='headerRightOptionSvg' />
+                </div>
 
-                <div className={`messageContainer ${chatNotiBoxVisible ? 'clicked' : ''}`}>
+                <div className={`headerRightOption ${chatNotiBoxVisible ? 'clicked' : ''}`}>
+                    <ForumIcon className='headerRightOptionSvg' onClick={toggleMessageBox} ref={messageBoxRef} />
                     {chatNotification.length > 0 && <p id='msgLengthIcon'>{chatNotification.length}</p>}
-                    <ForumIcon className='headerRight_Options' id='msgIcon' onClick={toggleMessageBox} ref={messageBoxRef} />
                     {chatNotiBoxVisible && <MessageBox />}
                 </div>
 
-                <div className={`notificationContainer ${notiBoxVisible ? 'clicked' : ''}`}>
+                <div className={`headerRightOption ${notiBoxVisible ? 'clicked' : ''}`}>
+                    <NotificationsIcon className='headerRightOptionSvg' onClick={toggleNotificationBox} ref={notificationBoxRef} />
                     {allNotification.length > 0 && <p id='notiLengthIcon'>{allNotification.length}</p>}
-                    <NotificationsIcon className='headerRight_Options' onClick={toggleNotificationBox} ref={notificationBoxRef} />
                     {notiBoxVisible && <NotificationBox />}
                 </div>
 
-                <div className={`userBox ${userBoxVisible ? 'clicked' : ''}`}>
-                    <Avatar src={user.photoURL} onClick={toggleUserBox} ref={userBoxRef} />
-                    {userBoxVisible && (
-                        <div className="headerBox">
-                            <NavLink to="/userhomepage/post">
-                                <div className='headerBoxOptions'>
-                                    <div className='headerBoxOptions_Left'>
-                                        <Avatar src={user.photoURL} />
-                                        <p>{user.username}</p>
-                                    </div>
-                                </div>
-                            </NavLink>
-
-                            <div className='headerBoxOptions'>
-                                <div className='headerBoxOptions_Left'>
-                                    <SettingsIcon />
-                                    <p>Setting & privacy</p>
-                                </div>
-                                <div className='headerBoxOptions_Right'>
-                                    <ArrowForwardIosIcon />
-                                </div>
-                            </div>
-
-                            <div className='headerBoxOptions'>
-                                <div className='headerBoxOptions_Left'>
-                                    <HelpIcon />
-                                    <p>Help & support</p>
-                                </div>
-                                <div className='headerBoxOptions_Right'>
-                                    <ArrowForwardIosIcon />
-                                </div>
-                            </div>
-
-                            <div className='headerBoxOptions'>
-                                <div className='headerBoxOptions_Left'>
-                                    <NightlightIcon />
-                                    <p>Display & accessibility</p>
-                                </div>
-                                <div className='headerBoxOptions_Right'>
-                                    <ArrowForwardIosIcon />
-                                </div>
-                            </div>
-
-                            <div className='headerBoxOptions' onClick={handleSignOut}>
-                                <div className='headerBoxOptions_Left'>
-                                    <LogoutIcon />
-                                    <p>Log out</p>
-                                </div>
-                            </div>
-
-                            <div className='terms'>
-                                <p><span>Privacy</span> · <span>Terms</span> · <span>Advertising</span> · <span>Ad choices</span> · <span>Cookies</span> · <span>More</span> · <span>Meta © 2023</span></p>
-                            </div>
-                            {/* <button onClick={deleteUser}>Delete</button> */}
-                        </div>
-                    )}
+                <div className={`headerRightOption ${userBoxVisible ? 'clicked' : ''}`}>
+                    <Avatar src={user.photoURL} className='headerRightOptionImg' onClick={toggleUserBox} ref={userBoxRef} />
+                    {userBoxVisible && <UserBox />}
                 </div>
             </div>
         </div>

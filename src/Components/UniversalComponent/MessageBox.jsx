@@ -28,8 +28,8 @@ function MessageBox() {
         setFriendMessageBox(false);
     }
 
-    const handleButtonClick = (buttonName) => {
-        setActiveButton(buttonName);
+    const handleCategory = (category) => {
+        setActiveButton(category);
     };
 
     const timeAgowithInitials = (timestamp) => {
@@ -119,8 +119,8 @@ function MessageBox() {
             </div>
 
             <div className='messageBoxMiddle'>
-                <button className={activeButton === 'Inbox' ? 'active' : ''} onClick={() => handleButtonClick('Inbox')}>Inbox</button>
-                <button className={activeButton === 'Communities' ? 'active' : ''} onClick={() => handleButtonClick('Communities')}>Communities</button>
+                <button className={activeButton === 'Inbox' ? 'active' : ''} onClick={() => handleCategory('Inbox')}>Inbox</button>
+                <button className={activeButton === 'Communities' ? 'active' : ''} onClick={() => handleCategory('Communities')}>Communities</button>
             </div>
 
             <div className='messageBoxBottom'>

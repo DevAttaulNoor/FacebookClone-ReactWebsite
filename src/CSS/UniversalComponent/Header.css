@@ -9,7 +9,7 @@
     z-index: 99;
 }
 
-/** Header Left Section */
+/* Header Left Section */
 .headerTransformedLeft {
     display: none;
 }
@@ -103,7 +103,7 @@
     font-size: 14px;
 }
 
-/** Header Middle Section */
+/* Header Middle Section */
 .headerMiddle {
     display: flex;
     align-items: center;
@@ -151,152 +151,66 @@
     color: #2381fa;
 }
 
-/** Header Right Section */
+/* Header Right Section */
 .headerRight {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     margin-right: 15px;
 }
 
-.headerRight_Options {
-    position: relative;
+.headerRightOption {
+    display: flex;
     margin-right: 8px;
     border-radius: 50%;
-    cursor: pointer;
     color: #000;
     background-color: #E4E6EB;
 }
 
-.headerRight_Options.MuiSvgIcon-root{
-    width: 38px;
-    height: 38px;
+.headerRightOption:last-child {
+    margin-right: 0;
+}
+
+.headerRightOption .headerRightOptionSvg{
+    width: 42px;
+    height: 42px;
     padding: 8px;
-}
-
-.userBox{
     cursor: pointer;
 }
 
-.headerBox {
+.headerRightOption .headerRightOptionImg{
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+}
+
+.headerRightOption #msgLengthIcon {
+    text-align: center;
     position: absolute;
-    top: 50px;
-    right: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    width: 320px;
-    padding: 8px 0;
-    border-radius: 7px;
-    background-color: #fff;
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
-    z-index: 1;
-}
-
-.headerBox .terms {
-    margin: 6px 8px 3px 16px;
-}
-
-.headerBox .terms p {
-    font-size: 12px;
-    font-weight: 400;
-    color: gray;
-    white-space: pre-wrap;
-}
-
-.headerBox .terms p span:hover {
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-.headerBoxOptions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: -webkit-fill-available;
-    margin: 1px 8px;
-    padding: 6px 8px;
-    transition: 3ms ease-in-out;
-}
-
-.headerBoxOptions:hover {
-    cursor: pointer;
-    cursor: pointer;
-    border-radius: 8px;
-    background-color: #F0F2F5;
-}
-
-.headerBoxOptions_Left {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.headerBoxOptions_Left p {
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: -0.5px;
-    margin-left: 10px;
-}
-
-.headerBoxOptions_Left .MuiSvgIcon-root {
-    width: 32px;
-    height: 32px;
-    padding: 6px;
-    border-radius: 50%;
-    color: #000;
-    background-color: #E4E6EB;
-}
-
-.headerBoxOptions_Left .MuiAvatar-root {
-    width: 33px;
-    height: 33px;
-}
-
-.headerBoxOptions_Right .MuiSvgIcon-root {
-    width: 28px;
-    height: 28px;
-    color: gray;
-}
-
-.messageContainer,
-.notificationContainer {
-    display: flex;
-}
-
-.messageContainer #msgLengthIcon {
-    position: absolute;
-    top: 1px;
-    right: 104px;
-    width: 15px;
-    height: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    top: 2px;
+    right: 94px;
+    width: 16px;
+    height: 16px;
     font-size: 12px;
     font-weight: 600;
-    padding: 4px;
     border-radius: 50%;
     z-index: 9;
     color: #fff;
     background-color: #e41e3f;
 }
 
-.notificationContainer #notiLengthIcon {
+.headerRightOption #notiLengthIcon {
     position: absolute;
-    top: 1px;
-    right: 57px;
-    width: 15px;
-    height: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
+    top: 2px;
+    right: 44px;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    font-size: 11px;
     font-weight: 600;
-    padding: 4px;
     border-radius: 50%;
-    z-index: 9;
+    z-index: 10;
     color: #fff;
     background-color: #e41e3f;
 }
