@@ -23,6 +23,8 @@ function PostPage() {
     const [likesCount, setLikesCount] = useState(0);
     const [currentUserLiked, setCurrentUserLiked] = useState(false);
 
+    console.log(selectedPost)
+
     const postComment = async () => {
         if (comment.trim() === '') {
             return;

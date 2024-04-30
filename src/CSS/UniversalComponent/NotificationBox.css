@@ -14,14 +14,6 @@
     background-color: #fff;
 }
 
-.notificationBox #noNoti {
-    font-size: 18px;
-    font-weight: 400;
-    text-align: center;
-    padding: 8px;
-    margin-bottom: 8px;
-}
-
 .notificationBox a {
     color: initial;
     text-decoration: none;
@@ -56,7 +48,7 @@
     cursor: pointer;
 }
 
-/* NotificationBox Top Section */
+/* NotificationBox Middle Section */
 .notificationBoxMiddle {
     width: 100%;
     display: flex;
@@ -68,12 +60,15 @@
     font-size: 14px;
     font-weight: 600;
     padding: 8px 12px;
-    margin-right: 8px;
     border-radius: 18px;
     outline: none;
     border: none;
     color: #050505;
     background-color: transparent;
+}
+
+.notificationBoxMiddle button:first-child {
+    margin-right: 8px;
 }
 
 .notificationBoxMiddle button:hover {
@@ -86,11 +81,21 @@
     background-color: #EBF5FF;
 }
 
+/* NotificationBox Bottom Section */
 .notificationBoxBottom {
     max-height: 580px;
     width: -webkit-fill-available;
     padding: 0 8px;
     overflow-y: auto;
+}
+
+.notificationBoxBottom #noNoti {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    padding: 35px 8px;
+    margin-bottom: 10px;
+    color: #65676B;
 }
 
 .notificationBoxBottomOption {

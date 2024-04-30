@@ -15,6 +15,8 @@ import FriendPage from './Components/FriendPage/FriendPage';
 import FriendpageAllFriends from './Components/FriendPage/FriendpageAllFriends';
 import PostPage from './Components/UniversalComponent/PostPage';
 import LoadingLine from './Components/UniversalComponent/LoadingLine';
+import MessageBox from './Components/UniversalComponent/MessageBox';
+import NotificationBox from './Components/UniversalComponent/NotificationBox';
 
 function App() {
 	const dispatch = useDispatch();

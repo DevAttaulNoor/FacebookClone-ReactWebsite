@@ -1,0 +1,165 @@
+/** MessageBox Section */
+.messageBox {
+    position: absolute;
+    top: 50px;
+    right: 16px;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    border-radius: 7px;
+    z-index: 1;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+}
+
+.messageBox a {
+    color: initial;
+    text-decoration: none;
+    width: -webkit-fill-available;
+}
+
+/* MessageBox Top Section */
+.messageBoxTop {
+    width: 100%;
+    padding: 10px 14px 10px;
+}
+
+.messageBoxTopTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.messageBoxTopTop h3 {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.messageBoxTopTop .MuiSvgIcon-root {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+    border-radius: 50%;
+    color: #65676B;
+}
+
+.messageBoxTopBottom {
+    position: relative;
+    margin: 10px 0 8px;
+}
+
+.messageBoxTopBottom input {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 8px 12px 8px 42px;
+    border-radius: 18px;
+    border: none;
+    outline: none;
+    color: #65676B;
+    background-color: #F0F2F5;
+}
+
+.messageBoxTopBottom svg {
+    position: absolute;
+    top: 8px;
+    left: 15px;
+    width: 20px;
+    height: 20px;
+    color: #65676B;
+}
+
+/* MessageBox Middle Section */
+.messageBoxMiddle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0px 14px 10px;
+}
+
+.messageBoxMiddle button {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 18px;
+    outline: none;
+    border: none;
+    color: #050505;
+    background-color: transparent;
+}
+
+.messageBoxMiddle button:first-child {
+    margin-right: 8px;
+}
+
+.messageBoxMiddle button:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.messageBoxMiddle button.active {
+    color: #0064D1;
+    background-color: #EBF5FF;
+}
+
+/* MessageBox Bottom Section */
+.messageBoxBottom {
+    width: 100%;
+    padding: 0 6px;
+}
+
+.messageBoxBottom #noMsg {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    padding: 35px 8px;
+    margin-bottom: 10px;
+    color: #65676B;
+}
+
+.messageBoxBottomOption {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 8px 8px;
+    margin-bottom: 0;
+}
+
+.messageBoxBottomOption:hover {
+    cursor: pointer;
+    border-radius: 6px;
+    background-color: #F0F2F5;
+}
+
+.messageBoxBottomOption:last-child {
+    margin-bottom: 8px;
+}
+
+.messageBoxBottomOption .MuiAvatar-root {
+    width: 52px;
+    height: 52px;
+}
+
+.messageBoxBottomOptionContent {
+    margin-left: 12px;
+}
+
+.messageBoxBottomOptionContent p {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 3px;
+}
+
+.messageBoxBottomOptionContentBottom {
+    display: flex;
+    white-space: pre-wrap;
+}
+
+.messageBoxBottomOptionContentBottom span,
+.messageBoxBottomOptionContentBottom h5 {
+    font-size: 14px;
+    font-weight: 400;
+    color: #65676B;
+}

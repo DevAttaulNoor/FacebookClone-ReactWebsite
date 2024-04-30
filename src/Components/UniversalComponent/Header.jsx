@@ -1,11 +1,13 @@
 import '../../CSS/UniversalComponent/Header.css'
 import fblogo from '../../Assets/Images/fblogo.png'
 import React, { useState, useRef, useEffect } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../Redux/userSlice';
+import { setChatNotiBoxVisible, setNotiBoxVisible } from '../../Redux/notificationSlice';
 import { auth, db } from '../../Firebase/firebase';
+import MessageBox from './MessageBox';
 import NotificationBox from './NotificationBox';
 import SearchIcon from '@mui/icons-material/Search';
 import AppsIcon from '@mui/icons-material/Apps';
@@ -19,7 +21,6 @@ import HelpIcon from '@mui/icons-material/Help';
 import NightlightIcon from '@mui/icons-material/Nightlight';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import HomeIcon from '@mui/icons-material/Home';
 import GroupsIcon from '@mui/icons-material/Groups';
 import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
@@ -31,20 +32,19 @@ function Header() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
-    const [searchText, setSearchText] = useState('');
-    const [selectedUser, setSelectedUser] = useState(null);
-    const [chats, setChats] = useState([])
-    const [userChats, setUserChats] = useState('')
-    const [notifications, setNotifications] = useState([]);
-    const allNotification = notifications.filter(notification => notification.notificationStatus === 'notseen');
-    const [matchingUsernames, setMatchingUsernames] = useState([]);
-    const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
-    const [userBoxVisible, setUserBoxVisible] = useState(false);
-    const [messageBoxVisible, setMessageBoxVisible] = useState(false);
-    const [notificationBoxVisible, setNotificationBoxVisible] = useState(false);
+    const notification = useSelector((state) => state.data.notification.notification);
+    const allNotification = notification.filter(notification => notification.notificationStatus === 'notseen');
+    const notiBoxVisible = useSelector((state) => state.data.notification.notiBoxVisible);
+    const chatNotification = useSelector((state) => state.data.notification.chatNotification);
+    const chatNotiBoxVisible = useSelector((state) => state.data.notification.chatNotiBoxVisible);
     const userBoxRef = useRef(null);
     const messageBoxRef = useRef(null);
     const notificationBoxRef = useRef(null);
+    const [searchText, setSearchText] = useState('');
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [matchingUsernames, setMatchingUsernames] = useState([]);
+    const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
+    const [userBoxVisible, setUserBoxVisible] = useState(false);
     const pathsToHideHeader = ['/homepage/storyreels'];
     const showHeader = !pathsToHideHeader.includes(useLocation().pathname);
 
@@ -71,46 +71,11 @@ function Header() {
     };
 
     const toggleNotificationBox = () => {
-        setNotificationBoxVisible(!notificationBoxVisible);
+        dispatch(setNotiBoxVisible(!notiBoxVisible));
     };
 
     const toggleMessageBox = () => {
-        setMessageBoxVisible(!messageBoxVisible);
-    };
-
-    const timeAgowithInitials = (timestamp) => {
-        if (!timestamp || !timestamp.toDate) {
-            return "0s"
-        }
-        const currentDate = new Date();
-        const postDate = timestamp.toDate();
-        const seconds = Math.floor((currentDate - postDate) / 1000);
-        const secondsDifference = Math.max(seconds, 1);
-        const periods = {
-            D: 315360000,
-            Y: 31536000,
-            M: 2628000,
-            w: 604800,
-            d: 86400,
-            h: 3600,
-            m: 60,
-            s: 1,
-        };
-
-        let elapsed = 0;
-        let granularity = 0;
-        let unit = '';
-
-        for (const period in periods) {
-            elapsed = Math.floor(secondsDifference / periods[period]);
-
-            if (elapsed >= 1) {
-                granularity = elapsed;
-                unit = period;
-                break;
-            }
-        }
-        return `${granularity}${unit}${granularity > 1 ? '' : ''}`;
+        dispatch(setChatNotiBoxVisible(!chatNotiBoxVisible));
     };
 
     useEffect(() => {
@@ -120,11 +85,11 @@ function Header() {
             }
 
             if (notificationBoxRef.current && !notificationBoxRef.current.contains(e.target)) {
-                setNotificationBoxVisible(false);
+                dispatch(setNotiBoxVisible(false));
             }
 
             if (messageBoxRef.current && !messageBoxRef.current.contains(e.target)) {
-                setMessageBoxVisible(false);
+                dispatch(setChatNotiBoxVisible(false));
             }
         };
 
@@ -184,70 +149,6 @@ function Header() {
                 console.error('Error getting documents:', error);
             });
     }, [searchText]);
-
-    useEffect(() => {
-        const likesData = db.collection('Users').doc(user.uid).collection('Notifications').doc(user.uid).collection('Likes');
-        const commentData = db.collection('Users').doc(user.uid).collection('Notifications').doc(user.uid).collection('Comments');
-        const friendReqData = db.collection('Users').doc(user.uid).collection('Notifications').doc(user.uid).collection('FriendsReqs');
-
-        // Use Promise.all to wait for all promises to resolve
-        Promise.all([
-            likesData.get(),
-            commentData.get(),
-            friendReqData.get(),
-        ]).then((results) => {
-            const likes = results[0].docs.map((doc) => doc.data());
-            const comments = results[1].docs.map((doc) => doc.data());
-            const friendReqs = results[2].docs.map((doc) => doc.data());
-
-            // Combine data from all collections
-            const notifications = [...likes, ...comments, ...friendReqs];
-
-            // Sort the combined array based on timestamps in ascending order
-            notifications.sort((a, b) => b.timestamp - a.timestamp);
-
-            // Set the combined and sorted data to your state
-            setNotifications(notifications);
-        }).catch((error) => {
-            console.error('Error fetching notifications:', error);
-        });
-    }, [user.uid]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const querySnapshot = await db.collection('Chats').get();
-
-                if (!querySnapshot.empty) {
-                    const chatsData = [];
-
-                    querySnapshot.forEach(doc => {
-                        const chatData = doc.data();
-                        // Retrieve the messages list from the chatData
-                        const messagesData = chatData.messages || []; // Ensure messagesData is an array
-                        chatData.messages = messagesData;
-                        chatsData.push(chatData);
-                    });
-
-                    setChats(chatsData);
-                } else {
-                    setChats([]);
-                }
-            } catch (error) {
-                console.error('Error fetching chat data:', error);
-                setChats([]);
-            }
-        };
-        fetchData();
-
-    }, [user.uid]);
-
-    useEffect(() => {
-        const relevantChats = chats
-            .map(chat => (chat.recipientUid === user.uid || chat.senderUid === user.uid) ? chat : null)
-            .filter(Boolean);
-        setUserChats(relevantChats)
-    }, [chats, user.uid]);
 
     return (
         <div className={`header ${showHeader ? '' : 'transformed'}`}>
@@ -328,90 +229,16 @@ function Header() {
             <div className="headerRight">
                 <AppsIcon className='headerRight_Options' />
 
-                <div className={`messageBox ${messageBoxVisible ? 'clicked' : ''}`}>
-                    {userChats.length > 0 && <p id='msgLengthIcon'>{userChats.length}</p>}
-
+                <div className={`messageContainer ${chatNotiBoxVisible ? 'clicked' : ''}`}>
+                    {chatNotification.length > 0 && <p id='msgLengthIcon'>{chatNotification.length}</p>}
                     <ForumIcon className='headerRight_Options' id='msgIcon' onClick={toggleMessageBox} ref={messageBoxRef} />
-                    {messageBoxVisible && (
-                        <div className="headerBox">
-                            <div className='headerBox_Top'>
-                                <div className='headerBox_TopTop'>
-                                    <h3>Chats</h3>
-                                    <MoreHorizIcon />
-                                </div>
-
-                                <div className='headerBox_TopMiddle'>
-                                    <SearchIcon />
-                                    <input type="text" name="" id="" placeholder='Search Messenger' />
-                                </div>
-
-                                <div className='headerBox_TopBottom'>
-                                    <button>Inbox</button>
-                                    <button>Communities</button>
-                                </div>
-                            </div>
-
-                            <div className='headerBox_Bottom'>
-                                {userChats.length === 0 ? (
-                                    <p id='noMsg'>No messages found.</p>
-                                ) : (
-                                    <>
-                                        {chats.map((chat, index) => {
-                                            // Check if the current user is either the sender or recipient of the chat
-                                            if (chat.senderUid === user.uid || chat.recipientUid === user.uid) {
-                                                return (
-                                                    <div key={index}>
-                                                        {/* Rendering only the last message in the chat */}
-                                                        {chat.messages.slice(-1).map((message, index) => (
-                                                            <div key={index}>
-                                                                {message.sender !== user.uid ? (
-                                                                    <div className='headerBox_BottomOption'>
-                                                                        <Avatar src={message.senderPhotoUrl} />
-                                                                        <div className='headerBox_BottomOptionContent'>
-                                                                            <p>{message.senderName}</p>
-                                                                            <div className='headerBox_BottomOptionContentBottom'>
-                                                                                <span>{message.text}</span>
-                                                                                <p> · </p>
-                                                                                <h5>{timeAgowithInitials(message.timestamp)}</h5>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                ) : (
-                                                                    <div className='headerBox_BottomOption'>
-                                                                        <Avatar src={message.recipientPhotoUrl} />
-                                                                        <div className='headerBox_BottomOptionContent'>
-                                                                            <p>{message.recipientName}</p>
-                                                                            <div className='headerBox_BottomOptionContentBottom'>
-                                                                                <span>{message.text}</span>
-                                                                                <p> · </p>
-                                                                                <h5>{timeAgowithInitials(message.timestamp)}</h5>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                )}
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                );
-                                            }
-                                            return null;
-                                        })}
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                    )}
+                    {chatNotiBoxVisible && <MessageBox />}
                 </div>
 
-                <div className={`notificationContainer ${notificationBoxVisible ? 'clicked' : ''}`}>
-                    {allNotification.length > 0 && (
-                        <p id='notiLengthIcon'>{allNotification.length}</p>
-                    )}
-
+                <div className={`notificationContainer ${notiBoxVisible ? 'clicked' : ''}`}>
+                    {allNotification.length > 0 && <p id='notiLengthIcon'>{allNotification.length}</p>}
                     <NotificationsIcon className='headerRight_Options' onClick={toggleNotificationBox} ref={notificationBoxRef} />
-                    {notificationBoxVisible && (
-                        <NotificationBox/>
-                    )}
+                    {notiBoxVisible && <NotificationBox />}
                 </div>
 
                 <div className={`userBox ${userBoxVisible ? 'clicked' : ''}`}>

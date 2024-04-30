@@ -6,16 +6,17 @@ import { db } from '../../Firebase/firebase';
 import { NavLink } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { setNotiBoxVisible, setNotification } from '../../Redux/notificationSlice';
 
 function NotificationBox() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
+    const notification = useSelector((state) => state.data.notification.notification);
+    const notSeenNotification = notification.filter(notification => notification.notificationStatus === 'notseen');
     const [activeButton, setActiveButton] = useState('All');
-    const [notifications, setNotifications] = useState([]);
-    const notSeenNotification = notifications.filter(notification => notification.notificationStatus === 'notseen');
 
     const handleButtonClick = (buttonName) => {
-        setActiveButton(buttonName); // Update the active button state when a button is clicked
+        setActiveButton(buttonName);
     };
 
     const handleNotificationClicked = async (id, type) => {
@@ -27,6 +28,8 @@ function NotificationBox() {
         } catch (error) {
             console.error("Error updating notification status: ", error);
         }
+
+        dispatch(setNotiBoxVisible(false));
     };
 
     const timeAgo = (timestamp) => {
@@ -80,13 +83,14 @@ function NotificationBox() {
             const friendReqs = results[2].docs.map((doc) => doc.data());
 
             // Combine data from all collections
-            const notifications = [...likes, ...comments, ...friendReqs];
+            const notification = [...likes, ...comments, ...friendReqs];
 
             // Sort the combined array based on timestamps in ascending order
-            notifications.sort((a, b) => b.timestamp - a.timestamp);
+            notification.sort((a, b) => b.timestamp - a.timestamp);
+            dispatch(setNotification(notification))
 
             // Set the combined and sorted data to your state
-            setNotifications(notifications);
+            // setNotifications(notifications);
         }).catch((error) => {
             console.error('Error fetching notifications:', error);
         });
@@ -105,11 +109,11 @@ function NotificationBox() {
             </div>
 
             <div className='notificationBoxBottom'>
-                {notifications.length > 0 ? (
+                {notification.length > 0 ? (
                     <>
                         {activeButton === 'All' ? (
                             <div className='notificationBoxBottomOptions'>
-                                {notifications.map((notification, index) => (
+                                {notification.map((notification, index) => (
                                     <>
                                         {notification.status === 'reacted' && (
                                             <div className='notificationBoxBottomOption' key={index}>
@@ -163,7 +167,7 @@ function NotificationBox() {
                                     <p id='noNoti'>No unread notifications found.</p>
                                 ) : (
                                     <div className='notificationBoxBottomOptions'>
-                                        {notifications
+                                        {notification
                                             .filter(notification => notification.notificationStatus === 'notseen')
                                             .map((notification, index) => (
                                                 <>

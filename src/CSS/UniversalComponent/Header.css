@@ -159,12 +159,6 @@
     margin-right: 15px;
 }
 
-.headerRight .MuiSvgIcon-root{
-    width: 38px;
-    height: 38px;
-    padding: 8px;
-}
-
 .headerRight_Options {
     position: relative;
     margin-right: 8px;
@@ -172,6 +166,12 @@
     cursor: pointer;
     color: #000;
     background-color: #E4E6EB;
+}
+
+.headerRight_Options.MuiSvgIcon-root{
+    width: 38px;
+    height: 38px;
+    padding: 8px;
 }
 
 .userBox{
@@ -192,21 +192,6 @@
     background-color: #fff;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
     z-index: 1;
-}
-
-.headerBox #noMsg, 
-.headerBox #noNoti {
-    font-size: 18px;
-    font-weight: 400;
-    text-align: center;
-    padding: 8px;
-    margin-bottom: 8px;
-}
-
-.headerBox a {
-    color: initial;
-    text-decoration: none;
-    width: -webkit-fill-available;
 }
 
 .headerBox .terms {
@@ -275,373 +260,45 @@
     color: gray;
 }
 
+.messageContainer,
 .notificationContainer {
     display: flex;
 }
 
+.messageContainer #msgLengthIcon {
+    position: absolute;
+    top: 1px;
+    right: 104px;
+    width: 15px;
+    height: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px;
+    border-radius: 50%;
+    z-index: 9;
+    color: #fff;
+    background-color: #e41e3f;
+}
+
 .notificationContainer #notiLengthIcon {
     position: absolute;
+    top: 1px;
     right: 57px;
-    top: 1px;
     width: 15px;
     height: 15px;
-    padding: 4px;
-    border-radius: 50%;
-    background-color: #e41e3f;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9;
-}
-
-.notificationContainer .headerBox {
-    padding: 0;
-}
-
-.notificationContainer .headerBox_Top {
-    width: -webkit-fill-available;
-    padding: 10px 14px 10px;
-}
-
-.notificationContainer .headerBox_TopTop {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 6px;
-}
-
-.notificationContainer .headerBox_TopTop h3 {
-    font-size: 23px;
-    font-weight: 700;
-}
-
-.notificationContainer .headerBox_TopTop .MuiSvgIcon-root {
-    width: 20px;
-}
-
-.notificationContainer .headerBox_TopBottom {
-    display: flex;
-    align-items: center;
-}
-
-.notificationContainer .headerBox_TopBottom button {
-    font-size: 14px;
-    font-weight: 600;
-    padding: 8px 12px;
-    margin-right: 8px;
-    border-radius: 18px;
-    outline: none;
-    border: none;
-    color: #050505;
-    background-color: transparent;
-}
-
-.notificationContainer .headerBox_TopBottom button:hover {
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.1);
-}
-
-.notificationContainer .headerBox_TopBottom button.active {
-    color: #0064D1;
-    background-color: #EBF5FF;
-}
-
-.notificationContainer .headerBox_Bottom {
-    max-height: 580px;
-    width: -webkit-fill-available;
-    padding: 0 8px;
-    overflow-y: auto;
-}
-
-.notificationContainer .headerBox_BottomOption {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 8px;
-    padding: 12px 8px;
-}
-
-.notificationContainer .headerBox_BottomOption a {
-    display: flex;
-    align-items: flex-start;
-}
-
-.notificationContainer .headerBox_BottomOption span {
-    font-weight: 500;
-}
-
-.notificationContainer .headerBox_BottomOption:hover {
-    cursor: pointer;
-    border-radius: 6px;
-    background-color: #F0F2F5;
-}
-
-.notificationContainer .headerBox_BottomOption_Left .MuiAvatar-root {
-    width: 52px;
-    height: 52px;
-}
-
-.notificationContainer .headerBox_BottomOption_Right {
-    padding: 0 10px;
-}
-
-.notificationContainer .headerBox_BottomOption_Right p {
-    font-size: 14px;
-    font-weight: 400;
-}
-
-.notificationContainer .headerBox_BottomOption_Right h5 {
     font-size: 12px;
-    font-weight: 500;
-    color: #0866FF;
-}
-
-.notificationContainer .headerBox_BottomOption_RightBottom {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    margin: 12px 10px 0 0;
-}
-
-.notificationContainer .headerBox_BottomOption_RightBottom button {
-    padding: 8px 12px;
-    background-color: #0866FF;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 500;
-    border: none;
-    outline: none;
-    border-radius: 8px;
-}
-
-.notificationContainer .headerBox_BottomOption_RightBottom button#confbtn {
-    background-color: #0866FF;
-    color: #fff;
-}
-
-.notificationContainer .headerBox_BottomOption_RightBottom button#delbtn {
-    background-color: #E4E6EB;
-    color: #000;
-}
-
-.messageBox {
-    display: flex;
-}
-
-.messageBox #msgLengthIcon {
-    position: absolute;
-    right: 104px;
-    top: 1px;
-    width: 15px;
-    height: 15px;
+    font-weight: 600;
     padding: 4px;
     border-radius: 50%;
-    background-color: #e41e3f;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     z-index: 9;
-}
-
-.messageBox .headerBox {
-    padding: 0;
-}
-
-.messageBox .headerBox_Top {
-    width: -webkit-fill-available;
-    padding: 10px 14px 10px;
-}
-
-.messageBox .headerBox_TopTop {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 6px;
-}
-
-.messageBox .headerBox_TopTop h3 {
-    font-size: 23px;
-    font-weight: 700;
-}
-
-.messageBox .headerBox_TopTop .MuiSvgIcon-root {
-    width: 20px;
-}
-
-.messageBox .headerBox_TopMiddle {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
-}
-
-.messageBox .headerBox_TopMiddle input {
-    width: 100%;
-    font-size: 14px;
-    font-weight: 400;
-    padding: 8px 12px 8px 32px;
-    border-radius: 18px;
-    outline: none;
-    border: none;
-    color: gray;
-    background-color: #F0F2F5;
-}
-
-.messageBox .headerBox_TopMiddle .MuiSvgIcon-root {
-    position: absolute;
-    left: 22px;
-    width: 20px;
-    color: gray;
-}
-
-.messageBox .headerBox_Bottom {
-    width: -webkit-fill-available;
-}
-
-.messageBox .headerBox_Bottom .headerBox_BottomOption {
-    display: flex;
-    align-items: center;
-    width: -webkit-fill-available;
-    margin-bottom: 0;
-    padding: 8px 8px;
-}
-
-.messageBox .headerBox_Bottom .headerBox_BottomOption:last-child {
-    margin-bottom: 8px;
-}
-
-.messageBox .headerBox_BottomOption {
-    display: flex;
-    align-items: flex-start;
-}
-
-.messageBox .headerBox_Bottom .headerBox_BottomOption .MuiAvatar-root {
-    width: 52px;
-    height: 52px;
-}
-
-.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent {
-    margin-left: 12px;
-}
-
-.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent p {
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 3px;
-}
-
-.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom {
-    display: flex;
-    white-space: pre-wrap;
-}
-
-/* .messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom p {
-    white-space: pre-wrap;
-    display: flex;
-} */
-
-.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom span,
-.messageBox .headerBox_Bottom .headerBox_BottomOption .headerBox_BottomOptionContent .headerBox_BottomOptionContentBottom h5 {
-    color: #65676B;
-    font-size: 14px;
-    font-weight: 400;
-}
-
-.messageBox .headerBox_TopBottom {
-    display: flex;
-    align-items: center;
-}
-
-.messageBox .headerBox_TopBottom button {
-    font-size: 14px;
-    font-weight: 500;
-    padding: 8px 12px;
-    margin-right: 8px;
-    border-radius: 18px;
-    outline: none;
-    border: none;
-    color: #0064D1;
-    background-color: #EBF5FF;
-}
-
-.messageBox .headerBox_TopBottom button:hover {
-    cursor: pointer;
-    background-color: #F0F2F5;
-}
-
-.messageBox .headerBox_Bottom {
-    max-height: 530px;
-    padding: 0 8px;
-    overflow-y: auto;
-}
-
-.messageBox .headerBox_BottomOption {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 5px;
-    padding: 12px 8px;
-}
-
-.messageBox .headerBox_BottomOption span {
-    font-weight: 500;
-}
-
-.messageBox .headerBox_BottomOption:hover {
-    cursor: pointer;
-    border-radius: 6px;
-    background-color: #F0F2F5;
-}
-
-.messageBox .headerBox_BottomOption_Left .MuiAvatar-root {
-    width: 52px;
-    height: 52px;
-}
-
-.messageBox .headerBox_BottomOption_Right {
-    padding: 0 10px;
-}
-
-.messageBox .headerBox_BottomOption_Right p {
-    font-size: 14px;
-    font-weight: 400;
-}
-
-.messageBox .headerBox_BottomOption_Right h5 {
-    font-size: 12px;
-    font-weight: 500;
-    color: #0866FF;
-}
-
-.messageBox .headerBox_BottomOption_RightBottom {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    margin: 12px 10px 0 0;
-}
-
-.messageBox .headerBox_BottomOption_RightBottom button {
-    padding: 8px 12px;
-    background-color: #0866FF;
     color: #fff;
-    font-size: 14px;
-    font-weight: 500;
-    border: none;
-    outline: none;
-    border-radius: 8px;
-}
-
-.messageBox .headerBox_BottomOption_RightBottom button#confbtn {
-    background-color: #0866FF;
-    color: #fff;
-}
-
-.messageBox .headerBox_BottomOption_RightBottom button#delbtn {
-    background-color: #E4E6EB;
-    color: #000;
+    background-color: #e41e3f;
 }
 
 /** Header Section Transformed */
