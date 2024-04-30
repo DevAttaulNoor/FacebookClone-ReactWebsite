@@ -1,12 +1,12 @@
-import '../../CSS/UniversalComponent/MessageBox.css'
+import '../../CSS/Header/MessageBox.css'
 import React, { useEffect, useState } from 'react';
 import { Avatar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import { setChatNotiBoxVisible, setChatNotification } from '../../Redux/notificationSlice';
 import { db } from '../../Firebase/firebase';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import HomepageMessage from '../HomePage/HomepageMessage';
-import { setChatNotiBoxVisible, setChatNotification } from '../../Redux/notificationSlice';
 
 function MessageBox() {
     const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import '../../CSS/UniversalComponent/UserBox.css'
+import '../../CSS/Header/UserBox.css'
 import React from 'react';
 import { Avatar } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router-dom';

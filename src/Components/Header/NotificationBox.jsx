@@ -1,12 +1,12 @@
-import '../../CSS/UniversalComponent/NotificationBox.css'
-import React, { useEffect, useState } from 'react'
+import '../../CSS/Header/NotificationBox.css';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedPost } from '../../Redux/postSlice';
-import { db } from '../../Firebase/firebase';
 import { NavLink } from 'react-router-dom';
 import { Avatar } from '@mui/material';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { db } from '../../Firebase/firebase';
+import { setSelectedPost } from '../../Redux/postSlice';
 import { setNotiBoxVisible, setNotification } from '../../Redux/notificationSlice';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 function NotificationBox() {
     const dispatch = useDispatch();

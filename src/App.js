@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, setLoading } from './Redux/userSlice';
 import Authentication from './Components/Authentication/Authentication';
-import Header from './Components/UniversalComponent/Header';
+import HeaderOption from './Components/Header/HeaderOption';
 import Friends from './Components/UniversalComponent/Friends';
 import HomePage from './Components/HomePage/HomePage';
 import HomepageReels from './Components/HomePage/HomepageReels';
@@ -15,8 +15,6 @@ import FriendPage from './Components/FriendPage/FriendPage';
 import FriendpageAllFriends from './Components/FriendPage/FriendpageAllFriends';
 import PostPage from './Components/UniversalComponent/PostPage';
 import LoadingLine from './Components/UniversalComponent/LoadingLine';
-import MessageBox from './Components/UniversalComponent/MessageBox';
-import NotificationBox from './Components/UniversalComponent/NotificationBox';
 
 function App() {
 	const dispatch = useDispatch();
@@ -40,7 +38,7 @@ function App() {
 					<>
 						{user ? (
 							<div className="App">
-								<Header />
+								<HeaderOption />
 								<Friends />
 								<Routes>
 									<Route path="homepage/*" element={<HomePage />} />

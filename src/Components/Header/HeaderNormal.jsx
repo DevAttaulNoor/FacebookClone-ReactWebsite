@@ -1,31 +1,28 @@
-import '../../CSS/UniversalComponent/Header.css'
+import '../../CSS/Header/HeaderNormal.css'
 import fblogo from '../../Assets/Images/fblogo.png'
 import React, { useState, useRef, useEffect } from 'react';
 import { Avatar } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { logoutUser } from '../../Redux/userSlice';
 import { setChatNotiBoxVisible, setNotiBoxVisible } from '../../Redux/notificationSlice';
-import { auth, db } from '../../Firebase/firebase';
+import { db } from '../../Firebase/firebase';
 import UserBox from './UserBox';
 import MessageBox from './MessageBox';
 import NotificationBox from './NotificationBox';
-import SearchIcon from '@mui/icons-material/Search';
+import HomeIcon from '@mui/icons-material/Home';
 import AppsIcon from '@mui/icons-material/Apps';
 import ForumIcon from '@mui/icons-material/Forum';
-import CloseIcon from '@mui/icons-material/Close';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import HomeIcon from '@mui/icons-material/Home';
 import GroupsIcon from '@mui/icons-material/Groups';
-import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
-import SmartDisplayOutlinedIcon from '@mui/icons-material/SmartDisplayOutlined';
+import SearchIcon from '@mui/icons-material/Search';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
+import SmartDisplayOutlinedIcon from '@mui/icons-material/SmartDisplayOutlined';
 
-function Header() {
-    const navigate = useNavigate();
+function HeaderNormal() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
     const notification = useSelector((state) => state.data.notification.notification);
@@ -41,8 +38,6 @@ function Header() {
     const [matchingUsernames, setMatchingUsernames] = useState([]);
     const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
     const [userBoxVisible, setUserBoxVisible] = useState(false);
-    const pathsToHideHeader = ['/homepage/storyreels'];
-    const showHeader = !pathsToHideHeader.includes(useLocation().pathname);
 
     const toggleUserBox = () => {
         setUserBoxVisible(!userBoxVisible);
@@ -104,7 +99,6 @@ function Header() {
 
     useEffect(() => {
         if (searchText === '') {
-            // Reset matching usernames when search input is empty
             setMatchingUsernames([]);
             return;
         }
@@ -133,15 +127,8 @@ function Header() {
     }, [searchText]);
 
     return (
-        <div className={`header ${showHeader ? '' : 'transformed'}`}>
-            <div className='headerTransformedLeft'>
-                <NavLink to={'/homepage'}>
-                    <CloseIcon className='closeIcon' />
-                    <img src={fblogo} alt="" />
-                </NavLink>
-            </div>
-
-            <div className='headerLeft'>
+        <div className='headerNormal'>
+            <div className='headerNormalLeft'>
                 <NavLink to={'/homepage'}>
                     <img src={fblogo} alt="" />
                 </NavLink>
@@ -182,7 +169,7 @@ function Header() {
                 </div>
             </div>
 
-            <div className="headerMiddle">
+            <div className="headerNormalMiddle">
                 <NavLink to="/homepage" activeclassname="active">
                     {({ isActive }) => (
                         isActive ? <HomeIcon /> : <HomeOutlinedIcon />
@@ -208,25 +195,25 @@ function Header() {
                 </NavLink>
             </div>
 
-            <div className="headerRight">
-                <div className='headerRightOption'>
-                    <AppsIcon className='headerRightOptionSvg' />
+            <div className="headerNormalRight">
+                <div className='headerNormalRightOption'>
+                    <AppsIcon className='headerNormalRightOptionSvg' />
                 </div>
 
-                <div className={`headerRightOption ${chatNotiBoxVisible ? 'clicked' : ''}`}>
-                    <ForumIcon className='headerRightOptionSvg' onClick={toggleMessageBox} ref={messageBoxRef} />
+                <div className={`headerNormalRightOption ${chatNotiBoxVisible ? 'clicked' : ''}`}>
+                    <ForumIcon className='headerNormalRightOptionSvg' onClick={toggleMessageBox} ref={messageBoxRef} />
                     {chatNotification.length > 0 && <p id='msgLengthIcon'>{chatNotification.length}</p>}
                     {chatNotiBoxVisible && <MessageBox />}
                 </div>
 
-                <div className={`headerRightOption ${notiBoxVisible ? 'clicked' : ''}`}>
-                    <NotificationsIcon className='headerRightOptionSvg' onClick={toggleNotificationBox} ref={notificationBoxRef} />
+                <div className={`headerNormalRightOption ${notiBoxVisible ? 'clicked' : ''}`}>
+                    <NotificationsIcon className='headerNormalRightOptionSvg' onClick={toggleNotificationBox} ref={notificationBoxRef} />
                     {allNotification.length > 0 && <p id='notiLengthIcon'>{allNotification.length}</p>}
                     {notiBoxVisible && <NotificationBox />}
                 </div>
 
-                <div className={`headerRightOption ${userBoxVisible ? 'clicked' : ''}`}>
-                    <Avatar src={user.photoURL} className='headerRightOptionImg' onClick={toggleUserBox} ref={userBoxRef} />
+                <div className={`headerNormalRightOption ${userBoxVisible ? 'clicked' : ''}`}>
+                    <Avatar src={user.photoURL} className='headerNormalRightOptionImg' onClick={toggleUserBox} ref={userBoxRef} />
                     {userBoxVisible && <UserBox />}
                 </div>
             </div>
@@ -234,4 +221,4 @@ function Header() {
     );
 }
 
-export default Header
+export default HeaderNormal
