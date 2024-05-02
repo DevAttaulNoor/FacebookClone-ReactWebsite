@@ -5,6 +5,7 @@ import { postSlice } from "./postSlice";
 import { friendSlice } from "./friendSlice";
 import { messageSlice } from "./messageSlice";
 import { notificationSlice } from "./notificationSlice";
+import { searchSlice } from "./searchSlice";
 
 export const rootReducer = combineReducers({
     authForm: authSlice.reducer,
@@ -13,4 +14,5 @@ export const rootReducer = combineReducers({
     friends: friendSlice.reducer,
     message: messageSlice.reducer,
     notification: notificationSlice.reducer,
+    search: searchSlice.reducer,
 })

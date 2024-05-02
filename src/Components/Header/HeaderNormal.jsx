@@ -4,9 +4,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Avatar } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { setSearchBoxVisible } from '../../Redux/searchSlice';
 import { setChatNotiBoxVisible, setNotiBoxVisible } from '../../Redux/notificationSlice';
-import { db } from '../../Firebase/firebase';
 import UserBox from './UserBox';
+import SearchBox from './SearchBox';
 import MessageBox from './MessageBox';
 import NotificationBox from './NotificationBox';
 import HomeIcon from '@mui/icons-material/Home';
@@ -20,7 +21,6 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import SmartDisplayOutlinedIcon from '@mui/icons-material/SmartDisplayOutlined';
 
 function HeaderNormal() {
@@ -31,14 +31,12 @@ function HeaderNormal() {
     const notiBoxVisible = useSelector((state) => state.data.notification.notiBoxVisible);
     const chatNotification = useSelector((state) => state.data.notification.chatNotification);
     const chatNotiBoxVisible = useSelector((state) => state.data.notification.chatNotiBoxVisible);
+    const searchBoxVisible = useSelector((state) => state.data.search.searchBoxVisible);
+    const [userBoxVisible, setUserBoxVisible] = useState(false);
     const userBoxRef = useRef(null);
+    const searchBoxRef = useRef(null);
     const messageBoxRef = useRef(null);
     const notificationBoxRef = useRef(null);
-    const [searchText, setSearchText] = useState('');
-    const [selectedUser, setSelectedUser] = useState(null);
-    const [matchingUsernames, setMatchingUsernames] = useState([]);
-    const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
-    const [userBoxVisible, setUserBoxVisible] = useState(false);
 
     const toggleUserBox = () => {
         setUserBoxVisible(!userBoxVisible);
@@ -51,16 +49,6 @@ function HeaderNormal() {
     const toggleMessageBox = () => {
         dispatch(setChatNotiBoxVisible(!chatNotiBoxVisible));
     };
-
-    const handleSearchBoxVisibility = (userId) => {
-        setSearchText('');
-        setSelectedUser(userId);
-        setIsSearchBoxVisible(false);
-    }
-
-    // const handleSearchInput = () => {
-    //     setIsSearchBoxVisible(!isSearchBoxVisible);
-    // };
 
     useEffect(() => {
         const handleOutsideClick = (e) => {
@@ -75,6 +63,10 @@ function HeaderNormal() {
             if (messageBoxRef.current && !messageBoxRef.current.contains(e.target)) {
                 dispatch(setChatNotiBoxVisible(false));
             }
+
+            if (searchBoxRef.current && !searchBoxRef.current.contains(e.target)) {
+                dispatch(setSearchBoxVisible(false));
+            }
         };
 
         window.addEventListener("click", handleOutsideClick);
@@ -83,98 +75,22 @@ function HeaderNormal() {
         return () => {
             window.removeEventListener("click", handleOutsideClick);
         };
-    }, [userBoxRef, notificationBoxRef, messageBoxRef]);
-
-    // useEffect(() => {
-    //     const handleOutsideClick = (e) => {
-    //         if (
-    //             isSearchBoxVisible &&
-    //             !document.querySelector(".searchContainer").contains(e.target)
-    //         ) {
-    //             setSearchText('');
-    //             setIsSearchBoxVisible(false);
-    //         }
-    //     };
-
-    //     window.addEventListener("click", handleOutsideClick);
-
-    //     // Cleanup the event listener when the component unmounts
-    //     return () => {
-    //         window.removeEventListener("click", handleOutsideClick);
-    //     };
-    // }, [isSearchBoxVisible]);
-
-    useEffect(() => {
-        if (searchText === '') {
-            setMatchingUsernames([]);
-            return;
-        }
-
-        db.collection("Users")
-            .get()
-            .then((querySnapshot) => {
-                const matchingUsernames = querySnapshot.docs
-                    .map((doc) => {
-                        const data = doc.data();
-                        return {
-                            id: doc.id,
-                            Uid: data.Uid,
-                            username: data.username,
-                            photoURL: data.photoURL,
-                        };
-                    })
-                    .filter((user) =>
-                        user.username.toLowerCase().includes(searchText.toLowerCase())
-                    );
-                setMatchingUsernames(matchingUsernames);
-            })
-            .catch((error) => {
-                console.error('Error getting documents:', error);
-            });
-    }, [searchText]);
+    }, [userBoxRef, notificationBoxRef, messageBoxRef, searchBoxRef, dispatch]);
 
     return (
         <div className='headerNormal'>
             <div className='headerNormalLeft'>
-                {isSearchBoxVisible ? (
-                    <>
-                        <div className="searchBox">
-                            <div className="searchBoxTop">
-                                <div className='svgBox' onClick={() => setIsSearchBoxVisible(false)}>
-                                    <KeyboardBackspaceIcon />
-                                </div>
-
-                                <input
-                                    type="text"
-                                    placeholder='Search Facebook'
-                                    value={searchText}
-                                    onChange={(e) => setSearchText(e.target.value)}
-                                />
-                            </div>
-
-                            <div className="searchBoxBottom">
-                                {matchingUsernames.length > 0 ? (
-                                    matchingUsernames.map((user) => (
-                                        <div className='searchBoxBottomOption' key={user.id} onClick={() => handleSearchBoxVisibility(user.id)}>
-                                            <NavLink to={`/frienduserpage/${user.id}`}>
-                                                <Avatar src={user.photoURL} />
-                                                <p>{user.username}</p>
-                                            </NavLink>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <p id='noMatch'>No match found</p>
-                                )}
-                            </div>
-                        </div>
-                    </>
+                {searchBoxVisible ? (
+                    <div ref={searchBoxRef}>
+                        <SearchBox />
+                    </div>
                 ) : (
                     <>
                         <NavLink to={'/homepage'}>
                             <img src={fblogo} alt="" />
                         </NavLink>
 
-                        <div className='searchContainer' onClick={() => setIsSearchBoxVisible(true)}>
+                        <div className='searchContainer' onClick={(e) => { e.stopPropagation(); dispatch(setSearchBoxVisible(true))}}>
                             <SearchIcon />
                             <input
                                 type="text"
