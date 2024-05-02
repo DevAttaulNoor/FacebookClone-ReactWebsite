@@ -76,6 +76,7 @@ function HomepageMessage({ closeBox, handleMessageBox, closeFriendBox, handleSel
         } else {
             // If the chat document doesn't exist, create it with the new message
             await chatDocRef.set({
+                chatId: chatId,
                 senderUid: user.uid,
                 recipientUid: recipientUserId,
                 messages: [newMessage]

@@ -2,30 +2,35 @@ import '../../CSS/Header/MessageBox.css'
 import React, { useEffect, useState } from 'react';
 import { Avatar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { setChatNotiBoxVisible, setChatNotification } from '../../Redux/notificationSlice';
+import { setChatNotification } from '../../Redux/notificationSlice';
 import { db } from '../../Firebase/firebase';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import HomepageMessage from '../HomePage/HomepageMessage';
+import { setMsgBoxVisibility } from '../../Redux/messageSlice';
 
 function MessageBox() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
     const friendsData = useSelector((state) => state.data.friends.friendsData);
+    // const msgBoxVisibility = useSelector((state) => state.data.message.msgBoxVisibility);
     const chatNotification = useSelector((state) => state.data.notification.chatNotification);
+    
     const [chats, setChats] = useState([]);
     const [selectedFriend, setSelectedFriend] = useState();
-    const [friendMessageBox, setFriendMessageBox] = useState(false);
+    // const [friendMessageBox, setFriendMessageBox] = useState(false);
     const [activeButton, setActiveButton] = useState('Inbox');
 
     const openFriendMessageBox = (friend) => {
         setSelectedFriend(friend);
-        setFriendMessageBox(true);
+        dispatch(setMsgBoxVisibility(true));
+        // setFriendMessageBox(true);
     };
 
     const closeFriendMessageBox = () => {
         setSelectedFriend(null);
-        setFriendMessageBox(false);
+        dispatch(setMsgBoxVisibility(false));
+        // setFriendMessageBox(false);
     }
 
     const handleCategory = (category) => {
@@ -101,8 +106,8 @@ function MessageBox() {
             .map(chat => (chat.recipientUid === user.uid || chat.senderUid === user.uid) ? chat : null)
             .filter(Boolean);
 
-        dispatch(setChatNotification(relevantChats))
-    }, [chats, user.uid]);
+        dispatch(setChatNotification(relevantChats));
+    }, [chats, user.uid, dispatch]);
 
     return (
         <div className="messageBox" onClick={(e) => e.stopPropagation()}>
@@ -126,7 +131,7 @@ function MessageBox() {
             <div className='messageBoxBottom'>
                 {chatNotification.length > 0 ? (
                     <>
-                        {chats.map((chat, index) => {
+                        {chats.map((chat) => {
                             const isUserSender = chat.senderUid === user.uid;
                             const isUserRecipient = chat.recipientUid === user.uid;
                             const friendId = isUserSender ? chat.recipientUid : chat.senderUid;
@@ -139,7 +144,7 @@ function MessageBox() {
                                 return (
                                     <>
                                         {activeButton === 'Inbox' ? (
-                                            <div className='messageBoxBottomOption' key={index} onClick={() => openFriendMessageBox(friend[0])}>
+                                            <div className='messageBoxBottomOption' key={chat.chatId} onClick={() => openFriendMessageBox(friend[0])}>
                                                 <Avatar src={isSender ? lastMessage.senderPhotoUrl : lastMessage.recipientPhotoUrl} />
                                                 <div className='messageBoxBottomOptionContent'>
                                                     <p>{isSender ? lastMessage.senderName : lastMessage.recipientName}</p>
@@ -156,6 +161,7 @@ function MessageBox() {
                             }
                             return null;
                         })}
+                        
                         {activeButton === 'Communities' && (
                             <p id='noMsg'>No communities message found.</p>
                         )}

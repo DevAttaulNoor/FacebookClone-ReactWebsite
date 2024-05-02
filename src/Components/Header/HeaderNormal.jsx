@@ -20,6 +20,7 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import SmartDisplayOutlinedIcon from '@mui/icons-material/SmartDisplayOutlined';
 
 function HeaderNormal() {
@@ -51,9 +52,15 @@ function HeaderNormal() {
         dispatch(setChatNotiBoxVisible(!chatNotiBoxVisible));
     };
 
-    const handleSearchInput = () => {
-        setIsSearchBoxVisible(!isSearchBoxVisible);
-    };
+    const handleSearchBoxVisibility = (userId) => {
+        setSearchText('');
+        setSelectedUser(userId);
+        setIsSearchBoxVisible(false);
+    }
+
+    // const handleSearchInput = () => {
+    //     setIsSearchBoxVisible(!isSearchBoxVisible);
+    // };
 
     useEffect(() => {
         const handleOutsideClick = (e) => {
@@ -78,24 +85,24 @@ function HeaderNormal() {
         };
     }, [userBoxRef, notificationBoxRef, messageBoxRef]);
 
-    useEffect(() => {
-        const handleOutsideClick = (e) => {
-            if (
-                isSearchBoxVisible &&
-                !document.querySelector(".searchContainer").contains(e.target)
-            ) {
-                setIsSearchBoxVisible(false);
-                setSearchText('');
-            }
-        };
+    // useEffect(() => {
+    //     const handleOutsideClick = (e) => {
+    //         if (
+    //             isSearchBoxVisible &&
+    //             !document.querySelector(".searchContainer").contains(e.target)
+    //         ) {
+    //             setSearchText('');
+    //             setIsSearchBoxVisible(false);
+    //         }
+    //     };
 
-        window.addEventListener("click", handleOutsideClick);
+    //     window.addEventListener("click", handleOutsideClick);
 
-        // Cleanup the event listener when the component unmounts
-        return () => {
-            window.removeEventListener("click", handleOutsideClick);
-        };
-    }, [isSearchBoxVisible]);
+    //     // Cleanup the event listener when the component unmounts
+    //     return () => {
+    //         window.removeEventListener("click", handleOutsideClick);
+    //     };
+    // }, [isSearchBoxVisible]);
 
     useEffect(() => {
         if (searchText === '') {
@@ -129,44 +136,53 @@ function HeaderNormal() {
     return (
         <div className='headerNormal'>
             <div className='headerNormalLeft'>
-                <NavLink to={'/homepage'}>
-                    <img src={fblogo} alt="" />
-                </NavLink>
+                {isSearchBoxVisible ? (
+                    <>
+                        <div className="searchBox">
+                            <div className="searchBoxTop">
+                                <div className='svgBox' onClick={() => setIsSearchBoxVisible(false)}>
+                                    <KeyboardBackspaceIcon />
+                                </div>
 
-                <div className='searchContainer'>
-                    <SearchIcon />
-                    <input
-                        type="text"
-                        placeholder='Search Facebook'
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
-                        onClick={handleSearchInput}
-                    />
-                    {isSearchBoxVisible && (
-                        <div className="searchContainerDropbox">
-                            {matchingUsernames.length === 0 ? (
-                                <p>No matches</p>
-                            ) : (
-                                matchingUsernames.map((user) => (
-                                    <div
-                                        key={user.id}
-                                        className={`searchContainerDropboxResults ${selectedUser === user.id ? "selected" : ""}`}
-                                        onClick={() => {
-                                            setSelectedUser(user.id);
-                                            setIsSearchBoxVisible(false);
-                                            setSearchText('');
-                                        }}
-                                    >
-                                        <NavLink to={`/frienduserpage/${user.id}`}>
-                                            <Avatar src={user.photoURL} />
-                                            <p>{user.username}</p>
-                                        </NavLink>
-                                    </div>
-                                ))
-                            )}
+                                <input
+                                    type="text"
+                                    placeholder='Search Facebook'
+                                    value={searchText}
+                                    onChange={(e) => setSearchText(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="searchBoxBottom">
+                                {matchingUsernames.length > 0 ? (
+                                    matchingUsernames.map((user) => (
+                                        <div className='searchBoxBottomOption' key={user.id} onClick={() => handleSearchBoxVisibility(user.id)}>
+                                            <NavLink to={`/frienduserpage/${user.id}`}>
+                                                <Avatar src={user.photoURL} />
+                                                <p>{user.username}</p>
+                                            </NavLink>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p id='noMatch'>No match found</p>
+                                )}
+                            </div>
                         </div>
-                    )}
-                </div>
+                    </>
+                ) : (
+                    <>
+                        <NavLink to={'/homepage'}>
+                            <img src={fblogo} alt="" />
+                        </NavLink>
+
+                        <div className='searchContainer' onClick={() => setIsSearchBoxVisible(true)}>
+                            <SearchIcon />
+                            <input
+                                type="text"
+                                placeholder='Search Facebook'
+                            />
+                        </div>
+                    </>
+                )}
             </div>
 
             <div className="headerNormalMiddle">

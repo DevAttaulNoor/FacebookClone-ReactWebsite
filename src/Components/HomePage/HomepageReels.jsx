@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { db, storage } from '../../Firebase/firebase';
 import firebase from "firebase/compat/app";
-import TitleIcon from '@mui/icons-material/Title';
+// import TitleIcon from '@mui/icons-material/Title';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 function HomepageReels() {
@@ -255,19 +255,23 @@ function HomepageReels() {
                 {showCards && (
                     <div className='homepageReelsMainCards'>
                         <div className="cardContainer photoCard" onClick={handleAddPhotoClick}>
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j" alt="" />
+                            <div className='icon'>
+                                <i></i>
+                            </div>
                             <p>Create a Photo Story</p>
                             <input
                                 type="file"
                                 accept="image/*"
                                 onChange={handleImageChange}
-                                className="hidden-input"
+                                className="hiddenInput"
                                 ref={inputRef}
                             />
                         </div>
 
                         <div className="cardContainer textCard" onClick={handleAddTextClick}>
-                            <TitleIcon />
+                            <div className='icon'>
+                                <i></i>
+                            </div>
                             <p>Create a Text Story</p>
                         </div>
                     </div>

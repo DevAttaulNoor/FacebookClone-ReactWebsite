@@ -271,29 +271,40 @@
     justify-content: center;
     border-radius: 10px;
     cursor: pointer;
-    background: radial-gradient(circle, #003cff, #21e5ff);
+    background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/Zd_TxH-pOMv.png?_nc_eui2=AeFCXpL4BPrnTmp7wz4-oOnM3bslaZtoocHduyVpm2ihwSxn_qkK8uAyp2i1oSPCVIaZYEGdpMGnpeqI-K_KeaA4");
 }
 
-.cardContainer .hidden-input {
-    display: none;
+.cardContainer.photoCard{
+    margin-right: 15px;
+    background-position: 0px 0px;
 }
 
-.cardContainer img {
-    padding: 8px;
-    margin-bottom: 5px;
+.cardContainer.textCard{
+    background-position: 0px -331px;
+}
+
+.cardContainer .icon {
+    padding: 12px;
+    margin-bottom: 8px;
     border-radius: 50%;
     box-shadow: 0px 0px 3px #ccc;
     background-color: #fff;
 }
 
-.cardContainer .MuiSvgIcon-root {
-    width: 40px;
-    height: 40px;
-    padding: 6px;
-    margin-bottom: 5px;
-    border-radius: 50%;
-    box-shadow: 0px 0px 3px #ccc;
-    background-color: #fff;
+.cardContainer .icon i {
+    width: 20px;
+    height: 20px;
+    display: flex;
+}
+
+.cardContainer.photoCard .icon i {
+    background-position: 0px -200px;
+    background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/yw/r/mf6ewFaBKyD.png?_nc_eui2=AeEVTDEQXzlHSj7vYQZVDVRPS55LcS2SBKZLnktxLZIEpldslzyz59JOW2TyADvjDnjEbuppSrKHPzktzYm0Fp5z");
+}
+
+.cardContainer.textCard .icon i {
+    background-position: 0px -83px;
+    background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/yY/r/EBvutOuy0EA.png?_nc_eui2=AeEve179pYD1LdaHKx51ib3cxXllPpn4tH_FeWU-mfi0f5reS-yJmnNi25IrEcoqmMEOp6LCFwMI17eRIXQW-2z6");
 }
 
 .cardContainer p {
@@ -302,8 +313,8 @@
     color: #fff;
 }
 
-.cardContainer.photoCard {
-    margin-right: 15px;
+.cardContainer .hiddenInput {
+    display: none;
 }
 
 /* HomePage Reels Main Card Content Section */
