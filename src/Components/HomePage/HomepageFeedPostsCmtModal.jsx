@@ -10,7 +10,9 @@ function HomepageFeedPostsCmtModal({ id, userid, closeModal }) {
     const user = useSelector((state) => state.data.user.user);
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
-    const commentsContainerRef = useRef(null)
+    const commentsContainerRef = useRef(null);
+
+    console.log(comments.uid)
 
     const postComment = async () => {
         if (comment.trim() === '') {
@@ -145,7 +147,7 @@ function HomepageFeedPostsCmtModal({ id, userid, closeModal }) {
                                 <p>{comment.text}</p>
                             </div>
                             <div className='commentBottom'>
-                                <button onClick={() => deleteComment(comment.id)}>Delete</button>
+                                {comment.uid === user.uid && <button onClick={() => deleteComment(comment.id)}>Delete</button>}
                                 <p>{timeAgowithInitials(comment.timestamp)}</p>
                             </div>
                         </div>

@@ -223,7 +223,7 @@ function PostPage() {
                 });
                 setComments(fetchedComments);
             });
-            
+
             return () => {
                 commentsRef();
             };
@@ -378,7 +378,7 @@ function PostPage() {
                                         <p>{comment.text}</p>
                                     </div>
                                     <div className='commentBottom'>
-                                        <button onClick={() => deleteComment(comment.id)}>Delete</button>
+                                        {comment.uid === user.uid && <button onClick={() => deleteComment(comment.id)}>Delete</button>}
                                         <p>{timeAgowithInitials(comment.timestamp)}</p>
                                     </div>
                                 </div>

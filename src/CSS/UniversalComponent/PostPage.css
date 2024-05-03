@@ -30,40 +30,6 @@
     margin-left: 10px;
 }
 
-/* .postPageInner_TopLeftMain{
-    margin-left: 10px;
-}
-
-.postPageInner_TopLeftMain h4 {
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.postPageInner_TopLeftMain p {
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    color: #65676B;
-}
-
-.postPageInner_TopLeftMain a{
-    color: initial;
-    text-decoration: none;
-}
-
-.postPageInner_TopLeftMain p svg {
-    font-size: 12px;
-    margin-left: 5px;
-    margin-top: 3px;
-}
-
-.postPageInner_TopLeftMain h4:hover,
-.postPageInner_TopLeftMain p:hover {
-    cursor: pointer;
-    text-decoration: underline;
-    text-decoration-color: inherit;
-} */
-
 .postPageInner_TopRight{
     display: flex;
     align-items: center;
@@ -199,12 +165,13 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    margin: 3px 0 0 22px;
+    margin: 2px 0 0 22px;
 }
 
 .postPageInner_BottomTop .commentInner .commentBottom button {
     font-size: 12px;
     font-weight: 500;
+    margin-right: 15px;
     outline: none;
     border: none;
     background-color: initial;
@@ -214,7 +181,6 @@
 .postPageInner_BottomTop .commentInner .commentBottom p {
     font-weight: 500;
     font-size: 12px;
-    margin-left: 15px;
     color: #65676B;
 }
 
