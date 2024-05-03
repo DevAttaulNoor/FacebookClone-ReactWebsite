@@ -291,6 +291,11 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
             });
     }
 
+    const handleFriendSelection = (friendUid) => {
+        sessionStorage.setItem('selectedFriend', JSON.stringify({friendUid: friendUid}));
+        dispatch(setSelectedFriend(friendUid));
+    }
+
     //* useEffect to get all the savedposts from the firestore
     useEffect(() => {
         if (user && user.uid && id) {
@@ -450,7 +455,7 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
                                             <h4>{username}</h4>
                                         </NavLink>
                                     ) : (
-                                        <NavLink to={`/profilepage/${userid}/post`} onClick={() => dispatch(setSelectedFriend(userid))}>
+                                        <NavLink to={`/profilepage/${userid}/post`} onClick={() => handleFriendSelection(userid)}>
                                             <h4>{username}</h4>
                                         </NavLink>
                                     )}

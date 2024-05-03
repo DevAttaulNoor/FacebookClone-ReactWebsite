@@ -22,6 +22,7 @@ function UserBox() {
         auth.signOut()
             .then(() => {
                 sessionStorage.removeItem('userData');
+                sessionStorage.removeItem('selectedFriend');
                 dispatch(logoutUser());
                 navigate('/');
             })

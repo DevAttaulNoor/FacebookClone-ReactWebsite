@@ -210,7 +210,6 @@ function PostPage() {
             }
         });
         return () => {
-            // Unsubscribe from the snapshot listener when the component unmounts
             unsubscribe();
         };
     }, [selectedPost]);
@@ -224,13 +223,12 @@ function PostPage() {
                 });
                 setComments(fetchedComments);
             });
-            // Return the unsubscribe function to clean up the listener
+            
             return () => {
-                commentsRef(); // Unsubscribe the listener
+                commentsRef();
             };
         };
 
-        // Call the function to set up the listener
         getRealtimeComments();
     }, [selectedPost]);
 
@@ -390,10 +388,6 @@ function PostPage() {
                         {!showAllComments && comments.length > 5 && (
                             <button id="showAllBtn" onClick={handleShowComments}>View {comments.length - 5} more comments</button>
                         )}
-
-                        {/* {showAllComments && comments.length > 5 && (
-                            <button onClick={handleHideComments}>Show less</button>
-                        )} */}
                     </div>
 
                     <div className='postPageInner_BottomBottom'>

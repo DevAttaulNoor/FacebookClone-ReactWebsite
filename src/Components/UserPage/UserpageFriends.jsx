@@ -9,6 +9,11 @@ function UserpageFriends() {
     const friends = useSelector((state) => state.data.friends.friends);
     const friendsData = useSelector((state) => state.data.friends.friendsData);
 
+    const handleFriendSelection = (friendUid) => {
+        sessionStorage.setItem('selectedFriend', JSON.stringify({friendUid: friendUid}));
+        dispatch(setSelectedFriend(friendUid));
+    }
+
     return (
         <>
             {friends.length > 0 && (
@@ -23,7 +28,7 @@ function UserpageFriends() {
                     <div className="userpageFriendsBottom">
                         <div className="userpageFriendsBottomContainer">
                             {friendsData.map((friend, index) => (
-                                <NavLink to={`/profilepage/${friend.friendUid}/post`} onClick={() => dispatch(setSelectedFriend(friend.friendUid))} key={index}>
+                                <NavLink to={`/profilepage/${friend.friendUid}/post`} onClick={() => handleFriendSelection(friend.friendUid)} key={index}>
                                     <div className="userpageFriendsBottomContainerOptions">
                                         <img src={friend.photoURL} alt="" />
                                         <p>{friend.username}</p>

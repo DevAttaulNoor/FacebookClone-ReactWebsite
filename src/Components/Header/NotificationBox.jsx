@@ -198,7 +198,7 @@ function NotificationBox() {
 
                                                     {notification.status === 'commented' && (
                                                         <div className='notificationBoxBottomOption' key={index}>
-                                                            <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} onClick={() => handleNotificationClicked(notification.commentid, "Comments")}>
+                                                            <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} onClick={() => handleNotificationClicked(notification.postid, "Comments")}>
                                                                 <div className='notificationBoxBottomOption_Left'>
                                                                     <Avatar src={notification.userphotoUrl} />
                                                                 </div>

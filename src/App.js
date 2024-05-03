@@ -15,6 +15,7 @@ import FriendPage from './Components/FriendPage/FriendPage';
 import FriendpageAllFriends from './Components/FriendPage/FriendpageAllFriends';
 import PostPage from './Components/UniversalComponent/PostPage';
 import LoadingLine from './Components/UniversalComponent/LoadingLine';
+import { setSelectedFriend } from './Redux/friendSlice';
 
 function App() {
 	const dispatch = useDispatch();
@@ -23,8 +24,12 @@ function App() {
 
 	useEffect(() => {
 		const userData = JSON.parse(sessionStorage.getItem('userData'));
+		const selectedFriend = JSON.parse(sessionStorage.getItem('selectedFriend'));
 		if (userData) {
 			dispatch(loginUser(userData));
+		}
+		if (selectedFriend) {
+			dispatch(setSelectedFriend(selectedFriend.friendUid));
 		}
 		dispatch(setLoading(false));
 	}, [dispatch]);

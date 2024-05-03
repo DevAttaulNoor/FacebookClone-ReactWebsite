@@ -9,23 +9,6 @@ import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
 function VideosPage() {
     const [posts, setPosts] = useState([]);
 
-    useEffect(() => {
-        const unsubscribe = db.collection("Posts")
-            .orderBy("timestamp", "desc")
-            .onSnapshot(snapshot => {
-                const filteredPosts = snapshot.docs
-                    .filter(doc => !doc.data().dob) // Filter out posts with a "dob" attribute
-                    .filter(doc => (doc.data().mediaType === 'video')) // Filter out posts with a "dob" attribute
-                    .map(doc => ({
-                        id: doc.id,
-                        data: doc.data()
-                    }));
-
-                setPosts(filteredPosts);
-            });
-        return () => unsubscribe();
-    }, []);
-
     const timeAgo = (timestamp) => {
         if (!timestamp || !timestamp.toDate) {
             return "0 second ago"
@@ -61,6 +44,23 @@ function VideosPage() {
         return `${granularity} ${unit}${granularity > 1 ? 's' : ''} ago`;
     };
 
+    useEffect(() => {
+        const unsubscribe = db.collection("Posts")
+            .orderBy("timestamp", "desc")
+            .onSnapshot(snapshot => {
+                const filteredPosts = snapshot.docs
+                    .filter(doc => !doc.data().dob) // Filter out posts with a "dob" attribute
+                    .filter(doc => (doc.data().mediaType === 'video')) // Filter out posts with a "dob" attribute
+                    .map(doc => ({
+                        id: doc.id,
+                        data: doc.data()
+                    }));
+
+                setPosts(filteredPosts);
+            });
+        return () => unsubscribe();
+    }, []);
+
     return (
         <div className='videospage'>
             <div className='videosageLeftbar'>
@@ -87,12 +87,13 @@ function VideosPage() {
                     return (
                         <HomepageFeedPosts
                             id={post.id}
+                            userid={post.data.uid}
+                            username={post.data.username}
                             photoURL={post.data.photoURL}
+                            message={post.data.message}
                             media={post.data.media}
                             mediaType={post.data.mediaType}
-                            username={post.data.username}
                             timestamp={formattedDate}
-                            message={post.data.message}
                             key={post.id}
                         />
                     );

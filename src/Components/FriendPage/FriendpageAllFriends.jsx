@@ -1,10 +1,10 @@
 import '../../CSS/FriendPage/FriendpageAllFriends.css'
 import React, { useState, useRef, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, Route, Routes } from 'react-router-dom';
 import { Avatar } from '@mui/material';
-import { db } from '../../Firebase/firebase';
+import { NavLink, Route, Routes } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeFriend, setSelectedFriend } from '../../Redux/friendSlice';
+import { db } from '../../Firebase/firebase';
 import ProfilePage from '../ProfilePage/ProfilePage'
 import SearchIcon from '@mui/icons-material/Search';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -15,8 +15,20 @@ function FriendpageAllFriends() {
     const user = useSelector((state) => state.data.user.user);
     const friends = useSelector((state) => state.data.friends.friends);
     const friendsData = useSelector((state) => state.data.friends.friendsData);
-    const [dialogVisibility, setDialogVisibility] = useState({});
-    const dialogBoxRefs = useRef({});
+    const [settingBoxVisibility, setSettingBoxVisibility] = useState({});
+    const settingBoxRef = useRef({});
+
+    const handleFriendSelection = (friendUid) => {
+        sessionStorage.setItem('selectedFriend', JSON.stringify({ friendUid: friendUid }));
+        dispatch(setSelectedFriend(friendUid));
+    }
+
+    const toggleSettingBox = (friendUid) => {
+        setSettingBoxVisibility((prevVisibility) => ({
+            ...prevVisibility,
+            [friendUid]: !prevVisibility[friendUid],
+        }));
+    };
 
     const handleUnfriend = async (uid, friendUid) => {
         try {
@@ -82,29 +94,22 @@ function FriendpageAllFriends() {
             friendFriendRequestQueryReceiver.forEach(async (doc) => {
                 await friendRef.collection('friendRequests').doc(doc.id).delete();
             });
-            
+
             dispatch(removeFriend(friendUid))
         }
-        
+
         catch (error) {
             console.error('Error unfriending user:', error);
         }
     }
 
-    const toggleDialog = (friendUid) => {
-        setDialogVisibility((prevVisibility) => ({
-            ...prevVisibility,
-            [friendUid]: !prevVisibility[friendUid],
-        }));
-    };
-    
     useEffect(() => {
         const handleOutsideClick = (e, friendUid) => {
             if (
-                dialogBoxRefs.current[friendUid] &&
-                !dialogBoxRefs.current[friendUid].contains(e.target)
+                settingBoxRef.current[friendUid] &&
+                !settingBoxRef.current[friendUid].contains(e.target)
             ) {
-                setDialogVisibility((prevVisibility) => ({
+                setSettingBoxVisibility((prevVisibility) => ({
                     ...prevVisibility,
                     [friendUid]: false,
                 }));
@@ -126,50 +131,45 @@ function FriendpageAllFriends() {
             }
         };
     }, [friends]);
-   
+
     return (
         <div className='friendpageAllFriends'>
             <div className='friendpageAllFriendsLeftbar'>
                 <div className="friendpageAllFriendsLeftbarTop">
-                    <div className='friendpageAllFriendsLeftbarTop_Top'>
-                        <NavLink to="/friendpage/">
-                            <KeyboardBackspaceIcon />
-                        </NavLink>
-                        <div className='texts'>
-                            <p id='mainText'>Friends</p>
-                            <p id='sideText'>All Friends</p>
-                        </div>
-                    </div>
+                    <NavLink to="/friendpage/">
+                        <KeyboardBackspaceIcon />
+                    </NavLink>
 
-                    <div className="friendpageAllFriendsLeftbarTop_Bottom">
-                        <div className='searchInp'>
-                            <SearchIcon />
-                            <input type="text" placeholder='Search Friends' />
-                        </div>
+                    <div className='heading'>
+                        <p id='mainText'>Friends</p>
+                        <p id='sideText'>All Friends</p>
                     </div>
                 </div>
 
-                <hr />
+                <div className="friendpageAllFriendsLeftbarMiddle searchContainer">
+                    <SearchIcon />
+                    <input type="text" placeholder='Search Friends' />
+                </div>
 
                 <div className="friendpageAllFriendsLeftbarBottom">
                     <p id='friendsCount'>{friendsData.length} friend(s)</p>
                     {friendsData.map((friend) => (
                         <div className='friendsList' key={friend.friendUid}>
-                            <div className='friendsListInfo'>
-                                <NavLink to={`/friendpage/allFriends/profilepage/${friend.friendUid}/post`} onClick={() => dispatch(setSelectedFriend(friend.friendUid))}>
+                            <div className='friendsListLeft'>
+                                <NavLink to={`/friendpage/allFriends/profilepage/${friend.friendUid}/post`} onClick={() => handleFriendSelection(friend.friendUid)}>
                                     <Avatar src={friend.photoURL} />
-                                    <p id="friendName">{friend.username}</p>
+                                    <p>{friend.username}</p>
                                 </NavLink>
                             </div>
 
-                            <div className={`unfriend ${dialogVisibility[friend.friendUid] ? 'clicked' : ''}`}>
+                            <div className={`friendsListRight ${settingBoxVisibility[friend.friendUid] ? 'clicked' : ''}`}>
                                 <MoreHorizIcon
-                                    onClick={() => toggleDialog(friend.friendUid)}
-                                    ref={(ref) => (dialogBoxRefs.current[friend.friendUid] = ref)}
+                                    onClick={() => toggleSettingBox(friend.friendUid)}
+                                    ref={(ref) => (settingBoxRef.current[friend.friendUid] = ref)}
                                 />
 
-                                {dialogVisibility[friend.friendUid] && (
-                                    <div className="dialogBox">
+                                {settingBoxVisibility[friend.friendUid] && (
+                                    <div className="settingBox">
                                         <button onClick={() => handleUnfriend(user.uid, friend.friendUid)}>Unfriend</button>
                                     </div>
                                 )}

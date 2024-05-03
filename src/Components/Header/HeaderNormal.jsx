@@ -51,32 +51,29 @@ function HeaderNormal() {
     };
 
     useEffect(() => {
+        const boxes = [
+            { ref: userBoxRef, visible: userBoxVisible, setVisible: setUserBoxVisible },
+            { ref: notificationBoxRef, visible: notiBoxVisible, setVisible: (value) => dispatch(setNotiBoxVisible(value)) },
+            { ref: messageBoxRef, visible: chatNotiBoxVisible, setVisible: (value) => dispatch(setChatNotiBoxVisible(value)) },
+            { ref: searchBoxRef, visible: searchBoxVisible, setVisible: (value) => dispatch(setSearchBoxVisible(value)) },
+        ];
+    
         const handleOutsideClick = (e) => {
-            if (userBoxRef.current && !userBoxRef.current.contains(e.target)) {
-                setUserBoxVisible(false);
-            }
-
-            if (notificationBoxRef.current && !notificationBoxRef.current.contains(e.target)) {
-                dispatch(setNotiBoxVisible(false));
-            }
-
-            if (messageBoxRef.current && !messageBoxRef.current.contains(e.target)) {
-                dispatch(setChatNotiBoxVisible(false));
-            }
-
-            if (searchBoxRef.current && !searchBoxRef.current.contains(e.target)) {
-                dispatch(setSearchBoxVisible(false));
-            }
+            boxes.forEach(({ ref, visible, setVisible }) => {
+                if (ref.current && !ref.current.contains(e.target) && visible) {
+                    setVisible(false);
+                }
+            });
         };
-
+    
         window.addEventListener("click", handleOutsideClick);
-
+    
         // Cleanup the event listener when the component unmounts
         return () => {
             window.removeEventListener("click", handleOutsideClick);
         };
-    }, [userBoxRef, notificationBoxRef, messageBoxRef, searchBoxRef, dispatch]);
-
+    }, [userBoxVisible, notiBoxVisible, chatNotiBoxVisible, searchBoxVisible, dispatch]);
+    
     return (
         <div className='headerNormal'>
             <div className='headerNormalLeft'>

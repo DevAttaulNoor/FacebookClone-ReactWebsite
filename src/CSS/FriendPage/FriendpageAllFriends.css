@@ -28,152 +28,141 @@
 /* FriendPage AllFriends Leftbar Top Section */
 .friendpageAllFriendsLeftbarTop {
     display: flex;
-    flex-direction: column;
-}
-
-.friendpageAllFriendsLeftbarTop_Top {
-    display: flex;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.friendpageAllFriendsLeftbarTop_Top .MuiSvgIcon-root a {
-    color: initial;
+.friendpageAllFriendsLeftbarTop a {
+    display: flex;
 }
 
-.friendpageAllFriendsLeftbarTop_Top .MuiSvgIcon-root {
+.friendpageAllFriendsLeftbarTop .MuiSvgIcon-root {
     width: 32px;
     height: 32px;
     padding: 6px;
+    border-radius: 50%;
     color: #000;
 }
 
-.friendpageAllFriendsLeftbarTop_Top .MuiSvgIcon-root:hover {
-    border-radius: 50%;
+.friendpageAllFriendsLeftbarTop .MuiSvgIcon-root:hover {
     background-color: whitesmoke;
 }
 
-.friendpageAllFriendsLeftbarTop_Top .texts {
+.friendpageAllFriendsLeftbarTop .heading {
     margin-left: 15px
 }
 
-.friendpageAllFriendsLeftbarTop_Top .texts #mainText {
+.friendpageAllFriendsLeftbarTop .heading #mainText {
     font-size: 10px;
     font-weight: 500;
 }
 
-.friendpageAllFriendsLeftbarTop_Top .texts #sideText {
+.friendpageAllFriendsLeftbarTop .heading #sideText {
     font-size: 24px;
     font-weight: 600;
 }
 
-.friendpageAllFriendsLeftbarTop_Bottom {
-    margin-bottom: 15px;
+/* FriendPage AllFriends Leftbar Middle Section */
+.friendpageAllFriendsLeftbarMiddle.searchContainer {
+    margin: 0 0 10px 0;
 }
 
-.friendpageAllFriendsLeftbarTop_Bottom .searchInp {
-    display: flex;
-    align-items: center;
-    background-color: #F0F2F5;
-    border-radius: 20px;
-    padding: 0px 8px;
-    height: 35px;
+.friendpageAllFriendsLeftbarMiddle.searchContainer input {
+    width: 100%;
 }
 
-.friendpageAllFriendsLeftbarTop_Bottom .searchInp .MuiSvgIcon-root {
-    color: gray;
-    height: 20px;
-    padding: 0px 3px 0 0;
-}
-
-.friendpageAllFriendsLeftbarTop_Bottom .searchInp input {
-    border: 0;
-    outline: 0;
-    background-color: transparent;
-    min-width: 195px;
-    font-size: 16px;
-}
-
-/* Friends All friends Leftbar Bottom Section*/
+/* FriendPage AllFriends Leftbar Bottom Section */
 .friendpageAllFriendsLeftbarBottom {
     display: flex;
     flex-direction: column;
     margin-top: 10px;
+    /* border-top: 1px solid lightgray; */
 }
 
 .friendpageAllFriendsLeftbarBottom #friendsCount {
-    margin: 0 0 8px 8px;
     font-size: 15px;
     font-weight: 600;
+    margin: 0 0 8px 8px;
 }
 
 .friendpageAllFriendsLeftbarBottom .friendsList {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 8px;
     position: relative;
-}
-
-.friendpageAllFriendsLeftbarBottom .friendsList:hover {
-    background-color: whitesmoke;
-    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 8px;
     border-radius: 8px;
 }
 
-.friendpageAllFriendsLeftbarBottom .friendsList .MuiSvgIcon-root {
-    padding: 5px;
-}
-
-.friendpageAllFriendsLeftbarBottom .friendsList .MuiSvgIcon-root:hover {
-    border-radius: 50%;
-    background-color: rgb(202, 202, 202);
+.friendpageAllFriendsLeftbarBottom .friendsList:hover {
     cursor: pointer;
+    background-color: whitesmoke;
 }
 
-.friendpageAllFriendsLeftbarBottom .friendsList .friendsListInfo {
+.friendsList .friendsListLeft {
     display: flex;
     align-items: center;
     margin: 8px 0;
 }
 
-.friendpageAllFriendsLeftbarBottom .friendsList .friendsListInfo a {
+.friendsList .friendsListLeft a {
     display: flex;
     align-items: center;
-    color: initial;
     text-decoration: none;
+    color: initial;
 }
 
-.friendpageAllFriendsLeftbarBottom .friendsList .friendsListInfo p {
-    margin-left: 8px;
+.friendsList .friendsListLeft p {
+    margin-left: 10px;
 }
 
-/* Dialog Box */
-.dialogBox {
+.friendsList .friendsListRight{
+    display: flex;
+}
+
+.friendsList .friendsListRight .MuiSvgIcon-root {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+    border-radius: 50%;
+    color: #65676B;
+}
+
+.friendsList .friendsListRight .MuiSvgIcon-root:hover {
+    cursor: pointer;
+    background-color: rgb(202, 202, 202);
+}
+
+.friendsList .friendsListRight .settingBox {
     position: absolute;
+    top: 50px;
+    right: 20px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    top: 50px;
-    right: 20px;
-    background-color: #fff;
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
     padding: 8px;
-    z-index: 1;
+    border-radius: 4px;
+    z-index: 10;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
 }
 
-.dialogBox button {
+.friendsList .friendsListRight .settingBox button {
+    width: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 15px;
     font-weight: 500;
-    background-color: #fff;
-    width: 120px;
     padding: 10px;
     border: none;
     outline: none;
-    border-bottom: 1px solid gray;
+    z-index: 10;
+    background-color: #fff;
+}
+
+.friendsList .friendsListRight .settingBox button:hover {
+    cursor: pointer;
+    background-color: whitesmoke;
 }

@@ -7,8 +7,8 @@ function Friends() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
     const friends = useSelector((state) => state.data.friends.friends);
-    const selectedFriend = useSelector((state) => state.data.friends.selectedFriend);
     const friendFriends = useSelector((state) => state.data.friends.friendFriends);
+    const selectedFriend = useSelector((state) => state.data.friends.selectedFriend);
 
     const fetchFriends = async (uid) => {
         try {
@@ -23,7 +23,11 @@ function Friends() {
                 });
             });
 
-            dispatch(setFriends(userFriends));
+            if (uid === user.uid) {
+                dispatch(setFriends(userFriends));
+            } else {
+                dispatch(setFriendFriends(userFriends));
+            }
         } catch (error) {
             console.error('Error fetching friends:', error);
         }
@@ -67,30 +71,6 @@ function Friends() {
         }
     };
 
-    const fetchFriendFriends = async (friendUids) => {
-        const friendFriends = friendUids.map(async (friend) => {
-            try {
-                const friendsCollection = db.collection('Users').doc(friend).collection('Friends');
-                const querySnapshot = await friendsCollection.get();
-                const userFriends = [];
-
-                querySnapshot.forEach((doc) => {
-                    const friendData = doc.data();
-                    userFriends.push({
-                        friendUid: friendData.friendUid,
-                    });
-                });
-
-                dispatch(setFriendFriends(userFriends));
-            } catch (error) {
-                console.error('Error fetching friends:', error);
-            }
-
-            const updatedFriends = await Promise.all(friendFriends);
-            dispatch(setFriendFriends(updatedFriends));
-        })
-    };
-
     const fetchFriendFriendsData = async (friendfirendsUid) => {
         const friendDetailsPromises = friendfirendsUid.map(async (friend) => {
             try {
@@ -115,10 +95,13 @@ function Friends() {
         dispatch(setFriendFriendsData(updatedFriends));
     };
 
-    // Fetch friends when user.uid changes
+    // Fetch friends when user.uid changes and friendFriends when selectedUser changes
     useEffect(() => {
         fetchFriends(user.uid);
-    }, [user.uid]);
+        if (selectedFriend) {
+            fetchFriends(selectedFriend)
+        }
+    }, [user.uid, selectedFriend]);
 
     // Fetch friend data when friends array changes
     useEffect(() => {
@@ -131,13 +114,6 @@ function Friends() {
     useEffect(() => {
         fetchSelectedFriendData(selectedFriend);
     }, [selectedFriend]);
-
-    // Fetch friend friends when friends changes
-    useEffect(() => {
-        // Extract friendUid for each friend
-        const friendFriendsUid = friends.map((friend) => friend.friendUid);
-        fetchFriendFriends(friendFriendsUid);
-    }, [friends]);
 
     // Fetch friend friends data when friends array changes
     useEffect(() => {
