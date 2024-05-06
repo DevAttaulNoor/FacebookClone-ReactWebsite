@@ -40,6 +40,7 @@
     text-decoration: underline;
 }
 
+/* HomePage Feed Section */
 .homepageFeed{
     width: 600px;
     display: flex;
@@ -47,7 +48,7 @@
     padding: 16px 0;
 }
 
-/** HomePage Rightbar Section */
+/* HomePage Rightbar Section */
 .homepageRightbar{
     position: sticky;
     top: 0px;
@@ -55,16 +56,13 @@
     height: 93vh;
     padding: 16px 8px 0 0;
     overflow-y: auto;
-    /* position: relative; */
 }
 
-.homepageRightbar #line{
-    color: whitesmoke;
-    margin-left: 8px;
+.homepageRightbarTop{
+    border-bottom: 1px solid lightgray;
 }
 
-
-/* HomePage New Message Section */
+/* HomePage NewMessage Section */
 .newMsgContainer{
     position: fixed;
     right: 6px;

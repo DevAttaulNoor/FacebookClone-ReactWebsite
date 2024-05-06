@@ -1,25 +1,19 @@
 import '../../CSS/HomePage/HomepageRightbarFriendsList.css'
-import React, { useState } from 'react'
+import React from 'react';
 import { Avatar } from '@mui/material';
-import { useSelector } from 'react-redux'
-import HomepageMessage from './HomepageMessage';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMsgFriend, setMsgFriendBoxVisibility } from '../../Redux/messageSlice';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 function HomepageRightbarFriendsList() {
+    const dispatch = useDispatch();
     const friendsData = useSelector((state) => state.data.friends.friendsData);
-    const [selectedFriend, setSelectedFriend] = useState();
-    const [friendMessageBox, setFriendMessageBox] = useState(false);
 
-    const openFriendMessageBox = (friend) => {
-        setSelectedFriend(friend);
-        setFriendMessageBox(true);
+    const handleMsgFriendBox = (friend) => {
+        dispatch(setMsgFriend(friend));
+        dispatch(setMsgFriendBoxVisibility(true));
     };
-
-    const closeFriendMessageBox = () => {
-        setSelectedFriend(null);
-        setFriendMessageBox(false);
-    }
 
     return (
         <div className='homepageRightbarFriendsList'>
@@ -27,29 +21,21 @@ function HomepageRightbarFriendsList() {
                 <div className="homepageRightbarFriendsList_TopLeft">
                     <h4>Contacts</h4>
                 </div>
-
                 <div className="homepageRightbarFriendsList_TopRight">
                     <SearchIcon />
                     <MoreHorizIcon />
                 </div>
             </div>
-
             <div className="homepageRightbarFriendsList_Bottom">
                 {friendsData.map((friend, index) => (
-                    <div
-                        className="homepageRightbarFriendsList_BottomOption"
-                        key={index}
-                        onClick={() => openFriendMessageBox(friend)}
-                    >
+                    <div className="homepageRightbarFriendsList_BottomOption" key={index} onClick={() => handleMsgFriendBox(friend)}>
                         <Avatar src={friend.photoURL} />
                         <p>{friend.username}</p>
                     </div>
                 ))}
             </div>
-
-            <HomepageMessage handleSelectedFriend={selectedFriend} closeFriendBox={closeFriendMessageBox} />
         </div>
-    )
+    );
 }
 
-export default HomepageRightbarFriendsList
+export default HomepageRightbarFriendsList;

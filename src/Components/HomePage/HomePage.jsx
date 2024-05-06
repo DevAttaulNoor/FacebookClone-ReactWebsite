@@ -1,9 +1,11 @@
 import '../../CSS/HomePage/HomePage.css'
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMsgAnyoneBoxVisibility } from '../../Redux/messageSlice';
 import { db } from '../../Firebase/firebase';
-import HomepageMessage from './HomepageMessage';
+import MessageFriend from '../Message/MessageFriend';
+import MessageAnyone from '../Message/MessageAnyone';
 import HomepageFeedReels from './HomepageFeedReels';
 import HomepageFeedPosts from './HomepageFeedPosts';
 import HomepageFeedPosting from './HomepageFeedPosting';
@@ -14,14 +16,12 @@ import Skeleton_Post from '../Skeletons/Skeleton_Post'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 function HomePage() {
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
+    const msgFriendBoxVisibility = useSelector((state) => state.data.message.msgFriendBoxVisibility);
+    const msgAnyoneBoxVisibility = useSelector((state) => state.data.message.msgAnyoneBoxVisibility);
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [messageBox, setMessageBox] = useState(false);
-
-    const closeMessageBox = () => {
-        setMessageBox(false);
-    };
 
     const timeAgo = (timestamp) => {
         if (!timestamp || !timestamp.toDate) {
@@ -139,8 +139,6 @@ function HomePage() {
                     <HomepageRightbarFriendsList />
                 </div>
 
-                <hr id='line' />
-
                 <div className="homepageRightbarBottom">
                     <HomepageRightbarGroupsList />
                 </div>
@@ -148,13 +146,12 @@ function HomePage() {
 
             <div className="newMsgContainer">
                 <div id='newMsg'>
-                    <i onClick={() => setMessageBox(true)}></i>
+                    <i onClick={() => dispatch(setMsgAnyoneBoxVisibility(true))}></i>
                 </div>
-
-                {messageBox && (
-                    <HomepageMessage handleMessageBox={messageBox} closeBox={closeMessageBox} />
-                )}
             </div>
+
+            {msgAnyoneBoxVisibility && <MessageAnyone />}
+            {msgFriendBoxVisibility && <MessageFriend />}
         </div>
     )
 }

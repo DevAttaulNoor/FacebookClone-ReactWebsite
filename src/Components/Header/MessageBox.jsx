@@ -3,38 +3,26 @@ import React, { useEffect, useState } from 'react';
 import { Avatar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { setChatNotification } from '../../Redux/notificationSlice';
+import { setMsgFriend, setMsgFriendBoxVisibility } from '../../Redux/messageSlice';
 import { db } from '../../Firebase/firebase';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import HomepageMessage from '../HomePage/HomepageMessage';
-import { setMsgBoxVisibility } from '../../Redux/messageSlice';
 
 function MessageBox() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
     const friendsData = useSelector((state) => state.data.friends.friendsData);
-    // const msgBoxVisibility = useSelector((state) => state.data.message.msgBoxVisibility);
     const chatNotification = useSelector((state) => state.data.notification.chatNotification);
-    
     const [chats, setChats] = useState([]);
-    const [selectedFriend, setSelectedFriend] = useState();
-    // const [friendMessageBox, setFriendMessageBox] = useState(false);
     const [activeButton, setActiveButton] = useState('Inbox');
-
-    const openFriendMessageBox = (friend) => {
-        setSelectedFriend(friend);
-        dispatch(setMsgBoxVisibility(true));
-        // setFriendMessageBox(true);
-    };
-
-    const closeFriendMessageBox = () => {
-        setSelectedFriend(null);
-        dispatch(setMsgBoxVisibility(false));
-        // setFriendMessageBox(false);
-    }
 
     const handleCategory = (category) => {
         setActiveButton(category);
+    };
+
+    const handleMsgFriendBox = (friend) => {
+        dispatch(setMsgFriend(friend));
+        dispatch(setMsgFriendBoxVisibility(true));
     };
 
     const timeAgowithInitials = (timestamp) => {
@@ -144,7 +132,7 @@ function MessageBox() {
                                 return (
                                     <>
                                         {activeButton === 'Inbox' ? (
-                                            <div className='messageBoxBottomOption' key={chat.chatId} onClick={() => openFriendMessageBox(friend[0])}>
+                                            <div className='messageBoxBottomOption' key={chat.chatId} onClick={() => handleMsgFriendBox(friend[0])}>
                                                 <Avatar src={isSender ? lastMessage.senderPhotoUrl : lastMessage.recipientPhotoUrl} />
                                                 <div className='messageBoxBottomOptionContent'>
                                                     <p>{isSender ? lastMessage.senderName : lastMessage.recipientName}</p>
@@ -170,8 +158,6 @@ function MessageBox() {
                     <p id='noMsg'>No messages found.</p>
                 )}
             </div>
-
-            <HomepageMessage handleSelectedFriend={selectedFriend} closeFriendBox={closeFriendMessageBox} />
         </div>
     );
 }

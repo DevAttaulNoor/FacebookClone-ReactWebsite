@@ -155,14 +155,27 @@
     font-size: 14px;
     font-weight: 500;
     margin-bottom: 3px;
+
 }
 
 .messageBoxBottomOptionContentBottom {
     display: flex;
-    white-space: pre-wrap;
 }
 
-.messageBoxBottomOptionContentBottom span,
+.messageBoxBottomOptionContentBottom span{
+    max-width: 190px;
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #65676B;
+}
+
+.messageBoxBottomOptionContentBottom p{
+   margin: 0 4px;
+}
+
 .messageBoxBottomOptionContentBottom h5 {
     font-size: 14px;
     font-weight: 400;
