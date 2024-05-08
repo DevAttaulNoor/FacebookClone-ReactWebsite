@@ -7,8 +7,8 @@ Its purpose is to mimic the fundamental features of Facebook, allowing users to 
 - Create, read, update, and delete posts.
 - Like and comment on posts.
 - Real-time updates for posts and notifications.
-- User profiles with profile pictures and personal infos
-
+- User profiles with profile pictures and personal infos.
+- 
 ## Technologies Used
 - **React.js**: A JavaScript library for building user interfaces.
 - **Firebase**: A cloud-based platform for developing web and mobile applications.
