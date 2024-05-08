@@ -9,9 +9,9 @@
 
 /** HomePage Feeds Posts Top Section */
 .homepageFeedsPosts_Top {
+    position: relative;
     display: flex;
     justify-content: space-between;
-    position: relative;
     padding: 15px;
 }
 
@@ -48,7 +48,7 @@
     color: #65676B;
 }
 
-.userpostInfo .userpostInfoBottom{
+.userpostInfo .userpostInfoBottom {
     font-size: 12px;
 }
 
@@ -92,39 +92,82 @@
 
 .homepageFeedsPosts_TopRight .postSetting {
     position: absolute;
+    top: 50px;
+    right: 30px;
+    width: 300px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    top: 70%;
-    right: 15px;
-    background-color: #fff;
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
     padding: 8px;
+    border-radius: 8px;
     z-index: 1;
-}
-
-.homepageFeedsPosts_TopRight .postSetting button {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    font-size: 15px;
-    font-weight: 500;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
     background-color: #fff;
-    width: 150px;
-    padding: 10px 30px 10px 4px;
-    border: none;
-    outline: none;
 }
 
-.homepageFeedsPosts_TopRight .postSetting button:hover {
-    background-color: whitesmoke;
+.postSetting .postSettingOption {
+    width: 100%;
+    display: flex;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.postSetting .postSettingOption:hover {
     cursor: pointer;
+    background-color: whitesmoke;
 }
 
-.homepageFeedsPosts_TopRight .postSetting button:first-child {
-    border-bottom: 1px solid gray;
+.postSettingOptionLeft {
+    display: flex;
+    margin-top: 5px;
+}
+
+.postSettingOptionLeft #savePostIcon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yu/r/doFgS_h9Kyh.png');
+    background-position: 0px -83px;
+    background-size: 41px 503px;
+}
+
+.postSettingOptionLeft #deletePostIcon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yp/r/faYX-HAY-C_.png');
+    background-position: 0px -172px;
+    background-size: auto;
+}
+
+.postSettingOptionLeft #editPostIcon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/g64EaKoBhMs.png');
+    background-position: 0px -258px;
+    background-size: auto;
+}
+
+.postSettingOptionRight {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 12px;
+}
+
+.postSettingOptionRight h5 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #050505;
+    margin-bottom: 3px;
+}
+
+.postSettingOptionRight p {
+    font-size: 12px;
+    font-weight: 400;
+    color: #65676B;
 }
 
 /** HomePage Feeds Posts Middle Section */

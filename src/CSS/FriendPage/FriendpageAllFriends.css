@@ -136,33 +136,70 @@
 .friendsList .friendsListRight .settingBox {
     position: absolute;
     top: 50px;
-    right: 20px;
+    left: 300px;
+    width: 300px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     padding: 8px;
-    border-radius: 4px;
-    z-index: 10;
+    border-radius: 8px;
+    z-index: 1;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
     background-color: #fff;
 }
 
-.friendsList .friendsListRight .settingBox button {
-    width: 120px;
+.settingBox .settingBoxOption {
+    width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
-    font-weight: 500;
-    padding: 10px;
-    border: none;
-    outline: none;
-    z-index: 10;
-    background-color: #fff;
+    padding: 8px;
+    border-radius: 8px;
 }
 
-.friendsList .friendsListRight .settingBox button:hover {
+.settingBox .settingBoxOption:hover {
     cursor: pointer;
     background-color: whitesmoke;
+}
+
+.settingBoxOptionLeft {
+    display: flex;
+    margin-top: 5px;
+}
+
+.settingBoxOptionLeft #unfriendIcon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yU/r/88nYD03nvqt.png');
+    background-position: 0px -84px;
+    background-size: auto;
+}
+
+.settingBoxOptionLeft #unfriendIcon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yU/r/88nYD03nvqt.png');
+    background-position: 0px -84px;
+    background-size: auto;
+}
+
+.settingBoxOptionRight {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 12px;
+}
+
+.settingBoxOptionRight h5 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #050505;
+    margin-bottom: 3px;
+}
+
+.settingBoxOptionRight p {
+    font-size: 12px;
+    font-weight: 400;
+    color: #65676B;
 }

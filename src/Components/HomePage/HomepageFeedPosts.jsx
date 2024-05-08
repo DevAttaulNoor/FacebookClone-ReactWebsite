@@ -292,7 +292,7 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
     }
 
     const handleFriendSelection = (friendUid) => {
-        sessionStorage.setItem('selectedFriend', JSON.stringify({friendUid: friendUid}));
+        sessionStorage.setItem('selectedFriend', JSON.stringify({ friendUid: friendUid }));
         dispatch(setSelectedFriend(friendUid));
     }
 
@@ -475,8 +475,27 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
                                 <div>
                                     {isDropdownVisible && (
                                         <div className="postSetting">
-                                            <button onClick={handleDelete}>Delete the post</button>
-                                            {!isEditing && <button onClick={handleEdit}>Edit the post</button>}
+                                            <div className="postSettingOption" onClick={handleDelete}>
+                                                <div className="postSettingOptionLeft">
+                                                    <i id='deletePostIcon'></i>
+                                                </div>
+                                                <div className="postSettingOptionRight">
+                                                    <h5>Move to trash</h5>
+                                                    <p>Items in your trash are deleted.</p>
+                                                </div>
+                                            </div>
+
+                                            {!isEditing && (
+                                                <div className="postSettingOption" onClick={handleEdit}>
+                                                    <div className="postSettingOptionLeft">
+                                                        <i id='editPostIcon'></i>
+                                                    </div>
+                                                    <div className="postSettingOptionRight">
+                                                        <h5>Edit post</h5>
+                                                        <p>Edit your post</p>
+                                                    </div>
+                                                </div>
+                                            )}
                                         </div>
                                     )}
                                 </div>
@@ -485,11 +504,27 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
                                     {isDropdownVisible && (
                                         <div className="postSetting">
                                             {savedPost === false ? (
-                                                <button onClick={handleSavePost}>Save the post</button>
+                                                <div className="postSettingOption" onClick={handleSavePost}>
+                                                    <div className="postSettingOptionLeft">
+                                                        <i id='savePostIcon'></i>
+                                                    </div>
+                                                    <div className="postSettingOptionRight">
+                                                        <h5>Save post</h5>
+                                                        <p>Add this to your saved items.</p>
+                                                    </div>
+                                                </div>
                                             ) : (
-                                                <button onClick={handleDelSavePost}>Unsave the post</button>
+                                                <div className="postSettingOption" onClick={handleDelSavePost}>
+                                                    <div className="postSettingOptionLeft">
+                                                        <i id='savePostIcon'></i>
+                                                    </div>
+                                                    <div className="postSettingOptionRight">
+                                                        <h5>Unsave post</h5>
+                                                        <p>Remove this from your saved items.</p>
+                                                    </div>
+                                                </div>
                                             )}
-                                            <button>Report the post</button>
+                                            {/* <button>Report the post</button> */}
                                         </div>
                                     )}
                                 </div>
@@ -629,7 +664,7 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
                     </>
                 )}
             </div>
-        </div>
+        </div >
     )
 }
 
