@@ -43,7 +43,7 @@ function ProfilepageVideos() {
                         <NavLink id="navLink" to="/profilepage/:userid/video" activeclassname="active">
                             <h3>Videos</h3>
                         </NavLink>
-                        <a id="seeAllLink" href="#">See all Videos</a>
+                        <p id="seeAllLink">See all Videos</p>
                     </div>
 
                     <div className="profilePageVideos_Bottom">

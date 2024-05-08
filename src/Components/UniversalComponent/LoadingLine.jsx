@@ -1,24 +1,26 @@
 import '../../CSS/UniversalComponent/LoadingLine.css'
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 function LoadingLine({ progress }) {
+    const progressRef = useRef(progress);
+
     useEffect(() => {
         const interval = setInterval(() => {
-            if (progress < 100) {
-                progress = progress + 1;
+            if (progressRef.current < 100) {
+                progressRef.current = progressRef.current + 1;
             } else {
                 clearInterval(interval);
             }
         }, 50);
 
         return () => clearInterval(interval);
-    }, [progress]);
+    }, []);
 
     return (
         <div className="loadingLine">
-            <div className="loadingLinefill" style={{ width: `${progress}%` }}></div>
+            <div className="loadingLinefill" style={{ width: `${progressRef.current}%` }}></div>
         </div>
     );
 }
 
-export default LoadingLine
+export default LoadingLine;

@@ -227,7 +227,7 @@ function HomepageFeedPosting() {
                     </div>
 
                     {media !== null && <personalbar className='image_progress'>Media is added</personalbar>}
-                    {progress != 0 && <progress className='post_progress' value={progress} max="100" />}
+                    {progress !== 0 && <progress className='post_progress' value={progress} max="100" />}
                     <button type="submit" id="submitBtn" onClick={handleUpload}>Post</button>
                 </form>
             </Modal >

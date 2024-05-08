@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../../Redux/userSlice';
 import { setAuthForm } from '../../Redux/authSlice';
 import { auth, db, storage } from '../../Firebase/firebase';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import AdjustOutlinedIcon from '@mui/icons-material/AdjustOutlined';
 
 function Signup() {
@@ -16,7 +14,6 @@ function Signup() {
     const [lastname, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
     const [dob, setDOB] = useState(new Date());
     const [selectedGender, setSelectedGender] = useState('');
     const [profilePicture, setProfilePicture] = useState(null);
@@ -28,6 +25,20 @@ function Signup() {
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const years = Array.from({ length: 100 }, (_, i) => new Date().getUTCFullYear() - i);
+
+    const handleProfilePictureChange = (e) => {
+        if (e.target.files[0]) {
+            setSelectedProfileImage(URL.createObjectURL(e.target.files[0]));
+            setProfilePicture(e.target.files[0]);
+        }
+    };
+
+    const handleCoverPictureChange = (e) => {
+        if (e.target.files[0]) {
+            setSelectedCoverImage(URL.createObjectURL(e.target.files[0]));
+            setCoverPicture(e.target.files[0]);
+        }
+    };
 
     const handleSignup = async (e) => {
         e.preventDefault();
@@ -114,28 +125,6 @@ function Signup() {
         }
     };
 
-    const handleProfilePictureChange = (e) => {
-        if (e.target.files[0]) {
-            setSelectedProfileImage(URL.createObjectURL(e.target.files[0]));
-            setProfilePicture(e.target.files[0]);
-        }
-    };
-
-    const handleCoverPictureChange = (e) => {
-        if (e.target.files[0]) {
-            setSelectedCoverImage(URL.createObjectURL(e.target.files[0]));
-            setCoverPicture(e.target.files[0]);
-        }
-    };
-
-    const togglePasswordVisibility = () => {
-        setShowPassword((prevShowPassword) => !prevShowPassword);
-    };
-
-    const handleGenderClick = (gender) => {
-        setSelectedGender(gender);
-    };
-
     return (
         <div className='signup'>
             <div className="signupTop">
@@ -173,19 +162,12 @@ function Signup() {
 
                 <div className="passwordContainer">
                     <input
-                        type={showPassword ? "text" : "password"}
+                        type="password"
                         value={password}
                         placeholder="New password"
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
-                    <span className="passwordToggle" onClick={togglePasswordVisibility}>
-                        {showPassword ? (
-                            <VisibilityIcon />
-                        ) : (
-                            <VisibilityOffIcon />
-                        )}
-                    </span>
                 </div>
 
                 <div className="dobContainer">
@@ -231,17 +213,17 @@ function Signup() {
                     <h5>Gender</h5>
 
                     <div className="genderOptions">
-                        <div className={`genderOption ${selectedGender === 'Male' ? 'active' : ''}`} onClick={() => handleGenderClick('Male')}>
+                        <div className={`genderOption ${selectedGender === 'Male' ? 'active' : ''}`} onClick={() => setSelectedGender('Male')}>
                             <p>Male</p>
                             <AdjustOutlinedIcon className={`${selectedGender === 'Male' ? 'active' : ''}`} />
                         </div>
 
-                        <div className={`genderOption ${selectedGender === 'Female' ? 'active' : ''}`} onClick={() => handleGenderClick('Female')}>
+                        <div className={`genderOption ${selectedGender === 'Female' ? 'active' : ''}`} onClick={() => setSelectedGender('Female')}>
                             <p>Female</p>
                             <AdjustOutlinedIcon className={`${selectedGender === 'Female' ? 'active' : ''}`} />
                         </div>
 
-                        <div className={`genderOption ${selectedGender === 'Other' ? 'active' : ''}`} onClick={() => handleGenderClick('Other')}>
+                        <div className={`genderOption ${selectedGender === 'Other' ? 'active' : ''}`} onClick={() => setSelectedGender('Other')}>
                             <p>Other</p>
                             <AdjustOutlinedIcon className={`${selectedGender === 'Other' ? 'active' : ''}`} />
                         </div>

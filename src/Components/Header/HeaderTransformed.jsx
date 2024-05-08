@@ -46,7 +46,7 @@ function HeaderTransformed() {
         return () => {
             window.removeEventListener("click", handleOutsideClick);
         };
-    }, [userBoxRef, notificationBoxRef]);
+    }, [userBoxRef, notificationBoxRef, dispatch]);
 
     return (
         <div className='headerTransformed'>

@@ -120,7 +120,7 @@ function UserpageFeed() {
                             timestamp={formatJoinedDate(joinedpost.data.dob)}
                             message={
                                 <div className='JoinedPostMsg'>
-                                    <img id='joinedImg' src='https://static.xx.fbcdn.net/rsrc.php/v3/yl/r/1SViyXWaRzP.png' alt="Joined Image" />
+                                    <img id='joinedImg' src='https://static.xx.fbcdn.net/rsrc.php/v3/yl/r/1SViyXWaRzP.png' alt="joinedPic" />
                                     <p id='joinedMsg'>{`Born on ${formatJoinedDate(joinedpost.data.dob)}`}</p>
                                 </div>
                             }

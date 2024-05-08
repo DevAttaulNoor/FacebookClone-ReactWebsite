@@ -24,7 +24,6 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
     const [post, setPost] = useState({});
-    const [users, setUsers] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
     const [editedMessage, setEditedMessage] = useState(message);
     const [mediaFile, setMediaFile] = useState(null)
@@ -37,7 +36,6 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
     const [currentUserLiked, setCurrentUserLiked] = useState(false);
     const [isLikedUsersModalOpen, setIsLikedUsersModalOpen] = useState(false);
     const [comments, setComments] = useState([]);
-    const [isCommenting, setIsCommenting] = useState(false);
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -241,11 +239,6 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
         setIsLikedUsersModalOpen(true);
     };
 
-    const openCommentModal = () => {
-        setIsCommenting(true);
-        setIsCommentModalOpen(true);
-    };
-
     const handleMediaUpload = (e) => {
         const file = e.target.files[0];
 
@@ -402,28 +395,6 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
             unsubscribe();
         };
     }, [id]);
-
-    //* useEffect to get all the users from the firestore
-    useEffect(() => {
-        setLoading(true);
-        const fetchUsers = async () => {
-            try {
-                const usersCollection = await db.collection('Users').get();
-                const usersData = usersCollection.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                setUsers(usersData);
-            }
-
-            catch (error) {
-                console.error('Error fetching users:', error);
-            }
-        };
-
-        fetchUsers();
-        setLoading(false);
-    }, []);
 
     //* useEffect to prevent background scrolling when popup modal is open
     useEffect(() => {
@@ -600,7 +571,7 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
 
                         <div className="homepageFeedsPosts_MiddleBottom">
                             {likesCount >= 1 && <p onClick={handleLikedUsersClick}> {likesCount} {likesCount === 1 ? 'Like' : 'Likes'} </p>}
-                            {comments.length >= 1 && <p onClick={openCommentModal}> {comments.length} {comments.length === 1 ? 'comment' : 'comments'} </p>}
+                            {comments.length >= 1 && <p onClick={() => setIsCommentModalOpen(true)}> {comments.length} {comments.length === 1 ? 'comment' : 'comments'} </p>}
                         </div>
                     </>
                 )}
@@ -630,7 +601,7 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
                                 )}
                             </div>
 
-                            <div className='homepageFeedsPosts_BottomOption' onClick={openCommentModal}>
+                            <div className='homepageFeedsPosts_BottomOption' onClick={() => setIsCommentModalOpen(true)}>
                                 <ChatBubbleOutlineOutlinedIcon />
                                 <p>Comment</p>
                             </div>

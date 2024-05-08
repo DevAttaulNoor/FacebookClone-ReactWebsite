@@ -167,7 +167,7 @@ function MessageAnyone() {
             .catch((error) => {
                 console.error('Error getting documents:', error);
             });
-    }, [searchText]);
+    }, [searchText, user.username]);
 
     useEffect(() => {
         let chatId = null;

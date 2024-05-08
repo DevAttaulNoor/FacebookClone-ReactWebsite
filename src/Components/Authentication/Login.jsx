@@ -5,9 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../Redux/userSlice';
 import { setAuthForm } from '../../Redux/authSlice';
-import { auth, db, provider } from '../../Firebase/firebase';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { auth, db } from '../../Firebase/firebase';
 
 function Login() {
     Modal.setAppElement('#root');
@@ -16,47 +14,7 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginerror, setLoginError] = useState(null);
-    const [showPassword, setShowPassword] = useState(false);
     const [isLoginProcessing, setIsLoginProcessing] = useState(false);
-
-    const signInWithFacebook = () => {
-        auth.signInWithPopup(provider).then((result) => {
-            const userCredential = result;
-            const user = userCredential.user;
-            const uid = user.uid;
-            const email = user.email;
-            const displayName = user.displayName;
-            const photoURL = `${user.photoURL}?access_token=${userCredential.credential.accessToken}`;
-            const coverphotoUrl = ''
-
-            const userData = {
-                uid: uid,
-                email: email,
-                displayName: displayName,
-                photoURL: photoURL,
-                coverphotoUrl: coverphotoUrl
-            };
-
-            db.collection("Users").doc(uid).set({
-                uid: user.uid,
-                email: user.email,
-                username: user.displayName,
-                photoURL: user.photoURL,
-                coverphotoUrl: coverphotoUrl
-            });
-
-            sessionStorage.setItem('userData', JSON.stringify(userData));
-            dispatch(loginUser(userData));
-            navigate('/homepage');
-        })
-            .catch((error) => {
-                if (error.code === 'auth/popup-closed-by-user') {
-                    console.log("Authentication popup closed by user.");
-                } else {
-                    console.error("Authentication error:", error);
-                }
-            });
-    }
 
     const signInWithEmailAndPassword = async () => {
         setIsLoginProcessing(true);
@@ -108,55 +66,37 @@ function Login() {
         }
     };
 
-    const togglePasswordVisibility = () => {
-        setShowPassword((prevShowPassword) => !prevShowPassword);
-    };
-
     return (
-        <div className='login'>
-            <form className='loginTop' onSubmit={(e) => {
-                e.preventDefault();
-                signInWithEmailAndPassword();
-            }}>
-                <div className='emailContainer'>
-                    <input
-                        type="email"
-                        value={email}
-                        placeholder="Email address"
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-
-                <div className="passwordContainer">
-                    <input
-                        type={showPassword ? "text" : "password"}
-                        value={password}
-                        placeholder="Password"
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                    <span className="passwordToggle" onClick={togglePasswordVisibility}>
-                        {showPassword ? (
-                            <VisibilityIcon />
-                        ) : (
-                            <VisibilityOffIcon />
-                        )}
-                    </span>
-                </div>
-
-                <button type="submit" id="submitBtn">{isLoginProcessing ? <div className="loadingSpin"></div> : 'Log in'}</button>
-                {loginerror && <p className="errorNote">{loginerror}</p>}
-                <button id="forgetBtn" type="button">Forgotten password?</button>
-                <hr id="line" />
-                <button id="newAccBtn" type="button" onClick={() => dispatch(setAuthForm('signup'))}>Create new account</button>
-            </form>
-
-            <div className='loginBottom'>
-                <button onClick={signInWithFacebook}>Log in</button>
-                <p>with existing FB account</p>
+        <form className='login' onSubmit={(e) => {
+            e.preventDefault();
+            signInWithEmailAndPassword();
+        }}>
+            <div className='emailContainer'>
+                <input
+                    type="email"
+                    value={email}
+                    placeholder="Email address"
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                />
             </div>
-        </div>
+
+            <div className="passwordContainer">
+                <input
+                    type="password"
+                    value={password}
+                    placeholder="Password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                />
+            </div>
+
+            <button type="submit" id="submitBtn">{isLoginProcessing ? <div className="loadingSpin"></div> : 'Log in'}</button>
+            {loginerror && <p className="errorNote">{loginerror}</p>}
+            <button id="forgetBtn" type="button">Forgotten password?</button>
+            <hr id="line" />
+            <button id="newAccBtn" type="button" onClick={() => dispatch(setAuthForm('signup'))}>Create new account</button>
+        </form>
     )
 }
 

@@ -63,33 +63,28 @@
 }
 
 /* HomePage NewMessage Section */
-.newMsgContainer{
-    position: fixed;
-    right: 6px;
-    bottom: 0px;
-}
-
-.newMsgContainer #newMsg{
+.newMsg{
     position: absolute;
     bottom: 15px;
-    right: 25px;
+    right: 30px;
     display: flex;
     align-items: center;
-    padding: 14px;
+    padding: 18px;
     border-radius: 50%;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
     background-color: #fff;
 }
 
-.newMsgContainer #newMsg:hover{
+.newMsg:hover{
     cursor: pointer;
     background-color: #F2F5F7;
 }
 
-.newMsgContainer #newMsg i{
+.newMsg #newMsgIcon{
     width: 20px;
     height: 20px;
-    background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/yN/r/x0nBY5aSKtI.png");
-    background-position: 0px -172px;
-    background-size: auto;
+    display: inline-block;
+    background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/xFYw0bOHCD1.png");
+    background-position: 0px -105px;
+    background-size: 21px 304px;
 }

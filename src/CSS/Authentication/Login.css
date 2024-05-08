@@ -1,11 +1,5 @@
 /** Login Section */
 .login {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Login Top Section */
-.loginTop {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -15,7 +9,7 @@
     background-color: #fff;
 }
 
-.loginTop input {
+.login input {
     width: 100%;
     font-size: 16px;
     padding: 15px;
@@ -25,7 +19,7 @@
     border: 1px solid lightgray;
 }
 
-.loginTop #submitBtn {
+.login #submitBtn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -39,7 +33,7 @@
     background-color: #1877f2;
 }
 
-.loginTop #forgetBtn {
+.login #forgetBtn {
     font-size: 14px;
     font-weight: 400;
     margin-top: 15px;
@@ -49,14 +43,14 @@
     background-color: #fff;
 }
 
-.loginTop #line {
+.login #line {
     width: 100%;
     margin: 20px 0;
     border: none;
     border-top: 1px solid lightgray;
 }
 
-.loginTop #newAccBtn {
+.login #newAccBtn {
     font-size: 17px;
     font-weight: 700;
     padding: 12px 16px;
@@ -67,7 +61,7 @@
     background-color: #42b72a;
 }
 
-.loginTop .loadingSpin {
+.login .loadingSpin {
     width: 30px;
     height: 30px;
     border: 3px solid #fff;
@@ -86,44 +80,9 @@
     }
 }
 
-.loginTop .passwordContainer {
-    position: relative;
-}
-
-.loginTop .passwordToggle {
-    position: absolute;
-    top: 55%;
-    right: 10px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: gray;
-}
-
-.loginTop .errorNote {
+.login .errorNote {
     text-align: center;
     font-size: 12px;
     padding: 3px 0 0 0;
     color: red;
-}
-
-/* Login Bottom Section */
-.loginBottom {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.loginBottom button {
-    font-size: 14px;
-    font-weight: 600;
-    border: none;
-    outline: none;
-    color: #000;
-    background-color: inherit;
-}
-
-.loginBottom p {
-    font-size: 14px;
-    margin-left: 3px;
-    background-color: inherit;
 }

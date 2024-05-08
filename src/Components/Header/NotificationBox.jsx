@@ -105,7 +105,7 @@ function NotificationBox() {
         }).catch((error) => {
             console.error('Error fetching notifications:', error);
         });
-    }, [user.uid]);
+    }, [user.uid, dispatch]);
 
     return (
         <div className="notificationBox" onClick={(e) => e.stopPropagation()}>

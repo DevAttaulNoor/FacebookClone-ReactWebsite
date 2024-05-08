@@ -13,7 +13,7 @@ import HomepageLeftbarOptions from './HomepageLeftbarOptions';
 import HomepageRightbarGroupsList from './HomepageRightbarGroupsList';
 import HomepageRightbarFriendsList from './HomepageRightbarFriendsList';
 import Skeleton_Post from '../Skeletons/Skeleton_Post'
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 function HomePage() {
     const dispatch = useDispatch();
@@ -96,7 +96,7 @@ function HomePage() {
                     <HomepageLeftbarOptions src='https://static.xx.fbcdn.net/rsrc.php/v3/yS/r/k0Svfg6IJtR.png' title='Saved' />
                 </NavLink>
 
-                <HomepageLeftbarOptions Icon={ArrowDropDownIcon} title='See more' />
+                <HomepageLeftbarOptions icon={<KeyboardArrowDownIcon />} title='See more' />
 
                 <div className='terms'>
                     <p><span>Privacy</span> · <span>Terms</span> · <span>Advertising</span> · <span>Ad choices</span> · <span>Cookies</span> · <span>More</span> · <span>Meta © 2023</span></p>
@@ -144,10 +144,8 @@ function HomePage() {
                 </div>
             </div>
 
-            <div className="newMsgContainer">
-                <div id='newMsg'>
-                    <i onClick={() => dispatch(setMsgAnyoneBoxVisibility(true))}></i>
-                </div>
+            <div className="newMsg">
+                <i id='newMsgIcon' onClick={() => dispatch(setMsgAnyoneBoxVisibility(true))}></i>
             </div>
 
             {msgAnyoneBoxVisibility && <MessageAnyone />}

@@ -129,19 +129,19 @@ function HeaderNormal() {
                     <AppsIcon className='headerNormalRightOptionSvg' />
                 </div>
 
-                <div className={`headerNormalRightOption ${chatNotiBoxVisible ? 'clicked' : ''}`}>
+                <div className="headerNormalRightOption">
                     <ForumIcon className='headerNormalRightOptionSvg' onClick={toggleMessageBox} ref={messageBoxRef} />
                     {chatNotification.length > 0 && <p id='msgLengthIcon'>{chatNotification.length}</p>}
                     {chatNotiBoxVisible && <MessageBox />}
                 </div>
 
-                <div className={`headerNormalRightOption ${notiBoxVisible ? 'clicked' : ''}`}>
+                <div className="headerNormalRightOption">
                     <NotificationsIcon className='headerNormalRightOptionSvg' onClick={toggleNotificationBox} ref={notificationBoxRef} />
                     {allNotification.length > 0 && <p id='notiLengthIcon'>{allNotification.length}</p>}
                     {notiBoxVisible && <NotificationBox />}
                 </div>
 
-                <div className={`headerNormalRightOption ${userBoxVisible ? 'clicked' : ''}`}>
+                <div className="headerNormalRightOption">
                     <Avatar src={user.photoURL} className='headerNormalRightOptionImg' onClick={toggleUserBox} ref={userBoxRef} />
                     {userBoxVisible && <UserBox />}
                 </div>

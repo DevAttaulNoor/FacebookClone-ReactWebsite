@@ -61,7 +61,7 @@ function ProfilepagePhotos() {
                         <NavLink id="navLink" to="/profilepage/:userid/photo" activeclassname="active">
                             <h3>Photos</h3>
                         </NavLink>
-                        <a id="seeAllLink" href="#">See all photos</a>
+                        <p id="seeAllLink">See all photos</p>
                     </div>
 
                     <div className="profilePagePhotos_Bottom">

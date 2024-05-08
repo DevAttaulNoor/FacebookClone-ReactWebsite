@@ -64,7 +64,7 @@ function UserpagePhotos() {
                     <div className="userpagePhotosBottom">
                         <div className="userpagePhotosBottomContainer">
                             {photoUrls.map((url, index) => (
-                                <img key={index} src={url} alt={`Photo ${index}`} />
+                                <img key={index} src={url} alt={`pic${index}`} />
                             ))}
                         </div>
                     </div>

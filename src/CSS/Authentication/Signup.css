@@ -53,19 +53,6 @@
     gap: 10px;
 }
 
-.signupMiddle .passwordContainer {
-    position: relative;
-}
-
-.signupMiddle .passwordToggle {
-    position: absolute;
-    top: 55%;
-    right: 10px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: gray;
-}
-
 .signupMiddle .dobContainer,
 .signupMiddle .genderContainer {
     margin: 4px 0;

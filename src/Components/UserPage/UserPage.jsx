@@ -16,14 +16,11 @@ function UserPage() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
     const friends = useSelector((state) => state.data.friends.friends);
-    const [profileImage, setProfileImage] = useState(null);
-    const [coverImage, setCoverImage] = useState(null);
     const [imageLoaded, setImageLoaded] = useState(false);
 
     const changeProfileImage = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setProfileImage(file);
             const storageRef = storage.ref(`Users/${user.uid}/${file.name}`);
 
             storageRef.put(file).then((snapshot) => {
@@ -56,7 +53,6 @@ function UserPage() {
     const changeCoverImage = (e) => {
         const coverfile = e.target.files[0];
         if (coverfile) {
-            setCoverImage(coverfile);
             const storageRef = storage.ref(`Users/${user.uid}/${coverfile.name}`);
 
             storageRef.put(coverfile).then((snapshot) => {
@@ -127,7 +123,7 @@ function UserPage() {
                 <div className="userpageTop_ProfileSection">
                     <div className="userpageTop_ProfileSectionLeft">
                         <div className="userpageTop_ProfileSectionLeftPhoto">
-                            <img src={user.photoURL} alt="Profile" />
+                            <img src={user.photoURL} alt="profilePic" />
                             <div onClick={() => document.getElementById('profileImageInput').click()}>
                                 <PhotoCameraIcon />
                                 <input

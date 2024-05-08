@@ -12,8 +12,6 @@ function HomepageFeedPostsCmtModal({ id, userid, closeModal }) {
     const [comments, setComments] = useState([]);
     const commentsContainerRef = useRef(null);
 
-    console.log(comments.uid)
-
     const postComment = async () => {
         if (comment.trim() === '') {
             return;

@@ -15,7 +15,7 @@ function ProfilepageFriends() {
                         <NavLink id="navLink" to="/profilepage/:userid/friend" activeclassname="active">
                             <h3>Friends</h3>
                         </NavLink>
-                        <a id="seeAllLink" href="#">See all friends</a>
+                        <p id="seeAllLink">See all friends</p>
                     </div>
 
                     <div className="profilePageFriends_Bottom">
