@@ -11,14 +11,13 @@
     width: 357px;
     display: flex;
     align-items: center;
-    padding: 6px 0 6px 14px;
+    padding: 4px 0 4px 14px;
     z-index: 10;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
     background-color: #fff;
 }
 
 .headerTransformedLeft a{
-    width: fit-content;
     display: flex;
     align-items: center;
     justify-content: center;

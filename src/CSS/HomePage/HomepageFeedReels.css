@@ -1,57 +1,49 @@
-/** HomePage Feeds Reels Section */
+/** HomePageFeeds Reels Section */
 .homepageFeedReels {
     width: 100%;
     padding: 8px;
     border-radius: 10px;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
-    background-color: #fff;    
+    background-color: #fff;
 }
 
 .homepageFeedReels a {
-    text-decoration: none;
-    color: initial;
-}
-
-/* HomePage Feeds Reels Inner Section */
-.homepageFeedReelsInner {
+    width: 100%;
     display: flex;
     align-items: center;
     padding: 8px;
     border-radius: 10px;
+    text-decoration: none;
+    color: initial;
 }
 
-.homepageFeedReelsInner:hover {
+.homepageFeedReels a:hover {
     cursor: pointer;
     background-color: whitesmoke;
 }
 
-.homepageFeedReelsInner .MuiSvgIcon-root {
-    width: 36px;
-    height: 36px;
-    padding: 8px;
+.homepageFeedReels a .MuiSvgIcon-root {
+    width: 40px;
+    height: 40px;
+    padding: 6px;
+    margin-right: 12px;
     border-radius: 50%;
     color: #1877F2;
     background-color: #EBF5FF;
 }
 
-.homepageFeedReelsInner .homepageFeedReelsInnerInfo {
-    display: flex;
-    flex-direction: column;
-    margin-left: 12px;
-}
-
-.homepageFeedReelsInner h2 {
+.homepageFeedReelsInfo h2 {
     font-size: 18px;
     font-weight: 600;
 }
 
-.homepageFeedReelsInner p {
+.homepageFeedReelsInfo p {
     font-size: 14px;
     font-weight: 400;
     color: gray;
 }
 
-/* HomePage Feeds Reels Scroll Section */
+/** HomePageFeeds Reels Scroll Section */
 .homepageFeedReels_Scroll {
     position: relative;
     overflow: auto;
@@ -80,7 +72,7 @@
     right: 20px;
 }
 
-/* HomePage Feeds Reels Scroll Reels Section */
+/* HomePageFeeds Reels ScrollReels Section */
 .homepageFeedReels_ScrollReels {
     display: flex;
     overflow-x: auto;
@@ -92,25 +84,23 @@
 }
 
 .homepageFeedReels_ScrollReels a {
-    height: fit-content;
     text-decoration: none;
     color: initial;
 }
 
 .homepageFeedReels_ScrollReelsInner {
-    position: relative;
-    width: 133px;
-    height: 244px;
+    width: 143px;
+    height: 250px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-right: 8px;
     border-radius: 10px;
     box-shadow: 0px 5px 5px -7px rgb(0, 0, 0, 0.75);
 }
 
 .homepageFeedReels_ScrollReelsInner img {
-    height: 142px;
-    flex: 1;
+    flex: 0.8;
     object-fit: cover;
     border-radius: 10px;
     border-bottom-left-radius: 0;
@@ -118,27 +108,24 @@
 }
 
 .homepageFeedReels_ScrollReelsInner .ScrollReelsCreate {
+    position: relative;
+    flex: 0.2;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
-    flex-direction: column;
-    flex: 0.25;
     border-radius: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     background-color: #fff;
 }
 
-.homepageFeedReels_ScrollReelsInner .ScrollReelsCreate h3 {
-    font-size: 14px;
-    font-weight: 550;
-    padding-top: 8px;
-}
-
 .homepageFeedReels_ScrollReelsInner .ScrollReelsCreate .MuiSvgIcon-root {
     position: absolute;
-    bottom: 32px;
-    left: 51px;
+    top: 0%;
+    left: 51%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
     padding: 3px;
     border: 3px solid #fff;
     border-radius: 50%;
@@ -146,28 +133,34 @@
     background-color: #1877F2;
 }
 
+.homepageFeedReels_ScrollReelsInner .ScrollReelsCreate h5 {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
 .homepageFeedReels_ScrollReelsStories {
     position: relative;
-    width: 110px;
-    height: 220px;
+    width: 143px;
+    height: 250px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 12px;
-    margin-left: 8px;
+    margin-right: 8px;
     border-radius: 10px;
     box-shadow: 0px 5px 5px -7px rgb(0, 0, 0, 0.75);
 }
 
 .homepageFeedReels_ScrollReelsStories .MuiAvatar-root {
-    width: 35px;
-    height: 35px;
+    width: 36px;
+    height: 36px;
     border: 3px solid #2381fa;
 }
 
 .homepageFeedReels_ScrollReelsStories p {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     color: #fff;
 }
@@ -176,5 +169,4 @@
     text-align: center;
     font-size: 12px;
     color: #fff;
-    background-color: transparent;
 }

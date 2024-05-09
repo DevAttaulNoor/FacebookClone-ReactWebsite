@@ -1,10 +1,9 @@
 import '../../CSS/HomePage/HomepageFeedReels.css'
 import React, { useState, useEffect, useRef } from 'react';
-import { Avatar } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { NavLink, Route, Routes } from 'react-router-dom';
+import { Avatar } from '@mui/material';
 import { db } from '../../Firebase/firebase';
-import HomepageReels from './HomepageReels';
 import AddIcon from '@mui/icons-material/Add';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -20,7 +19,7 @@ function HomepageFeedReels() {
 
     const scrollLeft = () => {
         if (containerRef.current) {
-            const scrollAmount = -240;
+            const scrollAmount = -150;
             const scrollDuration = 300;
             const container = containerRef.current;
 
@@ -45,20 +44,18 @@ function HomepageFeedReels() {
 
     const scrollRight = () => {
         if (containerRef.current) {
-            containerRef.current.scrollLeft += 240;
+            containerRef.current.scrollLeft += 150;
         }
     };
 
     useEffect(() => {
-        db.collection("Reels")
-            .orderBy("timestamp", "desc")
-            .onSnapshot((snapshot) => {
-                const reelsData = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                setReels(reelsData);
-            });
+        db.collection("Reels").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+            const reelsData = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setReels(reelsData);
+        });
     }, []);
 
     useEffect(() => {
@@ -100,21 +97,15 @@ function HomepageFeedReels() {
     return (
         <>
             {reels.length === 0 ? (
-                <div className='homepageFeedReels'>
-                    <Routes>
-                        <Route path='storyreels' element={<HomepageReels />} />
-                    </Routes>
-
+                <div className="homepageFeedReels">
                     <NavLink to={'/homepage/storyreels'}>
-                        <div className="homepageFeedReelsInner">
-                            <AddIcon />
-                            <div className='homepageFeedReelsInnerInfo'>
-                                <h2>Create Story</h2>
-                                <p>Share a photo or write something.</p>
-                            </div>
+                        <AddIcon />
+                        <div className='homepageFeedReelsInfo'>
+                            <h2>Create Story</h2>
+                            <p>Share a photo or write something.</p>
                         </div>
                     </NavLink >
-                </div >
+                </div>
             ) : (
                 <div className="homepageFeedReels_Scroll">
                     {showLeftButton && (<button id='leftScroll' onClick={scrollLeft}><KeyboardArrowLeftIcon /></button>)}
@@ -125,7 +116,7 @@ function HomepageFeedReels() {
                                 <img src={user.photoURL} alt="" />
                                 <div className='ScrollReelsCreate'>
                                     <AddIcon />
-                                    <h3>Create story</h3>
+                                    <h5>Create story</h5>
                                 </div>
                             </div>
                         </NavLink >

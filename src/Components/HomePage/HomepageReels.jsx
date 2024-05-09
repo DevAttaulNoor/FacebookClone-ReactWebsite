@@ -3,7 +3,6 @@ import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { db, storage } from '../../Firebase/firebase';
 import firebase from "firebase/compat/app";
-// import TitleIcon from '@mui/icons-material/Title';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 function HomepageReels() {
@@ -21,12 +20,12 @@ function HomepageReels() {
     const [image, setImage] = useState('');
     const [imageUrl, setImageUrl] = useState('');
 
-    const handleTextAreaChange = (event) => {
-        setTextAreaValue(event.target.value);
-    };
-
     const handleDotClick = (color) => {
         setActiveDot(color);
+    };
+
+    const handleTextAreaChange = (event) => {
+        setTextAreaValue(event.target.value);
     };
 
     const handleAddTextClick = () => {
@@ -38,14 +37,22 @@ function HomepageReels() {
         setShowCards(false);
     };
 
-    const handleAddPhotoClick = () => {
-        setShowForText(false);
-        setShowTextContent(false);
-        setShowAddText(true);
-        setShowForPhoto(false);
-        setShowPhotoContent(true);
-        setShowCards(false);
-        inputRef.current.click();
+    const handleImageChange = (e) => {
+        const selectedImage = e.target.files[0];
+        if (selectedImage && selectedImage.type.includes('image')) {
+            setImage(selectedImage);
+
+            const imageUrl = URL.createObjectURL(selectedImage);
+            setImageUrl(imageUrl);
+            setShowForText(false);
+            setShowTextContent(false);
+            setShowAddText(true);
+            setShowForPhoto(false);
+            setShowPhotoContent(true);
+            setShowCards(false);
+        } else {
+            console.error('Invalid file type. Please select an image.');
+        }
     };
 
     const handleTextInPhoto = () => {
@@ -54,18 +61,6 @@ function HomepageReels() {
         setShowAddText(true);
         setShowForPhoto((prev) => !prev);
         setShowPhotoContent(true);
-    };
-
-    const handleImageChange = (e) => {
-        const selectedImage = e.target.files[0];
-        if (selectedImage && selectedImage.type.includes('image')) {
-            setImage(selectedImage);
-
-            const imageUrl = URL.createObjectURL(selectedImage);
-            setImageUrl(imageUrl);
-        } else {
-            console.error('Invalid file type. Please select an image.');
-        }
     };
 
     const handleDiscardClick = () => {
@@ -165,6 +160,9 @@ function HomepageReels() {
         }
     };
 
+    console.log(image)
+    console.log(imageUrl)
+
     return (
         <div className="homepageReels">
             <div className='homepageReelsLeftbar'>
@@ -254,7 +252,7 @@ function HomepageReels() {
             <div className='homepageReelsMain'>
                 {showCards && (
                     <div className='homepageReelsMainCards'>
-                        <div className="cardContainer photoCard" onClick={handleAddPhotoClick}>
+                        <div className="cardContainer photoCard" onClick={() =>  inputRef.current.click()}>
                             <div className='icon'>
                                 <i></i>
                             </div>
@@ -299,64 +297,6 @@ function HomepageReels() {
                     </div>
                 )}
             </div>
-
-            {/* <div className='homepageReelsMain'>
-                <div className="homepageReelsMain_Body">
-                    <div
-                        className="homepageReelsMain_BodyCard Photo"
-                        style={{ display: showCards ? 'flex' : 'none' }}
-                        onClick={handleAddPhotoClick}
-
-                    >
-                        <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j" alt="" />
-                        <p>Create a Photo Story</p>
-
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            className="hidden-input"
-                            ref={inputRef}
-                        />
-                    </div>
-
-                    <div
-                        className="homepageReelsMain_BodyCard Text"
-                        style={{ display: showCards ? 'flex' : 'none' }}
-                        onClick={handleAddTextClick}
-                    >
-                        <TitleIcon />
-                        <p>Create a Text Story</p>
-                    </div>
-
-                    {showTextContent || showPhotoContent ? (
-                        <div className="contentDiv">
-                            {showTextContent && (
-                                <div className="textStoryContent">
-                                    <p>Preview</p>
-                                    <div className="textStoryContent_Inner">
-                                        <div className={`textStoryWindow ${activeDot}`}>
-                                            <p>{textAreaValue}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-
-                            {showPhotoContent && (
-                                <div className="photoStoryContent">
-                                    <p>Peview</p>
-                                    <div className="photoStoryContent_Inner">
-                                        <div className="photoStoryWindow" style={{ backgroundImage: imageUrl ? `url(${imageUrl})` : 'none' }}>
-                                            {image && console.log(imageUrl)}
-                                            <p>{textAreaValue}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    ) : null}
-                </div>
-            </div> */}
         </div >
     )
 }
