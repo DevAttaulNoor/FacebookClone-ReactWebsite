@@ -46,7 +46,7 @@
 /** HomePageFeeds Reels Scroll Section */
 .homepageFeedReels_Scroll {
     position: relative;
-    overflow: auto;
+    overflow-x: auto;
 }
 
 .homepageFeedReels_Scroll button {
@@ -153,6 +153,10 @@
     box-shadow: 0px 5px 5px -7px rgb(0, 0, 0, 0.75);
 }
 
+.homepageFeedReels_ScrollReelsStories:last-child {
+    margin-right: 0px;
+}
+
 .homepageFeedReels_ScrollReelsStories .MuiAvatar-root {
     width: 36px;
     height: 36px;
@@ -168,5 +172,8 @@
 .ReelsStoriesTextOverlay {
     text-align: center;
     font-size: 12px;
+    word-break: break-word;
+    overflow-x: hidden;
+    overflow-y: auto;
     color: #fff;
 }

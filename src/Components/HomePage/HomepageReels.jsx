@@ -8,24 +8,35 @@ import SettingsIcon from '@mui/icons-material/Settings';
 function HomepageReels() {
     const colors = ['blue', 'red', 'green', 'black', 'brown', 'yellow', 'blueviolet', 'cyan', 'gold', 'violet', 'silver', 'purple'];
     const user = useSelector((state) => state.data.user.user);
-    const [activeDot, setActiveDot] = useState(colors[0]);
-    const [showForText, setShowForText] = useState(false);
-    const [showTextContent, setShowTextContent] = useState(false);
-    const [showForPhoto, setShowForPhoto] = useState(false);
-    const [showPhotoContent, setShowPhotoContent] = useState(false);
-    const [showAddText, setShowAddText] = useState(false);
     const [showCards, setShowCards] = useState(true);
+    const [showAddText, setShowAddText] = useState(false);
     const [textAreaValue, setTextAreaValue] = useState("");
-    const inputRef = useRef(null);
+    const [textAreaValueCount, setTextAreaValueCount] = useState(250);
+    const [showTextContent, setShowTextContent] = useState(false);
+    const [showForText, setShowForText] = useState(false);
+    const [activeDot, setActiveDot] = useState(colors[0]);
+    const [showPhotoContent, setShowPhotoContent] = useState(false);
+    const [showForPhoto, setShowForPhoto] = useState(false);
     const [image, setImage] = useState('');
     const [imageUrl, setImageUrl] = useState('');
+    const inputRef = useRef(null);
 
     const handleDotClick = (color) => {
         setActiveDot(color);
     };
 
     const handleTextAreaChange = (event) => {
-        setTextAreaValue(event.target.value);
+        const inputValue = event.target.value;
+
+        if (inputValue.length > 250) {
+            console.log("Length Exceeds 10");
+            event.preventDefault();
+            event.target.setSelectionRange(0, 250);
+        } else {
+            console.log("Length within 10");
+            setTextAreaValue(inputValue);
+            setTextAreaValueCount(250 - inputValue.length)
+        }
     };
 
     const handleAddTextClick = () => {
@@ -74,6 +85,7 @@ function HomepageReels() {
         setShowPhotoContent(false);
         setShowAddText(false);
         setShowCards(true);
+        setTextAreaValueCount(250);
 
         // Reset the file input
         if (inputRef.current) {
@@ -90,13 +102,12 @@ function HomepageReels() {
             db.collection("Reels").add({
                 uid: user.uid,
                 email: user.email,
-                username: `${user.firstname} ${user.lastname}`,
+                username: user.username,
                 photoURL: user.photoURL,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 text: textAreaValue.trim(),
                 background: activeDotValue,
             });
-            console.log("succesfull")
 
             // Reset state variables to clear the fields
             setTextAreaValue("");
@@ -107,6 +118,7 @@ function HomepageReels() {
             setShowAddText(false);
             setShowForPhoto(false);
             setShowCards(true);
+            setTextAreaValueCount(250);
         }
 
         if (showPhotoContent && image) {
@@ -131,14 +143,12 @@ function HomepageReels() {
                             db.collection("Reels").add({
                                 uid: user.uid,
                                 email: user.email,
-                                username: `${user.firstname} ${user.lastname}`,
+                                username: user.username,
                                 photoURL: user.photoURL,
                                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                                 text: textAreaValue.trim(),
                                 background: url,
                             });
-
-                            console.log("Successful");
 
                             // Reset state variables to clear the fields
                             setImage('');
@@ -151,6 +161,7 @@ function HomepageReels() {
                             setShowAddText(false);
                             setShowForPhoto(false);
                             setShowCards(true);
+                            setTextAreaValueCount(250);
                         })
                         .catch((downloadError) => {
                             console.error("Error getting download URL:", downloadError);
@@ -159,9 +170,6 @@ function HomepageReels() {
             );
         }
     };
-
-    console.log(image)
-    console.log(imageUrl)
 
     return (
         <div className="homepageReels">
@@ -188,6 +196,8 @@ function HomepageReels() {
                                     value={textAreaValue}
                                     onChange={handleTextAreaChange}
                                 ></textarea>
+
+                                <p id='limitNote'>{textAreaValueCount} charcters remaining</p>
 
                                 <select name="texts">
                                     <option value="Simple">Simple</option>
@@ -228,6 +238,8 @@ function HomepageReels() {
                                         onChange={handleTextAreaChange}
                                     ></textarea>
 
+                                    <p id='limitNote'>{textAreaValueCount} charcters remaining</p>
+
                                     <select name="texts">
                                         <option value="Simple">Simple</option>
                                         <option value="Clean">Clean</option>
@@ -252,7 +264,7 @@ function HomepageReels() {
             <div className='homepageReelsMain'>
                 {showCards && (
                     <div className='homepageReelsMainCards'>
-                        <div className="cardContainer photoCard" onClick={() =>  inputRef.current.click()}>
+                        <div className="cardContainer photoCard" onClick={() => inputRef.current.click()}>
                             <div className='icon'>
                                 <i></i>
                             </div>
@@ -277,7 +289,7 @@ function HomepageReels() {
 
                 {showTextContent && (
                     <div className="textReelContent">
-                        <p>Preview</p>
+                        <h5>Preview</h5>
                         <div className="textReelContentInner">
                             <div className={`textStoryWindow ${activeDot}`}>
                                 <p>{textAreaValue}</p>
@@ -288,7 +300,7 @@ function HomepageReels() {
 
                 {showPhotoContent && (
                     <div className="photoReelContent">
-                        <p>Peview</p>
+                        <h5>Peview</h5>
                         <div className="photoReelContentInner">
                             <div className="photoStoryWindow" style={{ backgroundImage: imageUrl ? `url(${imageUrl})` : 'none' }}>
                                 <p>{textAreaValue}</p>

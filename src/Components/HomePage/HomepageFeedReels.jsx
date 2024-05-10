@@ -1,7 +1,7 @@
-import '../../CSS/HomePage/HomepageFeedReels.css'
+import '../../CSS/HomePage/HomepageFeedReels.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink, Route, Routes } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import { db } from '../../Firebase/firebase';
 import AddIcon from '@mui/icons-material/Add';
@@ -11,34 +11,13 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 function HomepageFeedReels() {
     const user = useSelector((state) => state.data.user.user);
     const [reels, setReels] = useState([]);
-    const initialShowLeftButton = sessionStorage.getItem('showLeftButton') === 'true' || false;
-    const initialShowRightButton = sessionStorage.getItem('showRightButton') === 'true' || false;
-    const [showLeftButton, setShowLeftButton] = useState(initialShowLeftButton);
-    const [showRightButton, setShowRightButton] = useState(initialShowRightButton);
+    const [showLeftButton, setShowLeftButton] = useState(false);
+    const [showRightButton, setShowRightButton] = useState(false);
     const containerRef = useRef(null);
 
     const scrollLeft = () => {
         if (containerRef.current) {
-            const scrollAmount = -150;
-            const scrollDuration = 300;
-            const container = containerRef.current;
-
-            const startTime = performance.now();
-            const scroll = (currentTime) => {
-                const elapsedTime = currentTime - startTime;
-
-                if (elapsedTime < scrollDuration) {
-                    const easing = (t) => t * (2 - t);
-                    const progress = elapsedTime / scrollDuration;
-                    const scrollPosition = scrollAmount * easing(progress);
-                    container.scrollBy({ left: scrollPosition, behavior: 'smooth' });
-                    requestAnimationFrame(scroll);
-                } else {
-                    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-                }
-            };
-
-            requestAnimationFrame(scroll);
+            containerRef.current.scrollLeft -= 150;
         }
     };
 
@@ -59,41 +38,39 @@ function HomepageFeedReels() {
     }, []);
 
     useEffect(() => {
-        const container = containerRef.current;
-
-        // Function to check scroll position and update button visibility
+        const container = containerRef.current; // Store the reference in a variable
+    
         const checkButtons = () => {
             if (container) {
-                const scrollPosition = container.scrollLeft;
-                const maxScroll = container.scrollWidth - container.clientWidth;
-                const newShowLeftButton = scrollPosition > 0;
-                const newShowRightButton = scrollPosition < maxScroll;
-
-                // Update state based on scroll position
-                setShowLeftButton(newShowLeftButton);
-                setShowRightButton(newShowRightButton);
-
-                // Store button states in session storage
-                sessionStorage.setItem('showLeftButton', newShowLeftButton.toString());
-                sessionStorage.setItem('showRightButton', newShowRightButton.toString());
+                setShowLeftButton(container.scrollLeft > 0);
+                setShowRightButton(container.scrollWidth > container.clientWidth && container.scrollLeft < container.scrollWidth - container.clientWidth);
             }
         };
-
-        // Initial check when component mounts
+    
         checkButtons();
-
+    
+        const resizeListener = () => {
+            checkButtons();
+        };
+    
+        const scrollListener = () => {
+            checkButtons();
+        };
+    
+        window.addEventListener('resize', resizeListener);
+        
         if (container) {
-            container.addEventListener('scroll', checkButtons);
+            container.addEventListener('scroll', scrollListener);
         }
-
-        // Cleanup when component unmounts
+    
         return () => {
+            window.removeEventListener('resize', resizeListener);
             if (container) {
-                container.removeEventListener('scroll', checkButtons);
+                container.removeEventListener('scroll', scrollListener);
             }
         };
-    }, [showLeftButton, showRightButton]);
-
+    }, [reels]);
+    
     return (
         <>
             {reels.length === 0 ? (
@@ -145,7 +122,7 @@ function HomepageFeedReels() {
                 </div>
             )}
         </>
-    )
+    );
 }
 
 export default HomepageFeedReels;
