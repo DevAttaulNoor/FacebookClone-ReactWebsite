@@ -65,11 +65,13 @@
 .homepageFeedReels_Scroll #leftScroll {
     top: 45%;
     left: 20px;
+    cursor: pointer;
 }
 
 .homepageFeedReels_Scroll #rightScroll {
     top: 45%;
     right: 20px;
+    cursor: pointer;
 }
 
 /* HomePageFeeds Reels ScrollReels Section */

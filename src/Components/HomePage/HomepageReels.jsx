@@ -7,11 +7,13 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 function HomepageReels() {
     const colors = ['blue', 'red', 'green', 'black', 'brown', 'yellow', 'blueviolet', 'cyan', 'gold', 'violet', 'silver', 'purple'];
+    const fontStyles = ['Helvetica', 'Times New Roman', 'Courier New', 'Verdana'];
     const user = useSelector((state) => state.data.user.user);
     const [showCards, setShowCards] = useState(true);
     const [showAddText, setShowAddText] = useState(false);
     const [textAreaValue, setTextAreaValue] = useState("");
     const [textAreaValueCount, setTextAreaValueCount] = useState(250);
+    const [activeFontStyle, setActiveFontStyle] = useState(fontStyles[0]);
     const [showTextContent, setShowTextContent] = useState(false);
     const [showForText, setShowForText] = useState(false);
     const [activeDot, setActiveDot] = useState(colors[0]);
@@ -23,6 +25,10 @@ function HomepageReels() {
 
     const handleDotClick = (color) => {
         setActiveDot(color);
+    };
+
+    const handleFontStyleChange = (fontStyle) => { // Function to handle font style change
+        setActiveFontStyle(fontStyle);
     };
 
     const handleTextAreaChange = (event) => {
@@ -107,6 +113,7 @@ function HomepageReels() {
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 text: textAreaValue.trim(),
                 background: activeDotValue,
+                font: activeFontStyle,
             });
 
             // Reset state variables to clear the fields
@@ -148,6 +155,7 @@ function HomepageReels() {
                                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                                 text: textAreaValue.trim(),
                                 background: url,
+                                font: activeFontStyle,
                             });
 
                             // Reset state variables to clear the fields
@@ -199,12 +207,10 @@ function HomepageReels() {
 
                                 <p id='limitNote'>{textAreaValueCount} charcters remaining</p>
 
-                                <select name="texts">
-                                    <option value="Simple">Simple</option>
-                                    <option value="Clean">Clean</option>
-                                    <option value="Causal">Causal</option>
-                                    <option value="Fancy">Fancy</option>
-                                    <option value="Headline">Headline</option>
+                                <select name="fonts" onChange={(e) => handleFontStyleChange(e.target.value)}>
+                                    {fontStyles.map((fontStyle) => (
+                                        <option key={fontStyle} value={fontStyle}>{fontStyle}</option>
+                                    ))}
                                 </select>
 
                                 <div className='bgColors'>
@@ -240,12 +246,10 @@ function HomepageReels() {
 
                                     <p id='limitNote'>{textAreaValueCount} charcters remaining</p>
 
-                                    <select name="texts">
-                                        <option value="Simple">Simple</option>
-                                        <option value="Clean">Clean</option>
-                                        <option value="Causal">Causal</option>
-                                        <option value="Fancy">Fancy</option>
-                                        <option value="Headline">Headline</option>
+                                    <select name="fonts" onChange={(e) => handleFontStyleChange(e.target.value)}>
+                                        {fontStyles.map((fontStyle) => (
+                                            <option key={fontStyle} value={fontStyle}>{fontStyle}</option>
+                                        ))}
                                     </select>
                                 </div>
                             )}
@@ -292,7 +296,7 @@ function HomepageReels() {
                         <h5>Preview</h5>
                         <div className="textReelContentInner">
                             <div className={`textStoryWindow ${activeDot}`}>
-                                <p>{textAreaValue}</p>
+                                <p style={{ fontFamily: activeFontStyle }}>{textAreaValue}</p>
                             </div>
                         </div>
                     </div>
@@ -303,7 +307,7 @@ function HomepageReels() {
                         <h5>Peview</h5>
                         <div className="photoReelContentInner">
                             <div className="photoStoryWindow" style={{ backgroundImage: imageUrl ? `url(${imageUrl})` : 'none' }}>
-                                <p>{textAreaValue}</p>
+                                <p style={{ fontFamily: activeFontStyle }}>{textAreaValue}</p>
                             </div>
                         </div>
                     </div>

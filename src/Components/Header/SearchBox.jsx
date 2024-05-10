@@ -37,15 +37,16 @@ function SearchBox() {
                             photoURL: data.photoURL,
                         };
                     })
-                    .filter((user) =>
-                        user.username.toLowerCase().includes(searchText.toLowerCase())
+                    .filter((person) =>
+                        person.username.toLowerCase().includes(searchText.toLowerCase()) &&
+                        person.username !== user.username
                     );
                 setMatchingUsernames(matchingUsernames);
             })
             .catch((error) => {
                 console.error('Error getting documents:', error);
             });
-    }, [searchText]);
+    }, [searchText, user.username]);
 
     return (
         <div className="searchBox">

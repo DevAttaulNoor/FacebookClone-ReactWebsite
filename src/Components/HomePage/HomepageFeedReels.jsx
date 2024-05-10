@@ -110,7 +110,7 @@ function HomepageFeedReels() {
                             >
 
                                 <Avatar src={reel.photoURL} />
-                                <div className="ReelsStoriesTextOverlay">
+                                <div className="ReelsStoriesTextOverlay" style={{fontFamily: reel.font}}>
                                     {reel.text}
                                 </div>
                                 <p>{reel.username}</p>
