@@ -226,7 +226,7 @@ function HomepageFeedPosting() {
                         </div>
                     </div>
 
-                    {media !== null && <personalbar className='image_progress'>Media is added</personalbar>}
+                    {media !== null && <p className='image_progress'>Media is added</p>}
                     {progress !== 0 && <progress className='post_progress' value={progress} max="100" />}
                     <button type="submit" id="submitBtn" onClick={handleUpload}>Post</button>
                 </form>

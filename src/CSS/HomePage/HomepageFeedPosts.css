@@ -255,7 +255,7 @@
 .EditModal_Middle #originalImg,
 .EditModal_Middle #editedVideo,
 .EditModal_Middle #originalVideo {
-    width: 348px;
+    width: 100%;
     height: 220px;
     object-fit: contain;
     border: 1px solid gray;
