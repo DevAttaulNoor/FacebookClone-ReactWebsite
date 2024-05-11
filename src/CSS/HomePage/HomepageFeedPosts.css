@@ -132,6 +132,15 @@
     background-size: 41px 503px;
 }
 
+.postSettingOptionLeft #unsavePostIcon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yZ/r/w0CJiTcp3tP.png');
+    background-position: 0px -84px;
+    background-size: 21px 593px;
+}
+
 .postSettingOptionLeft #deletePostIcon {
     width: 20px;
     height: 20px;

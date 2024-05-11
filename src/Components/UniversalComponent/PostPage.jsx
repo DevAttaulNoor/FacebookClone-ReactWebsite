@@ -1,9 +1,10 @@
 import "../../CSS/UniversalComponent/PostPage.css";
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from '@mui/material';
 import { NavLink } from "react-router-dom";
 import { db } from "../../Firebase/firebase";
+import { setSelectedFriend } from "../../Redux/friendSlice";
 import SendIcon from '@mui/icons-material/Send';
 import PublicIcon from '@mui/icons-material/Public';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -13,6 +14,7 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
 function PostPage() {
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
     const selectedPost = useSelector((state) => state.data.post.selectedPost);
     const [post, setPost] = useState('');
@@ -132,6 +134,11 @@ function PostPage() {
                 });
         }
     };
+
+    const handleFriendSelection = (friendUid) => {
+        sessionStorage.setItem('selectedFriend', JSON.stringify({ friendUid: friendUid }));
+        dispatch(setSelectedFriend(friendUid));
+    }
 
     const timeAgo = (timestamp) => {
         if (!timestamp || !timestamp.toDate) {
@@ -276,7 +283,7 @@ function PostPage() {
                                         <h4>{post.username}</h4>
                                     </NavLink>
                                 ) : (
-                                    <NavLink to={`/profilepage/${post.uid}/post`}>
+                                    <NavLink to={`/profilepage/${post.uid}/post`} onClick={() => handleFriendSelection(post.uid)}>
                                         <h4>{post.username}</h4>
                                     </NavLink>
                                 )}

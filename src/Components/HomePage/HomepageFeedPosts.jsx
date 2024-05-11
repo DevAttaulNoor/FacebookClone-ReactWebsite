@@ -267,22 +267,28 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
         }
     };
 
-    const handleSavePost = () => {
-        db.collection("Users").doc(user.uid).collection("SavedPosts").add({
-            postid: id,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        });
-    }
-
-    const handleDelSavePost = () => {
-        db.collection("Users").doc(user.uid).collection("SavedPosts").doc(id).delete()
-            .then(() => {
-                console.log("Document successfully deleted");
-            })
-            .catch((error) => {
-                console.error("Error deleting document: ", error);
+    const handleSavePost = async () => {
+        try {
+            await db.collection("Users").doc(user.uid).collection("SavedPosts").doc(id).set({
+                postid: id,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             });
-    }
+            console.log("Document successfully saved");
+            setSavedPost(true);
+        } catch (error) {
+            console.error("Error saving document: ", error);
+        }
+    };
+
+    const handleDelSavePost = async () => {
+        try {
+            await db.collection("Users").doc(user.uid).collection("SavedPosts").doc(id).delete();
+            console.log("Document successfully deleted");
+            setSavedPost(false);
+        } catch (error) {
+            console.error("Error deleting document: ", error);
+        }
+    };
 
     const handleFriendSelection = (friendUid) => {
         sessionStorage.setItem('selectedFriend', JSON.stringify({ friendUid: friendUid }));
@@ -487,7 +493,7 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
                                             ) : (
                                                 <div className="postSettingOption" onClick={handleDelSavePost}>
                                                     <div className="postSettingOptionLeft">
-                                                        <i id='savePostIcon'></i>
+                                                        <i id='unsavePostIcon'></i>
                                                     </div>
                                                     <div className="postSettingOptionRight">
                                                         <h5>Unsave post</h5>
