@@ -5,7 +5,7 @@ import firebase from "firebase/compat/app";
 import { Avatar } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { db, storage } from '../../Firebase/firebase';
+import { db } from '../../Firebase/firebase';
 import Skeleton from '../Skeletons/Skeleton';
 import Skeleton_UserInfo from '../Skeletons/Skeleton_UserInfo';
 import HomepageFeedPostsCmtModal from './HomepageFeedPostsCmtModal';
@@ -18,6 +18,7 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import { setSelectedFriend } from '../../Redux/friendSlice';
+import HomePageFeedPostEdit from './HomePageFeedPostEdit';
 
 function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, timestamp, message }) {
     Modal.setAppElement('#root');
@@ -25,11 +26,9 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
     const user = useSelector((state) => state.data.user.user);
     const [post, setPost] = useState({});
     const [isEditing, setIsEditing] = useState(false);
-    const [editedMessage, setEditedMessage] = useState(message);
-    const [mediaFile, setMediaFile] = useState(null)
-    const [editedMedia, setEditedMedia] = useState(media)
-    const [mediaFileType, setMediaFileType] = useState(null)
-    const [editedMediaFileType, setEditedMediaFileType] = useState(mediaType)
+    // const [editedMessage, setEditedMessage] = useState(message);
+    // const [editedMedia, setEditedMedia] = useState(media)
+    // const [mediaFileType, setMediaFileType] = useState(null)
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [isDropdownClicked, setIsDropdownClicked] = useState(false);
     const [likesCount, setLikesCount] = useState(0);
@@ -44,83 +43,9 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
 
     const handleEdit = () => {
         setIsEditing(true);
-        setEditedMedia(media);
-        setEditedMessage(message);
-        setMediaFileType(mediaType);
-    };
-
-    const handleSave = async () => {
-        const postRef = db.collection("Posts").doc(id);
-        const updateData = {};
-
-        if (editedMessage !== message) {
-            updateData.message = editedMessage;
-        }
-
-        if (mediaFile) {
-            const StorageRef = storage.ref(`Posts/${user.uid}/${mediaFile.name}`);
-            await StorageRef.put(mediaFile);
-            const mediaUrl = await StorageRef.getDownloadURL();
-            updateData.media = mediaUrl;
-
-            if (mediaFile.type.startsWith("image/")) {
-                setMediaFileType('image')
-                updateData.mediaType = 'image';
-                console.log("Media Type is image!");
-            }
-
-            else if (mediaFile.type.startsWith("video/")) {
-                setMediaFileType('video')
-                updateData.mediaType = 'video';
-                console.log("Media Type is video!");
-            }
-
-            else {
-                setMediaFileType('invalid')
-                updateData.mediaType = 'invalid';
-                console.log("Media Type is invalid!");
-            }
-        }
-
-        else if ((editedMessage !== message) && (mediaFile)) {
-            updateData.message = editedMessage;
-
-            const StorageRef = storage.ref(`Posts/${user.uid}/${mediaFile.name}`);
-            await StorageRef.put(mediaFile);
-            const mediaUrl = await StorageRef.getDownloadURL();
-            updateData.media = mediaUrl;
-
-            if (mediaFile.type.startsWith("image/")) {
-                setMediaFileType('image')
-                updateData.mediaType = 'image';
-                console.log("Media Type is image!");
-            }
-
-            else if (mediaFile.type.startsWith("video/")) {
-                setMediaFileType('video')
-                updateData.mediaType = 'video';
-                console.log("Media Type is video!");
-            }
-
-            else {
-                setMediaFileType('invalid')
-                updateData.mediaType = 'invalid';
-                console.log("Media Type is invalid!");
-            }
-        }
-
-        if (Object.keys(updateData).length > 0) {
-            try {
-                await postRef.update(updateData);
-                console.log("Media URLs in Firestore updated successfully!");
-                setIsEditing(false);
-                setIsDropdownVisible(false);
-            }
-
-            catch (error) {
-                console.error("Error updating media URLs in Firestore: ", error);
-            }
-        }
+        // setEditedMedia(media);
+        // setEditedMessage(message);
+        // setMediaFileType(mediaType);
     };
 
     const handleDelete = async () => {
@@ -237,34 +162,6 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
 
     const handleLikedUsersClick = () => {
         setIsLikedUsersModalOpen(true);
-    };
-
-    const handleMediaUpload = (e) => {
-        const file = e.target.files[0];
-
-        if (file) {
-            const storageRef = storage.ref(`Posts/${user.uid}/${file.name}`);
-            storageRef.put(file).then((snapshot) => {
-                snapshot.ref.getDownloadURL().then((url) => {
-                    if (file.type.startsWith("image/")) {
-                        setEditedMediaFileType('image')
-                        setEditedMedia(url);
-                        setMediaFile(file)
-                    }
-
-                    else if (file.type.startsWith("video/")) {
-                        setEditedMediaFileType('video')
-                        setEditedMedia(url);
-                        setMediaFile(file)
-                    }
-                });
-            });
-        }
-
-        else {
-            setEditedMedia(null);
-            setEditedMediaFileType(null);
-        }
     };
 
     const handleSavePost = async () => {
@@ -519,56 +416,15 @@ function HomepageFeedPosts({ id, userid, photoURL, media, mediaType, username, t
                         <div className='homepageFeedsPosts_MiddleTop'>
                             {isEditing ? (
                                 <Modal className="editModal" isOpen={isEditing} onRequestClose={() => setIsEditing(false)}>
-                                    <div className='EditModal'>
-                                        <div className="EditModal_Top">
-                                            <h2>Edit Post</h2>
-                                        </div>
-
-                                        <div className="EditModal_Middle">
-                                            <input id="msgInput" type="text" value={editedMessage} onChange={(e) => setEditedMessage(e.target.value)} />
-                                            <input id="mediaInput" type="file" accept="image/*,video/*" onChange={handleMediaUpload} style={{ display: 'none' }} />
-                                            <label id="mediaInputLabel" htmlFor="mediaInput">Select Media</label>
-
-                                            {editedMedia ? (
-                                                editedMediaFileType === 'image' ? (
-                                                    <img id="editedImg" src={editedMedia} alt="Edited" />
-                                                ) : editedMediaFileType === 'video' ? (
-                                                    <video id="editedVideo" controls>
-                                                        <source src={editedMedia} type="video/mp4" />
-                                                    </video>
-                                                ) : (
-                                                    <p id='noMedia'>Invalid media type</p>
-                                                )
-                                            ) : (
-                                                media ? (
-                                                    mediaFileType === 'image' ? (
-                                                        <img id="originalImg" src={media} alt="Original" />
-                                                    ) : mediaFileType === 'video' ? (
-                                                        <video id="originalVideo" controls>
-                                                            <source src={media} type="video/mp4" />
-                                                        </video>
-                                                    ) : (
-                                                        <p id='noMedia'>Invalid media type</p>
-                                                    )
-                                                ) : (
-                                                    <p id='noMedia'>No media selected</p>
-                                                )
-                                            )}
-                                        </div>
-
-                                        <div className="EditModal_Bottom">
-                                            <button onClick={handleSave}>Save</button>
-                                            <button onClick={() => setIsEditing(false)}>Cancel</button>
-                                        </div>
-                                    </div>
+                                    <HomePageFeedPostEdit id={id} media={media} mediaType={mediaType} message={message} close={() => setIsEditing(false)} />
                                 </Modal>
                             ) : (
                                 <div className='homepageFeedsPosts_MiddleTopInner'>
-                                    {message && <div id="postMsg" style={{ fontSize: media ? '15px' : '30px' }}> {editedMessage} </div>}
-                                    {media && mediaType === 'image' && <img id="postImg" src={editedMedia} alt="postImage" />}
+                                    {message && <div id="postMsg" style={{ fontSize: media ? '15px' : '30px' }}> {message} </div>}
+                                    {media && mediaType === 'image' && <img id="postImg" src={media} alt="postImage" />}
                                     {media && mediaType === 'video' && (
                                         <video id="postVideo" controls>
-                                            <source src={editedMedia} type="video/mp4" />
+                                            <source src={media} type="video/mp4" />
                                         </video>
                                     )}
                                 </div>

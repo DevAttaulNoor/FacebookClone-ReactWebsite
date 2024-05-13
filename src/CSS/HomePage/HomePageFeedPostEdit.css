@@ -1,0 +1,268 @@
+/** HomePage Feed Posting Modal Section */
+.postingModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 470px;
+    border-radius: 10px;
+    background-color: #fff;
+    z-index: 999;
+}
+
+.postingModal .post_progress {
+    width: -webkit-fill-available;
+    margin: 0 16px;
+}
+
+progress {
+    block-size: 4px;
+}
+
+.postingModal .image_progress {
+    font-size: 12px;
+    font-weight: 500px;
+    margin: 5px 0 0 16px;
+    color: green;
+}
+
+.postingModal #submitBtn {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background-color: #2391fa;
+    margin: 14px;
+    padding: 8px 5px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    width: -webkit-fill-available;
+    border-radius: 8px;
+}
+
+
+.postingModal #notSubmitBtn {
+    font-size: 14px;
+    font-weight: 600;
+    color: #BCC0C4;
+    background-color: #E4E6EB;
+    margin: 14px;
+    padding: 8px 5px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    width: -webkit-fill-available;
+    border-radius: 8px;
+}
+
+/* HomePage Feed Posting Modal Top Section */
+.postingModal_Top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid lightgray;
+    height: 55px;
+}
+
+.postingModal_Top p {
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.postingModal_Top .MuiSvgIcon-root {
+    position: absolute;
+    top: 11px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+    border-radius: 50%;
+    background-color: #E4E6EB;
+}
+
+.postingModal_Top .MuiSvgIcon-root:hover {
+    cursor: pointer;
+}
+
+/* HomePage Feed Posting Modal Middle Section */
+.postingModal_Middle {
+    display: flex;
+    flex-direction: column;
+    padding: 14px;
+    padding-bottom: 0;
+}
+
+.postingModal_MiddleTop {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.postingModal_MiddleTop p {
+    margin-left: 10px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.postingModal_MiddleMiddle {
+    position: relative;
+    display: flex;
+    align-items: end;
+}
+
+.postingModal_MiddleMiddle textarea#mediaMsg {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0px;
+    border: 0;
+    outline: 0;
+    resize: none;
+    color: #050505;
+}
+
+.postingModal_MiddleMiddle textarea#nonmediaMsg {
+    width: 100%;
+    font-size: 22px;
+    font-weight: 400;
+    padding: 0px;
+    border: 0;
+    outline: 0;
+    resize: none;
+    color: #050505;
+}
+
+.postingModal_MiddleMiddle svg {
+    color: #E4E6EB;
+}
+
+.postingModal_MiddleBottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-top: 15px;
+}
+
+.postingModal_MiddleBottom .mediaContainer{
+    position: relative;
+    width: 100%;
+    display: flex;
+    margin-top: 15px;
+}
+
+.mediaContainer img#originalImg,
+.mediaContainer video#originalVideo {
+    width: 100%;
+    height: 280px;
+    padding: 8px;
+    border-radius: 8px;
+    object-fit: contain;
+    border: 1px solid #CED0D4;
+    background-color: #050505;
+}
+
+.postingModal_MiddleBottom svg#closeIcon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    padding: 5px;
+    border-radius: 50%;
+    color: #050505;
+    background-color: #fff;
+}
+
+
+
+.postingModal_MiddleBottom img {
+    width: 40px;
+}
+
+.postingModal_MiddleBottom .MuiSvgIcon-root {
+    color: lightgray;
+    width: 26px;
+    height: 26px;
+}
+
+.postingModal_MiddleBottom img:hover,
+.postingModal_MiddleBottom .MuiSvgIcon-root:hover{
+    cursor: pointer;
+}
+
+/* DropdownBox Section */
+.postingModal_MiddleBottom .EmojiPickerReact,
+.postingModal_MiddleMiddle .EmojiPickerReact {
+    width: 260px !important;
+    height: 240px !important;
+    flex-direction: column-reverse !important;
+    border-radius: 8px !important;
+    position: absolute !important;
+    top: 30px;
+    right: 20px;
+    background-color: #fff;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    padding: 0;
+    z-index: 1;
+}
+
+.EmojiPickerReact .epr-header .epr-header-overlay {
+    display: none;
+}
+
+.EmojiPickerReact .epr-category-nav {
+    padding: 3px !important;
+    border-top: 1px solid lightgrey;
+}
+
+.EmojiPickerReact li.epr-emoji-category>.epr-emoji-category-content {
+    grid-template-columns: repeat(8, 1fr) !important;
+    margin: 0 !important;
+}
+
+.EmojiPickerReact button.epr-emoji .epr-emoji-img {
+    max-height: 35px !important;
+    max-width: 35px !important;
+    min-height: 35px !important;
+    min-width: 35px !important;
+    padding: 4px !important;
+}
+
+.EmojiPickerReact button.epr-emoji {
+    height: 35px !important;
+    max-height: 35px !important;
+    max-width: 35px !important;
+    width: 35px !important;
+}
+
+.EmojiPickerReact .epr-preview {
+    display: none !important;
+}
+
+.EmojiPickerReact li.epr-emoji-category>.epr-emoji-category-label {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    height: min-content !important;
+    padding: 0px !important;
+}
+
+.EmojiPickerReact .epr-category-nav {
+    justify-content: initial !important;
+}
+
+/* HomePage Feed Posting Modal Bottom Section */
+.postingModal_Bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    margin: 14px 14px 5px 14px;
+    padding: 12px 10px;
+}
+
+.postingModal_BottomLeft p {
+    font-size: 15px;
+    font-weight: 600;
+}
