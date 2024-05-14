@@ -1,12 +1,12 @@
-/** HomePage Feeds Posts Comment Modals Section */
-.homepageFeedPosts_CommentModal{
+/** Post Comment Section */
+.postComment {
     width: 560px;
     height: 460px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
@@ -15,8 +15,8 @@
     background: #fff;
 }
 
-/* HomePage Feeds Posts Comment Modals Top Section */
-.homepageFeedPosts_CommentModalTop {
+/* Post Comment Top Section */
+.postCommentTop {
     position: relative;
     width: 100%;
     display: flex;
@@ -27,26 +27,23 @@
     box-sizing: border-box;
 }
 
-.homepageFeedPosts_CommentModalTop .MuiSvgIcon-root {
+.postCommentTop .MuiSvgIcon-root {
     position: absolute;
     right: 10px;
     padding: 4px;
     border-radius: 50%;
+    cursor: pointer;
     color: #050505;
     background-color: #E4E6EB;
 }
 
-.homepageFeedPosts_CommentModalTop .MuiSvgIcon-root:hover {
-    cursor: pointer;
-}
-
-.homepageFeedPosts_CommentModalTop p {
+.postCommentTop p {
     font-size: 20px;
     font-weight: 600;
 }
 
-/* HomePage Feeds Posts Comment Modals Middle Section */
-.homepageFeedPosts_CommentModalMiddle {
+/* Post Comment Middle Section */
+.postCommentMiddle {
     width: 100%;
     height: 360px;
     padding: 12px;
@@ -57,16 +54,16 @@
     box-sizing: border-box;
 }
 
-.homepageFeedPosts_CommentModalMiddle:last-child {
+.postCommentMiddle:last-child {
     margin-bottom: 0px;
 }
 
-.homepageFeedPosts_CommentModalMiddle .comments {
+.postCommentMiddle .comments {
     display: flex;
     margin-bottom: 15px;
 }
 
-.homepageFeedPosts_CommentModalMiddle .comments:last-child {
+.postCommentMiddle .comments:last-child {
     margin-bottom: 0px;
 }
 
@@ -126,15 +123,15 @@
     text-decoration: underline;
 }
 
-/* HomePage Feeds Posts Comment Modals Bottom Section */
-.homepageFeedPosts_CommentModalBottom {
+/* Post Comment Bottom Section */
+.postCommentBottom {
     width: 100%;
     padding: 0 12px;
     border-top: 1px solid #CED0D4;
     box-sizing: border-box;
 }
 
-.homepageFeedPosts_CommentModalBottom .commentInput {
+.postCommentBottom .commentInput {
     position: relative;
     display: flex;
     align-items: center;
@@ -147,12 +144,9 @@
     height: 18px;
     outline: 0;
     border: 1px solid transparent;
+    cursor: pointer;
     color: gray;
     background-color: whitesmoke;
-}
-
-.commentInput .MuiSvgIcon-root:hover {
-    cursor: pointer;
 }
 
 .commentInput input {

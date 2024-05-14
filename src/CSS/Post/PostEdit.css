@@ -1,75 +1,30 @@
-/** HomePage Feed Posting Modal Section */
-.postingModal {
-    position: fixed;
-    top: 50%;
+/** Post Edit Section */
+.postEdit {
+    position: absolute;
+    top: 54%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 470px;
+    width: 480px;
     border-radius: 10px;
-    background-color: #fff;
     z-index: 999;
+    background-color: #fff;
 }
 
-.postingModal .post_progress {
-    width: -webkit-fill-available;
-    margin: 0 16px;
-}
-
-progress {
-    block-size: 4px;
-}
-
-.postingModal .image_progress {
-    font-size: 12px;
-    font-weight: 500px;
-    margin: 5px 0 0 16px;
-    color: green;
-}
-
-.postingModal #submitBtn {
-    font-size: 14px;
-    font-weight: 600;
-    color: #fff;
-    background-color: #2391fa;
-    margin: 14px;
-    padding: 8px 5px;
-    border: 0;
-    outline: 0;
-    cursor: pointer;
-    width: -webkit-fill-available;
-    border-radius: 8px;
-}
-
-
-.postingModal #notSubmitBtn {
-    font-size: 14px;
-    font-weight: 600;
-    color: #BCC0C4;
-    background-color: #E4E6EB;
-    margin: 14px;
-    padding: 8px 5px;
-    border: 0;
-    outline: 0;
-    cursor: pointer;
-    width: -webkit-fill-available;
-    border-radius: 8px;
-}
-
-/* HomePage Feed Posting Modal Top Section */
-.postingModal_Top {
+/* Post Edit Top Section */
+.postEditTop {
+    height: 55px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-bottom: 1px solid lightgray;
-    height: 55px;
 }
 
-.postingModal_Top p {
+.postEditTop p {
     font-size: 19px;
     font-weight: 700;
 }
 
-.postingModal_Top .MuiSvgIcon-root {
+.postEditTop .MuiSvgIcon-root {
     position: absolute;
     top: 11px;
     right: 12px;
@@ -77,66 +32,58 @@ progress {
     height: 32px;
     padding: 6px;
     border-radius: 50%;
+    cursor: pointer;
     background-color: #E4E6EB;
 }
 
-.postingModal_Top .MuiSvgIcon-root:hover {
-    cursor: pointer;
-}
-
-/* HomePage Feed Posting Modal Middle Section */
-.postingModal_Middle {
+/* Post Edit Middle Section */
+.postEditMiddle {
     display: flex;
     flex-direction: column;
-    padding: 14px;
-    padding-bottom: 0;
+    padding: 14px 14px 0 14px;
 }
 
-.postingModal_MiddleTop {
+.postEditMiddleTop {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.postingModal_MiddleTop p {
-    margin-left: 10px;
+.postEditMiddleTop p {
     font-size: 15px;
     font-weight: 600;
+    margin-left: 10px;
 }
 
-.postingModal_MiddleMiddle {
+.postEditMiddleMiddle {
     position: relative;
     display: flex;
     align-items: end;
 }
 
-.postingModal_MiddleMiddle textarea#mediaMsg {
+.postEditMiddleMiddle textarea {
     width: 100%;
+    font-weight: 400;
+    padding: 0px;
+    border: 0;
+    outline: 0;
+    resize: none;
+    color: #050505;
+}
+
+.postEditMiddleMiddle textarea#mediaMsg {
     font-size: 14px;
-    font-weight: 400;
-    padding: 0px;
-    border: 0;
-    outline: 0;
-    resize: none;
-    color: #050505;
 }
 
-.postingModal_MiddleMiddle textarea#nonmediaMsg {
-    width: 100%;
+.postEditMiddleMiddle textarea#nonmediaMsg {
     font-size: 22px;
-    font-weight: 400;
-    padding: 0px;
-    border: 0;
-    outline: 0;
-    resize: none;
-    color: #050505;
 }
 
-.postingModal_MiddleMiddle svg {
+.postEditMiddleMiddle svg {
     color: #E4E6EB;
 }
 
-.postingModal_MiddleBottom {
+.postEditMiddleBottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -144,7 +91,7 @@ progress {
     margin-top: 15px;
 }
 
-.postingModal_MiddleBottom .mediaContainer{
+.postEditMiddleBottom .mediaContainer {
     position: relative;
     width: 100%;
     display: flex;
@@ -162,7 +109,7 @@ progress {
     background-color: #050505;
 }
 
-.postingModal_MiddleBottom svg#closeIcon {
+.postEditMiddleBottom svg#closeIcon {
     position: absolute;
     top: 8px;
     right: 8px;
@@ -174,26 +121,89 @@ progress {
     background-color: #fff;
 }
 
-
-
-.postingModal_MiddleBottom img {
+.postEditMiddleBottom img {
     width: 40px;
-}
-
-.postingModal_MiddleBottom .MuiSvgIcon-root {
-    color: lightgray;
-    width: 26px;
-    height: 26px;
-}
-
-.postingModal_MiddleBottom img:hover,
-.postingModal_MiddleBottom .MuiSvgIcon-root:hover{
     cursor: pointer;
 }
 
-/* DropdownBox Section */
-.postingModal_MiddleBottom .EmojiPickerReact,
-.postingModal_MiddleMiddle .EmojiPickerReact {
+.postEditMiddleBottom .MuiSvgIcon-root {
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    color: lightgray;
+}
+
+/* Post Edit Bottom Section */
+.postEditBottom {
+    display: flex;
+    flex-direction: column;
+}
+
+.postEditBottomTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    margin: 14px 14px 5px 14px;
+    padding: 12px 10px;
+}
+
+.postEditBottomTop p {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.postEditBottomBottom {
+    margin: 14px;
+}
+
+.postEditBottomBottom button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 6px 0;
+    border: 0;
+    outline: 0;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.postEditBottomBottom button#submitBtn {
+    color: #fff;
+    background-color: #2391fa;
+}
+
+.postEditBottomBottom button#notSubmitBtn {
+    color: #BCC0C4;
+    background-color: #E4E6EB;
+}
+
+.postEditBottomBottom .loadingSpin {
+    width: 22px;
+    height: 22px;
+    border: 3px solid #2391fa;
+    border-top: 3px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Emoji Picker Section */
+.postEditMiddleBottom .EmojiPickerReact,
+.postEditMiddleMiddle .EmojiPickerReact {
     width: 260px !important;
     height: 240px !important;
     flex-direction: column-reverse !important;
@@ -249,20 +259,4 @@ progress {
 
 .EmojiPickerReact .epr-category-nav {
     justify-content: initial !important;
-}
-
-/* HomePage Feed Posting Modal Bottom Section */
-.postingModal_Bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid lightgray;
-    border-radius: 10px;
-    margin: 14px 14px 5px 14px;
-    padding: 12px 10px;
-}
-
-.postingModal_BottomLeft p {
-    font-size: 15px;
-    font-weight: 600;
 }

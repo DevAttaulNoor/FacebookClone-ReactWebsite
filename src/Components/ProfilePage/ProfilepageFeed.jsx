@@ -2,7 +2,7 @@ import '../../CSS/ProfilePage/ProfilepageFeed.css';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { db } from '../../Firebase/firebase';
-import HomepageFeedPosts from '../HomePage/HomepageFeedPosts';
+import Post from '../Post/Post';
 import HomepageFeedPosting from '../HomePage/HomepageFeedPosting';
 
 function ProfilepageFeed() {
@@ -93,7 +93,7 @@ function ProfilepageFeed() {
             {posts.map(post => {
                 const formattedDate = timeAgo(post.data.timestamp);
                 return (
-                    <HomepageFeedPosts
+                    <Post
                         id={post.id}
                         userid={post.data.uid}
                         photoURL={post.data.photoURL}
@@ -111,7 +111,7 @@ function ProfilepageFeed() {
                 const dob = joinedpost.data.dob;
                 return (
                     <div className="JoinedPost" key={joinedpost.id}>
-                        <HomepageFeedPosts
+                        <Post
                             id={joinedpost.id}
                             userid={joinedpost.data.uid}
                             photoURL={joinedpost.data.photoURL}

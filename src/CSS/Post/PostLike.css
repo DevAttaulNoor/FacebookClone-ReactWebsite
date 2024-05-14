@@ -1,5 +1,5 @@
-/** HomePage Feeds Posts Like Modals Section */
-.homepageFeedPosts_LikeModal {
+/** Post Like Section */
+.postLike {
     width: 560px;
     height: 460px;
     position: absolute;
@@ -15,8 +15,8 @@
     background: #fff;
 }
 
-/* HomePage Feeds Posts Like Modals Top Section */
-.homepageFeedPosts_LikeModalTop {
+/* Post Like Top Section */
+.postLikeTop {
     position: relative;
     width: 100%;
     display: flex;
@@ -27,26 +27,23 @@
     box-sizing: border-box;
 }
 
-.homepageFeedPosts_LikeModalTop .MuiSvgIcon-root {
+.postLikeTop .MuiSvgIcon-root {
     position: absolute;
     right: 10px;
     padding: 4px;
     border-radius: 50%;
+    cursor: pointer;
     color: #050505;
     background-color: #E4E6EB;
 }
 
-.homepageFeedPosts_LikeModalTop .MuiSvgIcon-root:hover {
-    cursor: pointer;
-}
-
-.homepageFeedPosts_LikeModalTop p {
+.postLikeTop p {
     font-size: 20px;
     font-weight: 600;
 }
 
-/* HomePage Feeds Posts Like Modals Middle Section */
-.homepageFeedPosts_LikeModalMiddle {
+/* Post Like Middle Section */
+.postLikeMiddle {
     width: 100%;
     height: 410px;
     padding: 12px;
@@ -57,17 +54,17 @@
     box-sizing: border-box;
 }
 
-.homepageFeedPosts_LikeModalMiddle .likedUsersInfo {
+.postLikeMiddle .likedUsersInfo {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.homepageFeedPosts_LikeModalMiddle .likedUsersInfo:last-child {
+.postLikeMiddle .likedUsersInfo:last-child {
     margin-bottom: 0px;
 }
 
-.homepageFeedPosts_LikeModalMiddle .likedUsersInfo span {
+.postLikeMiddle .likedUsersInfo span {
     font-size: 16px;
     font-weight: 600;
     margin-left: 8px;

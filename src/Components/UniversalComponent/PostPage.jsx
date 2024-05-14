@@ -276,8 +276,8 @@ function PostPage() {
                 <div className="postPageInner_Top">
                     <div className="postPageInner_TopLeft">
                         <Avatar src={post.photoURL} />
-                        <div className="userpostInfo">
-                            <div className='userpostInfoTop'>
+                        <div className="postUserInfo">
+                            <div className='postUserInfoTop'>
                                 {user.uid === post.uid ? (
                                     <NavLink to="/userhomepage/post">
                                         <h4>{post.username}</h4>
@@ -289,7 +289,7 @@ function PostPage() {
                                 )}
                             </div>
 
-                            <div className='userpostInfoBottom'>
+                            <div className='postUserInfoBottom'>
                                 <p>{timeAgo(post.timestamp)}</p>
                                 <span>·</span>
                                 <PublicIcon />

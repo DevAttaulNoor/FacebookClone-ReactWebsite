@@ -2,7 +2,7 @@ import '../../CSS/UniversalComponent/VideosPage.css'
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import { db } from '../../Firebase/firebase';
-import HomepageFeedPosts from '../HomePage/HomepageFeedPosts';
+import Post from '../Post/Post';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
 
@@ -85,7 +85,7 @@ function VideosPage() {
                 {posts.map(post => {
                     const formattedDate = timeAgo(post.data.timestamp);
                     return (
-                        <HomepageFeedPosts
+                        <Post
                             id={post.id}
                             userid={post.data.uid}
                             username={post.data.username}

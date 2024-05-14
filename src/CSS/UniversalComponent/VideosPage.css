@@ -103,7 +103,7 @@
     overflow-y: auto;
 }
 
-.videospageMain .homepageFeedsPosts_Middle .homepageFeedsPosts_MiddleTop .homepageFeedsPosts_MiddleTopInner #postVideo {
+.videospageMain #postVideo {
     width: 750px;
     height: 400px;
 }

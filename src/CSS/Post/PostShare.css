@@ -1,5 +1,5 @@
-/** HomePage Feeds Posts Share Modals Section */
-.homepageFeedPosts_ShareModal {
+/** Post Share Section */
+.postShare {
     width: 560px;
     height: 460px;
     position: absolute;
@@ -15,8 +15,8 @@
     background: #fff;
 }
 
-/* HomePage Feeds Posts Share Modals Top Section */
-.homepageFeedPosts_ShareModalTop {
+/* Post Share Top Section */
+.postShareTop {
     position: relative;
     width: 100%;
     display: flex;
@@ -27,20 +27,17 @@
     box-sizing: border-box;
 }
 
-.homepageFeedPosts_ShareModalTop .MuiSvgIcon-root {
+.postShareTop .MuiSvgIcon-root {
     position: absolute;
     right: 10px;
     padding: 4px;
     border-radius: 50%;
+    cursor: pointer;
     color: #050505;
     background-color: #E4E6EB;
 }
 
-.homepageFeedPosts_ShareModalTop .MuiSvgIcon-root:hover {
-    cursor: pointer;
-}
-
-.homepageFeedPosts_ShareModalTop p {
+.postShareTop p {
     font-size: 20px;
     font-weight: 600;
 }

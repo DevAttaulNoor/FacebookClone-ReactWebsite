@@ -1,11 +1,11 @@
-import '../../CSS/HomePage/HomepageFeedPostsLikeModal.css';
+import '../../CSS/Post/PostLike.css';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { db } from '../../Firebase/firebase';
 import { Avatar } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
-function HomepageFeedPostsLikeModal({ id, closeModal }) {
+function PostLike({ id, closeModal }) {
     const user = useSelector((state) => state.data.user.user);
     const [likedUsers, setLikedUsers] = useState([]);
 
@@ -24,13 +24,13 @@ function HomepageFeedPostsLikeModal({ id, closeModal }) {
     }, [id, user.uid]);
 
     return (
-        <div className='homepageFeedPosts_LikeModal'>
-            <div className="homepageFeedPosts_LikeModalTop">
+        <div className='postLike'>
+            <div className="postLikeTop">
                 <p>Reactions</p>
                 <CloseIcon onClick={closeModal.closeLikeModal} />
             </div>
 
-            <div className="homepageFeedPosts_LikeModalMiddle">
+            <div className="postLikeMiddle">
                 {likedUsers.map((user) => (
                     <div key={user.uid} className='likedUsersInfo'>
                         <Avatar src={user.photoUrl} />
@@ -42,4 +42,4 @@ function HomepageFeedPostsLikeModal({ id, closeModal }) {
     )
 }
 
-export default HomepageFeedPostsLikeModal;
+export default PostLike;

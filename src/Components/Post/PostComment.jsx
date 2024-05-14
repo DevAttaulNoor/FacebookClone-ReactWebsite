@@ -1,4 +1,4 @@
-import '../../CSS/HomePage/HomepageFeedPostsCmtModal.css';
+import '../../CSS/Post/PostComment.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { db } from '../../Firebase/firebase';
@@ -6,7 +6,7 @@ import { Avatar } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 
-function HomepageFeedPostsCmtModal({ id, userid, closeModal }) {
+function PostComment({ id, userid, closeModal }) {
     const user = useSelector((state) => state.data.user.user);
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
@@ -129,13 +129,13 @@ function HomepageFeedPostsCmtModal({ id, userid, closeModal }) {
     }, [id]);
 
     return (
-        <div className='homepageFeedPosts_CommentModal'>
-            <div className="homepageFeedPosts_CommentModalTop">
+        <div className='postComment'>
+            <div className="postCommentTop">
                 <p>Comments</p>
                 <CloseIcon onClick={closeModal.closeCommentModal} />
             </div>
 
-            <div className="homepageFeedPosts_CommentModalMiddle" ref={commentsContainerRef}>
+            <div className="postCommentMiddle" ref={commentsContainerRef}>
                 {comments.map((comment) => (
                     <div className='comments' key={comment.id}>
                         <Avatar src={comment.photoURL} />
@@ -153,7 +153,7 @@ function HomepageFeedPostsCmtModal({ id, userid, closeModal }) {
                 ))}
             </div>
 
-            <div className="homepageFeedPosts_CommentModalBottom">
+            <div className="postCommentBottom">
                 <div className='commentInput'>
                     <Avatar src={user.photoURL} />
                     <input type='text' placeholder='Write a comment...' value={comment} onChange={(e) => setComment(e.target.value)} />
@@ -164,4 +164,4 @@ function HomepageFeedPostsCmtModal({ id, userid, closeModal }) {
     )
 }
 
-export default HomepageFeedPostsCmtModal;
+export default PostComment;

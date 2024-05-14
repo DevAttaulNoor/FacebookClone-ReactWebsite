@@ -1,0 +1,253 @@
+/** Post Section */
+.post {
+    padding-bottom: 0;
+    margin-top: 15px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+/* Post Top Section */
+.postTop {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.postTopLeft {
+    display: flex;
+    align-items: center;
+}
+
+.postTopLeft .postUserInfo {
+    margin-left: 10px;
+}
+
+.postUserInfoTop a {
+    color: initial;
+    text-decoration: none;
+}
+
+.postUserInfoTop h4 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.postUserInfoTop h4:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: inherit;
+}
+
+.postUserInfoBottom {
+    display: flex;
+    align-items: center;
+    margin-top: 2px;
+    color: #65676B;
+}
+
+.postUserInfoBottom {
+    font-size: 12px;
+}
+
+.postUserInfoBottom p:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: inherit;
+}
+
+.postUserInfoBottom span {
+    margin: 0 4px 0 5px;
+}
+
+.postUserInfoBottom svg {
+    width: 14px;
+    height: 14px;
+}
+
+.postTopRight {
+    display: flex;
+    align-items: center;
+}
+
+.postTopRight .MuiSvgIcon-root {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+    border-radius: 50%;
+    color: #65676B;
+}
+
+.postTopRight .MuiSvgIcon-root:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+
+.postTopRight.clicked {
+    background-color: #fff;
+}
+
+.postTopRight .postSetting {
+    position: absolute;
+    top: 50px;
+    right: 30px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 8px;
+    z-index: 1;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+}
+
+.postSetting .postSettingOption {
+    width: 100%;
+    display: flex;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.postSetting .postSettingOption:hover {
+    cursor: pointer;
+    background-color: whitesmoke;
+}
+
+.postSettingOptionLeft {
+    display: flex;
+    margin-top: 5px;
+}
+
+.postSettingOptionLeft #savePostIcon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yu/r/doFgS_h9Kyh.png');
+    background-position: 0px -83px;
+    background-size: 41px 503px;
+}
+
+.postSettingOptionLeft #unsavePostIcon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yZ/r/w0CJiTcp3tP.png');
+    background-position: 0px -84px;
+    background-size: 21px 593px;
+}
+
+.postSettingOptionLeft #deletePostIcon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yp/r/faYX-HAY-C_.png');
+    background-position: 0px -172px;
+    background-size: auto;
+}
+
+.postSettingOptionLeft #editPostIcon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/g64EaKoBhMs.png');
+    background-position: 0px -258px;
+    background-size: auto;
+}
+
+.postSettingOptionRight {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 12px;
+}
+
+.postSettingOptionRight h5 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #050505;
+    margin-bottom: 3px;
+}
+
+.postSettingOptionRight p {
+    font-size: 12px;
+    font-weight: 400;
+    color: #65676B;
+}
+
+/* Posts Middle Section */
+.postMiddleTop #postMsg {
+    padding: 0 15px 15px;
+    letter-spacing: 0.2px;
+}
+
+.postMiddleTop #postImg,
+.postMiddleTop #postVideo {
+    width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+    background-color: #000;
+}
+
+.postMiddleTop .postEditModal {
+    width: 100%;
+    height: 100%;
+}
+
+.postMiddleBottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 15px;
+}
+
+.postMiddleBottom p {
+    font-size: 14px;
+    font-weight: 450;
+    color: gray;
+}
+
+.postMiddleBottom p:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* Posts Bottom Section */
+.postBottom {
+    padding: 0 15px;
+}
+
+.postBottomOptions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    border-top: 1px solid lightgray;
+}
+
+.postBottomOptions .postBottomOption {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 8px;
+    margin: 5px 0;
+}
+
+.postBottomOption:hover {
+    cursor: pointer;
+    background-color: #E4E6EB;
+}
+
+.postBottomOption p {
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #65676B;
+}
+
+.postBottomOption .MuiSvgIcon-root {
+    width: 21px;
+    color: #65676B;
+}

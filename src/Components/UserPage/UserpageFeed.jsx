@@ -1,7 +1,7 @@
 import '../../CSS/UserPage/UserpageFeed.css';
 import React, { useEffect, useState } from 'react';
 import { db } from '../../Firebase/firebase';
-import HomepageFeedPosts from '../HomePage/HomepageFeedPosts';
+import Post from '../Post/Post';
 import HomepageFeedPosting from '../HomePage/HomepageFeedPosting';
 
 function UserpageFeed() {
@@ -94,7 +94,7 @@ function UserpageFeed() {
             {posts.map((post, index) => {
                 return (
                     <div key={index}>
-                        <HomepageFeedPosts
+                        <Post
                             id={post.id}
                             userid={post.data.uid}
                             photoURL={post.data.photoURL}
@@ -111,7 +111,7 @@ function UserpageFeed() {
             {joinedposts.map((joinedpost, index) => {
                 return (
                     <div key={index} className="JoinedPost">
-                        <HomepageFeedPosts
+                        <Post
                             id={joinedpost.id}
                             userid={joinedpost.data.uid}
                             photoURL={joinedpost.data.photoURL}
