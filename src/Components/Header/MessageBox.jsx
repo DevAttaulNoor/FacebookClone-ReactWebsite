@@ -1,10 +1,8 @@
 import '../../CSS/Header/MessageBox.css'
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Avatar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { setChatNotification } from '../../Redux/notificationSlice';
 import { setMsgFriend, setMsgFriendBoxVisibility } from '../../Redux/messageSlice';
-import { db } from '../../Firebase/firebase';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
@@ -13,7 +11,6 @@ function MessageBox() {
     const user = useSelector((state) => state.data.user.user);
     const friendsData = useSelector((state) => state.data.friends.friendsData);
     const chatNotification = useSelector((state) => state.data.notification.chatNotification);
-    const [chats, setChats] = useState([]);
     const [activeButton, setActiveButton] = useState('Inbox');
 
     const handleCategory = (category) => {
@@ -60,43 +57,6 @@ function MessageBox() {
         return `${granularity}${unit}${granularity > 1 ? '' : ''}`;
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const querySnapshot = await db.collection('Chats').get();
-
-                if (!querySnapshot.empty) {
-                    const chatsData = [];
-
-                    querySnapshot.forEach(doc => {
-                        const chatData = doc.data();
-                        // Retrieve the messages list from the chatData
-                        const messagesData = chatData.messages || []; // Ensure messagesData is an array
-                        chatData.messages = messagesData;
-                        chatsData.push(chatData);
-                    });
-
-                    setChats(chatsData);
-                } else {
-                    setChats([]);
-                }
-            } catch (error) {
-                console.error('Error fetching chat data:', error);
-                setChats([]);
-            }
-        };
-        fetchData();
-
-    }, [user.uid]);
-
-    useEffect(() => {
-        const relevantChats = chats
-            .map(chat => (chat.recipientUid === user.uid || chat.senderUid === user.uid) ? chat : null)
-            .filter(Boolean);
-
-        dispatch(setChatNotification(relevantChats));
-    }, [chats, user.uid, dispatch]);
-
     return (
         <div className="messageBox" onClick={(e) => e.stopPropagation()}>
             <div className='messageBoxTop'>
@@ -119,7 +79,7 @@ function MessageBox() {
             <div className='messageBoxBottom'>
                 {chatNotification.length > 0 ? (
                     <>
-                        {chats.map((chat) => {
+                        {chatNotification.map((chat) => {
                             const isUserSender = chat.senderUid === user.uid;
                             const isUserRecipient = chat.recipientUid === user.uid;
                             const friendId = isUserSender ? chat.recipientUid : chat.senderUid;

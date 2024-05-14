@@ -1,11 +1,11 @@
 import '../../CSS/Header/NotificationBox.css';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import { db } from '../../Firebase/firebase';
 import { setSelectedPost } from '../../Redux/postSlice';
-import { setNotiBoxVisible, setNotification } from '../../Redux/notificationSlice';
+import { setNotiBoxVisible } from '../../Redux/notificationSlice';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 function NotificationBox() {
@@ -77,35 +77,6 @@ function NotificationBox() {
         }
         return `${granularity} ${unit}${granularity > 1 ? 's' : ''} ago`;
     };
-
-    useEffect(() => {
-        const likesData = db.collection('Users').doc(user.uid).collection('Notifications').doc(user.uid).collection('Likes');
-        const commentData = db.collection('Users').doc(user.uid).collection('Notifications').doc(user.uid).collection('Comments');
-        const friendReqData = db.collection('Users').doc(user.uid).collection('Notifications').doc(user.uid).collection('FriendsReqs');
-
-        // Use Promise.all to wait for all promises to resolve
-        Promise.all([
-            likesData.get(),
-            commentData.get(),
-            friendReqData.get(),
-        ]).then((results) => {
-            const likes = results[0].docs.map((doc) => doc.data());
-            const comments = results[1].docs.map((doc) => doc.data());
-            const friendReqs = results[2].docs.map((doc) => doc.data());
-
-            // Combine data from all collections
-            const notification = [...likes, ...comments, ...friendReqs];
-
-            // Sort the combined array based on timestamps in ascending order
-            notification.sort((a, b) => b.timestamp - a.timestamp);
-            dispatch(setNotification(notification))
-
-            // Set the combined and sorted data to your state
-            // setNotifications(notifications);
-        }).catch((error) => {
-            console.error('Error fetching notifications:', error);
-        });
-    }, [user.uid, dispatch]);
 
     return (
         <div className="notificationBox" onClick={(e) => e.stopPropagation()}>
