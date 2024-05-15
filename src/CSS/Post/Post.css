@@ -84,10 +84,6 @@
     cursor: pointer;
 }
 
-.postTopRight.clicked {
-    background-color: #fff;
-}
-
 .postTopRight .postSetting {
     position: absolute;
     top: 50px;

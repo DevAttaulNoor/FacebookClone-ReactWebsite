@@ -80,7 +80,7 @@ function PostEdit({ id, media, mediaType, message, close }) {
             }
         }
     };
-
+    
     return (
         <div className="postEdit">
             <div className="postEditTop">

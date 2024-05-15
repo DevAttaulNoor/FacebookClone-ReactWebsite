@@ -1,5 +1,5 @@
 import "../../CSS/HomePage/HomepageFeedPosting.css";
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import firebase from "firebase/compat/app";
 import EmojiPicker from 'emoji-picker-react';
 import { useSelector } from 'react-redux';
@@ -11,34 +11,50 @@ import SentimentSatisfiedAltOutlinedIcon from '@mui/icons-material/SentimentSati
 
 function HomepageFeedPosting() {
     const user = useSelector((state) => state.data.user.user);
-    const [open, setOpen] = useState(false);
-    const [media, setMedia] = useState(null);
-    const [mediaType, setMediaType] = useState(null);
-    const [message, setMessage] = useState("");
-    const [progress, setProgress] = useState(0);
+    const [openModal, setOpenModal] = useState(false);
+    const [message, setMessage] = useState('');
+    const [media, setMedia] = useState('');
+    const [mediaUrl, setMediaUrl] = useState('');
+    const [mediaType, setMediaType] = useState('');
+    const [postLoading, setPostLoading] = useState(false);
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-    const [isDialogVisible, setIsDialogVisible] = useState(false);
-    const dialogBoxRef = useRef(null);
+    const emojiBoxRef = useRef(null);
+    const mediaInputRef = useRef(null);
 
-    const handleClose = () => {
-        setOpen(false)
-        setMedia(null)
-        setMessage("")
-        setProgress(0)
+    const toggleEmojiPicker = () => {
+        setShowEmojiPicker(!showEmojiPicker);
+    };
+
+    const handleEmojiClick = (e) => {
+        setMessage((prevMessage) => prevMessage + e.emoji);
+    };
+
+    const handlePhotoOptionClick = () => {
+        setOpenModal(true);
+        if (mediaInputRef.current) {
+            mediaInputRef.current.click();
+        }
     }
 
-    const handleOpen = () => {
-        setOpen(true)
+    const handleModalClose = () => {
+        setOpenModal(false);
+        setMessage('');
+        setMedia('');
+        setMediaUrl('');
     }
 
-    const uploadWithClick = () => {
-        document.getElementById("mediaFile").click()
+    const handleMediaRemoval = () => {
+        setMedia('');
+        setMediaUrl('')
+        setMediaType('');
     }
 
     const handleMediaChange = (e) => {
-        if (e.target.files[0]) {
-            const file = e.target.files[0];
+        const file = e.target.files[0];
+        if (file) {
             setMedia(file);
+            const mediaURL = URL.createObjectURL(file);
+            setMediaUrl(mediaURL);
 
             // Determine the media type (image or video)
             if (file.type.startsWith("image/")) {
@@ -49,187 +65,186 @@ function HomepageFeedPosting() {
         }
     };
 
-    const handleUpload = (e) => {
+    const handlePosting = async (e) => {
         e.preventDefault();
+        setPostLoading(true);
 
-        if (message === "" && media === null) {
-            return;
-        }
-
-        if (media === null) {
-            db.collection("Posts").add({
-                uid: user.uid,
-                email: user.email,
-                username: user.username,
-                photoURL: user.photoURL,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                message: message,
-            });
-            handleClose();
-        }
-
-        else {
-            if (mediaType === "image") {
-                const uploadTask = storage.ref(`Posts/${user.uid}/${media.name}`).put(media);
-
-                uploadTask.on(
-                    "state_changed",
-                    (snapshot) => {
-                        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                        setProgress(progress);
-                    },
-                    (error) => {
-                        console.log(error);
-                        alert(error.message);
-                    },
-                    () => {
-                        storage.ref(`Posts/${user.uid}`).child(media.name).getDownloadURL().then(url => {
-                            db.collection("Posts").add({
-                                uid: user.uid,
-                                email: user.email,
-                                username: user.username,
-                                photoURL: user.photoURL,
-                                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                                message: message,
-                                media: url,
-                                mediaType: 'image'
-                            });
-                            handleClose();
-                        });
-                    }
-                );
-            }
-
-            else if (mediaType === "video") {
-                const uploadTask = storage.ref(`Posts/${user.uid}/${media.name}`).put(media);
-
-                uploadTask.on(
-                    "state_changed",
-                    (snapshot) => {
-                        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                        setProgress(progress);
-                    },
-                    (error) => {
-                        console.log(error);
-                        alert(error.message);
-                    },
-                    () => {
-                        storage.ref(`Posts/${user.uid}`).child(media.name).getDownloadURL().then(url => {
-                            db.collection("Posts").add({
-                                uid: user.uid,
-                                email: user.email,
-                                username: user.username,
-                                photoURL: user.photoURL,
-                                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                                message: message,
-                                media: url,
-                                mediaType: 'video'
-                            });
-                            handleClose();
-                        });
-                    }
-                );
-            }
-        }
-    };
-
-    const toggleEmojiPicker = () => {
-        setShowEmojiPicker(!showEmojiPicker); // Toggle the state to show/hide the emoji picker
-    };
-
-    const handleEmojiClick = (event) => {
-        setMessage((prevMessage) => prevMessage + event.emoji);
-        toggleEmojiPicker();
-    };
-
-    const toggleDialog = () => {
-        setIsDialogVisible(!isDialogVisible);
-    };
-
-    useEffect(() => {
-        const handleOutsideClick = (e) => {
-            if (dialogBoxRef.current && !dialogBoxRef.current.contains(e.target)) {
-                setIsDialogVisible(false);
-            }
+        const postDetails = {
+            uid: user.uid,
+            email: user.email,
+            username: user.username,
+            photoURL: user.photoURL,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         };
 
-        window.addEventListener("click", handleOutsideClick);
+        try {
+            if ((message !== '') && (media === '')) {
+                await db.collection("Posts").add({
+                    ...postDetails,
+                    message: message,
+                });
+                setPostLoading(false);
+                handleModalClose();
+                return;
+            }
 
-        // Cleanup the event listener when the component unmounts
-        return () => {
-            window.removeEventListener("click", handleOutsideClick);
-        };
-    }, []);
+            if ((message === '') && (media !== '')) {
+                const storageRef = storage.ref(`Posts/${user.uid}/${media.name}`);
+                await storageRef.put(media);
+                const mediaUrl = await storageRef.getDownloadURL();
+
+                await db.collection("Posts").add({
+                    ...postDetails,
+                    media: mediaUrl,
+                    mediaType: mediaType,
+                });
+
+                setPostLoading(false);
+                handleModalClose();
+            }
+
+            if ((message !== '') && (media !== '')) {
+                const storageRef = storage.ref(`Posts/${user.uid}/${media.name}`);
+                await storageRef.put(media);
+                const mediaUrl = await storageRef.getDownloadURL();
+
+                await db.collection("Posts").add({
+                    ...postDetails,
+                    message: message,
+                    media: mediaUrl,
+                    mediaType: mediaType,
+                });
+
+                setPostLoading(false);
+                handleModalClose();
+            }
+        } catch (error) {
+            console.error("Error uploading post: ", error);
+            setPostLoading(false);
+        }
+    };
 
     return (
         <div className='homepageFeedPosting'>
             <div className="homepageFeedPostingTop">
                 <Avatar src={user.photoURL} />
-                <input type="text" placeholder={`What's on your mind ${user.username}?`} onClick={handleOpen} />
+                <div className="inputContainer" onClick={() => setOpenModal(true)}>
+                    <p>{`What's on your mind, ${user.username}?`}</p>
+                </div>
             </div>
 
             <div className="homepageFeedPostingBottom">
-                <div className="homepageFeedPostingBottomOption">
+                <div className="homepageFeedPostingBottomOption" onClick={() => setOpenModal(true)}>
                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/c0dWho49-X3.png?_nc_eui2=AeHnEIjVawZBI76yMIMwddXsVnUPE18ZZ-dWdQ8TXxln51Q2S_zbzfHpnn234I7BWgTtb2IssbzIPCV_o410lzBg" alt="" />
                     <p>Live video</p>
                 </div>
-                <div className="homepageFeedPostingBottomOption" onClick={handleOpen}>
+                <div className="homepageFeedPostingBottomOption" onClick={handlePhotoOptionClick}>
                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j" alt="" />
                     <p>Photo/video</p>
                 </div>
-                <div className="homepageFeedPostingBottomOption">
+                <div className="homepageFeedPostingBottomOption" onClick={() => setOpenModal(true)}>
                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Y4mYLVOhTwq.png?_nc_eui2=AeHSN24y7ZwUiP0ks-vc5M5LvPIN-OmHLJy88g346YcsnMgGxvtWqzXUT3WG--zLIURpvgdh0oglkNtF3k-n2n77" alt="" />
                     <p>Feeling/activity</p>
                 </div>
             </div>
 
-            <Modal open={open} onClose={handleClose}>
-                <form className="postingModal">
-                    <div className="postingModal_Top">
+            <Modal open={openModal} onClose={handleModalClose}>
+                <div className="postingModal">
+                    <div className="postingModalTop">
                         <p>Create Post</p>
-                        <CloseIcon onClick={handleClose} />
+                        <CloseIcon onClick={handleModalClose} />
                     </div>
 
-                    <div className="postingModal_Middle">
-                        <div className="postingModal_MiddleTop">
+                    <div className="postingModalMiddle">
+                        <div className="postingModalMiddleTop">
                             <Avatar src={user.photoURL} />
                             <p>{user.username}</p>
                         </div>
-                        <div className="postingModal_MiddleMiddle">
-                            <textarea cols="5" placeholder="What's on your mind" value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
-                        </div>
-                        <div className="postingModal_MiddleBottom">
-                            <img src={bgcolorIcon} alt="" />
-                            <SentimentSatisfiedAltOutlinedIcon onClick={toggleDialog} ref={dialogBoxRef} />
-                            {isDialogVisible && (
-                                <EmojiPicker onEmojiClick={handleEmojiClick} />
+
+                        <div className="postingModalMiddleMiddle">
+                            {media ? (
+                                <>
+                                    <textarea
+                                        id='mediaMsg'
+                                        rows="4"
+                                        value={message}
+                                        placeholder="What's on your mind"
+                                        onChange={(e) => setMessage(e.target.value)}
+                                    />
+
+                                    <SentimentSatisfiedAltOutlinedIcon onClick={toggleEmojiPicker} ref={emojiBoxRef} />
+                                    {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} />}
+                                </>
+                            ) : (
+                                <textarea
+                                    id='nonmediaMsg'
+                                    rows="4"
+                                    value={message}
+                                    placeholder="What's on your mind"
+                                    onChange={(e) => setMessage(e.target.value)}
+                                />
                             )}
                         </div>
 
-                        <input type="file" id="mediaFile" accept="image/*,video/*" onChange={handleMediaChange} style={{ display: 'none' }} />
+                        <div className="postingModalMiddleBottom">
+                            {media ? (
+                                <div className='mediaContainer'>
+                                    {mediaType === 'image' && (
+                                        <img id="mediaImg" src={mediaUrl} alt="postingImg" />
+                                    )}
+
+                                    {mediaType === 'video' && (
+                                        <video id="mediaVideo" controls>
+                                            <source src={mediaUrl} type="video/mp4" />
+                                        </video>
+                                    )}
+                                    <CloseIcon id='closeIcon' onClick={handleMediaRemoval} />
+                                </div>
+                            ) : (
+                                <>
+                                    <img src={bgcolorIcon} alt="" />
+                                    <SentimentSatisfiedAltOutlinedIcon onClick={toggleEmojiPicker} ref={emojiBoxRef} />
+                                    {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} />}
+                                </>
+                            )}
+                        </div>
                     </div>
 
-                    <div className="postingModal_Bottom">
-                        <div className="postingModal_BottomLeft">
+                    <div className="postingModalBottom">
+                        <div className="postingModalBottomTop">
                             <p>Add to your post</p>
+
+                            <div className="postingModalBottomOptions">
+                                <IconButton onClick={() => mediaInputRef.current.click()}>
+                                    <img src="https:static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j" alt="" />
+                                    <input
+                                        type="file"
+                                        accept="image/*,video/*"
+                                        onChange={handleMediaChange}
+                                        style={{ display: 'none' }}
+                                        ref={mediaInputRef}
+                                    />
+                                </IconButton>
+
+                                <IconButton>
+                                    <img src="https:static.xx.fbcdn.net/rsrc.php/v3/yr/r/c0dWho49-X3.png?_nc_eui2=AeHnEIjVawZBI76yMIMwddXsVnUPE18ZZ-dWdQ8TXxln51Q2S_zbzfHpnn234I7BWgTtb2IssbzIPCV_o410lzBg" alt="" />
+                                </IconButton>
+
+                                <IconButton>
+                                    <img src="https:static.xx.fbcdn.net/rsrc.php/v3/yd/r/Y4mYLVOhTwq.png?_nc_eui2=AeHSN24y7ZwUiP0ks-vc5M5LvPIN-OmHLJy88g346YcsnMgGxvtWqzXUT3WG--zLIURpvgdh0oglkNtF3k-n2n77" alt="" />
+                                </IconButton>
+                            </div>
                         </div>
-                        <div className="postingModal_BottomRight">
-                            <IconButton onClick={uploadWithClick}>
-                                <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j" alt="" />
-                            </IconButton>
-                            <IconButton>
-                                <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/c0dWho49-X3.png?_nc_eui2=AeHnEIjVawZBI76yMIMwddXsVnUPE18ZZ-dWdQ8TXxln51Q2S_zbzfHpnn234I7BWgTtb2IssbzIPCV_o410lzBg" alt="" />
-                            </IconButton>
-                            <IconButton>
-                                <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Y4mYLVOhTwq.png?_nc_eui2=AeHSN24y7ZwUiP0ks-vc5M5LvPIN-OmHLJy88g346YcsnMgGxvtWqzXUT3WG--zLIURpvgdh0oglkNtF3k-n2n77" alt="" />
-                            </IconButton>
+
+                        <div className="postingModalBottomBottom">
+                            {message || media ? (
+                                <button id="submitBtn" onClick={handlePosting}>{postLoading ? <div className="loadingSpin"></div> : 'Post'}</button>
+                            ) : (
+                                <button id="notSubmitBtn">Post</button>
+                            )}
                         </div>
                     </div>
-
-                    {media !== null && <p className='image_progress'>Media is added</p>}
-                    {progress !== 0 && <progress className='post_progress' value={progress} max="100" />}
-                    <button type="submit" id="submitBtn" onClick={handleUpload}>Post</button>
-                </form>
+                </div>
             </Modal >
         </div >
     )
