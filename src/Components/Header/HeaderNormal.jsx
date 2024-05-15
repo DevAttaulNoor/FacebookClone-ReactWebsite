@@ -73,7 +73,7 @@ function HeaderNormal() {
             window.removeEventListener("click", handleOutsideClick);
         };
     }, [userBoxVisible, notiBoxVisible, chatNotiBoxVisible, searchBoxVisible, dispatch]);
-    
+
     return (
         <div className='headerNormal'>
             <div className='headerNormalLeft'>
