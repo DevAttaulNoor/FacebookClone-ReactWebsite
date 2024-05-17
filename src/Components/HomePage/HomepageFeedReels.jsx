@@ -39,30 +39,30 @@ function HomepageFeedReels() {
 
     useEffect(() => {
         const container = containerRef.current; // Store the reference in a variable
-    
+
         const checkButtons = () => {
             if (container) {
                 setShowLeftButton(container.scrollLeft > 0);
                 setShowRightButton(container.scrollWidth > container.clientWidth && container.scrollLeft < container.scrollWidth - container.clientWidth);
             }
         };
-    
+
         checkButtons();
-    
+
         const resizeListener = () => {
             checkButtons();
         };
-    
+
         const scrollListener = () => {
             checkButtons();
         };
-    
+
         window.addEventListener('resize', resizeListener);
-        
+
         if (container) {
             container.addEventListener('scroll', scrollListener);
         }
-    
+
         return () => {
             window.removeEventListener('resize', resizeListener);
             if (container) {
@@ -70,7 +70,9 @@ function HomepageFeedReels() {
             }
         };
     }, [reels]);
-    
+
+    console.log(reels)
+
     return (
         <>
             {reels.length === 0 ? (
@@ -102,15 +104,10 @@ function HomepageFeedReels() {
                             <div
                                 key={reel.id}
                                 className="homepageFeedReels_ScrollReelsStories"
-                                style={{
-                                    background: reel.background.startsWith("https") ? `url(${reel.background})` : reel.background,
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center'
-                                }}
+                                style={{ background: reel.background.startsWith("https") ? `url(${reel.background})` : reel.background, }}
                             >
-
                                 <Avatar src={reel.photoURL} />
-                                <div className="ReelsStoriesTextOverlay" style={{fontFamily: reel.font}}>
+                                <div className="ReelsStoriesTextOverlay" style={{ fontFamily: reel.font }}>
                                     {reel.text}
                                 </div>
                                 <p>{reel.username}</p>
