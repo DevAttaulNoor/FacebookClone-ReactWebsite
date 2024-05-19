@@ -9,7 +9,7 @@ import HeaderTransformed from './HeaderTransformed';
 function HeaderOption() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
-    const pathsToHideHeader = ['/homepage/storyreels'];
+    const pathsToHideHeader = ['/reelpage/', '/homepage/storyreels'];
     const showHeader = !pathsToHideHeader.includes(useLocation().pathname);
 
     useEffect(() => {

@@ -1,12 +1,12 @@
 import '../../CSS/HomePage/HomepageReels.css'
 import React, { useState, useRef } from 'react';
+import html2canvas from 'html2canvas';
 import { useSelector } from 'react-redux';
 import { db, storage } from '../../Firebase/firebase';
-import firebase from "firebase/compat/app";
 import SettingsIcon from '@mui/icons-material/Settings';
 
 function HomepageReels() {
-    const colors = ['blue', 'red', 'green', 'black', 'brown', 'yellow', 'blueviolet', 'cyan', 'gold', 'violet', 'silver', 'purple'];
+    const colors = ['blue', 'red', 'green', 'brown', 'yellow', 'blueviolet', 'cyan', 'gold', 'violet', 'silver', 'purple'];
     const fontStyles = ['Helvetica', 'Times New Roman', 'Courier New', 'Verdana'];
     const user = useSelector((state) => state.data.user.user);
     const [showCards, setShowCards] = useState(true);
@@ -27,7 +27,7 @@ function HomepageReels() {
         setActiveDot(color);
     };
 
-    const handleFontStyleChange = (fontStyle) => { // Function to handle font style change
+    const handleFontStyleChange = (fontStyle) => {
         setActiveFontStyle(fontStyle);
     };
 
@@ -35,11 +35,9 @@ function HomepageReels() {
         const inputValue = event.target.value;
 
         if (inputValue.length > 250) {
-            console.log("Length Exceeds 10");
             event.preventDefault();
             event.target.setSelectionRange(0, 250);
         } else {
-            console.log("Length within 10");
             setTextAreaValue(inputValue);
             setTextAreaValueCount(250 - inputValue.length)
         }
@@ -99,83 +97,116 @@ function HomepageReels() {
         }
     };
 
-    const handleUpload = (e) => {
+    const photoTimestampName = () => {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+
+        return `${year}${month}${day}_${hours}${minutes}${seconds}`;
+    };
+
+    const handleUpload = async (e) => {
         e.preventDefault();
 
-        if (showTextContent && textAreaValue) {
-            const activeDotValue = document.querySelector(".textStoryWindow").className.split(" ").find((className) => colors.includes(className));
-
-            db.collection("Reels").add({
-                uid: user.uid,
-                email: user.email,
-                username: user.username,
-                photoURL: user.photoURL,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                text: textAreaValue.trim(),
-                background: activeDotValue,
-                font: activeFontStyle,
-            });
-
-            // Reset state variables to clear the fields
-            setTextAreaValue("");
+        const resetState = () => {
+            setImage('');
+            setImageUrl('');
+            setTextAreaValue('');
             setActiveDot(colors[0]);
-            setShowTextContent(false);
-            setShowPhotoContent(false);
+            setShowCards(true);
             setShowForText(false);
             setShowAddText(false);
             setShowForPhoto(false);
-            setShowCards(true);
+            setShowTextContent(false);
+            setShowPhotoContent(false);
             setTextAreaValueCount(250);
+        };
+
+        const addToReels = async (data) => {
+            const reelsRef = db.collection("Reels");
+            const userReelsQuery = reelsRef.where("uid", "==", user.uid);
+            const userReelsSnapshot = await userReelsQuery.get();
+
+            if (!userReelsSnapshot.empty) {
+                const existingReelDoc = userReelsSnapshot.docs[0];
+                const existingReelData = existingReelDoc.data();
+                const updatedReels = [...existingReelData.reel, { ...data }];
+                await existingReelDoc.ref.update({ reel: updatedReels });
+            } else {
+                await reelsRef.add({
+                    uid: user.uid,
+                    email: user.email,
+                    username: user.username,
+                    photoURL: user.photoURL,
+                    timestamp: new Date(),
+                    reel: [{ ...data }]
+                });
+            }
+            resetState();
+        };
+
+        if (showTextContent && textAreaValue) {
+            try {
+                const textStoryDiv = document.querySelector(".textStoryWindow");
+                const canvas = await html2canvas(textStoryDiv);
+                const imgData = canvas.toDataURL('image/jpeg', 1);
+
+                // Convert data URL to a Blob
+                const response = await fetch(imgData);
+                const blob = await response.blob();
+
+                // Upload the image
+                const imageRef = storage.ref(`Reels/${user.uid}/${photoTimestampName()}.jpg`);
+                await imageRef.put(blob);
+                const url = await imageRef.getDownloadURL();
+                await addToReels({
+                    background: url,
+                    timestamp: new Date(),
+                });
+            } catch (error) {
+                console.error("Error capturing or uploading text story image:", error);
+            }
         }
 
-        if (showPhotoContent && image) {
-            const upload = storage.ref(`Images/Reels/${user.uid}/${image.name}`).put(image);
+        if (showPhotoContent && image && showForPhoto === false) {
+            try {
+                const imageRef = storage.ref(`Reels/${user.uid}/${image.name}`);
+                await imageRef.put(image);
+                const url = await imageRef.getDownloadURL();
+                await addToReels({
+                    background: url,
+                    timestamp: new Date(),
+                });
+            } catch (error) {
+                console.error("Error uploading or getting download URL:", error);
+            }
+        }
 
-            upload.on(
-                "state_changed",
-                (snapshot) => {
-                    // Handle progress or state changes if needed
-                },
-                (error) => {
-                    console.error("Error uploading:", error);
-                },
-                () => {
-                    // Upload completed successfully, get download URL
-                    storage
-                        .ref(`Images/Reels/${user.uid}`)
-                        .child(image.name)
-                        .getDownloadURL()
-                        .then((url) => {
-                            // Add data to Firestore or perform other actions
-                            db.collection("Reels").add({
-                                uid: user.uid,
-                                email: user.email,
-                                username: user.username,
-                                photoURL: user.photoURL,
-                                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                                text: textAreaValue.trim(),
-                                background: url,
-                                font: activeFontStyle,
-                            });
+        if (showPhotoContent && image && showForPhoto === true) {
+            try {
+                const photoStoryDiv = document.querySelector(".photoStoryWindow");
+                const canvas = await html2canvas(photoStoryDiv);
+                const imgData = canvas.toDataURL('image/jpeg', 1);
 
-                            // Reset state variables to clear the fields
-                            setImage('');
-                            setImageUrl('');
-                            setTextAreaValue("");
-                            setActiveDot(colors[0]);
-                            setShowTextContent(false);
-                            setShowPhotoContent(false);
-                            setShowForText(false);
-                            setShowAddText(false);
-                            setShowForPhoto(false);
-                            setShowCards(true);
-                            setTextAreaValueCount(250);
-                        })
-                        .catch((downloadError) => {
-                            console.error("Error getting download URL:", downloadError);
-                        });
-                }
-            );
+                // Convert data URL to a Blob
+                const response = await fetch(imgData);
+                const blob = await response.blob();
+
+                // Upload the image
+                const imageRef = storage.ref(`Reels/${user.uid}/${photoTimestampName()}.jpg`);
+                await imageRef.put(blob);
+                const url = await imageRef.getDownloadURL();
+                await addToReels({
+                    background: url,
+                    timestamp: new Date(),
+                });
+            } catch (error) {
+                console.error("Error capturing or uploading photo story image:", error);
+            }
         }
     };
 
@@ -313,7 +344,7 @@ function HomepageReels() {
                     </div>
                 )}
             </div>
-        </div >
+        </div>
     )
 }
 

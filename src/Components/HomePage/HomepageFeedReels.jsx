@@ -71,8 +71,6 @@ function HomepageFeedReels() {
         };
     }, [reels]);
 
-    console.log(reels)
-
     return (
         <>
             {reels.length === 0 ? (
@@ -100,18 +98,21 @@ function HomepageFeedReels() {
                             </div>
                         </NavLink >
 
-                        {reels.map((reel) => (
-                            <div
-                                key={reel.id}
-                                className="homepageFeedReels_ScrollReelsStories"
-                                style={{ background: reel.background.startsWith("https") ? `url(${reel.background})` : reel.background, }}
-                            >
-                                <Avatar src={reel.photoURL} />
-                                <div className="ReelsStoriesTextOverlay" style={{ fontFamily: reel.font }}>
-                                    {reel.text}
+                        {reels.map((reelContent) => (
+                            <NavLink to={'/reelpage/'}>
+                                <div
+                                    key={reelContent.id}
+                                    className="homepageFeedReels_ScrollReelsStories"
+                                    style={{
+                                        backgroundImage: `url(${reelContent.reel[[reelContent.reel.length - 1]].background})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center'
+                                    }}
+                                >
+                                    <Avatar src={reelContent.photoURL} />
+                                    <p>{reelContent.username}</p>
                                 </div>
-                                <p>{reel.username}</p>
-                            </div>
+                            </NavLink>
                         ))}
                     </div>
 

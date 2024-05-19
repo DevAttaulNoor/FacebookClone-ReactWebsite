@@ -153,8 +153,6 @@
     margin-right: 8px;
     border-radius: 10px;
     box-shadow: 0px 5px 5px -7px rgb(0, 0, 0, 0.75);
-    background-size: cover;
-    background-position: center;
 }
 
 .homepageFeedReels_ScrollReelsStories:last-child {
@@ -170,14 +168,5 @@
 .homepageFeedReels_ScrollReelsStories p {
     font-size: 12px;
     font-weight: 500;
-    color: #fff;
-}
-
-.ReelsStoriesTextOverlay {
-    text-align: center;
-    font-size: 12px;
-    word-break: break-word;
-    overflow-x: hidden;
-    overflow-y: auto;
     color: #fff;
 }

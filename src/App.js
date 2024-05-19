@@ -16,6 +16,7 @@ import FriendPage from './Components/FriendPage/FriendPage';
 import FriendpageAllFriends from './Components/FriendPage/FriendpageAllFriends';
 import PostPage from './Components/UniversalComponent/PostPage';
 import LoadingLine from './Components/UniversalComponent/LoadingLine';
+import ReelPage from './Components/HomePage/ReelPage';
 
 function App() {
 	const dispatch = useDispatch();
@@ -53,6 +54,7 @@ function App() {
 									<Route path="savedpage/*" element={<SavedPage />} />
 									<Route path="videospage/*" element={<VideosPage />} />
 									<Route path="userhomepage/*" element={<UserPage />} />
+									<Route path="reelpage/*" element={<ReelPage />} />
 									<Route path="profilepage/:selectedFriend/*" element={<ProfilePage />} />
 									<Route path="profilepage/:selectedFriend/post/:postId" element={<PostPage />} />
 								</Routes>
