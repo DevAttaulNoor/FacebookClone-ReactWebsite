@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setMsgAnyoneBoxVisibility } from '../../Redux/messageSlice';
 import { db } from '../../Firebase/firebase';
 import Post from '../Post/Post';
+import ReelFeed from '../ReelPage/ReelFeed';
 import MessageFriend from '../Message/MessageFriend';
 import MessageAnyone from '../Message/MessageAnyone';
-import HomepageFeedReels from './HomepageFeedReels';
 import HomepageFeedPosting from './HomepageFeedPosting';
 import HomepageLeftbarOptions from './HomepageLeftbarOptions';
 import HomepageRightbarGroupsList from './HomepageRightbarGroupsList';
@@ -104,7 +104,7 @@ function HomePage() {
             </div>
 
             <div className='homepageFeed'>
-                <HomepageFeedReels />
+                <ReelFeed />
                 <HomepageFeedPosting />
 
                 {loading ? (

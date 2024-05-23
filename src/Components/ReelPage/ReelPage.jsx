@@ -1,6 +1,6 @@
-import '../../CSS/HomePage/ReelPage.css';
+import '../../CSS/ReelPage/ReelPage.css';
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { db, storage } from '../../Firebase/firebase';
 import { Avatar } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -9,40 +9,19 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { NavLink } from 'react-router-dom';
+import { setSelectedReel } from '../../Redux/reelSlice';
 
 function ReelPage() {
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
-    const [reels, setReels] = useState([]);
+    const reels = useSelector((state) => state.data.reel.reels);
+    const filteredReels = reels.filter(reel => reel.uid !== user.uid)
+    const selectedReel = useSelector((state) => state.data.reel.selectedReel);
+    const selectedReelContent = reels.filter(reel => reel.id === selectedReel);
     const [currentReelIndex, setCurrentReelIndex] = useState(0);
-    const maxReelLength = reels[0]?.reel.length || 0; // Get the length of the first reel array
-    const currentReelContent = reels[0]?.reel[currentReelIndex];
-
-    const [menuVisible, setMenuVisible] = useState(false); // State to handle menu visibility
-
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentReelIndex(prevIndex => {
-                if (prevIndex + 1 >= maxReelLength) {
-                    clearInterval(interval);
-                    return prevIndex;
-                }
-                return prevIndex + 1;
-            });
-        }, 10000);
-
-        return () => clearInterval(interval);
-    }, [maxReelLength]);
-
-    useEffect(() => {
-        db.collection("Reels").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
-            const reelsData = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            setReels(reelsData);
-        });
-    }, []);
+    const maxReelLength = selectedReelContent[0]?.reel.length || 0;
+    const currentReelContent = selectedReelContent[0]?.reel[currentReelIndex];
+    const [menuVisible, setMenuVisible] = useState(false);
 
     const handleNext = () => {
         setCurrentReelIndex((prevIndex) => (prevIndex + 1) % maxReelLength);
@@ -82,6 +61,55 @@ function ReelPage() {
         }
     };
 
+    const timeAgowithInitials = (timestamp) => {
+        if (!timestamp || !timestamp.toDate) {
+            return "0s"
+        }
+        const currentDate = new Date();
+        const postDate = timestamp.toDate();
+        const seconds = Math.floor((currentDate - postDate) / 1000);
+        const secondsDifference = Math.max(seconds, 1);
+        const periods = {
+            D: 315360000,
+            Y: 31536000,
+            M: 2628000,
+            w: 604800,
+            d: 86400,
+            h: 3600,
+            m: 60,
+            s: 1,
+        };
+
+        let elapsed = 0;
+        let granularity = 0;
+        let unit = '';
+
+        for (const period in periods) {
+            elapsed = Math.floor(secondsDifference / periods[period]);
+
+            if (elapsed >= 1) {
+                granularity = elapsed;
+                unit = period;
+                break;
+            }
+        }
+        return `${granularity}${unit}${granularity > 1 ? '' : ''}`;
+    };
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentReelIndex(prevIndex => {
+                if (prevIndex + 1 >= maxReelLength) {
+                    clearInterval(interval);
+                    return prevIndex;
+                }
+                return prevIndex + 1;
+            });
+        }, 10000);
+
+        return () => clearInterval(interval);
+    }, [maxReelLength]);
+
     return (
         <div className="reelpage">
             <div className='reelpageLeftbar'>
@@ -107,6 +135,23 @@ function ReelPage() {
                         </NavLink>
                     </div>
                 </div>
+
+                <div className="reelpageLeftbarBottom">
+                    <h5 id='title'>Other stories</h5>
+
+                    {filteredReels.map(reelContent => (
+                        <div className='userInfoContainer' key={reelContent.id} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
+                            {console.log(reelContent)}
+                            <div className='userInfo'>
+                                <img src={reelContent.photoURL} alt="" />
+                                <div className='userInfoRight'>
+                                    <h5>{reelContent.username}</h5>
+                                    <p>{timeAgowithInitials(reelContent.timestamp)}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
 
             <div className='reelpageMain'>
@@ -123,8 +168,12 @@ function ReelPage() {
                     >
                         <div className='reelTop'>
                             <div className="reelTopLeft">
-                                <Avatar src={reels[0].photoURL} />
-                                <p>{reels[0].username}</p>
+                                <Avatar src={selectedReelContent[0].photoURL} />
+
+                                <div className='reelTopLeftInfo'>
+                                    <h5>{selectedReelContent[0].username}</h5>
+                                    <p>{timeAgowithInitials(currentReelContent.timestamp)}</p>
+                                </div>
                             </div>
 
                             <div className="reelTopRight">

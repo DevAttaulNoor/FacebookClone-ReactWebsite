@@ -62,6 +62,13 @@
     justify-content: space-between;
     padding: 8px 12px;
     margin: 2px 4px;
+    border-bottom: 1px solid lightgray;
+}
+
+.reelpageLeftbarMiddle .userInfoContainer:hover {
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: rgb(211 211 211/33%);
 }
 
 .userInfoContainer .userInfo {
@@ -111,6 +118,32 @@
     background-color: #F0F2F5;
 }
 
+.reelpageLeftbarBottom{
+    display: flex;
+    flex-direction: column;
+}
+
+.reelpageLeftbarBottom h5#title{
+    font-size: 16px;
+    font-weight: 700;
+    padding: 20px 16px 0 16px;
+    color: #050505;
+}
+
+.reelpageLeftbarBottom .userInfoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    margin: 2px 4px;
+}
+
+.reelpageLeftbarBottom .userInfoContainer:hover {
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: rgb(211 211 211/33%);
+}
+
 /* ReelPage Main Section */
 .reelpageMain {
     width: 100%;
@@ -139,10 +172,21 @@
     align-items: center;
 }
 
-.reelTopLeft p {
+.reelTopLeftInfo{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.reelTopLeftInfo h5{
     font-size: 15px;
     font-weight: 600;
-    margin-left: 10px;
+    cursor: pointer;
+}
+
+.reelTopLeftInfo p{
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
 }
 

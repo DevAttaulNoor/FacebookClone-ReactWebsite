@@ -7,7 +7,8 @@ import Authentication from './Components/Authentication/Authentication';
 import HeaderOption from './Components/Header/HeaderOption';
 import Friends from './Components/UniversalComponent/Friends';
 import HomePage from './Components/HomePage/HomePage';
-import HomepageReels from './Components/HomePage/HomepageReels';
+import ReelCreate from './Components/ReelPage/ReelCreate';
+import ReelPage from './Components/ReelPage/ReelPage';
 import UserPage from './Components/UserPage/UserPage';
 import SavedPage from './Components/UniversalComponent/SavedPage';
 import VideosPage from './Components/UniversalComponent/VideosPage';
@@ -16,7 +17,6 @@ import FriendPage from './Components/FriendPage/FriendPage';
 import FriendpageAllFriends from './Components/FriendPage/FriendpageAllFriends';
 import PostPage from './Components/UniversalComponent/PostPage';
 import LoadingLine from './Components/UniversalComponent/LoadingLine';
-import ReelPage from './Components/HomePage/ReelPage';
 
 function App() {
 	const dispatch = useDispatch();
@@ -48,7 +48,7 @@ function App() {
 								<Friends />
 								<Routes>
 									<Route path="homepage/*" element={<HomePage />} />
-									<Route path="homepage/storyreels" element={<HomepageReels />} />
+									<Route path="homepage/storyreels" element={<ReelCreate />} />
 									<Route path="friendpage/*" element={<FriendPage />} />
 									<Route path="friendpage/allFriends/*" element={<FriendpageAllFriends />} />
 									<Route path="savedpage/*" element={<SavedPage />} />

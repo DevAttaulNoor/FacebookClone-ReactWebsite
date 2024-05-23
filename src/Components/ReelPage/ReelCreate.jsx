@@ -1,11 +1,11 @@
-import '../../CSS/HomePage/HomepageReels.css'
+import '../../CSS/ReelPage/ReelCreate.css'
 import React, { useState, useRef } from 'react';
 import html2canvas from 'html2canvas';
 import { useSelector } from 'react-redux';
 import { db, storage } from '../../Firebase/firebase';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-function HomepageReels() {
+function ReelCreate() {
     const colors = ['blue', 'red', 'green', 'brown', 'yellow', 'blueviolet', 'cyan', 'gold', 'violet', 'silver', 'purple'];
     const fontStyles = ['Helvetica', 'Times New Roman', 'Courier New', 'Verdana'];
     const user = useSelector((state) => state.data.user.user);
@@ -211,22 +211,22 @@ function HomepageReels() {
     };
 
     return (
-        <div className="homepageReels">
-            <div className='homepageReelsLeftbar'>
+        <div className="reelCreate">
+            <div className='reelCreateLeftbar'>
                 <div>
-                    <div className='homepageReelsLeftbar_Top'>
-                        <div className="homepageReelsLeftbar_TopHeading">
+                    <div className='reelCreateLeftbar_Top'>
+                        <div className="reelCreateLeftbar_TopHeading">
                             <p>Your story</p>
                             <SettingsIcon />
                         </div>
 
-                        <div className="homepageReelsLeftbar_TopUserinfo">
+                        <div className="reelCreateLeftbar_TopUserinfo">
                             <img src={user.photoURL} alt="" />
                             <p>{user.username}</p>
                         </div>
                     </div>
 
-                    <div className="homepageReelsLeftbar_Middle">
+                    <div className="reelCreateLeftbar_Middle">
                         {showForText && (
                             <div className='textReelContainer'>
                                 <textarea
@@ -289,16 +289,16 @@ function HomepageReels() {
                 </div>
 
                 {(showTextContent || showPhotoContent) && (
-                    <div className="homepageReelsLeftbar_Bottom">
+                    <div className="reelCreateLeftbar_Bottom">
                         <button id='discardBtn' onClick={handleDiscardClick}>Discard</button>
                         <button id='shareBtn' onClick={handleUpload}>Share to Story</button>
                     </div>
                 )}
             </div>
 
-            <div className='homepageReelsMain'>
+            <div className='reelCreateMain'>
                 {showCards && (
-                    <div className='homepageReelsMainCards'>
+                    <div className='reelCreateMainCards'>
                         <div className="cardContainer photoCard" onClick={() => inputRef.current.click()}>
                             <div className='icon'>
                                 <i></i>
@@ -348,4 +348,4 @@ function HomepageReels() {
     )
 }
 
-export default HomepageReels;
+export default ReelCreate;

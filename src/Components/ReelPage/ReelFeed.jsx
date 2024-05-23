@@ -1,16 +1,18 @@
-import '../../CSS/HomePage/HomepageFeedReels.css';
+import '../../CSS/ReelPage/ReelFeed.css';
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import { Avatar } from '@mui/material';
+import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setReels, setSelectedReel } from '../../Redux/reelSlice';
 import { db } from '../../Firebase/firebase';
 import AddIcon from '@mui/icons-material/Add';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
-function HomepageFeedReels() {
+function ReelFeed() {
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
-    const [reels, setReels] = useState([]);
+    const reels = useSelector((state) => state.data.reel.reels);
     const [showLeftButton, setShowLeftButton] = useState(false);
     const [showRightButton, setShowRightButton] = useState(false);
     const containerRef = useRef(null);
@@ -33,9 +35,9 @@ function HomepageFeedReels() {
                 id: doc.id,
                 ...doc.data(),
             }));
-            setReels(reelsData);
+            dispatch(setReels(reelsData));
         });
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         const container = containerRef.current; // Store the reference in a variable
@@ -74,22 +76,22 @@ function HomepageFeedReels() {
     return (
         <>
             {reels.length === 0 ? (
-                <div className="homepageFeedReels">
+                <div className="reelFeed">
                     <NavLink to={'/homepage/storyreels'}>
                         <AddIcon />
-                        <div className='homepageFeedReelsInfo'>
+                        <div className='reelFeedInfo'>
                             <h2>Create Story</h2>
                             <p>Share a photo or write something.</p>
                         </div>
                     </NavLink >
                 </div>
             ) : (
-                <div className="homepageFeedReels_Scroll">
+                <div className="reelFeed_Scroll">
                     {showLeftButton && (<button id='leftScroll' onClick={scrollLeft}><KeyboardArrowLeftIcon /></button>)}
 
-                    <div className='homepageFeedReels_ScrollReels' ref={containerRef}>
+                    <div className='reelFeed_ScrollReels' ref={containerRef}>
                         <NavLink to={'/homepage/storyreels'}>
-                            <div className="homepageFeedReels_ScrollReelsInner">
+                            <div className="reelFeed_ScrollReelsInner">
                                 <img src={user.photoURL} alt="" />
                                 <div className='ScrollReelsCreate'>
                                     <AddIcon />
@@ -99,10 +101,10 @@ function HomepageFeedReels() {
                         </NavLink >
 
                         {reels.map((reelContent) => (
-                            <NavLink to={'/reelpage/'}>
+                            <NavLink to={'/reelpage/'} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
                                 <div
                                     key={reelContent.id}
-                                    className="homepageFeedReels_ScrollReelsStories"
+                                    className="reelFeed_ScrollReelsStories"
                                     style={{
                                         backgroundImage: `url(${reelContent.reel[[reelContent.reel.length - 1]].background})`,
                                         backgroundSize: 'cover',
@@ -123,4 +125,4 @@ function HomepageFeedReels() {
     );
 }
 
-export default HomepageFeedReels;
+export default ReelFeed;
