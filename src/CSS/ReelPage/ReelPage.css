@@ -44,19 +44,38 @@
     background-color: rgba(0, 0, 0, 0.15);
 }
 
-.reelpageLeftbarMiddle{
+.reelpageLeftbarMiddle {
     display: flex;
     flex-direction: column;
 }
 
-.reelpageLeftbarMiddle h5#title{
+.reelpageLeftbarMiddle a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: initial;
+}
+
+.reelpageLeftbarMiddle a .MuiSvgIcon-root {
+    width: 54px;
+    height: 54px;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #1877F2;
+    background-color: #F0F2F5;
+}
+
+.reelpageLeftbarMiddle h5#title {
     font-size: 16px;
     font-weight: 700;
     padding: 20px 16px 0 16px;
     color: #050505;
 }
 
-.reelpageLeftbarMiddle .userInfoContainer {
+.reelpageLeftbarMiddle .userInfoContainer,
+.reelpageLeftbarMiddle .createReelContainer {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -65,13 +84,15 @@
     border-bottom: 1px solid lightgray;
 }
 
-.reelpageLeftbarMiddle .userInfoContainer:hover {
+.reelpageLeftbarMiddle .userInfoContainer:hover,
+.reelpageLeftbarMiddle .createReelContainer:hover {
     cursor: pointer;
     border-radius: 10px;
     background-color: rgb(211 211 211/33%);
 }
 
-.userInfoContainer .userInfo {
+.userInfoContainer .userInfo,
+.createReelContainer .createReelInner {
     display: flex;
     align-items: center;
 }
@@ -83,47 +104,33 @@
     border-radius: 50%;
 }
 
-.userInfoContainer .userInfo .userInfoRight {
+.userInfoContainer .userInfo .userInfoRight,
+.createReelContainer .createReelInner .createReelRight {
     display: flex;
     flex-direction: column;
     margin-left: 10px;
 }
 
-.userInfoContainer .userInfo .userInfoRight h5 {
+.userInfoContainer .userInfo .userInfoRight h5,
+.createReelContainer .createReelInner .createReelRight h5 {
     font-size: 15px;
     font-weight: 600;
     color: #050505;
 }
 
-.userInfoContainer .userInfo .userInfoRight p {
+.userInfoContainer .userInfo .userInfoRight p,
+.createReelContainer .createReelInner .createReelRight p {
     font-size: 13px;
     font-weight: 500;
     color: #656765;
 }
 
-.userInfoContainer a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: initial;
-}
-
-.userInfoContainer a .MuiSvgIcon-root {
-    width: 46px;
-    height: 46px;
-    padding: 8px;
-    border-radius: 50%;
-    cursor: pointer;
-    color: #1877F2;
-    background-color: #F0F2F5;
-}
-
-.reelpageLeftbarBottom{
+.reelpageLeftbarBottom {
     display: flex;
     flex-direction: column;
 }
 
-.reelpageLeftbarBottom h5#title{
+.reelpageLeftbarBottom h5#title {
     font-size: 16px;
     font-weight: 700;
     padding: 20px 16px 0 16px;
@@ -153,7 +160,7 @@
 }
 
 .reelpageMain .reel {
-    width: 30%;
+    width: 300px;
     padding: 16px 12px;
     margin: 10px 0 20px 0;
     border-radius: 10px;
@@ -172,19 +179,19 @@
     align-items: center;
 }
 
-.reelTopLeftInfo{
+.reelTopLeftInfo {
     display: flex;
     flex-direction: column;
     margin-left: 10px;
 }
 
-.reelTopLeftInfo h5{
+.reelTopLeftInfo h5 {
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
 }
 
-.reelTopLeftInfo p{
+.reelTopLeftInfo p {
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;

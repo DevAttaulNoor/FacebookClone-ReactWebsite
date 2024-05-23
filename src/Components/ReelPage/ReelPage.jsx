@@ -1,21 +1,22 @@
 import '../../CSS/ReelPage/ReelPage.css';
 import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
+import { Avatar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { db, storage } from '../../Firebase/firebase';
-import { Avatar } from '@mui/material';
+import { setReels, setSelectedReel } from '../../Redux/reelSlice';
 import AddIcon from '@mui/icons-material/Add';
 import SettingsIcon from '@mui/icons-material/Settings';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import { NavLink } from 'react-router-dom';
-import { setSelectedReel } from '../../Redux/reelSlice';
 
 function ReelPage() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
     const reels = useSelector((state) => state.data.reel.reels);
-    const filteredReels = reels.filter(reel => reel.uid !== user.uid)
+    const allReels = reels.filter(reel => reel.uid !== user.uid);
+    const userReel = reels.filter(reel => reel.uid === user.uid);
     const selectedReel = useSelector((state) => state.data.reel.selectedReel);
     const selectedReelContent = reels.filter(reel => reel.id === selectedReel);
     const [currentReelIndex, setCurrentReelIndex] = useState(0);
@@ -44,9 +45,9 @@ function ReelPage() {
             await imageRef.delete();
 
             // Delete the reel document from Firestore
-            const reelDocRef = db.collection('Reels').doc(reels[0].id);
+            const reelDocRef = db.collection('Reels').doc(selectedReelContent.id);
             await reelDocRef.update({
-                reel: reels[0].reel.filter((_, index) => index !== currentReelIndex)
+                reel: selectedReelContent.reel.filter((_, index) => index !== currentReelIndex)
             });
 
             // Hide the menu after deletion
@@ -97,6 +98,16 @@ function ReelPage() {
     };
 
     useEffect(() => {
+        db.collection("Reels").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+            const reelsData = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            dispatch(setReels(reelsData));
+        });
+    }, [dispatch]);
+
+    useEffect(() => {
         const interval = setInterval(() => {
             setCurrentReelIndex(prevIndex => {
                 if (prevIndex + 1 >= maxReelLength) {
@@ -110,6 +121,8 @@ function ReelPage() {
         return () => clearInterval(interval);
     }, [maxReelLength]);
 
+    console.log(userReel)
+
     return (
         <div className="reelpage">
             <div className='reelpageLeftbar'>
@@ -121,27 +134,44 @@ function ReelPage() {
                 <div className="reelpageLeftbarMiddle">
                     <h5 id='title'>Your story</h5>
 
-                    <div className='userInfoContainer'>
-                        <div className='userInfo'>
-                            <img src={user.photoURL} alt="" />
-                            <div className='userInfoRight'>
-                                <h5>{user.username}</h5>
-                                <p>timestamp</p>
-                            </div>
-                        </div>
+                    {userReel.length !== 0 ? (
+                        <>
+                            {userReel.map(reelContent => (
+                                <div className='userInfoContainer' key={reelContent.id} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
+                                    <div className='userInfo'>
+                                        <img src={reelContent.photoURL} alt="" />
+                                        <div className='userInfoRight'>
+                                            <h5>{reelContent.username}</h5>
+                                            <p>{timeAgowithInitials(reelContent.timestamp)}</p>
+                                        </div>
+                                    </div>
 
+                                    <NavLink to={'/homepage/storyreels'}>
+                                        <AddIcon />
+                                    </NavLink>
+                                </div>
+                            ))}
+                        </>
+                    ) : (
                         <NavLink to={'/homepage/storyreels'}>
-                            <AddIcon />
+                            <div className='createReelContainer'>
+                                <div className='createReelInner'>
+                                    <AddIcon />
+                                    <div className='createReelRight'>
+                                        <h5>Create a story</h5>
+                                        <p>Share a photo or write something.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </NavLink>
-                    </div>
+                    )}
                 </div>
 
                 <div className="reelpageLeftbarBottom">
-                    <h5 id='title'>Other stories</h5>
+                    <h5 id='title'>All stories</h5>
 
-                    {filteredReels.map(reelContent => (
+                    {allReels.map(reelContent => (
                         <div className='userInfoContainer' key={reelContent.id} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
-                            {console.log(reelContent)}
                             <div className='userInfo'>
                                 <img src={reelContent.photoURL} alt="" />
                                 <div className='userInfoRight'>

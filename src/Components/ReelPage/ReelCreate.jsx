@@ -19,9 +19,11 @@ function ReelCreate() {
     const [activeDot, setActiveDot] = useState(colors[0]);
     const [showPhotoContent, setShowPhotoContent] = useState(false);
     const [showForPhoto, setShowForPhoto] = useState(false);
+    const [uploadLoading, setUploadLoading] = useState(false);
     const [image, setImage] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const inputRef = useRef(null);
+
 
     const handleDotClick = (color) => {
         setActiveDot(color);
@@ -111,6 +113,7 @@ function ReelCreate() {
 
     const handleUpload = async (e) => {
         e.preventDefault();
+        setUploadLoading(true);
 
         const resetState = () => {
             setImage('');
@@ -147,6 +150,7 @@ function ReelCreate() {
                 });
             }
             resetState();
+            setUploadLoading(false);
         };
 
         if (showTextContent && textAreaValue) {
@@ -168,6 +172,7 @@ function ReelCreate() {
                     timestamp: new Date(),
                 });
             } catch (error) {
+                setUploadLoading(false);
                 console.error("Error capturing or uploading text story image:", error);
             }
         }
@@ -182,6 +187,7 @@ function ReelCreate() {
                     timestamp: new Date(),
                 });
             } catch (error) {
+                setUploadLoading(false);
                 console.error("Error uploading or getting download URL:", error);
             }
         }
@@ -205,6 +211,7 @@ function ReelCreate() {
                     timestamp: new Date(),
                 });
             } catch (error) {
+                setUploadLoading(false);
                 console.error("Error capturing or uploading photo story image:", error);
             }
         }
@@ -291,7 +298,7 @@ function ReelCreate() {
                 {(showTextContent || showPhotoContent) && (
                     <div className="reelCreateLeftbar_Bottom">
                         <button id='discardBtn' onClick={handleDiscardClick}>Discard</button>
-                        <button id='shareBtn' onClick={handleUpload}>Share to Story</button>
+                        <button id="shareBtn" onClick={handleUpload}>{uploadLoading ? <div className="loadingSpin"></div> : 'Share to Story'}</button>
                     </div>
                 )}
             </div>
