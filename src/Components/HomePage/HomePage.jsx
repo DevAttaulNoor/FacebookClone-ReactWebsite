@@ -12,7 +12,6 @@ import HomepageFeedPosting from './HomepageFeedPosting';
 import HomepageLeftbarOptions from './HomepageLeftbarOptions';
 import HomepageRightbarGroupsList from './HomepageRightbarGroupsList';
 import HomepageRightbarFriendsList from './HomepageRightbarFriendsList';
-import Skeleton_Post from '../Skeletons/Skeleton_Post'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 function HomePage() {
@@ -21,7 +20,6 @@ function HomePage() {
     const msgFriendBoxVisibility = useSelector((state) => state.data.message.msgFriendBoxVisibility);
     const msgAnyoneBoxVisibility = useSelector((state) => state.data.message.msgAnyoneBoxVisibility);
     const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(true);
 
     const timeAgo = (timestamp) => {
         if (!timestamp || !timestamp.toDate) {
@@ -70,7 +68,6 @@ function HomePage() {
                     }));
 
                 setPosts(filteredPosts);
-                setLoading(false);
             });
         return () => unsubscribe();
     }, []);
@@ -107,31 +104,22 @@ function HomePage() {
                 <ReelFeed />
                 <HomepageFeedPosting />
 
-                {loading ? (
-                    <div className='postSkeleton'>
-                        <Skeleton_Post />
-                        <Skeleton_Post />
-                    </div>
-                ) : (
-                    <>
-                        {posts.map(post => {
-                            return (
-                                <div key={post.id}>
-                                    <Post
-                                        id={post.id}
-                                        userid={post.data.uid}
-                                        photoURL={post.data.photoURL}
-                                        media={post.data.media}
-                                        mediaType={post.data.mediaType}
-                                        username={post.data.username}
-                                        timestamp={timeAgo(post.data.timestamp)}
-                                        message={post.data.message}
-                                    />
-                                </div>
-                            );
-                        })}
-                    </>
-                )}
+                {posts.map(post => {
+                    return (
+                        <div key={post.id}>
+                            <Post
+                                id={post.id}
+                                userid={post.data.uid}
+                                photoURL={post.data.photoURL}
+                                media={post.data.media}
+                                mediaType={post.data.mediaType}
+                                username={post.data.username}
+                                timestamp={timeAgo(post.data.timestamp)}
+                                message={post.data.message}
+                            />
+                        </div>
+                    );
+                })}
             </div>
 
             <div className='homepageRightbar'>
