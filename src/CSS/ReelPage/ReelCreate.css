@@ -251,6 +251,12 @@
     background-color: #0866FF;
 }
 
+.reelCreateLeftbar_Bottom #loadingBtn {
+    padding: 6px 12px;
+    color: #fff;
+    background-color: #0866FF;
+}
+
 .reelCreateLeftbar_Bottom .loadingSpin {
     width: 22px;
     height: 22px;

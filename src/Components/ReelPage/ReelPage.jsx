@@ -1,5 +1,5 @@
 import '../../CSS/ReelPage/ReelPage.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,6 +23,7 @@ function ReelPage() {
     const maxReelLength = selectedReelContent[0]?.reel.length || 0;
     const currentReelContent = selectedReelContent[0]?.reel[currentReelIndex];
     const [menuVisible, setMenuVisible] = useState(false);
+    const menuRef = useRef(null);
 
     const handleNext = () => {
         setCurrentReelIndex((prevIndex) => (prevIndex + 1) % maxReelLength);
@@ -44,11 +45,15 @@ function ReelPage() {
             const imageRef = storage.refFromURL(currentReelContent.background);
             await imageRef.delete();
 
-            // Delete the reel document from Firestore
-            const reelDocRef = db.collection('Reels').doc(selectedReelContent.id);
-            await reelDocRef.update({
-                reel: selectedReelContent.reel.filter((_, index) => index !== currentReelIndex)
-            });
+            // Get the updated reel data
+            const reelDocRef = db.collection('Reels').doc(selectedReelContent[0].id);
+            const reelData = selectedReelContent[0].reel.filter((_, index) => index !== currentReelIndex);
+
+            if (reelData.length === 0) {
+                await reelDocRef.delete();
+            } else {
+                await reelDocRef.update({ reel: reelData });
+            }
 
             // Hide the menu after deletion
             setMenuVisible(false);
@@ -98,14 +103,17 @@ function ReelPage() {
     };
 
     useEffect(() => {
-        db.collection("Reels").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
-            const reelsData = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            dispatch(setReels(reelsData));
-        });
-    }, [dispatch]);
+        const handleClickOutside = (event) => {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setMenuVisible(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [menuRef]);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -121,7 +129,15 @@ function ReelPage() {
         return () => clearInterval(interval);
     }, [maxReelLength]);
 
-    console.log(userReel)
+    useEffect(() => {
+        db.collection("Reels").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+            const reelsData = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            dispatch(setReels(reelsData));
+        });
+    }, [dispatch]);
 
     return (
         <div className="reelpage">
@@ -137,7 +153,10 @@ function ReelPage() {
                     {userReel.length !== 0 ? (
                         <>
                             {userReel.map(reelContent => (
-                                <div className='userInfoContainer' key={reelContent.id} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
+                                <div key={reelContent.id}
+                                    className={`userInfoContainer ${(selectedReel === reelContent.id) ? 'active' : ''}`}
+                                    onClick={() => dispatch(setSelectedReel(reelContent.id))}
+                                >
                                     <div className='userInfo'>
                                         <img src={reelContent.photoURL} alt="" />
                                         <div className='userInfoRight'>
@@ -171,7 +190,10 @@ function ReelPage() {
                     <h5 id='title'>All stories</h5>
 
                     {allReels.map(reelContent => (
-                        <div className='userInfoContainer' key={reelContent.id} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
+                        <div key={reelContent.id}
+                            className={`userInfoContainer ${(selectedReel === reelContent.id) ? 'active' : ''}`}
+                            onClick={() => dispatch(setSelectedReel(reelContent.id))}
+                        >
                             <div className='userInfo'>
                                 <img src={reelContent.photoURL} alt="" />
                                 <div className='userInfoRight'>
@@ -207,17 +229,24 @@ function ReelPage() {
                             </div>
 
                             <div className="reelTopRight">
-                                <div onClick={handlePrevious}>
+                                <div className='reelTopRightOption' onClick={handlePrevious}>
                                     <ArrowLeftIcon />
                                 </div>
-                                <div onClick={handleNext}>
+                                <div className='reelTopRightOption' onClick={handleNext}>
                                     <ArrowRightIcon />
                                 </div>
-                                <div>
+                                <div className='reelTopRightOption'>
                                     <MoreHorizIcon onClick={handleMenuToggle} />
                                     {menuVisible && (
-                                        <div className="menu">
-                                            <button onClick={handleDelete}>Delete</button>
+                                        <div className="menu" ref={menuRef}>
+                                            <div className='menuOption' onClick={handleDelete}>
+                                                <div className="menuOptionLeft">
+                                                    <i id='deletePostIcon'></i>
+                                                </div>
+                                                <div className="menuOptionRight">
+                                                    <h5>Delete</h5>
+                                                </div>
+                                            </div>
                                         </div>
                                     )}
                                 </div>
@@ -226,7 +255,7 @@ function ReelPage() {
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     );
 }
 

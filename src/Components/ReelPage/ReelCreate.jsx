@@ -24,7 +24,6 @@ function ReelCreate() {
     const [imageUrl, setImageUrl] = useState('');
     const inputRef = useRef(null);
 
-
     const handleDotClick = (color) => {
         setActiveDot(color);
     };
@@ -298,7 +297,11 @@ function ReelCreate() {
                 {(showTextContent || showPhotoContent) && (
                     <div className="reelCreateLeftbar_Bottom">
                         <button id='discardBtn' onClick={handleDiscardClick}>Discard</button>
-                        <button id="shareBtn" onClick={handleUpload}>{uploadLoading ? <div className="loadingSpin"></div> : 'Share to Story'}</button>
+                        {uploadLoading ? (
+                            <button id="loadingBtn"> <div className="loadingSpin"></div> </button>
+                        ) : (
+                            <button id="shareBtn" onClick={handleUpload}>Share to Story</button>
+                        )}
                     </div>
                 )}
             </div>
