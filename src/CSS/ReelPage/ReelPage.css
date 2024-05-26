@@ -68,7 +68,7 @@
 .reelpageLeftbarMiddle h5#title {
     font-size: 16px;
     font-weight: 600;
-    padding: 20px 16px 0 16px;
+    padding: 20px 16px 10px 16px;
     color: #050505;
 }
 
@@ -78,7 +78,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 8px;
-    margin: 10px 6px 0px 6px;
+    margin: 0 6px;
     border-radius: 6px;
 }
 
@@ -136,10 +136,17 @@
     flex-direction: column;
 }
 
+.reelpageLeftbarBottom #noStories{
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px 16px 0 16px;
+    color: #656765;
+}
+
 .reelpageLeftbarBottom h5#title {
     font-size: 16px;
     font-weight: 600;
-    padding: 20px 16px 0 16px;
+    padding: 20px 16px 10px 16px;
     color: #050505;
 }
 
@@ -148,7 +155,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 8px;
-    margin: 10px 6px 0px 6px;
+    margin: 0px 6px 2px 6px;
     border-radius: 6px;
 }
 

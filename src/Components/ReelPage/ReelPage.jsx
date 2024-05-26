@@ -187,22 +187,28 @@ function ReelPage() {
                 </div>
 
                 <div className="reelpageLeftbarBottom">
-                    <h5 id='title'>All stories</h5>
+                    {allReels.length === 0 ? (
+                        <p id='noStories'>There are no stories to be shown from friends and others</p>
+                    ) : (
+                        <>
+                            <h5 id='title'>All stories</h5>
 
-                    {allReels.map(reelContent => (
-                        <div key={reelContent.id}
-                            className={`userInfoContainer ${(selectedReel === reelContent.id) ? 'active' : ''}`}
-                            onClick={() => dispatch(setSelectedReel(reelContent.id))}
-                        >
-                            <div className='userInfo'>
-                                <img src={reelContent.photoURL} alt="" />
-                                <div className='userInfoRight'>
-                                    <h5>{reelContent.username}</h5>
-                                    <p>{timeAgowithInitials(reelContent.timestamp)}</p>
+                            {allReels.map(reelContent => (
+                                <div key={reelContent.id}
+                                    className={`userInfoContainer ${(selectedReel === reelContent.id) ? 'active' : ''}`}
+                                    onClick={() => dispatch(setSelectedReel(reelContent.id))}
+                                >
+                                    <div className='userInfo'>
+                                        <img src={reelContent.photoURL} alt="" />
+                                        <div className='userInfoRight'>
+                                            <h5>{reelContent.username}</h5>
+                                            <p>{timeAgowithInitials(reelContent.timestamp)}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    ))}
+                            ))}
+                        </>
+                    )}
                 </div>
             </div>
 
