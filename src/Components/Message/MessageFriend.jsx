@@ -52,11 +52,7 @@ function MessageFriend() {
         const newMessage = {
             text: messageInput,
             sender: user.uid,
-            senderName: user.username,
-            senderPhotoUrl: user.photoURL,
             recipient: recipientUserId,
-            recipientName: recipientUserName,
-            recipientPhotoUrl: recipientUserPhotoUrl,
             timestamp: new Date(),
         };
 
@@ -73,11 +69,15 @@ function MessageFriend() {
             // Update the messages field in the document
             await chatDocRef.update({ messages: updatedMessages });
         } else {
-            // If the chat document doesn't exist, create it with the new message
+            setMessageInput('');
             await chatDocRef.set({
                 chatId: chatId,
                 senderUid: user.uid,
+                senderName: user.username,
+                senderPhotoUrl: user.photoURL,
                 recipientUid: recipientUserId,
+                recipientName: recipientUserName,
+                recipientPhotoUrl: recipientUserPhotoUrl,
                 messages: [newMessage]
             });
         }

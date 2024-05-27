@@ -87,15 +87,14 @@ function MessageBox() {
 
                             if (isUserSender || isUserRecipient) {
                                 const lastMessage = chat.messages.slice(-1)[0];
-                                const isSender = lastMessage.sender !== user.uid;
 
                                 return (
                                     <>
                                         {activeButton === 'Inbox' ? (
                                             <div className='messageBoxBottomOption' key={chat.chatId} onClick={() => handleMsgFriendBox(friend[0])}>
-                                                <Avatar src={isSender ? lastMessage.senderPhotoUrl : lastMessage.recipientPhotoUrl} />
+                                                <Avatar src={isUserSender ? chat.recipientPhotoUrl : chat.senderPhotoUrl} />
                                                 <div className='messageBoxBottomOptionContent'>
-                                                    <p>{isSender ? lastMessage.senderName : lastMessage.recipientName}</p>
+                                                    <p>{isUserSender ? chat.recipientName : chat.senderName}</p>
                                                     <div className='messageBoxBottomOptionContentBottom'>
                                                         <span>{lastMessage.text}</span>
                                                         <p> · </p>
@@ -109,7 +108,7 @@ function MessageBox() {
                             }
                             return null;
                         })}
-                        
+
                         {activeButton === 'Communities' && (
                             <p id='noMsg'>No communities message found.</p>
                         )}

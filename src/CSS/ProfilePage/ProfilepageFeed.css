@@ -7,7 +7,7 @@
     margin-right: 0;
 }
 
-.profilePageFeed .homepageFeedPosting {
+.profilePageFeed > .post:first-child {
     margin-top: 0;
 }
 

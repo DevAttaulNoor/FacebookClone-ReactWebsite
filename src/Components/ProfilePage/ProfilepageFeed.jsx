@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { db } from '../../Firebase/firebase';
 import Post from '../Post/Post';
-import HomepageFeedPosting from '../HomePage/HomepageFeedPosting';
 
 function ProfilepageFeed() {
     const selectedFriend = useSelector((state) => state.data.friends.selectedFriend);
@@ -89,7 +88,6 @@ function ProfilepageFeed() {
 
     return (
         <div className='profilePageFeed'>
-            <HomepageFeedPosting />
             {posts.map(post => {
                 const formattedDate = timeAgo(post.data.timestamp);
                 return (

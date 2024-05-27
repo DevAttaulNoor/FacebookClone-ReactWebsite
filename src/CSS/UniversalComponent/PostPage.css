@@ -31,6 +31,7 @@
 }
 
 .postPageInner_TopRight{
+    position: relative;
     display: flex;
     align-items: center;
 }
@@ -46,6 +47,22 @@
 .postPageInner_TopRight .MuiSvgIcon-root:hover {
     background-color: whitesmoke;
     cursor: pointer;
+}
+
+.postPageInner_TopRight .postSetting {
+    position: absolute;
+    top: 35px;
+    right: 15px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 8px;
+    z-index: 1;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
 }
 
 /* PostPage Middle Section */

@@ -1,10 +1,14 @@
 import "../../CSS/UniversalComponent/PostPage.css";
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import Modal from 'react-modal';
 import { Avatar } from '@mui/material';
 import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 import { db } from "../../Firebase/firebase";
 import { setSelectedFriend } from "../../Redux/friendSlice";
+import PostLike from "../Post/PostLike";
+import PostShare from "../Post/PostShare";
+import PostComment from "../Post/PostComment";
 import SendIcon from '@mui/icons-material/Send';
 import PublicIcon from '@mui/icons-material/Public';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -14,6 +18,7 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
 function PostPage() {
+    Modal.setAppElement('#root');
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
     const selectedPost = useSelector((state) => state.data.post.selectedPost);
@@ -24,6 +29,78 @@ function PostPage() {
     const visibleComments = showAllComments ? comments : comments.slice(0, 5);
     const [likesCount, setLikesCount] = useState(0);
     const [currentUserLiked, setCurrentUserLiked] = useState(false);
+    const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+    const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+    const [isLikedUsersModalOpen, setIsLikedUsersModalOpen] = useState(false);
+    const dropdownRef = useRef(null);
+
+    const toggleDropdown = () => {
+        setIsDropdownVisible(!isDropdownVisible);
+    };
+
+    const handleLike = async () => {
+        // Check if the user has already liked the post
+        const likedUsersRef = db.collection("Posts").doc(selectedPost).collection("likes");
+        const likedUserDoc = await likedUsersRef.doc(user.uid).get();
+
+        if (likedUserDoc.exists) {
+            // User has previously liked the post, so we should unlike it
+            // Update the likes count in Firestore and remove the user's like information
+            db.collection("Posts")
+                .doc(selectedPost)
+                .update({ likesCount: Math.max(likesCount - 1, 0) })
+                .catch((error) => {
+                    console.error("Error unliking post: ", error);
+                });
+
+            db.collection("Users").doc(post.uid).collection("Notifications").doc(post.uid).collection('Likes').doc(selectedPost).delete();
+
+            likedUserDoc.ref
+                .delete()
+                .catch((error) => {
+                    console.error("Error removing like information: ", error);
+                });
+        } else {
+            // User has not liked the post before, so we should like it
+            // Update the likes count in Firestore and add the user's like information
+            db.collection("Posts")
+                .doc(selectedPost)
+                .update({ likesCount: likesCount + 1 })
+                .catch((error) => {
+                    console.error("Error liking post: ", error);
+                });
+
+            if (user.uid !== post.uid) {
+                db.collection("Users").doc(post.uid).collection("Notifications").doc(post.uid).collection('Likes').doc(selectedPost).set({
+                    postid: selectedPost,
+                    postuserid: post.uid,
+                    userid: user.uid,
+                    username: user.username,
+                    userphotoUrl: user.photoURL,
+                    timestamp: new Date(),
+                    status: 'reacted',
+                    notificationStatus: 'notseen',
+                })
+            }
+
+            likedUsersRef
+                .doc(user.uid)
+                .set({
+                    uid: user.uid,
+                    photoUrl: user.photoURL,
+                    username: user.username,
+                    email: user.email,
+                })
+                .catch((error) => {
+                    console.error("Error adding like information: ", error);
+                });
+        }
+    };
+
+    const handleLikedUsersClick = () => {
+        setIsLikedUsersModalOpen(true);
+    };
 
     const postComment = async () => {
         if (comment.trim() === '') {
@@ -78,67 +155,58 @@ function PostPage() {
         setShowAllComments(true);
     };
 
-    const handleLike = async () => {
-        // Check if the user has already liked the post
-        const likedUsersRef = db.collection("Posts").doc(selectedPost).collection("likes");
-        const likedUserDoc = await likedUsersRef.doc(user.uid).get();
-
-        if (likedUserDoc.exists) {
-            // User has previously liked the post, so we should unlike it
-            // Update the likes count in Firestore and remove the user's like information
-            db.collection("Posts")
-                .doc(selectedPost)
-                .update({ likesCount: Math.max(likesCount - 1, 0) })
-                .catch((error) => {
-                    console.error("Error unliking post: ", error);
-                });
-
-            db.collection("Users").doc(post.uid).collection("Notifications").doc(post.uid).collection('Likes').doc(selectedPost).delete();
-
-            likedUserDoc.ref
-                .delete()
-                .catch((error) => {
-                    console.error("Error removing like information: ", error);
-                });
-        } else {
-            // User has not liked the post before, so we should like it
-            // Update the likes count in Firestore and add the user's like information
-            db.collection("Posts")
-                .doc(selectedPost)
-                .update({ likesCount: likesCount + 1 })
-                .catch((error) => {
-                    console.error("Error liking post: ", error);
-                });
-
-            if (post.uid !== user.uid) {
-                db.collection("Users").doc(post.uid).collection("Notifications").doc(post.uid).collection('Likes').doc(selectedPost).set({
-                    postuserid: post.uid,
-                    userid: user.uid,
-                    username: user.username,
-                    userphotoUrl: user.photoURL,
-                    timestamp: new Date(),
-                    status: 'reacted',
-                })
-            }
-
-            likedUsersRef
-                .doc(user.uid)
-                .set({
-                    uid: user.uid,
-                    photoUrl: user.photoURL,
-                    username: user.username,
-                    email: user.email,
-                })
-                .catch((error) => {
-                    console.error("Error adding like information: ", error);
-                });
-        }
-    };
-
     const handleFriendSelection = (friendUid) => {
         sessionStorage.setItem('selectedFriend', JSON.stringify({ friendUid: friendUid }));
         dispatch(setSelectedFriend(friendUid));
     }
+
+    const handleDelete = async () => {
+        const postRef = db.collection("Posts").doc(selectedPost);
+
+        // Delete the post document
+        try {
+            await postRef.delete();
+            console.log("Post document successfully deleted!");
+        } catch (error) {
+            console.error("Error removing post document: ", error);
+        }
+
+        // Delete the "likes" subcollection
+        const likesRef = postRef.collection("likes");
+        const deleteLikesPromise = likesRef.get()
+            .then((querySnapshot) => {
+                const batch = db.batch();
+                querySnapshot.forEach((doc) => {
+                    batch.delete(doc.ref);
+                });
+                return batch.commit();
+            })
+            .catch((error) => {
+                console.error("Error removing likes subcollection: ", error);
+            });
+
+        // Delete all comments in the collection
+        const commentsRef = postRef.collection("comments");
+        const deleteCommentsPromise = commentsRef.get()
+            .then((querySnapshot) => {
+                const batch = db.batch();
+                querySnapshot.forEach((doc) => {
+                    batch.delete(doc.ref);
+                });
+                return batch.commit();
+            })
+            .catch((error) => {
+                console.error("Error removing comments: ", error);
+            });
+
+        // Use Promise.all to wait for all delete operations to complete
+        try {
+            await Promise.all([deleteLikesPromise, deleteCommentsPromise]);
+            console.log("Likes subcollection and comments successfully deleted!");
+        } catch (error) {
+            console.error("Error deleting likes subcollection and comments: ", error);
+        }
+    };
 
     const timeAgo = (timestamp) => {
         if (!timestamp || !timestamp.toDate) {
@@ -239,6 +307,20 @@ function PostPage() {
         getRealtimeComments();
     }, [selectedPost]);
 
+    //* useEffect to close the dropdown when a click occurs outside of the area
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownVisible(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [dropdownRef]);
+
     //* useEffect to get all the like count on a post from the firestore
     useEffect(() => {
         const postRef = db.collection("Posts").doc(selectedPost);
@@ -297,8 +379,21 @@ function PostPage() {
                         </div>
                     </div>
 
-                    <div className="postPageInner_TopRight">
+                    <div className="postPageInner_TopRight" onClick={toggleDropdown}>
                         <MoreHorizIcon />
+                        {isDropdownVisible && (
+                            <div className="postSetting" ref={dropdownRef}>
+                                <div className="postSettingOption" onClick={handleDelete}>
+                                    <div className="postSettingOptionLeft">
+                                        <i id='deletePostIcon'></i>
+                                    </div>
+                                    <div className="postSettingOptionRight">
+                                        <h5>Move to trash</h5>
+                                        <p>Items in your trash are deleted.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -325,25 +420,8 @@ function PostPage() {
 
                     <div className="postPageInner_MiddleBottom">
                         <div className="postPageInner_MiddleBottom_Top">
-                            {post.likesCount !== 0 ? (
-                                post.likesCount > 1 ? (
-                                    <p>{post.likesCount} likes</p>
-                                ) : (
-                                    <p>{post.likesCount} like</p>
-                                )
-                            ) : (
-                                <p></p>
-                            )}
-
-                            {comments.length !== 0 ? (
-                                comments.length > 1 ? (
-                                    <p>{comments.length} comments</p>
-                                ) : (
-                                    <p>{comments.length} comment</p>
-                                )
-                            ) : (
-                                <p></p>
-                            )}
+                            {post.likesCount >= 1 && <p onClick={handleLikedUsersClick}> {post.likesCount} {post.likesCount === 1 ? 'Like' : 'Likes'} </p>}
+                            {comments.length >= 1 && <p onClick={() => setIsCommentModalOpen(true)}> {comments.length} {comments.length === 1 ? 'comment' : 'comments'} </p>}
                         </div>
 
                         <div className="postPageInner_MiddleBottom_Bottom">
@@ -366,10 +444,31 @@ function PostPage() {
                                 <p>Comment</p>
                             </div>
 
-                            <div className='postPageInner_MiddleBottom_BottomOption'>
+                            <div className='postPageInner_MiddleBottom_BottomOption' onClick={() => setIsShareModalOpen(true)}>
                                 <ReplyOutlinedIcon />
                                 <p>Share</p>
                             </div>
+                        </div>
+
+                        <div className="postBottomModals">
+                            <Modal className="likedUserModal" isOpen={isLikedUsersModalOpen} onRequestClose={() => setIsLikedUsersModalOpen(false)}>
+                                <PostLike
+                                    id={selectedPost}
+                                    closeModal={{ closeLikeModal: () => setIsLikedUsersModalOpen(false) }}
+                                />
+                            </Modal>
+
+                            <Modal className="commentedUserModal" isOpen={isCommentModalOpen} onRequestClose={() => setIsCommentModalOpen(false)}>
+                                <PostComment
+                                    id={selectedPost}
+                                    userid={post.uid}
+                                    closeModal={{ closeCommentModal: () => setIsCommentModalOpen(false) }}
+                                />
+                            </Modal>
+
+                            <Modal className="sharedUserModal" isOpen={isShareModalOpen} onRequestClose={() => setIsShareModalOpen(false)}>
+                                <PostShare closeModal={() => setIsShareModalOpen(false)} />
+                            </Modal>
                         </div>
                     </div>
                 </div>
