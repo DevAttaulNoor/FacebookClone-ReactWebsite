@@ -1,4 +1,4 @@
-import '../../CSS/Post/PostEdit.css';
+import '../../CSS/PostPage/PostEdit.css';
 import bgcolorIcon from '../../Assets/Images/Aa.png'
 import React, { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';

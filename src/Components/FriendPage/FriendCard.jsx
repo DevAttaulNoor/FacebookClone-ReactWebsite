@@ -51,7 +51,7 @@ function FriendCard({ user }) {
                     receiverUid: user.uid,
                     receiverName: user.username,
                     receiverPhotoUrl: user.photoURL,
-                    timestamp: new Date(),
+                    timestamp: Math.floor(new Date().getTime() / 1000),
                     status: 'sent',
                     notificationStatus: 'notseen',
                 });

@@ -101,9 +101,8 @@ function ReelFeed() {
                         </NavLink >
 
                         {reels.map((reelContent) => (
-                            <NavLink to={`/reelpage/${reelContent.id}`} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
+                            <NavLink to={`/reelpage/${reelContent.id}`} key={reelContent.id} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
                                 <div
-                                    key={reelContent.id}
                                     className="reelFeed_ScrollReelsStories"
                                     style={{
                                         backgroundImage: `url(${reelContent.reel[[reelContent.reel.length - 1]].background})`,

@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { db, storage } from '../../Firebase/firebase';
+import { timeAgoInitials } from '../../Assets/Utility/TimeModule';
 import { setReels, setSelectedReel } from '../../Redux/reelSlice';
 import AddIcon from '@mui/icons-material/Add';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -91,41 +92,6 @@ function ReelPage() {
         }
     };
 
-    const timeAgowithInitials = (timestamp) => {
-        if (!timestamp || !timestamp.toDate) {
-            return "0s"
-        }
-        const currentDate = new Date();
-        const postDate = timestamp.toDate();
-        const seconds = Math.floor((currentDate - postDate) / 1000);
-        const secondsDifference = Math.max(seconds, 1);
-        const periods = {
-            D: 315360000,
-            Y: 31536000,
-            M: 2628000,
-            w: 604800,
-            d: 86400,
-            h: 3600,
-            m: 60,
-            s: 1,
-        };
-
-        let elapsed = 0;
-        let granularity = 0;
-        let unit = '';
-
-        for (const period in periods) {
-            elapsed = Math.floor(secondsDifference / periods[period]);
-
-            if (elapsed >= 1) {
-                granularity = elapsed;
-                unit = period;
-                break;
-            }
-        }
-        return `${granularity}${unit}${granularity > 1 ? '' : ''}`;
-    };
-
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -193,13 +159,13 @@ function ReelPage() {
                     {userReel.length !== 0 ? (
                         <>
                             {userReel.map(reelContent => (
-                                <NavLink to={`/reelpage/${reelContent.id}`} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
-                                    <div key={reelContent.id} className={`userInfoContainer ${(selectedReel === reelContent.id) ? 'active' : ''}`}>
+                                <NavLink to={`/reelpage/${reelContent.id}`} key={reelContent.id} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
+                                    <div className={`userInfoContainer ${(selectedReel === reelContent.id) ? 'active' : ''}`}>
                                         <div className='userInfo'>
                                             <img src={reelContent.photoURL} alt="" />
                                             <div className='userInfoRight'>
                                                 <h5>{reelContent.username}</h5>
-                                                <p>{timeAgowithInitials(reelContent.timestamp)}</p>
+                                                <p>{timeAgoInitials(reelContent.timestamp)}</p>
                                             </div>
                                         </div>
 
@@ -233,13 +199,13 @@ function ReelPage() {
                             <h5 id='title'>All stories</h5>
 
                             {allReels.map(reelContent => (
-                                <NavLink to={`/reelpage/${reelContent.id}`} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
-                                    <div key={reelContent.id} className={`userInfoContainer ${(selectedReel === reelContent.id) ? 'active' : ''}`}>
+                                <NavLink to={`/reelpage/${reelContent.id}`} key={reelContent.id} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
+                                    <div className={`userInfoContainer ${(selectedReel === reelContent.id) ? 'active' : ''}`}>
                                         <div className='userInfo'>
                                             <img src={reelContent.photoURL} alt="" />
                                             <div className='userInfoRight'>
                                                 <h5>{reelContent.username}</h5>
-                                                <p>{timeAgowithInitials(reelContent.timestamp)}</p>
+                                                <p>{timeAgoInitials(reelContent.timestamp)}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -268,7 +234,7 @@ function ReelPage() {
 
                                 <div className='reelTopLeftInfo'>
                                     <h5>{selectedReelContent[0].username}</h5>
-                                    <p>{timeAgowithInitials(currentReelContent.timestamp)}</p>
+                                    <p>{timeAgoInitials(currentReelContent.timestamp)}</p>
                                 </div>
                             </div>
 

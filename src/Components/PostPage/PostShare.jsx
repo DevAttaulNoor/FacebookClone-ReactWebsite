@@ -1,4 +1,4 @@
-import '../../CSS/Post/PostShare.css';
+import '../../CSS/PostPage/PostShare.css';
 import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 

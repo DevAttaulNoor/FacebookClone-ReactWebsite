@@ -1,8 +1,9 @@
-import '../../CSS/Post/PostComment.css';
+import '../../CSS/PostPage/PostComment.css';
 import React, { useState, useEffect, useRef } from 'react';
+import { Avatar } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { db } from '../../Firebase/firebase';
-import { Avatar } from '@mui/material';
+import { timeAgoInitials } from "../../Assets/Utility/TimeModule";
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 
@@ -23,7 +24,7 @@ function PostComment({ id, userid, closeModal }) {
             username: user.username,
             photoURL: user.photoURL,
             text: comment,
-            timestamp: new Date(),
+            timestamp: Math.floor(new Date().getTime() / 1000),
         };
 
         setComment('');
@@ -50,7 +51,7 @@ function PostComment({ id, userid, closeModal }) {
                     userphotoUrl: user.photoURL,
                     commentid: commentRef.id,
                     commenttext: comment,
-                    timestamp: new Date(),
+                    timestamp: Math.floor(new Date().getTime() / 1000),
                     status: 'commented',
                     notificationStatus: 'notseen',
                 });
@@ -69,41 +70,6 @@ function PostComment({ id, userid, closeModal }) {
         } catch (error) {
             console.error("Error removing comment: ", error);
         }
-    };
-
-    const timeAgowithInitials = (timestamp) => {
-        if (!timestamp || !timestamp.toDate) {
-            return "0s"
-        }
-        const currentDate = new Date();
-        const postDate = timestamp.toDate();
-        const seconds = Math.floor((currentDate - postDate) / 1000);
-        const secondsDifference = Math.max(seconds, 1);
-        const periods = {
-            D: 315360000,
-            Y: 31536000,
-            M: 2628000,
-            w: 604800,
-            d: 86400,
-            h: 3600,
-            m: 60,
-            s: 1,
-        };
-
-        let elapsed = 0;
-        let granularity = 0;
-        let unit = '';
-
-        for (const period in periods) {
-            elapsed = Math.floor(secondsDifference / periods[period]);
-
-            if (elapsed >= 1) {
-                granularity = elapsed;
-                unit = period;
-                break;
-            }
-        }
-        return `${granularity}${unit}${granularity > 1 ? '' : ''}`;
     };
 
     useEffect(() => {
@@ -146,7 +112,7 @@ function PostComment({ id, userid, closeModal }) {
                             </div>
                             <div className='commentBottom'>
                                 {comment.uid === user.uid && <button onClick={() => deleteComment(comment.id)}>Delete</button>}
-                                <p>{timeAgowithInitials(comment.timestamp)}</p>
+                                <p>{timeAgoInitials(comment.timestamp)}</p>
                             </div>
                         </div>
                     </div>

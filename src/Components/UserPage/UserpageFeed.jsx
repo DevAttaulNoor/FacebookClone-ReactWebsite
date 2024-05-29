@@ -1,7 +1,8 @@
 import '../../CSS/UserPage/UserpageFeed.css';
 import React, { useEffect, useState } from 'react';
 import { db } from '../../Firebase/firebase';
-import Post from '../Post/Post';
+import { timeAgo, formatJoinedDate } from '../../Assets/Utility/TimeModule';
+import PostFeed from '../PostPage/PostFeed';
 import HomepageFeedPosting from '../HomePage/HomepageFeedPosting';
 
 function UserpageFeed() {
@@ -10,50 +11,6 @@ function UserpageFeed() {
     const userDataStr = sessionStorage.getItem('userData');
     const userData = JSON.parse(userDataStr);
     const userUid = userData.uid;
-
-    const timeAgo = (timestamp) => {
-        if (!timestamp || !timestamp.toDate) {
-            return "0 second ago"
-        }
-        const currentDate = new Date();
-        const postDate = timestamp.toDate();
-        const seconds = Math.floor((currentDate - postDate) / 1000);
-        const secondsDifference = Math.max(seconds, 1);
-        const periods = {
-            decade: 315360000,
-            year: 31536000,
-            month: 2628000,
-            week: 604800,
-            day: 86400,
-            hour: 3600,
-            minute: 60,
-            second: 1,
-        };
-
-        let elapsed = 0;
-        let granularity = 0;
-        let unit = '';
-
-        for (const period in periods) {
-            elapsed = Math.floor(secondsDifference / periods[period]);
-
-            if (elapsed >= 1) {
-                granularity = elapsed;
-                unit = period;
-                break;
-            }
-        }
-        return `${granularity} ${unit}${granularity > 1 ? 's' : ''} ago`;
-    };
-
-    const formatJoinedDate = (timestamp) => {
-        if (!timestamp || !timestamp.toDate) {
-            return "Unknown Date";
-        }
-        const dob = timestamp.toDate();
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        return dob.toLocaleDateString('en-GB', options);
-    };
 
     useEffect(() => {
         const unsubscribe = db.collection("Posts")
@@ -94,7 +51,7 @@ function UserpageFeed() {
             {posts.map((post, index) => {
                 return (
                     <div key={index}>
-                        <Post
+                        <PostFeed
                             id={post.id}
                             userid={post.data.uid}
                             photoURL={post.data.photoURL}
@@ -111,7 +68,7 @@ function UserpageFeed() {
             {joinedposts.map((joinedpost, index) => {
                 return (
                     <div key={index} className="JoinedPost">
-                        <Post
+                        <PostFeed
                             id={joinedpost.id}
                             userid={joinedpost.data.uid}
                             photoURL={joinedpost.data.photoURL}

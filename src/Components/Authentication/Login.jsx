@@ -48,7 +48,7 @@ function Login() {
 
                 sessionStorage.setItem('userData', JSON.stringify(updatedUserData));
                 dispatch(loginUser(updatedUserData));
-                navigate('/homepage');
+                navigate('homepage/');
             }
 
             else {
@@ -93,9 +93,9 @@ function Login() {
 
             <button type="submit" id="submitBtn">{isLoginProcessing ? <div className="loadingSpin"></div> : 'Log in'}</button>
             {loginerror && <p className="errorNote">{loginerror}</p>}
-            <button id="forgetBtn" type="button">Forgotten password?</button>
+            <button type="button" id="forgetBtn">Forgotten password?</button>
             <hr id="line" />
-            <button id="newAccBtn" type="button" onClick={() => dispatch(setAuthForm('signup'))}>Create new account</button>
+            <button type="button" id="newAccBtn" onClick={() => dispatch(setAuthForm('signup'))}>Create new account</button>
         </form>
     )
 }

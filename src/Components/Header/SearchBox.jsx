@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Avatar } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedFriend } from '../../Redux/friendSlice';
 import { setSearchBoxVisible } from '../../Redux/searchSlice';
 import { db } from '../../Firebase/firebase';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
@@ -67,17 +68,10 @@ function SearchBox() {
                 {matchingUsernames.length > 0 ? (
                     matchingUsernames.map((matchingUser) => (
                         <div className='searchBoxBottomOption' key={matchingUser.id} onClick={() => handleSearchBoxVisibility()}>
-                            {matchingUser.id === user.uid ? (
-                                <NavLink to={`/userhomepage/post`}>
-                                    <Avatar src={user.photoURL} />
-                                    <p>{user.username}</p>
-                                </NavLink>
-                            ) : (
-                                <NavLink to={`/profilepage/${matchingUser.id}/post`}>
-                                    <Avatar src={matchingUser.photoURL} />
-                                    <p>{matchingUser.username}</p>
-                                </NavLink>
-                            )}
+                            <NavLink to={`/profilepage/${matchingUser.id}/post`} onClick={() => dispatch(setSelectedFriend(matchingUser.id))}>
+                                <Avatar src={matchingUser.photoURL} />
+                                <p>{matchingUser.username}</p>
+                            </NavLink>
                         </div>
                     ))
                 ) : (

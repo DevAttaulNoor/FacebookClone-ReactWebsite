@@ -2,9 +2,10 @@ import '../../CSS/HomePage/HomePage.css'
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMsgAnyoneBoxVisibility } from '../../Redux/messageSlice';
 import { db } from '../../Firebase/firebase';
-import Post from '../Post/Post';
+import { timeAgo } from '../../Assets/Utility/TimeModule';
+import { setMsgAnyoneBoxVisibility } from '../../Redux/messageSlice';
+import PostFeed from '../PostPage/PostFeed';
 import ReelFeed from '../ReelPage/ReelFeed';
 import MessageFriend from '../Message/MessageFriend';
 import MessageAnyone from '../Message/MessageAnyone';
@@ -20,41 +21,6 @@ function HomePage() {
     const msgFriendBoxVisibility = useSelector((state) => state.data.message.msgFriendBoxVisibility);
     const msgAnyoneBoxVisibility = useSelector((state) => state.data.message.msgAnyoneBoxVisibility);
     const [posts, setPosts] = useState([]);
-
-    const timeAgo = (timestamp) => {
-        if (!timestamp || !timestamp.toDate) {
-            return "0 second ago"
-        }
-        const currentDate = new Date();
-        const postDate = timestamp.toDate();
-        const seconds = Math.floor((currentDate - postDate) / 1000);
-        const secondsDifference = Math.max(seconds, 1);
-        const periods = {
-            decade: 315360000,
-            year: 31536000,
-            month: 2628000,
-            week: 604800,
-            day: 86400,
-            hour: 3600,
-            minute: 60,
-            second: 1,
-        };
-
-        let elapsed = 0;
-        let granularity = 0;
-        let unit = '';
-
-        for (const period in periods) {
-            elapsed = Math.floor(secondsDifference / periods[period]);
-
-            if (elapsed >= 1) {
-                granularity = elapsed;
-                unit = period;
-                break;
-            }
-        }
-        return `${granularity} ${unit}${granularity > 1 ? 's' : ''} ago`;
-    };
 
     useEffect(() => {
         const unsubscribe = db.collection("Posts")
@@ -107,7 +73,7 @@ function HomePage() {
                 {posts.map(post => {
                     return (
                         <div key={post.id}>
-                            <Post
+                            <PostFeed
                                 id={post.id}
                                 userid={post.data.uid}
                                 photoURL={post.data.photoURL}

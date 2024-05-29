@@ -1,7 +1,6 @@
 import '../../CSS/UserPage/UserpageInfo.css';
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import firebase from "firebase/compat/app";
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom'
 import { db } from '../../Firebase/firebase';
@@ -38,7 +37,7 @@ function UserpageInfo() {
             .doc(user.uid)
             .set({
                 introText: bioText,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                timestamp: Math.floor(new Date().getTime() / 1000),
             })
             .then(() => {
                 console.log("Document successfully updated!");

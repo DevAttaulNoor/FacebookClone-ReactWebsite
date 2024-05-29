@@ -112,7 +112,7 @@ function Signup() {
 
             sessionStorage.setItem('userData', JSON.stringify(userData));
             dispatch(loginUser(userData));
-            navigate('/homepage');
+            navigate('homepage/');
         }
 
         catch (error) {
@@ -238,7 +238,7 @@ function Signup() {
                         id="profilePictureInput"
                         style={{ display: "none" }}
                         onChange={handleProfilePictureChange}
-                        required
+                        // required
                     />
 
                     {selectedProfileImage && (
@@ -254,7 +254,7 @@ function Signup() {
                         id="coverPictureInput"
                         style={{ display: "none" }}
                         onChange={handleCoverPictureChange}
-                        required
+                        // required
                     />
 
                     {selectedCoverImage && (
@@ -267,7 +267,7 @@ function Signup() {
                     <p id="termCondNote">By clicking Sign Up, you agree to our <span>Terms</span>, <span>Privacy Policy</span> and <span>Cookies Policy</span>. You may receive SMS notifications from us and can opt out at any time.</p>
                 </div>
 
-                <button id='submitBtn' type="submit">{isSignupProcessing ? <div class="loadingSpin"></div> : 'Sign Up'}</button>
+                <button id='submitBtn' type="submit">{isSignupProcessing ? <div className="loadingSpin"></div> : 'Sign Up'}</button>
                 {signuperror && <p className="errorNote">{signuperror}</p>}
                 <button id='switchFormBtn' onClick={() => dispatch(setAuthForm('login'))}>Already have an account?</button>
             </form>

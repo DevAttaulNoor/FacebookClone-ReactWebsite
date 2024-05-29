@@ -1,14 +1,15 @@
-import "../../CSS/UniversalComponent/PostPage.css";
+import "../../CSS/PostPage/PostPage.css";
 import React, { useEffect, useRef, useState } from 'react';
 import Modal from 'react-modal';
 import { Avatar } from '@mui/material';
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { db } from "../../Firebase/firebase";
+import { timeAgo, timeAgoInitials } from "../../Assets/Utility/TimeModule";
 import { setSelectedFriend } from "../../Redux/friendSlice";
-import PostLike from "../Post/PostLike";
-import PostShare from "../Post/PostShare";
-import PostComment from "../Post/PostComment";
+import PostLike from "./PostLike";
+import PostShare from "./PostShare";
+import PostComment from "./PostComment";
 import SendIcon from '@mui/icons-material/Send';
 import PublicIcon from '@mui/icons-material/Public';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -77,7 +78,7 @@ function PostPage() {
                     userid: user.uid,
                     username: user.username,
                     userphotoUrl: user.photoURL,
-                    timestamp: new Date(),
+                    timestamp: Math.floor(new Date().getTime() / 1000),
                     status: 'reacted',
                     notificationStatus: 'notseen',
                 })
@@ -112,7 +113,7 @@ function PostPage() {
             username: user.username,
             photoURL: user.photoURL,
             text: comment,
-            timestamp: new Date(),
+            timestamp: Math.floor(new Date().getTime() / 1000),
         };
 
         try {
@@ -128,7 +129,7 @@ function PostPage() {
                     commentusername: user.username,
                     commentuserphotoUrl: user.photoURL,
                     commenttext: comment,
-                    timestamp: new Date(),
+                    timestamp: Math.floor(new Date().getTime() / 1000),
                     status: 'commented'
                 });
             }
@@ -205,76 +206,6 @@ function PostPage() {
         } catch (error) {
             console.error("Error deleting likes subcollection and comments: ", error);
         }
-    };
-
-    const timeAgo = (timestamp) => {
-        if (!timestamp || !timestamp.toDate) {
-            return "0 second ago"
-        }
-        const currentDate = new Date();
-        const postDate = timestamp.toDate();
-        const seconds = Math.floor((currentDate - postDate) / 1000);
-        const secondsDifference = Math.max(seconds, 1);
-        const periods = {
-            decade: 315360000,
-            year: 31536000,
-            month: 2628000,
-            week: 604800,
-            day: 86400,
-            hour: 3600,
-            minute: 60,
-            second: 1,
-        };
-
-        let elapsed = 0;
-        let granularity = 0;
-        let unit = '';
-
-        for (const period in periods) {
-            elapsed = Math.floor(secondsDifference / periods[period]);
-
-            if (elapsed >= 1) {
-                granularity = elapsed;
-                unit = period;
-                break;
-            }
-        }
-        return `${granularity} ${unit}${granularity > 1 ? 's' : ''} ago`;
-    };
-
-    const timeAgowithInitials = (timestamp) => {
-        if (!timestamp || !timestamp.toDate) {
-            return "0s"
-        }
-        const currentDate = new Date();
-        const postDate = timestamp.toDate();
-        const seconds = Math.floor((currentDate - postDate) / 1000);
-        const secondsDifference = Math.max(seconds, 1);
-        const periods = {
-            D: 315360000,
-            Y: 31536000,
-            M: 2628000,
-            w: 604800,
-            d: 86400,
-            h: 3600,
-            m: 60,
-            s: 1,
-        };
-
-        let elapsed = 0;
-        let granularity = 0;
-        let unit = '';
-
-        for (const period in periods) {
-            elapsed = Math.floor(secondsDifference / periods[period]);
-
-            if (elapsed >= 1) {
-                granularity = elapsed;
-                unit = period;
-                break;
-            }
-        }
-        return `${granularity}${unit}${granularity > 1 ? '' : ''}`;
     };
 
     useEffect(() => {
@@ -479,7 +410,7 @@ function PostPage() {
                                     </div>
                                     <div className='commentBottom'>
                                         {comment.uid === user.uid && <button onClick={() => deleteComment(comment.id)}>Delete</button>}
-                                        <p>{timeAgowithInitials(comment.timestamp)}</p>
+                                        <p>{timeAgoInitials(comment.timestamp)}</p>
                                     </div>
                                 </div>
                             </div>

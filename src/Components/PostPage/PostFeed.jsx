@@ -1,4 +1,4 @@
-import '../../CSS/Post/Post.css';
+import '../../CSS/PostPage/PostFeed.css';
 import React, { useState, useEffect, useRef } from 'react';
 import Modal from 'react-modal';
 import { Avatar } from '@mui/material';
@@ -17,7 +17,7 @@ import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
-function Post({ id, userid, photoURL, media, mediaType, username, timestamp, message }) {
+function PostFeed({ id, userid, photoURL, media, mediaType, username, timestamp, message }) {
     Modal.setAppElement('#root');
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
@@ -35,6 +35,10 @@ function Post({ id, userid, photoURL, media, mediaType, username, timestamp, mes
 
     const toggleDropdown = () => {
         setIsDropdownVisible(!isDropdownVisible);
+    };
+
+    const handleLikedUsersClick = () => {
+        setIsLikedUsersModalOpen(true);
     };
 
     const handleLike = async () => {
@@ -76,7 +80,7 @@ function Post({ id, userid, photoURL, media, mediaType, username, timestamp, mes
                     userid: user.uid,
                     username: user.username,
                     userphotoUrl: user.photoURL,
-                    timestamp: new Date(),
+                    timestamp: Math.floor(new Date().getTime() / 1000),
                     status: 'reacted',
                     notificationStatus: 'notseen',
                 })
@@ -94,10 +98,6 @@ function Post({ id, userid, photoURL, media, mediaType, username, timestamp, mes
                     console.error("Error adding like information: ", error);
                 });
         }
-    };
-
-    const handleLikedUsersClick = () => {
-        setIsLikedUsersModalOpen(true);
     };
 
     const handleDelete = async () => {
@@ -152,7 +152,7 @@ function Post({ id, userid, photoURL, media, mediaType, username, timestamp, mes
         try {
             await db.collection("Users").doc(user.uid).collection("SavedItems").doc(id).set({
                 postId: id,
-                timestamp: new Date(),
+                timestamp: Math.floor(new Date().getTime() / 1000),
             });
             console.log("Document successfully saved");
             setSavedPost(true);
@@ -282,9 +282,9 @@ function Post({ id, userid, photoURL, media, mediaType, username, timestamp, mes
     }, [id]);
 
     return (
-        <div className='post'>
-            <div className="postTop">
-                <div className="postTopLeft">
+        <div className='postfeed'>
+            <div className="postfeedTop">
+                <div className="postfeedTopLeft">
                     <Avatar src={photoURL} />
 
                     <div className="postUserInfo">
@@ -308,7 +308,7 @@ function Post({ id, userid, photoURL, media, mediaType, username, timestamp, mes
                     </div>
                 </div>
 
-                <div className='postTopRight' onClick={toggleDropdown} ref={dropdownRef}>
+                <div className='postfeedTopRight' onClick={toggleDropdown} ref={dropdownRef}>
                     <MoreHorizIcon />
                     {user.uid === post.uid ? (
                         <>
@@ -370,8 +370,8 @@ function Post({ id, userid, photoURL, media, mediaType, username, timestamp, mes
                 </div>
             </div>
 
-            <div className="postMiddle">
-                <div className='postMiddleTop'>
+            <div className="postfeedMiddle">
+                <div className='postfeedMiddleTop'>
                     {message && <div id="postMsg" style={{ fontSize: media ? '15px' : '30px' }}> {message} </div>}
                     {media && mediaType === 'image' && <img id="postImg" src={media} alt="postImage" />}
                     {media && mediaType === 'video' && (
@@ -387,15 +387,15 @@ function Post({ id, userid, photoURL, media, mediaType, username, timestamp, mes
                     )}
                 </div>
 
-                <div className="postMiddleBottom">
+                <div className="postfeedMiddleBottom">
                     {likesCount >= 1 && <p onClick={handleLikedUsersClick}> {likesCount} {likesCount === 1 ? 'Like' : 'Likes'} </p>}
                     {comments.length >= 1 && <p onClick={() => setIsCommentModalOpen(true)}> {comments.length} {comments.length === 1 ? 'comment' : 'comments'} </p>}
                 </div>
             </div>
 
-            <div className="postBottom">
-                <div className='postBottomOptions'>
-                    <div className='postBottomOption' onClick={handleLike}>
+            <div className="postfeedBottom">
+                <div className='postfeedBottomOptions'>
+                    <div className='postfeedBottomOption' onClick={handleLike}>
                         {currentUserLiked ? (
                             <>
                                 <ThumbUpIcon style={{ color: 'blue' }} />
@@ -409,18 +409,18 @@ function Post({ id, userid, photoURL, media, mediaType, username, timestamp, mes
                         )}
                     </div>
 
-                    <div className='postBottomOption' onClick={() => setIsCommentModalOpen(true)}>
+                    <div className='postfeedBottomOption' onClick={() => setIsCommentModalOpen(true)}>
                         <ChatBubbleOutlineOutlinedIcon />
                         <p>Comment</p>
                     </div>
 
-                    <div className='postBottomOption' onClick={() => setIsShareModalOpen(true)}>
+                    <div className='postfeedBottomOption' onClick={() => setIsShareModalOpen(true)}>
                         <ReplyOutlinedIcon />
                         <p>Share</p>
                     </div>
                 </div>
 
-                <div className="postBottomModals">
+                <div className="postfeedBottomModals">
                     <Modal className="likedUserModal" isOpen={isLikedUsersModalOpen} onRequestClose={() => setIsLikedUsersModalOpen(false)}>
                         <PostLike
                             id={id}
@@ -445,4 +445,4 @@ function Post({ id, userid, photoURL, media, mediaType, username, timestamp, mes
     )
 }
 
-export default Post;
+export default PostFeed;

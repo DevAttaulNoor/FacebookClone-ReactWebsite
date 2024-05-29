@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from '@mui/material';
 import { db } from '../../Firebase/firebase';
+import { timeAgoInitials } from "../../Assets/Utility/TimeModule";
 import { setMsgFriendBoxVisibility } from '../../Redux/messageSlice';
 import EmojiPicker from 'emoji-picker-react';
 import SendIcon from '@mui/icons-material/Send';
@@ -53,7 +54,7 @@ function MessageFriend() {
             text: messageInput,
             sender: user.uid,
             recipient: recipientUserId,
-            timestamp: new Date(),
+            timestamp: Math.floor(new Date().getTime() / 1000),
         };
 
         // Retrieve the existing messages for the chat
@@ -81,41 +82,6 @@ function MessageFriend() {
                 messages: [newMessage]
             });
         }
-    };
-
-    const timeAgowithInitials = (timestamp) => {
-        if (!timestamp || !timestamp.toDate) {
-            return "0s"
-        }
-        const currentDate = new Date();
-        const postDate = timestamp.toDate();
-        const seconds = Math.floor((currentDate - postDate) / 1000);
-        const secondsDifference = Math.max(seconds, 1);
-        const periods = {
-            D: 315360000,
-            Y: 31536000,
-            M: 2628000,
-            w: 604800,
-            d: 86400,
-            h: 3600,
-            m: 60,
-            s: 1,
-        };
-
-        let elapsed = 0;
-        let granularity = 0;
-        let unit = '';
-
-        for (const period in periods) {
-            elapsed = Math.floor(secondsDifference / periods[period]);
-
-            if (elapsed >= 1) {
-                granularity = elapsed;
-                unit = period;
-                break;
-            }
-        }
-        return `${granularity}${unit}${granularity > 1 ? '' : ''}`;
     };
 
     useEffect(() => {
@@ -183,7 +149,7 @@ function MessageFriend() {
                 {messages.map((message) => (
                     <div key={message.timestamp} className={`message ${message.sender === user.uid ? 'sent' : 'received'}`}>
                         <h5>{message.text}</h5>
-                        <p>{timeAgowithInitials(message.timestamp)}</p>
+                        <p>{timeAgoInitials(message.timestamp)}</p>
                     </div>
                 ))}
             </div>

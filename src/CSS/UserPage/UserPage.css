@@ -80,29 +80,28 @@
     position: relative;
 }
 
-.userpageTop_ProfileSectionLeftPhoto img {
+.userpageTop_ProfileSectionLeftPhoto .MuiAvatar-root {
     width: 150px;
     height: 150px;
-    border-radius: 50%;
     object-fit: cover;
     border: 4px solid #fff;
 }
 
-.userpageTop_ProfileSectionLeftPhoto .MuiSvgIcon-root {
+.userpageTop_ProfileSectionLeftPhoto .profileChangeIcon {
     position: absolute;
-    bottom: 12px;
-    right: 12px;
-    width: 28px;
-    height: 28px;
+    bottom: 6px;
+    right: 6px;
+    width: 34px;
+    height: 34px;
     padding: 6px;
     border-radius: 50%;
     color: black;
     background-color: #E4E6EB;
 }
 
-.userpageTop_ProfileSectionLeftPhoto .MuiSvgIcon-root:hover {
-    background-color: lightgray;
+.userpageTop_ProfileSectionLeftPhoto .profileChangeIcon:hover {
     cursor: pointer;
+    background-color: lightgray;
 }
 
 .userpageTop_ProfileSectionLeftInfo {

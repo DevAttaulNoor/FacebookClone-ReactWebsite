@@ -65,7 +65,7 @@ function FriendpageFriendReqs() {
 
                 db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('FriendsReqs').doc(user.uid).update({
                     status: 'accepted',
-                    timestamp: new Date(),
+                    timestamp: Math.floor(new Date().getTime() / 1000),
                 });
 
                 // After successfully accepting the friend request, update the state
@@ -105,7 +105,7 @@ function FriendpageFriendReqs() {
 
             db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('FriendsReqs').doc(user.uid).update({
                 status: 'removed',
-                timestamp: new Date(),
+                timestamp: Math.floor(new Date().getTime() / 1000),
             });
 
             alert("Friend request rejected!");

@@ -10,12 +10,12 @@ import HomePage from './Components/HomePage/HomePage';
 import ReelCreate from './Components/ReelPage/ReelCreate';
 import ReelPage from './Components/ReelPage/ReelPage';
 import UserPage from './Components/UserPage/UserPage';
+import PostPage from './Components/PostPage/PostPage';
 import SavedPage from './Components/UniversalComponent/SavedPage';
 import VideosPage from './Components/UniversalComponent/VideosPage';
 import ProfilePage from './Components/ProfilePage/ProfilePage';
 import FriendPage from './Components/FriendPage/FriendPage';
 import FriendpageAllFriends from './Components/FriendPage/FriendpageAllFriends';
-import PostPage from './Components/UniversalComponent/PostPage';
 import LoadingLine from './Components/UniversalComponent/LoadingLine';
 
 function App() {

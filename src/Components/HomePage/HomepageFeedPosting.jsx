@@ -1,11 +1,10 @@
 import "../../CSS/HomePage/HomepageFeedPosting.css";
+import bgcolorIcon from '../../Assets/Images/Aa.png'
 import React, { useState, useRef } from 'react';
-import firebase from "firebase/compat/app";
 import EmojiPicker from 'emoji-picker-react';
 import { useSelector } from 'react-redux';
 import { db, storage } from '../../Firebase/firebase';
 import { Avatar, IconButton, Modal } from '@mui/material';
-import bgcolorIcon from '../../Assets/Images/Aa.png'
 import CloseIcon from '@mui/icons-material/Close';
 import SentimentSatisfiedAltOutlinedIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
 
@@ -74,7 +73,7 @@ function HomepageFeedPosting() {
             email: user.email,
             username: user.username,
             photoURL: user.photoURL,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            timestamp: Math.floor(new Date().getTime() / 1000),
         };
 
         try {

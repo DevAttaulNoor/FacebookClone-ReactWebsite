@@ -144,7 +144,7 @@ function ReelCreate() {
                     email: user.email,
                     username: user.username,
                     photoURL: user.photoURL,
-                    timestamp: new Date(),
+                    timestamp: Math.floor(new Date().getTime() / 1000),
                     reel: [{ ...data }]
                 });
             }
@@ -168,7 +168,7 @@ function ReelCreate() {
                 const url = await imageRef.getDownloadURL();
                 await addToReels({
                     background: url,
-                    timestamp: new Date(),
+                    timestamp: Math.floor(new Date().getTime() / 1000),
                 });
             } catch (error) {
                 setUploadLoading(false);
@@ -183,7 +183,7 @@ function ReelCreate() {
                 const url = await imageRef.getDownloadURL();
                 await addToReels({
                     background: url,
-                    timestamp: new Date(),
+                    timestamp: Math.floor(new Date().getTime() / 1000),
                 });
             } catch (error) {
                 setUploadLoading(false);
@@ -207,7 +207,7 @@ function ReelCreate() {
                 const url = await imageRef.getDownloadURL();
                 await addToReels({
                     background: url,
-                    timestamp: new Date(),
+                    timestamp: Math.floor(new Date().getTime() / 1000),
                 });
             } catch (error) {
                 setUploadLoading(false);
