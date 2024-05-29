@@ -55,7 +55,14 @@
     color: initial;
 }
 
-.reelpageLeftbarMiddle a .MuiSvgIcon-root {
+.reelpageLeftbarMiddle h5#title {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 20px 16px 10px 16px;
+    color: #050505;
+}
+
+.reelpageLeftbarMiddle a.createReel .MuiSvgIcon-root {
     width: 54px;
     height: 54px;
     padding: 14px;
@@ -65,15 +72,9 @@
     background-color: #F0F2F5;
 }
 
-.reelpageLeftbarMiddle h5#title {
-    font-size: 16px;
-    font-weight: 600;
-    padding: 20px 16px 10px 16px;
-    color: #050505;
-}
-
 .reelpageLeftbarMiddle .userInfoContainer,
 .reelpageLeftbarMiddle .createReelContainer {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -136,6 +137,13 @@
     flex-direction: column;
 }
 
+.reelpageLeftbarBottom a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: initial;
+}
+
 .reelpageLeftbarBottom #noStories{
     font-size: 14px;
     font-weight: 500;
@@ -151,6 +159,7 @@
 }
 
 .reelpageLeftbarBottom .userInfoContainer {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -223,9 +232,9 @@
 
 .reelTopRightOption .menu {
     position: absolute;
-    top: 35px;
+    top: 25px;
     right: 8px;
-    width: 300px;
+    width: 240px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -254,13 +263,31 @@
     display: flex;
 }
 
-.menuOptionLeft #deletePostIcon {
+.menuOptionLeft #deleteIcon {
     width: 20px;
     height: 20px;
     display: inline-block;
     background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yp/r/faYX-HAY-C_.png');
     background-position: 0px -172px;
     background-size: auto;
+}
+
+.menuOptionLeft #saveIcon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yu/r/doFgS_h9Kyh.png');
+    background-position: 0px -83px;
+    background-size: 41px 503px;
+}
+
+.menuOptionLeft #unsaveIcon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yZ/r/w0CJiTcp3tP.png');
+    background-position: 0px -84px;
+    background-size: 21px 593px;
 }
 
 .menuOptionRight {

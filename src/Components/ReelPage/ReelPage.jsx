@@ -22,6 +22,7 @@ function ReelPage() {
     const [currentReelIndex, setCurrentReelIndex] = useState(0);
     const maxReelLength = selectedReelContent[0]?.reel.length || 0;
     const currentReelContent = selectedReelContent[0]?.reel[currentReelIndex];
+    const [savedReel, setSavedReel] = useState(false);
     const [menuVisible, setMenuVisible] = useState(false);
     const menuRef = useRef(null);
 
@@ -64,6 +65,29 @@ function ReelPage() {
             }
         } catch (error) {
             console.error('Error deleting reel: ', error);
+        }
+    };
+
+    const handleSaveReel = async () => {
+        try {
+            await db.collection("Users").doc(user.uid).collection("SavedItems").doc(selectedReel).set({
+                reelId: selectedReel,
+                timestamp: new Date(),
+            });
+            console.log("Document successfully saved");
+            setSavedReel(true);
+        } catch (error) {
+            console.error("Error saving document: ", error);
+        }
+    };
+
+    const handleDelSaveReel = async () => {
+        try {
+            await db.collection("Users").doc(user.uid).collection("SavedItems").doc(selectedReel).delete();
+            console.log("Document successfully deleted");
+            setSavedReel(false);
+        } catch (error) {
+            console.error("Error deleting document: ", error);
         }
     };
 
@@ -116,6 +140,22 @@ function ReelPage() {
     }, [menuRef]);
 
     useEffect(() => {
+        if (user && selectedReel) {
+            const checkIfReelExists = async () => {
+                const savedReelRef = db.collection("Users").doc(user.uid).collection("SavedItems");
+                const snapshot = await savedReelRef.where('reelId', '==', selectedReel).get();
+
+                if (!snapshot.empty) {
+                    setSavedReel(true);
+                } else {
+                    setSavedReel(false);
+                }
+            };
+            checkIfReelExists();
+        }
+    }, [selectedReel, savedReel, user]);
+
+    useEffect(() => {
         const interval = setInterval(() => {
             setCurrentReelIndex(prevIndex => {
                 if (prevIndex + 1 >= maxReelLength) {
@@ -153,26 +193,25 @@ function ReelPage() {
                     {userReel.length !== 0 ? (
                         <>
                             {userReel.map(reelContent => (
-                                <div key={reelContent.id}
-                                    className={`userInfoContainer ${(selectedReel === reelContent.id) ? 'active' : ''}`}
-                                    onClick={() => dispatch(setSelectedReel(reelContent.id))}
-                                >
-                                    <div className='userInfo'>
-                                        <img src={reelContent.photoURL} alt="" />
-                                        <div className='userInfoRight'>
-                                            <h5>{reelContent.username}</h5>
-                                            <p>{timeAgowithInitials(reelContent.timestamp)}</p>
+                                <NavLink to={`/reelpage/${reelContent.id}`} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
+                                    <div key={reelContent.id} className={`userInfoContainer ${(selectedReel === reelContent.id) ? 'active' : ''}`}>
+                                        <div className='userInfo'>
+                                            <img src={reelContent.photoURL} alt="" />
+                                            <div className='userInfoRight'>
+                                                <h5>{reelContent.username}</h5>
+                                                <p>{timeAgowithInitials(reelContent.timestamp)}</p>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <NavLink to={'/homepage/storyreels'}>
-                                        <AddIcon />
-                                    </NavLink>
-                                </div>
+                                        <NavLink to={'/homepage/storyreels'} className='createReel'>
+                                            <AddIcon />
+                                        </NavLink>
+                                    </div>
+                                </NavLink>
                             ))}
                         </>
                     ) : (
-                        <NavLink to={'/homepage/storyreels'}>
+                        <NavLink to={'/homepage/storyreels'} className='createReel'>
                             <div className='createReelContainer'>
                                 <div className='createReelInner'>
                                     <AddIcon />
@@ -194,18 +233,17 @@ function ReelPage() {
                             <h5 id='title'>All stories</h5>
 
                             {allReels.map(reelContent => (
-                                <div key={reelContent.id}
-                                    className={`userInfoContainer ${(selectedReel === reelContent.id) ? 'active' : ''}`}
-                                    onClick={() => dispatch(setSelectedReel(reelContent.id))}
-                                >
-                                    <div className='userInfo'>
-                                        <img src={reelContent.photoURL} alt="" />
-                                        <div className='userInfoRight'>
-                                            <h5>{reelContent.username}</h5>
-                                            <p>{timeAgowithInitials(reelContent.timestamp)}</p>
+                                <NavLink to={`/reelpage/${reelContent.id}`} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
+                                    <div key={reelContent.id} className={`userInfoContainer ${(selectedReel === reelContent.id) ? 'active' : ''}`}>
+                                        <div className='userInfo'>
+                                            <img src={reelContent.photoURL} alt="" />
+                                            <div className='userInfoRight'>
+                                                <h5>{reelContent.username}</h5>
+                                                <p>{timeAgowithInitials(reelContent.timestamp)}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </NavLink>
                             ))}
                         </>
                     )}
@@ -241,19 +279,49 @@ function ReelPage() {
                                 <div className='reelTopRightOption' onClick={handleNext}>
                                     <ArrowRightIcon />
                                 </div>
-                                <div className='reelTopRightOption'>
-                                    <MoreHorizIcon onClick={handleMenuToggle} />
-                                    {menuVisible && (
-                                        <div className="menu" ref={menuRef}>
-                                            <div className='menuOption' onClick={handleDelete}>
-                                                <div className="menuOptionLeft">
-                                                    <i id='deletePostIcon'></i>
+                                <div className='reelTopRightOption' onClick={handleMenuToggle} ref={menuRef}>
+                                    <MoreHorizIcon />
+                                    {selectedReelContent[0].uid === user.uid ? (
+                                        <>
+                                            {menuVisible && (
+                                                <div className="menu" >
+                                                    <div className='menuOption' onClick={handleDelete}>
+                                                        <div className="menuOptionLeft">
+                                                            <i id='deleteIcon'></i>
+                                                        </div>
+                                                        <div className="menuOptionRight">
+                                                            <h5>Delete</h5>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className="menuOptionRight">
-                                                    <h5>Delete</h5>
+                                            )}
+                                        </>
+                                    ) : (
+                                        <>
+                                            {menuVisible && (
+                                                <div className="menu">
+                                                    {savedReel === false ? (
+                                                        <div className='menuOption' onClick={handleSaveReel}>
+                                                            <div className="menuOptionLeft">
+                                                                <i id='saveIcon'></i>
+                                                            </div>
+                                                            <div className="menuOptionRight">
+                                                                <h5>Save Reel</h5>
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <div className='menuOption' onClick={handleDelSaveReel}>
+                                                            <div className="menuOptionLeft">
+                                                                <i id='unsaveIcon'></i>
+                                                            </div>
+                                                            <div className="menuOptionRight">
+                                                                <h5>Unsave Reel</h5>
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                 </div>
-                                            </div>
-                                        </div>
+                                            )}
+                                        </>
                                     )}
                                 </div>
                             </div>

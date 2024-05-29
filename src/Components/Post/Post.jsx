@@ -1,7 +1,6 @@
 import '../../CSS/Post/Post.css';
 import React, { useState, useEffect, useRef } from 'react';
 import Modal from 'react-modal';
-import firebase from "firebase/compat/app";
 import { Avatar } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -151,9 +150,9 @@ function Post({ id, userid, photoURL, media, mediaType, username, timestamp, mes
 
     const handleSavePost = async () => {
         try {
-            await db.collection("Users").doc(user.uid).collection("SavedPosts").doc(id).set({
-                postid: id,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            await db.collection("Users").doc(user.uid).collection("SavedItems").doc(id).set({
+                postId: id,
+                timestamp: new Date(),
             });
             console.log("Document successfully saved");
             setSavedPost(true);
@@ -164,7 +163,7 @@ function Post({ id, userid, photoURL, media, mediaType, username, timestamp, mes
 
     const handleDelSavePost = async () => {
         try {
-            await db.collection("Users").doc(user.uid).collection("SavedPosts").doc(id).delete();
+            await db.collection("Users").doc(user.uid).collection("SavedItems").doc(id).delete();
             console.log("Document successfully deleted");
             setSavedPost(false);
         } catch (error) {
@@ -253,8 +252,8 @@ function Post({ id, userid, photoURL, media, mediaType, username, timestamp, mes
     useEffect(() => {
         if (user && user.uid && id) {
             const checkIfPostExists = async () => {
-                const savedPostsRef = db.collection("Users").doc(user.uid).collection("SavedPosts");
-                const snapshot = await savedPostsRef.where("postid", "==", id).get();
+                const savedPostsRef = db.collection("Users").doc(user.uid).collection("SavedItems");
+                const snapshot = await savedPostsRef.where("postId", "==", id).get();
 
                 if (!snapshot.empty) {
                     setSavedPost(true);
@@ -264,7 +263,7 @@ function Post({ id, userid, photoURL, media, mediaType, username, timestamp, mes
             };
             checkIfPostExists();
         }
-    }, [user, savedPost, id]);
+    }, [id, savedPost, user]);
 
     //* useEffect to get all the posts from the firestore
     useEffect(() => {

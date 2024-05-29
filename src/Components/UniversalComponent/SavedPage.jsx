@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { db } from '../../Firebase/firebase';
 import { setSelectedPost } from '../../Redux/postSlice';
+import { setSelectedReel } from '../../Redux/reelSlice';
 import TuneIcon from '@mui/icons-material/Tune';
 import SettingsIcon from '@mui/icons-material/Settings';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -12,8 +13,8 @@ import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined';
 function SavedPage() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
-    const [savedPost, setSavedPost] = useState([]);
-    const [savedPostItems, setSavedPostItems] = useState([]);
+    const [savedItemsId, setSavedItemsId] = useState([]);
+    const [savedItemsContent, setSavedItemsContent] = useState([]);
     const [dropdownVisibility, setDropdownVisibility] = useState({});
     const dropdownRef = useRef(null);
 
@@ -24,9 +25,9 @@ function SavedPage() {
         }));
     };
 
-    const handleDelSavePost = async (postId) => {
+    const handleDelSaveItem = async (itemId) => {
         try {
-            await db.collection("Users").doc(user.uid).collection("SavedPosts").doc(postId).delete();
+            await db.collection("Users").doc(user.uid).collection("SavedItems").doc(itemId).delete();
             console.log("Document successfully deleted");
         } catch (error) {
             console.error("Error deleting document: ", error);
@@ -37,13 +38,28 @@ function SavedPage() {
         try {
             const postDoc = await db.collection('Posts').doc(postId).get();
             if (postDoc.exists) {
-                return postDoc.data(); // Return the data
+                return postDoc.data();
             } else {
                 console.log('Post not found.');
                 return null;
             }
         } catch (error) {
             console.error('Error fetching post attributes:', error);
+            return null;
+        }
+    };
+
+    const fetchReelAttributes = async (reelId) => {
+        try {
+            const reelDoc = await db.collection('Reels').doc(reelId).get();
+            if (reelDoc.exists) {
+                return reelDoc.data();
+            } else {
+                console.log('Reel not found.');
+                return null;
+            }
+        } catch (error) {
+            console.error('Error fetching reel attributes:', error);
             return null;
         }
     };
@@ -58,30 +74,30 @@ function SavedPage() {
                 }));
             }
         };
-    
+
         const handleClick = (postId) => (event) => {
             handleClickOutside(postId, event);
         };
-    
+
         // Add event listeners for each post
         Object.keys(dropdownVisibility).forEach(postId => {
             document.addEventListener('mousedown', handleClick(postId));
         });
-    
+
         // Remove event listeners when the component unmounts
         return () => {
             Object.keys(dropdownVisibility).forEach(postId => {
                 document.removeEventListener('mousedown', handleClick(postId));
             });
         };
-    }, [dropdownVisibility]);    
+    }, [dropdownVisibility]);
 
     useEffect(() => {
-        const savedRef = db.collection('Users').doc(user.uid).collection('SavedPosts');
+        const savedItemsRef = db.collection('Users').doc(user.uid).collection('SavedItems');
 
-        const unsubscribe = savedRef.onSnapshot((snapshot) => {
-            const savedPostsData = snapshot.docs.map(doc => doc.data());
-            setSavedPost(savedPostsData);
+        const unsubscribe = savedItemsRef.onSnapshot((snapshot) => {
+            const savedItemsData = snapshot.docs.map(doc => doc.data());
+            setSavedItemsId(savedItemsData);
         });
 
         return () => {
@@ -91,19 +107,22 @@ function SavedPage() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const postItems = await Promise.all(savedPost.map(async (savedPostItem) => {
-                const postId = savedPostItem.postid;
-                const postData = await fetchPostAttributes(postId);
-                if (postData) {
-                    return { id: postId, data: postData };
+            const saveItems = await Promise.all(savedItemsId.map(async (savedItem) => {
+                const saveItemsPostData = await fetchPostAttributes(savedItem.postId);
+                const saveItemsReelData = await fetchReelAttributes(savedItem.reelId);
+                if (saveItemsPostData) {
+                    return { id: savedItem.postId, data: saveItemsPostData };
+                }
+                if (saveItemsReelData) {
+                    return { id: savedItem.reelId, data: saveItemsReelData };
                 }
                 return null;
             }));
-            setSavedPostItems(postItems.filter(item => item !== null));
+            setSavedItemsContent(saveItems.filter(item => item !== null));
         };
 
         fetchData();
-    }, [savedPost]);
+    }, [savedItemsId]);
 
     return (
         <div className='savedpage'>
@@ -130,38 +149,50 @@ function SavedPage() {
                 </div>
 
                 <div className='savedpageMainBottom'>
-                    {savedPostItems.map(postitem => (
-                        <div className='savedPosts' key={postitem.id}>
+                    {savedItemsContent.map(saveditem => (
+                        <div className='savedPosts' key={saveditem.id}>
                             <div className='savedPosts_Left'>
-                                {postitem.data.mediaType === 'image' ? (
-                                    <img src={postitem.data.media} alt="" />
+                                {saveditem.data.reel ? (
+                                    <img src={saveditem.data.reel[0].background} alt="reelBackground" />
                                 ) : (
-                                    <video id="postVideo">
-                                        <source src={postitem.data.media} type="video/mp4" />
-                                    </video>
+                                    <>
+                                        {saveditem.data.mediaType === 'image' ? (
+                                            <img src={saveditem.data.media} alt="" />
+                                        ) : (
+                                            <video id="postVideo">
+                                                <source src={saveditem.data.media} type="video/mp4" />
+                                            </video>
+                                        )}
+                                    </>
                                 )}
                             </div>
 
                             <div className='savedPosts_Right'>
                                 <div className='savedPosts_RightTop'>
-                                    <h3>{postitem.data.message}</h3>
+                                    <h3>{saveditem.data.message}</h3>
                                     <div className='savedPosts_RightTopBottom'>
-                                        <img src={postitem.data.photoURL} alt="" />
+                                        <img src={saveditem.data.photoURL} alt="" />
                                         <div>
                                             <p>Saved from</p>
-                                            <NavLink to={`/profilepage/${postitem.data.uid}/post/${postitem.id}`} onClick={() => dispatch(setSelectedPost(postitem.id))}>
-                                                <span>{postitem.data.username}'s post</span>
-                                            </NavLink>
+                                            {saveditem.data.reel ? (
+                                                <NavLink to={`/reelpage/${saveditem.id}`} onClick={() => dispatch(setSelectedReel(saveditem.id))}>
+                                                    <span>{saveditem.data.username}'s reel</span>
+                                                </NavLink>
+                                            ) : (
+                                                <NavLink to={`/profilepage/${saveditem.data.uid}/post/${saveditem.id}`} onClick={() => dispatch(setSelectedPost(saveditem.id))}>
+                                                    <span>{saveditem.data.username}'s post</span>
+                                                </NavLink>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className='savedPosts_RightBottom'>
                                     <button>Add to collection</button>
-                                    <MoreHorizIcon onClick={() => toggleDropdown(postitem.id)} />
-                                    {dropdownVisibility[postitem.id] && (
+                                    <MoreHorizIcon onClick={() => toggleDropdown(saveditem.id)} />
+                                    {dropdownVisibility[saveditem.id] && (
                                         <div className="dropdown" ref={dropdownRef}>
-                                            <div className='dropdownOption' onClick={() => handleDelSavePost(postitem.id)}>
+                                            <div className='dropdownOption' onClick={() => handleDelSaveItem(saveditem.id)}>
                                                 <i id='unsavePostIcon'></i>
                                                 <h5>Unsave</h5>
                                             </div>

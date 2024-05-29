@@ -15,7 +15,6 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
 function PostPage() {
     Modal.setAppElement('#root');
@@ -437,11 +436,6 @@ function PostPage() {
                                         <p>Like</p>
                                     </>
                                 )}
-                            </div>
-
-                            <div className='postPageInner_MiddleBottom_BottomOption'>
-                                <ChatBubbleOutlineOutlinedIcon />
-                                <p>Comment</p>
                             </div>
 
                             <div className='postPageInner_MiddleBottom_BottomOption' onClick={() => setIsShareModalOpen(true)}>

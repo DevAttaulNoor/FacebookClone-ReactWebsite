@@ -30,16 +30,6 @@ function ReelFeed() {
     };
 
     useEffect(() => {
-        db.collection("Reels").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
-            const reelsData = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            dispatch(setReels(reelsData));
-        });
-    }, [dispatch]);
-
-    useEffect(() => {
         const container = containerRef.current; // Store the reference in a variable
 
         const checkButtons = () => {
@@ -73,6 +63,16 @@ function ReelFeed() {
         };
     }, [reels]);
 
+    useEffect(() => {
+        db.collection("Reels").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+            const reelsData = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            dispatch(setReels(reelsData));
+        });
+    }, [dispatch]);
+
     return (
         <>
             {reels.length === 0 ? (
@@ -101,7 +101,7 @@ function ReelFeed() {
                         </NavLink >
 
                         {reels.map((reelContent) => (
-                            <NavLink to={'/reelpage/'} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
+                            <NavLink to={`/reelpage/${reelContent.id}`} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
                                 <div
                                     key={reelContent.id}
                                     className="reelFeed_ScrollReelsStories"

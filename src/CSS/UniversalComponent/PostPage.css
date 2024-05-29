@@ -101,7 +101,7 @@
 .postPageInner_MiddleBottom_Bottom{
     margin: 0 15px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 2px;
     border-top: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
