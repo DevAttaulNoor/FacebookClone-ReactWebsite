@@ -92,7 +92,7 @@ function ReelFeed() {
                     <div className='reelFeed_ScrollReels' ref={containerRef}>
                         <NavLink to={'/homepage/storyreels'}>
                             <div className="reelFeed_ScrollReelsInner">
-                                <img src={user.photoURL} alt="" />
+                                <Avatar src={user.photoURL}/>
                                 <div className='ScrollReelsCreate'>
                                     <AddIcon />
                                     <h5>Create story</h5>

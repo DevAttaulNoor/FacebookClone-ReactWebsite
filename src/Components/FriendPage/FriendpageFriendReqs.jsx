@@ -9,7 +9,7 @@ function FriendpageFriendReqs() {
     const user = useSelector((state) => state.data.user.user);
     const [friendRequests, setFriendRequests] = useState([]);
     const [isRequestProcessing, setIsRequestProcessing] = useState(false);
-    
+
     const acceptFriendRequest = async (friendRequestId, senderUid) => {
         try {
             // Check if the request is already being processed
@@ -133,8 +133,8 @@ function FriendpageFriendReqs() {
                     });
                 });
                 setFriendRequests(requests);
-            } 
-            
+            }
+
             catch (error) {
                 console.error("Error fetching friend requests:", error);
             }
@@ -144,36 +144,44 @@ function FriendpageFriendReqs() {
 
     return (
         <div className="friendpageFriendReqs">
-            <div className="friendpageFriendReqsTop">
-                <p>Friends Requests</p>
-            </div>
+            {friendRequests.length > 0 ? (
+                <>
+                    <div className="friendpageFriendReqsTop">
+                        <p>Friends Requests</p>
+                    </div>
 
-            <div className="friendpageFriendReqsBottom">
-                {friendRequests.map((request) => {
-                    if (request.status !== "accepted" && request.receiverUid === user.uid) {
-                        return (
-                            <div key={request.id} className="friendCard">
-                                <div className="friendCardTop">
-                                    <img src={request.senderPhotoUrl} alt="" />
-                                </div>
-                                <div className="friendCardBottom">
-                                    <p id="friendName">{request.senderName}</p>
-                                    <p id="friendMutual">Mutual friends</p>
-                                    {isRequestProcessing ? (
-                                        <button disabled>Accepting...</button>
-                                    ) : (
-                                        <button onClick={() => acceptFriendRequest(request.id, request.senderUid)}>
-                                            Accept
-                                        </button>
-                                    )}
-                                    <button onClick={() => rejectFriendRequest(request.id, request.senderUid)}>Reject</button>
-                                </div>
-                            </div>
-                        );
-                    }
-                    return null;
-                })}
-            </div>
+                    <div className="friendpageFriendReqsBottom">
+                        {friendRequests.map((request) => {
+                            if (request.status !== "accepted" && request.receiverUid === user.uid) {
+                                return (
+                                    <div key={request.id} className="friendCard">
+                                        <div className="friendCardTop">
+                                            <img src={request.senderPhotoUrl} alt="" />
+                                        </div>
+                                        <div className="friendCardBottom">
+                                            <p id="friendName">{request.senderName}</p>
+                                            <p id="friendMutual">Mutual friends</p>
+                                            {isRequestProcessing ? (
+                                                <button disabled>Accepting...</button>
+                                            ) : (
+                                                <button onClick={() => acceptFriendRequest(request.id, request.senderUid)}>
+                                                    Accept
+                                                </button>
+                                            )}
+                                            <button onClick={() => rejectFriendRequest(request.id, request.senderUid)}>Reject</button>
+                                        </div>
+                                    </div>
+                                );
+                            }
+                            return null;
+                        })}
+                    </div>
+                </>
+            ) : (
+                <div className='noReqsNote'>
+                    <h3>When you have friend requests or suggestions, you'll see them here.</h3>
+                </div>
+            )}
         </div>
     );
 

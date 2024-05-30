@@ -231,14 +231,13 @@ function Signup() {
                 </div>
 
                 <div className='profilePicContainer'>
-                    <button className='picturesBtn' onClick={() => document.getElementById("profilePictureInput").click()}>Choose Profile Picture</button>
+                    <button type="button" className='picturesBtn' onClick={() => document.getElementById("profilePictureInput").click()}>Choose Profile Picture</button>
                     <input
                         type="file"
                         accept="image/*"
                         id="profilePictureInput"
                         style={{ display: "none" }}
                         onChange={handleProfilePictureChange}
-                        // required
                     />
 
                     {selectedProfileImage && (
@@ -247,14 +246,13 @@ function Signup() {
                 </div>
 
                 <div className='coverPicContainer'>
-                    <button className='picturesBtn' onClick={() => document.getElementById("coverPictureInput").click()}>Choose Cover Picture</button>
+                    <button type="button" className='picturesBtn' onClick={() => document.getElementById("coverPictureInput").click()}>Choose Cover Picture</button>
                     <input
                         type="file"
                         accept="image/*"
                         id="coverPictureInput"
                         style={{ display: "none" }}
                         onChange={handleCoverPictureChange}
-                        // required
                     />
 
                     {selectedCoverImage && (

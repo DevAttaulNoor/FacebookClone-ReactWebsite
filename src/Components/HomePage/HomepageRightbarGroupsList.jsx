@@ -18,7 +18,7 @@ function HomepageRightbarGroupsList() {
             <div className="homepageRightbarGroupsList_Body">
                 <div className="homepageRightbarGroupsList_BodyOptions">
                     <AddIcon />
-                    <p>Create New Group</p>
+                    <p>Create new group</p>
                 </div>
             </div>
         </div>

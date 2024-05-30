@@ -1,6 +1,7 @@
 import '../../CSS/ReelPage/ReelCreate.css'
 import React, { useState, useRef } from 'react';
 import html2canvas from 'html2canvas';
+import { Avatar } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { db, storage } from '../../Firebase/firebase';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -227,7 +228,7 @@ function ReelCreate() {
                         </div>
 
                         <div className="reelCreateLeftbar_TopUserinfo">
-                            <img src={user.photoURL} alt="" />
+                            <Avatar src={user.photoURL} />
                             <p>{user.username}</p>
                         </div>
                     </div>

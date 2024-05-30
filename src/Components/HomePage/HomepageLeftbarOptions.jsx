@@ -5,8 +5,7 @@ import { Avatar } from '@mui/material'
 function HomepageLeftbarOptions({ src, icon, title }) {
     return (
         <div className='homepageLeftbarOptions'>
-            {src && <Avatar src={src} />}
-            {icon && icon}
+            {icon ? icon : <Avatar src={src} />}
             <p>{title}</p>
         </div>
     )

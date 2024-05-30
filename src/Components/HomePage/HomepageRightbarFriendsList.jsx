@@ -1,8 +1,10 @@
 import '../../CSS/HomePage/HomepageRightbarFriendsList.css'
 import React from 'react';
 import { Avatar } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMsgFriend, setMsgFriendBoxVisibility } from '../../Redux/messageSlice';
+import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
@@ -27,12 +29,23 @@ function HomepageRightbarFriendsList() {
                 </div>
             </div>
             <div className="homepageRightbarFriendsList_Bottom">
-                {friendsData.map((friend, index) => (
-                    <div className="homepageRightbarFriendsList_BottomOption" key={index} onClick={() => handleMsgFriendBox(friend)}>
-                        <Avatar src={friend.photoURL} />
-                        <p>{friend.username}</p>
+                {friendsData.length > 0 ? (
+                    <>
+                        {friendsData.map((friend, index) => (
+                            <div className="homepageRightbarFriendsList_BottomOption" key={index} onClick={() => handleMsgFriendBox(friend)}>
+                                <Avatar src={friend.photoURL} />
+                                <p>{friend.username}</p>
+                            </div>
+                        ))}
+                    </>
+                ) : (
+                    <div className="homepageRightbarFriendsList_BottomOption">
+                        <NavLink to={'/friendpage/'}>
+                            <AddIcon />
+                            <p>Find some friends</p>
+                        </NavLink>
                     </div>
-                ))}
+                )}
             </div>
         </div>
     );

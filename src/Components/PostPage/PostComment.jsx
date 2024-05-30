@@ -123,7 +123,7 @@ function PostComment({ id, userid, closeModal }) {
                 <div className='commentInput'>
                     <Avatar src={user.photoURL} />
                     <input type='text' placeholder='Write a comment...' value={comment} onChange={(e) => setComment(e.target.value)} />
-                    <SendIcon onClick={postComment} />
+                    <SendIcon className='sendBtn' onClick={postComment} />
                 </div>
             </div>
         </div>

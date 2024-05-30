@@ -37,6 +37,27 @@
 }
 
 /* HomePage Rightbar FriendsList Body Section */
+.homepageRightbarFriendsList_Bottom a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: initial;
+}
+
+.homepageRightbarFriendsList_Bottom svg {
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+    border-radius: 50%;
+    background-color: #E4E6EB;
+}
+
+.homepageRightbarFriendsList_Bottom p {
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
 .homepageRightbarFriendsList_BottomOption {
     display: flex;
     align-items: center;
@@ -53,17 +74,4 @@
 .homepageRightbarFriendsList_BottomOption:hover {
     cursor: pointer;
     background-color: rgb(211 211 211/33%);
-}
-
-.homepageRightbarFriendsList_BottomOption p {
-    font-size: 14px;
-    font-weight: 600;
-    margin-left: 10px;
-}
-
-.homepageRightbarFriendsList_BottomOption a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: initial;
 }

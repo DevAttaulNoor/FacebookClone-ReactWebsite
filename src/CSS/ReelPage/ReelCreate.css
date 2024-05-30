@@ -56,11 +56,10 @@
     margin: 20px 0 25px 0;
 }
 
-.reelCreateLeftbar_TopUserinfo img {
+.reelCreateLeftbar_TopUserinfo .MuiAvatar-root {
     width: 54px;
     height: 54px;
     object-fit: cover;
-    border-radius: 50%;
 }
 
 .reelCreateLeftbar_TopUserinfo p {
