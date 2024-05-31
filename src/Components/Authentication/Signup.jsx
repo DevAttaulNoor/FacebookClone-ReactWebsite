@@ -81,7 +81,7 @@ function Signup() {
                 email: user.email,
                 password: password,
                 username: user.displayName,
-                dob: dob,
+                dob: Math.floor(dob.getTime() / 1000),
                 gender: selectedGender,
                 photoURL: user.photoURL,
                 coverphotoUrl: coverphotoUrl,
@@ -91,7 +91,7 @@ function Signup() {
             const postData = {
                 uid: user.uid,
                 email: user.email,
-                dob: dob,
+                dob: Math.floor(dob.getTime() / 1000),
                 username: user.displayName,
                 photoURL: user.photoURL,
             };
@@ -104,7 +104,7 @@ function Signup() {
                 email: email,
                 password: password,
                 username: `${firstname} ${lastname}`,
-                dob: dob,
+                dob: Math.floor(dob.getTime() / 1000),
                 gender: selectedGender,
                 photoURL: photoURL,
                 coverphotoUrl: coverphotoUrl,

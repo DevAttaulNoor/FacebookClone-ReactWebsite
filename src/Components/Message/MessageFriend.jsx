@@ -98,7 +98,15 @@ function MessageFriend() {
         if (msgFriend) {
             const userUid = user.uid;
             const friendUid = msgFriend.friendUid;
-            chatId = userUid < friendUid ? `${userUid}_${friendUid}` : `${friendUid}_${userUid}`;
+            const anypersonUid = msgFriend.uid;
+            
+            if (friendUid) {
+                chatId = userUid < friendUid ? `${userUid}_${friendUid}` : `${friendUid}_${userUid}`;
+            }
+            
+            if (anypersonUid) {
+                chatId = userUid < anypersonUid ? `${userUid}_${anypersonUid}` : `${anypersonUid}_${userUid}`;
+            }
         }
 
         if (chatId) {
@@ -143,7 +151,7 @@ function MessageFriend() {
                     <Avatar src={msgFriend.photoURL} />
                     <h3>{msgFriend.username}</h3>
                     <p>Facebook</p>
-                    <p>You're friends on Facebook</p>
+                    {msgFriend.friendUid && <p>You're friends on Facebook</p>}
                 </div>
 
                 {messages.map((message) => (
@@ -168,7 +176,7 @@ function MessageFriend() {
                 {isEmojiPickerVisible && (
                     <EmojiPicker onEmojiClick={handleEmojiClick} />
                 )}
-                <SendIcon onClick={() => sendMessage(msgFriend.friendUid, msgFriend.username, msgFriend.photoURL)} />
+                <SendIcon onClick={() => sendMessage(msgFriend.friendUid ? msgFriend.friendUid : msgFriend.uid, msgFriend.username, msgFriend.photoURL)} />
             </div>
         </div>
     )

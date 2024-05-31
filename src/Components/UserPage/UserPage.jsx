@@ -26,26 +26,26 @@ function UserPage() {
                 const storageRef = storage.ref(`Users/${user.uid}/${file.name}`);
                 const snapshot = await storageRef.put(file);
                 const url = await snapshot.ref.getDownloadURL();
-
+    
                 // Update user's photoURL in "Users" collection
                 await db.collection("Users").doc(user.uid).update({ photoURL: url });
                 console.log("User's photoURL in Users collection updated successfully!");
-
+    
                 const updateBatch = (batch, snapshot, field) => {
                     snapshot.forEach((doc) => {
                         batch.update(doc.ref, field);
                     });
                 };
-
+    
                 // Fetch all users and update notifications
                 const allUsersSnapshot = await db.collection("Users").get();
                 const userPromises = allUsersSnapshot.docs.map(async (userDoc) => {
                     const otherUserUid = userDoc.id;
                     if (otherUserUid === user.uid) return;
-
+    
                     const commentsSnapshot = await db.collection("Users").doc(otherUserUid).collection("Notifications").doc(otherUserUid).collection("Comments").where('userid', '==', user.uid).get();
                     const likesSnapshot = await db.collection("Users").doc(otherUserUid).collection("Notifications").doc(otherUserUid).collection("Likes").where('userid', '==', user.uid).get();
-
+    
                     const batch = db.batch();
                     updateBatch(batch, commentsSnapshot, { userphotoUrl: url });
                     updateBatch(batch, likesSnapshot, { userphotoUrl: url });
@@ -53,29 +53,29 @@ function UserPage() {
                     console.log(`User's Notification photoURL collections updated successfully for user ${otherUserUid}!`);
                 });
                 await Promise.all(userPromises);
-
+    
                 // Update user's photoURL in "Posts" collection
                 const postsSnapshot = await db.collection("Posts").where('uid', '==', user.uid).get();
                 const postsBatch = db.batch();
                 updateBatch(postsBatch, postsSnapshot, { photoURL: url });
                 await postsBatch.commit();
                 console.log("User's photoURL in Posts collection updated successfully!");
-
+    
                 // Update user's photoURL in "Reels" collection
                 const reelsSnapshot = await db.collection("Reels").where('uid', '==', user.uid).get();
                 const reelsBatch = db.batch();
                 updateBatch(reelsBatch, reelsSnapshot, { photoURL: url });
                 await reelsBatch.commit();
                 console.log("User's photoURL in Reels collection updated successfully!");
-
+    
                 // Update user's photoURL in subcollections of "Posts"
                 const allPostsSnapshot = await db.collection("Posts").get();
                 const subcollectionsPromises = allPostsSnapshot.docs.map(async (postDoc) => {
                     const postId = postDoc.id;
-
+    
                     const postCommentsSnapshot = await db.collection("Posts").doc(postId).collection("comments").where('uid', '==', user.uid).get();
                     const postLikesSnapshot = await db.collection("Posts").doc(postId).collection("likes").where('uid', '==', user.uid).get();
-
+    
                     const batch = db.batch();
                     updateBatch(batch, postCommentsSnapshot, { photoURL: url });
                     updateBatch(batch, postLikesSnapshot, { photoUrl: url });
@@ -83,22 +83,33 @@ function UserPage() {
                     console.log(`User's photoURL updated in Comments and Likes subcollections for post ${postId}!`);
                 });
                 await Promise.all(subcollectionsPromises);
-
+    
                 // Update user's photoURL in "Chats" collection
                 const chatsSnapshot = await db.collection("Chats").where('senderUid', '==', user.uid).get();
                 const recipientChatsSnapshot = await db.collection("Chats").where('recipientUid', '==', user.uid).get();
-
+    
                 const chatsBatch = db.batch();
                 updateBatch(chatsBatch, chatsSnapshot, { senderPhotoUrl: url });
                 updateBatch(chatsBatch, recipientChatsSnapshot, { recipientPhotoUrl: url });
                 await chatsBatch.commit();
                 console.log("User's photoURL in Chats collection updated successfully!");
-
+    
+                // Update user's photoURL in "friendRequests" subcollections
+                const allUsersWithFriendRequests = await db.collection("Users").get();
+                const friendRequestsPromises = allUsersWithFriendRequests.docs.map(async (userDoc) => {
+                    const friendRequestsSnapshot = await db.collection("Users").doc(userDoc.id).collection("friendRequests").where('senderUid', '==', user.uid).get();
+                    const friendRequestsBatch = db.batch();
+                    updateBatch(friendRequestsBatch, friendRequestsSnapshot, { senderPhotoUrl: url });
+                    await friendRequestsBatch.commit();
+                    console.log(`User's photoURL in friendRequests subcollection updated successfully for user ${userDoc.id}!`);
+                });
+                await Promise.all(friendRequestsPromises);
+    
                 // Update sessionStorage and Redux state
                 const userDataString = sessionStorage.getItem('userData');
                 let userData = userDataString ? JSON.parse(userDataString) : {};
                 userData.photoURL = url;
-
+    
                 dispatch(loginUser(userData));
                 sessionStorage.setItem('userData', JSON.stringify(userData));
             } catch (error) {
@@ -106,7 +117,7 @@ function UserPage() {
             }
         }
     };
-
+    
     const changeCoverImage = (e) => {
         const coverfile = e.target.files[0];
         if (coverfile) {
@@ -138,7 +149,7 @@ function UserPage() {
                 });
             });
         }
-    }
+    };
 
     useEffect(() => {
         const img = new Image();

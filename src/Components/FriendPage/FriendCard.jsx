@@ -1,5 +1,6 @@
 import '../../CSS/FriendPage/FriendCard.css'
 import React, { useState, useEffect } from 'react';
+import { Avatar } from '@mui/material';
 import { auth, db } from '../../Firebase/firebase';
 
 function FriendCard({ user }) {
@@ -100,7 +101,7 @@ function FriendCard({ user }) {
     return (
         <div className='friendCard'>
             <div className="friendCardTop">
-                <img src={user.photoURL} alt="" />
+                <Avatar src={user.photoURL} />
             </div>
 
             <div className="friendCardBottom">

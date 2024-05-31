@@ -63,12 +63,13 @@ const timeAgoInitials = (timestamp) => {
 };
 
 const formatJoinedDate = (timestamp) => {
-    // if (!timestamp || !timestamp.toDate) {
-    //     return "Unknown Date";
-    // }
-    const dob = new Date(timestamp * 1000);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return dob.toLocaleDateString('en-GB', options);
+    const date = new Date(timestamp * 1000);
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const month = date.toLocaleString('default', { month: 'long' });
+    const year = date.getUTCFullYear();
+
+    // Format the date as DD Month YYYY
+    return `${day} ${month} ${year}`;
 };
 
 export { timeAgo, timeAgoInitials, formatJoinedDate };

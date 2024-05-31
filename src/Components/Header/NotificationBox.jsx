@@ -62,9 +62,9 @@ function NotificationBox() {
                         {activeButton === 'All' ? (
                             <div className='notificationBoxBottomOptions'>
                                 {notification.map((notification, index) => (
-                                    <>
+                                    <div key={index}>
                                         {notification.status === 'reacted' && (
-                                            <div className='notificationBoxBottomOption' key={index}>
+                                            <div className='notificationBoxBottomOption'>
                                                 <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} onClick={() => handleNotificationClicked(notification.postid, "Likes")}>
                                                     <div className='notificationBoxBottomOption_Left'>
                                                         <Avatar src={notification.userphotoUrl} />
@@ -78,7 +78,7 @@ function NotificationBox() {
                                         )}
 
                                         {notification.status === 'commented' && (
-                                            <div className='notificationBoxBottomOption' key={index}>
+                                            <div className='notificationBoxBottomOption'>
                                                 <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} onClick={() => handleNotificationClicked(notification.postid, "Comments")}>
                                                     <div className='notificationBoxBottomOption_Left'>
                                                         <Avatar src={notification.userphotoUrl} />
@@ -92,7 +92,7 @@ function NotificationBox() {
                                         )}
 
                                         {notification.status === 'sent' && (
-                                            <div className='notificationBoxBottomOption' key={index}>
+                                            <div className='notificationBoxBottomOption'>
                                                 <div className='notificationBoxBottomOption_Left'>
                                                     <Avatar src={notification.senderPhotoUrl} />
                                                 </div>
@@ -106,7 +106,7 @@ function NotificationBox() {
                                                 </div>
                                             </div>
                                         )}
-                                    </>
+                                    </div>
                                 ))}
                             </div>
                         ) : (
@@ -118,9 +118,9 @@ function NotificationBox() {
                                         {notification
                                             .filter(notification => notification.notificationStatus === 'notseen')
                                             .map((notification, index) => (
-                                                <>
+                                                <div key={index}>
                                                     {notification.status === 'reacted' && (
-                                                        <div className='notificationBoxBottomOption' key={index}>
+                                                        <div className='notificationBoxBottomOption'>
                                                             <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} onClick={() => handleNotificationClicked(notification.postid, "Likes")}>
                                                                 <div className='notificationBoxBottomOption_Left'>
                                                                     <Avatar src={notification.userphotoUrl} />
@@ -134,7 +134,7 @@ function NotificationBox() {
                                                     )}
 
                                                     {notification.status === 'commented' && (
-                                                        <div className='notificationBoxBottomOption' key={index}>
+                                                        <div className='notificationBoxBottomOption'>
                                                             <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} onClick={() => handleNotificationClicked(notification.postid, "Comments")}>
                                                                 <div className='notificationBoxBottomOption_Left'>
                                                                     <Avatar src={notification.userphotoUrl} />
@@ -148,7 +148,7 @@ function NotificationBox() {
                                                     )}
 
                                                     {notification.status === 'sent' && (
-                                                        <div className='notificationBoxBottomOption' key={index}>
+                                                        <div className='notificationBoxBottomOption'>
                                                             <div className='notificationBoxBottomOption_Left'>
                                                                 <Avatar src={notification.senderPhotoUrl} />
                                                             </div>
@@ -162,7 +162,7 @@ function NotificationBox() {
                                                             </div>
                                                         </div>
                                                     )}
-                                                </>
+                                                </div>
                                             ))}
                                     </div>
                                 )}

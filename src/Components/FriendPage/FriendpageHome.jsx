@@ -48,15 +48,23 @@ function FriendpageHome() {
 
     return (
         <div className="friendpageHome">
-            <div className="friendpageHomeTop">
-                <p>People you may know</p>
-            </div>
-            
-            <div className="friendpageHomeBottom">
-                {filteredUsers.map((friend) => (
-                    <FriendCard key={friend.id} user={friend} />
-                ))}
-            </div>
+            {filteredUsers.length > 0 ? (
+                <>
+                    <div className="friendpageHomeTop">
+                        <p>People you may know</p>
+                    </div>
+
+                    <div className="friendpageHomeBottom">
+                        {filteredUsers.map((friend) => (
+                            <FriendCard key={friend.id} user={friend} />
+                        ))}
+                    </div>
+                </>
+            ) : (
+                <div className='noReqsNote'>
+                    <h3>When you have friend requests or suggestions, you'll see them here.</h3>
+                </div>
+            )}
         </div>
     )
 }

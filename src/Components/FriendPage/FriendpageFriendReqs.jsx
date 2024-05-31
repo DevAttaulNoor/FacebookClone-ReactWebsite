@@ -1,5 +1,6 @@
-import '../../CSS/FriendPage/FriendpageFriendReqs.css'
+import '../../CSS/FriendPage/FriendpageFriendReqs.css';
 import React, { useEffect, useState } from "react";
+import { Avatar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { db } from '../../Firebase/firebase';
 import { setFriends } from '../../Redux/friendSlice';
@@ -12,43 +13,34 @@ function FriendpageFriendReqs() {
 
     const acceptFriendRequest = async (friendRequestId, senderUid) => {
         try {
-            // Check if the request is already being processed
             if (isRequestProcessing) {
                 return;
             }
 
-            setIsRequestProcessing(true); // Set a flag to indicate that the request is being processed
+            setIsRequestProcessing(true);
 
             const usersCollection = db.collection("Users");
             const currentUserDoc = usersCollection.doc(user.uid);
 
-            // Check if the user is already a friend
             const currentUserFriendsQuery = await currentUserDoc
                 .collection("Friends")
                 .where("friendUid", "==", senderUid)
                 .get();
 
             if (currentUserFriendsQuery.docs.length === 0) {
-                // User is not already a friend, proceed to add them
-
-                // Update the sender's "Friends" subcollection
                 await usersCollection
                     .doc(senderUid)
                     .collection("Friends")
                     .add({
                         friendUid: user.uid,
-                        // You can fetch other user details here using a similar approach
                     });
 
-                // Update the current user's "Friends" subcollection
                 await currentUserDoc
                     .collection("Friends")
                     .add({
                         friendUid: senderUid,
-                        // You can fetch other user details here using a similar approach
                     });
 
-                // Update the friend request's status to "accepted" in both the sender's and receiver's subcollections
                 const senderFriendRequestsCollection = usersCollection
                     .doc(senderUid)
                     .collection("friendRequests");
@@ -68,20 +60,19 @@ function FriendpageFriendReqs() {
                     timestamp: Math.floor(new Date().getTime() / 1000),
                 });
 
-                // After successfully accepting the friend request, update the state
                 setFriendRequests((prevRequests) =>
                     prevRequests.filter((request) => request.id !== friendRequestId)
                 );
 
                 alert("Friend request accepted!");
-                dispatch(setFriends(friendRequestId))
+                dispatch(setFriends(friendRequestId));
             } else {
                 alert("You are already friends with this user.");
             }
         } catch (error) {
             console.error("Error accepting friend request:", error);
         } finally {
-            setIsRequestProcessing(false); // Reset the request processing flag
+            setIsRequestProcessing(false);
         }
     };
 
@@ -89,14 +80,12 @@ function FriendpageFriendReqs() {
         try {
             const usersCollection = db.collection("Users");
 
-            // Delete the friend request from the sender's "friendRequests" subcollection
             const senderFriendRequestsCollection = usersCollection
                 .doc(senderUid)
                 .collection("friendRequests");
 
             await senderFriendRequestsCollection.doc(friendRequestId).delete();
 
-            // Delete the friend request from the receiver's "friendRequests" subcollection
             const receiverFriendRequestsCollection = usersCollection
                 .doc(user.uid)
                 .collection("friendRequests");
@@ -109,6 +98,9 @@ function FriendpageFriendReqs() {
             });
 
             alert("Friend request rejected!");
+            setFriendRequests((prevRequests) =>
+                prevRequests.filter((request) => request.id !== friendRequestId)
+            );
         } catch (error) {
             console.error("Error rejecting friend request:", error);
         }
@@ -133,13 +125,11 @@ function FriendpageFriendReqs() {
                     });
                 });
                 setFriendRequests(requests);
-            }
-
-            catch (error) {
+            } catch (error) {
                 console.error("Error fetching friend requests:", error);
             }
-        }
-        fetchFriendRequests()
+        };
+        fetchFriendRequests();
     }, [user.uid]);
 
     return (
@@ -147,7 +137,7 @@ function FriendpageFriendReqs() {
             {friendRequests.length > 0 ? (
                 <>
                     <div className="friendpageFriendReqsTop">
-                        <p>Friends Requests</p>
+                        <p>Friend Requests</p>
                     </div>
 
                     <div className="friendpageFriendReqsBottom">
@@ -156,7 +146,7 @@ function FriendpageFriendReqs() {
                                 return (
                                     <div key={request.id} className="friendCard">
                                         <div className="friendCardTop">
-                                            <img src={request.senderPhotoUrl} alt="" />
+                                            <Avatar src={request.senderPhotoUrl} />
                                         </div>
                                         <div className="friendCardBottom">
                                             <p id="friendName">{request.senderName}</p>
@@ -178,13 +168,12 @@ function FriendpageFriendReqs() {
                     </div>
                 </>
             ) : (
-                <div className='noReqsNote'>
+                <div className="noReqsNote">
                     <h3>When you have friend requests or suggestions, you'll see them here.</h3>
                 </div>
             )}
         </div>
     );
-
 }
 
 export default FriendpageFriendReqs;

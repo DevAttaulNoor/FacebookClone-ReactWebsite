@@ -10,7 +10,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 function MessageBox() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
-    const friendsData = useSelector((state) => state.data.friends.friendsData);
+    const users = useSelector((state) => state.data.user.users);
     const chatNotification = useSelector((state) => state.data.notification.chatNotification);
     const [activeButton, setActiveButton] = useState('Inbox');
 
@@ -49,7 +49,7 @@ function MessageBox() {
                             const isUserSender = chat.senderUid === user.uid;
                             const isUserRecipient = chat.recipientUid === user.uid;
                             const friendId = isUserSender ? chat.recipientUid : chat.senderUid;
-                            const friend = friendsData.filter(friend => friend.friendUid === friendId);
+                            const friend = users.filter(friend => friend.uid === friendId);
 
                             if (isUserSender || isUserRecipient) {
                                 const lastMessage = chat.messages.slice(-1)[0];
