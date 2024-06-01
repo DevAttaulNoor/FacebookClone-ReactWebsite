@@ -26,6 +26,14 @@ function Signup() {
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const years = Array.from({ length: 100 }, (_, i) => new Date().getUTCFullYear() - i);
 
+    const handleGenderClick = (gender) => {
+        if (selectedGender === gender) {
+            setSelectedGender('');
+        } else {
+            setSelectedGender(gender);
+        }
+    };
+
     const handleProfilePictureChange = (e) => {
         if (e.target.files[0]) {
             setSelectedProfileImage(URL.createObjectURL(e.target.files[0]));
@@ -44,6 +52,13 @@ function Signup() {
         e.preventDefault();
         setIsSignupProcessing(true);
         setSignupError(null);
+
+        // Check if gender is selected
+        if (selectedGender === '' || selectedGender === null) {
+            setSignupError("Please select your gender.");
+            setIsSignupProcessing(false);
+            return;
+        }
 
         try {
             const userCredential = await auth.createUserWithEmailAndPassword(
@@ -213,17 +228,17 @@ function Signup() {
                     <h5>Gender</h5>
 
                     <div className="genderOptions">
-                        <div className={`genderOption ${selectedGender === 'Male' ? 'active' : ''}`} onClick={() => setSelectedGender('Male')}>
+                        <div className={`genderOption ${selectedGender === 'Male' ? 'active' : ''}`} onClick={() => handleGenderClick('Male')}>
                             <p>Male</p>
                             <AdjustOutlinedIcon className={`${selectedGender === 'Male' ? 'active' : ''}`} />
                         </div>
 
-                        <div className={`genderOption ${selectedGender === 'Female' ? 'active' : ''}`} onClick={() => setSelectedGender('Female')}>
+                        <div className={`genderOption ${selectedGender === 'Female' ? 'active' : ''}`} onClick={() => handleGenderClick('Female')}>
                             <p>Female</p>
                             <AdjustOutlinedIcon className={`${selectedGender === 'Female' ? 'active' : ''}`} />
                         </div>
 
-                        <div className={`genderOption ${selectedGender === 'Other' ? 'active' : ''}`} onClick={() => setSelectedGender('Other')}>
+                        <div className={`genderOption ${selectedGender === 'Other' ? 'active' : ''}`} onClick={() => handleGenderClick('Other')}>
                             <p>Other</p>
                             <AdjustOutlinedIcon className={`${selectedGender === 'Other' ? 'active' : ''}`} />
                         </div>

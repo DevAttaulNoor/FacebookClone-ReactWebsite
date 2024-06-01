@@ -98,8 +98,6 @@ function UserPage() {
                 const allUsersWithFriendRequests = await db.collection("Users").get();
                 const friendRequestsPromises = allUsersWithFriendRequests.docs.map(async (userDoc) => {
                     const friendRequestsSnapshot = await db.collection("Users").doc(userDoc.id).collection("friendRequests").where('senderUid', '==', user.uid).get();
-
-                    console.log(friendRequestsSnapshot)
                     const friendRequestsBatch = db.batch();
                     updateBatch(friendRequestsBatch, friendRequestsSnapshot, { senderPhotoUrl: url });
                     await friendRequestsBatch.commit();

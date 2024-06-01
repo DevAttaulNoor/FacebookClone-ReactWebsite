@@ -98,6 +98,12 @@ function Friends() {
         if (friends.length > 0) {
             fetchFriendsData(friends);
         }
+
+        // Clear friends data when component unmounts or user logs out
+        return () => {
+            dispatch(setFriendsData([]));
+        };
+
     }, [friends, dispatch]);
 
     // Fetch selected friend data when selected friend changes
