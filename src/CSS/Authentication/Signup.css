@@ -80,6 +80,7 @@
     outline: none;
     border-radius: 5px;
     border: 1px solid lightgray;
+    cursor: pointer;
     background-color: whitesmoke;
 }
 
@@ -91,6 +92,7 @@
     padding: 7px 2px 7px 7px;
     border-radius: 5px;
     border: 1px solid lightgray;
+    cursor: pointer;
     background-color: whitesmoke;
 }
 
@@ -116,6 +118,7 @@
     outline: none;
     border-radius: 5px;
     border: 1px solid lightgray;
+    cursor: pointer;
     color: gray;
     background-color: whitesmoke;
 }
@@ -135,6 +138,7 @@
 
 .signupMiddle .notesContainer span:hover {
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .signupMiddle .notesContainer #learnMoreNote,
@@ -155,6 +159,7 @@
     margin: 12px 0 0;
     border: none;
     border-radius: 6px;
+    cursor: pointer;
     color: #fff;
     background-color: #42b72a;
 }
@@ -191,6 +196,7 @@
     padding: 10px;
     border: none;
     border-radius: 6px;
+    cursor: pointer;
     color: #1877F2;
     background-color: transparent;
 }

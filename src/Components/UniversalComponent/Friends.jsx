@@ -24,38 +24,49 @@ function Friends() {
         };
 
         fetchUsers();
-    }, [user.uid, dispatch]);
+    }, [dispatch]);
 
-    // Fetch friends when user.uid changes and friendFriends when selectedUser changes
+    // Real-time listener for friends
     useEffect(() => {
-        const fetchFriends = async (uid) => {
-            try {
-                const friendsCollection = db.collection('Users').doc(uid).collection('Friends');
-                const querySnapshot = await friendsCollection.get();
-                const userFriends = [];
+        if (!user.uid) return;
 
+        const unsubscribe = db.collection('Users').doc(user.uid).collection('Friends')
+            .onSnapshot((querySnapshot) => {
+                const userFriends = [];
                 querySnapshot.forEach((doc) => {
                     const friendData = doc.data();
                     userFriends.push({
                         friendUid: friendData.friendUid,
                     });
                 });
-
-                if (uid === user.uid) {
-                    dispatch(setFriends(userFriends));
-                } else {
-                    dispatch(setFriendFriends(userFriends));
-                }
-            } catch (error) {
+                dispatch(setFriends(userFriends));
+            }, (error) => {
                 console.error('Error fetching friends:', error);
-            }
-        };
+            });
 
-        fetchFriends(user.uid);
-        if (selectedFriend) {
-            fetchFriends(selectedFriend)
-        }
-    }, [user.uid, selectedFriend, dispatch]);
+        return () => unsubscribe();
+    }, [user.uid, dispatch]);
+
+    // Real-time listener for selected friend's friends
+    useEffect(() => {
+        if (!selectedFriend) return;
+
+        const unsubscribe = db.collection('Users').doc(selectedFriend).collection('Friends')
+            .onSnapshot((querySnapshot) => {
+                const friendFriendsArray = [];
+                querySnapshot.forEach((doc) => {
+                    const friendData = doc.data();
+                    friendFriendsArray.push({
+                        friendUid: friendData.friendUid,
+                    });
+                });
+                dispatch(setFriendFriends(friendFriendsArray));
+            }, (error) => {
+                console.error('Error fetching selected friends friends:', error);
+            });
+
+        return () => unsubscribe();
+    }, [selectedFriend, dispatch]);
 
     // Fetch friend data when friends array changes
     useEffect(() => {
@@ -142,9 +153,7 @@ function Friends() {
         }
     }, [friendFriends, dispatch]);
 
-    return (
-        null
-    );
+    return null;
 }
 
 export default Friends;

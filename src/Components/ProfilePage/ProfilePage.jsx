@@ -19,10 +19,11 @@ function ProfilePage() {
         <div className="profilePage">
             <div className="profilePageTop">
                 <div className="profilePageTop_CoverSection">
-                    <img
-                        src={selectedFriendData.coverphotoUrl}
-                        alt="Cover"
-                    />
+                    {selectedFriendData.coverphotoUrl ? (
+                        <img src={selectedFriendData.coverphotoUrl} alt="coverPhoto"/>
+                    ) : (
+                        <div className="coverPhoto"></div>
+                    )}
                 </div>
 
                 <div className="profilePageTop_ProfileSection">

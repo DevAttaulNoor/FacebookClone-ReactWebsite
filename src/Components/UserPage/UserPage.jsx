@@ -16,7 +16,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 function UserPage() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
-    const friends = useSelector((state) => state.data.friends.friends);
+    const friendsData = useSelector((state) => state.data.friends.friendsData);
     const [imageLoaded, setImageLoaded] = useState(false);
 
     const changeProfileImage = async (e) => {
@@ -208,7 +208,7 @@ function UserPage() {
 
                         <div className="userpageTop_ProfileSectionLeftInfo">
                             <h3>{user.username}</h3>
-                            <p>{friends.length} friends</p>
+                            <p>{friendsData.length} friends</p>
                         </div>
                     </div>
 

@@ -32,6 +32,14 @@
     object-fit: cover;
 }
 
+.profilePageTop_CoverSection .coverPhoto {
+    width: 995px;
+    height: 370px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: #F0F2F5;
+}
+
 .profilePageTop_CoverSection button {
     position: absolute;
     top: 320px;
