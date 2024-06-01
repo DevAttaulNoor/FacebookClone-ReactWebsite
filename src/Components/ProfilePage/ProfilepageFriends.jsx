@@ -1,7 +1,8 @@
 import "../../CSS/ProfilePage/ProfilepageFriends.css"
 import React from 'react';
-import { useSelector } from "react-redux";
+import { Avatar } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function ProfilepageFriends() {
     const friendFriends = useSelector((state) => state.data.friends.friendFriends)
@@ -22,7 +23,7 @@ function ProfilepageFriends() {
                         <div className="profilePageFriends_BottomContainer">
                             {friendFriendsData.map((friend) => (
                                 <div className="profilePageFriends_BottomContainerOptions" key={friend.friendUid}>
-                                    <img src={friend.photoURL} alt="" />
+                                    <Avatar src={friend.photoURL}/>
                                     <p>{friend.username}</p>
                                 </div>
                             ))}

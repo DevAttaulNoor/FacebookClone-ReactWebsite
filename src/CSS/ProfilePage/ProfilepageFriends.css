@@ -45,16 +45,21 @@
 }
 
 .profilePageFriends_BottomContainer {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
 }
 
-.profilePageFriends_BottomContainerOptions img {
+.profilePageFriends_BottomContainerOptions:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.profilePageFriends_BottomContainerOptions .MuiAvatar-root {
     width: 100%;
     height: 110px;
-    object-fit: cover;
-    border-radius: 6px
+    border-radius: 6px;
 }
 
 .profilePageFriends_BottomContainerOptions p {

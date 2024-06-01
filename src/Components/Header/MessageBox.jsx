@@ -1,4 +1,4 @@
-import '../../CSS/Header/MessageBox.css'
+import '../../CSS/Header/MessageBox.css';
 import React, { useState } from 'react';
 import { Avatar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -56,7 +56,7 @@ function MessageBox() {
 
                                 return (
                                     <>
-                                        {activeButton === 'Inbox' ? (
+                                        {activeButton === 'Inbox' && (
                                             <div className='messageBoxBottomOption' key={chat.chatId} onClick={() => handleMsgFriendBox(friend[0])}>
                                                 <Avatar src={isUserSender ? chat.recipientPhotoUrl : chat.senderPhotoUrl} />
                                                 <div className='messageBoxBottomOptionContent'>
@@ -68,7 +68,7 @@ function MessageBox() {
                                                     </div>
                                                 </div>
                                             </div>
-                                        ) : null}
+                                        )}
                                     </>
                                 );
                             }
@@ -87,4 +87,4 @@ function MessageBox() {
     );
 }
 
-export default MessageBox
+export default MessageBox;

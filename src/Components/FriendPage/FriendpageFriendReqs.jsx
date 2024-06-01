@@ -9,15 +9,16 @@ function FriendpageFriendReqs() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
     const [friendRequests, setFriendRequests] = useState([]);
-    const [isRequestProcessing, setIsRequestProcessing] = useState(false);
+    const [acceptingRequests, setAcceptingRequests] = useState({});
+    const [rejectingRequests, setRejectingRequests] = useState({});
 
     const acceptFriendRequest = async (friendRequestId, senderUid) => {
         try {
-            if (isRequestProcessing) {
+            if (acceptingRequests[friendRequestId]) {
                 return;
             }
 
-            setIsRequestProcessing(true);
+            setAcceptingRequests(prev => ({ ...prev, [friendRequestId]: true }));
 
             const usersCollection = db.collection("Users");
             const currentUserDoc = usersCollection.doc(user.uid);
@@ -72,12 +73,18 @@ function FriendpageFriendReqs() {
         } catch (error) {
             console.error("Error accepting friend request:", error);
         } finally {
-            setIsRequestProcessing(false);
+            setAcceptingRequests(prev => ({ ...prev, [friendRequestId]: false }));
         }
     };
 
     const rejectFriendRequest = async (friendRequestId, senderUid) => {
         try {
+            if (rejectingRequests[friendRequestId]) {
+                return;
+            }
+
+            setRejectingRequests(prev => ({ ...prev, [friendRequestId]: true }));
+            
             const usersCollection = db.collection("Users");
 
             const senderFriendRequestsCollection = usersCollection
@@ -103,6 +110,8 @@ function FriendpageFriendReqs() {
             );
         } catch (error) {
             console.error("Error rejecting friend request:", error);
+        } finally {
+            setRejectingRequests(prev => ({ ...prev, [friendRequestId]: false }));
         }
     };
 
@@ -134,7 +143,7 @@ function FriendpageFriendReqs() {
 
     return (
         <div className="friendpageFriendReqs">
-            {friendRequests.length > 0 ? (
+            {(friendRequests.filter(reqs => (reqs.receiverUid === user.uid) && (reqs.status === 'pending'))).length > 0 ? (
                 <>
                     <div className="friendpageFriendReqsTop">
                         <p>Friend Requests</p>
@@ -151,14 +160,17 @@ function FriendpageFriendReqs() {
                                         <div className="friendCardBottom">
                                             <p id="friendName">{request.senderName}</p>
                                             <p id="friendMutual">Mutual friends</p>
-                                            {isRequestProcessing ? (
-                                                <button disabled>Accepting...</button>
+                                            {acceptingRequests[request.id] ? (
+                                                <button disabled>Accepting</button>
                                             ) : (
-                                                <button onClick={() => acceptFriendRequest(request.id, request.senderUid)}>
-                                                    Accept
-                                                </button>
+                                                <button onClick={() => acceptFriendRequest(request.id, request.senderUid)}>Accept</button>
                                             )}
-                                            <button onClick={() => rejectFriendRequest(request.id, request.senderUid)}>Reject</button>
+                                            
+                                            {rejectingRequests[request.id] ? (
+                                                <button disabled>Rejecting</button>
+                                            ) : (
+                                                <button onClick={() => rejectFriendRequest(request.id, request.senderUid)}>Reject</button>
+                                            )}
                                         </div>
                                     </div>
                                 );

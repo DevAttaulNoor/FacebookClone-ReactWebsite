@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { db } from '../../Firebase/firebase';
 import { setUsers } from '../../Redux/userSlice';
@@ -59,46 +59,42 @@ function Friends() {
 
     // Fetch friend data when friends array changes
     useEffect(() => {
-        const fetchFriendData = async (friend) => {
-            try {
-                const friendDoc = await db.collection('Users').doc(friend.friendUid).get();
-                if (friendDoc.exists) {
-                    const friendDetails = friendDoc.data();
-                    return {
-                        ...friend,
-                        username: friendDetails.username || '',
-                        photoURL: friendDetails.photoURL || '',
-                    };
-                }
-            } catch (error) {
-                console.error('Error fetching friend details:', error);
-            }
-            return null;
-        };
+        const fetchFriendsData = async (friendsArray) => {
+            if (!Array.isArray(friendsArray)) return;
 
-        const fetchFriendsData = async (friendsList) => {
-            const friendDetailsPromises = friendsList.map(friend => fetchFriendData(friend));
+            const friendDetailsPromises = friendsArray.map(async (friend) => {
+                try {
+                    const friendDoc = await db.collection('Users').doc(friend.friendUid).get();
+
+                    if (friendDoc.exists) {
+                        const friendDetails = friendDoc.data();
+                        return {
+                            ...friend,
+                            username: friendDetails.username || '',
+                            photoURL: friendDetails.photoURL || '',
+                        };
+                    }
+                } catch (error) {
+                    console.error('Error fetching friend details:', error);
+                }
+                return null;
+            });
+
             const updatedFriends = await Promise.all(friendDetailsPromises);
-            dispatch(setFriendsData(updatedFriends));
+            dispatch(setFriendsData(updatedFriends.filter(friend => friend !== null)));
         };
 
         if (friends.length > 0) {
-            if (friends.length === 1) {
-                fetchFriendData(friends[0]).then((updatedFriend) => {
-                    dispatch(setFriendsData([updatedFriend]));
-                });
-            } else {
-                fetchFriendsData(friends);
-            }
+            fetchFriendsData(friends);
         }
     }, [friends, dispatch]);
 
     // Fetch selected friend data when selected friend changes
     useEffect(() => {
-        const fetchSelectedFriendData = async (friendfirendsUid) => {
+        const fetchSelectedFriendData = async (friendUid) => {
             try {
-                if (friendfirendsUid) {
-                    const friendDoc = await db.collection('Users').doc(friendfirendsUid).get();
+                if (friendUid) {
+                    const friendDoc = await db.collection('Users').doc(friendUid).get();
 
                     if (friendDoc.exists) {
                         const friendDetails = friendDoc.data();
@@ -113,10 +109,12 @@ function Friends() {
         fetchSelectedFriendData(selectedFriend);
     }, [selectedFriend, dispatch]);
 
-    // Fetch friend friends data when friends array changes
+    // Fetch friend friends data when friendFriends array changes
     useEffect(() => {
-        const fetchFriendFriendsData = async (friendfirendsUid) => {
-            const friendDetailsPromises = friendfirendsUid.map(async (friend) => {
+        const fetchFriendFriendsData = async (friendFriendsArray) => {
+            if (!Array.isArray(friendFriendsArray)) return;
+
+            const friendDetailsPromises = friendFriendsArray.map(async (friend) => {
                 try {
                     const friendDoc = await db.collection('Users').doc(friend.friendUid).get();
 
@@ -136,7 +134,7 @@ function Friends() {
             });
 
             const updatedFriends = await Promise.all(friendDetailsPromises);
-            dispatch(setFriendFriendsData(updatedFriends));
+            dispatch(setFriendFriendsData(updatedFriends.filter(friend => friend !== null)));
         };
 
         if (friendFriends.length > 0) {
@@ -146,7 +144,7 @@ function Friends() {
 
     return (
         null
-    )
+    );
 }
 
 export default Friends;

@@ -1,5 +1,6 @@
 import "../../CSS/UserPage/UserpageFriends.css"
 import React from 'react';
+import { Avatar } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedFriend } from "../../Redux/friendSlice";
@@ -30,7 +31,7 @@ function UserpageFriends() {
                             {friendsData.map((friend, index) => (
                                 <NavLink to={`/profilepage/${friend.friendUid}/post`} onClick={() => handleFriendSelection(friend.friendUid)} key={index}>
                                     <div className="userpageFriendsBottomContainerOptions">
-                                        <img src={friend.photoURL} alt="" />
+                                        <Avatar src={friend.photoURL}/>
                                         <p>{friend.username}</p>
                                     </div>
                                 </NavLink>

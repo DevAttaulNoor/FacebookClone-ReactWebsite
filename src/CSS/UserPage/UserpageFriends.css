@@ -46,6 +46,7 @@
 }
 
 .userpageFriendsBottomContainer {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
@@ -56,18 +57,18 @@
     color: initial;
 }
 
-.userpageFriendsBottomContainerOptions img {
+.userpageFriendsBottomContainerOptions:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.userpageFriendsBottomContainerOptions .MuiAvatar-root {
     width: 100%;
     height: 110px;
     border-radius: 6px;
-    object-fit: cover;
 }
 
 .userpageFriendsBottomContainerOptions p {
     font-size: 12px;
     font-weight: 500;
-}
-
-.userpageFriendsBottomContainerOptions:hover {
-    text-decoration: underline;
 }
