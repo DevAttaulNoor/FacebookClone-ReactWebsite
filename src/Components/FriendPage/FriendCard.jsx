@@ -22,6 +22,7 @@ function FriendCard({ user }) {
 
                 // Send a new friend request to the receiver
                 await userDocRef.collection('friendRequests').doc(friendRequestId).set({
+                    requestId: friendRequestId,
                     senderUid: senderUid,
                     senderName: senderName,
                     senderEmail: senderEmail,
@@ -35,6 +36,7 @@ function FriendCard({ user }) {
                 // Also, create the same request in the sender's "friendRequests" subcollection
                 const senderDocRef = db.collection('Users').doc(senderUid);
                 await senderDocRef.collection('friendRequests').doc(friendRequestId).set({
+                    requestId: friendRequestId,
                     senderUid: senderUid,
                     senderName: senderName,
                     senderEmail: senderEmail,
@@ -45,7 +47,8 @@ function FriendCard({ user }) {
                     status: 'pending',
                 });
 
-                db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('FriendsReqs').doc(user.uid).set({
+                db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('FriendsReqs').doc(friendRequestId).set({
+                    requestId: friendRequestId,
                     senderUid: senderUid,
                     senderName: senderName,
                     senderPhotoUrl: senderPhotoUrl,

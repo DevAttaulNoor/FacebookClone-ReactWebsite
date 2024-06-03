@@ -91,19 +91,17 @@ function NotificationBox() {
                                             </div>
                                         )}
 
-                                        {notification.status === 'sent' && (
+                                        {(notification.status === 'sent' || notification.status === 'accepted' || notification.status === 'removed') && (
                                             <div className='notificationBoxBottomOption'>
-                                                <div className='notificationBoxBottomOption_Left'>
-                                                    <Avatar src={notification.senderPhotoUrl} />
-                                                </div>
-                                                <div className="notificationBoxBottomOption_Right">
-                                                    <p><span>{notification.senderName}</span> has sent you a friend request</p>
-                                                    <h5>{timeAgo(notification.timestamp)}</h5>
-                                                    <div className="notificationBoxBottomOption_RightBottom">
-                                                        <button id='confbtn'>Confirm</button>
-                                                        <button id='delbtn'>Delete</button>
+                                                <NavLink to={`/friendReqs}`} onClick={() => handleNotificationClicked(notification.friendRequestId, "FriendsReqs")}>
+                                                    <div className='notificationBoxBottomOption_Left'>
+                                                        <Avatar src={notification.senderPhotoUrl} />
                                                     </div>
-                                                </div>
+                                                    <div className="notificationBoxBottomOption_Right">
+                                                        <p><span>{notification.senderName}</span> has sent you a friend request</p>
+                                                        <h5>{timeAgo(notification.timestamp)}</h5>
+                                                    </div>
+                                                </NavLink>
                                             </div>
                                         )}
                                     </div>
@@ -147,19 +145,17 @@ function NotificationBox() {
                                                         </div>
                                                     )}
 
-                                                    {notification.status === 'sent' && (
+                                                    {(notification.status === 'sent' || notification.status === 'accepted' || notification.status === 'removed') && (
                                                         <div className='notificationBoxBottomOption'>
-                                                            <div className='notificationBoxBottomOption_Left'>
-                                                                <Avatar src={notification.senderPhotoUrl} />
-                                                            </div>
-                                                            <div className="notificationBoxBottomOption_Right">
-                                                                <p><span>{notification.senderName}</span> has sent you a friend request</p>
-                                                                <h5>{timeAgo(notification.timestamp)}</h5>
-                                                                <div className="notificationBoxBottomOption_RightBottom">
-                                                                    <button id='confbtn'>Confirm</button>
-                                                                    <button id='delbtn'>Delete</button>
+                                                            <NavLink to={`/friendReqs}`} onClick={() => handleNotificationClicked(notification.friendRequestId, "FriendsReqs")}>
+                                                                <div className='notificationBoxBottomOption_Left'>
+                                                                    <Avatar src={notification.senderPhotoUrl} />
                                                                 </div>
-                                                            </div>
+                                                                <div className="notificationBoxBottomOption_Right">
+                                                                    <p><span>{notification.senderName}</span> has sent you a friend request</p>
+                                                                    <h5>{timeAgo(notification.timestamp)}</h5>
+                                                                </div>
+                                                            </NavLink>
                                                         </div>
                                                     )}
                                                 </div>

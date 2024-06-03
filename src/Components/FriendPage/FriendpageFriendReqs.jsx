@@ -50,14 +50,17 @@ function FriendpageFriendReqs() {
 
                 await senderFriendRequestsCollection.doc(friendRequestId).update({
                     status: "accepted",
+                    notificationStatus: 'seen',
                 });
 
                 await receiverFriendRequestsCollection.doc(friendRequestId).update({
                     status: "accepted",
+                    notificationStatus: 'seen',
                 });
 
-                db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('FriendsReqs').doc(user.uid).update({
+                db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('FriendsReqs').doc(friendRequestId).update({
                     status: 'accepted',
+                    notificationStatus: 'seen',
                     timestamp: Math.floor(new Date().getTime() / 1000),
                 });
 
@@ -99,8 +102,9 @@ function FriendpageFriendReqs() {
 
             await receiverFriendRequestsCollection.doc(friendRequestId).delete();
 
-            db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('FriendsReqs').doc(user.uid).update({
+            db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('FriendsReqs').doc(friendRequestId).update({
                 status: 'removed',
+                notificationStatus: 'seen',
                 timestamp: Math.floor(new Date().getTime() / 1000),
             });
 
