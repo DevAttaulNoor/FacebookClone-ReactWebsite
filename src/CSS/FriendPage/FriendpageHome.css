@@ -4,15 +4,13 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 20px 40px;
 }
 
 /* FriendPage Home Top Section */
 .friendpageHomeTop p {
     font-size: 20px;
     font-weight: 650;
-    padding: 10px 0 15px;
+    padding: 25px 0 15px;
 }
 
 /* FriendPage Home Bottom Section */
@@ -20,4 +18,5 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;
+    padding-bottom: 25px;
 }

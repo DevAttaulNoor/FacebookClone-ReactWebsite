@@ -17,8 +17,6 @@ function UserBox() {
     const user = useSelector((state) => state.data.user.user);
 
     const handleSignOut = () => {
-        sessionStorage.removeItem('userData');
-
         auth.signOut()
             .then(() => {
                 sessionStorage.removeItem('userData');

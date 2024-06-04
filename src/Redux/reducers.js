@@ -13,8 +13,8 @@ export const rootReducer = combineReducers({
     user: userSlice.reducer,
     post: postSlice.reducer,
     reel: reelSlice.reducer,
+    search: searchSlice.reducer,
     friends: friendSlice.reducer,
     message: messageSlice.reducer,
     notification: notificationSlice.reducer,
-    search: searchSlice.reducer,
 })

@@ -56,7 +56,7 @@ function FriendpageHome() {
 
                     <div className="friendpageHomeBottom">
                         {filteredUsers.map((friend) => (
-                            <FriendCard key={friend.id} user={friend} />
+                            <FriendCard key={friend.id} otherUser={friend} />
                         ))}
                     </div>
                 </>

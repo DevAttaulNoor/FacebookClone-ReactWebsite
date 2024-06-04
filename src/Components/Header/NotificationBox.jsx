@@ -93,7 +93,7 @@ function NotificationBox() {
 
                                         {(notification.status === 'sent' || notification.status === 'accepted' || notification.status === 'removed') && (
                                             <div className='notificationBoxBottomOption'>
-                                                <NavLink to={`/friendReqs}`} onClick={() => handleNotificationClicked(notification.friendRequestId, "FriendsReqs")}>
+                                                <NavLink to={`/friendpage/friendReqs`} onClick={() => handleNotificationClicked(notification.requestId, "FriendsReqs")}>
                                                     <div className='notificationBoxBottomOption_Left'>
                                                         <Avatar src={notification.senderPhotoUrl} />
                                                     </div>
@@ -145,9 +145,9 @@ function NotificationBox() {
                                                         </div>
                                                     )}
 
-                                                    {(notification.status === 'sent' || notification.status === 'accepted' || notification.status === 'removed') && (
+                                                    {notification.status === 'sent' && (
                                                         <div className='notificationBoxBottomOption'>
-                                                            <NavLink to={`/friendReqs}`} onClick={() => handleNotificationClicked(notification.friendRequestId, "FriendsReqs")}>
+                                                            <NavLink to={`/friendpage/friendReqs`} onClick={() => handleNotificationClicked(notification.requestId, "FriendsReqs")}>
                                                                 <div className='notificationBoxBottomOption_Left'>
                                                                     <Avatar src={notification.senderPhotoUrl} />
                                                                 </div>
