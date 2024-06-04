@@ -8,12 +8,16 @@ function FriendpageFriendReqs() {
     const user = useSelector((state) => state.data.user.user);
     const [friendRequests, setFriendRequests] = useState([]);
 
+    const handleRequests = (requestId) => {
+        setFriendRequests((prevRequests) =>
+            prevRequests.filter((request) => request.id !== requestId)
+        );
+    };
+
     useEffect(() => {
         const fetchFriendRequests = async () => {
             try {
-                const friendRequestsCollection = db.collection("Users").doc(user.uid).collection("friendRequests");
-
-                const querySnapshot = await friendRequestsCollection.get();
+                const querySnapshot = await db.collection("Users").doc(user.uid).collection("friendRequests").get();
                 const requests = [];
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
@@ -45,7 +49,7 @@ function FriendpageFriendReqs() {
                     <div className="friendpageFriendReqsBottom">
                         {friendRequests.map((request) => (
                             (request.status !== "accepted" && request.receiverUid === user.uid) ? (
-                                <FriendCard key={request.id} otherUser={request} />
+                                <FriendCard key={request.id} otherUser={request} requestsUpdated={handleRequests}/>
                             ) : (
                                 null
                             )

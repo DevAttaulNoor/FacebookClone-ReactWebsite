@@ -7,9 +7,34 @@ import { setFriendFriends, setFriendFriendsData, setFriends, setFriendsData, set
 function Friends() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
-    const friends = useSelector((state) => state.data.friends.friends);
     const friendFriends = useSelector((state) => state.data.friends.friendFriends);
     const selectedFriend = useSelector((state) => state.data.friends.selectedFriend);
+
+    // Function to fetch friend data
+    const fetchFriendsData = async (friendsArray) => {
+        if (!Array.isArray(friendsArray)) return;
+
+        const friendDetailsPromises = friendsArray.map(async (friend) => {
+            try {
+                const friendDoc = await db.collection('Users').doc(friend.friendUid).get();
+
+                if (friendDoc.exists) {
+                    const friendDetails = friendDoc.data();
+                    return {
+                        ...friend,
+                        username: friendDetails.username || '',
+                        photoURL: friendDetails.photoURL || '',
+                    };
+                }
+            } catch (error) {
+                console.error('Error fetching friend details:', error);
+            }
+            return null;
+        });
+
+        const updatedFriends = await Promise.all(friendDetailsPromises);
+        dispatch(setFriendsData(updatedFriends.filter(friend => friend !== null)));
+    };
 
     // Fetching all the users
     useEffect(() => {
@@ -81,50 +106,15 @@ function Friends() {
                     });
                 });
                 dispatch(setFriends(userFriends));
+
+                // Fetch friend data immediately after setting friends
+                fetchFriendsData(userFriends); // Add this line
             }, (error) => {
                 console.error('Error fetching friends:', error);
             });
 
         return () => unsubscribe();
     }, [user.uid, dispatch]);
-
-    // Fetch friend data when friends array changes
-    useEffect(() => {
-        const fetchFriendsData = async (friendsArray) => {
-            if (!Array.isArray(friendsArray)) return;
-
-            const friendDetailsPromises = friendsArray.map(async (friend) => {
-                try {
-                    const friendDoc = await db.collection('Users').doc(friend.friendUid).get();
-
-                    if (friendDoc.exists) {
-                        const friendDetails = friendDoc.data();
-                        return {
-                            ...friend,
-                            username: friendDetails.username || '',
-                            photoURL: friendDetails.photoURL || '',
-                        };
-                    }
-                } catch (error) {
-                    console.error('Error fetching friend details:', error);
-                }
-                return null;
-            });
-
-            const updatedFriends = await Promise.all(friendDetailsPromises);
-            dispatch(setFriendsData(updatedFriends.filter(friend => friend !== null)));
-        };
-
-        if (friends.length > 0) {
-            fetchFriendsData(friends);
-        }
-
-        // Clear friends data when component unmounts or user logs out
-        return () => {
-            dispatch(setFriendsData([]));
-        };
-
-    }, [friends, dispatch]);
 
     // Fetch friend friends data when friendFriends array changes
     useEffect(() => {

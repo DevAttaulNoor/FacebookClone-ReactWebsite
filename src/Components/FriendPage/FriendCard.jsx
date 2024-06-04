@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { db } from '../../Firebase/firebase';
 import { setFriends } from '../../Redux/friendSlice';
 
-function FriendCard({ otherUser }) {
+function FriendCard({ otherUser, requestsUpdated}) {
     const dispatch = useDispatch();
     const user = useSelector(state => state.data.user.user);
     const [acceptingRequests, setAcceptingRequests] = useState({});
@@ -100,6 +100,7 @@ function FriendCard({ otherUser }) {
             else {
                 alert("You are already friends with this user.");
             }
+            requestsUpdated(friendRequestId);
         }
 
         catch (error) {
@@ -121,11 +122,14 @@ function FriendCard({ otherUser }) {
 
             await db.collection("Users").doc(senderUid).collection("friendRequests").doc(friendRequestId).delete();
             await db.collection("Users").doc(user.uid).collection("friendRequests").doc(friendRequestId).delete();
+            
             db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection('FriendsReqs').doc(friendRequestId).update({
                 status: 'removed',
                 notificationStatus: 'seen',
                 timestamp: Math.floor(new Date().getTime() / 1000),
             });
+
+            requestsUpdated(friendRequestId);
         }
 
         catch (error) {
@@ -141,27 +145,25 @@ function FriendCard({ otherUser }) {
     useEffect(() => {
         const checkFriendRequestStatus = async () => {
             try {
-                const existingRequest = await db.collection('Users').doc(otherUser.uid).collection('friendRequests')
-                    .where('senderUid', '==', user.uid)
-                    .where('receiverUid', '==', otherUser.uid)
-                    .get();
+                if (user?.uid && otherUser?.uid) {
+                    const existingRequest = await db.collection('Users').doc(otherUser.uid).collection('friendRequests')
+                        .where('senderUid', '==', user.uid)
+                        .where('receiverUid', '==', otherUser.uid)
+                        .get();
 
-                if (!existingRequest.empty) {
-                    const requestStatus = existingRequest.docs[0].data().status;
-                    setFriendRequestStatus(requestStatus);
+                    if (!existingRequest.empty) {
+                        const requestStatus = existingRequest.docs[0].data().status;
+                        setFriendRequestStatus(requestStatus);
+                    } else {
+                        setFriendRequestStatus('');
+                    }
                 }
-
-                else {
-                    setFriendRequestStatus('');
-                }
-            }
-
-            catch (error) {
+            } catch (error) {
                 console.error('Error checking friend request status:', error);
             }
         };
         checkFriendRequestStatus();
-    }, [user.uid, otherUser.uid]);
+    }, [user?.uid, otherUser?.uid]);
 
     return (
         <div className='friendCard'>
