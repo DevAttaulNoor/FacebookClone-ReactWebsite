@@ -3,8 +3,13 @@ import React from 'react';
 import { Avatar } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutUser } from '../../Redux/userSlice';
 import { auth } from '../../Firebase/firebase';
+import { logoutUser } from '../../Redux/userSlice';
+import { setClearMsg } from '../../Redux/messageSlice';
+import { setClearPost } from '../../Redux/postSlice';
+import { setClearReels } from '../../Redux/reelSlice';
+import { setClearFriends } from '../../Redux/friendSlice';
+import { setClearNotification } from '../../Redux/notificationSlice';
 import HelpIcon from '@mui/icons-material/Help';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -19,10 +24,15 @@ function UserBox() {
     const handleSignOut = () => {
         auth.signOut()
             .then(() => {
+                navigate('/');
                 sessionStorage.removeItem('userData');
                 sessionStorage.removeItem('selectedFriend');
                 dispatch(logoutUser());
-                navigate('/');
+                dispatch(setClearMsg());
+                dispatch(setClearPost());
+                dispatch(setClearReels());
+                dispatch(setClearFriends());
+                dispatch(setClearNotification());
             })
             .catch((error) => {
                 console.error("Sign out error:", error);

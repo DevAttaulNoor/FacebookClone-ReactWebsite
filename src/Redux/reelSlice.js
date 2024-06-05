@@ -16,7 +16,9 @@ export const reelSlice = createSlice({
         setSelectedReel: (state, action) => {
             state.selectedReel = action.payload;
         },
+
+        setClearReels: () => initialState
     }
 })
 
-export const { setReels, setSelectedReel } = reelSlice.actions;
+export const { setReels, setSelectedReel, setClearReels } = reelSlice.actions;

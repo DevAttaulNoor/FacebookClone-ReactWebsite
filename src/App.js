@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, setLoading } from './Redux/userSlice';
 import { setSelectedFriend } from './Redux/friendSlice';
@@ -42,11 +42,12 @@ function App() {
 					<LoadingLine />
 				) : (
 					<>
-						{user ? (
-							<div className="App">
-								<HeaderOption />
-								<Friends />
-								<Routes>
+						{user && <HeaderOption />}
+						{user && <Friends />}
+						<Routes>
+							{user ? (
+								<>
+									<Route path="/" element={<Navigate to="/homepage" />} />
 									<Route path="homepage/*" element={<HomePage />} />
 									<Route path="homepage/storyreels" element={<ReelCreate />} />
 									<Route path="friendpage/*" element={<FriendPage />} />
@@ -57,13 +58,14 @@ function App() {
 									<Route path="reelpage/*" element={<ReelPage />} />
 									<Route path="profilepage/:selectedFriend/*" element={<ProfilePage />} />
 									<Route path="profilepage/:selectedFriend/post/:postId" element={<PostPage />} />
-								</Routes>
-							</div>
-						) : (
-							<Routes>
-								<Route path="/" element={<Authentication />} />
-							</Routes>
-						)}
+								</>
+							) : (
+								<>
+									<Route path="/" element={<Authentication />} />
+									<Route path="*" element={<Navigate to="/" />} />
+								</>
+							)}
+						</Routes>
 					</>
 				)}
 			</>

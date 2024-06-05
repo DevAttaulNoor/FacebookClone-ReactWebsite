@@ -26,7 +26,9 @@ export const notificationSlice = createSlice({
         setChatNotiBoxVisible: (state, action) => {
             state.chatNotiBoxVisible = action.payload;
         },
+
+        setClearNotification: () => initialState
     }
 })
 
-export const { setNotification, setNotiBoxVisible, setChatNotification, setChatNotiBoxVisible } = notificationSlice.actions;
+export const { setNotification, setNotiBoxVisible, setChatNotification, setChatNotiBoxVisible, setClearNotification } = notificationSlice.actions;

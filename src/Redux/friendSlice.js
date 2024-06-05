@@ -7,7 +7,7 @@ const initialState = {
     selectedFriendData: '',
     friendFriends: '',
     friendFriendsData: [],
-}
+};
 
 export const friendSlice = createSlice({
     name: 'friends',
@@ -42,7 +42,9 @@ export const friendSlice = createSlice({
         setFriendFriendsData: (state, action) => {
             state.friendFriendsData = action.payload;
         },
-    }
-})
 
-export const { setFriends, setFriendsData, removeFriend, setSelectedFriend, setSelectedFriendData, setFriendFriends, setFriendFriendsData } = friendSlice.actions;
+        setClearFriends: () => initialState
+    }
+});
+
+export const { setFriends, setFriendsData, removeFriend, setSelectedFriend, setSelectedFriendData, setFriendFriends, setFriendFriendsData, setClearFriends } = friendSlice.actions;

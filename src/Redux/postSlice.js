@@ -11,7 +11,9 @@ export const postSlice = createSlice({
         setSelectedPost: (state, action) => {
             state.selectedPost = action.payload;
         },
+
+        setClearPost: () => initialState
     }
 })
 
-export const { setSelectedPost } = postSlice.actions;
+export const { setSelectedPost, setClearPost } = postSlice.actions;

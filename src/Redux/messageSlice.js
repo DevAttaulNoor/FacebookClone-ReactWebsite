@@ -26,7 +26,9 @@ export const messageSlice = createSlice({
         setMsgAnyoneBoxVisibility: (state, action) => {
             state.msgAnyoneBoxVisibility = action.payload;
         },
+
+        setClearMsg: () => initialState
     }
 })
 
-export const { setMsgFriend, setMsgFriendBoxVisibility, setMsgAnyone, setMsgAnyoneBoxVisibility } = messageSlice.actions;
+export const { setMsgFriend, setMsgFriendBoxVisibility, setMsgAnyone, setMsgAnyoneBoxVisibility, setClearMsg } = messageSlice.actions;
