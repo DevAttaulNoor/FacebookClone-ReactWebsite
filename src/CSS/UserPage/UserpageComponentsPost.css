@@ -1,13 +1,14 @@
 /** UserPage Components Posts Section */
 .userpageComponentsPost {
-    display: flex;
-    justify-content: space-between;
     width: 100%;
-    max-width: 940px;    
+    display: flex;
+    justify-content: center;
 }
 
-.userpageComponentsPost_Left,
-.userpageComponentsPost_Right {
-    margin: 0;
-    padding: 0;
+.userpageComponentsPost_Left{
+    flex: 0.4;
+}
+
+.userpageComponentsPost_Right{
+    flex: 0.6;
 }

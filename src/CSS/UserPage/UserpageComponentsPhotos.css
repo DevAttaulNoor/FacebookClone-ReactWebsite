@@ -1,11 +1,11 @@
 /** UserPage Components Photos Section */
 .userpageComponentsPhotos {
-    width: 910px;
-    padding: 16px;
-    margin: 10px 0;
+    width: 100%;
+    padding: 15px;
+    margin: 20px 0;
     border-radius: 8px;
-    background-color: #fff;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+    background-color: #fff;
 }
 
 /* UserPage Components Photos Top Section */
@@ -18,9 +18,9 @@
 }
 
 .userpageComponentsPhotos_Top h3 {
-    color: #000;
     font-size: 18px;
     font-weight: 700;
+    color: #050505;
 }
 
 .userpageComponentsPhotos_Top h3:hover {
@@ -37,10 +37,10 @@
 .userpageComponentsPhotos_TopRight p {
     font-size: 14px;
     font-weight: 500;
-    color: #0065D1;
     padding: 8px;
     margin: 0 4px;
     border-radius: 4px;
+    color: #0065D1;
 }
 
 .userpageComponentsPhotos_TopRight p:hover {
@@ -48,14 +48,13 @@
     background-color: #E4E6EB;
 }
 
-.userpageComponentsPhotos_TopRight .moreOptions {
-    display: flex;
-    align-items: center;
-    border-radius: 6px;
-    padding: 8px 12px;
+.userpageComponentsPhotos_TopRight .MuiSvgIcon-root.moreOptions {
+    width: 46px;
+    height: 36px;
+    padding: 2px 12px;
     margin-left: 6px;
-    width: 16px;
-    height: 18px;
+    border-radius: 6px;
+    cursor: pointer;
     background-color: #E4E6EB;
 }
 
@@ -83,14 +82,13 @@
 }
 
 .userpageComponentsPhotos_Middle .userpagePhotosBottomContainer {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 9px;
+    gap: 10px;
 }
 
 .userpageComponentsPhotos_Middle .userpagePhotosBottomContainer img {
     object-fit: cover;
-    width: 175px;
-    height: 175px;
     border-radius: 5px;
 }

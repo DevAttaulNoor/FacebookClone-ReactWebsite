@@ -1,24 +1,26 @@
 /** UserPage Components About Section */
 .userpageComponentsAbout{
-    width: 940px;
-    margin: 10px 0;
+    width: 100%;
     display: flex;
+    margin: 20px 0;
     border-radius: 8px;
-    background-color: #fff;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+    background-color: #fff;
 }
 
 /* UserPage Components About Left Section */
 .userpageComponentsAbout_Left{
+    flex: 0.25;
     padding: 14px 6px;
     border-right: 1px solid lightgray;
 }
 
 .userpageComponentsAbout_Left h3{
-    color: #000;
+    width: fit-content;
     font-size: 18px;
     font-weight: 700;
     margin: 0 8px 10px;
+    color: #050505;
 }
 
 .userpageComponentsAbout_Left h3:hover{
@@ -28,14 +30,16 @@
 }
 
 .userpageComponentsAbout_Left p{
-    min-width: 230px;
+    font-size: 14px;
+    font-weight: 500;
     padding: 8px;
     margin-bottom: 4px;
     border-radius: 6px;
-
-    font-size: 14px;
-    font-weight: 500;
     color: #65676B;
+}
+
+.userpageComponentsAbout_Left p:last-child{
+    margin-bottom: 0px;
 }
 
 .userpageComponentsAbout_Left p:hover{
@@ -50,11 +54,12 @@
 
 /* UserPage Components About Right Section */
 .userpageComponentsAbout_Right{
-    width: 100%;
+    flex: 0.75;
     padding: 15px;
 }
 
 .userpageComponentsAbout_RightOption{
+    width: fit-content;
     display: flex;
     align-items: center;
     margin: 16px 0;
@@ -82,4 +87,3 @@
     border: 1px solid #0866FF;
     margin-right: 8px;
 }
-

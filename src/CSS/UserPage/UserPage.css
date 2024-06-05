@@ -1,96 +1,104 @@
 /** UserPage Section */
 .userpage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     width: 100%;
     height: auto;
     min-height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 /* UserPage Top Section */
 .userpageTop {
+    width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
     background-color: #fff;
-    width: 100%;
 }
 
 /* userpage Top Cover Section */
 .userpageTop_CoverSection {
-    position: relative;
     width: 100%;
-    max-width: 995px;
+    display: flex;
+    justify-content: center;
+    background-image: linear-gradient(to top, #FFFFFF, rgba(255,255,255.9), rgba(255,255,255,.7), rgba(255,255,255,.4), rgba(255,255,255,0));;
 }
 
-.userpageTop_CoverSection img {
-    width: 995px;
-    height: 370px;
+.coverImg {
+    position: relative;
+    width: 70%;
+    height: 410px;
+    display: flex;
+    justify-content: center;
+}
+
+.coverImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
-    object-fit: cover;
 }
 
-.userpageTop_CoverSection button {
+.coverImg .changeCoverPhoto {
     position: absolute;
-    top: 320px;
-    right: 27px;
+    bottom: 15px;
+    right: 25px;
     display: flex;
     align-items: center;
-    padding: 6px 12px;
+    padding: 7px 12px;
     border-radius: 6px;
-    border: none;
-    outline: none;
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.userpageTop_CoverSection button:hover {
     cursor: pointer;
+    color: #050505;
+    background-color: #fff;
 }
 
-.userpageTop_CoverSection p {
+.coverImg .changeCoverPhoto:hover {
+    background-color: #E4E6EB;
+}
+
+.coverImg .changeCoverPhoto p {
     font-size: 14px;
-    font-weight: 500;
-    margin-left: 5px;
+    font-weight: 600;
+    margin-left: 6px;
 }
 
-.userpageTop_CoverSection .MuiSvgIcon-root {
-    width: 16px;
+.coverImg .changeCoverPhoto .MuiSvgIcon-root {
+    width: 20px;
     height: 20px;
 }
 
 /* UserPage Top Profile Section */
 .userpageTop_ProfileSection{
+    width: 65%;
+    height: 150px;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    width: 940px;
-    height: 90px;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
 }
 
 .userpageTop_ProfileSectionLeft {
     display: flex;
-    align-items: flex-end;
 }
 
-.userpageTop_ProfileSectionLeftPhoto {
+.profilePhoto {
     position: relative;
+    display: flex;
 }
 
-.userpageTop_ProfileSectionLeftPhoto .MuiAvatar-root {
-    width: 150px;
-    height: 150px;
+.profilePhoto .MuiAvatar-root {
+    width: 180px;
+    height: 180px;
     object-fit: cover;
     border: 4px solid #fff;
 }
 
-.userpageTop_ProfileSectionLeftPhoto .profileChangeIcon {
+.profilePhoto .profileChangeIcon {
     position: absolute;
-    bottom: 6px;
-    right: 6px;
+    bottom: 10px;
+    right: 10px;
     width: 34px;
     height: 34px;
     padding: 6px;
@@ -99,33 +107,58 @@
     background-color: #E4E6EB;
 }
 
-.userpageTop_ProfileSectionLeftPhoto .profileChangeIcon:hover {
+.profilePhoto .profileChangeIcon:hover {
     cursor: pointer;
     background-color: lightgray;
 }
 
-.userpageTop_ProfileSectionLeftInfo {
+.profileInfo {
     display: flex;
     flex-direction: column;
-    padding-left: 14px;
-    margin-bottom: 25px;
+    margin: 50px 0 0 15px;
 }
 
-.userpageTop_ProfileSectionLeftInfo h3 {
-    font-size: 28px;
+.profileInfo h3 {
+    font-size: 32px;
     font-weight: 700;
     margin-bottom: 2px;
 }
 
-.userpageTop_ProfileSectionLeftInfo p {
+.profileInfo a {
+    color: initial;
+    text-decoration: none;
+}
+
+.profileInfo a p {
     font-size: 14px;
-    font-weight: 500;
-    color: gray;
+    font-weight: 600;
+    color: #65676B;
+}
+
+.profileInfo a p:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.profileInfo .friendsList{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.profileInfo .friendsList .friendPhoto {
+    display: flex;
+}
+
+.profileInfo .friendsList .friendPhoto .MuiAvatar-root {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #fff;
 }
 
 .userpageTop_ProfileSectionRight {
     display: flex;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
 }
 
 .userpageTop_ProfileSectionRight .MuiSvgIcon-root {
@@ -134,16 +167,13 @@
 }
 
 .userpageTop_ProfileSectionRightOption {
-    background-color: #E4E6EB;
-    border-radius: 6px;
-    padding: 5px 10px;
-    margin-left: 6px;
     display: flex;
     align-items: center;
-}
-
-.userpageTop_ProfileSectionRightOption:hover {
+    padding: 8px 12px;
+    margin-left: 6px;
+    border-radius: 6px;
     cursor: pointer;
+    background-color: #E4E6EB;
 }
 
 .userpageTop_ProfileSectionRightOption p {
@@ -153,8 +183,8 @@
 }
 
 .userpageTop_ProfileSectionRight #addStoryBtn {
-    background-color: #1B74E4;
     color: #fff;
+    background-color: #1B74E4;
 }
 
 .userpageTop_ProfileSectionRight #editProfileBtn img {
@@ -163,11 +193,10 @@
 
 /* UserPage Top Components Section */
 .userpageTop_Components{
+    width: 65%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
-    max-width: 940px;
     border-top: 1px solid rgb(197, 197, 197);
 }
 
@@ -177,9 +206,9 @@
 }
 
 .userpageTop_ComponentsLeft a{
+    height: fit-content;
     text-decoration: none;
     color: initial;
-    height: fit-content;
 }
 
 .userpageTop_ComponentsLeft a.active .userpageTop_ComponentsLeftOption{
@@ -208,58 +237,51 @@
 .userpageTop_ComponentsLeftOption {
     font-size: 14px;
     font-weight: 600;
-    padding: 14px;
+    padding: 16px;
     margin: 2px 0;
     border-radius: 8px;
     color: #65676B;
 }
 
 .userpageTop_ComponentsLeftOption:hover {
-    background-color: whitesmoke;
     cursor: pointer;
+    background-color: whitesmoke;
 }
 
 .userpageTop_ComponentsLeftOption#moreOption {
     display: flex;
     align-items: center;
-    padding: 11px 14px;
+    padding: 12px 14px;
 }
 
 .userpageTop_ComponentsLeftOption#moreOption svg{
-    color: #65676B;
     width: 18px;
     height: 18px;
     margin-left: 3px;
+    color: #65676B;
 }
 
-.userpageTop_ComponentsRight {
-    background-color: #E4E6EB;
-    border-radius: 6px;
-    padding: 5px 10px;
-    margin-left: 6px;
+.userpageTop_ComponentsRight {    
     display: flex;
     align-items: center;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background-color: #E4E6EB;
 }
 
 .userpageTop_ComponentsRight .MuiSvgIcon-root {
-    width: 20px;
-    height: 22px;
-}
-
-.userpageTop_ComponentsRight .MuiSvgIcon-root:hover {
+    width: 24px;
+    height: 24px;
     cursor: pointer;
 }
 
 /* UserPage Bottom Section */
 .userpageBottom {
+    width: 65%;
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 940px;    
+    justify-content: center;
 }
 
-.userpageBottomLeft,
-.userpageBottomRight {
-    margin: 0;
-    padding: 0;
+.userpageBottom .userpageComponents {
+    width: 100%;
 }

@@ -2,9 +2,7 @@
 .userpageFeed {
     display: flex;
     flex-direction: column;
-    width: 540px;
-    margin: 15px;
-    margin-right: 0;
+    padding: 15px 0 15px 15px;
 }
 
 .userpageFeed .homepageFeedPosting {
