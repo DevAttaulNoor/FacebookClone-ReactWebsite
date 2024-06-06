@@ -154,7 +154,11 @@ function UserPage() {
             <div className="userpageTop">
                 <div className="userpageTop_CoverSection">
                     <div className="coverImg">
-                        <img src={user.coverphotoUrl} alt="coverPhoto" />
+                        {user.coverphotoUrl ? (
+                            <img src={user.coverphotoUrl} alt="coverPhoto" />
+                        ) : (
+                            <div className="coverPhoto"></div>
+                        )}
 
                         <div className="changeCoverPhoto" onClick={() => document.getElementById('coverImageInput').click()}>
                             <PhotoCameraIcon />
@@ -194,11 +198,10 @@ function UserPage() {
                                 <p>{friendsData.length} friends</p>
                             </NavLink>
 
-
                             <div className="friendsList">
-                                {friendsData.slice(0, 8).map((friends, index) => (
+                                {friendsData.slice(0, 8).map(friends => (
                                     <NavLink to="/userhomepage/friend" key={friends.friendUid}>
-                                        <div className="friendPhoto" style={{ marginRight: index !== friendsData.slice(0, 2).length - 1 ? '-10px' : '0' }}>
+                                        <div className="friendPhoto" style={{ marginRight: '-10px' }}>
                                             <Avatar src={friends.photoURL} />
                                         </div>
                                     </NavLink>

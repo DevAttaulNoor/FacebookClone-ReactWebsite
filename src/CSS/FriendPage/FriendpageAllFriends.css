@@ -21,6 +21,7 @@
     display: flex;
     flex-direction: column;
     padding: 8px;
+    z-index: 10;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
     background-color: #fff;
 }
@@ -96,6 +97,10 @@
 
 .friendpageAllFriendsLeftbarBottom .friendsList:hover {
     cursor: pointer;
+    background-color: whitesmoke;
+}
+
+.friendpageAllFriendsLeftbarBottom .friendsList.active{
     background-color: whitesmoke;
 }
 

@@ -1,6 +1,5 @@
-/** ProfilePage Friends Section */
+/** ProfilePageFriends Section */
 .profilePageFriends {
-    width: 360px;
     padding: 15px;
     margin: 15px 0;
     border-radius: 8px;
@@ -8,7 +7,7 @@
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* ProfilePage Friends Top Section */
+/* ProfilePageFriends Top Section */
 .profilePageFriends_Top {
     display: flex;
     align-items: center;
@@ -16,30 +15,31 @@
     margin-bottom: 10px;
 }
 
-.profilePageFriends_Top #navLink {
+.profilePageFriends_Top h3 {
     color: initial;
     text-decoration: none;
 }
 
-.profilePageFriends_Top #navLink:hover {
+.profilePageFriends_Top h3:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
-.profilePageFriends_Top #seeAllLink {
+.profilePageFriends_Top a {
+    text-decoration: none;
+    color: #1B74E4;
     font-size: 15px;
     font-weight: 400;
     padding: 8px;
     border-radius: 6px;
-    color: #1B74E4;
 }
 
-.profilePageFriends_Top #seeAllLink:hover{
-    cursor: pointer;
+.profilePageFriends_Top a:hover {
     background-color: whitesmoke;
+    cursor: pointer;
 }
 
-/* ProfilePage Friends Bottom Section */
+/* ProfilePageFriends Bottom Section */
 .profilePageFriends_Bottom {
     display: flex;
 }
@@ -49,6 +49,11 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
+}
+
+.profilePageFriends_BottomContainer a {
+    text-decoration: none;
+    color: initial;
 }
 
 .profilePageFriends_BottomContainerOptions:hover {
@@ -63,6 +68,6 @@
 }
 
 .profilePageFriends_BottomContainerOptions p {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
 }

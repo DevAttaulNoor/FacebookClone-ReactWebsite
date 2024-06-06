@@ -1,135 +1,111 @@
 /** Profile Page Section */
 .profilePage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     width: 100%;
     height: auto;
     min-height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 /* Profile Page Top Section */
 .profilePageTop {
+    width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
     background-color: #fff;
-    width: 100%;
 }
 
 /* Profile Page Top Cover Section */
 .profilePageTop_CoverSection {
-    position: relative;
     width: 100%;
-    max-width: 995px;
+    display: flex;
+    justify-content: center;
+    background-image: linear-gradient(to top, #FFFFFF, rgba(255,255,255.9), rgba(255,255,255,.7), rgba(255,255,255,.4), rgba(255,255,255,0));;
 }
 
 .profilePageTop_CoverSection img {
-    width: 995px;
-    height: 370px;
+    width: 85%;
+    height: 410px;
+    object-fit: cover;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
-    object-fit: cover;
 }
 
 .profilePageTop_CoverSection .coverPhoto {
-    width: 995px;
-    height: 370px;
+    width: 85%;
+    height: 410px;
+    object-fit: cover;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     background-color: #F0F2F5;
 }
 
-.profilePageTop_CoverSection button {
-    position: absolute;
-    top: 320px;
-    right: 27px;
-    display: flex;
-    align-items: center;
-    padding: 6px 12px;
-    border-radius: 6px;
-    border: none;
-    outline: none;
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.profilePageTop_CoverSection button:hover {
-    cursor: pointer;
-}
-
-.profilePageTop_CoverSection p {
-    font-size: 14px;
-    font-weight: 500;
-    margin-left: 5px;
-}
-
-.profilePageTop_CoverSection .MuiSvgIcon-root {
-    width: 16px;
-    height: 20px;
-}
-
 /* Profile Page Top Profile Section */
 .profilePageTop_ProfileSection {
+    width: 80%;
+    height: 150px;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    width: 940px;
-    height: 90px;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
 }
 
-.profilePageTop_ProfileSectionLeft {
+.profilePageTop_ProfileSectionLeft,
+.profilePhoto {
     display: flex;
-    align-items: flex-end;
 }
 
-.profilePageTop_ProfileSectionLeftPhoto {
-    position: relative;
-}
-
-.profilePageTop_ProfileSectionLeftPhoto img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
+.profilePhoto .MuiAvatar-root {
+    width: 180px;
+    height: 180px;
     object-fit: cover;
     border: 4px solid #fff;
 }
 
-.profilePageTop_ProfileSectionLeftPhoto .MuiSvgIcon-root {
-    color: black;
-    background-color: #E4E6EB;
-    border-radius: 50%;
-    padding: 6px;
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-    width: 20px;
-    height: 20px;
-}
-
-.profilePageTop_ProfileSectionLeftPhoto .MuiSvgIcon-root:hover {
-    background-color: lightgray;
-    cursor: pointer;
-}
-
-.profilePageTop_ProfileSectionLeftInfo {
+.profileInfo {
     display: flex;
     flex-direction: column;
-    padding-left: 14px;
-    margin-bottom: 25px;
+    margin: 50px 0 0 15px;
 }
 
-.profilePageTop_ProfileSectionLeftInfo h3 {
-    font-size: 28px;
+.profileInfo h3 {
+    font-size: 32px;
     font-weight: 700;
     margin-bottom: 2px;
 }
 
-.profilePageTop_ProfileSectionLeftInfo p {
+.profileInfo a {
+    color: initial;
+    text-decoration: none;
+}
+
+.profileInfo a p {
     font-size: 14px;
-    font-weight: 500;
-    color: gray;
+    font-weight: 600;
+    color: #65676B;
+}
+
+.profileInfo a p:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.profileInfo .friendsList{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.profileInfo .friendsList .friendPhoto {
+    display: flex;
+}
+
+.profileInfo .friendsList .friendPhoto .MuiAvatar-root {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #fff;
 }
 
 .profilePageTop_ProfileSectionRight {
@@ -172,11 +148,10 @@
 
 /* Profile Page Top Components Section */
 .profilePageTop_Components {
+    width: 80%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
-    max-width: 940px;
     border-top: 1px solid rgb(197, 197, 197);
 }
 
@@ -185,9 +160,9 @@
 }
 
 .profilePageTop_ComponentsLeft a {
+    height: fit-content;
     text-decoration: none;
     color: initial;
-    height: fit-content;
 }
 
 .profilePageTop_ComponentsLeft a.active .profilePageTop_ComponentsLeftOption {
@@ -216,58 +191,51 @@
 .profilePageTop_ComponentsLeftOption {
     font-size: 14px;
     font-weight: 600;
-    padding: 14px;
+    padding: 16px;
     margin: 2px 0;
     border-radius: 8px;
     color: #65676B;
 }
 
 .profilePageTop_ComponentsLeftOption:hover {
-    background-color: whitesmoke;
     cursor: pointer;
+    background-color: whitesmoke;
 }
 
 .profilePageTop_ComponentsLeftOption#moreOption {
     display: flex;
     align-items: center;
-    padding: 11px 14px;
+    padding: 12px 14px;
 }
 
 .profilePageTop_ComponentsLeftOption#moreOption svg {
-    color: #65676B;
     width: 18px;
     height: 18px;
     margin-left: 3px;
+    color: #65676B;
 }
 
 .profilePageTop_ComponentsRight {
-    background-color: #E4E6EB;
-    border-radius: 6px;
-    padding: 5px 10px;
-    margin-left: 6px;
     display: flex;
     align-items: center;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background-color: #E4E6EB;
 }
 
 .profilePageTop_ComponentsRight .MuiSvgIcon-root {
-    width: 20px;
-    height: 22px;
-}
-
-.profilePageTop_ComponentsRight .MuiSvgIcon-root:hover {
+    width: 24px;
+    height: 24px;
     cursor: pointer;
 }
 
 /* Profile Page Bottom Section */
 .profilePageBottom {
+    width: 80%;
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 940px;
+    justify-content: center;
 }
 
-.profilePageBottomLeft,
-.profilePageBottomRight {
-    margin: 0;
-    padding: 0;
+.profilePageBottom .profilePageComponents {
+    width: 100%;
 }

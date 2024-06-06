@@ -1,17 +1,19 @@
-/** ProfilePage Feed Section */
+/** ProfilePageFeed Section */
 .profilePageFeed {
     display: flex;
     flex-direction: column;
-    width: 540px;
-    margin: 15px;
-    margin-right: 0;
+    padding: 15px 0 15px 15px;
 }
 
-.profilePageFeed > .postfeed:first-child {
+.profilePageFeed > .postfeed{
     margin-top: 0;
 }
 
-/* ProfilePage Joined Post */
+.profilePageFeed > .JoinedPost .postfeed{
+    margin-top: 0;
+}
+
+/* rofilePageFeed Joined Post */
 .profilePageFeed .JoinedPost .JoinedPostMsg {
     display: flex;
     flex-direction: column;

@@ -15,6 +15,7 @@ function FriendpageAllFriends() {
     const user = useSelector((state) => state.data.user.user);
     const friends = useSelector((state) => state.data.friends.friends);
     const friendsData = useSelector((state) => state.data.friends.friendsData);
+    const selectedFriend = useSelector((state) => state.data.friends.selectedFriend);
     const [settingBoxVisibility, setSettingBoxVisibility] = useState({});
     const settingBoxRef = useRef({});
 
@@ -152,9 +153,14 @@ function FriendpageAllFriends() {
                 </div>
 
                 <div className="friendpageAllFriendsLeftbarBottom">
-                    <p id='friendsCount'>{friendsData.length} friend(s)</p>
+                    {friendsData.length > 1 ? (
+                        <p id='friendsCount'>{friendsData.length} friends</p>
+                    ) : (
+                        <p id='friendsCount'>{friendsData.length} friend</p>
+                    )}
+
                     {friendsData.map((friend) => (
-                        <div className='friendsList' key={friend.friendUid}>
+                        <div key={friend.friendUid} className={`friendsList ${selectedFriend === friend.friendUid ? 'active' : ''}`}>
                             <div className='friendsListLeft'>
                                 <NavLink to={`/friendpage/allFriends/profilepage/${friend.friendUid}/post`} onClick={() => handleFriendSelection(friend.friendUid)}>
                                     <Avatar src={friend.photoURL} />

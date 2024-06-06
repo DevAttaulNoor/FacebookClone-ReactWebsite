@@ -1,6 +1,5 @@
-/** ProfilePage Videos Section */
-.profilePageVideos {
-    width: 360px;
+/** ProfilePageVideos Section */
+.profilePageVideos{
     padding: 15px;
     margin: 15px 0;
     border-radius: 8px;
@@ -8,38 +7,39 @@
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* ProfilePage Videos Top Section */
-.profilePageVideos_Top {
+/* ProfilePageVideos Top Section */
+.profilePageVideos_Top{
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.profilePageVideos_Top #navLink {
+.profilePageVideos_Top h3 {
     color: initial;
     text-decoration: none;
 }
 
-.profilePageVideos_Top #navLink:hover {
+.profilePageVideos_Top h3:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
-.profilePageVideos_Top #seeAllLink {
+.profilePageVideos_Top a {
+    text-decoration: none;
+    color: #1B74E4;
     font-size: 15px;
     font-weight: 400;
     padding: 8px;
     border-radius: 6px;
-    color: #1B74E4;
 }
 
-.profilePageVideos_Top #seeAllLink:hover{
-    cursor: pointer;
+.profilePageVideos_Top a:hover{
     background-color: whitesmoke;
+    cursor: pointer;
 }
 
-/* ProfilePage Videos Bottom Section */
+/* ProfilePageVideos Bottom Section */
 .profilePageVideos_Bottom {
     display: flex;
     justify-content: center;

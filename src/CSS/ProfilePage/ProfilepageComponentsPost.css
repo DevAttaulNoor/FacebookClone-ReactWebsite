@@ -1,13 +1,14 @@
-/** ProfilePage Components Post Section */
+/** ProfilePageComponentsPost Section */
 .profilePageComponentsPost {
-    display: flex;
-    justify-content: space-between;
     width: 100%;
-    max-width: 940px;    
+    display: flex;
+    justify-content: center;
 }
 
-.profilePageComponentsPost_Left,
-.profilePageComponentsPost_Right {
-    margin: 0;
-    padding: 0;
+.profilePageComponentsPost_Left{
+    flex: 0.4;
+}
+
+.profilePageComponentsPost_Right{
+    flex: 0.6;
 }

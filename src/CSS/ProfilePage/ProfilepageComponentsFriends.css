@@ -1,61 +1,36 @@
-/** ProfilePage Components Friends Section */
-.profilePageComponentsFriends{
-    width: 910px;
-    padding: 16px;
-    margin: 10px 0;
+/** ProfilePageComponentsFriends Section */
+.profilePageComponentsFriends {
+    width: 100%;
+    padding: 15px;
+    margin: 20px 0;
     border-radius: 8px;
-    background-color: #fff;
     box-shadow: 1px 1px 10px 1px rgb(0, 0, 0, 0.1);
+    background-color: #fff;
 }
 
-/* ProfilePage Components Friends Top Section */
-.profilePageComponentsFriends_Top{
+/* ProfilePageComponentsFriends Top Section */
+.profilePageComponentsFriends_Top {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.profilePageComponentsFriends_TopLeft h3{
-    color: #000;
+.profilePageComponentsFriends_TopLeft h3 {
     font-size: 18px;
     font-weight: 700;
+    color: #050505;
 }
 
-.profilePageComponentsFriends_TopLeft h3:hover{
+.profilePageComponentsFriends_TopLeft h3:hover {
     cursor: pointer;
     text-decoration: underline;
     text-decoration-thickness: 2px;
 }
 
-.profilePageComponentsFriends_TopRight{
+.profilePageComponentsFriends_TopRight {
     display: flex;
     align-items: center;
-}
-
-.profilePageComponentsFriends_TopRight p{
-    font-size: 14px;
-    font-weight: 500;
-    color: #0065D1;
-    padding: 8px;
-    margin: 0 4px;
-    border-radius: 4px;
-}
-
-.profilePageComponentsFriends_TopRight p:hover{
-    cursor: pointer;
-    background-color: #E4E6EB;
-}
-
-.profilePageComponentsFriends_TopRight .moreOptions{
-    display: flex;
-    align-items: center;
-    border-radius: 6px;
-    padding: 8px 12px;
-    margin-left: 6px;
-    width: 16px;
-    height: 18px;
-    background-color: #E4E6EB;
 }
 
 .profilePageComponentsFriends_TopRight .searchInp {
@@ -84,12 +59,36 @@
     background-color: transparent;
 }
 
-/* ProfilePage Components Friends Middle Section */
-.profilePageComponentsFriends_Middle{
+.profilePageComponentsFriends_TopRight p {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px;
+    margin: 0 4px;
+    border-radius: 4px;
+    color: #0065D1;
+}
+
+.profilePageComponentsFriends_TopRight p:hover {
+    cursor: pointer;
+    background-color: #E4E6EB;
+}
+
+.profilePageComponentsFriends_TopRight .MuiSvgIcon-root.moreOptions {
+    width: 46px;
+    height: 36px;
+    padding: 2px 12px;
+    margin-left: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #E4E6EB;
+}
+
+/* ProfilePageComponentsFriends Middle Section */
+.profilePageComponentsFriends_Middle {
     width: 100%;
 }
 
-.profilePageComponentsFriends_Middle .profilePageFriends{
+.profilePageComponentsFriends_Middle .profilePageFriends {
     width: 100%;
     padding: 0;
     margin: 0;
@@ -98,7 +97,7 @@
     background-color: transparent;
 }
 
-.profilePageComponentsFriends_Middle .profilePageFriends_Top{
+.profilePageComponentsFriends_Middle .profilePageFriends_Top {
     display: none;
 }
 
@@ -108,30 +107,30 @@
 }
 
 .profilePageComponentsFriends_Middle .profilePageFriends_BottomContainer {
-    margin-top: 15px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+    margin-top: 15px;
 }
 
-.profilePageComponentsFriends_Middle .profilePageFriends_BottomContainerOptions{
-    width: 412px;
+.profilePageComponentsFriends_Middle .profilePageFriends_BottomContainerOptions {
+    width: 100%;
     display: flex;
     align-items: center;
-    padding: 18px;
+    padding: 15px;
     border-radius: 5px;
-    border: 1px solid lightgray;
+    border: 1px solid #E4E6EB;
+    box-shadow: 0 0 2px rgb(0, 0, 0, 0.1);
 }
 
-.profilePageComponentsFriends_Middle .profilePageFriends_BottomContainerOptions p{
+.profilePageComponentsFriends_Middle .profilePageFriends_BottomContainerOptions p {
+    font-size: 14px;
     margin-left: 15px;
-    font-size: 16px;
 }
 
-.profilePageComponentsFriends_Middle .profilePageFriends_BottomContainerOptions img {
-    object-fit: cover;
+.profilePageComponentsFriends_Middle .profilePageFriends_BottomContainerOptions .MuiAvatar-root {
     width: 75px;
     height: 75px;
+    object-fit: cover;
     border-radius: 5px;
-    border: 1px solid lightgray;
 }

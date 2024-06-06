@@ -1,5 +1,6 @@
 import "../../CSS/ProfilePage/ProfilePage.css";
 import React from "react";
+import { Avatar } from "@mui/material";
 import { useSelector } from "react-redux";
 import { NavLink, useLocation } from 'react-router-dom';
 import ProfilepageComponents from "./ProfilepageComponents";
@@ -11,6 +12,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 function ProfilePage() {
     const location = useLocation();
     const friendFriends = useSelector((state) => state.data.friends.friendFriends);
+    const friendFriendsData = useSelector((state) => state.data.friends.friendFriendsData);
     const selectedFriend = useSelector((state) => state.data.friends.selectedFriend);
     const selectedFriendData = useSelector((state) => state.data.friends.selectedFriendData);
     const baseUrl = location.pathname.includes('/friendpage/allFriends') ? '/friendpage/allFriends/profilepage' : '/profilepage';
@@ -20,7 +22,7 @@ function ProfilePage() {
             <div className="profilePageTop">
                 <div className="profilePageTop_CoverSection">
                     {selectedFriendData.coverphotoUrl ? (
-                        <img src={selectedFriendData.coverphotoUrl} alt="coverPhoto"/>
+                        <img src={selectedFriendData.coverphotoUrl} alt="coverPhoto" />
                     ) : (
                         <div className="coverPhoto"></div>
                     )}
@@ -28,13 +30,26 @@ function ProfilePage() {
 
                 <div className="profilePageTop_ProfileSection">
                     <div className="profilePageTop_ProfileSectionLeft">
-                        <div className="profilePageTop_ProfileSectionLeftPhoto">
-                            <img src={selectedFriendData.photoURL} alt="Profile" />
+                        <div className="profilePhoto">
+                            <Avatar src={selectedFriendData.photoURL} />
                         </div>
 
-                        <div className="profilePageTop_ProfileSectionLeftInfo">
+                        <div className="profileInfo">
                             <h3>{selectedFriendData.username}</h3>
-                            <p>{friendFriends.length} friends</p>
+
+                            <NavLink to={`${baseUrl}/${selectedFriend}/friend`}>
+                                <p>{friendFriendsData.length} friends</p>
+                            </NavLink>
+
+                            <div className="friendsList">
+                                {friendFriendsData.slice(0, 8).map(friends => (
+                                    <NavLink to={`${baseUrl}/${selectedFriend}/friend`} key={friends.friendUid}>
+                                        <div className="friendPhoto" style={{ marginRight: '-10px' }}>
+                                            <Avatar src={friends.photoURL} />
+                                        </div>
+                                    </NavLink>
+                                ))}
+                            </div>
                         </div>
                     </div>
 
