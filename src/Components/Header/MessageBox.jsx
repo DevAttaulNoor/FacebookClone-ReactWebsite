@@ -55,9 +55,9 @@ function MessageBox() {
                                 const lastMessage = chat.messages.slice(-1)[0];
 
                                 return (
-                                    <>
+                                    <div key={chat.chatId}>
                                         {activeButton === 'Inbox' && (
-                                            <div className='messageBoxBottomOption' key={chat.chatId} onClick={() => handleMsgFriendBox(friend[0])}>
+                                            <div className='messageBoxBottomOption' onClick={() => handleMsgFriendBox(friend[0])}>
                                                 <Avatar src={isUserSender ? chat.recipientPhotoUrl : chat.senderPhotoUrl} />
                                                 <div className='messageBoxBottomOptionContent'>
                                                     <p>{isUserSender ? chat.recipientName : chat.senderName}</p>
@@ -69,7 +69,7 @@ function MessageBox() {
                                                 </div>
                                             </div>
                                         )}
-                                    </>
+                                    </div>
                                 );
                             }
                             return null;

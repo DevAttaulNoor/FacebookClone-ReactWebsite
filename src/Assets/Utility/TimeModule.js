@@ -62,6 +62,11 @@ const timeAgoInitials = (timestamp) => {
     return `${granularity}${unit}`;
 };
 
+const formatMsgDate = (timestamp) => {
+    const date = new Date(timestamp * 1000);
+    return new Intl.DateTimeFormat('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' }).format(date);
+};
+
 const formatJoinedDate = (timestamp) => {
     const date = new Date(timestamp * 1000);
     const day = String(date.getUTCDate()).padStart(2, '0');
@@ -72,4 +77,4 @@ const formatJoinedDate = (timestamp) => {
     return `${day} ${month} ${year}`;
 };
 
-export { timeAgo, timeAgoInitials, formatJoinedDate };
+export { timeAgo, timeAgoInitials, formatMsgDate, formatJoinedDate };

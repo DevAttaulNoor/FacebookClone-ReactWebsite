@@ -135,6 +135,15 @@
     color: #65676B;
 }
 
+.MessageAnyoneMiddleBottom .newDateMsg {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 15px 20px;
+    color: #65676B;
+}
+
 .MessageAnyoneMiddleBottom .message {
     width: 100%;
     display: flex;

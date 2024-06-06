@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from '@mui/material';
 import { db } from '../../Firebase/firebase';
-import { timeAgoInitials } from "../../Assets/Utility/TimeModule";
+import { formatMsgDate, timeAgoInitials } from "../../Assets/Utility/TimeModule";
 import { setMsgAnyone, setMsgAnyoneBoxVisibility } from '../../Redux/messageSlice';
 import EmojiPicker from 'emoji-picker-react';
 import SendIcon from '@mui/icons-material/Send';
@@ -48,6 +48,19 @@ function MessageAnyone() {
         dispatch(setMsgAnyone(''));
         dispatch(setMsgAnyoneBoxVisibility(false));
     }
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            sendMessage(msgAnyone.uid, msgAnyone.username, msgAnyone.photoURL);
+        }
+    };
+
+    const handleFirstMessageOfDay = (currentMessage, previousMessage) => {
+        const currentDate = new Date(currentMessage.timestamp * 1000).toDateString();
+        const previousDate = previousMessage ? new Date(previousMessage.timestamp * 1000).toDateString() : null;
+        return currentDate !== previousDate;
+    };
 
     const sendMessage = async (recipientUserId, recipientUserName, recipientUserPhotoUrl) => {
         if (messageInput.trim() === '') {
@@ -208,12 +221,20 @@ function MessageAnyone() {
                                 </div>
 
                                 <div className='MessageAnyoneMiddleBottom' ref={messageContainerRef}>
-                                    {messages.map((message) => (
-                                        <div key={message.timestamp} className={`message ${message.sender === user.uid ? 'sent' : 'received'}`}>
-                                            <h5>{message.text}</h5>
-                                            <p>{timeAgoInitials(message.timestamp)}</p>
-                                        </div>
-                                    ))}
+                                    {messages.map((message, index) => {
+                                        const previousMessage = index > 0 ? messages[index - 1] : null;
+                                        const showDate = handleFirstMessageOfDay(message, previousMessage);
+
+                                        return (
+                                            <React.Fragment key={message.timestamp}>
+                                                {showDate && <div className="newDateMsg">{formatMsgDate(message.timestamp)}</div>}
+                                                <div className={`message ${message.sender === user.uid ? 'sent' : 'received'}`}>
+                                                    <h5>{message.text}</h5>
+                                                    <p>{timeAgoInitials(message.timestamp)}</p>
+                                                </div>
+                                            </React.Fragment>
+                                        );
+                                    })}
                                 </div>
                             </div>
 
@@ -225,6 +246,7 @@ function MessageAnyone() {
                                         placeholder='Aa'
                                         value={messageInput}
                                         onChange={(e) => setMessageInput(e.target.value)}
+                                        onKeyDown={handleKeyDown}
                                     />
                                     <EmojiEmotionsIcon className='emojiIcon' onClick={toggleEmojiPickerBox} ref={emojiPickerRef} />
                                 </div>

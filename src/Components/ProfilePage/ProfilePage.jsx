@@ -11,7 +11,6 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 function ProfilePage() {
     const location = useLocation();
-    const friendFriends = useSelector((state) => state.data.friends.friendFriends);
     const friendFriendsData = useSelector((state) => state.data.friends.friendFriendsData);
     const selectedFriend = useSelector((state) => state.data.friends.selectedFriend);
     const selectedFriendData = useSelector((state) => state.data.friends.selectedFriendData);
