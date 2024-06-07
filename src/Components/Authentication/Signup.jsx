@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../../Redux/userSlice';
 import { setAuthForm } from '../../Redux/authSlice';
 import { auth, db, storage } from '../../Firebase/firebase';
+import CloseIcon from '@mui/icons-material/Close';
 import AdjustOutlinedIcon from '@mui/icons-material/AdjustOutlined';
 
 function Signup() {
@@ -16,10 +17,10 @@ function Signup() {
     const [password, setPassword] = useState('');
     const [dob, setDOB] = useState(new Date());
     const [selectedGender, setSelectedGender] = useState('');
-    const [profilePicture, setProfilePicture] = useState(null);
-    const [selectedProfileImage, setSelectedProfileImage] = useState(null);
-    const [coverPicture, setCoverPicture] = useState(null);
-    const [selectedCoverImage, setSelectedCoverImage] = useState(null);
+    const [profilePicture, setProfilePicture] = useState('');
+    const [selectedProfileImage, setSelectedProfileImage] = useState('');
+    const [coverPicture, setCoverPicture] = useState('');
+    const [selectedCoverImage, setSelectedCoverImage] = useState('');
     const [isSignupProcessing, setIsSignupProcessing] = useState(false);
     const [signuperror, setSignupError] = useState(null);
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
@@ -33,6 +34,18 @@ function Signup() {
             setSelectedGender(gender);
         }
     };
+
+    const handlePictureRemoval = (imgCategory) => {
+        if (imgCategory === 'profilePic') {
+            setProfilePicture('');
+            setSelectedProfileImage('');
+        }
+
+        if (imgCategory === 'coverPic') {
+            setCoverPicture('');
+            setSelectedCoverImage('');
+        }
+    }
 
     const handleProfilePictureChange = (e) => {
         if (e.target.files[0]) {
@@ -256,7 +269,10 @@ function Signup() {
                     />
 
                     {selectedProfileImage && (
-                        <img src={selectedProfileImage} alt="profilePicture" />
+                        <div className='imgContainer'>
+                            <img src={selectedProfileImage} alt="profilePicture" />
+                            <CloseIcon id='closeIcon' onClick={() => handlePictureRemoval('profilePic')} />
+                        </div>
                     )}
                 </div>
 
@@ -271,7 +287,10 @@ function Signup() {
                     />
 
                     {selectedCoverImage && (
-                        <img src={selectedCoverImage} alt="coverPicture" />
+                        <div className='imgContainer'>
+                            <img src={selectedCoverImage} alt="coverPicture" />
+                            <CloseIcon id='closeIcon' onClick={() => handlePictureRemoval('coverPic')} />
+                        </div>
                     )}
                 </div>
 

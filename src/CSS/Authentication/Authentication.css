@@ -1,45 +1,55 @@
 /** Authentication Section */
 .authentication {
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
-    padding: 0 40px;
-    margin: auto 0px;
-    gap: 80px;
     overflow-y: auto;
 }
 
-/* Authentication Top Section */
-.authenticationTop {
-    width: 580px;
+.authenticationInner {
+    width: 65%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Authentication Left Section */
+.authenticationLeft {
+    flex: 0.55;
     display: flex;
     justify-content: center;
     flex-direction: column;
+    margin: 0 20px 60px 0;
 }
 
-.authenticationTop h1 {
+.authenticationLeft h1 {
     font-size: 54px;
     font-weight: 700;
     color: #1877f2;
 }
 
-.authenticationTop p {
+.authenticationLeft p {
     font-size: 28px;
-    font-weight: normal;
-    line-height: 32px;
-    margin-bottom: 30px;
+    font-weight: 500;
+    line-height: 36px;
+    color: #050505;
 }
 
 /* Authentication Bottom Section */
-.authenticationBottom {
-    margin: auto 0;
+.authenticationRight {
+    flex: 0.45;
+    display: flex;
+    justify-content: center;
+    margin: auto;
 }
 
-.authenticationBottom .login {
-    width: 360px;
+.authenticationRight .login {
+    width: 80%;
+    height: fit-content;
 }
 
-.authenticationBottom .signup {
-    width: 420px;
+.authenticationRight .signup {
+    width: 90%;
+    height: fit-content;
     margin: 40px 0;
 }
