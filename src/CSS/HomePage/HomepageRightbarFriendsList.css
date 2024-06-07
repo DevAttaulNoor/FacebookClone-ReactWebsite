@@ -48,13 +48,17 @@
     display: flex;
     align-items: center;
     padding: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 2px;
     border-radius: 8px;
 }
 
 .homepageRightbarFriendsList_BottomOption:hover {
     cursor: pointer;
     background-color: rgb(211 211 211/33%);
+}
+
+.homepageRightbarFriendsList_BottomOption:last-child {
+    margin-bottom: 8px;
 }
 
 .homepageRightbarFriendsList_BottomOption p {

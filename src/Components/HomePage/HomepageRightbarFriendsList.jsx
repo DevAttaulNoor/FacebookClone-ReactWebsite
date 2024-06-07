@@ -41,7 +41,7 @@ function HomepageRightbarFriendsList() {
                 ) : (
                     <div className="homepageRightbarFriendsList_BottomOption">
                         <NavLink to={'/friendpage/'}>
-                            <AddIcon className='addIcon'/>
+                            <AddIcon className='addIcon' />
                             <p>Find some friends</p>
                         </NavLink>
                     </div>
