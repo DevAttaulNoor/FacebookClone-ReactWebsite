@@ -10,17 +10,17 @@ function Authentication() {
     return (
         <div className='authentication'>
             <div className='authenticationInner'>
-                <div className="authenticationLeft">
+                <div className="authenticationInnerLeft">
                     <h1>facebook</h1>
                     <p>Facebook helps you connect and share with the people in your life.</p>
                 </div>
 
                 {authForm === 'login' ? (
-                    <div className='authenticationRight'>
+                    <div className='authenticationInnerRight'>
                         <Login />
                     </div>
                 ) : (
-                    <div className='authenticationRight'>
+                    <div className='authenticationInnerRight'>
                         <Signup />
                     </div>
                 )}

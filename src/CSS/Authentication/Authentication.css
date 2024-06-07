@@ -4,52 +4,87 @@
     height: 100%;
     display: flex;
     justify-content: center;
+    padding: 0 40px;
     overflow-y: auto;
 }
 
+/* Authentication Inner Section */
 .authenticationInner {
-    width: 65%;
+    min-width: 80%;
     display: flex;
     justify-content: center;
 }
 
-/* Authentication Left Section */
-.authenticationLeft {
-    flex: 0.55;
+.authenticationInnerLeft {
+    flex: 0.45;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    margin: 0 20px 60px 0;
+    margin: auto;
 }
 
-.authenticationLeft h1 {
+.authenticationInnerLeft h1 {
     font-size: 54px;
     font-weight: 700;
     color: #1877f2;
 }
 
-.authenticationLeft p {
+.authenticationInnerLeft p {
     font-size: 28px;
     font-weight: 500;
     line-height: 36px;
     color: #050505;
+    margin-bottom: 40px;
 }
 
-/* Authentication Bottom Section */
-.authenticationRight {
-    flex: 0.45;
+.authenticationInnerRight {
+    flex: 0.35;
     display: flex;
     justify-content: center;
     margin: auto;
 }
 
-.authenticationRight .login {
-    width: 80%;
-    height: fit-content;
+.authenticationInnerRight .signup {
+    margin: 40px 0;
 }
 
-.authenticationRight .signup {
-    width: 90%;
-    height: fit-content;
-    margin: 40px 0;
+/** Responsive Media Queries */
+@media only screen and (max-width: 950px) {
+    .authentication {
+        padding: 0 40px;
+    }
+
+    .authenticationInner {
+        min-width: 100%;
+        gap: 30px;
+    }
+
+    .authenticationInnerLeft {
+        flex: 0.55;
+    }
+
+    .authenticationInnerRight {
+        flex: 0.45;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+    .authentication {
+        padding: 0 80px;
+    }
+
+    .authenticationInner {
+        min-width: 100%;
+        display: block;
+        margin: auto;
+    }
+
+    .authenticationInnerLeft {
+        text-align: center;
+        margin: 40px 0px 0px;
+    }
+
+    .authenticationInnerRight .signup {
+        margin: 0px 0px 40px;
+    }
 }
