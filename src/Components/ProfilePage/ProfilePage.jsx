@@ -4,6 +4,7 @@ import { Avatar } from "@mui/material";
 import { useSelector } from "react-redux";
 import { NavLink, useLocation } from 'react-router-dom';
 import ProfilepageComponents from "./ProfilepageComponents";
+import LazyLoadingImage from "../../Assets/Utility/LazyLoadingImage";
 import AddIcon from '@mui/icons-material/Add';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -21,7 +22,12 @@ function ProfilePage() {
             <div className="profilePageTop">
                 <div className="profilePageTop_CoverSection">
                     {selectedFriendData.coverphotoUrl ? (
-                        <img src={selectedFriendData.coverphotoUrl} alt="coverPhoto" />
+                        <LazyLoadingImage
+                            effect={'blur'}
+                            alt={"coverPhoto"}
+                            lowResSrc={selectedFriendData.coverphotoUrl}
+                            highResSrc={selectedFriendData.coverphotoUrl}
+                        />
                     ) : (
                         <div className="coverPhoto"></div>
                     )}

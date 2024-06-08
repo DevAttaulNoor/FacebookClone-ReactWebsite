@@ -33,7 +33,12 @@
     justify-content: center;
 }
 
-.coverImg img {
+.coverImg span {
+    width: 100%;
+    height: 100%;
+}
+
+.coverImg span img {
     width: 100%;
     height: 100%;
     object-fit: cover;

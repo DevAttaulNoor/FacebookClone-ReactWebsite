@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import firebase from "firebase/compat/app";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import LazyLoadingImage from "../../Assets/Utility/LazyLoadingImage";
 
 function ProfilepagePhotos() {
     const selectedFriend = useSelector((state) => state.data.friends.selectedFriend);
@@ -67,7 +68,13 @@ function ProfilepagePhotos() {
                     <div className="profilePagePhotos_Bottom">
                         <div className="profilePagePhotos_BottomContainer">
                             {photoUrls.map((url, index) => (
-                                <img key={index} src={url} alt={`userPhoto${index}`} />
+                                <LazyLoadingImage
+                                    key={index}
+                                    effect={'blur'}
+                                    lowResSrc={url}
+                                    highResSrc={url}
+                                    alt={`userPhoto${index}`}
+                                />
                             ))}
                         </div>
                     </div>

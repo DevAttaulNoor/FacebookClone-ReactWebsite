@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from "../../Redux/userSlice";
 import { db, storage } from '../../Firebase/firebase';
 import UserpageComponents from "./UserpageComponents";
+import LazyLoadingImage from "../../Assets/Utility/LazyLoadingImage";
 import AddIcon from '@mui/icons-material/Add';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
@@ -155,7 +156,12 @@ function UserPage() {
                 <div className="userpageTop_CoverSection">
                     <div className="coverImg">
                         {user.coverphotoUrl ? (
-                            <img src={user.coverphotoUrl} alt="coverPhoto" />
+                            <LazyLoadingImage
+                                effect={'blur'}
+                                alt={"coverPhoto"}
+                                lowResSrc={user.coverphotoUrl}
+                                highResSrc={user.coverphotoUrl}
+                            />
                         ) : (
                             <div className="coverPhoto"></div>
                         )}

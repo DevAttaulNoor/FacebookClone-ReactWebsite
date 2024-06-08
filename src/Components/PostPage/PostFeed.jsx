@@ -10,6 +10,7 @@ import PostEdit from './PostEdit';
 import PostLike from './PostLike';
 import PostShare from './PostShare';
 import PostComment from './PostComment';
+import LazyLoadingImage from '../../Assets/Utility/LazyLoadingImage';
 import PublicIcon from '@mui/icons-material/Public';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -372,8 +373,22 @@ function PostFeed({ id, userid, photoURL, media, mediaType, username, timestamp,
 
             <div className="postfeedMiddle">
                 <div className='postfeedMiddleTop'>
-                    {message && <div id="postMsg" style={{ fontSize: media ? '15px' : '30px' }}> {message} </div>}
-                    {media && mediaType === 'image' && <img id="postImg" src={media} alt="postImage" />}
+                    {message && (
+                        <div id="postMsg" style={{ fontSize: media ? '15px' : '30px' }}>
+                            {message}
+                        </div>
+                    )}
+
+                    {media && mediaType === 'image' && (
+                        <LazyLoadingImage
+                            alt={"postImage"}
+                            effect={'blur'}
+                            lowResSrc={media}
+                            highResSrc={media}
+                            className={'postImg'}
+                        />
+                    )}
+
                     {media && mediaType === 'video' && (
                         <video id="postVideo" controls>
                             <source src={media} type="video/mp4" />
