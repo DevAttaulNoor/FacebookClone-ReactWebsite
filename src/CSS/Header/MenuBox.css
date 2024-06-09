@@ -1,0 +1,91 @@
+/** MenuBox Section */
+.menuBox {
+    position: absolute;
+    top: 52px;
+    right: 5px;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8px 0;
+    border-radius: 7px;
+    z-index: 100;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+}
+
+/* MenuBox Options Section */
+.menuBoxOptions{
+    width: 100%;
+}
+
+.menuBoxOptions a{
+    width: 100%;
+    text-decoration: none;
+    color: initial;
+}
+
+.menuBoxOption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 8px;
+    margin: 0 8px;
+    transition: 3ms ease-in-out;
+}
+
+.menuBoxOption:hover {
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: #F0F2F5;
+}
+
+.menuBoxOptionLeft {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.menuBoxOptionLeft p {
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 12px;
+}
+
+.menuBoxOptionLeft .MuiSvgIcon-root {
+    width: 38px;
+    height: 38px;
+    padding: 6px;
+    border-radius: 50%;
+    color: #000;
+    background-color: #E4E6EB;
+}
+
+.menuBoxOptionLeft .MuiAvatar-root {
+    width: 38px;
+    height: 38px;
+}
+
+.menuBoxOptionRight .MuiSvgIcon-root {
+    width: 24px;
+    height: 24px;
+    color: gray;
+}
+
+/* MenuBox Terms Section */
+.menuBoxTerms {
+    margin: 6px 8px 3px 16px;
+}
+
+.menuBoxTerms p {
+    font-size: 12px;
+    font-weight: 400;
+    white-space: pre-wrap;
+    color: #65676B;
+}
+
+.menuBoxTerms p span:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}

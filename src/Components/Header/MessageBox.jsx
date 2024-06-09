@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Avatar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { timeAgoInitials } from '../../Assets/Utility/TimeModule';
+import { setChatNotiBoxVisible } from '../../Redux/notificationSlice';
 import { setMsgFriend, setMsgFriendBoxVisibility } from '../../Redux/messageSlice';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -21,6 +22,7 @@ function MessageBox() {
     const handleMsgFriendBox = (friend) => {
         dispatch(setMsgFriend(friend));
         dispatch(setMsgFriendBoxVisibility(true));
+        dispatch(setChatNotiBoxVisible(false));
     };
 
     return (

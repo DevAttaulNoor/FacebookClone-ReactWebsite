@@ -21,6 +21,8 @@ function NotificationBox() {
     };
 
     const handleNotificationClicked = async (id, type) => {
+        dispatch(setNotiBoxVisible(false));
+        
         try {
             const notificationRef = db.collection("Users").doc(user.uid).collection("Notifications").doc(user.uid).collection(type).doc(id);
             const notificationDoc = await notificationRef.get();
@@ -35,13 +37,10 @@ function NotificationBox() {
                     });
                 }
             }
-
             dispatch(setSelectedPost(id));
         } catch (error) {
             console.error("Error updating notification status: ", error);
         }
-
-        dispatch(setNotiBoxVisible(false));
     };
 
     return (

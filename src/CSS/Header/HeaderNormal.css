@@ -39,7 +39,7 @@
 }
 
 .searchContainer input {
-    width: 200px;
+    max-width: 200px;
     font-size: 14px;
     padding: 10px 6px;
     border: 0;
@@ -106,14 +106,18 @@
 
 .headerNormalRightOption {
     display: flex;
-    margin-right: 8px;
+    margin-left: 8px;
     border-radius: 50%;
     color: #000;
     background-color: #E4E6EB;
 }
 
+.headerNormalRightOption:first-child {
+    margin-left: 0;
+}
+
 .headerNormalRightOption:last-child {
-    margin-right: 0;
+    display: none;
 }
 
 .headerNormalRightOption .headerNormalRightOptionSvg {
@@ -158,3 +162,36 @@
     color: #fff;
     background-color: #e41e3f;
 }
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 950px) {
+
+    /* HeaderNormal Left Section */
+    .searchContainer .MuiSvgIcon-root {
+        width: 42px;
+        height: 42px;
+        padding: 10px;
+        margin-left: 0px;
+    }
+
+    .searchContainer input {
+        display: none;
+    }
+
+    /* HeaderNormal Middle Section */
+    .headerNormalMiddle a {
+        padding: 6px 24px;
+    }
+
+    /* HeaderNormal Right Section */
+    .headerNormalRightOption {
+        display: none;
+    }
+
+    .headerNormalRightOption:last-child {
+        display: flex;
+        margin-left: 0px;
+    }
+}
+
+@media only screen and (max-width: 680px) {}

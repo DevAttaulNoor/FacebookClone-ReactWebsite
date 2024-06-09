@@ -17,6 +17,7 @@
     height: 93vh;
     padding: 16px 0 0 8px;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .homepageLeftbar a{
@@ -56,6 +57,7 @@
     height: 93vh;
     padding: 16px 8px 0 0;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .homepageRightbarTop{

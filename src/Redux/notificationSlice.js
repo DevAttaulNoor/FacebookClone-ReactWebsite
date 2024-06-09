@@ -5,6 +5,8 @@ const initialState = {
     notiBoxVisible: false,
     chatNotification: [],
     chatNotiBoxVisible: false,
+    userBoxVisible: false,
+    menuBoxVisible: false,
 }
 
 export const notificationSlice = createSlice({
@@ -27,8 +29,16 @@ export const notificationSlice = createSlice({
             state.chatNotiBoxVisible = action.payload;
         },
 
+        setUserBoxVisible: (state, action) => {
+            state.userBoxVisible = action.payload;
+        },
+
+        setMenuBoxVisible: (state, action) => {
+            state.menuBoxVisible = action.payload;
+        },
+
         setClearNotification: () => initialState
     }
 })
 
-export const { setNotification, setNotiBoxVisible, setChatNotification, setChatNotiBoxVisible, setClearNotification } = notificationSlice.actions;
+export const { setNotification, setNotiBoxVisible, setChatNotification, setChatNotiBoxVisible, setUserBoxVisible, setMenuBoxVisible, setClearNotification } = notificationSlice.actions;

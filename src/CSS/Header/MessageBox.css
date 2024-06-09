@@ -162,7 +162,7 @@
     display: flex;
 }
 
-.messageBoxBottomOptionContentBottom span{
+.messageBoxBottomOptionContentBottom span {
     max-width: 190px;
     font-size: 14px;
     font-weight: 400;
@@ -172,8 +172,8 @@
     color: #65676B;
 }
 
-.messageBoxBottomOptionContentBottom p{
-   margin: 0 4px;
+.messageBoxBottomOptionContentBottom p {
+    margin: 0 4px;
 }
 
 .messageBoxBottomOptionContentBottom h5 {

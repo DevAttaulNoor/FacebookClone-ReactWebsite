@@ -1,4 +1,4 @@
-import '../../CSS/Header/UserBox.css'
+import '../../CSS/Header/UserBox.css';
 import React from 'react';
 import { Avatar } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { setClearMsg } from '../../Redux/messageSlice';
 import { setClearPost } from '../../Redux/postSlice';
 import { setClearReels } from '../../Redux/reelSlice';
 import { setClearFriends } from '../../Redux/friendSlice';
-import { setClearNotification } from '../../Redux/notificationSlice';
+import { setClearNotification, setUserBoxVisible } from '../../Redux/notificationSlice';
 import HelpIcon from '@mui/icons-material/Help';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -40,9 +40,9 @@ function UserBox() {
     };
 
     return (
-        <div className="userBox">
+        <div className="userBox" onClick={(e) => e.stopPropagation()}>
             <div className='userBoxOptions'>
-                <NavLink to="/userhomepage/post">
+                <NavLink to="/userhomepage/post" onClick={() => dispatch(setUserBoxVisible(false))}>
                     <div className='userBoxOption'>
                         <div className='userBoxOptionLeft'>
                             <Avatar src={user.photoURL} />
@@ -93,7 +93,7 @@ function UserBox() {
                 <p><span>Privacy</span> · <span>Terms</span> · <span>Advertising</span> · <span>Ad choices</span> · <span>Cookies</span> · <span>More</span> · <span>Meta © 2023</span></p>
             </div>
         </div>
-    )
+    );
 }
 
-export default UserBox
+export default UserBox;
