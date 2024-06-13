@@ -92,7 +92,7 @@ function MenuBox() {
                         <ForumIcon className='headerNormalRightOptionSvg' />
                         {chatNotification.length > 0 && <p id='msgLengthIcon'>{chatNotification.length}</p>}
                         {chatNotiBoxVisible && <MessageBox />}
-                        <p>Setting & privacy</p>
+                        <p>Chats</p>
                     </div>
                     <div className='menuBoxOptionRight'>
                         <ArrowForwardIosIcon />
@@ -104,7 +104,7 @@ function MenuBox() {
                         <NotificationsIcon className='headerNormalRightOptionSvg' />
                         {allNotification.length > 0 && <p id='notiLengthIcon'>{allNotification.length}</p>}
                         {notiBoxVisible && <NotificationBox />}
-                        <p>Setting & privacy</p>
+                        <p>Notifications</p>
                     </div>
                     <div className='menuBoxOptionRight'>
                         <ArrowForwardIosIcon />

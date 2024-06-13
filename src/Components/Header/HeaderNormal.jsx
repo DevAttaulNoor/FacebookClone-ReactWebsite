@@ -6,12 +6,14 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchBoxVisible } from '../../Redux/searchSlice';
 import { setChatNotiBoxVisible, setMenuBoxVisible, setNotiBoxVisible, setUserBoxVisible } from '../../Redux/notificationSlice';
+import MenuBox from './MenuBox';
 import UserBox from './UserBox';
 import SearchBox from './SearchBox';
 import MessageBox from './MessageBox';
 import NotificationBox from './NotificationBox';
 import HomeIcon from '@mui/icons-material/Home';
 import AppsIcon from '@mui/icons-material/Apps';
+import MenuIcon from '@mui/icons-material/Menu';
 import ForumIcon from '@mui/icons-material/Forum';
 import GroupsIcon from '@mui/icons-material/Groups';
 import SearchIcon from '@mui/icons-material/Search';
@@ -22,9 +24,6 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import SmartDisplayOutlinedIcon from '@mui/icons-material/SmartDisplayOutlined';
-
-import MenuIcon from '@mui/icons-material/Menu';
-import MenuBox from './MenuBox';
 
 function HeaderNormal() {
     const dispatch = useDispatch();
