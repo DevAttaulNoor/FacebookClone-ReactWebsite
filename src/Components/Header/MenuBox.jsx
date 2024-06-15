@@ -1,15 +1,15 @@
 import '../../CSS/Header/MenuBox.css';
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { auth } from '../../Firebase/firebase';
 import { logoutUser } from '../../Redux/userSlice';
 import { setClearMsg } from '../../Redux/messageSlice';
 import { setClearPost } from '../../Redux/postSlice';
 import { setClearReels } from '../../Redux/reelSlice';
 import { setClearFriends } from '../../Redux/friendSlice';
-import { setChatNotiBoxVisible, setClearNotification, setMenuBoxVisible, setNotiBoxVisible, setUserBoxVisible } from '../../Redux/notificationSlice';
+import { setChatNotiBoxVisible, setClearNotification, setMenuBoxVisible, setNotiBoxVisible } from '../../Redux/notificationSlice';
 import MessageBox from './MessageBox';
 import NotificationBox from './NotificationBox';
 import HelpIcon from '@mui/icons-material/Help';
@@ -29,11 +29,13 @@ function MenuBox() {
     const notiBoxVisible = useSelector((state) => state.data.notification.notiBoxVisible);
     const chatNotification = useSelector((state) => state.data.notification.chatNotification);
     const chatNotiBoxVisible = useSelector((state) => state.data.notification.chatNotiBoxVisible);
+    const [currentView, setCurrentView] = useState('menu');
     const msgBoxRef = useRef(null);
     const notiBoxRef = useRef(null);
 
-    const handleToggle = (currentVisibility, setVisibilityAction) => {
+    const handleToggle = (currentVisibility, setVisibilityAction, view) => {
         dispatch(setVisibilityAction(!currentVisibility));
+        setCurrentView(view);
     };
 
     const handleSignOut = () => {
@@ -76,83 +78,93 @@ function MenuBox() {
     }, [notiBoxVisible, chatNotiBoxVisible, dispatch]);
 
     return (
-        <div className="menuBox" onClick={(e) => e.stopPropagation()}>
-            <div className='menuBoxOptions'>
-                <NavLink to="/userhomepage/post" onClick={() => dispatch(setMenuBoxVisible(false))}>
-                    <div className='menuBoxOption'>
-                        <div className='menuBoxOptionLeft'>
-                            <Avatar src={user.photoURL} />
-                            <p>{user.username}</p>
+        <>
+            {currentView === 'menu' && (
+                <div className="menuBox" onClick={(e) => e.stopPropagation()}>
+                    <div className='menuBoxOptions'>
+                        <NavLink to="/userhomepage/post" onClick={() => dispatch(setMenuBoxVisible(false))}>
+                            <div className='menuBoxOption'>
+                                <div className='menuBoxOptionLeft'>
+                                    <Avatar src={user.photoURL} />
+                                    <p>{user.username}</p>
+                                </div>
+                            </div>
+                        </NavLink>
+
+                        <div className='menuBoxOption' onClick={() => handleToggle(chatNotiBoxVisible, setChatNotiBoxVisible, 'chat')} ref={msgBoxRef}>
+                            <div className='menuBoxOptionLeft'>
+                                <ForumIcon className='headerNormalRightOptionSvg' />
+                                {chatNotification.length > 0 && <p id='msgLengthIcon'>{chatNotification.length}</p>}
+                                <p>Chats</p>
+                            </div>
+                            <div className='menuBoxOptionRight'>
+                                <ArrowForwardIosIcon />
+                            </div>
+                        </div>
+
+                        <div className='menuBoxOption' onClick={() => handleToggle(notiBoxVisible, setNotiBoxVisible, 'noti')} ref={notiBoxRef}>
+                            <div className='menuBoxOptionLeft'>
+                                <NotificationsIcon className='headerNormalRightOptionSvg' />
+                                {allNotification.length > 0 && <p id='notiLengthIcon'>{allNotification.length}</p>}
+                                <p>Notifications</p>
+                            </div>
+                            <div className='menuBoxOptionRight'>
+                                <ArrowForwardIosIcon />
+                            </div>
+                        </div>
+
+                        <div className='menuBoxOption'>
+                            <div className='menuBoxOptionLeft'>
+                                <SettingsIcon />
+                                <p>Setting & privacy</p>
+                            </div>
+                            <div className='menuBoxOptionRight'>
+                                <ArrowForwardIosIcon />
+                            </div>
+                        </div>
+
+                        <div className='menuBoxOption'>
+                            <div className='menuBoxOptionLeft'>
+                                <HelpIcon />
+                                <p>Help & support</p>
+                            </div>
+                            <div className='menuBoxOptionRight'>
+                                <ArrowForwardIosIcon />
+                            </div>
+                        </div>
+
+                        <div className='menuBoxOption'>
+                            <div className='menuBoxOptionLeft'>
+                                <NightlightIcon />
+                                <p>Display & accessibility</p>
+                            </div>
+                            <div className='menuBoxOptionRight'>
+                                <ArrowForwardIosIcon />
+                            </div>
+                        </div>
+
+                        <div className='menuBoxOption' onClick={handleSignOut}>
+                            <div className='menuBoxOptionLeft'>
+                                <LogoutIcon />
+                                <p>Log out</p>
+                            </div>
                         </div>
                     </div>
-                </NavLink>
 
-                <div className='menuBoxOption' onClick={() => handleToggle(chatNotiBoxVisible, setChatNotiBoxVisible)} ref={msgBoxRef}>
-                    <div className='menuBoxOptionLeft'>
-                        <ForumIcon className='headerNormalRightOptionSvg' />
-                        {chatNotification.length > 0 && <p id='msgLengthIcon'>{chatNotification.length}</p>}
-                        {chatNotiBoxVisible && <MessageBox />}
-                        <p>Chats</p>
-                    </div>
-                    <div className='menuBoxOptionRight'>
-                        <ArrowForwardIosIcon />
+                    <div className='menuBoxTerms'>
+                        <p><span>Privacy</span> · <span>Terms</span> · <span>Advertising</span> · <span>Ad choices</span> · <span>Cookies</span> · <span>More</span> · <span>Meta © 2023</span></p>
                     </div>
                 </div>
+            )}
 
-                <div className='menuBoxOption' onClick={() => handleToggle(notiBoxVisible, setNotiBoxVisible)} ref={notiBoxRef}>
-                    <div className='menuBoxOptionLeft'>
-                        <NotificationsIcon className='headerNormalRightOptionSvg' />
-                        {allNotification.length > 0 && <p id='notiLengthIcon'>{allNotification.length}</p>}
-                        {notiBoxVisible && <NotificationBox />}
-                        <p>Notifications</p>
-                    </div>
-                    <div className='menuBoxOptionRight'>
-                        <ArrowForwardIosIcon />
-                    </div>
-                </div>
+            {currentView === 'chat' && (
+                <MessageBox />
+            )}
 
-                <div className='menuBoxOption'>
-                    <div className='menuBoxOptionLeft'>
-                        <SettingsIcon />
-                        <p>Setting & privacy</p>
-                    </div>
-                    <div className='menuBoxOptionRight'>
-                        <ArrowForwardIosIcon />
-                    </div>
-                </div>
-
-                <div className='menuBoxOption'>
-                    <div className='menuBoxOptionLeft'>
-                        <HelpIcon />
-                        <p>Help & support</p>
-                    </div>
-                    <div className='menuBoxOptionRight'>
-                        <ArrowForwardIosIcon />
-                    </div>
-                </div>
-
-                <div className='menuBoxOption'>
-                    <div className='menuBoxOptionLeft'>
-                        <NightlightIcon />
-                        <p>Display & accessibility</p>
-                    </div>
-                    <div className='menuBoxOptionRight'>
-                        <ArrowForwardIosIcon />
-                    </div>
-                </div>
-
-                <div className='menuBoxOption' onClick={handleSignOut}>
-                    <div className='menuBoxOptionLeft'>
-                        <LogoutIcon />
-                        <p>Log out</p>
-                    </div>
-                </div>
-            </div>
-
-            <div className='menuBoxTerms'>
-                <p><span>Privacy</span> · <span>Terms</span> · <span>Advertising</span> · <span>Ad choices</span> · <span>Cookies</span> · <span>More</span> · <span>Meta © 2023</span></p>
-            </div>
-        </div>
+            {currentView === 'noti' && (
+                <NotificationBox />
+            )}
+        </>
     );
 }
 
