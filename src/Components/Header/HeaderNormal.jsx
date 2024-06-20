@@ -5,8 +5,7 @@ import { Avatar } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchBoxVisible } from '../../Redux/searchSlice';
-import { setChatNotiBoxVisible, setMenuBoxVisible, setNotiBoxVisible, setUserBoxVisible } from '../../Redux/notificationSlice';
-import MenuBox from './MenuBox';
+import { setChatNotiBoxVisible, setNotiBoxVisible, setUserBoxVisible } from '../../Redux/notificationSlice';
 import UserBox from './UserBox';
 import SearchBox from './SearchBox';
 import MessageBox from './MessageBox';
@@ -40,7 +39,6 @@ function HeaderNormal() {
     const msgBoxRef = useRef(null);
     const notiBoxRef = useRef(null);
     const userBoxRef = useRef(null);
-    const menuBoxRef = useRef(null);
 
     const handleToggle = (currentVisibility, setVisibilityAction) => {
         dispatch(setVisibilityAction(!currentVisibility));
@@ -52,7 +50,6 @@ function HeaderNormal() {
             { ref: msgBoxRef, visible: chatNotiBoxVisible, setVisible: (value) => dispatch(setChatNotiBoxVisible(value)) },
             { ref: notiBoxRef, visible: notiBoxVisible, setVisible: (value) => dispatch(setNotiBoxVisible(value)) },
             { ref: userBoxRef, visible: userBoxVisible, setVisible: (value) => dispatch(setUserBoxVisible(value)) },
-            { ref: menuBoxRef, visible: menuBoxVisible, setVisible: (value) => dispatch(setMenuBoxVisible(value)) },
         ];
 
         const handleOutsideClick = (e) => {
@@ -107,6 +104,9 @@ function HeaderNormal() {
                 <NavLink to="/grouppage" activeclassname="active">
                     {({ isActive }) => (isActive ? <GroupsIcon /> : <GroupsOutlinedIcon />)}
                 </NavLink>
+                <NavLink to="/bookmarkpage" activeclassname="active">
+                    {({ isActive }) => (isActive ? <MenuIcon /> : <MenuIcon />)}
+                </NavLink>
             </div>
 
             <div className="headerNormalRight">
@@ -126,10 +126,6 @@ function HeaderNormal() {
                 <div className="headerNormalRightOption" onClick={() => handleToggle(userBoxVisible, setUserBoxVisible)} ref={userBoxRef}>
                     <Avatar src={user.photoURL} className='headerNormalRightOptionImg' />
                     {userBoxVisible && <UserBox />}
-                </div>
-                <div className="headerNormalRightOption" onClick={() => handleToggle(menuBoxVisible, setMenuBoxVisible)} ref={menuBoxRef}>
-                    <MenuIcon className='headerNormalRightOptionSvg' />
-                    {menuBoxVisible && <MenuBox />}
                 </div>
             </div>
         </div>

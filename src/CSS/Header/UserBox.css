@@ -16,11 +16,11 @@
 }
 
 /* UserBox Options Section */
-.userBoxOptions{
+.userBoxOptions {
     width: 100%;
 }
 
-.userBoxOptions a{
+.userBoxOptions a {
     width: 100%;
     text-decoration: none;
     color: initial;
@@ -41,7 +41,12 @@
     background-color: #F0F2F5;
 }
 
+.userBoxOption.menuBoxOption {
+    display: none;
+}
+
 .userBoxOptionLeft {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -67,6 +72,16 @@
     height: 38px;
 }
 
+.userBoxOptionLeft #msgLengthIcon {
+    top: -2px !important;
+    right: 44px !important;
+}
+
+.userBoxOptionLeft #notiLengthIcon {
+    top: -2px !important;
+    left: 16px !important;
+}
+
 .userBoxOptionRight .MuiSvgIcon-root {
     width: 24px;
     height: 24px;
@@ -89,3 +104,12 @@
     cursor: pointer;
     text-decoration: underline;
 }
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 950px) {
+    .userBoxOption.menuBoxOption {
+        display: flex;
+    }
+}
+
+@media only screen and (max-width: 680px) {}
