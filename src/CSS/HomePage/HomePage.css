@@ -10,7 +10,7 @@
 }
 
 /* Homepage Leftbar Section */
-.homepageLeftbar{
+.homepageLeftbar {
     position: sticky;
     top: 0px;
     width: 100%;
@@ -20,37 +20,37 @@
     overflow-x: hidden;
 }
 
-.homepageLeftbar a{
+.homepageLeftbar a {
     text-decoration: none;
     color: initial;
 }
 
-.homepageLeftbar .terms{
+.homepageLeftbar .terms {
     margin: 6px 0 0 12px;
 }
 
-.homepageLeftbar .terms p{
+.homepageLeftbar .terms p {
     font-size: 12px;
     font-weight: 400;
     white-space: pre-wrap;
     color: gray;
 }
 
-.homepageLeftbar .terms p span:hover{
+.homepageLeftbar .terms p span:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
 /* HomePage Feed Section */
-.homepageFeed{
-    width: 600px;
+.homepageFeed {
+    max-width: 600px;
     display: flex;
     flex-direction: column;
     padding: 16px 0;
 }
 
 /* HomePage Rightbar Section */
-.homepageRightbar{
+.homepageRightbar {
     position: sticky;
     top: 0px;
     width: 100%;
@@ -60,12 +60,12 @@
     overflow-x: hidden;
 }
 
-.homepageRightbarTop{
+.homepageRightbarTop {
     border-bottom: 1px solid lightgray;
 }
 
 /* HomePage NewMessage Section */
-.newMsg{
+.newMsg {
     position: absolute;
     bottom: 15px;
     right: 30px;
@@ -77,16 +77,60 @@
     background-color: #fff;
 }
 
-.newMsg:hover{
+.newMsg:hover {
     cursor: pointer;
     background-color: #F2F5F7;
 }
 
-.newMsg #newMsgIcon{
+.newMsg #newMsgIcon {
     width: 20px;
     height: 20px;
     display: inline-block;
     background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/xFYw0bOHCD1.png");
     background-position: 0px -105px;
     background-size: 21px 304px;
+}
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 950px) {
+
+    /** Homepage Section */
+    .homepage {
+        grid-template-columns: 2fr 1fr;
+    }
+
+    /* Homepage Leftbar Section */
+    .homepageLeftbar {
+        display: none;
+    }
+
+    /* HomePage Feed Section */
+    .homepageFeed {
+        padding: 16px 0px 16px 16px;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+
+    /** Homepage Section */
+    .homepage {
+        grid-template-columns: 1fr;
+        gap: 0px
+    }
+
+    /* Homepage Leftbar Section */
+    .homepageLeftbar {
+        display: none;
+    }
+
+    /* HomePage Feed Section */
+    .homepageFeed {
+        max-width: 100%;
+        padding: 16px;
+    }
+
+    /* HomePage Rightbar Section */
+    .homepageRightbar {
+        display: none;
+    }
 }

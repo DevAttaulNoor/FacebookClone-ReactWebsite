@@ -1,5 +1,8 @@
 /** PostFeed Section */
 .postfeed {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     padding-bottom: 0;
     margin-top: 15px;
     border-radius: 10px;
@@ -174,12 +177,20 @@
 }
 
 /* PostFeed Middle Section */
+.postfeedMiddle {
+    width: 100%;
+}
+
+.postfeedMiddleTop {
+    width: 100%;
+}
+
 .postfeedMiddleTop #postMsg {
     padding: 0 15px 15px;
     letter-spacing: 0.2px;
 }
 
-.postfeedMiddleTop span{
+.postfeedMiddleTop span {
     width: 100%;
     height: 100%;
 }

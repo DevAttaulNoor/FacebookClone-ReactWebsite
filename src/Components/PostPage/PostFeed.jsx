@@ -18,7 +18,7 @@ import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
-function PostFeed({ id, userid, photoURL, media, mediaType, username, timestamp, message }) {
+function PostFeed({ key, id, userid, photoURL, media, mediaType, username, timestamp, message }) {
     Modal.setAppElement('#root');
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
@@ -283,7 +283,7 @@ function PostFeed({ id, userid, photoURL, media, mediaType, username, timestamp,
     }, [id]);
 
     return (
-        <div className='postfeed'>
+        <div className='postfeed' key={key}>
             <div className="postfeedTop">
                 <div className="postfeedTopLeft">
                     <Avatar src={photoURL} />

@@ -72,18 +72,17 @@ function HomePage() {
 
                 {posts.map(post => {
                     return (
-                        <div key={post.id}>
-                            <PostFeed
-                                id={post.id}
-                                userid={post.data.uid}
-                                photoURL={post.data.photoURL}
-                                media={post.data.media}
-                                mediaType={post.data.mediaType}
-                                username={post.data.username}
-                                timestamp={timeAgo(post.data.timestamp)}
-                                message={post.data.message}
-                            />
-                        </div>
+                        <PostFeed
+                            key={post.id}
+                            id={post.id}
+                            userid={post.data.uid}
+                            photoURL={post.data.photoURL}
+                            media={post.data.media}
+                            mediaType={post.data.mediaType}
+                            username={post.data.username}
+                            timestamp={timeAgo(post.data.timestamp)}
+                            message={post.data.message}
+                        />
                     );
                 })}
             </div>
