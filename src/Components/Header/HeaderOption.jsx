@@ -46,7 +46,6 @@ function HeaderOption() {
             dispatch(setNotification(allNotifications));
         };
 
-        // Clean up the listeners when the component unmounts
         return () => {
             likesListener();
             commentsListener();
@@ -74,7 +73,6 @@ function HeaderOption() {
             dispatch(setChatNotification([]));
         });
 
-        // Clean up the listener when the component unmounts
         return () => {
             chatListener();
         };
