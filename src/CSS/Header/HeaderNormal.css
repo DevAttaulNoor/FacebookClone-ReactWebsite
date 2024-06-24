@@ -183,7 +183,7 @@
         padding: 6px 24px;
     }
 
-    .headerNormalMiddle a:last-child{
+    .headerNormalMiddle a:last-child {
         display: flex;
     }
 
@@ -200,4 +200,20 @@
 
 @media only screen and (max-width: 680px) {
 
+    /** HeaderNormal Section */
+    .headerNormal {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    /* HeaderNormal Middle Section */
+    .headerNormalMiddle a {
+        display: none;
+    }
+
+    .headerNormalMiddle a:first-child,
+    .headerNormalMiddle a:last-child {
+        display: flex;
+    }
 }
