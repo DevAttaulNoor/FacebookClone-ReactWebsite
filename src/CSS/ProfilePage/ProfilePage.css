@@ -22,12 +22,13 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    background-image: linear-gradient(to top, #FFFFFF, rgba(255,255,255.9), rgba(255,255,255,.7), rgba(255,255,255,.4), rgba(255,255,255,0));;
+    background-image: linear-gradient(to top, #FFFFFF, rgba(255, 255, 255.9), rgba(255, 255, 255, .7), rgba(255, 255, 255, .4), rgba(255, 255, 255, 0));
+    ;
 }
 
 .profilePageTop_CoverSection span {
-    width: 85%;
-    height: 410px;
+    width: 1260px;
+    height: 460px;
 }
 
 .profilePageTop_CoverSection span img {
@@ -39,8 +40,8 @@
 }
 
 .profilePageTop_CoverSection .coverPhoto {
-    width: 85%;
-    height: 410px;
+    width: 1260px;
+    height: 460px;
     object-fit: cover;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -49,11 +50,13 @@
 
 /* Profile Page Top Profile Section */
 .profilePageTop_ProfileSection {
-    width: 80%;
+    max-width: 1200px;
+    width: 100%;
     height: 150px;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
+    padding: 0px 15px;
     margin-bottom: 15px;
 }
 
@@ -97,7 +100,7 @@
     text-decoration: underline;
 }
 
-.profileInfo .friendsList{
+.profileInfo .friendsList {
     display: flex;
     align-items: center;
     margin-top: 10px;
@@ -153,10 +156,12 @@
 
 /* Profile Page Top Components Section */
 .profilePageTop_Components {
-    width: 80%;
+    max-width: 1200px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0px 15px;
     border-top: 1px solid rgb(197, 197, 197);
 }
 
@@ -236,11 +241,69 @@
 
 /* Profile Page Bottom Section */
 .profilePageBottom {
-    width: 80%;
+    max-width: 1200px;
+    width: 100%;
     display: flex;
     justify-content: center;
+    padding: 0px 15px;
 }
 
 .profilePageBottom .profilePageComponents {
     width: 100%;
+}
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 900px) {
+
+    /* Profile Page Top Profile Section */
+    .profilePageTop_ProfileSection {
+        height: 280px;
+        align-items: center;
+        justify-content: flex-end;
+        flex-direction: column;
+    }
+
+    .profilePageTop_ProfileSectionLeft {
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .profilePageTop_ProfileSectionLeft .profileInfo {
+        margin: 8px 0px 18px 0px;
+    }
+
+    .profilePageTop_ProfileSectionLeft .profileInfo a p {
+        text-align: center;
+    }
+
+    .profilePageTop_ProfileSectionLeft .profileInfo .friendsList {
+        justify-content: center;
+    }
+
+    .profilePageTop_ProfileSectionRight {
+        margin-bottom: 0px;
+    }
+
+    /* Profile Page Bottom Section */
+    .profilePageBottom .profilePageComponents {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+
+    /* Profile Page Top Components Section */
+    .profilePageTop_Components {
+        justify-content: center;
+    }
+
+    .profilePageTop_ComponentsLeftOption {
+        padding: 12px;
+    }
+
+    .profilePageTop_ComponentsRight {
+        display: none;
+    }
 }

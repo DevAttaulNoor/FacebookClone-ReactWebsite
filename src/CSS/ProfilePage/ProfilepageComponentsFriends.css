@@ -134,3 +134,37 @@
     object-fit: cover;
     border-radius: 5px;
 }
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 900px) {
+
+    /* ProfilePageComponentsFriends Top Section */
+    .profilePageComponentsFriends_TopRight p {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+
+    /* ProfilePageComponentsFriends Top Section */
+    .profilePageComponentsFriends_TopRight .searchInp .MuiSvgIcon-root {
+        width: 28px;
+        height: 28px;
+        padding: 4px;
+        margin-left: 0px;
+    }
+
+    .profilePageComponentsFriends_TopRight .searchInp input {
+        display: none;
+    }
+
+    /* ProfilePageComponentsFriends Middle Section */
+    .profilePageComponentsFriends_Middle .profilePageFriends_BottomContainerOptions {
+        flex-direction: column;
+    }
+
+    .profilePageComponentsFriends_Middle .profilePageFriends_BottomContainerOptions p {
+        font-size: 14px;
+        margin: 8px 0px 0px 0px;
+    }
+}

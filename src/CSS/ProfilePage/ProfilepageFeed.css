@@ -2,15 +2,7 @@
 .profilePageFeed {
     display: flex;
     flex-direction: column;
-    padding: 15px 0 15px 15px;
-}
-
-.profilePageFeed > .postfeed{
-    margin-top: 0;
-}
-
-.profilePageFeed > .JoinedPost .postfeed{
-    margin-top: 0;
+    padding: 0 0 15px 15px;
 }
 
 /* rofilePageFeed Joined Post */
@@ -40,3 +32,16 @@
     cursor: pointer;
     text-decoration: underline;
 }
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 900px) {
+
+    /** ProfilePageFeed Section */
+    .profilePageFeed {
+        display: flex;
+        flex-direction: column;
+        padding: 0 0 15px 0;
+    }
+}
+
+@media only screen and (max-width: 680px) {}
