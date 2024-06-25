@@ -92,3 +92,20 @@
     object-fit: cover;
     border-radius: 5px;
 }
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 900px) {
+
+    /* UserPage Components Videos Middle Section */
+    .userpageComponentsVideos_Middle .userpageVideosBottomContainer {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media only screen and (max-width: 680px) {
+
+    /* UserPage Components Videos Middle Section */
+    .userpageComponentsVideos_Middle .userpageVideosBottomContainer {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
