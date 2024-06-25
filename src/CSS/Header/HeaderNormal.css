@@ -200,13 +200,6 @@
 
 @media only screen and (max-width: 680px) {
 
-    /** HeaderNormal Section */
-    .headerNormal {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
     /* HeaderNormal Middle Section */
     .headerNormalMiddle a {
         display: none;

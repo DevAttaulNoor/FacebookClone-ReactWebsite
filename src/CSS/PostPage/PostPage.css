@@ -2,6 +2,7 @@
 .postPage{
     display: flex;
     justify-content: center;
+    padding: 0px 15px;
     overflow-y: auto;
 }
 
