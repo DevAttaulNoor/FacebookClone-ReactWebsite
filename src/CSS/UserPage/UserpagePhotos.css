@@ -47,11 +47,11 @@
 .userpagePhotosBottomContainer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
+    gap: 5px;
 }
 
 .userpagePhotosBottomContainer img {
     width: 100%;
-    height: 115px;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
 }

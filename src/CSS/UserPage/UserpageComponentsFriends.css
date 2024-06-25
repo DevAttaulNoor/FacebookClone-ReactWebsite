@@ -134,3 +134,37 @@
     object-fit: cover;
     border-radius: 5px;
 }
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 900px) {
+
+    /* UserPage Components Friends Top Section */
+    .userpageComponentsFriends_TopRight p {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+
+    /* UserPage Components Friends Top Section */
+    .userpageComponentsFriends_TopRight .searchInp .MuiSvgIcon-root {
+        width: 28px;
+        height: 28px;
+        padding: 4px;
+        margin-left: 0px;
+    }
+
+    .userpageComponentsFriends_TopRight .searchInp input {
+        display: none;
+    }
+
+    /* UserPage Components Friends Middle Section */
+    .userpageComponentsFriends_Middle .userpageFriendsBottomContainerOptions {
+        flex-direction: column;
+    }
+
+    .userpageComponentsFriends_Middle .userpageFriendsBottomContainerOptions p {
+        font-size: 14px;
+        margin: 8px 0px 0px 0px;
+    }
+}

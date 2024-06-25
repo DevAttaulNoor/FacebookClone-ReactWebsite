@@ -36,3 +36,16 @@
     cursor: pointer;
     text-decoration: underline;
 }
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 900px) {
+
+    /** UserPage Feed Section */
+    .userpageFeed {
+        display: flex;
+        flex-direction: column;
+        padding: 0 0 15px 0;
+    }
+}
+
+@media only screen and (max-width: 680px) {}

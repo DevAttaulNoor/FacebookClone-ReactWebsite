@@ -17,18 +17,18 @@
     background-color: #fff;
 }
 
-/* userpage Top Cover Section */
+/* UserPage Top Cover Section */
 .userpageTop_CoverSection {
     width: 100%;
     display: flex;
     justify-content: center;
-    background-image: linear-gradient(to top, #FFFFFF, rgba(255,255,255.9), rgba(255,255,255,.7), rgba(255,255,255,.4), rgba(255,255,255,0));;
+    background-image: linear-gradient(to top, #FFFFFF, rgba(255, 255, 255.9), rgba(255, 255, 255, .7), rgba(255, 255, 255, .4), rgba(255, 255, 255, 0));
 }
 
 .coverImg {
     position: relative;
-    width: 70%;
-    height: 410px;
+    width: 1260px;
+    height: 460px;
     display: flex;
     justify-content: center;
 }
@@ -84,12 +84,14 @@
 }
 
 /* UserPage Top Profile Section */
-.userpageTop_ProfileSection{
-    width: 65%;
+.userpageTop_ProfileSection {
+    max-width: 1200px;
+    width: 100%;
     height: 150px;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
+    padding: 0px 15px;
     margin-bottom: 15px;
 }
 
@@ -97,19 +99,19 @@
     display: flex;
 }
 
-.profilePhoto {
+.userpageTop_ProfileSectionLeft .profilePhoto {
     position: relative;
     display: flex;
 }
 
-.profilePhoto .MuiAvatar-root {
+.userpageTop_ProfileSectionLeft .profilePhoto .MuiAvatar-root {
     width: 180px;
     height: 180px;
     object-fit: cover;
     border: 4px solid #fff;
 }
 
-.profilePhoto .profileChangeIcon {
+.userpageTop_ProfileSectionLeft .profilePhoto .profileChangeIcon {
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -121,50 +123,50 @@
     background-color: #E4E6EB;
 }
 
-.profilePhoto .profileChangeIcon:hover {
+.userpageTop_ProfileSectionLeft .profilePhoto .profileChangeIcon:hover {
     cursor: pointer;
     background-color: lightgray;
 }
 
-.profileInfo {
+.userpageTop_ProfileSectionLeft .profileInfo {
     display: flex;
     flex-direction: column;
     margin: 50px 0 0 15px;
 }
 
-.profileInfo h3 {
+.userpageTop_ProfileSectionLeft .profileInfo h3 {
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 2px;
 }
 
-.profileInfo a {
+.userpageTop_ProfileSectionLeft .profileInfo a {
     color: initial;
     text-decoration: none;
 }
 
-.profileInfo a p {
+.userpageTop_ProfileSectionLeft .profileInfo a p {
     font-size: 14px;
     font-weight: 600;
     color: #65676B;
 }
 
-.profileInfo a p:hover {
+.userpageTop_ProfileSectionLeft .profileInfo a p:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
-.profileInfo .friendsList{
+.userpageTop_ProfileSectionLeft .profileInfo .friendsList {
     display: flex;
     align-items: center;
     margin-top: 10px;
 }
 
-.profileInfo .friendsList .friendPhoto {
+.userpageTop_ProfileSectionLeft .profileInfo .friendsList .friendPhoto {
     display: flex;
 }
 
-.profileInfo .friendsList .friendPhoto .MuiAvatar-root {
+.userpageTop_ProfileSectionLeft .profileInfo .friendsList .friendPhoto .MuiAvatar-root {
     width: 40px;
     height: 40px;
     border: 2px solid #fff;
@@ -206,35 +208,36 @@
 }
 
 /* UserPage Top Components Section */
-.userpageTop_Components{
-    width: 65%;
+.userpageTop_Components {
+    max-width: 1200px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0px 15px;
     border-top: 1px solid rgb(197, 197, 197);
 }
 
-/* userpage Top Left Components Section */
 .userpageTop_ComponentsLeft {
     display: flex;
 }
 
-.userpageTop_ComponentsLeft a{
+.userpageTop_ComponentsLeft a {
     height: fit-content;
     text-decoration: none;
     color: initial;
 }
 
-.userpageTop_ComponentsLeft a.active .userpageTop_ComponentsLeftOption{
+.userpageTop_ComponentsLeft a.active .userpageTop_ComponentsLeftOption {
     position: relative;
     color: #2381fa;
 }
 
-.userpageTop_ComponentsLeft a.active .userpageTop_ComponentsLeftOption:hover{
+.userpageTop_ComponentsLeft a.active .userpageTop_ComponentsLeftOption:hover {
     background-color: transparent;
 }
 
-.userpageTop_ComponentsLeft a.active .userpageTop_ComponentsLeftOption::after{
+.userpageTop_ComponentsLeft a.active .userpageTop_ComponentsLeftOption::after {
     content: "";
     position: absolute;
     height: 2px;
@@ -244,7 +247,7 @@
     background-color: #2381fa;
 }
 
-.userpageTop_ComponentsLeft a.active .userpageTop_ComponentsLeftOption svg{
+.userpageTop_ComponentsLeft a.active .userpageTop_ComponentsLeftOption svg {
     color: #2381fa;
 }
 
@@ -268,14 +271,14 @@
     padding: 12px 14px;
 }
 
-.userpageTop_ComponentsLeftOption#moreOption svg{
+.userpageTop_ComponentsLeftOption#moreOption svg {
     width: 18px;
     height: 18px;
     margin-left: 3px;
     color: #65676B;
 }
 
-.userpageTop_ComponentsRight {    
+.userpageTop_ComponentsRight {
     display: flex;
     align-items: center;
     padding: 8px 10px;
@@ -291,11 +294,70 @@
 
 /* UserPage Bottom Section */
 .userpageBottom {
-    width: 65%;
+    max-width: 1200px;
+    width: 100%;
     display: flex;
     justify-content: center;
+    padding: 0px 15px;
 }
 
 .userpageBottom .userpageComponents {
     width: 100%;
+}
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 900px) {
+
+    /* UserPage Top Cover Section */
+    .coverImg .changeCoverPhoto p {
+        display: none;
+    }
+
+    /* UserPage Top Profile Section */
+    .userpageTop_ProfileSection {
+        height: 280px;
+        align-items: center;
+        justify-content: flex-end;
+        flex-direction: column;
+    }
+
+    .userpageTop_ProfileSectionLeft {
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .userpageTop_ProfileSectionLeft .profileInfo {
+        margin: 8px 0px 18px 0px;
+    }
+
+    .userpageTop_ProfileSectionLeft .profileInfo a p {
+        text-align: center;
+    }
+
+    .userpageTop_ProfileSectionLeft .profileInfo .friendsList {
+        justify-content: center;
+    }
+
+    /* UserPage Bottom Section */
+    .userpageBottom .userpageComponents {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+
+    /* UserPage Top Components Section */
+    .userpageTop_Components {
+        justify-content: center;
+    }
+
+    .userpageTop_ComponentsLeftOption {
+        padding: 12px;
+    }
+
+    .userpageTop_ComponentsRight {
+        display: none;
+    }
 }

@@ -1,5 +1,5 @@
 /** UserPage Components About Section */
-.userpageComponentsAbout{
+.userpageComponentsAbout {
     width: 100%;
     display: flex;
     margin: 20px 0;
@@ -9,13 +9,13 @@
 }
 
 /* UserPage Components About Left Section */
-.userpageComponentsAbout_Left{
+.userpageComponentsAbout_Left {
     flex: 0.25;
     padding: 14px 6px;
     border-right: 1px solid lightgray;
 }
 
-.userpageComponentsAbout_Left h3{
+.userpageComponentsAbout_Left h3 {
     width: fit-content;
     font-size: 18px;
     font-weight: 700;
@@ -23,13 +23,13 @@
     color: #050505;
 }
 
-.userpageComponentsAbout_Left h3:hover{
+.userpageComponentsAbout_Left h3:hover {
     cursor: pointer;
     text-decoration: underline;
     text-decoration-thickness: 2px;
 }
 
-.userpageComponentsAbout_Left p{
+.userpageComponentsAbout_Left p {
     font-size: 14px;
     font-weight: 500;
     padding: 8px;
@@ -38,47 +38,47 @@
     color: #65676B;
 }
 
-.userpageComponentsAbout_Left p:last-child{
+.userpageComponentsAbout_Left p:last-child {
     margin-bottom: 0px;
 }
 
-.userpageComponentsAbout_Left p:hover{
+.userpageComponentsAbout_Left p:hover {
     cursor: pointer;
     background-color: #E4E6EB;
 }
 
-.userpageComponentsAbout_Left p .active{
+.userpageComponentsAbout_Left p .active {
     color: #0866FF;
     background-color: #EBF5FF;
 }
 
 /* UserPage Components About Right Section */
-.userpageComponentsAbout_Right{
+.userpageComponentsAbout_Right {
     flex: 0.75;
     padding: 15px;
 }
 
-.userpageComponentsAbout_RightOption{
+.userpageComponentsAbout_RightOption {
     width: fit-content;
     display: flex;
     align-items: center;
     margin: 16px 0;
 }
 
-.userpageComponentsAbout_RightOption:hover{
+.userpageComponentsAbout_RightOption:hover {
     color: #0866FF;
     cursor: pointer;
     text-decoration: underline;
 }
 
-.userpageComponentsAbout_RightOption p{
+.userpageComponentsAbout_RightOption p {
     font-size: 14px;
     font-weight: 500;
     padding: 6px;
     color: #0866FF;
 }
 
-.userpageComponentsAbout_RightOption .MuiSvgIcon-root{
+.userpageComponentsAbout_RightOption .MuiSvgIcon-root {
     width: 20px;
     height: 20px;
     color: #0866FF;
@@ -86,4 +86,28 @@
     border-radius: 50%;
     border: 1px solid #0866FF;
     margin-right: 8px;
+}
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 900px) {
+
+    /** UserPage Components About Section */
+    .userpageComponentsAbout {
+        width: 75%;
+        flex-direction: column;
+    }
+
+    /* UserPage Components About Left Section */
+    .userpageComponentsAbout_Left {
+        border-bottom: 1px solid lightgray;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+
+    /** UserPage Components About Section */
+    .userpageComponentsAbout {
+        width: 100%;
+        flex-direction: column;
+    }
 }
