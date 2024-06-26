@@ -7,12 +7,12 @@ import Authentication from './Components/Authentication/Authentication';
 import HeaderOption from './Components/Header/HeaderOption';
 import Friends from './Components/UniversalComponent/Friends';
 import HomePage from './Components/HomePage/HomePage';
+import VideoPage from './Components/VideoPage/VideoPage';
 import ReelCreate from './Components/ReelPage/ReelCreate';
 import ReelPage from './Components/ReelPage/ReelPage';
 import UserPage from './Components/UserPage/UserPage';
 import PostPage from './Components/PostPage/PostPage';
 import SavedPage from './Components/UniversalComponent/SavedPage';
-import VideosPage from './Components/UniversalComponent/VideosPage';
 import ProfilePage from './Components/ProfilePage/ProfilePage';
 import FriendPage from './Components/FriendPage/FriendPage';
 import FriendpageAllFriends from './Components/FriendPage/FriendpageAllFriends';
@@ -54,7 +54,7 @@ function App() {
 									<Route path="friendpage/*" element={<FriendPage />} />
 									<Route path="friendpage/allFriends/*" element={<FriendpageAllFriends />} />
 									<Route path="savedpage/*" element={<SavedPage />} />
-									<Route path="videospage/*" element={<VideosPage />} />
+									<Route path="videopage/*" element={<VideoPage />} />
 									<Route path="bookmarkpage/*" element={<BookmarkPage />} />
 									<Route path="userhomepage/*" element={<UserPage />} />
 									<Route path="reelpage/*" element={<ReelPage />} />

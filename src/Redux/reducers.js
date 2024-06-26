@@ -4,9 +4,10 @@ import { userSlice } from "./userSlice";
 import { postSlice } from "./postSlice";
 import { reelSlice } from "./reelSlice";
 import { friendSlice } from "./friendSlice";
-import { messageSlice } from "./messageSlice";
-import { notificationSlice } from "./notificationSlice";
 import { searchSlice } from "./searchSlice";
+import { messageSlice } from "./messageSlice";
+import { savedItemsSlice } from "./savedItemsSlice";
+import { notificationSlice } from "./notificationSlice";
 
 export const rootReducer = combineReducers({
     authForm: authSlice.reducer,
@@ -16,5 +17,6 @@ export const rootReducer = combineReducers({
     search: searchSlice.reducer,
     friends: friendSlice.reducer,
     message: messageSlice.reducer,
+    savedItems: savedItemsSlice.reducer,
     notification: notificationSlice.reducer,
 })

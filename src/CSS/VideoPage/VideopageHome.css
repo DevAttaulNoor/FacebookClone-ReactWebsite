@@ -1,0 +1,20 @@
+/** Videopage Home Section */
+.videopageHome {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 15px 15px 15px;
+}
+
+.videopageHome .postfeed {
+    width: 75%;
+}
+
+@media only screen and (max-width: 680px) {
+
+    /* VideoPage Main Section */
+    .videopageHome .postfeed {
+        width: 100%;
+    }
+}

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { db } from '../../Firebase/firebase';
 import { setSelectedPost } from '../../Redux/postSlice';
 import { setSelectedReel } from '../../Redux/reelSlice';
+import { setSavedItems } from '../../Redux/savedItemsSlice';
 import TuneIcon from '@mui/icons-material/Tune';
 import SettingsIcon from '@mui/icons-material/Settings';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -13,8 +14,8 @@ import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined';
 function SavedPage() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
+    const savedItems = useSelector((state) => state.data.savedItems.savedItems);
     const [savedItemsId, setSavedItemsId] = useState([]);
-    const [savedItemsContent, setSavedItemsContent] = useState([]);
     const [dropdownVisibility, setDropdownVisibility] = useState({});
     const dropdownRef = useRef(null);
 
@@ -118,7 +119,7 @@ function SavedPage() {
                 }
                 return null;
             }));
-            setSavedItemsContent(saveItems.filter(item => item !== null));
+            dispatch(setSavedItems(saveItems.filter(item => item !== null)))
         };
 
         fetchData();
@@ -149,7 +150,7 @@ function SavedPage() {
                 </div>
 
                 <div className='savedpageMainBottom'>
-                    {savedItemsContent.map(saveditem => (
+                    {savedItems.map(saveditem => (
                         <div className='savedPosts' key={saveditem.id}>
                             <div className='savedPosts_Left'>
                                 {saveditem.data.reel ? (

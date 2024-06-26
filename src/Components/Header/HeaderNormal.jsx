@@ -98,7 +98,7 @@ function HeaderNormal() {
                 <NavLink to="/friendpage" activeclassname="active">
                     {({ isActive }) => (isActive ? <PeopleAltIcon /> : <PeopleAltOutlinedIcon />)}
                 </NavLink>
-                <NavLink to="/videospage" activeclassname="active">
+                <NavLink to="/videopage" activeclassname="active">
                     {({ isActive }) => (isActive ? <SmartDisplayIcon /> : <SmartDisplayOutlinedIcon />)}
                 </NavLink>
                 <NavLink to="/grouppage" activeclassname="active">

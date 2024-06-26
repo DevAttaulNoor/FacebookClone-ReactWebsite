@@ -49,7 +49,7 @@ function HomePage() {
                     <HomepageLeftbarOptions src='https://static.xx.fbcdn.net/rsrc.php/v3/y6/r/i0pziEs5Wj6.png' title='Friends' />
                 </NavLink>
 
-                <NavLink to="/videospage">
+                <NavLink to="/videopage">
                     <HomepageLeftbarOptions src='https://static.xx.fbcdn.net/rsrc.php/v3/yx/r/XNFKm5WC2yS.png' title='Videos' />
                 </NavLink>
 
