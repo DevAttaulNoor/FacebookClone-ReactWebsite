@@ -44,6 +44,7 @@
 /* HomePage Feed Section */
 .homepageFeed {
     max-width: 600px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     padding: 16px 0;
