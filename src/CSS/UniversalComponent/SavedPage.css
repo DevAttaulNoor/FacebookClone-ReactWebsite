@@ -56,6 +56,7 @@
 .savedpageLeftbarBottom a {
     color: initial;
     text-decoration: none;
+    border-radius: 8px;
 }
 
 .savedpageLeftbarBottomOption {
@@ -80,16 +81,15 @@
 .savedpageLeftbarBottomOption p {
     font-size: 14px;
     font-weight: 600;
-    margin-left: 10px;
 }
 
 .savedpageLeftbarBottomOption .MuiSvgIcon-root {
     width: 36px;
     height: 36px;
     padding: 6px;
+    margin-right: 10px;
     border-radius: 50%;
-    color: #fff;
-    background-color: #1877F2;
+    background-color: #E4E6EB;
 }
 
 /* SavedPage Main Section */
@@ -103,11 +103,12 @@
 
 /* Saved Page Main Top Section */
 .savedpageMainTop {
+    max-width: 860px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 100px 10px 100px;
+    padding: 15px 30px;
 }
 
 .savedpageMainTop p {
@@ -136,11 +137,12 @@
 
 /* Saved Page Main Bottom Section */
 .savedpageMainBottom {
+    max-width: 860px;
     width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 0 100px 15px 100px;
+    padding: 0px 30px 15px;
 }
 
 .savedpageMainBottom .savedPosts {
@@ -176,7 +178,7 @@
 }
 
 .savedPosts_Right {
-    width: -webkit-fill-available;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -285,7 +287,7 @@
     position: absolute;
     top: 45px;
     left: 215px;
-    width: 300px;
+    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -324,4 +326,120 @@
     font-weight: 600;
     color: #050505;
     margin-left: 10px;
+}
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 950px) {
+
+    /** SavedPage Section */
+    .savedpage {
+        flex-direction: column;
+    }
+
+    /* SavedPage LeftBar Section */
+    .savedpageLeftbar {
+        height: fit-content;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        padding: 10px 15px;
+    }
+
+    /* SavedPage LeftBar Top Section */
+    .savedpageLeftbarTop {
+        width: fit-content;
+        margin: 0px;
+        padding: 0px 12px 0px 0px;
+    }
+
+    .savedpageLeftbarTop .MuiSvgIcon-root {
+        display: none;
+    }
+
+    /* SavedPage LeftBar Bottom Section */
+    .savedpageLeftbarBottom {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .savedpageLeftbarBottomOption {
+        padding: 8px 12px;
+        border-radius: 25px;
+        background-color: #E4E6EB;
+    }
+
+    .savedpageLeftbarBottomOption:hover {
+        border-radius: 25px;
+        background-color: #F0F2F5;
+    }
+
+    .savedpageLeftbarBottom a {
+        border-radius: 25px;
+    }
+
+    .savedpageLeftbarBottom a.active .savedpageLeftbarBottomOption {
+        border-radius: 25px;
+        background-color: #EBF5FF;
+    }
+
+    .savedpageLeftbarBottom a.active .savedpageLeftbarBottomOption p {
+        color: #0064D1;
+    }
+
+    .savedpageLeftbarBottomOption .MuiSvgIcon-root {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+
+    /* Saved Page Main Top Section */
+    .savedpageMainTop {
+        max-width: 520px;
+    }
+
+    /* Saved Page Main Bottom Section */
+    .savedpageMainBottom {
+        max-width: 520px;
+    }
+
+    .savedpageMainBottom .savedPosts {
+        height: fit-content;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .savedPosts_Left {
+        width: 100%;
+        height: 260px;
+        margin-right: 0px;
+    }
+
+    .savedPosts_Left img,
+    .savedPosts_Left video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 6px;
+    }
+
+    .savedPosts_Right {
+        width: fit-content;
+    }
+
+    .savedPosts_RightTop {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .savedPosts_RightBottom .dropdown {
+        left: 100px;
+    }
 }
