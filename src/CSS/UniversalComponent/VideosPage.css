@@ -52,31 +52,30 @@
 .videosageLeftbarBottom a {
     color: initial;
     text-decoration: none;
-}
-
-.videosageLeftbarBottomOptions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px;
-    transition: 3ms ease-in-out;
-}
-
-.videosageLeftbarBottomOptions:hover,
-.videosageLeftbarBottom a.active {
-    cursor: pointer;
     border-radius: 8px;
-    background-color: #F0F2F5;
-}
-
-.videosageLeftbarBottom a.active .videosageLeftbarBottomOption .MuiSvgIcon-root {
-    color: #fff;
-    background-color: #1877f2;
 }
 
 .videosageLeftbarBottomOption {
     display: flex;
     align-items: center;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 3ms ease-in-out;
+}
+
+.videosageLeftbarBottomOption:hover,
+.videosageLeftbarBottom a.active {
+    background-color: #F0F2F5;
+}
+
+.videosageLeftbarBottom a.active .MuiSvgIcon-root {
+    color: #fff;
+    background-color: #1877f2;
+}
+
+.videosageLeftbarBottom a.active .MuiSvgIcon-root #savePostIcon {
+    filter: invert(100%);
 }
 
 .videosageLeftbarBottomOption p {
@@ -87,10 +86,22 @@
 .videosageLeftbarBottomOption .MuiSvgIcon-root {
     width: 36px;
     height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 6px;
     margin-right: 10px;
     border-radius: 50%;
     background-color: #E4E6EB;
+}
+
+.videosageLeftbarBottomOption #savePostIcon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yu/r/doFgS_h9Kyh.png');
+    background-position: 0px -83px;
+    background-size: 41px 503px;
 }
 
 /* VideosPage Main Section */
@@ -99,11 +110,80 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 0 0 15px 0;
+    padding: 0 15px 15px 15px;
     overflow-y: auto;
 }
 
-.videospageMain #postVideo {
-    width: 750px;
-    height: 400px;
+.videospageMain .postfeed {
+    width: 75%;
+}
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 950px) {
+
+    /** VideosPage Section */
+    .videospage {
+        flex-direction: column;
+    }
+
+    /* VideosPage LeftBar Section */
+    .videosageLeftbar {
+        height: fit-content;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        padding: 10px 15px;
+    }
+
+    .videosageLeftbarTop {
+        margin: 0px;
+        padding: 0px 12px 0px 0px;
+    }
+
+    .videosageLeftbarTop .MuiSvgIcon-root {
+        display: none;
+    }
+
+    .videosageLeftbarBottom {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .videosageLeftbarBottomOption {
+        padding: 8px 12px;
+        border-radius: 25px;
+        background-color: #E4E6EB;
+    }
+
+    .videosageLeftbarBottomOption:hover {
+        border-radius: 25px;
+        background-color: #F0F2F5;
+    }
+
+    .videosageLeftbarBottom a {
+        border-radius: 25px;
+    }
+
+    .videosageLeftbarBottom a.active .videosageLeftbarBottomOption {
+        border-radius: 25px;
+        background-color: #EBF5FF;
+    }
+
+    .videosageLeftbarBottom a.active .videosageLeftbarBottomOption p {
+        color: #0064D1;
+    }
+
+    .videosageLeftbarBottomOption .MuiSvgIcon-root {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+
+    /* VideosPage Main Section */
+    .videospageMain .postfeed {
+        width: 100%;
+    }
 }

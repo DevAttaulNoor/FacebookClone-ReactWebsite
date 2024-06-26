@@ -37,11 +37,15 @@ function VideosPage() {
 
                 <div className="videosageLeftbarBottom">
                     <NavLink to="/videospage/" activeclassname="active">
-                        <div className="videosageLeftbarBottomOptions">
-                            <div className="videosageLeftbarBottomOption">
-                                <SmartDisplayIcon />
-                                <p>Home</p>
-                            </div>
+                        <div className="videosageLeftbarBottomOption">
+                            <SmartDisplayIcon />
+                            <p>Home</p>
+                        </div>
+                    </NavLink>
+                    <NavLink to="/videospage/saved" activeclassname="active">
+                        <div className="videosageLeftbarBottomOption">
+                            <div className='MuiSvgIcon-root'><i id='savePostIcon'></i></div>
+                            <p>Saved</p>
                         </div>
                     </NavLink>
                 </div>

@@ -349,7 +349,7 @@ function PostFeed({ key, id, userid, photoURL, media, mediaType, username, times
                                                 <i id='savePostIcon'></i>
                                             </div>
                                             <div className="postSettingOptionRight">
-                                                <h5>Save post</h5>
+                                                <h5>{mediaType === 'video' ? 'Save video' : 'Save post'}</h5>
                                                 <p>Add this to your saved items.</p>
                                             </div>
                                         </div>
@@ -359,7 +359,7 @@ function PostFeed({ key, id, userid, photoURL, media, mediaType, username, times
                                                 <i id='unsavePostIcon'></i>
                                             </div>
                                             <div className="postSettingOptionRight">
-                                                <h5>Unsave post</h5>
+                                                <h5>{mediaType === 'video' ? 'Unsave video' : 'Unsave post'}</h5>
                                                 <p>Remove this from your saved items.</p>
                                             </div>
                                         </div>
