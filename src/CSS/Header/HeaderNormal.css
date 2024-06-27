@@ -2,6 +2,7 @@
 .headerNormal {
     position: sticky;
     top: 0;
+    height: 55px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     padding: 4px 0px;

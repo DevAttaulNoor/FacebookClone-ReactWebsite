@@ -1,6 +1,6 @@
 /** VideoPage Section */
 .videoPage {
-    height: 93vh;
+    height: calc(100% - 55px);
     display: flex;
     overflow: hidden;
 }

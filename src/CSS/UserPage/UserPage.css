@@ -1,8 +1,6 @@
 /** UserPage Section */
 .userpage {
     width: 100%;
-    height: auto;
-    min-height: 100vh;
     display: flex;
     align-items: center;
     flex-direction: column;

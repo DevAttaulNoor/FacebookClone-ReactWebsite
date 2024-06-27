@@ -1,7 +1,7 @@
 /** Homepage Section */
 .homepage {
     width: 100%;
-    height: 93vh;
+    height: calc(100% - 55px);
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     justify-items: center;
@@ -14,7 +14,7 @@
     position: sticky;
     top: 0px;
     width: 100%;
-    height: 93vh;
+    height: 92vh;
     padding: 16px 0 0 8px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -55,7 +55,7 @@
     position: sticky;
     top: 0px;
     width: 100%;
-    height: 93vh;
+    height: 92vh;
     padding: 16px 8px 0 0;
     overflow-y: auto;
     overflow-x: hidden;

@@ -1,5 +1,6 @@
 /** HeaderTransformed Section */
 .headerTransformed {
+    height: 55px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -8,7 +9,8 @@
 
 /* HeaderTransformed Left Section */
 .headerTransformedLeft {
-    width: 357px;
+    height: 55px;
+    width: 356px;
     display: flex;
     align-items: center;
     padding: 4px 0 4px 14px;
