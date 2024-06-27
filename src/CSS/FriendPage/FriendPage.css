@@ -5,15 +5,6 @@
     overflow: hidden;
 }
 
-/* FriendPage Main Section */
-.friendpageMain {
-    width: 100%;
-    height: 100%;
-    padding: 0px 40px;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
 /* Friend Page Leftbar Section */
 .friendpageLeftbar {
     width: 460px;
@@ -63,39 +54,40 @@
 .friendpageLeftbarBottom a {
     color: initial;
     text-decoration: none;
+    border-radius: 8px;
 }
 
-.friendpageLeftbarBottomOptions {
+.friendpageLeftbarBottomOption {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 8px;
+    border-radius: 8px;
     transition: 3ms ease-in-out;
 }
 
-.friendpageLeftbarBottomOptions:hover,
+.friendpageLeftbarBottomOption:hover,
 .friendpageLeftbarBottom a.active {
     cursor: pointer;
-    border-radius: 8px;
     background-color: #F0F2F5;
 }
 
-.friendpageLeftbarBottom a.active .friendpageLeftbarBottomOptionsLeft .MuiSvgIcon-root {
+.friendpageLeftbarBottom a.active .friendpageLeftbarBottomOptionLeft .MuiSvgIcon-root {
     color: #fff;
     background-color: #1877f2;
 }
 
-.friendpageLeftbarBottomOptionsLeft {
+.friendpageLeftbarBottomOptionLeft {
     display: flex;
     align-items: center;
 }
 
-.friendpageLeftbarBottomOptionsLeft p {
+.friendpageLeftbarBottomOptionLeft p {
     font-size: 16px;
     font-weight: 600;
 }
 
-.friendpageLeftbarBottomOptionsLeft .MuiSvgIcon-root {
+.friendpageLeftbarBottomOptionLeft .MuiSvgIcon-root {
     width: 36px;
     height: 36px;
     padding: 6px;
@@ -104,8 +96,82 @@
     background-color: #E4E6EB;
 }
 
-.friendpageLeftbarBottomOptionsRight .MuiSvgIcon-root {
+.friendpageLeftbarBottomOptionRight .MuiSvgIcon-root {
     width: 18px;
     height: 18px;
     color: gray;
+}
+
+/* FriendPage Main Section */
+.friendpageMain {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 950px) {
+
+    /** FriendPage Section */
+    .friendpage {
+        flex-direction: column;
+    }
+
+    /* VideoPage LeftBar Section */
+    .friendpageLeftbar {
+        height: fit-content;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        padding: 10px 15px;
+    }
+
+    .friendpageLeftbarTop {
+        margin: 0px;
+        padding: 0px 12px 0px 0px;
+    }
+
+    .friendpageLeftbarTop .MuiSvgIcon-root {
+        display: none;
+    }
+
+    .friendpageLeftbarBottom {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .friendpageLeftbarBottomOption {
+        padding: 8px 12px;
+        border-radius: 25px;
+        background-color: #E4E6EB;
+    }
+
+    .friendpageLeftbarBottomOption:hover {
+        border-radius: 25px;
+        background-color: #F0F2F5;
+    }
+
+    .friendpageLeftbarBottom a {
+        border-radius: 25px;
+    }
+
+    .friendpageLeftbarBottom a.active .friendpageLeftbarBottomOption {
+        border-radius: 25px;
+        background-color: #EBF5FF;
+    }
+
+    .friendpageLeftbarBottom a.active .friendpageLeftbarBottomOption p {
+        color: #0064D1;
+    }
+
+    .friendpageLeftbarBottomOption .MuiSvgIcon-root {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+
 }

@@ -1,17 +1,8 @@
 /** FriendPage AllFriends Section */
-.friendpageAllFriends{
+.friendpageAllFriends {
     height: 93vh;
     display: flex;
     overflow: hidden;
-}
-
-/* FriendPage AllFriends Main Section */
-.friendpageAllFriendsMain {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    overflow-y: auto;
 }
 
 /* FriendPage AllFriends Leftbar Section */
@@ -100,7 +91,7 @@
     background-color: whitesmoke;
 }
 
-.friendpageAllFriendsLeftbarBottom .friendsList.active{
+.friendpageAllFriendsLeftbarBottom .friendsList.active {
     background-color: whitesmoke;
 }
 
@@ -121,7 +112,7 @@
     margin-left: 10px;
 }
 
-.friendsList .friendsListRight{
+.friendsList .friendsListRight {
     display: flex;
 }
 
@@ -207,4 +198,66 @@
     font-size: 12px;
     font-weight: 400;
     color: #65676B;
+}
+
+/* FriendPage AllFriends Main Section */
+.friendpageAllFriendsMain {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow-y: auto;
+}
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 1200px) {
+
+    /* FriendPage AllFriends Main Profile Page Section */
+    .friendpageAllFriendsMain .profilePageTop_ProfileSection {
+        height: 280px;
+        align-items: center;
+        justify-content: flex-end;
+        flex-direction: column;
+    }
+
+    .friendpageAllFriendsMain .profilePageTop_ProfileSectionLeft {
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .friendpageAllFriendsMain .profilePageTop_ProfileSectionLeft .profileInfo {
+        margin: 8px 0px 18px 0px;
+    }
+
+    .friendpageAllFriendsMain .profilePageTop_ProfileSectionLeft .profileInfo a p {
+        text-align: center;
+    }
+
+    .friendpageAllFriendsMain .profilePageTop_ProfileSectionLeft .profileInfo .friendsList {
+        justify-content: center;
+    }
+
+    .friendpageAllFriendsMain .profilePageTop_ProfileSectionRight {
+        margin-bottom: 0px;
+    }
+
+    /* FriendPage AllFriends Main Profile Page Top Components Section */
+    .friendpageAllFriendsMain .profilePageTop_Components {
+        justify-content: center;
+    }
+
+    .friendpageAllFriendsMain .profilePageTop_ComponentsLeftOption {
+        padding: 12px;
+    }
+
+    .friendpageAllFriendsMain .profilePageTop_ComponentsRight {
+        display: none;
+    }
+
+    /* FriendPage AllFriends Main Profile Page Bottom Section */
+    .friendpageAllFriendsMain .profilePageBottom .profilePageComponents {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

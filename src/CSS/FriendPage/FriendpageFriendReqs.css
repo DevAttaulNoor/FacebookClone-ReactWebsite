@@ -29,8 +29,8 @@
 
 /* Friendpage FriendReqs Bottom Section */
 .friendpageFriendReqsBottom {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     padding-bottom: 25px;
 }

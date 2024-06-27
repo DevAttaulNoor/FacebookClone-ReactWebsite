@@ -4,6 +4,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    padding: 0px 40px;
 }
 
 /* FriendPage Home Top Section */
@@ -15,8 +16,8 @@
 
 /* FriendPage Home Bottom Section */
 .friendpageHomeBottom {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     padding-bottom: 25px;
 }
