@@ -11,7 +11,7 @@ import AppsIcon from '@mui/icons-material/Apps';
 import CloseIcon from '@mui/icons-material/Close';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
-function HeaderTransformed() {
+function HeaderTransformed({ backgroundColor }) {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
     const notification = useSelector((state) => state.data.notification.notification);
@@ -49,7 +49,7 @@ function HeaderTransformed() {
     }, [userBoxRef, notificationBoxRef, dispatch]);
 
     return (
-        <div className='headerTransformed'>
+        <div className='headerTransformed' style={{ backgroundColor }}>
             <div className='headerTransformedLeft'>
                 <NavLink to={'/homepage'}>
                     <CloseIcon className='closeIcon' />

@@ -3,21 +3,21 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, setLoading } from './Redux/userSlice';
 import { setSelectedFriend } from './Redux/friendSlice';
+import Data from './Components/UniversalComponent/Data';
 import Authentication from './Components/Authentication/Authentication';
 import HeaderOption from './Components/Header/HeaderOption';
-import Friends from './Components/UniversalComponent/Friends';
 import HomePage from './Components/HomePage/HomePage';
 import VideoPage from './Components/VideoPage/VideoPage';
-import ReelCreate from './Components/ReelPage/ReelCreate';
 import ReelPage from './Components/ReelPage/ReelPage';
 import UserPage from './Components/UserPage/UserPage';
 import PostPage from './Components/PostPage/PostPage';
-import SavedPage from './Components/UniversalComponent/SavedPage';
-import ProfilePage from './Components/ProfilePage/ProfilePage';
+import ReelCreate from './Components/ReelPage/ReelCreate';
 import FriendPage from './Components/FriendPage/FriendPage';
-import FriendpageAllFriends from './Components/FriendPage/FriendpageAllFriends';
+import ProfilePage from './Components/ProfilePage/ProfilePage';
+import SavedPage from './Components/UniversalComponent/SavedPage';
 import LoadingLine from './Components/UniversalComponent/LoadingLine';
 import BookmarkPage from './Components/UniversalComponent/BookmarkPage';
+import FriendpageAllFriends from './Components/FriendPage/FriendpageAllFriends';
 
 function App() {
 	const dispatch = useDispatch();
@@ -44,7 +44,7 @@ function App() {
 				) : (
 					<>
 						{user && <HeaderOption />}
-						{user && <Friends />}
+						{user && <Data />}
 						<Routes>
 							{user ? (
 								<>

@@ -7,11 +7,18 @@ import HeaderNormal from './HeaderNormal';
 import HeaderTransformed from './HeaderTransformed';
 
 function HeaderOption() {
+    const location = useLocation();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
     const selectedReel = useSelector((state) => state.data.reel.selectedReel);
-    const pathsToHideHeader = [`/reelpage/${selectedReel}`, '/homepage/storyreels'];
-    const showHeader = !pathsToHideHeader.includes(useLocation().pathname);
+    const path = location.pathname;
+    const showHeader = !(path.startsWith('/reelpage') || path === '/homepage/storyreels');
+
+    // Determine background color based on the route
+    let headerBackgroundColor = 'transparent';
+    if (path === `/reelpage/${selectedReel}`) {
+        headerBackgroundColor = 'black';
+    }
 
     useEffect(() => {
         const handleSnapshot = (snapshot, type) => {
@@ -83,7 +90,7 @@ function HeaderOption() {
             {showHeader ? (
                 <HeaderNormal />
             ) : (
-                <HeaderTransformed />
+                <HeaderTransformed backgroundColor={headerBackgroundColor} />
             )}
         </>
     );

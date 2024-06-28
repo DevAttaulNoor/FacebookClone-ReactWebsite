@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { db } from '../../Firebase/firebase';
 import { setSelectedPost } from '../../Redux/postSlice';
 import { setSelectedReel } from '../../Redux/reelSlice';
-import { setSavedItems } from '../../Redux/savedItemsSlice';
 import TuneIcon from '@mui/icons-material/Tune';
 import SettingsIcon from '@mui/icons-material/Settings';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -14,8 +13,7 @@ import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined';
 function SavedPage() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
-    const savedItems = useSelector((state) => state.data.savedItems.savedItems);
-    const [savedItemsId, setSavedItemsId] = useState([]);
+    const savedItemsData = useSelector((state) => state.data.savedItems.savedItemsData);
     const [dropdownVisibility, setDropdownVisibility] = useState({});
     const dropdownRef = useRef(null);
 
@@ -32,36 +30,6 @@ function SavedPage() {
             console.log("Document successfully deleted");
         } catch (error) {
             console.error("Error deleting document: ", error);
-        }
-    };
-
-    const fetchPostAttributes = async (postId) => {
-        try {
-            const postDoc = await db.collection('Posts').doc(postId).get();
-            if (postDoc.exists) {
-                return postDoc.data();
-            } else {
-                console.log('Post not found.');
-                return null;
-            }
-        } catch (error) {
-            console.error('Error fetching post attributes:', error);
-            return null;
-        }
-    };
-
-    const fetchReelAttributes = async (reelId) => {
-        try {
-            const reelDoc = await db.collection('Reels').doc(reelId).get();
-            if (reelDoc.exists) {
-                return reelDoc.data();
-            } else {
-                console.log('Reel not found.');
-                return null;
-            }
-        } catch (error) {
-            console.error('Error fetching reel attributes:', error);
-            return null;
         }
     };
 
@@ -93,38 +61,6 @@ function SavedPage() {
         };
     }, [dropdownVisibility]);
 
-    useEffect(() => {
-        const savedItemsRef = db.collection('Users').doc(user.uid).collection('SavedItems');
-
-        const unsubscribe = savedItemsRef.onSnapshot((snapshot) => {
-            const savedItemsData = snapshot.docs.map(doc => doc.data());
-            setSavedItemsId(savedItemsData);
-        });
-
-        return () => {
-            unsubscribe();
-        };
-    }, [user.uid]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const saveItems = await Promise.all(savedItemsId.map(async (savedItem) => {
-                const saveItemsPostData = await fetchPostAttributes(savedItem.postId);
-                const saveItemsReelData = await fetchReelAttributes(savedItem.reelId);
-                if (saveItemsPostData) {
-                    return { id: savedItem.postId, data: saveItemsPostData };
-                }
-                if (saveItemsReelData) {
-                    return { id: savedItem.reelId, data: saveItemsReelData };
-                }
-                return null;
-            }));
-            dispatch(setSavedItems(saveItems.filter(item => item !== null)))
-        };
-
-        fetchData();
-    }, [savedItemsId]);
-
     return (
         <div className='savedpage'>
             <div className='savedpageLeftbar'>
@@ -150,7 +86,7 @@ function SavedPage() {
                 </div>
 
                 <div className='savedpageMainBottom'>
-                    {savedItems.map(saveditem => (
+                    {savedItemsData.map(saveditem => (
                         <div className='savedPosts' key={saveditem.id}>
                             <div className='savedPosts_Left'>
                                 {saveditem.data.reel ? (

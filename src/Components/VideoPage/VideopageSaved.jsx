@@ -5,8 +5,8 @@ import { timeAgo } from '../../Assets/Utility/TimeModule';
 import PostFeed from '../PostPage/PostFeed';
 
 function VideopageSaved() {
-    const savedItems = useSelector((state) => state.data.savedItems.savedItems);
-    const savedVideos = savedItems.filter(item => item.data.mediaType === 'video')
+    const savedItemsData = useSelector((state) => state.data.savedItems.savedItemsData);
+    const savedVideos = savedItemsData.filter(item => item.data.mediaType === 'video')
 
     return (
         <div className='videopageSaved'>

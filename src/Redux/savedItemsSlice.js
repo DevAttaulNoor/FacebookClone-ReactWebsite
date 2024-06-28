@@ -1,19 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    savedItems: [],
+    savedItemsId: [],
+    savedItemsData: [],
 }
 
 export const savedItemsSlice = createSlice({
     name: 'savedItems',
     initialState,
     reducers: {
-        setSavedItems: (state, action) => {
-            state.savedItems = action.payload;
+        setSavedItemsId: (state, action) => {
+            state.savedItemsId = action.payload;
+        },
+
+        setSavedItemsData: (state, action) => {
+            state.savedItemsData = action.payload;
         },
 
         setClearSavedItems: () => initialState
     }
 })
 
-export const { setSavedItems, setClearSavedItems } = savedItemsSlice.actions;
+export const { setSavedItemsId, setSavedItemsData, setClearSavedItems } = savedItemsSlice.actions;
