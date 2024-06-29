@@ -1,9 +1,12 @@
 /** HeaderTransformed Section */
 .headerTransformed {
+    position: sticky;
+    top: 0;
     height: 55px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    z-index: 99;
 }
 
 /* HeaderTransformed Left Section */
@@ -18,7 +21,7 @@
     background-color: #fff;
 }
 
-.headerTransformedLeft a{
+.headerTransformedLeft a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,14 +70,14 @@
     margin-right: 0;
 }
 
-.headerTransformedRightOption .headerTransformedRightOptionSvg{
+.headerTransformedRightOption .headerTransformedRightOptionSvg {
     width: 42px;
     height: 42px;
     padding: 8px;
     cursor: pointer;
 }
 
-.headerTransformedRightOption .headerTransformedRightOptionImg{
+.headerTransformedRightOption .headerTransformedRightOptionImg {
     width: 42px;
     height: 42px;
     cursor: pointer;
@@ -111,7 +114,19 @@
 }
 
 /** Responsive Media Queries */
-@media only screen and (max-width: 950px) {
+@media only screen and (max-width: 900px) {
+
+    /** HeaderTransformed Section */
+    .headerTransformed {
+        box-shadow: 0px 0px 3px #ccc;
+        background-color: #fff !important;
+    }
+
+    /* HeaderTransformed Left Section */
+    .headerTransformedLeft {
+        box-shadow: none;
+        background-color: transparent;
+    }
 
     /* HeaderTransformed Right Section */
     .headerTransformedRightOption {
@@ -124,6 +139,4 @@
     }
 }
 
-@media only screen and (max-width: 680px) {
-
-}
+@media only screen and (max-width: 680px) {}

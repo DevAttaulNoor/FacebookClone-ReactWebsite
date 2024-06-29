@@ -220,7 +220,7 @@ function ReelCreate() {
     return (
         <div className="reelCreate">
             <div className='reelCreateLeftbar'>
-                <div>
+                <div className='reelCreateLeftbarInner'>
                     <div className='reelCreateLeftbar_Top'>
                         <div className="reelCreateLeftbar_TopHeading">
                             <p>Your story</p>
@@ -236,14 +236,16 @@ function ReelCreate() {
                     <div className="reelCreateLeftbar_Middle">
                         {showForText && (
                             <div className='textReelContainer'>
-                                <textarea
-                                    rows="7"
-                                    placeholder='Start typing'
-                                    value={textAreaValue}
-                                    onChange={handleTextAreaChange}
-                                ></textarea>
+                                <div className='textareaContainer'>
+                                    <textarea
+                                        rows="7"
+                                        placeholder='Start typing'
+                                        value={textAreaValue}
+                                        onChange={handleTextAreaChange}
+                                    ></textarea>
 
-                                <p id='limitNote'>{textAreaValueCount} charcters remaining</p>
+                                    <p id='limitNote'>{textAreaValueCount} charcters remaining</p>
+                                </div>
 
                                 <select name="fonts" onChange={(e) => handleFontStyleChange(e.target.value)}>
                                     {fontStyles.map((fontStyle) => (
@@ -294,6 +296,7 @@ function ReelCreate() {
                         </div>
                     </div>
                 </div>
+
 
                 {(showTextContent || showPhotoContent) && (
                     <div className="reelCreateLeftbar_Bottom">
