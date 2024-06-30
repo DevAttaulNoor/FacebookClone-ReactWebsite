@@ -317,11 +317,11 @@
         width: 100%;
         height: fit-content;
         flex-direction: row;
-        padding: 10px 0px;
     }
 
     .reelpageLeftbarTop {
-        margin: 0px 16px;
+        padding: 10px 0px;
+        margin: 0px 10px 0px 15px;
     }
 
     .reelpageLeftbarTop .MuiSvgIcon-root {
@@ -330,6 +330,7 @@
 
     .reelpageLeftbarMiddle {
         flex-direction: row;
+        padding: 10px 0px;
         border-right: 1px solid #E4E6EB;
     }
 
@@ -341,8 +342,15 @@
         display: none;
     }
 
+    .reelpageLeftbarMiddle .userInfoContainer,
+    .reelpageLeftbarMiddle .createReelContainer {
+        width: max-content;
+    }
+
     .reelpageLeftbarBottom {
         flex-direction: row;
+        padding: 10px 0px;
+        overflow-x: auto;
     }
 
     .reelpageLeftbarBottom h5#title {
@@ -350,6 +358,7 @@
     }
 
     .reelpageLeftbarBottom .userInfoContainer {
+        width: max-content;
         margin: 0px 6px 0px 6px;
     }
 
