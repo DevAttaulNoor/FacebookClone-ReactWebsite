@@ -30,7 +30,9 @@
 .postLikeTop .MuiSvgIcon-root {
     position: absolute;
     right: 10px;
-    padding: 4px;
+    width: 32px;
+    height: 32px;
+    padding: 6px;
     border-radius: 50%;
     cursor: pointer;
     color: #050505;
@@ -68,4 +70,22 @@
     font-size: 16px;
     font-weight: 600;
     margin-left: 8px;
+}
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 950px) {
+
+    /** Post Like Section */
+    .postLike {
+        width: 480px;
+        height: 400px;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+    /** Post Like Section */
+    .postLike {
+        width: 70%;
+        height: 380px;
+    }
 }

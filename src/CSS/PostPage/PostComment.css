@@ -30,7 +30,9 @@
 .postCommentTop .MuiSvgIcon-root {
     position: absolute;
     right: 10px;
-    padding: 4px;
+    width: 32px;
+    height: 32px;
+    padding: 6px;
     border-radius: 50%;
     cursor: pointer;
     color: #050505;
@@ -159,4 +161,23 @@
     margin: 10px 0 10px 8px;
     padding: 12px 24px 12px 14px;
     background-color: whitesmoke;
+}
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 950px) {
+
+    /** Post Comment Section */
+    .postComment {
+        width: 480px;
+        height: 400px;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+
+    /** Post Comment Section */
+    .postComment {
+        width: 70%;
+        height: 380px;
+    }
 }

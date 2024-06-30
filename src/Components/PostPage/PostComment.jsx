@@ -13,6 +13,23 @@ function PostComment({ id, userid, closeModal }) {
     const [comments, setComments] = useState([]);
     const commentsContainerRef = useRef(null);
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            postComment();
+        }
+    };
+
+    const deleteComment = async (commentId) => {
+        try {
+            // Delete a comment from the "Posts" and "Notification" collection
+            await db.collection("Posts").doc(id).collection("comments").doc(commentId).delete();
+            await db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Comments').doc(commentId).delete();
+        } catch (error) {
+            console.error("Error removing comment: ", error);
+        }
+    };
+
     const postComment = async () => {
         if (comment.trim() === '') {
             return;
@@ -59,16 +76,6 @@ function PostComment({ id, userid, closeModal }) {
 
         } catch (error) {
             console.error("Error posting comment:", error);
-        }
-    };
-
-    const deleteComment = async (commentId) => {
-        try {
-            // Delete a comment from the "Posts" and "Notification" collection
-            await db.collection("Posts").doc(id).collection("comments").doc(commentId).delete();
-            await db.collection("Users").doc(userid).collection("Notifications").doc(userid).collection('Comments').doc(commentId).delete();
-        } catch (error) {
-            console.error("Error removing comment: ", error);
         }
     };
 
@@ -122,7 +129,13 @@ function PostComment({ id, userid, closeModal }) {
             <div className="postCommentBottom">
                 <div className='commentInput'>
                     <Avatar src={user.photoURL} />
-                    <input type='text' placeholder='Write a comment...' value={comment} onChange={(e) => setComment(e.target.value)} />
+                    <input
+                        type='text'
+                        value={comment}
+                        placeholder='Write a comment...'
+                        onChange={(e) => setComment(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                    />
                     <SendIcon className='sendBtn' onClick={postComment} />
                 </div>
             </div>

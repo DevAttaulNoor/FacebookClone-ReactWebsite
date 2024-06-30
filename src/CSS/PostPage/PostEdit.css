@@ -260,3 +260,14 @@
 .EmojiPickerReact .epr-category-nav {
     justify-content: initial !important;
 }
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 950px) {}
+
+@media only screen and (max-width: 680px) {
+
+    /** Post Edit Section */
+    .postEdit {
+        width: 70%;
+    }
+}
