@@ -46,7 +46,8 @@
 /** ReelFeed Scroll Section */
 .reelFeed_Scroll {
     position: relative;
-    overflow-x: auto;
+    width: 100%;
+    max-width: 50vw;
 }
 
 .reelFeed_Scroll button {
@@ -169,4 +170,21 @@
     font-size: 12px;
     font-weight: 500;
     color: #fff;
+}
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 950px) {
+
+    /** ReelFeed Scroll Section */
+    .reelFeed_Scroll {
+        max-width: 65vw;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+
+    /** ReelFeed Scroll Section */
+    .reelFeed_Scroll {
+        max-width: 90vw;
+    }
 }

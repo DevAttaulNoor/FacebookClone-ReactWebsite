@@ -277,14 +277,16 @@ function ReelCreate() {
 
                             {showForPhoto && (
                                 <div className='photoReel'>
-                                    <textarea
-                                        rows="7"
-                                        placeholder='Start typing'
-                                        value={textAreaValue}
-                                        onChange={handleTextAreaChange}
-                                    ></textarea>
+                                    <div className='textareaContainer'>
+                                        <textarea
+                                            rows="7"
+                                            placeholder='Start typing'
+                                            value={textAreaValue}
+                                            onChange={handleTextAreaChange}
+                                        ></textarea>
 
-                                    <p id='limitNote'>{textAreaValueCount} charcters remaining</p>
+                                        <p id='limitNote'>{textAreaValueCount} charcters remaining</p>
+                                    </div>
 
                                     <select name="fonts" onChange={(e) => handleFontStyleChange(e.target.value)}>
                                         {fontStyles.map((fontStyle) => (
@@ -296,7 +298,6 @@ function ReelCreate() {
                         </div>
                     </div>
                 </div>
-
 
                 {(showTextContent || showPhotoContent) && (
                     <div className="reelCreateLeftbar_Bottom">
