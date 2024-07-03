@@ -1,5 +1,6 @@
 import "../../CSS/UserPage/UserPage.css";
-import React from "react";
+import React, { useState } from "react";
+import Modal from 'react-modal';
 import { Avatar } from "@mui/material";
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,15 +9,18 @@ import { db, storage } from '../../Firebase/firebase';
 import UserpageComponents from "./UserpageComponents";
 import LazyLoadingImage from "../../Assets/Utility/LazyLoadingImage";
 import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 function UserPage() {
+    Modal.setAppElement('#root');
     const dispatch = useDispatch();
     const user = useSelector((state) => state.data.user.user);
     const friendsData = useSelector((state) => state.data.friends.friendsData);
+    const [iseditProfileModalOpen, setIseditProfileModalOpen] = useState(false);
 
     const changeProfileImage = async (e) => {
         const file = e.target.files[0];
@@ -218,13 +222,34 @@ function UserPage() {
 
                     <div className="userpageTop_ProfileSectionRight">
                         <div className="userpageTop_ProfileSectionRightOption" id="addStoryBtn">
-                            <AddIcon />
-                            <p>Add to story</p>
+                            <NavLink to={'/homepage/storyreels'}>
+                                <AddIcon />
+                                <p>Add to story</p>
+                            </NavLink>
                         </div>
 
                         <div className="userpageTop_ProfileSectionRightOption" id="editProfileBtn">
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yW/r/OR6SzrfoMFg.png" alt="" />
-                            <p>Edit profile</p>
+                            <Modal className="editProfileModal" isOpen={iseditProfileModalOpen} onRequestClose={() => setIseditProfileModalOpen(false)}>
+                                <div className="editProfileModalTop">
+                                    <CloseIcon onClick={() => setIseditProfileModalOpen(false)} />
+                                    <p>Edit profile</p>
+                                </div>
+
+                                <div className="editProfileModalMiddle">
+                                    <div className="profileContainer"></div>
+                                    <div className="coverContainer"></div>
+                                    <div className="bioContainer"></div>
+                                </div>
+
+                                <div className="editProfileModalBottom">
+                                    
+                                </div>
+                            </Modal>
+
+                            <div className="userpageTop_ProfileSectionRightOptionInner" onClick={() => setIseditProfileModalOpen(true)}>
+                                <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yW/r/OR6SzrfoMFg.png" alt="" />
+                                <p>Edit profile</p>
+                            </div>
                         </div>
 
                         <div className="userpageTop_ProfileSectionRightOption" id="arrowBtn">

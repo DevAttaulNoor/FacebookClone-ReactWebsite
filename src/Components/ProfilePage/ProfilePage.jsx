@@ -5,16 +5,17 @@ import { useSelector } from "react-redux";
 import { NavLink, useLocation } from 'react-router-dom';
 import ProfilepageComponents from "./ProfilepageComponents";
 import LazyLoadingImage from "../../Assets/Utility/LazyLoadingImage";
-import AddIcon from '@mui/icons-material/Add';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 function ProfilePage() {
     const location = useLocation();
+    const friends = useSelector((state) => state.data.friends.friends);
     const friendFriendsData = useSelector((state) => state.data.friends.friendFriendsData);
     const selectedFriend = useSelector((state) => state.data.friends.selectedFriend);
     const selectedFriendData = useSelector((state) => state.data.friends.selectedFriendData);
+    const isFriend = friends.some(friend => friend.friendUid === selectedFriend);
     const baseUrl = location.pathname.includes('/friendpage/allFriends') ? '/friendpage/allFriends/profilepage' : '/profilepage';
 
     return (
@@ -59,14 +60,21 @@ function ProfilePage() {
                     </div>
 
                     <div className="profilePageTop_ProfileSectionRight">
-                        <div className="profilePageTop_ProfileSectionRightOption" id="addStoryBtn">
-                            <AddIcon />
-                            <p>Message</p>
-                        </div>
+                        {isFriend ? (
+                            <div className="profilePageTop_ProfileSectionRightOption" id="friendBtn">
+                                <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yF/r/5nzjDogBZbf.png?_nc_eui2=AeFEAd2Gr8hqE5iFj014M69jr5jr7d_7UXGvmOvt3_tRcWVQq6CW7Abth79PUUZ9xzNkb2tM1DuXqx03_2RdecH7" alt="" />
+                                <p>Friends</p>
+                            </div>
+                        ) : (
+                            <div className="profilePageTop_ProfileSectionRightOption" id="friendBtn">
+                                <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yK/r/r2FA830xjtI.png?_nc_eui2=AeF6jL-mPfHxp3Q2l3_zlRZ1LvJBHXhZHNwu8kEdeFkc3G8XZZMwaO-3gDeqPWuSSoBt_sMKaW0V310y8Er_FfN_" alt="" />
+                                <p>Add friend</p>
+                            </div>
+                        )}
 
-                        <div className="profilePageTop_ProfileSectionRightOption" id="editProfileBtn">
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yW/r/OR6SzrfoMFg.png" alt="" />
-                            <p>Add friend</p>
+                        <div className="profilePageTop_ProfileSectionRightOption" id="messageBtn">
+                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/YjBUcSAL8TC.png?_nc_eui2=AeF2qGdiV5I3eMpACVj57_XQYWMzpYRsku5hYzOlhGyS7gU7w4tIet3x6nGKruTMjeogVqCkMTBSFjIY9O41YKIk" alt="" />
+                            <p>Message</p>
                         </div>
 
                         <div className="profilePageTop_ProfileSectionRightOption" id="arrowBtn">

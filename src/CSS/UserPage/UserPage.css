@@ -1,9 +1,11 @@
 /** UserPage Section */
 .userpage {
     width: 100%;
+    height: calc(100% - 55px);
     display: flex;
     align-items: center;
     flex-direction: column;
+    overflow-y: auto;
 }
 
 /* UserPage Top Section */
@@ -25,7 +27,7 @@
 
 .coverImg {
     position: relative;
-    width: 1260px;
+    width: 1080px;
     height: 460px;
     display: flex;
     justify-content: center;
@@ -83,7 +85,7 @@
 
 /* UserPage Top Profile Section */
 .userpageTop_ProfileSection {
-    max-width: 1200px;
+    max-width: 1040px;
     width: 100%;
     height: 150px;
     display: flex;
@@ -190,6 +192,25 @@
     background-color: #E4E6EB;
 }
 
+.userpageTop_ProfileSectionRightOption a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+}
+
+.userpageTop_ProfileSectionRightOption a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+}
+
+.userpageTop_ProfileSectionRightOption .userpageTop_ProfileSectionRightOptionInner {
+    display: flex;
+    align-items: center;
+}
+
 .userpageTop_ProfileSectionRightOption p {
     font-size: 14px;
     font-weight: 600;
@@ -207,7 +228,7 @@
 
 /* UserPage Top Components Section */
 .userpageTop_Components {
-    max-width: 1200px;
+    max-width: 1040px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -292,7 +313,7 @@
 
 /* UserPage Bottom Section */
 .userpageBottom {
-    max-width: 1200px;
+    max-width: 1040px;
     width: 100%;
     display: flex;
     justify-content: center;

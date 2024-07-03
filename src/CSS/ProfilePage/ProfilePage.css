@@ -27,7 +27,7 @@
 }
 
 .profilePageTop_CoverSection span {
-    width: 1260px;
+    width: 1080px;
     height: 460px;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .profilePageTop_CoverSection .coverPhoto {
-    width: 1260px;
+    width: 1080px;
     height: 460px;
     object-fit: cover;
     border-bottom-left-radius: 8px;
@@ -50,7 +50,7 @@
 
 /* Profile Page Top Profile Section */
 .profilePageTop_ProfileSection {
-    max-width: 1200px;
+    max-width: 1040px;
     width: 100%;
     height: 150px;
     display: flex;
@@ -127,12 +127,13 @@
 }
 
 .profilePageTop_ProfileSectionRightOption {
-    background-color: #E4E6EB;
-    border-radius: 6px;
-    padding: 5px 10px;
-    margin-left: 6px;
     display: flex;
     align-items: center;
+    padding: 8px 12px;
+    margin-left: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #E4E6EB;
 }
 
 .profilePageTop_ProfileSectionRightOption:hover {
@@ -145,18 +146,18 @@
     margin-left: 5px;
 }
 
-.profilePageTop_ProfileSectionRight #addStoryBtn {
-    background-color: #1B74E4;
+.profilePageTop_ProfileSectionRight #messageBtn {
     color: #fff;
+    background-color: #1B74E4;
 }
 
-.profilePageTop_ProfileSectionRight #editProfileBtn img {
-    width: 14px;
+.profilePageTop_ProfileSectionRight #messageBtn img {
+    filter: invert(100%);
 }
 
 /* Profile Page Top Components Section */
 .profilePageTop_Components {
-    max-width: 1200px;
+    max-width: 1040px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -241,7 +242,7 @@
 
 /* Profile Page Bottom Section */
 .profilePageBottom {
-    max-width: 1200px;
+    max-width: 1040px;
     width: 100%;
     display: flex;
     justify-content: center;
