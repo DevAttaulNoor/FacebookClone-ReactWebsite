@@ -166,8 +166,11 @@
 .detailsModal_Top .MuiSvgIcon-root {
     position: absolute;
     right: 10px;
-    padding: 4px;
+    width: 32px;
+    height: 32px;
+    padding: 6px;
     border-radius: 50%;
+    cursor: pointer;
     color: #050505;
     background-color: #E4E6EB;
 }
@@ -359,10 +362,12 @@
 
 .hobbiesModal_Top .MuiSvgIcon-root {
     position: absolute;
-    top: 10px;
     right: 10px;
-    padding: 4px;
+    width: 32px;
+    height: 32px;
+    padding: 6px;
     border-radius: 50%;
+    cursor: pointer;
     color: #050505;
     background-color: #E4E6EB;
 }
@@ -563,8 +568,11 @@
 .featuredModal_Top .MuiSvgIcon-root {
     position: absolute;
     right: 10px;
-    padding: 4px;
+    width: 32px;
+    height: 32px;
+    padding: 6px;
     border-radius: 50%;
+    cursor: pointer;
     color: #050505;
     background-color: #E4E6EB;
 }

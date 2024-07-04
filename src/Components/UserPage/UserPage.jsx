@@ -229,28 +229,40 @@ function UserPage() {
                         </div>
 
                         <div className="userpageTop_ProfileSectionRightOption" id="editProfileBtn">
-                            <Modal className="editProfileModal" isOpen={iseditProfileModalOpen} onRequestClose={() => setIseditProfileModalOpen(false)}>
-                                <div className="editProfileModalTop">
-                                    <CloseIcon onClick={() => setIseditProfileModalOpen(false)} />
-                                    <p>Edit profile</p>
-                                </div>
-
-                                <div className="editProfileModalMiddle">
-                                    <div className="profileContainer"></div>
-                                    <div className="coverContainer"></div>
-                                    <div className="bioContainer"></div>
-                                </div>
-
-                                <div className="editProfileModalBottom">
-                                    
-                                </div>
-                            </Modal>
-
                             <div className="userpageTop_ProfileSectionRightOptionInner" onClick={() => setIseditProfileModalOpen(true)}>
                                 <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yW/r/OR6SzrfoMFg.png" alt="" />
                                 <p>Edit profile</p>
                             </div>
                         </div>
+
+                        <Modal className="editProfileModal" isOpen={iseditProfileModalOpen} onRequestClose={() => setIseditProfileModalOpen(false)}>
+                            <div className="editProfileModalTop">
+                                <CloseIcon onClick={() => setIseditProfileModalOpen(false)} />
+                                <p>Edit profile</p>
+                            </div>
+
+                            <div className="editProfileModalMiddle">
+                                <div className="profileContainer">
+                                    <div className="profileContainerTop">
+                                        <h3>Profile picture</h3>
+                                        <p>Edit</p>
+                                    </div>
+
+                                    <div className="profileContainerBottom">
+                                        <div className="profilePhoto" onClick={() => document.getElementById('profileImageInput').click()}>
+                                            <Avatar src={user.photoURL} />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="coverContainer"></div>
+                                <div className="bioContainer"></div>
+                            </div>
+
+                            <div className="editProfileModalBottom">
+
+                            </div>
+                        </Modal>
 
                         <div className="userpageTop_ProfileSectionRightOption" id="arrowBtn">
                             <KeyboardArrowDownIcon />
