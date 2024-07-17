@@ -31,17 +31,24 @@ The key features of such a platform include:
 - Activity Notifications: Users receive notifications for various activities such as friend requests, likes, comments, and messages.
 
 **7. News Feed**
-Dynamic Feed: A continuously updating feed of posts from friends and pages the user follows.
+- Dynamic Feed: A continuously updating feed of posts from friends and pages the user follows.
 
 **8. Search Functionality**
-User Search: Users can search for other users by name or email.
-Content Search: Users can search for specific posts, images, or videos across the platform.
+- User Search: Users can search for other users by name or email.
+- Content Search: Users can search for specific posts, images, or videos across the platform.
 
 ## Technologies Used
+- **CSS**: Stylesheets for visually styling the web pages.
 - **React.js**: A JavaScript library for building user interfaces.
 - **React Router**: A library for routing in React applications.
-- **CSS**: A utility-first CSS framework for rapidly building custom designs.
-- **Redux**: A predictable state container for managing the application's state.
+- **React Modal**: A customizable modal component for React, allowing you to create modal dialogs and popups with ease.
+- **React Lazy Load Image**: A React component that optimizes the loading of images by delaying the loading of off-screen images until they are needed.
+- **HTML to Canvas**: A library that allows you to take screenshots of web pages or parts of them by rendering HTML into canvas elements.
+- **Emoji Picker React**: A customizable and easy-to-use emoji picker component for React applications, allowing users to select and insert emojis.
+- **Material UI**: A comprehensive set of UI components based on Material Design, allowing you to build attractive and responsive user interfaces.
+- **Material UI Icons**: A collection of Material Design icons for use with Material-UI components, providing a wide range of customizable icons.
+- **Firebase**: A comprehensive app development platform from Google that provides services such as authentication, real-time databases, cloud storage, and more.
+- **Redux Toolkit**: The official, recommended way to write Redux logic. It includes simplified APIs, best practices, and built-in support for common use cases.
 
 ## Getting Started
 1. Clone the repository: `git clone https://github.com/DevAttaulNoor/FacebookClone-ReactWebsite.git`
