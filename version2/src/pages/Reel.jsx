@@ -1,5 +1,7 @@
-export const Reel = () => {
+const Reel = () => {
     return (
         <div>Reel</div>
     )
 }
+
+export default Reel

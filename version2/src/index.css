@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+@layer base {}
+
+@layer components {
+    .outerContainerStyle {
+        @apply h-full w-full max-w-[1920px] flex flex-col justify-between mx-auto shadow-xl overflow-hidden;
+    }
+}

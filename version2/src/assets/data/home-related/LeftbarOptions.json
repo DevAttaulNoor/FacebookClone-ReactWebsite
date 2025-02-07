@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "title": "User",
+        "icon": "PROFILE_AVATAR",
+        "path": "USER"
+    },
+    {
+        "id": 2,
+        "title": "Friend",
+        "icon": "FRIEND",
+        "path": "FRIEND"
+    },
+    {
+        "id": 3,
+        "title": "Video",
+        "icon": "VIDEO",
+        "path": "VIDEO"
+    },
+    {
+        "id": 4,
+        "title": "Group",
+        "icon": "GROUP",
+        "path": "GROUP"
+    },
+    {
+        "id": 5,
+        "title": "Saved",
+        "icon": "SAVED",
+        "path": "SAVED"
+    }
+]

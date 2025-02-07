@@ -1,5 +1,5 @@
-export const Error = () => {
+export const Error = ({ errorData }) => {
     return (
-        <div>Error</div>
+        <div>Error {errorData.data}</div>
     )
 }
