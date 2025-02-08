@@ -1,12 +1,18 @@
 export const Routes = {
-    LAUNCH: {
-        path: '/launch',
-        title: 'Launch',
-        metaTitle: 'Launch',
-        metaDescription: 'Launch'
+    LOGIN: {
+        path: '/',
+        title: 'Login',
+        metaTitle: 'Login',
+        metaDescription: 'Login'
+    },
+    SIGNUP: {
+        path: '/signup',
+        title: 'Create new account',
+        metaTitle: 'Create new account',
+        metaDescription: 'Create new account'
     },
     HOME: {
-        path: '/',
+        path: '/home',
         title: 'Home',
         metaTitle: 'Home',
         metaDescription: 'Home'

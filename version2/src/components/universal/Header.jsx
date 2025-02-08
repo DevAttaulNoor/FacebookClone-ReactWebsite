@@ -103,7 +103,7 @@ export const Header = () => {
 
             <div className='flex items-center justify-end py-2 gap-2'>
                 {headerSideOptions.map((data) => (
-                    <span title={data.title} className='flex items-center justify-center text-2xl p-2.5 rounded-full cursor-pointer bg-[#E4E6EB]'>
+                    <span key={data.id} title={data.title} className='flex items-center justify-center text-2xl p-2.5 rounded-full cursor-pointer bg-[#E4E6EB]'>
                         {data.icon}
                     </span>
                 ))}

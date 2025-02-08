@@ -9,7 +9,8 @@ import { Error } from "./pages/General/Error";
 import { Loading } from "./pages/General/Loading";
 import { OuterContainer } from "./layouts/OuterContainer";
 
-const Launch = lazy(() => import("./pages/Launch"));
+const Login = lazy(() => import("./pages/Launch/Login"));
+const Signup = lazy(() => import("./pages/Launch/Signup"));
 const Home = lazy(() => import("./pages/Home"));
 const Friend = lazy(() => import("./pages/Friend"));
 const Group = lazy(() => import("./pages/Group"));
@@ -36,7 +37,8 @@ const routes = createBrowserRouter([
         element: <OuterContainer />,
         errorElement: <ErrorBoundary />,
         children: [
-            { path: Routes.LAUNCH.path, element: <Launch /> },
+            { path: Routes.LOGIN.path, element: <Login /> },
+            { path: Routes.SIGNUP.path, element: <Signup /> },
             { path: Routes.HOME.path, element: <Home /> },
             { path: Routes.FRIEND.path, element: <Friend /> },
             { path: Routes.GROUP.path, element: <Group /> },
