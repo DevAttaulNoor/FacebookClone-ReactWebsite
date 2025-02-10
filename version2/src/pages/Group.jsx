@@ -1,7 +1,5 @@
 const Group = () => {
-    return (
-        <div>Group</div>
-    )
-}
+    return <div>Group</div>;
+};
 
-export default Group
+export default Group;

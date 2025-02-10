@@ -1,74 +1,74 @@
 export const Routes = {
     LOGIN: {
-        path: '/',
-        title: 'Login',
-        metaTitle: 'Login',
-        metaDescription: 'Login'
+        path: "/",
+        title: "Login",
+        metaTitle: "Login",
+        metaDescription: "Login",
     },
     SIGNUP: {
-        path: '/signup',
-        title: 'Create new account',
-        metaTitle: 'Create new account',
-        metaDescription: 'Create new account'
+        path: "/signup",
+        title: "Create new account",
+        metaTitle: "Create new account",
+        metaDescription: "Create new account",
     },
     HOME: {
-        path: '/home',
-        title: 'Home',
-        metaTitle: 'Home',
-        metaDescription: 'Home'
+        path: "/home",
+        title: "Home",
+        metaTitle: "Home",
+        metaDescription: "Home",
     },
     FRIEND: {
-        path: '/friend',
-        title: 'Friend',
-        metaTitle: 'Friend',
-        metaDescription: 'Friend'
+        path: "/friend",
+        title: "Friend",
+        metaTitle: "Friend",
+        metaDescription: "Friend",
     },
     GROUP: {
-        path: '/group',
-        title: 'Group',
-        metaTitle: 'Group',
-        metaDescription: 'Group'
+        path: "/group",
+        title: "Group",
+        metaTitle: "Group",
+        metaDescription: "Group",
     },
     SAVED: {
-        path: '/saved',
-        title: 'Saved',
-        metaTitle: 'Saved',
-        metaDescription: 'Saved'
+        path: "/saved",
+        title: "Saved",
+        metaTitle: "Saved",
+        metaDescription: "Saved",
     },
     VIDEO: {
-        path: '/video',
-        title: 'Video',
-        metaTitle: 'Video',
-        metaDescription: 'Video'
+        path: "/video",
+        title: "Video",
+        metaTitle: "Video",
+        metaDescription: "Video",
     },
     BOOKMARK: {
-        path: '/bookmark',
-        title: 'Bookmark',
-        metaTitle: 'Bookmark',
-        metaDescription: 'Bookmark'
+        path: "/bookmark",
+        title: "Bookmark",
+        metaTitle: "Bookmark",
+        metaDescription: "Bookmark",
     },
     USER: {
-        path: '/user',
-        title: 'User',
-        metaTitle: 'User',
-        metaDescription: 'User'
+        path: "/user",
+        title: "User",
+        metaTitle: "User",
+        metaDescription: "User",
     },
     REEL: {
-        path: '/reel',
-        title: 'Reel',
-        metaTitle: 'Reel',
-        metaDescription: 'Reel'
+        path: "/reel",
+        title: "Reel",
+        metaTitle: "Reel",
+        metaDescription: "Reel",
     },
     PROFILE: {
-        path: '/profile',
-        title: 'Profile',
-        metaTitle: 'Profile',
-        metaDescription: 'Profile'
+        path: "/profile",
+        title: "Profile",
+        metaTitle: "Profile",
+        metaDescription: "Profile",
     },
     POST: {
-        path: '/post',
-        title: 'Post',
-        metaTitle: 'Post',
-        metaDescription: 'Post'
-    }
+        path: "/post",
+        title: "Post",
+        metaTitle: "Post",
+        metaDescription: "Post",
+    },
 };

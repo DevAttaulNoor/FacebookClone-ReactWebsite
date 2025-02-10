@@ -1,7 +1,5 @@
 const Reel = () => {
-    return (
-        <div>Reel</div>
-    )
-}
+    return <div>Reel</div>;
+};
 
-export default Reel
+export default Reel;

@@ -17,6 +17,10 @@ import { IoEllipsisHorizontalSharp } from "react-icons/io5";
 import { IoMdAdd } from "react-icons/io";
 import { FaAngleDown } from "react-icons/fa6";
 
+import { BiLike } from "react-icons/bi";
+import { BiSolidLike } from "react-icons/bi";
+import { FaRegCommentDots } from "react-icons/fa";
+
 
 export const ReactIcons = {
     HOME: <IoHome />,
@@ -38,4 +42,9 @@ export const ReactIcons = {
     OPTIONS_THREE_DOTS: <IoEllipsisHorizontalSharp />,
     ADD_PLUS: <IoMdAdd />,
     DOWN: <FaAngleDown />,
-}
+
+    // Post Feed
+    COMMENT: <FaRegCommentDots />,
+    LIKE: <BiLike />,
+    LIKE_OUTLINE: <BiSolidLike />,
+};

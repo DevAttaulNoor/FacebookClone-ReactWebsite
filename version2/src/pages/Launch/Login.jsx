@@ -1,44 +1,51 @@
-import { Link } from "react-router"
-import { Routes } from "@constants/Routes"
+import { Link } from "react-router";
+import { Routes } from "@constants/Routes";
 
 const Login = () => {
     return (
-        <div className='w-full h-full flex items-center justify-center py-10'>
+        <div className="flex h-full w-full items-center justify-center py-10">
             <div className="flex flex-col gap-2">
-                <h1 className="text-5xl font-bold text-[#1877f2]">facebook</h1>
-                <p className="w-2/3 text-2xl text-slate-900">Facebook helps you connect and share with the people in your life.</p>
+                <h1 className="text-5xl font-bold text-customBlue-default">facebook</h1>
+                <p className="w-2/3 text-2xl text-slate-900">
+                    Facebook helps you connect and share with the people in your
+                    life.
+                </p>
             </div>
 
-            <div className="flex flex-col p-4 gap-3.5 rounded-lg bg-white">
-                <form className='flex flex-col gap-3.5'>
+            <div className="flex flex-col gap-3.5 rounded-lg bg-white p-4">
+                <form className="flex flex-col gap-3.5">
                     <input
                         type="email"
                         placeholder="Email address"
                         required
-                        className="w-92 p-4 rounded-md outline-none border border-slate-300"
+                        className="loginInputStyle"
                     />
 
                     <input
                         type="password"
                         placeholder="Password"
                         required
-                        className="w-92 p-4 rounded-md outline-none border border-slate-300"
+                        className="loginInputStyle"
                     />
 
-                    <button className="text-xl font-semibold px-4 py-2.5 border border-slate-100 rounded-md outline-none text-white bg-[#1877f2]">Log in</button>
+                    <button className="rounded-md border border-slate-100 bg-customtext-customBlue-default px-4 py-2.5 text-xl font-semibold text-white outline-none">
+                        Log in
+                    </button>
                 </form>
 
-                <button className="text-sm outline-none text-[#1877f2]">Forgotten password?</button>
+                <button className="text-sm text-customBlue-default outline-none">
+                    Forgotten password?
+                </button>
                 <hr className="text-slate-300" />
                 <Link
                     to={Routes.SIGNUP.path}
-                    className="w-fit text-lg font-bold px-4 py-3 mx-auto rounded-md text-white bg-[#42b72a]"
+                    className="mx-auto w-fit rounded-md bg-[#42b72a] px-4 py-3 text-lg font-bold text-white"
                 >
                     {Routes.SIGNUP.title}
                 </Link>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;

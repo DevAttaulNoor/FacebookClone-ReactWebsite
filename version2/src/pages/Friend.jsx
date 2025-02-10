@@ -1,7 +1,5 @@
 const Friend = () => {
-    return (
-        <div>Friend</div>
-    )
-}
+    return <div>Friend</div>;
+};
 
-export default Friend
+export default Friend;

@@ -1,5 +1,5 @@
-import { Outlet } from "react-router"
-import { Header } from "../components/universal/Header"
+import { Outlet } from "react-router";
+import { Header } from "../components/universal/Header";
 
 export const OuterContainer = ({ children }) => {
     return (
@@ -7,5 +7,5 @@ export const OuterContainer = ({ children }) => {
             <Header />
             {children ? children : <Outlet />}
         </main>
-    )
-}
+    );
+};
