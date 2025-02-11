@@ -32,7 +32,11 @@ export default {
             boxShadow: {
                 customFull: '0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1)',
                 customFull2: '1px 1px 10px 1px rgb(0, 0, 0, 0.1)'
-            }
+            },
+
+            backgroundImage: {
+                'coverPhoto-gradient': 'linear-gradient(to top, #FFFFFF, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0))',
+            },
         },
     },
     plugins: [],
