@@ -21,6 +21,12 @@ import { BiLike } from "react-icons/bi";
 import { BiSolidLike } from "react-icons/bi";
 import { FaRegCommentDots } from "react-icons/fa";
 
+import { IoSettingsSharp } from "react-icons/io5";
+import { IoPeople } from "react-icons/io5";
+import { BsFillPersonPlusFill } from "react-icons/bs";
+import { BsPersonLinesFill } from "react-icons/bs";
+import { MdOutlineGroupAdd } from "react-icons/md";
+
 
 export const ReactIcons = {
     HOME: <IoHome />,
@@ -47,4 +53,13 @@ export const ReactIcons = {
     COMMENT: <FaRegCommentDots />,
     LIKE: <BiLike />,
     LIKE_OUTLINE: <BiSolidLike />,
+
+    // Friends Page
+    SETTING: <IoSettingsSharp />,
+    FRIENDS_STYLE2: <IoPeople />,
+    FRIENDS_REQUEST: <BsFillPersonPlusFill />,
+    FRIENDS_LIST: <BsPersonLinesFill />,
+
+    // Group
+    GROUP_LIST: <MdOutlineGroupAdd />,
 };

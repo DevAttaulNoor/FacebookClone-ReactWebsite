@@ -1,8 +1,8 @@
 import { ReactIcons } from "@constants/ReactIcons"
 
-export const FeedPost = () => {
+export const FeedPost = ({ postContainerStyle = 'w-full' }) => {
     return (
-        <div className='w-full flex flex-col gap-4 rounded-xl shadow-customFull2 bg-white'>
+        <div className={`${postContainerStyle} flex flex-col gap-4 rounded-xl shadow-customFull2 bg-white`}>
             <div className="flex items-center justify-between p-4 pb-0">
                 <div className="flex items-center gap-2.5">
                     <span className="text-4xl">{ReactIcons.PROFILE_AVATAR}</span>

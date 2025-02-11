@@ -17,6 +17,7 @@ export default {
             colors: {
                 customBlue: {
                     default: '#1877f2',
+                    100: '#E7F3FF',
                     200: '#385898'
                 },
 

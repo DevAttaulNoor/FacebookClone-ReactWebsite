@@ -28,7 +28,7 @@ const Login = () => {
                         className="loginInputStyle"
                     />
 
-                    <button className="rounded-md border border-slate-100 bg-customtext-customBlue-default px-4 py-2.5 text-xl font-semibold text-white outline-none">
+                    <button className="rounded-md border border-slate-100 bg-customBlue-default px-4 py-2.5 text-xl font-semibold text-white outline-none">
                         Log in
                     </button>
                 </form>

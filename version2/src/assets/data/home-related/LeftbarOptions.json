@@ -1,9 +1,9 @@
 [
     {
         "id": 1,
-        "title": "User",
+        "title": "Profile",
         "icon": "PROFILE_AVATAR",
-        "path": "USER"
+        "path": "PROFILE"
     },
     {
         "id": 2,

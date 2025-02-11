@@ -23,11 +23,29 @@ export const Routes = {
         metaTitle: "Friend",
         metaDescription: "Friend",
     },
+    FRIEND_AllREQUEST: {
+        path: "/friend/allRequest",
+        title: "Friend Requests",
+        metaTitle: "Friend Requests",
+        metaDescription: "Friend Requests",
+    },
+    FRIEND_AllFRIENDS: {
+        path: "/friend/friendlist",
+        title: "All friends",
+        metaTitle: "All friends",
+        metaDescription: "All friends",
+    },
     GROUP: {
         path: "/group",
         title: "Group",
         metaTitle: "Group",
         metaDescription: "Group",
+    },
+    GROUP_LIST: {
+        path: "/group/grouplist",
+        title: "Your Groups",
+        metaTitle: "Your Groups",
+        metaDescription: "Your Groups",
     },
     SAVED: {
         path: "/saved",
@@ -41,17 +59,17 @@ export const Routes = {
         metaTitle: "Video",
         metaDescription: "Video",
     },
+    VIDEO_SAVED: {
+        path: "/video/saved",
+        title: "Saved Videos",
+        metaTitle: "Saved Videos",
+        metaDescription: "Saved Videos",
+    },
     BOOKMARK: {
         path: "/bookmark",
         title: "Bookmark",
         metaTitle: "Bookmark",
         metaDescription: "Bookmark",
-    },
-    USER: {
-        path: "/user",
-        title: "User",
-        metaTitle: "User",
-        metaDescription: "User",
     },
     REEL: {
         path: "/reel",
