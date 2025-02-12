@@ -26,6 +26,7 @@ import { IoPeople } from "react-icons/io5";
 import { BsFillPersonPlusFill } from "react-icons/bs";
 import { BsPersonLinesFill } from "react-icons/bs";
 import { MdOutlineGroupAdd } from "react-icons/md";
+import { FaCamera } from "react-icons/fa";
 
 
 export const ReactIcons = {
@@ -62,4 +63,7 @@ export const ReactIcons = {
 
     // Group
     GROUP_LIST: <MdOutlineGroupAdd />,
+
+    // Profile Page
+    CAMERA: <FaCamera />,
 };

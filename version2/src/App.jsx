@@ -18,7 +18,7 @@ const Home = lazy(() => import("./pages/Home"));
 const Saved = lazy(() => import("./pages/Saved"));
 const Bookmark = lazy(() => import("./pages/Bookmark"));
 const Reel = lazy(() => import("./pages/Reel"));
-const Profile = lazy(() => import("./pages/Profile"));
+const Profile = lazy(() => import("./pages/Profile/Profile"));
 const Post = lazy(() => import("./pages/Post"));
 
 const ErrorBoundary = () => {
@@ -55,11 +55,18 @@ const routes = createBrowserRouter([
             { path: Routes.GROUP.path, element: <Group /> },
             { path: Routes.GROUP_LIST.path, element: <Group /> },
 
+            // Profile Page
+            { path: Routes.PROFILE.path, element: <Profile /> },
+            { path: Routes.PROFILE_ABOUT.path, element: <Profile /> },
+            { path: Routes.PROFILE_PHOTO.path, element: <Profile /> },
+            { path: Routes.PROFILE_VIDEO.path, element: <Profile /> },
+            { path: Routes.PROFILE_FRIEND.path, element: <Profile /> },
+
+
             { path: Routes.SAVED.path, element: <Saved /> },
             { path: Routes.VIDEO.path, element: <Video /> },
             { path: Routes.BOOKMARK.path, element: <Bookmark /> },
             { path: Routes.REEL.path, element: <Reel /> },
-            { path: Routes.PROFILE.path, element: <Profile /> },
             { path: Routes.POST.path, element: <Post /> },
         ],
     },

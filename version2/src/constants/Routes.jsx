@@ -83,6 +83,30 @@ export const Routes = {
         metaTitle: "Profile",
         metaDescription: "Profile",
     },
+    PROFILE_ABOUT: {
+        path: "/profile/about",
+        title: "Intro",
+        metaTitle: "About",
+        metaDescription: "About",
+    },
+    PROFILE_VIDEO: {
+        path: "/profile/video",
+        title: "Video",
+        metaTitle: "Video",
+        metaDescription: "Video",
+    },
+    PROFILE_PHOTO: {
+        path: "/profile/photo",
+        title: "Photo",
+        metaTitle: "Photo",
+        metaDescription: "Photo",
+    },
+    PROFILE_FRIEND: {
+        path: "/profile/friend",
+        title: "Friend",
+        metaTitle: "Friend",
+        metaDescription: "Friend",
+    },
     POST: {
         path: "/post",
         title: "Post",

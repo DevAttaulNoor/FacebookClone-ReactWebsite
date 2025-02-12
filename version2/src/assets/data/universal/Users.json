@@ -2,51 +2,145 @@
     {
         "id": 1,
         "name": "John Doe",
-        "image": "/Images/universal/users/albert-dera.jpg"
+        "profilephoto": "/Images/universal/users/albert-dera.jpg",
+        "coverphoto": "/Images/universal/users/albert-dera.jpg",
+        "bio": "Workoholic and a gym rat",
+        "friends": [
+            {
+                "id": 2,
+                "name": "Michael Smith",
+                "profilephoto": "/Images/universal/users/ayo-ogunseinde.jpg",
+                "coverphoto": "/Images/universal/users/ayo-ogunseinde.jpg"
+            },
+            {
+                "id": 5,
+                "name": "Daniel Wilson",
+                "profilephoto": "/Images/universal/users/erik-lucatero.jpg",
+                "coverphoto": "/Images/universal/users/erik-lucatero.jpg"
+            }
+        ]
     },
     {
         "id": 2,
         "name": "Michael Smith",
-        "image": "/Images/universal/users/ayo-ogunseinde.jpg"
+        "profilephoto": "/Images/universal/users/ayo-ogunseinde.jpg",
+        "coverphoto": "/Images/universal/users/ayo-ogunseinde.jpg",
+        "friends": [
+            {
+                "id": 4,
+                "name": "Christopher Brown",
+                "profilephoto": "/Images/universal/users/christopher-campbell.jpg",
+                "coverphoto": "/Images/universal/users/christopher-campbell.jpg"
+            },
+            {
+                "id": 6,
+                "name": "James Miller",
+                "profilephoto": "/Images/universal/users/harps-joseph.jpg",
+                "coverphoto": "/Images/universal/users/harps-joseph.jpg"
+            }
+        ]
     },
     {
         "id": 3,
         "name": "David Johnson",
-        "image": "/Images/universal/users/charles-etoroma.jpg"
+        "profilephoto": "/Images/universal/users/charles-etoroma.jpg",
+        "coverphoto": "/Images/universal/users/charles-etoroma.jpg",
+        "friends": []
     },
     {
         "id": 4,
         "name": "Christopher Brown",
-        "image": "/Images/universal/users/christopher-campbell.jpg"
+        "profilephoto": "/Images/universal/users/christopher-campbell.jpg",
+        "coverphoto": "/Images/universal/users/christopher-campbell.jpg",
+        "friends": [
+            {
+                "id": 1,
+                "name": "John Doe",
+                "profilephoto": "/Images/universal/users/albert-dera.jpg",
+                "coverphoto": "/Images/universal/users/albert-dera.jpg"
+            }
+        ]
     },
     {
         "id": 5,
         "name": "Daniel Wilson",
-        "image": "/Images/universal/users/erik-lucatero.jpg"
+        "profilephoto": "/Images/universal/users/erik-lucatero.jpg",
+        "coverphoto": "/Images/universal/users/erik-lucatero.jpg",
+        "friends": [
+            {
+                "id": 3,
+                "name": "David Johnson",
+                "profilephoto": "/Images/universal/users/charles-etoroma.jpg",
+                "coverphoto": "/Images/universal/users/charles-etoroma.jpg"
+            },
+            {
+                "id": 9,
+                "name": "William Thomas",
+                "profilephoto": "/Images/universal/users/matheus-ferrero.jpg",
+                "coverphoto": "/Images/universal/users/matheus-ferrero.jpg"
+            }
+        ]
     },
     {
         "id": 6,
         "name": "James Miller",
-        "image": "/Images/universal/users/harps-joseph.jpg"
+        "profilephoto": "/Images/universal/users/harps-joseph.jpg",
+        "coverphoto": "/Images/universal/users/harps-joseph.jpg",
+        "friends": [
+            {
+                "id": 8,
+                "name": "Matthew Anderson",
+                "profilephoto": "/Images/universal/users/matheus-ferrero.jpg",
+                "coverphoto": "/Images/universal/users/matheus-ferrero.jpg"
+            }
+        ]
     },
     {
         "id": 7,
         "name": "Robert Davis",
-        "image": "/Images/universal/users/joseph-gonzalez.jpg"
+        "profilephoto": "/Images/universal/users/joseph-gonzalez.jpg",
+        "coverphoto": "/Images/universal/users/joseph-gonzalez.jpg",
+        "friends": []
     },
     {
         "id": 8,
         "name": "Matthew Anderson",
-        "image": "/Images/universal/users/lucy-night.jpg"
+        "profilephoto": "/Images/universal/users/matheus-ferrero.jpg",
+        "coverphoto": "/Images/universal/users/matheus-ferrero.jpg",
+        "friends": [
+            {
+                "id": 10,
+                "name": "Benjamin Garcia",
+                "profilephoto": "/Images/universal/users/michael-dam.jpg",
+                "coverphoto": "/Images/universal/users/michael-dam.jpg"
+            },
+            {
+                "id": 7,
+                "name": "Robert Davis",
+                "profilephoto": "/Images/universal/users/joseph-gonzalez.jpg",
+                "coverphoto": "/Images/universal/users/joseph-gonzalez.jpg"
+            }
+        ]
     },
     {
         "id": 9,
         "name": "William Thomas",
-        "image": "/Images/universal/users/matheus-ferrero.jpg"
+        "profilephoto": "/Images/universal/users/matheus-ferrero (2).jpg",
+        "coverphoto": "/Images/universal/users/matheus-ferrero (2).jpg",
+        "friends": []
     },
     {
         "id": 10,
         "name": "Benjamin Garcia",
-        "image": "/Images/universal/users/michael-dam.jpg"
+        "profilephoto": "/Images/universal/users/michael-dam.jpg",
+        "coverphoto": "/Images/universal/users/michael-dam.jpg",
+        "friends": [
+            {
+                "id": 2,
+                "name": "Michael Smith",
+                "profilephoto": "/Images/universal/users/ayo-ogunseinde.jpg",
+                "coverphoto": "/Images/universal/users/ayo-ogunseinde.jpg"
+            }
+        ]
     }
 ]
