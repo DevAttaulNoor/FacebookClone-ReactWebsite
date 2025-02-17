@@ -1,7 +1,33 @@
+import { useState } from "react";
 import { Link } from "react-router";
 import { Routes } from "@constants/Routes";
+import { InputField } from "@components/universal/inputs/InputField";
+import { auth,db } from "@services/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { getDoc, doc } from "firebase/firestore";
 
 const Login = () => {
+    const [email, setEmail] = useState('');
+    const [userData, setUserData] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+            const user = await getDoc(doc(db, "Users", userCredentials.user.uid));
+            setUserData(user.data());
+            setEmail('');
+            setError('');
+setPassword('');
+            console.log("User login successful", userData);
+        } catch (error) {
+            setError(error.message);
+            console.log("User login unsuccessful", error);
+        }
+    };
+
     return (
         <div className="flex h-full w-full items-center justify-center py-10">
             <div className="flex flex-col gap-2">
@@ -13,24 +39,37 @@ const Login = () => {
             </div>
 
             <div className="flex flex-col gap-3.5 rounded-lg bg-white p-4">
-                <form className="flex flex-col gap-3.5">
-                    <input
-                        type="email"
-                        placeholder="Email address"
-                        required
-                        className="loginInputStyle"
+                <form
+                    onSubmit={handleLogin}
+                    className="flex flex-col gap-3.5"
+                >
+                    <InputField
+                        inputData={{
+                            type: 'email',
+                            value: email,
+                            placeholder: 'Email address',
+                            onChange: (e) => setEmail(e.target.value),
+                            required: true
+                        }}
+                        inputStyle="w-96 p-4"
                     />
 
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        required
-                        className="loginInputStyle"
+                    <InputField
+                        inputData={{
+                            type: 'password',
+                            value: password,
+                            placeholder: 'Password',
+                            onChange: (e) => setPassword(e.target.value),
+                            required: true
+                        }}
+                        inputStyle="w-96 p-4"
                     />
 
                     <button className="rounded-md border border-slate-100 bg-customBlue-default px-4 py-2.5 text-xl font-semibold text-white outline-none">
                         Log in
                     </button>
+
+                    {error && <p className="text-center text-sm text-red-500">{error}</p>}
                 </form>
 
                 <button className="text-sm text-customBlue-default outline-none">

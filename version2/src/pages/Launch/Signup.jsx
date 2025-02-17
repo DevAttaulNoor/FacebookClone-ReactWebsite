@@ -1,5 +1,10 @@
+import { useState } from "react";
 import { Link } from "react-router";
+import { auth, db } from "@services/firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { Routes } from "@constants/Routes";
+import { InputField } from "@components/universal/inputs/InputField";
+import { setDoc, doc } from "firebase/firestore";
 
 const genderOptions = [
     {
@@ -12,18 +17,85 @@ const genderOptions = [
     },
     {
         id: 3,
-        title: 'Custom'
+        title: 'Trans'
     },
-]
+];
+
+const dobOptions = [
+    {
+        id: 1,
+        title: 'day',
+        value: Array.from({ length: 31 }, (_, i) => i + 1)
+    },
+    {
+        id: 2,
+        title: 'month',
+        value: Array.from({ length: 12 }, (_, i) => new Date(2000, i).toLocaleString('en', { month: 'short' })),
+    },
+    {
+        id: 3,
+        title: 'year',
+        value: Array.from({ length: 100 }, (_, i) => new Date().getUTCFullYear() - i),
+    },
+];
+
+const initialState = {
+    name: { first: '', last: '' },
+    email: '',
+    gender: '',
+    password: '',
+    dob: { day: "", month: "", year: "" },
+};
 
 const Signup = () => {
-    const days = Array.from({ length: 31 }, (_, i) => i + 1);
-    const months = Array.from({ length: 12 }, (_, i) => new Date(2000, i).toLocaleString('en', { month: 'short' }));
-    const years = Array.from({ length: 100 }, (_, i) => new Date().getUTCFullYear() - i);
+    const [formData, setFormData] = useState(initialState);
+    const [error, setError] = useState('');
+
+    const handleDobChange = (type, value) => {
+        setFormData(prev => ({
+            ...prev,
+            dob: { ...prev.dob, [type]: value }
+        }));
+    };
+
+    const handleGenderChange = (value) => {
+        setFormData(prev => ({
+            ...prev,
+            gender: value
+        }));
+    };
+
+    const handleSignup = async (e) => {
+        e.preventDefault();
+
+        try {
+            const userCredentials = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+            const user = userCredentials.user;
+
+            await updateProfile(user, {
+                displayName: `${formData.name.first} ${formData.name.last}`,
+            });
+
+            await setDoc(doc(db, "Users", user.uid), {
+                uid: user.uid,
+                email: user.email,
+                gender: formData.gender,
+                username: user.displayName,
+                dob: `${formData.dob.day}/${formData.dob.month}/${formData.dob.year}`,
+            });
+
+            setFormData(initialState)
+            setError('');
+            console.log("User creation successful", user);
+        } catch (error) {
+            setError(error.message);
+            console.error("User creation failed", error);
+        }
+    };
 
     return (
-        <div className="flex h-full w-full flex-col items-center py-10 gap-10">
-            <h1 className="text-7xl font-bold text-customBlue-default">facebook</h1>
+        <div className="flex h-full w-full flex-col items-center py-8 gap-8 overflow-y-auto">
+            <h1 className="text-[64px] font-bold text-customBlue-default">facebook</h1>
 
             <div className="flex flex-col rounded-lg bg-white shadow-customFull">
                 <div className="flex flex-col items-center justify-center px-4 py-2.5">
@@ -38,64 +110,74 @@ const Signup = () => {
                 <hr className="text-slate-500" />
 
                 <div className="flex flex-col items-center gap-3.5 p-4">
-                    <form className="flex flex-col gap-3.5">
-                        <div className="w-96 flex items-center gap-2.5">
-                            <input
-                                type="text"
-                                placeholder="First name"
-                                required
-                                className="w-full rounded-md border border-slate-300 px-3 py-2"
+                    <form
+                        onSubmit={handleSignup}
+                        className="flex flex-col gap-3.5"
+                    >
+                        <div className="w-full flex items-center gap-2.5">
+                            <InputField
+                                inputData={{
+                                    type: 'text',
+                                    value: formData.name.first,
+                                    placeholder: "First name",
+                                    onChange: (e) => setFormData(prev => ({ ...prev, name: { ...prev.name, first: e.target.value } })),
+                                    required: true,
+                                }}
+                                inputStyle="px-3 py-2"
                             />
 
-                            <input
-                                type="text"
-                                placeholder="Last name"
-                                required
-                                className="w-full rounded-md border border-slate-300 px-3 py-2"
+                            <InputField
+                                inputData={{
+                                    type: 'text',
+                                    value: formData.name.last,
+                                    placeholder: "Last name",
+                                    onChange: (e) => setFormData(prev => ({ ...prev, name: { ...prev.name, last: e.target.value } })),
+                                    required: true,
+                                }}
+                                inputStyle="px-3 py-2"
                             />
                         </div>
 
-                        <input
-                            type="email"
-                            placeholder="Email address"
-                            required
-                            className="w-full rounded-md border border-slate-300 px-3 py-2"
+                        <InputField
+                            inputData={{
+                                type: 'email',
+                                value: formData.email,
+                                placeholder: "Email address",
+                                onChange: (e) => setFormData(prev => ({ ...prev, email: e.target.value })),
+                                required: true,
+                            }}
+                            inputStyle="px-3 py-2"
                         />
 
-                        <input
-                            type="password"
-                            placeholder="New password"
-                            required
-                            className="w-full rounded-md border border-slate-300 px-3 py-2"
+                        <InputField
+                            inputData={{
+                                type: 'password',
+                                value: formData.password,
+                                placeholder: "New password",
+                                onChange: (e) => setFormData(prev => ({ ...prev, password: e.target.value })),
+                                required: true,
+                            }}
+                            inputStyle="px-3 py-2"
                         />
 
                         <div className="flex flex-col gap-2">
                             <h5 className="text-xs text-customGray-200">Date of birth</h5>
 
                             <div className="grid grid-cols-3 gap-2.5">
-                                <select className="w-full px-1 py-2 outline-none rounded-md border border-slate-300 cursor-pointer">
-                                    {days.map((day) => (
-                                        <option key={day} value={day}>
-                                            {day}
-                                        </option>
-                                    ))}
-                                </select>
-
-                                <select className="w-full px-1 py-2 outline-none rounded-md border border-slate-300 cursor-pointer">
-                                    {months.map((monthName) => (
-                                        <option key={monthName} value={monthName}>
-                                            {monthName}
-                                        </option>
-                                    ))}
-                                </select>
-
-                                <select className="w-full px-1 py-2 outline-none rounded-md border border-slate-300 cursor-pointer">
-                                    {years.map((year) => (
-                                        <option key={year} value={year}>
-                                            {year}
-                                        </option>
-                                    ))}
-                                </select>
+                                {dobOptions.map((data) => (
+                                    <select 
+                                        key={data.id}
+                                        className="w-full px-1 py-2 outline-none rounded-md border border-slate-300 cursor-pointer"
+                                        value={formData.dob[data.title]} 
+                                        onChange={(e) => handleDobChange(data.title, e.target.value)}
+                                        required
+                                    >
+                                        <option value="" disabled>Select {data.title}</option>
+                                        {data.value.map((elem, index) => (
+                                            <option key={index} value={elem}>{elem}</option>
+                                        ))}
+                                    </select>
+                                ))}
                             </div>
                         </div>
 
@@ -104,10 +186,21 @@ const Signup = () => {
 
                             <div className="grid grid-cols-3 gap-2.5">
                                 {genderOptions.map((data) => (
-                                    <div key={data.id} className='w-full flex items-center justify-between p-2 rounded-md border border-slate-300 cursor-pointer'>
+                                    <div 
+                                        key={data.id} 
+                                        onClick={() => handleGenderChange(data.title)}
+                                        className="w-full flex items-center justify-between p-2 rounded-md border border-slate-300 cursor-pointer"
+                                    >
                                         <p>{data.title}</p>
-
-                                        <input type="radio" name={data.title} id="" />
+                                        <input 
+                                            type="radio" 
+                                            name="gender" 
+                                            value={data.title}  
+                                            checked={formData.gender === data.title}  
+                                            onChange={() => handleGenderChange(data.title)} 
+                                            className="cursor-pointer" 
+                                            required 
+                                        />
                                     </div>
                                 ))}
                             </div>
@@ -140,9 +233,13 @@ const Signup = () => {
                             </p>
                         </div>
 
-                        <button className="mx-auto w-fit rounded-md bg-[#42b72a] px-16 py-2 text-lg font-bold text-white">
-                            {"Sign Up"}
+                        <button
+                            className="mx-auto w-fit rounded-md bg-[#42b72a] px-16 py-2 text-lg font-bold text-white"
+                        >
+                            Sign Up
                         </button>
+
+                        {error && <p className="text-center text-sm text-red-500">{error}</p>}
                     </form>
 
                     <Link
