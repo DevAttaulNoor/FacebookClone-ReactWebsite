@@ -6,7 +6,7 @@ import { useAuthUser } from "@hooks/useAuthUser";
 export const OuterContainer = ({ children }) => {
     const user = useAuthUser();
     const location = useLocation();
-    const headerToShow = user || (location.pathname === Routes.LOGIN.path) || (location.pathname === Routes.SIGNUP.path)
+    const headerToShow = !user || (location.pathname === Routes.LOGIN.path) || (location.pathname === Routes.SIGNUP.path)
 
     return (
         <main className="outerContainerStyle">

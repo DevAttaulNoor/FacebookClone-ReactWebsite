@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router";
 import { Routes } from "@constants/Routes";
 import { ReactIcons } from "@constants/ReactIcons";
 import fblogo from "/Images/fblogo.png";
+import { useAuthUser } from "@hooks/useAuthUser";
 
 const headerLinks = [
     {
@@ -51,14 +52,11 @@ const headerSideOptions = [
         title: "Notification",
         icon: ReactIcons.NOTIFICATION,
     },
-    {
-        id: 4,
-        title: "Profile",
-        icon: ReactIcons.PROFILE_AVATAR,
-    },
 ];
 
 export const Header = () => {
+    const user = useAuthUser();
+
     return (
         <div className="sticky top-0 z-30 grid grid-cols-[1fr_2fr_1fr] bg-white px-3 shadow">
             <div className="flex gap-2 py-2">
@@ -118,6 +116,21 @@ export const Header = () => {
                         {data.icon}
                     </span>
                 ))}
+
+                {user.profilePhoto ? (
+                    <img
+                        src={user.profilePhoto}
+                        alt={`profile picture of ${user.username}`}
+                        className="w-11 h-11 rounded-full border border-customGray-100 object-contain bg-white"
+                    />
+                ) : (
+                    <span
+                        title={"Profile"}
+                        className="flex cursor-pointer items-center justify-center rounded-full bg-[#E4E6EB] p-2.5 text-2xl"
+                    >
+                        {ReactIcons.PROFILE_AVATAR}
+                    </span>
+                )}
             </div>
         </div>
     );

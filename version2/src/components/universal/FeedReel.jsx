@@ -1,10 +1,11 @@
 import { Link } from "react-router";
+import { Routes } from "@constants/Routes";
 import { ReactIcons } from "@constants/ReactIcons";
 
 export const FeedReel = () => {
     return (
         <Link
-            to={'/homepage/storyreels'}
+            to={Routes.REEL.path}
             className='w-full flex items-center p-2 rounded-lg shadow-customFull2 bg-white cursor-pointer group'
         >
             <div className="w-full flex items-center p-2 gap-2.5 rounded-lg group-hover:bg-customGray-default">
