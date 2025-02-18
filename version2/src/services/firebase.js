@@ -1,18 +1,20 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAVTKa2YbN16CUDucwiCQHvFEQ0Gwj1Xz8",
-    authDomain: "fb-clone-v2-47a42.firebaseapp.com",
-    projectId: "fb-clone-v2-47a42",
-    storageBucket: "fb-clone-v2-47a42.firebasestorage.app",
-    messagingSenderId: "706668170631",
-    appId: "1:706668170631:web:74096b8dd1f73658055722"
+    apiKey: "AIzaSyA9lA6YzItci9gZgid3to3zEYL10U04C5o",
+    authDomain: "react-facebook-clone-e7bc0.firebaseapp.com",
+    projectId: "react-facebook-clone-e7bc0",
+    storageBucket: "react-facebook-clone-e7bc0.appspot.com",
+    messagingSenderId: "915537057768",
+    appId: "1:915537057768:web:50cf51cdd2fa935fe8765d"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
 export const db = getFirestore(app);
+export const storage = getStorage(app); 

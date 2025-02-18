@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router";
-import { auth, db } from "@services/firebase";
+import { Link, useNavigate } from "react-router";
+import { auth, db, storage } from "@services/firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { Routes } from "@constants/Routes";
 import { InputField } from "@components/universal/inputs/InputField";
 import { setDoc, doc } from "firebase/firestore";
+import { ReactIcons } from "@constants/ReactIcons";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const genderOptions = [
     {
@@ -44,12 +46,14 @@ const initialState = {
     email: '',
     gender: '',
     password: '',
+    profilePhoto: '',
     dob: { day: "", month: "", year: "" },
 };
 
 const Signup = () => {
-    const [formData, setFormData] = useState(initialState);
+    const navigate = useNavigate();
     const [error, setError] = useState('');
+    const [formData, setFormData] = useState(initialState);
 
     const handleDobChange = (type, value) => {
         setFormData(prev => ({
@@ -72,8 +76,17 @@ const Signup = () => {
             const userCredentials = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
             const user = userCredentials.user;
 
+            let photoURL = "";
+            if (formData.profilePhoto) {
+                const file = formData.profilePhoto;
+                const storageRef = ref(storage, `Users/${user.uid}/${file.name}`);
+                await uploadBytes(storageRef, file);
+                photoURL = await getDownloadURL(storageRef);
+            }
+
             await updateProfile(user, {
                 displayName: `${formData.name.first} ${formData.name.last}`,
+                photoURL: photoURL,
             });
 
             await setDoc(doc(db, "Users", user.uid), {
@@ -81,11 +94,13 @@ const Signup = () => {
                 email: user.email,
                 gender: formData.gender,
                 username: user.displayName,
+                profilePhoto: photoURL,
                 dob: `${formData.dob.day}/${formData.dob.month}/${formData.dob.year}`,
             });
 
-            setFormData(initialState)
+            setFormData(initialState);
             setError('');
+            navigate(Routes.HOME.path);
             console.log("User creation successful", user);
         } catch (error) {
             setError(error.message);
@@ -165,10 +180,10 @@ const Signup = () => {
 
                             <div className="grid grid-cols-3 gap-2.5">
                                 {dobOptions.map((data) => (
-                                    <select 
+                                    <select
                                         key={data.id}
                                         className="w-full px-1 py-2 outline-none rounded-md border border-slate-300 cursor-pointer"
-                                        value={formData.dob[data.title]} 
+                                        value={formData.dob[data.title]}
                                         onChange={(e) => handleDobChange(data.title, e.target.value)}
                                         required
                                     >
@@ -186,24 +201,53 @@ const Signup = () => {
 
                             <div className="grid grid-cols-3 gap-2.5">
                                 {genderOptions.map((data) => (
-                                    <div 
-                                        key={data.id} 
+                                    <div
+                                        key={data.id}
                                         onClick={() => handleGenderChange(data.title)}
                                         className="w-full flex items-center justify-between p-2 rounded-md border border-slate-300 cursor-pointer"
                                     >
                                         <p>{data.title}</p>
-                                        <input 
-                                            type="radio" 
-                                            name="gender" 
-                                            value={data.title}  
-                                            checked={formData.gender === data.title}  
-                                            onChange={() => handleGenderChange(data.title)} 
-                                            className="cursor-pointer" 
-                                            required 
+                                        <input
+                                            type="radio"
+                                            name="gender"
+                                            value={data.title}
+                                            checked={formData.gender === data.title}
+                                            onChange={() => handleGenderChange(data.title)}
+                                            className="cursor-pointer"
+                                            required
                                         />
                                     </div>
                                 ))}
                             </div>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <label className="w-full text-sm rounded-md border px-3 py-2 border-slate-300 cursor-pointer bg-customGray-default">
+                                Choose Profile Picture
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) =>
+                                        setFormData((prev) => ({
+                                            ...prev,
+                                            profilePhoto: e.target.files[0], // Store file instead of object URL
+                                        }))
+                                    }
+                                    className="hidden"
+                                />
+                            </label>
+
+                            {formData.profilePhoto && (
+                                <div
+                                    style={{ backgroundImage: `url(${URL.createObjectURL(formData.profilePhoto)})` }}
+                                    className="bg-contain bg-no-repeat bg-center w-full h-48 flex justify-end rounded-md border border-slate-300 bg-white"
+                                >
+                                    <span
+                                        onClick={() => setFormData((prev) => ({ ...prev, profilePhoto: null }))}
+                                        className="m-1 p-1 cursor-pointer"
+                                    >{ReactIcons.CLOSE}</span>
+                                </div>
+                            )}
                         </div>
 
                         <div className="w-96">

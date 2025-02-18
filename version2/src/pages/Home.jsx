@@ -25,8 +25,8 @@ const feedPostingOptions = [
 
 const Home = () => {
     return (
-        <div className="grid w-full grid-cols-[1fr_2fr_1fr] items-center gap-10 overflow-y-auto">
-            <div className="sticky top-0 flex flex-col gap-2 h-full w-full overflow-y-auto p-2 mt-1">
+        <div className="grid h-full w-full grid-cols-[1fr_2fr_1fr] gap-10 overflow-y-auto">
+            <div className="sticky top-0 flex flex-col gap-2 h-full w-full overflow-y-auto p-2">
                 {leftbarOptionsData.map((data) => (
                     <Link
                         key={data.id}
@@ -102,7 +102,7 @@ const Home = () => {
                 <FeedPost />
             </div>
 
-            <div className="sticky top-0 h-full w-full overflow-y-auto p-2 mt-1">
+            <div className="sticky top-0 h-full w-full overflow-y-auto p-2">
                 <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between border-b border-b-slate-300">
                         <h4 className="font-medium text-[#65676B]">Contacts</h4>

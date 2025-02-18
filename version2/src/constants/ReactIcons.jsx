@@ -27,7 +27,7 @@ import { BsFillPersonPlusFill } from "react-icons/bs";
 import { BsPersonLinesFill } from "react-icons/bs";
 import { MdOutlineGroupAdd } from "react-icons/md";
 import { FaCamera } from "react-icons/fa";
-
+import { IoClose } from "react-icons/io5";
 
 export const ReactIcons = {
     HOME: <IoHome />,
@@ -44,6 +44,7 @@ export const ReactIcons = {
     NOTIFICATION: <IoNotifications />,
     PROFILE_AVATAR: <BsPersonCircle />,
     SEARCH_MAGNIFYINGGLASS: <HiOutlineSearch />,
+    CLOSE: <IoClose />,
 
     // Home Page
     OPTIONS_THREE_DOTS: <IoEllipsisHorizontalSharp />,

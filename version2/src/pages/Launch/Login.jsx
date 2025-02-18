@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
+import { auth } from "@services/firebase";
 import { Routes } from "@constants/Routes";
 import { InputField } from "@components/universal/inputs/InputField";
-import { auth,db } from "@services/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { getDoc, doc } from "firebase/firestore";
 
 const Login = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
-    const [userData, setUserData] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
@@ -16,12 +16,11 @@ const Login = () => {
         e.preventDefault();
         try {
             const userCredentials = await signInWithEmailAndPassword(auth, email, password);
-            const user = await getDoc(doc(db, "Users", userCredentials.user.uid));
-            setUserData(user.data());
             setEmail('');
             setError('');
-setPassword('');
-            console.log("User login successful", userData);
+            setPassword('');
+            navigate(Routes.HOME.path)
+            console.log("User login successful", userCredentials.user);
         } catch (error) {
             setError(error.message);
             console.log("User login unsuccessful", error);
