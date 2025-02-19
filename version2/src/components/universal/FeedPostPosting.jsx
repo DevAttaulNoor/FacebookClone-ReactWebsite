@@ -1,7 +1,12 @@
-import { ReactIcons } from "@constants/ReactIcons";
+import '@assets/css/customEmojiPickerStyle.css'
+import EmojiPicker from 'emoji-picker-react';
+import { useRef, useState } from "react";
 import { useAuthUser } from "@hooks/useAuthUser";
-import { BasicModal } from "./modals/BasicModal";
-import { useState } from "react";
+import { ReactIcons } from "@constants/ReactIcons";
+import { ModalLayout } from "@layouts/ModalLayout";
+import { collection, doc, setDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { db, storage } from '@services/firebase';
 
 const feedPostingOptions = [
     {
@@ -23,7 +28,105 @@ const feedPostingOptions = [
 
 export const FeedPostPosting = () => {
     const user = useAuthUser();
+    const emojiBoxRef = useRef(null);
+    const messageMediaInputRef = useRef(null);
+    const [messageText, setMessageText] = useState('');
+    const [messageMedia, setMessageMedia] = useState({ content: '', type: '' });
     const [isModalOpen, setModalOpen] = useState(false);
+    const [isEmojiModalOpen, setIsEmojiModalOpen] = useState(false);
+
+
+    console.log("User object:", user);
+
+    const handleModalClose = () => {
+        setModalOpen(false);
+        setIsEmojiModalOpen(false);
+        setMessageText('');
+        setMessageMedia({ content: '', type: '' });
+    };
+
+    const handleMediaChange = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            setMessageMedia(prev => ({ ...prev, content: file }));
+
+            // Determine the media type (image or video)
+            if (file.type.startsWith("image/")) {
+                setMessageMedia(prev => ({ ...prev, type: "image" }));
+            } else if (file.type.startsWith("video/")) {
+                setMessageMedia(prev => ({ ...prev, type: "video" }));
+            }
+        }
+    };
+
+    const handlePosting = async (e) => {
+        e.preventDefault();
+
+        const postDetails = {
+            uid: user.uid,
+            email: user.email,
+            username: user.username,
+            photoURL: user.profilePhoto,
+            timestamp: Math.floor(new Date().getTime() / 1000),
+        };
+
+        try {
+            const postRef = doc(collection(db, "Posts")); // Create a reference to a new document in the "Posts" collection
+
+            if ((messageText !== '') && (messageMedia.content === '')) {
+                await setDoc(postRef, {
+                    ...postDetails,
+                    message: messageText,
+                });
+
+                handleModalClose();
+                return;
+            }
+
+            if ((messageText === '') && (messageMedia.content !== '')) {
+                // const storageRef = ref(storage, `Posts/${user.uid}/${messageMedia.content.name}`);
+                // await uploadBytes(storageRef, messageMedia.content);
+                // const mediaUrl = await getDownloadURL(storageRef);
+
+                // const storageRef = storage.ref(`Posts/${user.uid}`);
+                // await storageRef.put(messageMedia.content);
+                // const mediaUrl = await storageRef.getDownloadURL();
+
+                const file = messageMedia.content;
+                const storageRef = ref(storage, `Posts/${user.uid}/${file.name}`);
+                await uploadBytes(storageRef, file);
+                let mediaUrl = await getDownloadURL(storageRef);
+
+
+                await setDoc(postRef, {
+                    ...postDetails,
+                    media: mediaUrl,
+                    mediaType: messageMedia.type,
+                });
+
+                handleModalClose();
+            }
+
+            if ((messageText !== '') && (messageMedia.content !== '')) {
+                const file = messageMedia.content;
+                const storageRef = ref(storage, `Posts/${user.uid}/${file.name}`);
+                await uploadBytes(storageRef, file);
+                let mediaUrl = await getDownloadURL(storageRef);
+
+                await setDoc(postRef, {
+                    ...postDetails,
+                    message: messageText,
+                    media: mediaUrl,
+                    mediaType: messageMedia.type,
+                });
+
+                handleModalClose();
+            }
+        } catch (error) {
+            console.error("Error uploading post: ", error);
+        }
+    };
 
     return (
         <div className="relative">
@@ -60,10 +163,110 @@ export const FeedPostPosting = () => {
                 </div>
             </div>
 
-            <BasicModal
-                isOpen={isModalOpen}
-                onClose={() => setModalOpen(false)}
-            />
+            <ModalLayout isOpen={isModalOpen} containerStyle={'relative p-3 gap-3'}>
+                <div className="flex justify-center">
+                    <h1 className="text-lg font-bold">Create Post</h1>
+
+                    <span
+                        onClick={handleModalClose}
+                        className="absolute top-2 right-2 p-1 cursor-pointer rounded-full hover:bg-customGray-default"
+                    >
+                        {ReactIcons.CLOSE}
+                    </span>
+                </div>
+
+                <hr className="text-customGray-default" />
+
+                <div className="flex flex-col gap-3">
+                    <div className="flex items-center gap-2.5">
+                        {user?.profilePhoto ? (
+                            <img
+                                src={user.profilePhoto}
+                                alt={`profile picture of ${user.username}`}
+                                className="w-10 h-10 rounded-full border border-customGray-100 object-contain bg-white"
+                            />
+                        ) : (
+                            <span className="text-4xl">
+                                {ReactIcons.PROFILE_AVATAR}
+                            </span>
+                        )}
+
+                        <p className="text-sm font-semibold">{user.username}</p>
+                    </div>
+
+                    <textarea
+                        rows="4"
+                        value={messageText}
+                        placeholder="What's on your mind"
+                        onChange={(e) => setMessageText(e.target.value)}
+                        className={`${messageMedia ? 'text-sm' : 'text-xl'} w-full resize-none`}
+                    />
+
+                    {messageMedia.content && (
+                        <div className='relative rounded-lg border border-customGray-default'>
+                            {messageMedia.type === 'image' && (
+                                <img src={URL.createObjectURL(messageMedia.content)} className="w-full h-56 p-1 rounded-lg object-contain" />
+                            )}
+
+                            {messageMedia.type === 'video' && (
+                                <video controls className="w-full h-56 p-1 rounded-lg object-contain">
+                                    <source src={URL.createObjectURL(messageMedia.content)} type="video/mp4" />
+                                </video>
+                            )}
+
+                            <span
+                                onClick={() => setMessageMedia({ content: '', type: '' })}
+                                className="absolute top-2 right-2 cursor-pointer"
+                            >
+                                {ReactIcons.CLOSE}
+                            </span>
+                        </div>
+                    )}
+
+                    <span
+                        ref={emojiBoxRef}
+                        onClick={() => setIsEmojiModalOpen(!isEmojiModalOpen)}
+                        className="self-end text-xl text-customGray-200 cursor-pointer hover:text-customGray-300"
+                    >
+                        {ReactIcons.SMILE_EMOJI}
+                    </span>
+
+                    <EmojiPicker
+                        onEmojiClick={(e) => setMessageText((prev) => prev + e.emoji)}
+                        className={`${isEmojiModalOpen ? '' : '!hidden'} customStyle`}
+                    />
+                </div>
+
+                <div className="flex flex-col px-3 gap-2 border rounded-lg border-customGray-default p-2.5">
+                    <p className="text-sm font-semibold">Add to your post</p>
+
+                    <div className="flex items-center gap-4">
+                        {feedPostingOptions.map((data) => (
+                            <img
+                                key={data.id}
+                                src={data.icon}
+                                alt={`icon of ${data.title}`}
+                                onClick={() => messageMediaInputRef.current.click()}
+                                className="cursor-pointer"
+                            />
+                        ))}
+                        <input
+                            ref={messageMediaInputRef}
+                            type="file"
+                            accept="image/*,video/*"
+                            onChange={handleMediaChange}
+                            className="hidden"
+                        />
+                    </div>
+                </div>
+
+                <button
+                    onClick={handlePosting}
+                    className={`${(messageText || messageMedia.content) ? 'text-white bg-customBlue-default' : 'text-customGray-200 bg-customGray-100'} w-full font-medium py-1.5 rounded-lg cursor-pointer`}
+                >
+                    Post
+                </button>
+            </ModalLayout>
         </div>
     )
 }

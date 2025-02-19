@@ -10,7 +10,8 @@
         @apply h-screen w-full overflow-y-auto overflow-x-hidden bg-customGray-default font-roboto;
     }
 
-    input {
+    input,
+    textarea {
         @apply outline-none;
     }
 }

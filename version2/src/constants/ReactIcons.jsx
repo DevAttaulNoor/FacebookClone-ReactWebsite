@@ -28,6 +28,7 @@ import { BsPersonLinesFill } from "react-icons/bs";
 import { MdOutlineGroupAdd } from "react-icons/md";
 import { FaCamera } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
+import { BsEmojiSmile } from "react-icons/bs";
 
 export const ReactIcons = {
     HOME: <IoHome />,
@@ -45,6 +46,7 @@ export const ReactIcons = {
     PROFILE_AVATAR: <BsPersonCircle />,
     SEARCH_MAGNIFYINGGLASS: <HiOutlineSearch />,
     CLOSE: <IoClose />,
+    SMILE_EMOJI: <BsEmojiSmile />,
 
     // Home Page
     OPTIONS_THREE_DOTS: <IoEllipsisHorizontalSharp />,
