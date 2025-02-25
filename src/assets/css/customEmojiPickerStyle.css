@@ -1,0 +1,59 @@
+/* Emoji Picker Section */
+.customStyle.EmojiPickerReact {
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 260px !important;
+    height: 240px !important;
+    flex-direction: column-reverse !important;
+    border-radius: 8px !important;
+    background-color: #fff;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    padding: 0;
+    z-index: 1;
+}
+
+.EmojiPickerReact .epr-header .epr-header-overlay {
+    display: none;
+}
+
+.EmojiPickerReact .epr-category-nav {
+    padding: 3px !important;
+    border-top: 1px solid lightgrey;
+}
+
+.EmojiPickerReact li.epr-emoji-category > .epr-emoji-category-content {
+    grid-template-columns: repeat(8, 1fr) !important;
+    margin: 0 !important;
+}
+
+.EmojiPickerReact button.epr-emoji .epr-emoji-img {
+    max-height: 35px !important;
+    max-width: 35px !important;
+    min-height: 35px !important;
+    min-width: 35px !important;
+    padding: 4px !important;
+}
+
+.EmojiPickerReact button.epr-emoji {
+    height: 35px !important;
+    max-height: 35px !important;
+    max-width: 35px !important;
+    width: 35px !important;
+}
+
+.EmojiPickerReact .epr-preview {
+    display: none !important;
+}
+
+.EmojiPickerReact li.epr-emoji-category > .epr-emoji-category-label {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    height: min-content !important;
+    padding: 0px !important;
+}
+
+.EmojiPickerReact .epr-category-nav {
+    justify-content: initial !important;
+}
