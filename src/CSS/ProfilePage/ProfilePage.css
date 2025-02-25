@@ -1,0 +1,317 @@
+/** Profile Page Section */
+.profilePage {
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* Profile Page Top Section */
+.profilePageTop {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+/* Profile Page Top Cover Section */
+.profilePageTop_CoverSection {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-image: linear-gradient(
+    to top,
+    #ffffff,
+    rgba(255, 255, 255.9),
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0)
+  );
+}
+
+.profilePageTop_CoverSection span {
+  width: 1080px;
+  height: 460px;
+}
+
+.profilePageTop_CoverSection span img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.profilePageTop_CoverSection .coverPhoto {
+  width: 1080px;
+  height: 460px;
+  object-fit: cover;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: #f0f2f5;
+}
+
+/* Profile Page Top Profile Section */
+.profilePageTop_ProfileSection {
+  max-width: 1040px;
+  width: 100%;
+  height: 150px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0px 15px;
+  margin-bottom: 15px;
+}
+
+.profilePageTop_ProfileSectionLeft,
+.profilePhoto {
+  display: flex;
+}
+
+.profilePhoto .MuiAvatar-root {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border: 4px solid #fff;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  margin: 50px 0 0 15px;
+}
+
+.profileInfo h3 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.profileInfo a {
+  color: initial;
+  text-decoration: none;
+}
+
+.profileInfo a p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #65676b;
+}
+
+.profileInfo a p:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.profileInfo .friendsList {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.profileInfo .friendsList .friendPhoto {
+  display: flex;
+}
+
+.profileInfo .friendsList .friendPhoto .MuiAvatar-root {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #fff;
+}
+
+.profilePageTop_ProfileSectionRight {
+  display: flex;
+  margin-bottom: 25px;
+}
+
+.profilePageTop_ProfileSectionRight .MuiSvgIcon-root {
+  width: 20px;
+  height: 22px;
+}
+
+.profilePageTop_ProfileSectionRightOption {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  margin-left: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #e4e6eb;
+}
+
+.profilePageTop_ProfileSectionRightOption p {
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 5px;
+}
+
+.profilePageTop_ProfileSectionRight #messageBtn {
+  color: #fff;
+  background-color: #1b74e4;
+}
+
+.profilePageTop_ProfileSectionRight #messageBtn img {
+  filter: invert(100%);
+}
+
+/* Profile Page Top Components Section */
+.profilePageTop_Components {
+  max-width: 1040px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 15px;
+  border-top: 1px solid rgb(197, 197, 197);
+}
+
+.profilePageTop_ComponentsLeft {
+  display: flex;
+}
+
+.profilePageTop_ComponentsLeft a {
+  height: fit-content;
+  text-decoration: none;
+  color: initial;
+}
+
+.profilePageTop_ComponentsLeft a.active .profilePageTop_ComponentsLeftOption {
+  position: relative;
+  color: #2381fa;
+}
+
+.profilePageTop_ComponentsLeft
+  a.active
+  .profilePageTop_ComponentsLeftOption:hover {
+  background-color: transparent;
+}
+
+.profilePageTop_ComponentsLeft
+  a.active
+  .profilePageTop_ComponentsLeftOption::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  background-color: #2381fa;
+}
+
+.profilePageTop_ComponentsLeft
+  a.active
+  .profilePageTop_ComponentsLeftOption
+  svg {
+  color: #2381fa;
+}
+
+.profilePageTop_ComponentsLeftOption {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 16px;
+  margin: 2px 0;
+  border-radius: 8px;
+  color: #65676b;
+}
+
+.profilePageTop_ComponentsLeftOption:hover {
+  cursor: pointer;
+  background-color: whitesmoke;
+}
+
+.profilePageTop_ComponentsLeftOption#moreOption {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+}
+
+.profilePageTop_ComponentsLeftOption#moreOption svg {
+  width: 18px;
+  height: 18px;
+  margin-left: 3px;
+  color: #65676b;
+}
+
+.profilePageTop_ComponentsRight {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background-color: #e4e6eb;
+}
+
+.profilePageTop_ComponentsRight .MuiSvgIcon-root {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+/* Profile Page Bottom Section */
+.profilePageBottom {
+  max-width: 1040px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0px 15px;
+}
+
+.profilePageBottom .profilePageComponents {
+  width: 100%;
+}
+
+/** Responsive Media Queries */
+@media only screen and (max-width: 900px) {
+  /* Profile Page Top Profile Section */
+  .profilePageTop_ProfileSection {
+    height: 280px;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+  }
+
+  .profilePageTop_ProfileSectionLeft {
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .profilePageTop_ProfileSectionLeft .profileInfo {
+    margin: 8px 0px 18px 0px;
+  }
+
+  .profilePageTop_ProfileSectionLeft .profileInfo a p {
+    text-align: center;
+  }
+
+  .profilePageTop_ProfileSectionLeft .profileInfo .friendsList {
+    justify-content: center;
+  }
+
+  .profilePageTop_ProfileSectionRight {
+    margin-bottom: 0px;
+  }
+
+  /* Profile Page Bottom Section */
+  .profilePageBottom .profilePageComponents {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  /* Profile Page Top Components Section */
+  .profilePageTop_Components {
+    justify-content: center;
+  }
+
+  .profilePageTop_ComponentsLeftOption {
+    padding: 12px;
+  }
+
+  .profilePageTop_ComponentsRight {
+    display: none;
+  }
+}
