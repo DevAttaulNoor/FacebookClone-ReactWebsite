@@ -1,5 +1,7 @@
 import { Link } from "react-router";
 import { Routes } from "@constants/Routes";
+import { usePosts } from "@hooks/usePosts";
+import { useUsers } from "@hooks/useUsers";
 import { useAuthUser } from "@hooks/useAuthUser";
 import { ReactIcons } from "@constants/ReactIcons";
 import { FeedPost } from "@components/universal/FeedPost";
@@ -9,6 +11,8 @@ import leftbarOptionsData from "@assets/data/home-related/LeftbarOptions.json";
 
 const Home = () => {
     const user = useAuthUser();
+    const { posts } = usePosts();
+    const { users } = useUsers();
 
     return (
         <div className="grid h-full w-full grid-cols-[1fr_2fr_1fr] gap-10 overflow-y-auto">
@@ -87,7 +91,10 @@ const Home = () => {
 
                 <FeedPostPosting />
 
-                <FeedPost />
+                <FeedPost
+                    userData={users}
+                    postData={posts}
+                />
             </div>
 
             <div className="sticky top-0 h-full w-full overflow-y-auto p-2">

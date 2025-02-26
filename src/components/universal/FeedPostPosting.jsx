@@ -2,11 +2,11 @@ import '@assets/css/customEmojiPickerStyle.css'
 import EmojiPicker from 'emoji-picker-react';
 import { useRef, useState } from "react";
 import { useAuthUser } from "@hooks/useAuthUser";
-import { ReactIcons } from "@constants/ReactIcons";
+import { db, storage } from '@services/firebase';
 import { ModalLayout } from "@layouts/ModalLayout";
+import { ReactIcons } from "@constants/ReactIcons";
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { db, storage } from '@services/firebase';
 
 const feedPostingOptions = [
     {
@@ -34,9 +34,6 @@ export const FeedPostPosting = () => {
     const [messageMedia, setMessageMedia] = useState({ content: '', type: '' });
     const [isModalOpen, setModalOpen] = useState(false);
     const [isEmojiModalOpen, setIsEmojiModalOpen] = useState(false);
-
-
-    console.log("User object:", user);
 
     const handleModalClose = () => {
         setModalOpen(false);
@@ -66,8 +63,6 @@ export const FeedPostPosting = () => {
         const postDetails = {
             uid: user.uid,
             email: user.email,
-            username: user.username,
-            photoURL: user.profilePhoto,
             timestamp: Math.floor(new Date().getTime() / 1000),
         };
 
