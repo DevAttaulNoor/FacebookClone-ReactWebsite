@@ -1,10 +1,11 @@
 import { NavLink, useLocation } from "react-router";
 import { Routes } from "@constants/Routes";
+import { useUsers } from "@hooks/useUsers";
+import { useAuthUser } from "@hooks/useAuthUser";
 import { ReactIcons } from "@constants/ReactIcons";
-import { Friend_AllRequest } from "./Friend_AllRequest";
-import { Friend_AllFriends } from "./Friend_AllFriends";
 import { FriendCard } from "@components/friend-related/FriendCard";
-import userData from "@assets/data/universal/Users.json"
+import { Friend_AllFriends } from "./Friend_AllFriends";
+import { Friend_AllRequest } from "./Friend_AllRequest";
 
 const friendsLeftbarOptions = [
     {
@@ -29,6 +30,8 @@ const friendsLeftbarOptions = [
 
 const Friend = () => {
     const location = useLocation();
+    const user = useAuthUser();
+    const { usersExceptCurrent } = useUsers(user.uid);
 
     return (
         <div className="w-full h-full flex">
@@ -62,7 +65,7 @@ const Friend = () => {
                         <h1 className="text-xl font-bold">People you may know</h1>
 
                         <div className="grid grid-cols-5 gap-3">
-                            {userData.map((data) => (
+                            {usersExceptCurrent.map((data) => (
                                 <FriendCard
                                     key={data.id}
                                     friendData={data}

@@ -8,7 +8,9 @@ import { Profile_Photos } from "./Profile_Photos";
 import { Profile_Video } from "./Profile_Video";
 import { FeedPostPosting } from "@components/universal/FeedPostPosting";
 import { ProfileComponentLayout } from "@layouts/ProfileComponentLayout";
-import userData from "@assets/data/universal/Users.json";
+import { useAuthUser } from "@hooks/useAuthUser";
+import { usePosts } from "@hooks/usePosts";
+import { useUsers } from "@hooks/useUsers";
 
 const profileComponents = [
     { id: 1, title: 'Posts', path: Routes.PROFILE.path },
@@ -19,8 +21,12 @@ const profileComponents = [
 ];
 
 const Profile = () => {
-    const user = userData[0];
     const location = useLocation();
+    const user = useAuthUser();
+    const { users } = useUsers();
+    const { userPosts } = usePosts(user.uid);
+    const userPostPhotos = userPosts.filter(data => data.mediaType === 'image')
+    const userPostVideos = userPosts.filter(data => data.mediaType === 'video')
 
     return (
         <div className="w-full h-full flex items-center flex-col overflow-y-auto bg">
@@ -28,8 +34,8 @@ const Profile = () => {
                 {/* Cover Photo */}
                 <div className="w-[1080px] h-[460px] rounded-b-lg bg-coverPhoto-gradient">
                     <img
-                        src={user.coverphoto}
-                        alt={`cover image of ${user.name}`}
+                        src={user?.coverphoto}
+                        alt={`cover image of ${user?.username}`}
                         className="w-full h-full object-cover object-center rounded-b-lg bg-customGray-default"
                     />
                 </div>
@@ -40,8 +46,8 @@ const Profile = () => {
                         {/* Profile Image */}
                         <div className="relative">
                             <img
-                                src={user.profilephoto}
-                                alt={`profile image of ${user.name}`}
+                                src={user?.profilePhoto}
+                                alt={`profile image of ${user.username}`}
                                 className="w-44 h-44 rounded-full border-2 border-white object-cover"
                             />
 
@@ -49,7 +55,7 @@ const Profile = () => {
                         </div>
 
                         <div className="flex flex-col">
-                            <h3 className="text-2xl font-bold">{user.name}</h3>
+                            <h3 className="text-2xl font-bold">{user.username}</h3>
 
                             {/* Friends Count */}
                             {user.friends?.length > 0 && (
@@ -67,8 +73,8 @@ const Profile = () => {
                                         className="w-10 h-10 rounded-full border-2 border-white -ml-2 first:-ml-0"
                                     >
                                         <img
-                                            src={data.profilephoto}
-                                            alt={`profile image of ${data.name}`}
+                                            src={data?.profilePhoto}
+                                            alt={`profile image of ${data.username}`}
                                             className="w-full h-full rounded-full object-cover"
                                         />
                                     </Link>
@@ -133,36 +139,51 @@ const Profile = () => {
                             >
                                 <div className="grid grid-cols-3 gap-2">
                                     <img
-                                        src={user.coverphoto}
-                                        alt={`cover image of ${user.name}`}
+                                        src={user.profilePhoto}
+                                        alt={`profile image of ${user.username}`}
                                         className="w-full h-full object-cover"
                                     />
 
-                                    <img
-                                        src={user.profilephoto}
-                                        alt={`profile image of ${user.name}`}
-                                        className="w-full h-full object-cover"
-                                    />
+                                    {userPostPhotos.length > 0 && (
+                                        <>
+                                            {userPostPhotos.map((data) => (
+                                                <img
+                                                    key={data.id}
+                                                    src={data.media}
+                                                    alt={`image from post of ${data.username}`}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            ))}
+                                        </>
+                                    )}
                                 </div>
                             </ProfileComponentLayout>
 
-                            {/* <ProfileComponentLayout
-                        title={Routes.PROFILE_VIDEO.title}
-                        path={Routes.PROFILE_VIDEO.path}
-                    >
-                        <div className="grid grid-cols-3 gap-2">
-                            <video controls>
-                                <source src={url} type="video/mp4" />
-                            </video>
-                        </div>
-                    </ProfileComponentLayout> */}
+                            {userPostVideos.length > 0 && (
+                                <ProfileComponentLayout
+                                    title={Routes.PROFILE_VIDEO.title}
+                                    path={Routes.PROFILE_VIDEO.path}
+                                >
+                                    <div className="grid grid-cols-3 gap-2">
+                                        {userPostVideos.map((data) => (
+                                            <video
+                                                controls
+                                                key={data.id}
+                                                className="w-full h-full object-cover"
+                                            >
+                                                <source src={data.media} type="video/mp4" />
+                                            </video>
+                                        ))}
+                                    </div>
+                                </ProfileComponentLayout>
+                            )}
 
                             <ProfileComponentLayout
                                 title={Routes.PROFILE_FRIEND.title}
                                 path={Routes.PROFILE_FRIEND.path}
                             >
                                 <div className="grid grid-cols-3 gap-x-3 gap-y-4">
-                                    {user.friends.map((data) => (
+                                    {/* {user?.friends.map((data) => (
                                         <Link
                                             key={data.id}
                                             to={Routes.PROFILE.path}
@@ -176,7 +197,7 @@ const Profile = () => {
 
                                             <p className="text-xs font-medium">{data.name}</p>
                                         </Link>
-                                    ))}
+                                    ))} */}
                                 </div>
                             </ProfileComponentLayout>
                         </div>
@@ -184,7 +205,10 @@ const Profile = () => {
                         <div className="flex flex-[0.6] w-full flex-col gap-4">
                             <FeedPostPosting />
 
-                            <FeedPost />
+                            <FeedPost
+                                userData={users}
+                                postData={userPosts}
+                            />
                         </div>
                     </>
                 )}
@@ -198,11 +222,16 @@ const Profile = () => {
                 )}
 
                 {location.pathname === Routes.PROFILE_PHOTO.path && (
-                    <Profile_Photos />
+                    <Profile_Photos
+                        userData={user}
+                        userPhotosData={userPostPhotos}
+                    />
                 )}
 
                 {location.pathname === Routes.PROFILE_VIDEO.path && (
-                    <Profile_Video />
+                    <Profile_Video
+                        userVideosData={userPostVideos}
+                    />
                 )}
             </div>
         </div>

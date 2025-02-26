@@ -1,7 +1,6 @@
 import { ReactIcons } from "@constants/ReactIcons";
-import userData from "@assets/data/universal/Users.json";
 
-export const Profile_Photos = () => {
+export const Profile_Photos = ({ userData, userPhotosData }) => {
     return (
         <div className="w-full p-4 rounded-lg shadow-customFull2 bg-white">
             <div className="flex items-center justify-between mb-2">
@@ -15,16 +14,19 @@ export const Profile_Photos = () => {
 
             <div className="grid grid-cols-5 gap-2">
                 <img
-                    src={userData[0].coverphoto}
-                    alt={`cover image of ${userData[0].name}`}
+                    src={userData.profilePhoto}
+                    alt={`cover image of ${userData.username}`}
                     className="w-full h-full object-cover"
                 />
 
-                <img
-                    src={userData[0].profilephoto}
-                    alt={`profile image of ${userData[0].name}`}
-                    className="w-full h-full object-cover"
-                />
+                {userPhotosData.map((data) => (
+                    <img
+                        key={data.id}
+                        src={data.media}
+                        alt={`image from post of ${data.username}`}
+                        className="w-full h-full object-cover"
+                    />
+                ))}
             </div>
         </div>
     )

@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { db } from "@services/firebase";
 import { collection, onSnapshot } from "firebase/firestore";
 
-export const useUsers = () => {
+export const useUsers = (userId) => {
     const [users, setUsers] = useState([]);
+    const [usersExceptCurrent, setUsersExceptCurrent] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -15,6 +16,13 @@ export const useUsers = () => {
             (snapshot) => {
                 const allUsers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 setUsers(allUsers);
+
+                // Filter user form the current user
+                if (userId) {
+                    const currentUser = allUsers.filter(user => user.uid !== userId);
+                    setUsersExceptCurrent(currentUser);
+                }
+
                 setLoading(false);
             },
             (err) => {
@@ -28,5 +36,5 @@ export const useUsers = () => {
         };
     }, []);
 
-    return { users, loading, error };
+    return { usersExceptCurrent, users, loading, error };
 };

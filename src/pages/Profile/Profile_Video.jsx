@@ -1,6 +1,6 @@
 import { ReactIcons } from "@constants/ReactIcons"
 
-export const Profile_Video = () => {
+export const Profile_Video = ({ userVideosData }) => {
     return (
         <div className="w-full p-4 rounded-lg shadow-customFull2 bg-white">
             <div className="flex items-center justify-between mb-2">
@@ -13,9 +13,15 @@ export const Profile_Video = () => {
             </div>
 
             <div className="grid grid-cols-5 gap-2">
-                {/* <video controls>
-                    <source src={url} type="video/mp4" />
-                </video> */}
+                {userVideosData.map((data) => (
+                    <video
+                        controls
+                        key={data.id}
+                        className="w-full h-full object-cover"
+                    >
+                        <source src={data.media} type="video/mp4" />
+                    </video>
+                ))}
             </div>
         </div>
     )

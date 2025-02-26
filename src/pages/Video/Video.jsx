@@ -3,6 +3,8 @@ import { Routes } from "@constants/Routes";
 import { ReactIcons } from "@constants/ReactIcons";
 import { Video_Saved } from "./Video_Saved";
 import { FeedPost } from "@components/universal/FeedPost";
+import { usePosts } from "@hooks/usePosts";
+import { useUsers } from "@hooks/useUsers";
 
 const videosLeftbarOptions = [
     {
@@ -21,10 +23,13 @@ const videosLeftbarOptions = [
 
 const Video = () => {
     const location = useLocation();
+    const { users } = useUsers();
+    const { posts } = usePosts();
+    const videoPosts = posts.filter(post => post.mediaType === 'video')
 
     return (
         <div className="w-full h-full flex">
-            <div className='w-[420px] h-full flex flex-col p-2 shadow-customFull2 bg-white'>
+            <div className='w-[420px] flex flex-col p-2 shadow-customFull2 bg-white'>
                 <div className="flex items-center justify-between pl-2 mb-2">
                     <p className="text-xl font-bold">Video</p>
 
@@ -46,11 +51,13 @@ const Video = () => {
                 </div>
             </div>
 
-            <div className='w-full h-full overflow-x-hidden overflow-y-auto'>
+            <div className='w-full flex flex-col items-center p-4 gap-4 overflow-x-hidden overflow-y-auto'>
                 {location.pathname === Routes.VIDEO.path && (
-                    <div className='flex flex-col items-center p-4'>
-                        <FeedPost postContainerStyle="w-2/3" />
-                    </div>
+                    <FeedPost
+                        userData={users}
+                        postData={videoPosts}
+                        postContainerStyle="w-2/3"
+                    />
                 )}
 
                 {location.pathname === Routes.VIDEO_SAVED.path && (

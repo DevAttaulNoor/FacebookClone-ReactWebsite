@@ -15,15 +15,13 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+            await signInWithEmailAndPassword(auth, email, password);
             setEmail('');
             setError('');
             setPassword('');
             navigate(Routes.HOME.path)
-            console.log("User login successful", userCredentials.user);
         } catch (error) {
             setError(error.message);
-            console.log("User login unsuccessful", error);
         }
     };
 

@@ -16,7 +16,7 @@ const Home = () => {
 
     return (
         <div className="grid h-full w-full grid-cols-[1fr_2fr_1fr] gap-10 overflow-y-auto">
-            <div className="sticky top-0 flex flex-col gap-2 h-full w-full overflow-y-auto p-2">
+            <div className="flex flex-col gap-2 h-full w-full overflow-y-auto p-2">
                 <Link
                     to={Routes.PROFILE.path}
                     className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 hover:bg-customGray-100"
@@ -97,7 +97,7 @@ const Home = () => {
                 />
             </div>
 
-            <div className="sticky top-0 h-full w-full overflow-y-auto p-2">
+            <div className="h-full w-full overflow-y-auto p-2">
                 <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between border-b border-b-slate-300">
                         <h4 className="font-medium text-[#65676B]">Contacts</h4>
@@ -133,7 +133,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     );
 };
 

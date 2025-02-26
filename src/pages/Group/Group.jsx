@@ -3,6 +3,9 @@ import { Routes } from "@constants/Routes";
 import { ReactIcons } from "@constants/ReactIcons";
 import { Group_AllGroups } from "./Group_AllGroups";
 import { FeedPost } from "@components/universal/FeedPost";
+import { usePosts } from "@hooks/usePosts";
+import { useUsers } from "@hooks/useUsers";
+import { useAuthUser } from "@hooks/useAuthUser";
 
 const groupsLeftbarOptions = [
     {
@@ -21,6 +24,10 @@ const groupsLeftbarOptions = [
 
 const Group = () => {
     const location = useLocation();
+    const user = useAuthUser();
+    const { users } = useUsers();
+    const { posts } = usePosts();
+    const postsExceptCurrentUser = posts.filter(post => post.uid !== user.uid)
 
     return (
         <div className="w-full h-full flex">
@@ -51,7 +58,10 @@ const Group = () => {
                     <div className='flex flex-col items-center p-4'>
                         <div className="w-1/2 flex flex-col gap-2">
                             <h5 className="text-customGray-200 text-sm font-medium">Recent Activity</h5>
-                            <FeedPost />
+                            <FeedPost
+                                userData={users}
+                                postData={postsExceptCurrentUser}
+                            />
                         </div>
                     </div>
                 )}

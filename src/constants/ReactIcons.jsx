@@ -12,6 +12,7 @@ import { IoNotifications } from "react-icons/io5";
 import { BsPersonCircle } from "react-icons/bs";
 import { HiOutlineSearch } from "react-icons/hi";
 import { FaSave } from "react-icons/fa";
+import { IoPersonSharp } from "react-icons/io5";
 
 import { IoEllipsisHorizontalSharp } from "react-icons/io5";
 import { IoMdAdd } from "react-icons/io";
@@ -44,6 +45,7 @@ export const ReactIcons = {
     MESSAGE: <MdMessage />,
     NOTIFICATION: <IoNotifications />,
     PROFILE_AVATAR: <BsPersonCircle />,
+    PROFILE_AVATAR_WITHOUT_CIRCLE: <IoPersonSharp />,
     SEARCH_MAGNIFYINGGLASS: <HiOutlineSearch />,
     CLOSE: <IoClose />,
     SMILE_EMOJI: <BsEmojiSmile />,
