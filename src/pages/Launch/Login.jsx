@@ -16,10 +16,10 @@ const Login = () => {
         e.preventDefault();
         try {
             await signInWithEmailAndPassword(auth, email, password);
+            navigate(Routes.HOME.path)
             setEmail('');
             setError('');
             setPassword('');
-            navigate(Routes.HOME.path)
         } catch (error) {
             setError(error.message);
         }

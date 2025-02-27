@@ -14,7 +14,7 @@ export const useUsers = (userId) => {
         const unsubscribeUsers = onSnapshot(
             usersQuery,
             (snapshot) => {
-                const allUsers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                const allUsers = snapshot.docs.map(doc => ({ ...doc.data() }));
                 setUsers(allUsers);
 
                 // Filter user form the current user

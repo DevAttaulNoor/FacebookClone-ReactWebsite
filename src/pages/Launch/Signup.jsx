@@ -98,9 +98,9 @@ const Signup = () => {
                 dob: `${formData.dob.day}/${formData.dob.month}/${formData.dob.year}`,
             });
 
-            setFormData(initialState);
             setError('');
             navigate(Routes.HOME.path);
+            setFormData(initialState);
             console.log("User creation successful", user);
         } catch (error) {
             setError(error.message);
