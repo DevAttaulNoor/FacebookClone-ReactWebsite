@@ -34,8 +34,7 @@ const friendsLeftbarOptions = [
 const Friend = () => {
     const user = useAuthUser();
     const location = useLocation();
-    const { usersExceptCurrent } = useUsers(user.uid);
-    const { pendingFriends, acceptedFriends } = useFriends(user.uid);
+    const { friends, pendingFriends, acceptingFriends, acceptedFriends } = useFriends(user.uid);
 
     // Send Friend Request
     const handleAddFriend = async (friendId) => {
@@ -97,6 +96,28 @@ const Friend = () => {
         }
     };
 
+    // Filter users
+    // const ReqsPendingState = usersExceptCurrent.filter(data =>
+    //     pendingFriends.some(user => user.receiverUid === data.uid)
+    // );
+
+    // const ReqsAcceptingState = usersExceptCurrent.filter(data =>
+    //     pendingFriends.some(user => user.senderUid === data.uid)
+    // );
+
+    // const ReqsAcceptedState = usersExceptCurrent.filter(data =>
+    //     acceptedFriends.some(user => user.id === data.uid)
+    // );
+
+    // const FriendsTobeMade = usersExceptCurrent.filter(data => ![...ReqsAcceptingState, ...ReqsAcceptedState].some(user => user.uid === data.uid));
+
+    // console.log(pendingFriends, 'pendingFriends')
+    // console.log(acceptedFriends, 'acceptedFriends')
+    // console.log(ReqsPendingState, 'ReqsPendingState')
+    // console.log(ReqsAcceptingState, 'ReqsAcceptingState')
+    // console.log(ReqsAcceptedState, 'ReqsAcceptedState')
+    // console.log(FriendsTobeMade, 'FriendsTobeMade')
+
     return (
         <div className="w-full h-full flex">
             <div className='w-[420px] h-full flex flex-col p-2 shadow-customFull2 bg-white'>
@@ -132,11 +153,16 @@ const Friend = () => {
                         <h1 className="text-xl font-bold">People you may know</h1>
 
                         <div className="grid grid-cols-5 gap-3">
-                            {usersExceptCurrent.map((user) => (
+                            {friends.map((data) => (
                                 <FriendCard
-                                    key={user.uid}
-                                    usersData={user}
-                                    friendsData={pendingFriends}
+                                    key={data.uid}
+                                    userData={data}
+                                    usersData={friends}
+                                    friendsData={{
+                                        pendingFriends: pendingFriends,
+                                        acceptingFriends: acceptingFriends,
+                                        acceptedFriends: acceptedFriends,
+                                    }}
                                     handleAddFriend={handleAddFriend}
                                     handleAcceptFriendRequest={handleAcceptFriendRequest}
                                     handleDeclineFriendRequest={handleDeclineFriendRequest}
@@ -148,13 +174,32 @@ const Friend = () => {
 
                 {location.pathname === Routes.FRIEND_AllREQUEST.path && (
                     <Friend_AllRequest
+                        userData={acceptingFriends}
+                        usersData={friends}
+                        friendsData={{
+                            pendingFriends: pendingFriends,
+                            acceptingFriends: acceptingFriends,
+                            acceptedFriends: acceptedFriends,
+                        }}
+                        handleAddFriend={handleAddFriend}
                         handleAcceptFriendRequest={handleAcceptFriendRequest}
                         handleDeclineFriendRequest={handleDeclineFriendRequest}
                     />
                 )}
 
                 {location.pathname === Routes.FRIEND_AllFRIENDS.path && (
-                    <Friend_AllFriends />
+                    <Friend_AllFriends
+                        userData={acceptedFriends}
+                        usersData={friends}
+                        friendsData={{
+                            pendingFriends: pendingFriends,
+                            acceptingFriends: acceptingFriends,
+                            acceptedFriends: acceptedFriends,
+                        }}
+                        handleAddFriend={handleAddFriend}
+                        handleAcceptFriendRequest={handleAcceptFriendRequest}
+                        handleDeclineFriendRequest={handleDeclineFriendRequest}
+                    />
                 )}
             </div>
         </div>

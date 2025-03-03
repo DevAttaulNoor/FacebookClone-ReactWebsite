@@ -1,14 +1,19 @@
 import { ReactIcons } from "@constants/ReactIcons";
 
-export const FriendCard = ({ usersData, friendsData, handleAddFriend, handleAcceptFriendRequest, handleDeclineFriendRequest }) => {
-    const pendingRequest = friendsData.find(data => data.status === 'pending' && (data.senderUid === usersData.uid || data.receiverUid === usersData.uid));
-
+export const FriendCard = ({
+    userData,
+    usersData,
+    friendsData,
+    handleAddFriend,
+    handleAcceptFriendRequest,
+    handleDeclineFriendRequest
+}) => {
     return (
-        <div className='flex flex-col rounded-lg gap-1.5 shadow-customFull2 bg-white' >
-            {usersData?.profilePhoto ? (
+        <div className='flex flex-col rounded-lg gap-1.5 shadow-customFull2 bg-white'>
+            {userData?.profilePhoto ? (
                 <img
-                    src={usersData?.profilePhoto}
-                    alt={`image of ${usersData.username}`}
+                    src={userData?.profilePhoto}
+                    alt={`image of ${userData.username}`}
                     className="h-52 rounded-t-lg object-cover"
                 />
             ) : (
@@ -17,30 +22,30 @@ export const FriendCard = ({ usersData, friendsData, handleAddFriend, handleAcce
                 </span>
             )}
 
-            <h5 className="font-medium px-3">{usersData.username}</h5>
+            <h5 className="font-medium px-3">{userData.username}</h5>
 
             <div className='flex flex-col p-3 gap-2'>
-                {pendingRequest ? (
-                    <>
-                        {pendingRequest.receiverUid === usersData.uid ? (
-                            <button className="w-full text-sm font-semibold px-2.5 py-2 rounded cursor-pointer text-customBlue-default bg-customBlue-100 hover:bg-customGray-default">
-                                Pending
-                            </button>
-                        ) : (
-                            <>
-                                <button onClick={() => handleAcceptFriendRequest(usersData.uid)} className="w-full text-sm font-semibold px-2.5 py-2 rounded cursor-pointer text-customBlue-default bg-customBlue-100 hover:bg-customGray-default">
-                                    Accept
-                                </button>
+                {friendsData.pendingFriends.some(data => data.uid == userData.uid) && (
+                    <button className="w-full text-sm font-semibold px-2.5 py-2 rounded cursor-pointer text-customBlue-default bg-customBlue-100 hover:bg-customGray-default">
+                        Pending
+                    </button>
+                )}
 
-                                <button onClick={() => handleDeclineFriendRequest(usersData.uid)} className="w-full text-sm font-semibold px-2.5 py-2 rounded cursor-pointer bg-customGray-100 hover:bg-customGray-default">
-                                    Decline
-                                </button>
-                            </>
-                        )}
+                {friendsData.acceptingFriends.some(data => data.uid == userData.uid) && (
+                    <>
+                        <button onClick={() => handleAcceptFriendRequest(userData.uid)} className="w-full text-sm font-semibold px-2.5 py-2 rounded cursor-pointer text-customBlue-default bg-customBlue-100 hover:bg-customGray-default">
+                            Accept
+                        </button>
+
+                        <button onClick={() => handleDeclineFriendRequest(userData.uid)} className="w-full text-sm font-semibold px-2.5 py-2 rounded cursor-pointer bg-customGray-100 hover:bg-customGray-default">
+                            Decline
+                        </button>
                     </>
-                ) : (
+                )}
+
+                {!friendsData.pendingFriends.some(data => data.uid == userData.uid) && usersData.some(data => data.uid == userData.uid) && (
                     <button
-                        onClick={() => handleAddFriend(usersData.uid)}
+                        onClick={() => handleAddFriend(userData.uid)}
                         className="w-full text-sm font-semibold px-2.5 py-2 rounded cursor-pointer text-customBlue-default bg-customBlue-100 hover:bg-customGray-default"
                     >
                         Add friend
