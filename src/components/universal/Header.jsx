@@ -27,13 +27,6 @@ const headerLinks = [
         ActiveIcon: ReactIcons.VIDEO,
         nonActiveIcon: ReactIcons.VIDEO_OUTLINED,
     },
-    {
-        id: 4,
-        title: Routes.GROUP.title,
-        path: Routes.GROUP.path,
-        ActiveIcon: ReactIcons.GROUP,
-        nonActiveIcon: ReactIcons.GROUP_OUTLINED,
-    },
 ];
 
 const headerSideOptions = [

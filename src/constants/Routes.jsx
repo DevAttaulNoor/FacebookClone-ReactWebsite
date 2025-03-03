@@ -35,18 +35,6 @@ export const Routes = {
         metaTitle: "All friends",
         metaDescription: "All friends",
     },
-    GROUP: {
-        path: "/group",
-        title: "Group",
-        metaTitle: "Group",
-        metaDescription: "Group",
-    },
-    GROUP_LIST: {
-        path: "/group/grouplist",
-        title: "Your Groups",
-        metaTitle: "Your Groups",
-        metaDescription: "Your Groups",
-    },
     SAVED: {
         path: "/saved",
         title: "Saved",

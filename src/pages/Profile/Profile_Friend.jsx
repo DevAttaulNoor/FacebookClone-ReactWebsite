@@ -1,7 +1,6 @@
 import { ReactIcons } from "@constants/ReactIcons"
-import userData from "@assets/data/universal/Users.json";
 
-export const Profile_Friend = () => {
+export const Profile_Friend = ({ friendsData }) => {
     return (
         <div className="w-full p-4 rounded-lg shadow-customFull2 bg-white">
             <div className="flex items-center justify-between mb-2">
@@ -25,16 +24,21 @@ export const Profile_Friend = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-2">
-                {userData[0].friends.map((data) => (
-                    <div className="flex items-center justify-between p-2 rounded-lg border border-customGray-100">
+                {friendsData.map((data) => (
+                    <div key={data.uid} className="flex items-center justify-between p-2 rounded-lg border border-customGray-100">
                         <div className="flex gap-2 items-center">
-                            <img
-                                src={data.profilephoto}
-                                alt={`image of ${data.name}`}
-                                className="w-16 h-16 object-cover rounded-md"
-                            />
+                            {data?.profilePhoto ? (
+                                <img
+                                    src={data.profilePhoto}
+                                    alt={`image of ${data.username}`}
+                                    className="w-16 h-16 object-cover rounded-md"
+                                />
+                            ) : (
+                                <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
+                            )}
 
-                            <p className="text-xs font-medium">{data.name}</p>
+
+                            <p className="text-xs font-medium">{data.username}</p>
                         </div>
 
                         <span className="p-2 rounded-full cursor-pointer hover:bg-customGray-100">{ReactIcons.OPTIONS_THREE_DOTS}</span>

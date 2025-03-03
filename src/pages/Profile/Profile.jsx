@@ -11,6 +11,7 @@ import { ProfileComponentLayout } from "@layouts/ProfileComponentLayout";
 import { useAuthUser } from "@hooks/useAuthUser";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
+import { useFriends } from "@hooks/useFriends";
 
 const profileComponents = [
     { id: 1, title: 'Posts', path: Routes.PROFILE.path },
@@ -24,6 +25,7 @@ const Profile = () => {
     const location = useLocation();
     const user = useAuthUser();
     const { users } = useUsers();
+    const { acceptedFriends } = useFriends(user.uid);
     const { userPosts } = usePosts(user.uid);
     const userPostPhotos = userPosts.filter(data => data.mediaType === 'image')
     const userPostVideos = userPosts.filter(data => data.mediaType === 'video')
@@ -58,25 +60,29 @@ const Profile = () => {
                             <h3 className="text-2xl font-bold">{user.username}</h3>
 
                             {/* Friends Count */}
-                            {user.friends?.length > 0 && (
+                            {acceptedFriends.length > 0 && (
                                 <Link to={Routes.FRIEND_AllFRIENDS.path} className="text-sm text-customGray-200 cursor-pointer hover:underline">
-                                    {`${user.friends.length} ${user.friends.length > 1 ? 'friends' : 'friend'}`}
+                                    {`${acceptedFriends.length} ${acceptedFriends.length > 1 ? 'friends' : 'friend'}`}
                                 </Link>
                             )}
 
                             {/* Friends List Preview */}
                             <div className="flex items-center mt-2">
-                                {user.friends?.slice(0, 8).map((data) => (
+                                {acceptedFriends.slice(0, 8).map((data) => (
                                     <Link
-                                        key={data.id}
+                                        key={data.uid}
                                         to={Routes.PROFILE.path}
                                         className="w-10 h-10 rounded-full border-2 border-white -ml-2 first:-ml-0"
                                     >
-                                        <img
-                                            src={data?.profilePhoto}
-                                            alt={`profile image of ${data.username}`}
-                                            className="w-full h-full rounded-full object-cover"
-                                        />
+                                        {data?.profilePhoto ? (
+                                            <img
+                                                src={data?.profilePhoto}
+                                                alt={`profile image of ${data.username}`}
+                                                className="w-full h-full rounded-full object-cover"
+                                            />
+                                        ) : (
+                                            <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
+                                        )}
                                     </Link>
                                 ))}
                             </div>
@@ -183,21 +189,25 @@ const Profile = () => {
                                 path={Routes.PROFILE_FRIEND.path}
                             >
                                 <div className="grid grid-cols-3 gap-x-3 gap-y-4">
-                                    {/* {user?.friends.map((data) => (
+                                    {acceptedFriends.map((data) => (
                                         <Link
                                             key={data.id}
                                             to={Routes.PROFILE.path}
                                             className="flex flex-col gap-1"
                                         >
-                                            <img
-                                                src={data.profilephoto}
-                                                alt={`profile image of ${data.name}`}
-                                                className="w-full h-full rounded-md"
-                                            />
+                                            {data?.profilePhoto ? (
+                                                <img
+                                                    src={data.profilePhoto}
+                                                    alt={`profile picture of ${data.username}`}
+                                                    className="w-full h-full rounded-md"
+                                                />
+                                            ) : (
+                                                <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
+                                            )}
 
-                                            <p className="text-xs font-medium">{data.name}</p>
+                                            <p className="text-xs font-medium">{data.username}</p>
                                         </Link>
-                                    ))} */}
+                                    ))}
                                 </div>
                             </ProfileComponentLayout>
                         </div>
@@ -218,7 +228,9 @@ const Profile = () => {
                 )}
 
                 {location.pathname === Routes.PROFILE_FRIEND.path && (
-                    <Profile_Friend />
+                    <Profile_Friend
+                        friendsData={acceptedFriends}
+                    />
                 )}
 
                 {location.pathname === Routes.PROFILE_PHOTO.path && (

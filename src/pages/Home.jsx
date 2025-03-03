@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
+import { useFriends } from "@hooks/useFriends";
 import { useAuthUser } from "@hooks/useAuthUser";
 import { ReactIcons } from "@constants/ReactIcons";
 import { FeedPost } from "@components/universal/FeedPost";
@@ -13,6 +14,7 @@ const Home = () => {
     const user = useAuthUser();
     const { posts } = usePosts();
     const { users } = useUsers();
+    const { acceptedFriends } = useFriends(user.uid);
 
     return (
         <div className="grid h-full w-full grid-cols-[1fr_2fr_1fr] gap-10 overflow-y-auto">
@@ -112,25 +114,20 @@ const Home = () => {
                         </div>
                     </div>
 
-                    <div className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 hover:bg-customGray-100">
-                        <span className="text-4xl">{ReactIcons.PROFILE_AVATAR}</span>
-                        <p className="font-medium">dumpy friend</p>
-                    </div>
-                </div>
-
-                <div className="flex flex-col gap-2 mt-3">
-                    <div className="flex items-center justify-between border-b border-b-slate-300">
-                        <h4 className="font-medium text-[#65676B]">Group Chats</h4>
-
-                        <span className="cursor-pointer rounded-3xl p-1.5 text-lg text-[#65676B] hover:bg-slate-100">
-                            {ReactIcons.OPTIONS_THREE_DOTS}
-                        </span>
-                    </div>
-
-                    <div className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 hover:bg-customGray-100">
-                        <span className="text-2xl bg-customGray-100 p-2 rounded-full">{ReactIcons.ADD_PLUS}</span>
-                        <p className="font-medium">Create new group</p>
-                    </div>
+                    {acceptedFriends.map((user) => (
+                        <div key={user.uid} className="flex cursor-pointer items-center gap-2.5 rounded-lg p-2 hover:bg-customGray-100">
+                            {user?.profilePhoto ? (
+                                <img
+                                    src={user.profilePhoto}
+                                    alt={`profile picture of ${user.username}`}
+                                    className="w-10 h-10 rounded-full border border-customGray-100 object-contain bg-white"
+                                />
+                            ) : (
+                                <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
+                            )}
+                            <p className="font-medium">{user.username}</p>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

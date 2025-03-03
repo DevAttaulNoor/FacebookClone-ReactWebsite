@@ -13,12 +13,6 @@
     },
     {
         "id": 3,
-        "title": "Group",
-        "icon": "GROUP",
-        "path": "GROUP"
-    },
-    {
-        "id": 4,
         "title": "Saved",
         "icon": "SAVED",
         "path": "SAVED"

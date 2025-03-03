@@ -13,7 +13,6 @@ const Login = lazy(() => import("./pages/Launch/Login"));
 const Signup = lazy(() => import("./pages/Launch/Signup"));
 const Friend = lazy(() => import("./pages/Friend/Friend"));
 const Video = lazy(() => import("./pages/Video/Video"));
-const Group = lazy(() => import("./pages/Group/Group"));
 const Home = lazy(() => import("./pages/Home"));
 const Saved = lazy(() => import("./pages/Saved"));
 const Bookmark = lazy(() => import("./pages/Bookmark"));
@@ -50,10 +49,6 @@ const routes = createBrowserRouter([
             // Videos Page Section Related
             { path: Routes.VIDEO.path, element: <Video /> },
             { path: Routes.VIDEO_SAVED.path, element: <Video /> },
-
-            // Groups Page Section Related
-            { path: Routes.GROUP.path, element: <Group /> },
-            { path: Routes.GROUP_LIST.path, element: <Group /> },
 
             // Profile Page
             { path: Routes.PROFILE.path, element: <Profile /> },

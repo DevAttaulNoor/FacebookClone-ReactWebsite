@@ -4,8 +4,6 @@ import { BsPeopleFill } from "react-icons/bs";
 import { BsPeople } from "react-icons/bs";
 import { BsPlayBtnFill } from "react-icons/bs";
 import { BsPlayBtn } from "react-icons/bs";
-import { HiMiniUserGroup } from "react-icons/hi2";
-import { HiOutlineUserGroup } from "react-icons/hi2";
 import { IoAppsSharp } from "react-icons/io5";
 import { MdMessage } from "react-icons/md";
 import { IoNotifications } from "react-icons/io5";
@@ -26,7 +24,6 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { IoPeople } from "react-icons/io5";
 import { BsFillPersonPlusFill } from "react-icons/bs";
 import { BsPersonLinesFill } from "react-icons/bs";
-import { MdOutlineGroupAdd } from "react-icons/md";
 import { FaCamera } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { BsEmojiSmile } from "react-icons/bs";
@@ -38,8 +35,6 @@ export const ReactIcons = {
     FRIEND_OUTLINED: <BsPeople />,
     VIDEO: <BsPlayBtnFill />,
     VIDEO_OUTLINED: <BsPlayBtn />,
-    GROUP: <HiMiniUserGroup />,
-    GROUP_OUTLINED: <HiOutlineUserGroup />,
     SAVED: <FaSave />,
     MENU: <IoAppsSharp />,
     MESSAGE: <MdMessage />,
@@ -65,9 +60,6 @@ export const ReactIcons = {
     FRIENDS_STYLE2: <IoPeople />,
     FRIENDS_REQUEST: <BsFillPersonPlusFill />,
     FRIENDS_LIST: <BsPersonLinesFill />,
-
-    // Group
-    GROUP_LIST: <MdOutlineGroupAdd />,
 
     // Profile Page
     CAMERA: <FaCamera />,
