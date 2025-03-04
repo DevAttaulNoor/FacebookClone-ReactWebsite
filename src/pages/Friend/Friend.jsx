@@ -1,14 +1,13 @@
 import { NavLink, useLocation } from "react-router";
+import { setDoc, doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "@services/firebase";
 import { Routes } from "@constants/Routes";
-import { useUsers } from "@hooks/useUsers";
 import { useFriends } from "@hooks/useFriends";
 import { useAuthUser } from "@hooks/useAuthUser";
 import { ReactIcons } from "@constants/ReactIcons";
 import { Friend_AllRequest } from "./Friend_AllRequest";
 import { Friend_AllFriends } from "./Friend_AllFriends";
 import { FriendCard } from "@components/friend-related/FriendCard";
-import { setDoc, doc, updateDoc, deleteDoc } from "firebase/firestore";
 
 const friendsLeftbarOptions = [
     {
@@ -95,28 +94,6 @@ const Friend = () => {
             console.error("Error declining friend request:", error);
         }
     };
-
-    // Filter users
-    // const ReqsPendingState = usersExceptCurrent.filter(data =>
-    //     pendingFriends.some(user => user.receiverUid === data.uid)
-    // );
-
-    // const ReqsAcceptingState = usersExceptCurrent.filter(data =>
-    //     pendingFriends.some(user => user.senderUid === data.uid)
-    // );
-
-    // const ReqsAcceptedState = usersExceptCurrent.filter(data =>
-    //     acceptedFriends.some(user => user.id === data.uid)
-    // );
-
-    // const FriendsTobeMade = usersExceptCurrent.filter(data => ![...ReqsAcceptingState, ...ReqsAcceptedState].some(user => user.uid === data.uid));
-
-    // console.log(pendingFriends, 'pendingFriends')
-    // console.log(acceptedFriends, 'acceptedFriends')
-    // console.log(ReqsPendingState, 'ReqsPendingState')
-    // console.log(ReqsAcceptingState, 'ReqsAcceptingState')
-    // console.log(ReqsAcceptedState, 'ReqsAcceptedState')
-    // console.log(FriendsTobeMade, 'FriendsTobeMade')
 
     return (
         <div className="w-full h-full flex">

@@ -11,6 +11,7 @@
     }
 
     input,
+    select,
     textarea {
         @apply outline-none;
     }
