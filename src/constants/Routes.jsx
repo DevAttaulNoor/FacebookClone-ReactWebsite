@@ -60,10 +60,16 @@ export const Routes = {
         metaDescription: "Bookmark",
     },
     STORY: {
-        path: "/story",
+        path: "/story/:id",
         title: "Story",
         metaTitle: "Story",
         metaDescription: "Story",
+    },
+    STORY_CREATE: {
+        path: "/story/create",
+        title: "Create Story",
+        metaTitle: "Create Story",
+        metaDescription: "Create Story",
     },
     PROFILE: {
         path: "/profile",

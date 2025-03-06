@@ -16,7 +16,8 @@ const Video = lazy(() => import("./pages/Video/Video"));
 const Home = lazy(() => import("./pages/Home"));
 const Saved = lazy(() => import("./pages/Saved"));
 const Bookmark = lazy(() => import("./pages/Bookmark"));
-const Story = lazy(() => import("./pages/Story"));
+const Story = lazy(() => import("./pages/Story/Story"));
+const Story_Create = lazy(() => import("./pages/Story/Story_Create"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
 const Post = lazy(() => import("./pages/Post"));
 
@@ -59,6 +60,7 @@ const routes = createBrowserRouter([
 
             // Story Page
             { path: Routes.STORY.path, element: <Story /> },
+            { path: Routes.STORY_CREATE.path, element: <Story_Create /> },
 
             { path: Routes.SAVED.path, element: <Saved /> },
             { path: Routes.VIDEO.path, element: <Video /> },

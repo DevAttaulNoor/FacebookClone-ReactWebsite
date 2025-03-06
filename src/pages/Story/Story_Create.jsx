@@ -6,7 +6,7 @@ import { db, storage } from "@services/firebase";
 import { ReactIcons } from "@constants/ReactIcons"
 import { TextareaField } from "@components/universal/inputs/TextareaField"
 
-const Story = () => {
+const Story_Create = () => {
     const user = useAuthUser();
     const inputRef = useRef(null);
     const [uploadLoading, setUploadLoading] = useState(false);
@@ -304,4 +304,4 @@ const Story = () => {
     )
 }
 
-export default Story
+export default Story_Create
