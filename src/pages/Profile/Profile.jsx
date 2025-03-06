@@ -191,7 +191,7 @@ const Profile = () => {
                                 <div className="grid grid-cols-3 gap-x-3 gap-y-4">
                                     {acceptedFriends.map((data) => (
                                         <Link
-                                            key={data.id}
+                                            key={data.uid}
                                             to={Routes.PROFILE.path}
                                             className="flex flex-col gap-1"
                                         >

@@ -59,11 +59,11 @@ export const Routes = {
         metaTitle: "Bookmark",
         metaDescription: "Bookmark",
     },
-    REEL: {
-        path: "/reel",
-        title: "Reel",
-        metaTitle: "Reel",
-        metaDescription: "Reel",
+    STORY: {
+        path: "/story",
+        title: "Story",
+        metaTitle: "Story",
+        metaDescription: "Story",
     },
     PROFILE: {
         path: "/profile",

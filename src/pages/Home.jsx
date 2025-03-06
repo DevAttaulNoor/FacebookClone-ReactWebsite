@@ -6,7 +6,7 @@ import { useFriends } from "@hooks/useFriends";
 import { useAuthUser } from "@hooks/useAuthUser";
 import { ReactIcons } from "@constants/ReactIcons";
 import { FeedPost } from "@components/universal/FeedPost";
-import { FeedReel } from "@components/universal/FeedReel";
+import { FeedStory } from "@components/universal/FeedStory";
 import { FeedPostPosting } from "@components/universal/FeedPostPosting";
 import leftbarOptionsData from "@assets/data/home-related/LeftbarOptions.json";
 
@@ -89,7 +89,7 @@ const Home = () => {
             </div>
 
             <div className="mx-auto flex w-full max-w-[600px] flex-col gap-4 py-4">
-                <FeedReel />
+                <FeedStory />
 
                 <FeedPostPosting />
 

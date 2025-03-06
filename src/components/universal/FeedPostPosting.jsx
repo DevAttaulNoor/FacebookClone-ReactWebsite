@@ -80,19 +80,10 @@ export const FeedPostPosting = () => {
             }
 
             if ((messageText === '') && (messageMedia.content !== '')) {
-                // const storageRef = ref(storage, `Posts/${user.uid}/${messageMedia.content.name}`);
-                // await uploadBytes(storageRef, messageMedia.content);
-                // const mediaUrl = await getDownloadURL(storageRef);
-
-                // const storageRef = storage.ref(`Posts/${user.uid}`);
-                // await storageRef.put(messageMedia.content);
-                // const mediaUrl = await storageRef.getDownloadURL();
-
                 const file = messageMedia.content;
                 const storageRef = ref(storage, `Posts/${user.uid}/${file.name}`);
                 await uploadBytes(storageRef, file);
                 let mediaUrl = await getDownloadURL(storageRef);
-
 
                 await setDoc(postRef, {
                     ...postDetails,

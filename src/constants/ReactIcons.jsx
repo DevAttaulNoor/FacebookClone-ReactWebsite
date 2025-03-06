@@ -28,6 +28,10 @@ import { FaCamera } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { BsEmojiSmile } from "react-icons/bs";
 
+import { GrGallery } from "react-icons/gr";
+import { IoTextOutline } from "react-icons/io5";
+
+
 export const ReactIcons = {
     HOME: <IoHome />,
     HOME_OUTLINED: <IoHomeOutline />,
@@ -44,6 +48,8 @@ export const ReactIcons = {
     SEARCH_MAGNIFYINGGLASS: <HiOutlineSearch />,
     CLOSE: <IoClose />,
     SMILE_EMOJI: <BsEmojiSmile />,
+    PHOTO_GALLERY: <GrGallery />,
+    TEXT: <IoTextOutline />,
 
     // Home Page
     OPTIONS_THREE_DOTS: <IoEllipsisHorizontalSharp />,
