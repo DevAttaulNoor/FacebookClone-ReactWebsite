@@ -8,7 +8,7 @@ import { ReactIcons } from "@constants/ReactIcons";
 export const FeedStory = () => {
     const user = useAuthUser();
     const { users } = useUsers();
-    const { stories } = useStories(user.uid);
+    const { stories, groupedStories } = useStories(user.uid);
 
     return (
         <>
@@ -34,14 +34,15 @@ export const FeedStory = () => {
                         </div>
                     </Link>
 
-                    {stories.map((data) => {
+                    {groupedStories.map((data) => {
                         const storyUser = users.find(elem => elem.uid === data.uid);
+                        const storiesLength = data.stories.length - 1
 
                         return (
                             <Link
                                 key={data.id}
                                 to={`/story/${data.id}`}
-                                style={{ backgroundImage: `url(${data.background})` }}
+                                style={{ backgroundImage: `url(${data.stories[storiesLength].background})` }}
                                 className="w-36 h-60 flex flex-col justify-between p-3 rounded-xl shadow-xl bg-cover bg-center"
                             >
                                 {storyUser?.profilePhoto ? (

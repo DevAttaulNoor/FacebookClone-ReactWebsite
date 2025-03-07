@@ -6,6 +6,8 @@ import { db, storage } from "@services/firebase";
 import { ReactIcons } from "@constants/ReactIcons"
 import { TextareaField } from "@components/universal/inputs/TextareaField"
 
+import html2canvas from "html2canvas";
+
 const Story_Create = () => {
     const user = useAuthUser();
     const inputRef = useRef(null);
@@ -28,8 +30,8 @@ const Story_Create = () => {
         activeFont: 'Helvetica',
     });
     const [textCardBgColor, setTextCardBgColor] = useState({
-        colors: ['blue-600', 'red-600', 'green-600', '[#A52A2A]', 'yellow-500', 'purple-600', 'cyan-500', '[#FFD700]', 'violet-500', 'gray-300'],
-        activeColor: 'blue-600',
+        colors: ['blue', 'red', 'green', 'brown', 'yellow', 'purple', 'cyan', 'black', 'violet', 'gray'],
+        activeColor: 'blue',
     });
 
     const handleDiscardClick = () => {
@@ -80,18 +82,35 @@ const Story_Create = () => {
             const storyPostRef = doc(collection(db, "Stories"));
 
             if (storyContent.isTextStoryContentVisible && textInput.value) {
+                const canvas = await html2canvas(document.getElementById('textStoryContent'));
+                const dataUrl = canvas.toDataURL('image/png');
+                const blob = await fetch(dataUrl).then(res => res.blob());
+
+                // Generate a filename in the format "IMG-YYYYMMDD"
+                const now = new Date();
+                const year = now.getFullYear(); // YYYY
+                const month = String(now.getMonth() + 1).padStart(2, '0'); // MM (zero-padded)
+                const day = String(now.getDate()).padStart(2, '0'); // DD (zero-padded)
+                const fileName = `IMG-${year}${month}${day}.png`; // Example: IMG-20240109.png
+
+                const storageRef = ref(storage, `Stories/${user.uid}/${fileName}`);
+                await uploadBytes(storageRef, blob);
+                const background = await getDownloadURL(storageRef);
+
                 await setDoc(storyPostRef, {
                     ...storyPostDetails,
                     message: textInput.value,
-                    background: textCardBgColor.activeColor
+                    background: background,
                 });
             }
 
             if (storyContent.isPhotoStoryContentVisible && photoInput.value) {
-                const file = photoInput.value;
-                const storageRef = ref(storage, `Stories/${user.uid}/${file.name}`);
-                await uploadBytes(storageRef, file);
-                let background = await getDownloadURL(storageRef);
+                const canvas = await html2canvas(document.getElementById('photoStoryContent'));
+                const dataUrl = canvas.toDataURL('image/png');
+                const blob = await fetch(dataUrl).then(res => res.blob());
+                const storageRef = ref(storage, `Stories/${user.uid}/${photoInput.value.name}`);
+                await uploadBytes(storageRef, blob);
+                const background = await getDownloadURL(storageRef);
 
                 await setDoc(storyPostRef, {
                     ...storyPostDetails,
@@ -100,6 +119,7 @@ const Story_Create = () => {
                 });
             }
 
+            // Reset the form and loading state
             handleDiscardClick();
             setUploadLoading(false);
         } catch (error) {
@@ -175,7 +195,8 @@ const Story_Create = () => {
                                         <span
                                             key={index}
                                             onClick={() => setTextCardBgColor(prev => ({ ...prev, activeColor: color }))}
-                                            className={`${textCardBgColor.activeColor === color ? 'border-customBlue-default' : 'border-transparent'} w-7 h-7 rounded-full border-[3px] cursor-pointer bg-${color}`}
+                                            style={{ backgroundColor: color }}
+                                            className={`${textCardBgColor.activeColor === color ? 'border-customBlue-default' : 'border-transparent'} w-7 h-7 rounded-full border-[3px] cursor-pointer`}
                                         />
                                     ))}
                                 </div>
@@ -278,7 +299,11 @@ const Story_Create = () => {
                         <h5 className="text-sm font-medium">Preview</h5>
 
                         <div className="h-full flex items-center justify-center p-4 rounded-lg bg-black">
-                            <div className={`font-${cardsFontFamily.activeFont} w-72 h-full text-xl font-semibold flex items-center justify-center py-10 px-8 rounded-2xl break-words bg-no-repeat bg-cover overflow-x-hidden overflow-y-auto text-white bg-${textCardBgColor.activeColor}`}>
+                            <div
+                                id="textStoryContent"
+                                style={{ backgroundColor: textCardBgColor.activeColor }}
+                                className={`font-${cardsFontFamily.activeFont} w-72 h-full text-xl font-semibold flex items-center justify-center py-10 px-8 rounded-2xl break-words bg-no-repeat bg-cover overflow-x-hidden overflow-y-auto text-white`}
+                            >
                                 {textInput.value}
                             </div>
                         </div>
@@ -291,8 +316,9 @@ const Story_Create = () => {
 
                         <div className="h-full flex items-center justify-center p-4 rounded-lg bg-black">
                             <div
+                                id="photoStoryContent"
                                 style={{ backgroundImage: `url(${photoInput.url})` }}
-                                className={`font-${cardsFontFamily.activeFont} w-72 h-full text-xl font-semibold flex items-center justify-center py-10 px-8 rounded-2xl break-words bg-no-repeat bg-cover overflow-x-hidden overflow-y-auto text-white`}
+                                className={`font-${cardsFontFamily.activeFont} w-72 h-full text-xl font-semibold flex items-center justify-center py-10 px-8 rounded-2xl break-words bg-no-repeat bg-cover bg-center overflow-x-hidden overflow-y-auto text-white`}
                             >
                                 {textInput.value}
                             </div>
