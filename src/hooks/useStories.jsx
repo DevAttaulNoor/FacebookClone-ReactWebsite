@@ -5,7 +5,6 @@ import { collection, onSnapshot } from "firebase/firestore";
 export const useStories = (userId) => {
     const [stories, setStories] = useState([]);
     const [userStories, setUserStories] = useState([]);
-    const [groupedStories, setGroupedStories] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -16,7 +15,17 @@ export const useStories = (userId) => {
             storiesQuery,
             (snapshot) => {
                 const allStories = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                setStories(allStories);
+                const groupedStories = allStories.reduce((user, story) => {
+                    const existingGroup = user.find(group => group.uid === story.uid);
+
+                    if (existingGroup) {
+                        existingGroup.stories.push(story);
+                    } else {
+                        user.push({ uid: story.uid, stories: [story] });
+                    }
+
+                    return user;
+                }, []);
 
                 // Filter stories for the current user
                 if (userId) {
@@ -25,22 +34,8 @@ export const useStories = (userId) => {
                 }
 
                 // Group stories by uid
-                const grouped = allStories.reduce((acc, story) => {
-                    // Find if the uid already exists in the accumulator array
-                    const existingGroup = acc.find(group => group.uid === story.uid);
 
-                    if (existingGroup) {
-                        // If the uid exists, push the story into its stories array
-                        existingGroup.stories.push(story);
-                    } else {
-                        // If the uid doesn't exist, create a new group object
-                        acc.push({ uid: story.uid, stories: [story] });
-                    }
-
-                    return acc;
-                }, []);
-
-                setGroupedStories(grouped);
+                setStories(groupedStories);
                 setLoading(false);
             },
             (err) => {
@@ -54,5 +49,5 @@ export const useStories = (userId) => {
         };
     }, [userId]);
 
-    return { stories, userStories, groupedStories, loading, error };
+    return { stories, userStories, loading, error };
 };

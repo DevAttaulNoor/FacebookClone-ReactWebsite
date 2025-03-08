@@ -1,3 +1,4 @@
+import html2canvas from "html2canvas";
 import { useRef, useState } from "react";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -5,8 +6,6 @@ import { useAuthUser } from "@hooks/useAuthUser"
 import { db, storage } from "@services/firebase";
 import { ReactIcons } from "@constants/ReactIcons"
 import { TextareaField } from "@components/universal/inputs/TextareaField"
-
-import html2canvas from "html2canvas";
 
 const Story_Create = () => {
     const user = useAuthUser();
