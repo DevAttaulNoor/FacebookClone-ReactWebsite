@@ -387,7 +387,7 @@ export const Header = () => {
                         dropdownContainerStyle="dropdownContainerStyle1 gap-1"
                     >
                         <Link
-                            to={Routes.PROFILE.path}
+                            to={`/profile/${user.uid}`}
                             className='flex items-center p-1.5 gap-2.5 rounded-lg cursor-pointer hover:bg-customGray-default'
                         >
                             {user.profilePhoto ? (

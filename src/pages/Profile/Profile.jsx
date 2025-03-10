@@ -1,34 +1,34 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useParams } from "react-router-dom";
 import { Routes } from "@constants/Routes";
-import { ReactIcons } from "@constants/ReactIcons";
-import { FeedPost } from "@components/universal/feed-related/FeedPost";
-import { Profile_About } from "./Profile_About";
-import { Profile_Friend } from "./Profile_Friend";
-import { Profile_Photos } from "./Profile_Photos";
-import { Profile_Video } from "./Profile_Video";
-import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
-import { ProfileComponentLayout } from "@layouts/ProfileComponentLayout";
-import { useAuthUser } from "@hooks/useAuthUser";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
 import { useFriends } from "@hooks/useFriends";
-
-const profileComponents = [
-    { id: 1, title: 'Posts', path: Routes.PROFILE.path },
-    { id: 2, title: 'About', path: Routes.PROFILE_ABOUT.path },
-    { id: 3, title: 'Friends', path: Routes.PROFILE_FRIEND.path },
-    { id: 4, title: 'Photos', path: Routes.PROFILE_PHOTO.path },
-    { id: 5, title: 'Videos', path: Routes.PROFILE_VIDEO.path }
-];
+import { ReactIcons } from "@constants/ReactIcons";
+import { FeedPost } from "@components/universal/feed-related/FeedPost";
+import { ProfileComponentLayout } from "@layouts/ProfileComponentLayout";
+import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
+import { Profile_About } from "./Profile_About";
+import { Profile_Video } from "./Profile_Video";
+import { Profile_Photos } from "./Profile_Photos";
+import { Profile_Friend } from "./Profile_Friend";
 
 const Profile = () => {
     const location = useLocation();
-    const user = useAuthUser();
+    const { id } = useParams();
     const { users } = useUsers();
-    const { acceptedFriends } = useFriends(user.uid);
-    const { userPosts } = usePosts(user.uid);
+    const activeProfileUser = users?.find(data => data.uid === id);
+    const { userPosts } = usePosts(activeProfileUser?.uid);
+    const { acceptedFriends } = useFriends(activeProfileUser?.uid);
     const userPostPhotos = userPosts.filter(data => data.mediaType === 'image')
     const userPostVideos = userPosts.filter(data => data.mediaType === 'video')
+
+    const profileComponents = [
+        { id: 1, title: 'Posts', path: `/profile/${activeProfileUser?.uid}` },
+        { id: 2, title: 'About', path: `/profile/${activeProfileUser?.uid}/about` },
+        { id: 3, title: 'Friends', path: `/profile/${activeProfileUser?.uid}/friend` },
+        { id: 4, title: 'Photos', path: `/profile/${activeProfileUser?.uid}/photo` },
+        { id: 5, title: 'Videos', path: `/profile/${activeProfileUser?.uid}/video` }
+    ];
 
     return (
         <div className="w-full h-full flex items-center flex-col overflow-y-auto bg">
@@ -36,8 +36,8 @@ const Profile = () => {
                 {/* Cover Photo */}
                 <div className="w-[1080px] h-[460px] rounded-b-lg bg-coverPhoto-gradient">
                     <img
-                        src={user?.coverphoto}
-                        alt={`cover image of ${user?.username}`}
+                        src={activeProfileUser?.coverphoto}
+                        alt={`cover image of ${activeProfileUser?.username}`}
                         className="w-full h-full object-cover object-center rounded-b-lg bg-customGray-default"
                     />
                 </div>
@@ -48,8 +48,8 @@ const Profile = () => {
                         {/* Profile Image */}
                         <div className="relative">
                             <img
-                                src={user?.profilePhoto}
-                                alt={`profile image of ${user.username}`}
+                                src={activeProfileUser?.profilePhoto}
+                                alt={`profile image of ${activeProfileUser?.username}`}
                                 className="w-44 h-44 rounded-full border-2 border-white object-cover"
                             />
 
@@ -57,18 +57,18 @@ const Profile = () => {
                         </div>
 
                         <div className="flex flex-col">
-                            <h3 className="text-2xl font-bold">{user.username}</h3>
+                            <h3 className="text-2xl font-bold">{activeProfileUser?.username}</h3>
 
                             {/* Friends Count */}
-                            {acceptedFriends.length > 0 && (
+                            {acceptedFriends?.length > 0 && (
                                 <Link to={Routes.FRIEND_AllFRIENDS.path} className="text-sm text-customGray-200 cursor-pointer hover:underline">
-                                    {`${acceptedFriends.length} ${acceptedFriends.length > 1 ? 'friends' : 'friend'}`}
+                                    {`${acceptedFriends?.length} ${acceptedFriends?.length > 1 ? 'friends' : 'friend'}`}
                                 </Link>
                             )}
 
                             {/* Friends List Preview */}
                             <div className="flex items-center mt-2">
-                                {acceptedFriends.slice(0, 8).map((data) => (
+                                {acceptedFriends?.slice(0, 8).map((data) => (
                                     <Link
                                         key={data.uid}
                                         to={Routes.PROFILE.path}
@@ -128,25 +128,25 @@ const Profile = () => {
 
             {/* Profile Page Components */}
             <div className="max-w-[1040px] w-full flex p-4 gap-3">
-                {location.pathname === Routes.PROFILE.path && (
+                {location.pathname === `/profile/${activeProfileUser?.uid}` && (
                     <>
                         <div className="flex flex-[0.4] flex-col gap-4">
                             <ProfileComponentLayout
+                                path={`/profile/${activeProfileUser?.uid}/about`}
                                 title={Routes.PROFILE_ABOUT.title}
-                                path={Routes.PROFILE_ABOUT.path}
                                 noSeeAll={false}
                             >
-                                <p className="text-sm text-center">{user?.bio}</p>
+                                <p className="text-sm text-center">{activeProfileUser?.bio}</p>
                             </ProfileComponentLayout>
 
                             <ProfileComponentLayout
+                                path={`/profile/${activeProfileUser?.uid}/photo`}
                                 title={Routes.PROFILE_PHOTO.title}
-                                path={Routes.PROFILE_PHOTO.path}
                             >
                                 <div className="grid grid-cols-3 gap-2">
                                     <img
-                                        src={user.profilePhoto}
-                                        alt={`profile image of ${user.username}`}
+                                        src={activeProfileUser?.profilePhoto}
+                                        alt={`profile image of ${activeProfileUser?.username}`}
                                         className="w-full h-full object-cover"
                                     />
 
@@ -167,8 +167,8 @@ const Profile = () => {
 
                             {userPostVideos.length > 0 && (
                                 <ProfileComponentLayout
+                                    path={`/profile/${activeProfileUser?.uid}/video`}
                                     title={Routes.PROFILE_VIDEO.title}
-                                    path={Routes.PROFILE_VIDEO.path}
                                 >
                                     <div className="grid grid-cols-3 gap-2">
                                         {userPostVideos.map((data) => (
@@ -185,11 +185,11 @@ const Profile = () => {
                             )}
 
                             <ProfileComponentLayout
+                                path={`/profile/${activeProfileUser?.uid}/friend`}
                                 title={Routes.PROFILE_FRIEND.title}
-                                path={Routes.PROFILE_FRIEND.path}
                             >
                                 <div className="grid grid-cols-3 gap-x-3 gap-y-4">
-                                    {acceptedFriends.map((data) => (
+                                    {acceptedFriends?.map((data) => (
                                         <Link
                                             key={data.uid}
                                             to={Routes.PROFILE.path}
@@ -223,24 +223,24 @@ const Profile = () => {
                     </>
                 )}
 
-                {location.pathname === Routes.PROFILE_ABOUT.path && (
+                {location.pathname === `/profile/${activeProfileUser?.uid}/about` && (
                     <Profile_About />
                 )}
 
-                {location.pathname === Routes.PROFILE_FRIEND.path && (
+                {location.pathname === `/profile/${activeProfileUser?.uid}/friend` && (
                     <Profile_Friend
                         friendsData={acceptedFriends}
                     />
                 )}
 
-                {location.pathname === Routes.PROFILE_PHOTO.path && (
+                {location.pathname === `/profile/${activeProfileUser?.uid}/photo` && (
                     <Profile_Photos
-                        userData={user}
+                        userData={activeProfileUser}
                         userPhotosData={userPostPhotos}
                     />
                 )}
 
-                {location.pathname === Routes.PROFILE_VIDEO.path && (
+                {location.pathname === `/profile/${activeProfileUser?.uid}/video` && (
                     <Profile_Video
                         userVideosData={userPostVideos}
                     />

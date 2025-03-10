@@ -20,7 +20,7 @@ const Home = () => {
         <div className="grid h-full w-full grid-cols-[1fr_2fr_1fr] gap-10 overflow-y-auto">
             <div className="flex flex-col gap-2 h-full w-full overflow-y-auto p-2">
                 <Link
-                    to={Routes.PROFILE.path}
+                    to={`/profile/${user.uid}`}
                     className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 hover:bg-customGray-100"
                 >
                     {user ? (

@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { ReactIcons } from "@constants/ReactIcons"
 
 export const FeedPost = ({ userData, postData, postContainerStyle = 'w-full' }) => {
@@ -22,10 +23,15 @@ export const FeedPost = ({ userData, postData, postContainerStyle = 'w-full' }) 
                                     </span>
                                 )}
 
-                                <div className="postUserInfo">
-                                    <h5 className="text-sm font-medium cursor-pointer hover:underline">{postUser?.username}</h5>
+                                <div>
+                                    <Link
+                                        to={`/profile/${postUser?.uid}`}
+                                        className="text-sm font-medium cursor-pointer hover:underline"
+                                    >
+                                        {postUser?.username}
+                                    </Link>
 
-                                    <p className="text-sm text-customGray-200 cursor-pointer">timestamp</p>
+                                    <p className="text-xs text-customGray-200 cursor-pointer">{data.timestamp}</p>
                                 </div>
                             </div>
 
