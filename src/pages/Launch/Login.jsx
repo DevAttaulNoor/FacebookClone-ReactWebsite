@@ -48,7 +48,7 @@ const Login = () => {
                             onChange: (e) => setEmail(e.target.value),
                             required: true
                         }}
-                        inputStyle="w-96 p-4"
+                        inputStyle="launchpageInputStyle w-96 p-4"
                     />
 
                     <InputField
@@ -59,7 +59,7 @@ const Login = () => {
                             onChange: (e) => setPassword(e.target.value),
                             required: true
                         }}
-                        inputStyle="w-96 p-4"
+                        inputStyle="launchpageInputStyle w-96 p-4"
                     />
 
                     <button className="rounded-md border border-slate-100 bg-customBlue-default px-4 py-2.5 text-xl font-semibold text-white outline-none">

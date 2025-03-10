@@ -1,12 +1,12 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Routes } from "@constants/Routes";
 import { ReactIcons } from "@constants/ReactIcons";
-import { FeedPost } from "@components/universal/FeedPost";
+import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import { Profile_About } from "./Profile_About";
 import { Profile_Friend } from "./Profile_Friend";
 import { Profile_Photos } from "./Profile_Photos";
 import { Profile_Video } from "./Profile_Video";
-import { FeedPostPosting } from "@components/universal/FeedPostPosting";
+import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
 import { ProfileComponentLayout } from "@layouts/ProfileComponentLayout";
 import { useAuthUser } from "@hooks/useAuthUser";
 import { usePosts } from "@hooks/usePosts";

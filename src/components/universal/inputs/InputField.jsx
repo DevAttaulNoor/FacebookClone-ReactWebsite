@@ -1,11 +1,11 @@
-export const InputField = ({ inputStyle = 'w-full',inputData }) => {
+export const InputField = ({ inputStyle = '', inputData }) => {
     return (
         <input
             type={inputData.type}
             value={inputData.value}
             placeholder={inputData.placeholder}
             onChange={inputData.onChange}
-            className={`${inputStyle} rounded-md border border-slate-300`}
+            className={`${inputStyle}`}
             required={inputData.required ?? false}
         />
     )

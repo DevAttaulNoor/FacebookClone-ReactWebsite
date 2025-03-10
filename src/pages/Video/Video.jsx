@@ -2,7 +2,7 @@ import { NavLink, useLocation } from "react-router";
 import { Routes } from "@constants/Routes";
 import { ReactIcons } from "@constants/ReactIcons";
 import { Video_Saved } from "./Video_Saved";
-import { FeedPost } from "@components/universal/FeedPost";
+import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
 

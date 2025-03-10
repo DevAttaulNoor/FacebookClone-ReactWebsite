@@ -30,7 +30,7 @@ export const FeedStory = () => {
                             </span>
                         )}
 
-                        <div className='flex flex-col items-center justify-center p-2 -mt-5 rounded-b-xl'>
+                        <div className='flex flex-col items-center justify-center p-2 rounded-b-xl'>
                             <span className="text-xl p-2 border-[3px] border-white rounded-full text-white bg-customBlue-default">{ReactIcons.ADD_PLUS}</span>
                             <h5 className="text-xs font-medium">Create story</h5>
                         </div>

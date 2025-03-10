@@ -30,7 +30,7 @@ import { BsEmojiSmile } from "react-icons/bs";
 
 import { GrGallery } from "react-icons/gr";
 import { IoTextOutline } from "react-icons/io5";
-
+import { BsArrowLeft } from "react-icons/bs";
 
 export const ReactIcons = {
     HOME: <IoHome />,
@@ -50,6 +50,7 @@ export const ReactIcons = {
     SMILE_EMOJI: <BsEmojiSmile />,
     PHOTO_GALLERY: <GrGallery />,
     TEXT: <IoTextOutline />,
+    ARROW_LEFT: <BsArrowLeft />,
 
     // Home Page
     OPTIONS_THREE_DOTS: <IoEllipsisHorizontalSharp />,

@@ -138,7 +138,7 @@ const Signup = () => {
                                     onChange: (e) => setFormData(prev => ({ ...prev, name: { ...prev.name, first: e.target.value } })),
                                     required: true,
                                 }}
-                                inputStyle="px-3 py-2"
+                                inputStyle="launchpageInputStyle px-3 py-2"
                             />
 
                             <InputField
@@ -149,7 +149,7 @@ const Signup = () => {
                                     onChange: (e) => setFormData(prev => ({ ...prev, name: { ...prev.name, last: e.target.value } })),
                                     required: true,
                                 }}
-                                inputStyle="px-3 py-2"
+                                inputStyle="launchpageInputStyle px-3 py-2"
                             />
                         </div>
 
@@ -161,7 +161,7 @@ const Signup = () => {
                                 onChange: (e) => setFormData(prev => ({ ...prev, email: e.target.value })),
                                 required: true,
                             }}
-                            inputStyle="px-3 py-2"
+                            inputStyle="launchpageInputStyle px-3 py-2"
                         />
 
                         <InputField
@@ -172,7 +172,7 @@ const Signup = () => {
                                 onChange: (e) => setFormData(prev => ({ ...prev, password: e.target.value })),
                                 required: true,
                             }}
-                            inputStyle="px-3 py-2"
+                            inputStyle="launchpageInputStyle px-3 py-2"
                         />
 
                         <div className="flex flex-col gap-2">
