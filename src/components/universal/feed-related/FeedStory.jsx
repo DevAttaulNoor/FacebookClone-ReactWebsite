@@ -4,9 +4,10 @@ import { useUsers } from "@hooks/useUsers";
 import { useStories } from "@hooks/useStories";
 import { useAuthUser } from "@hooks/useAuthUser";
 import { ReactIcons } from "@constants/ReactIcons";
+import { StoryCard } from "../cards/StoryCard";
 
 export const FeedStory = () => {
-    const user = useAuthUser();
+    const { user } = useAuthUser();
     const { users } = useUsers();
     const { stories } = useStories();
 
@@ -16,52 +17,34 @@ export const FeedStory = () => {
                 <div className='flex gap-2'>
                     <Link
                         to={Routes.STORY_CREATE.path}
-                        className="w-36 h-60 flex flex-col justify-between rounded-xl shadow-xl bg-white"
+                        className="w-32 h-56 flex flex-col justify-between rounded-xl shadow-xl bg-white"
                     >
                         {user?.profilePhoto ? (
                             <img
                                 src={user.profilePhoto}
                                 alt={`profile picture of ${user.username}`}
-                                className="w-full h-full rounded-t-xl object-cover"
+                                className="w-full h-[90%] rounded-t-xl object-cover"
                             />
                         ) : (
-                            <span className="flex items-center justify-center text-8xl h-52 w-full rounded-t-lg object-cover bg-customGray-default">
+                            <span className="flex items-center justify-center text-8xl h-[90%] w-full rounded-t-lg object-cover bg-customGray-default">
                                 {ReactIcons.PROFILE_AVATAR_WITHOUT_CIRCLE}
                             </span>
                         )}
 
-                        <div className='flex flex-col items-center justify-center p-2 rounded-b-xl'>
+                        <div className='flex flex-col items-center justify-center p-2 -mt-6 rounded-b-xl'>
                             <span className="text-xl p-2 border-[3px] border-white rounded-full text-white bg-customBlue-default">{ReactIcons.ADD_PLUS}</span>
                             <h5 className="text-xs font-medium">Create story</h5>
                         </div>
                     </Link>
 
-                    {stories.map((data) => {
-                        const storyUser = users.find(elem => elem.uid === data.uid);
-                        const storiesLength = data.stories.length - 1
-
-                        return (
-                            <Link
-                                key={data.uid}
-                                to={`/story/${data.uid}`}
-                                style={{ backgroundImage: `url(${data.stories[storiesLength].background})` }}
-                                className="w-36 h-60 flex flex-col justify-between p-3 rounded-xl shadow-xl bg-cover bg-center"
-                            >
-                                {storyUser?.profilePhoto ? (
-                                    <img
-                                        src={storyUser.profilePhoto}
-                                        alt={`profile picture of ${storyUser.username}`}
-                                        className="w-8 h-8 rounded-full border-2 border-customBlue-default object-contain bg-white"
-                                    />
-                                ) : (
-                                    <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
-                                )}
-
-                                <p className="text-xs font-medium text-white">{storyUser.username}</p>
-                            </Link>
-                        )
-                    })}
-                </div >
+                    {stories.map((data) => (
+                        <StoryCard
+                            key={data.uid}
+                            storyData={data}
+                            userData={users}
+                        />
+                    ))}
+                </div>
             ) : (
                 <Link
                     to={Routes.STORY_CREATE.path}

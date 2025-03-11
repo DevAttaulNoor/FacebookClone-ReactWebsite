@@ -25,9 +25,13 @@ export const Profile_Friend = ({ friendsData }) => {
 
             <div className="grid grid-cols-2 gap-2">
                 {friendsData.map((data) => (
-                    <div key={data.uid} className="flex items-center justify-between p-2 rounded-lg border border-customGray-100">
+                    <Link
+                        key={data.uid}
+                        to={`/profile/${data.uid}`}
+                        className="flex items-center justify-between p-2 rounded-lg border border-customGray-100"
+                    >
                         <div className="flex gap-2 items-center">
-                            {data?.profilePhoto ? (
+                            {data.profilePhoto ? (
                                 <img
                                     src={data.profilePhoto}
                                     alt={`image of ${data.username}`}
@@ -37,12 +41,11 @@ export const Profile_Friend = ({ friendsData }) => {
                                 <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
                             )}
 
-
                             <p className="text-xs font-medium">{data.username}</p>
                         </div>
 
                         <span className="p-2 rounded-full cursor-pointer hover:bg-customGray-100">{ReactIcons.OPTIONS_THREE_DOTS}</span>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>

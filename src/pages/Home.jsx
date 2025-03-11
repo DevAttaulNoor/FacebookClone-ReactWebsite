@@ -11,7 +11,7 @@ import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPost
 import leftbarOptionsData from "@assets/data/home-related/LeftbarOptions.json";
 
 const Home = () => {
-    const user = useAuthUser();
+    const { user } = useAuthUser();
     const { posts } = usePosts();
     const { users } = useUsers();
     const { acceptedFriends } = useFriends(user.uid);
@@ -23,25 +23,17 @@ const Home = () => {
                     to={`/profile/${user.uid}`}
                     className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 hover:bg-customGray-100"
                 >
-                    {user ? (
-                        <>
-                            {user?.profilePhoto ? (
-                                <img
-                                    src={user.profilePhoto}
-                                    alt={`profile picture of ${user.username}`}
-                                    className="w-8 h-8 rounded-full border border-customGray-100 object-contain bg-white"
-                                />
-                            ) : (
-                                <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
-                            )}
-                            <p className="font-medium">{user.username}</p>
-                        </>
+                    {user?.profilePhoto ? (
+                        <img
+                            src={user?.profilePhoto}
+                            alt={`profile picture of ${user?.username}`}
+                            className="w-8 h-8 rounded-full border border-customGray-100 object-contain bg-white"
+                        />
                     ) : (
-                        <>
-                            <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
-                            <p className="font-medium">Profile name</p>
-                        </>
+                        <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
                     )}
+
+                    <p className="font-medium">{user?.username}</p>
                 </Link>
 
                 {leftbarOptionsData.map((data) => (

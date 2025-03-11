@@ -1,21 +1,31 @@
-export const StoryCard = () => {
+import { Link } from "react-router"
+import { ReactIcons } from "@constants/ReactIcons"
+
+export const StoryCard = ({ userData, storyData }) => {
+    const storyUser = userData.find(elem => elem.uid === storyData.uid);
+    const storiesLength = storyData.stories.length - 1
+
     return (
-        <NavLink
-            to={`/reelpage/${reelContent.id}`}
-            key={reelContent.id}
-            onClick={() => dispatch(setSelectedReel(reelContent.id))}
+        <Link
+            to={`/story/${storyData.uid}`}
+            className="relative w-32 h-56 flex flex-col justify-between p-2 rounded-xl shadow-xl z-0 bg-black"
         >
-            <div
-                className="reelFeed_ScrollReelsStories"
-                style={{
-                    backgroundImage: `url(${reelContent.reel[[reelContent.reel.length - 1]].background})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
-                }}
-            >
-                <Avatar src={reelContent.photoURL} />
-                <p>{reelContent.username}</p>
-            </div>
-        </NavLink>
+            {storyUser?.profilePhoto ? (
+                <img
+                    src={storyUser.profilePhoto}
+                    alt={`profile picture of ${storyUser.username}`}
+                    className="w-11 h-11 rounded-full border-[3px] border-customBlue-default object-contain bg-customGray-200"
+                />
+            ) : (
+                <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
+            )}
+
+            <p className="text-xs font-medium px-1 drop-shadow-xl text-white">{storyUser.username}</p>
+
+            <span
+                style={{ backgroundImage: `url(${storyData.stories[storiesLength].background})` }}
+                className="absolute top-7 bottom-7 left-0 right-0 -z-[5] bg-cover bg-center bg-no-repeat"
+            />
+        </Link>
     )
 }

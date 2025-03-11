@@ -55,7 +55,7 @@ const profileDropdownOptions = [
 ];
 
 export const Header = () => {
-    const user = useAuthUser();
+    const { user } = useAuthUser();
     const [inputValue, setInputValue] = useState({
         userSearch: '',
         chatSearch: ''

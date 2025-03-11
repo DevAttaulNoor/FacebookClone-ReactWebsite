@@ -31,6 +31,8 @@ import { BsEmojiSmile } from "react-icons/bs";
 import { GrGallery } from "react-icons/gr";
 import { IoTextOutline } from "react-icons/io5";
 import { BsArrowLeft } from "react-icons/bs";
+import { MdEdit } from "react-icons/md";
+import { MdPersonAdd } from "react-icons/md";
 
 export const ReactIcons = {
     HOME: <IoHome />,
@@ -51,6 +53,7 @@ export const ReactIcons = {
     PHOTO_GALLERY: <GrGallery />,
     TEXT: <IoTextOutline />,
     ARROW_LEFT: <BsArrowLeft />,
+    EDIT_PENCIL: <MdEdit />,
 
     // Home Page
     OPTIONS_THREE_DOTS: <IoEllipsisHorizontalSharp />,
@@ -67,6 +70,7 @@ export const ReactIcons = {
     FRIENDS_STYLE2: <IoPeople />,
     FRIENDS_REQUEST: <BsFillPersonPlusFill />,
     FRIENDS_LIST: <BsPersonLinesFill />,
+    FRIEND_ADD: <MdPersonAdd />,
 
     // Profile Page
     CAMERA: <FaCamera />,

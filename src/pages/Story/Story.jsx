@@ -6,14 +6,14 @@ import { useAuthUser } from "@hooks/useAuthUser"
 import { ReactIcons } from "@constants/ReactIcons";
 
 const Story = () => {
-    const user = useAuthUser();
     const { id } = useParams();
     const { users } = useUsers();
+    const { user } = useAuthUser();
     const { stories, userStories } = useStories(user.uid);
-    const story = stories.flatMap(data => data.stories).filter(elem => elem.uid === id)
-    const userStory1 = users.find(elem => elem.uid === story[story.length - 1].uid);
-    const userStory = users.find(elem => elem.uid === userStories[userStories.length - 1].uid);
-    const storiesExceptCurrentUser = stories.filter(data => data.uid !== user.uid)
+    const story = stories?.flatMap(data => data.stories).filter(elem => elem.uid === id)
+    const userStory1 = users?.find(elem => elem.uid === story[story.length - 1].uid);
+    const userStory = users?.find(elem => elem.uid === userStories[userStories.length - 1].uid);
+    const storiesExceptCurrentUser = stories?.filter(data => data.uid !== user.uid)
 
     return (
         <div className="w-full h-full flex">
@@ -110,14 +110,14 @@ const Story = () => {
 
             <div className='w-full flex justify-center py-4 bg-black'>
                 <div
-                    style={{ backgroundImage: `url(${story[story.length - 1].background})` }}
+                    style={{ backgroundImage: `url(${story[story.length - 1]?.background})` }}
                     className="w-96 flex px-3 py-4 rounded-xl text-white bg-[#242526] bg-cover bg-center bg-no-repeat"
                 >
                     <div className="h-fit flex items-center gap-2">
                         {userStory1?.profilePhoto ? (
                             <img
-                                src={userStory1.profilePhoto}
-                                alt={`profile picture of ${userStory1.username}`}
+                                src={userStory1?.profilePhoto}
+                                alt={`profile picture of ${userStory1?.username}`}
                                 className="w-10 h-10 rounded-full border border-customGray-100 object-contain bg-white"
                             />
                         ) : (
@@ -125,8 +125,8 @@ const Story = () => {
                         )}
 
                         <div className='flex flex-col'>
-                            <h5 className="font-medium">{userStory1.username}</h5>
-                            <p className="text-sm">{story[story.length - 1].timestamp}</p>
+                            <h5 className="font-medium">{userStory1?.username}</h5>
+                            <p className="text-sm">{story[story.length - 1]?.timestamp}</p>
                         </div>
                     </div>
                 </div>

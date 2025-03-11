@@ -3,6 +3,7 @@ import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
 import { useFriends } from "@hooks/useFriends";
+import { useAuthUser } from "@hooks/useAuthUser";
 import { ReactIcons } from "@constants/ReactIcons";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import { ProfileComponentLayout } from "@layouts/ProfileComponentLayout";
@@ -16,6 +17,7 @@ const Profile = () => {
     const location = useLocation();
     const { id } = useParams();
     const { users } = useUsers();
+    const { user } = useAuthUser();
     const activeProfileUser = users?.find(data => data.uid === id);
     const { userPosts } = usePosts(activeProfileUser?.uid);
     const { acceptedFriends } = useFriends(activeProfileUser?.uid);
@@ -35,16 +37,36 @@ const Profile = () => {
             <div className="w-full flex flex-col items-center bg-white">
                 {/* Cover Photo */}
                 <div className="w-[1080px] h-[460px] rounded-b-lg bg-coverPhoto-gradient">
-                    <img
-                        src={activeProfileUser?.coverphoto}
-                        alt={`cover image of ${activeProfileUser?.username}`}
-                        className="w-full h-full object-cover object-center rounded-b-lg bg-customGray-default"
-                    />
+                    {activeProfileUser?.coverphoto ? (
+                        <div
+                            style={{ backgroundImage: `url(${activeProfileUser?.coverphoto})` }}
+                            className="w-full h-full flex items-end justify-end py-4 px-6 rounded-b-lg bg-cover bg-center bg-no-repeat bg-customGray-default"
+                        >
+                            <button
+                                className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer bg-white hover:bg-customGray-default"
+                            >
+                                <span className="text-lg">{ReactIcons.EDIT_PENCIL}</span>
+                                <p className="text-sm font-semibold">Edit cover photo</p>
+                            </button>
+                        </div>
+                    ) : (
+                        <div
+                            style={{ backgroundImage: `url(${activeProfileUser?.coverphoto})` }}
+                            className="w-full h-full flex items-end justify-end py-4 px-6 rounded-b-lg bg-cover bg-center bg-no-repeat bg-customGray-default"
+                        >
+                            <button
+                                className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer bg-white hover:bg-customGray-100 z-[5]"
+                            >
+                                <span className="text-lg">{ReactIcons.ADD_PLUS}</span>
+                                <p className="text-sm font-semibold">Add cover photo</p>
+                            </button>
+                        </div>
+                    )}
                 </div>
 
                 {/* Profile Section */}
-                <div className="max-w-[1040px] w-full h-40 flex items-end justify-between p-4">
-                    <div className="flex items-center gap-4">
+                <div className="max-w-[1040px] w-full flex items-end justify-between p-4 -mt-20">
+                    <div className="flex items-end gap-4">
                         {/* Profile Image */}
                         <div className="relative">
                             <img
@@ -53,10 +75,12 @@ const Profile = () => {
                                 className="w-44 h-44 rounded-full border-2 border-white object-cover"
                             />
 
-                            <span className="absolute bottom-2 right-2 p-2 text-lg bg-customGray-100 rounded-full cursor-pointer hover:bg-customGray-default">{ReactIcons.CAMERA}</span>
+                            {activeProfileUser?.uid == user?.uid && (
+                                <span className="absolute bottom-2 right-2 p-2 text-lg bg-customGray-100 rounded-full cursor-pointer hover:bg-customGray-default">{ReactIcons.CAMERA}</span>
+                            )}
                         </div>
 
-                        <div className="flex flex-col">
+                        <div className="flex flex-col mb-4">
                             <h3 className="text-2xl font-bold">{activeProfileUser?.username}</h3>
 
                             {/* Friends Count */}
@@ -67,16 +91,16 @@ const Profile = () => {
                             )}
 
                             {/* Friends List Preview */}
-                            <div className="flex items-center mt-2">
+                            <div className="flex items-center mt-1">
                                 {acceptedFriends?.slice(0, 8).map((data) => (
                                     <Link
                                         key={data.uid}
-                                        to={Routes.PROFILE.path}
-                                        className="w-10 h-10 rounded-full border-2 border-white -ml-2 first:-ml-0"
+                                        to={`/profile/${data.uid}`}
+                                        className="w-8 h-8 rounded-full border-2 border-white -ml-2 first:-ml-0"
                                     >
-                                        {data?.profilePhoto ? (
+                                        {data.profilePhoto ? (
                                             <img
-                                                src={data?.profilePhoto}
+                                                src={data.profilePhoto}
                                                 alt={`profile image of ${data.username}`}
                                                 className="w-full h-full rounded-full object-cover"
                                             />
@@ -90,20 +114,49 @@ const Profile = () => {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex gap-1">
-                        <div className="flex items-center px-3 py-2 rounded-md cursor-pointer bg-customGray-100">
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yK/r/r2FA830xjtI.png" alt="" />
-                            <p className="text-sm font-semibold ml-1">Add friend</p>
-                        </div>
+                    <div className="flex gap-2">
+                        {activeProfileUser?.uid == user?.uid ? (
+                            <>
+                                <Link
+                                    to={Routes.STORY_CREATE.path}
+                                    className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer text-white bg-customBlue-default"
+                                >
+                                    <span className="text-lg">{ReactIcons.ADD_PLUS}</span>
+                                    <p className="text-sm font-semibold">Add to story</p>
+                                </Link>
 
-                        <div className="flex items-center px-3 py-2 rounded-md cursor-pointer text-white bg-customBlue-default">
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/YjBUcSAL8TC.png" alt="" />
-                            <p className="text-sm font-semibold ml-1">Message</p>
-                        </div>
+                                <button
+                                    className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer bg-customGray-100"
+                                >
+                                    <span className="text-lg">{ReactIcons.EDIT_PENCIL}</span>
+                                    <p className="text-sm font-semibold">Edit profile</p>
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                {acceptedFriends?.some(data => data.uid == user?.uid) ? (
+                                    <span className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer text-white bg-customBlue-default">
+                                        <span className="text-lg">{ReactIcons.FRIEND}</span>
+                                        <p className="text-sm font-semibold">Friend</p>
+                                    </span>
+                                ) : (
+                                    <Link
+                                        to={Routes.FRIEND.path}
+                                        className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer text-white bg-customBlue-default"
+                                    >
+                                        <span className="text-lg">{ReactIcons.FRIEND_ADD}</span>
+                                        <p className="text-sm font-semibold">Add friend</p>
+                                    </Link>
+                                )}
 
-                        <div className="flex items-center px-3 py-2 rounded-md cursor-pointer bg-customGray-100">
-                            <span>{ReactIcons.DOWN}</span>
-                        </div>
+                                <button
+                                    className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer bg-customGray-100"
+                                >
+                                    <span className="text-lg">{ReactIcons.MESSAGE}</span>
+                                    <p className="text-sm font-semibold">Message</p>
+                                </button>
+                            </>
+                        )}
                     </div>
                 </div>
 
@@ -127,7 +180,7 @@ const Profile = () => {
             </div>
 
             {/* Profile Page Components */}
-            <div className="max-w-[1040px] w-full flex p-4 gap-3">
+            <div className="max-w-[1040px] w-full flex p-4 gap-4">
                 {location.pathname === `/profile/${activeProfileUser?.uid}` && (
                     <>
                         <div className="flex flex-[0.4] flex-col gap-4">
@@ -192,7 +245,7 @@ const Profile = () => {
                                     {acceptedFriends?.map((data) => (
                                         <Link
                                             key={data.uid}
-                                            to={Routes.PROFILE.path}
+                                            to={`/profile/${data.uid}`}
                                             className="flex flex-col gap-1"
                                         >
                                             {data?.profilePhoto ? (
@@ -246,7 +299,7 @@ const Profile = () => {
                     />
                 )}
             </div>
-        </div>
+        </div >
     );
 };
 

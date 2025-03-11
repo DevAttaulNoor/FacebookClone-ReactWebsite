@@ -31,7 +31,7 @@ const friendsLeftbarOptions = [
 ];
 
 const Friend = () => {
-    const user = useAuthUser();
+    const { user } = useAuthUser();
     const location = useLocation();
     const { friends, pendingFriends, acceptingFriends, acceptedFriends } = useFriends(user.uid);
 

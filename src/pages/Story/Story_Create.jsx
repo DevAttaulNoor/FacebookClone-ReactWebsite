@@ -8,7 +8,7 @@ import { ReactIcons } from "@constants/ReactIcons"
 import { TextareaField } from "@components/universal/inputs/TextareaField"
 
 const Story_Create = () => {
-    const user = useAuthUser();
+    const { user } = useAuthUser();
     const inputRef = useRef(null);
     const [uploadLoading, setUploadLoading] = useState(false);
     const [textInput, setTextInput] = useState({

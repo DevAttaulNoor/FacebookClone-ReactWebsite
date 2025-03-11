@@ -27,7 +27,7 @@ const feedPostingOptions = [
 ];
 
 export const FeedPostPosting = () => {
-    const user = useAuthUser();
+    const { user } = useAuthUser();
     const emojiBoxRef = useRef(null);
     const messageMediaInputRef = useRef(null);
     const [messageText, setMessageText] = useState('');
@@ -120,8 +120,8 @@ export const FeedPostPosting = () => {
                 <div className="flex items-center gap-2 py-3">
                     {user?.profilePhoto ? (
                         <img
-                            src={user.profilePhoto}
-                            alt={`profile picture of ${user.username}`}
+                            src={user?.profilePhoto}
+                            alt={`profile picture of ${user?.username}`}
                             className="w-10 h-10 rounded-full border border-customGray-100 object-contain bg-white"
                         />
                     ) : (
@@ -131,7 +131,7 @@ export const FeedPostPosting = () => {
                     )}
 
                     <div onClick={() => setModalOpen(true)} className="w-full cursor-pointer rounded-3xl bg-customGray-default px-3 py-2.5 hover:bg-[#E4E6EB]">
-                        <p className="text-slate-500">{`What's on your mind, ${user.username}`}</p>
+                        <p className="text-slate-500">{`What's on your mind, ${user?.username}`}</p>
                     </div>
                 </div>
 
@@ -167,8 +167,8 @@ export const FeedPostPosting = () => {
                     <div className="flex items-center gap-2.5">
                         {user?.profilePhoto ? (
                             <img
-                                src={user.profilePhoto}
-                                alt={`profile picture of ${user.username}`}
+                                src={user?.profilePhoto}
+                                alt={`profile picture of ${user?.username}`}
                                 className="w-10 h-10 rounded-full border border-customGray-100 object-contain bg-white"
                             />
                         ) : (
@@ -177,7 +177,7 @@ export const FeedPostPosting = () => {
                             </span>
                         )}
 
-                        <p className="text-sm font-semibold">{user.username}</p>
+                        <p className="text-sm font-semibold">{user?.username}</p>
                     </div>
 
                     <textarea
