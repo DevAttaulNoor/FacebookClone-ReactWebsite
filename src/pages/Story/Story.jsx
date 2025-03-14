@@ -11,8 +11,8 @@ const Story = () => {
     const { user } = useAuthUser();
     const { stories, userStories } = useStories(user.uid);
     const story = stories?.flatMap(data => data.stories).filter(elem => elem.uid === id)
-    const userStory1 = users?.find(elem => elem.uid === story[story.length - 1].uid);
-    const userStory = users?.find(elem => elem.uid === userStories[userStories.length - 1].uid);
+    const userStory1 = users?.find(elem => elem.uid === story[story.length - 1]?.uid);
+    const userStory = users?.find(elem => elem.uid === userStories[userStories.length - 1]?.uid);
     const storiesExceptCurrentUser = stories?.filter(data => data.uid !== user.uid)
 
     return (

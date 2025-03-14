@@ -1,3 +1,4 @@
+import { Link } from "react-router"
 import { ReactIcons } from "@constants/ReactIcons"
 
 export const Profile_Friend = ({ friendsData }) => {
@@ -19,7 +20,7 @@ export const Profile_Friend = ({ friendsData }) => {
                     <p className="text-sm font-medium p-2 mx-1 rounded text-customBlue-default cursor-pointer hover:bg-customGray-100">Friends requests</p>
                     <p className="text-sm font-medium p-2 mx-1 rounded text-customBlue-default cursor-pointer hover:bg-customGray-100">Find Friends</p>
 
-                    <span className="text-xl py-0.5 px-3 rounded-lg ml-1.5 cursor-pointer bg-customGray-100">{ReactIcons.OPTIONS_THREE_DOTS}</span>
+                    <span className="text-lg py-2 px-3 rounded-lg ml-1.5 cursor-pointer bg-customGray-100">{ReactIcons.OPTIONS_THREE_DOTS}</span>
                 </div>
             </div>
 

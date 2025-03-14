@@ -1,9 +1,13 @@
+import { useRef, useState } from "react";
+import { doc, updateDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Link, NavLink, useLocation, useParams } from "react-router-dom";
 import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
 import { useFriends } from "@hooks/useFriends";
 import { useAuthUser } from "@hooks/useAuthUser";
+import { db, storage } from "@services/firebase";
 import { ReactIcons } from "@constants/ReactIcons";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import { ProfileComponentLayout } from "@layouts/ProfileComponentLayout";
@@ -12,9 +16,9 @@ import { Profile_About } from "./Profile_About";
 import { Profile_Video } from "./Profile_Video";
 import { Profile_Photos } from "./Profile_Photos";
 import { Profile_Friend } from "./Profile_Friend";
+import { TextareaField } from "@components/universal/inputs/TextareaField";
 
 const Profile = () => {
-    const location = useLocation();
     const { id } = useParams();
     const { users } = useUsers();
     const { user } = useAuthUser();
@@ -23,6 +27,15 @@ const Profile = () => {
     const { acceptedFriends } = useFriends(activeProfileUser?.uid);
     const userPostPhotos = userPosts.filter(data => data.mediaType === 'image')
     const userPostVideos = userPosts.filter(data => data.mediaType === 'video')
+    const location = useLocation();
+    const coverPhotoRef = useRef(null);
+    const profilePhotoRef = useRef(null);
+
+    const [bioInput, setBioInput] = useState({
+        value: "",
+        count: 101,
+        isVisible: false,
+    });
 
     const profileComponents = [
         { id: 1, title: 'Posts', path: `/profile/${activeProfileUser?.uid}` },
@@ -32,34 +45,92 @@ const Profile = () => {
         { id: 5, title: 'Videos', path: `/profile/${activeProfileUser?.uid}/video` }
     ];
 
+    const handlePhotoChange = async (photoType, photoTypeRef) => {
+        const file = photoTypeRef.current.files[0];
+        if (file) {
+            try {
+                let photo;
+                const storageRef = ref(storage, `Users/${user.uid}/${file.name}`);
+                await uploadBytes(storageRef, file);
+                photo = await getDownloadURL(storageRef);
+
+                const userDocRef = doc(db, "Users", user.uid);
+
+                if (photoType === "profilePhoto") {
+                    await updateDoc(userDocRef, { profilePhoto: photo });
+                } else if (photoType === "coverPhoto") {
+                    await updateDoc(userDocRef, { coverPhoto: photo });
+                } else {
+                    console.error(`Invalid photoType: ${photoType}`);
+                }
+
+                console.log(`Success uploading ${photoType}`);
+            } catch (error) {
+                console.error(`Error uploading ${photoType}:`, error);
+            }
+        }
+    };
+
+    const handleBioText = async () => {
+        try {
+            const userDocRef = doc(db, "Users", user.uid);
+            await updateDoc(userDocRef, { bio: bioInput.value });
+            setBioInput((prev) => ({ ...prev, isVisible: false }));
+        } catch (error) {
+            console.error(`Error uploading bio text`, error);
+        }
+    }
+
     return (
         <div className="w-full h-full flex items-center flex-col overflow-y-auto bg">
             <div className="w-full flex flex-col items-center bg-white">
                 {/* Cover Photo */}
                 <div className="w-[1080px] h-[460px] rounded-b-lg bg-coverPhoto-gradient">
-                    {activeProfileUser?.coverphoto ? (
+                    {activeProfileUser?.coverPhoto ? (
                         <div
-                            style={{ backgroundImage: `url(${activeProfileUser?.coverphoto})` }}
+                            style={{ backgroundImage: `url(${activeProfileUser?.coverPhoto})` }}
                             className="w-full h-full flex items-end justify-end py-4 px-6 rounded-b-lg bg-cover bg-center bg-no-repeat bg-customGray-default"
                         >
-                            <button
-                                className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer bg-white hover:bg-customGray-default"
-                            >
-                                <span className="text-lg">{ReactIcons.EDIT_PENCIL}</span>
-                                <p className="text-sm font-semibold">Edit cover photo</p>
-                            </button>
+                            {activeProfileUser?.uid === user?.uid && (
+                                <button
+                                    onClick={() => coverPhotoRef.current.click()}
+                                    className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer bg-white hover:bg-customGray-default z-[5]"
+                                >
+                                    <span className="text-lg">{ReactIcons.EDIT_PENCIL}</span>
+                                    <p className="text-sm font-semibold">Edit cover photo</p>
+
+                                    <input
+                                        type="file"
+                                        ref={coverPhotoRef}
+                                        accept="image/*"
+                                        onChange={() => handlePhotoChange('coverPhoto', coverPhotoRef)}
+                                        className="hidden"
+                                    />
+                                </button>
+                            )}
                         </div>
                     ) : (
                         <div
-                            style={{ backgroundImage: `url(${activeProfileUser?.coverphoto})` }}
+                            style={{ backgroundImage: `url(${activeProfileUser?.coverPhoto})` }}
                             className="w-full h-full flex items-end justify-end py-4 px-6 rounded-b-lg bg-cover bg-center bg-no-repeat bg-customGray-default"
                         >
-                            <button
-                                className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer bg-white hover:bg-customGray-100 z-[5]"
-                            >
-                                <span className="text-lg">{ReactIcons.ADD_PLUS}</span>
-                                <p className="text-sm font-semibold">Add cover photo</p>
-                            </button>
+                            {activeProfileUser?.uid === user?.uid && (
+                                <button
+                                    onClick={() => coverPhotoRef.current.click()}
+                                    className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer bg-white hover:bg-customGray-100 z-[5]"
+                                >
+                                    <span className="text-lg">{ReactIcons.ADD_PLUS}</span>
+                                    <p className="text-sm font-semibold">Add cover photo</p>
+
+                                    <input
+                                        type="file"
+                                        ref={coverPhotoRef}
+                                        accept="image/*"
+                                        onChange={() => handlePhotoChange('coverPhoto', coverPhotoRef)}
+                                        className="hidden"
+                                    />
+                                </button>
+                            )}
                         </div>
                     )}
                 </div>
@@ -76,7 +147,20 @@ const Profile = () => {
                             />
 
                             {activeProfileUser?.uid == user?.uid && (
-                                <span className="absolute bottom-2 right-2 p-2 text-lg bg-customGray-100 rounded-full cursor-pointer hover:bg-customGray-default">{ReactIcons.CAMERA}</span>
+                                <span
+                                    onClick={() => profilePhotoRef.current.click()}
+                                    className="absolute bottom-2 right-2 p-2 text-lg bg-customGray-100 rounded-full cursor-pointer hover:bg-customGray-default"
+                                >
+                                    {ReactIcons.CAMERA}
+
+                                    <input
+                                        type="file"
+                                        ref={profilePhotoRef}
+                                        accept="image/*"
+                                        onChange={() => handlePhotoChange('profilePhoto', profilePhotoRef)}
+                                        className="hidden"
+                                    />
+                                </span>
                             )}
                         </div>
 
@@ -184,13 +268,70 @@ const Profile = () => {
                 {location.pathname === `/profile/${activeProfileUser?.uid}` && (
                     <>
                         <div className="flex flex-[0.4] flex-col gap-4">
-                            <ProfileComponentLayout
-                                path={`/profile/${activeProfileUser?.uid}/about`}
-                                title={Routes.PROFILE_ABOUT.title}
-                                noSeeAll={false}
-                            >
-                                <p className="text-sm text-center">{activeProfileUser?.bio}</p>
-                            </ProfileComponentLayout>
+                            {activeProfileUser?.uid == user?.uid ? (
+                                <ProfileComponentLayout
+                                    path={`/profile/${activeProfileUser?.uid}/about`}
+                                    title={Routes.PROFILE_ABOUT.title}
+                                    noSeeAll={false}
+                                >
+                                    {bioInput.isVisible ? (
+                                        <div className="flex flex-col rounded-lg">
+                                            <TextareaField
+                                                textareaData={{
+                                                    rows: 3,
+                                                    value: bioInput.value,
+                                                    maxLength: bioInput.count,
+                                                    placeholder: 'Describe who you are',
+                                                    onChange: (e) => setBioInput(prev => ({ ...prev, value: e.target.value })),
+                                                }}
+                                                textareaStyle="text-center text-sm font-medium py-2 px-3 rounded-lg border-2 resize-none cursor-pointer bg-customGray-default hover:bg-customGray-100"
+                                            />
+
+                                            <p className="text-end text-xs font-medium text-customGray-300">
+                                                {bioInput.count - bioInput.value.length} characters limit
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <p className="text-sm text-center">{activeProfileUser?.bio}</p>
+                                            <button
+                                                onClick={() => setBioInput(prev => ({ ...prev, isVisible: !prev.isVisible }))}
+                                                className="w-full text-sm font-medium py-2.5 rounded-lg bg-customGray-100 hover:bg-customGray-default"
+                                            >
+                                                {`${activeProfileUser.bio ? 'Edit' : 'Add'} bio`}
+                                            </button>
+                                        </>
+                                    )}
+
+                                    <div className={`${bioInput.isVisible ? 'flex' : 'hidden'} justify-end gap-2`}>
+                                        <button
+                                            onClick={handleBioText}
+                                            className="text-sm font-medium py-2 px-4 rounded-lg text-white bg-customBlue-default"
+                                        >
+                                            Save
+                                        </button>
+
+                                        <button
+                                            onClick={() => setBioInput(prev => ({ ...prev, isVisible: false }))}
+                                            className="text-sm font-medium py-2 px-4 rounded-lg bg-customGray-100"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </ProfileComponentLayout>
+                            ) : (
+                                <>
+                                    {activeProfileUser?.bio && (
+                                        <ProfileComponentLayout
+                                            path={`/profile/${activeProfileUser?.uid}/about`}
+                                            title={Routes.PROFILE_ABOUT.title}
+                                            noSeeAll={false}
+                                        >
+                                            <p className="text-sm text-center">{activeProfileUser?.bio}</p>
+                                        </ProfileComponentLayout>
+                                    )}
+                                </>
+                            )}
 
                             <ProfileComponentLayout
                                 path={`/profile/${activeProfileUser?.uid}/photo`}
@@ -237,32 +378,34 @@ const Profile = () => {
                                 </ProfileComponentLayout>
                             )}
 
-                            <ProfileComponentLayout
-                                path={`/profile/${activeProfileUser?.uid}/friend`}
-                                title={Routes.PROFILE_FRIEND.title}
-                            >
-                                <div className="grid grid-cols-3 gap-x-3 gap-y-4">
-                                    {acceptedFriends?.map((data) => (
-                                        <Link
-                                            key={data.uid}
-                                            to={`/profile/${data.uid}`}
-                                            className="flex flex-col gap-1"
-                                        >
-                                            {data?.profilePhoto ? (
-                                                <img
-                                                    src={data.profilePhoto}
-                                                    alt={`profile picture of ${data.username}`}
-                                                    className="w-full h-full rounded-md"
-                                                />
-                                            ) : (
-                                                <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
-                                            )}
+                            {acceptedFriends.length > 0 && (
+                                <ProfileComponentLayout
+                                    path={`/profile/${activeProfileUser?.uid}/friend`}
+                                    title={Routes.PROFILE_FRIEND.title}
+                                >
+                                    <div className="grid grid-cols-3 gap-x-3 gap-y-4">
+                                        {acceptedFriends?.map((data) => (
+                                            <Link
+                                                key={data.uid}
+                                                to={`/profile/${data.uid}`}
+                                                className="flex flex-col gap-1"
+                                            >
+                                                {data?.profilePhoto ? (
+                                                    <img
+                                                        src={data.profilePhoto}
+                                                        alt={`profile picture of ${data.username}`}
+                                                        className="w-full h-full rounded-md"
+                                                    />
+                                                ) : (
+                                                    <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
+                                                )}
 
-                                            <p className="text-xs font-medium">{data.username}</p>
-                                        </Link>
-                                    ))}
-                                </div>
-                            </ProfileComponentLayout>
+                                                <p className="text-xs font-medium">{data.username}</p>
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </ProfileComponentLayout>
+                            )}
                         </div>
 
                         <div className="flex flex-[0.6] w-full flex-col gap-4">

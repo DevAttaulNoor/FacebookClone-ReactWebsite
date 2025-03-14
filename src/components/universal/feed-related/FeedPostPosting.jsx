@@ -5,6 +5,7 @@ import { useAuthUser } from "@hooks/useAuthUser";
 import { db, storage } from '@services/firebase';
 import { ModalLayout } from "@layouts/ModalLayout";
 import { ReactIcons } from "@constants/ReactIcons";
+import { TextareaField } from '../inputs/TextareaField';
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
@@ -142,7 +143,7 @@ export const FeedPostPosting = () => {
                         <div key={data.id} className="flex cursor-pointer items-center justify-center gap-2 rounded-lg p-3 hover:bg-slate-100">
                             <img src={data.icon} alt={""} className="w-5" />
                             <p className="text-sm font-medium text-[#65676B]">
-                                Live video
+                                {data.title}
                             </p>
                         </div>
                     ))}
@@ -180,12 +181,14 @@ export const FeedPostPosting = () => {
                         <p className="text-sm font-semibold">{user?.username}</p>
                     </div>
 
-                    <textarea
-                        rows="4"
-                        value={messageText}
-                        placeholder="What's on your mind"
-                        onChange={(e) => setMessageText(e.target.value)}
-                        className={`${messageMedia ? 'text-sm' : 'text-xl'} w-full resize-none`}
+                    <TextareaField
+                        textareaData={{
+                            rows: 4,
+                            value: messageText,
+                            placeholder: "What's on your mind",
+                            onChange: (e) => setMessageText(e.target.value),
+                        }}
+                        textareaStyle={`${messageMedia ? 'text-sm' : 'text-xl'} w-full resize-none`}
                     />
 
                     {messageMedia.content && (
