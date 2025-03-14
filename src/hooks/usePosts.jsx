@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { db } from "@services/firebase";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, doc } from "firebase/firestore";
 
 export const usePosts = (userId) => {
     const [posts, setPosts] = useState([]);
@@ -9,21 +9,54 @@ export const usePosts = (userId) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const postsQuery = collection(db, 'Posts');
+        const postsQuery = collection(db, "Posts");
 
         const unsubscribePosts = onSnapshot(
             postsQuery,
             (snapshot) => {
-                const allPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                let allPosts = snapshot.docs.map(postDoc => ({
+                    id: postDoc.id,
+                    ...postDoc.data(),
+                    comments: []
+                }));
+
+                // Create a map to store unsubscribe functions for each post's comments
+                const unsubscribeCommentsMap = {};
+
+                allPosts.forEach(post => {
+                    const commentsRef = collection(doc(db, "Posts", post.id), "comments");
+
+                    const unsubscribeComments = onSnapshot(
+                        commentsRef,
+                        (commentsSnapshot) => {
+                            const postComments = commentsSnapshot.docs.map(commentDoc => ({
+                                id: commentDoc.id,
+                                ...commentDoc.data(),
+                            }));
+
+                            // Update the post with its real-time comments
+                            setPosts(prevPosts =>
+                                prevPosts.map(p => p.id === post.id ? { ...p, comments: postComments } : p)
+                            );
+                        },
+                        (err) => console.error(`Error fetching comments for post ${post.id}:`, err)
+                    );
+
+                    // Store the unsubscribe function for cleanup
+                    unsubscribeCommentsMap[post.id] = unsubscribeComments;
+                });
+
                 setPosts(allPosts);
 
-                // Filter posts for the current user
                 if (userId) {
-                    const currentUserPosts = allPosts.filter(post => post.uid === userId);
-                    setUserPosts(currentUserPosts);
+                    setUserPosts(allPosts.filter(post => post.uid === userId));
                 }
 
                 setLoading(false);
+
+                return () => {
+                    Object.values(unsubscribeCommentsMap).forEach(unsub => unsub());
+                };
             },
             (err) => {
                 setError(err);

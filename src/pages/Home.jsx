@@ -86,6 +86,7 @@ const Home = () => {
                 <FeedPostPosting />
 
                 <FeedPost
+                    activeUser={user}
                     userData={users}
                     postData={posts}
                 />

@@ -116,7 +116,7 @@ export const FeedPostPosting = () => {
     };
 
     return (
-        <div className="relative">
+        <>
             <div className="flex w-full flex-col rounded-lg bg-white px-4 shadow">
                 <div className="flex items-center gap-2 py-3">
                     {user?.profilePhoto ? (
@@ -256,6 +256,6 @@ export const FeedPostPosting = () => {
                     Post
                 </button>
             </ModalLayout>
-        </div>
+        </>
     )
 }

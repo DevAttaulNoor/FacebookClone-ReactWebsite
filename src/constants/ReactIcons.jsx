@@ -33,6 +33,7 @@ import { IoTextOutline } from "react-icons/io5";
 import { BsArrowLeft } from "react-icons/bs";
 import { MdEdit } from "react-icons/md";
 import { MdPersonAdd } from "react-icons/md";
+import { IoMdSend } from "react-icons/io";
 
 export const ReactIcons = {
     HOME: <IoHome />,
@@ -54,6 +55,7 @@ export const ReactIcons = {
     TEXT: <IoTextOutline />,
     ARROW_LEFT: <BsArrowLeft />,
     EDIT_PENCIL: <MdEdit />,
+    SEND_ARROW: <IoMdSend />,
 
     // Home Page
     OPTIONS_THREE_DOTS: <IoEllipsisHorizontalSharp />,
