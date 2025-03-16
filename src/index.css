@@ -19,7 +19,7 @@
 
 @layer components {
     .outerContainerStyle {
-        @apply mx-auto flex h-full w-full max-w-outerContainer flex-col overflow-hidden shadow-xl;
+        @apply relative mx-auto flex h-full w-full max-w-outerContainer flex-col overflow-hidden shadow-xl;
     }
 
     .launchpageInputStyle {

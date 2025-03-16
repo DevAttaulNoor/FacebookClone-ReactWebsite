@@ -214,7 +214,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                     const users = userData?.find(user => user.uid === elem.uid);
 
                                     return (
-                                        <div key={elem} className="flex gap-2">
+                                        <div key={elem.id} className="flex gap-2">
                                             {users?.profilePhoto ? (
                                                 <img
                                                     src={users?.profilePhoto}
@@ -284,9 +284,8 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                     </div>
                                 </div>
                             </ModalLayout>
-                        )
-                        }
-                    </div >
+                        )}
+                    </div>
                 )
             })}
         </>

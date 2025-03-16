@@ -34,6 +34,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import { MdEdit } from "react-icons/md";
 import { MdPersonAdd } from "react-icons/md";
 import { IoMdSend } from "react-icons/io";
+import { BiSolidEdit } from "react-icons/bi";
 
 export const ReactIcons = {
     HOME: <IoHome />,
@@ -55,6 +56,7 @@ export const ReactIcons = {
     TEXT: <IoTextOutline />,
     ARROW_LEFT: <BsArrowLeft />,
     EDIT_PENCIL: <MdEdit />,
+    EDIT_PENCIL_BOX: <BiSolidEdit />,
     SEND_ARROW: <IoMdSend />,
 
     // Home Page

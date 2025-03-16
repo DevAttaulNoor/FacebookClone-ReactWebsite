@@ -5,8 +5,8 @@ export const InputField = ({ inputStyle = '', inputData }) => {
             value={inputData.value}
             placeholder={inputData.placeholder}
             onChange={inputData.onChange}
-            className={`${inputStyle}`}
             required={inputData.required ?? false}
+            className={`${inputStyle}`}
         />
     )
 }
