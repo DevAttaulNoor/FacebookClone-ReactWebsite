@@ -5,6 +5,7 @@ export const InputField = ({ inputStyle = '', inputData }) => {
             value={inputData.value}
             placeholder={inputData.placeholder}
             onChange={inputData.onChange}
+            onKeyDown={inputData.onKeyDown}
             required={inputData.required ?? false}
             className={`${inputStyle}`}
         />

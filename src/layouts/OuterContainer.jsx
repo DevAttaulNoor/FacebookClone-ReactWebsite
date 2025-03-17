@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router";
 import { Routes } from "@constants/Routes";
 import { useAuthUser } from "@hooks/useAuthUser";
@@ -33,7 +33,7 @@ export const OuterContainer = ({ children }) => {
                         {ReactIcons.EDIT_PENCIL_BOX}
                     </span>
 
-                    {isMessageBoxVisible && <MessageBox />}
+                    {isMessageBoxVisible && <MessageBox isClose={() => setIsMessageBoxVisisble(false)} />}
                 </>
             )}
         </main>

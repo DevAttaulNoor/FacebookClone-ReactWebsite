@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router";
 import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
@@ -7,6 +8,7 @@ import { useAuthUser } from "@hooks/useAuthUser";
 import { ReactIcons } from "@constants/ReactIcons";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import { FeedStory } from "@components/universal/feed-related/FeedStory";
+import { MessageBox } from "@components/universal/message-related/MessageBox";
 import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
 import leftbarOptionsData from "@assets/data/home-related/LeftbarOptions.json";
 
@@ -15,6 +17,7 @@ const Home = () => {
     const { posts } = usePosts();
     const { users } = useUsers();
     const { acceptedFriends } = useFriends(user.uid);
+    const [isMessageBoxVisible, setIsMessageBoxVisisble] = useState(null);
 
     return (
         <div className="grid h-full w-full grid-cols-[1fr_2fr_1fr] gap-10 overflow-y-auto">
@@ -107,7 +110,11 @@ const Home = () => {
                 </div>
 
                 {acceptedFriends.map((user) => (
-                    <div key={user.uid} className="flex cursor-pointer items-center gap-2.5 rounded-lg p-2 hover:bg-customGray-100">
+                    <div
+                        key={user.uid}
+                        onClick={() => setIsMessageBoxVisisble(user.uid)}
+                        className="flex cursor-pointer items-center gap-2.5 rounded-lg p-2 hover:bg-customGray-100"
+                    >
                         {user?.profilePhoto ? (
                             <img
                                 src={user.profilePhoto}
@@ -120,6 +127,8 @@ const Home = () => {
                         <p className="font-medium">{user.username}</p>
                     </div>
                 ))}
+
+                {isMessageBoxVisible && <MessageBox isOpen={isMessageBoxVisible} isClose={() => setIsMessageBoxVisisble(null)} />}
             </div>
         </div>
     );

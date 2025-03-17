@@ -8,8 +8,8 @@ export const useFriends = (userId) => {
     const [friends, setFriends] = useState([]);
     const [friendReqs, setFriendReqs] = useState([]);
     const [pendingFriends, setPendingFriends] = useState([]);
-    const [acceptingFriends, setAcceptingFriends] = useState([]);
     const [acceptedFriends, setAcceptedFriends] = useState([]);
+    const [acceptingFriends, setAcceptingFriends] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
