@@ -35,6 +35,9 @@ import { MdEdit } from "react-icons/md";
 import { MdPersonAdd } from "react-icons/md";
 import { IoMdSend } from "react-icons/io";
 import { BiSolidEdit } from "react-icons/bi";
+import { PiTagSimpleFill } from "react-icons/pi";
+import { FaRegTrashCan } from "react-icons/fa6";
+
 
 export const ReactIcons = {
     HOME: <IoHome />,
@@ -58,6 +61,8 @@ export const ReactIcons = {
     EDIT_PENCIL: <MdEdit />,
     EDIT_PENCIL_BOX: <BiSolidEdit />,
     SEND_ARROW: <IoMdSend />,
+    SAVED_POST: <PiTagSimpleFill />,
+    DELETE_TRASHBIN: <FaRegTrashCan />,
 
     // Home Page
     OPTIONS_THREE_DOTS: <IoEllipsisHorizontalSharp />,

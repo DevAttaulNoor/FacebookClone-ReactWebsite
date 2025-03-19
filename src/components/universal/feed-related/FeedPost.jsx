@@ -1,17 +1,101 @@
-import { useState } from "react";
+import '@assets/css/customEmojiPickerStyle.css'
+import EmojiPicker from 'emoji-picker-react';
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
-import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "@services/firebase";
+import { addDoc, collection, deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import { db, storage } from "@services/firebase";
 import { ReactIcons } from "@constants/ReactIcons"
 import { ModalLayout } from "@layouts/ModalLayout";
 import { InputField } from "../inputs/InputField";
+import { BasicDropdown } from "../dropdowns/BasicDropdown";
+import { TextareaField } from "../inputs/TextareaField";
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+
+const feedPostingOptions = [
+    {
+        id: 1,
+        title: "Live video",
+        icon: "https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/c0dWho49-X3.png?_nc_eui2=AeHnEIjVawZBI76yMIMwddXsVnUPE18ZZ-dWdQ8TXxln51Q2S_zbzfHpnn234I7BWgTtb2IssbzIPCV_o410lzBg",
+    },
+    {
+        id: 2,
+        title: "Photo/video",
+        icon: "https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j",
+    },
+    {
+        id: 3,
+        title: "Feeling/activity",
+        icon: "https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Y4mYLVOhTwq.png?_nc_eui2=AeHSN24y7ZwUiP0ks-vc5M5LvPIN-OmHLJy88g346YcsnMgGxvtWqzXUT3WG--zLIURpvgdh0oglkNtF3k-n2n77",
+    },
+];
 
 export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 'w-full' }) => {
     const [commentInput, setCommentInput] = useState('');
     const [postModalOpen, setPostModalOpen] = useState({
         comment: null,
         reaction: null,
-    })
+        editing: null,
+    });
+    const [postActionDropdown, setPostActionDropdown] = useState(null);
+
+
+    const emojiBoxRef = useRef(null);
+    const messageMediaInputRef = useRef(null);
+    // const [messageText, setMessageText] = useState('');
+    // const [messageMedia, setMessageMedia] = useState({ content: '', type: '' });
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [isEmojiModalOpen, setIsEmojiModalOpen] = useState(false);
+
+
+    const activePost = postData.find(data => data.id === postModalOpen.editing);
+
+    const [messageText, setMessageText] = useState("");
+    const [messageMedia, setMessageMedia] = useState({ content: "", type: "" });
+
+    // Update state when activePost changes
+    useEffect(() => {
+        if (activePost) {
+            setMessageText(activePost.message || "");
+            setMessageMedia({
+                content: activePost.media || "",
+                type: activePost.mediaType || "",
+            });
+        }
+    }, [activePost]);
+
+    console.log(messageMedia)
+
+    const handlePostDelete = async (postId) => {
+        try {
+            await deleteDoc(doc(db, 'Posts', postId));
+        } catch (error) {
+            console.error("Error deleting:", error);
+        }
+    };
+
+    const handlePostSave = async (postId, userId) => {
+        try {
+            const postDocRef = doc(db, "Posts", postId);
+            const postDoc = await getDoc(postDocRef);
+
+            if (postDoc.exists()) {
+                const existingSaves = postDoc.data().saves || [];
+                const userIndex = existingSaves.findIndex(entry => entry.uid === userId);
+
+                if (userIndex !== -1) {
+                    const updatedSaves = existingSaves.filter(entry => entry.uid !== userId);
+                    await updateDoc(postDocRef, { saves: updatedSaves });
+                } else {
+                    const updatedSaves = [...existingSaves, { uid: userId, timestamp: Math.floor(Date.now() / 1000) }];
+                    await updateDoc(postDocRef, { saves: updatedSaves });
+                }
+            } else {
+                console.error("Post not found.");
+            }
+        } catch (error) {
+            console.error("Error saving post:", error);
+        }
+    };
 
     const handleReaction = async (postId, userId) => {
         try {
@@ -54,6 +138,70 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
         }
     };
 
+    const handlePostEdit = async (postId, userId) => {
+        try {
+            const postRef = doc(db, "Posts", postId);
+
+            if ((messageText !== '') && (messageMedia.content === '')) {
+                await updateDoc(postRef, {
+                    message: messageText,
+                    media: '',
+                    mediaType: '',
+                });
+
+                setPostModalOpen(prev => ({ ...prev, editing: null }));
+                return;
+            }
+
+            if ((messageText === '') && (messageMedia.content !== '')) {
+                const file = messageMedia.content;
+                const storageRef = ref(storage, `Posts/${userId}/${file.name}`);
+                await uploadBytes(storageRef, file);
+                let mediaUrl = await getDownloadURL(storageRef);
+
+                await updateDoc(postRef, {
+                    message: '',
+                    media: mediaUrl,
+                    mediaType: messageMedia.type,
+                });
+
+                setPostModalOpen(prev => ({ ...prev, editing: null }));
+            }
+
+            if ((messageText !== '') && (messageMedia.content !== '')) {
+                const file = messageMedia.content;
+                const storageRef = ref(storage, `Posts/${userId}/${file.name}`);
+                await uploadBytes(storageRef, file);
+                let mediaUrl = await getDownloadURL(storageRef);
+
+                await updateDoc(postRef, {
+                    message: messageText,
+                    media: mediaUrl,
+                    mediaType: messageMedia.type,
+                });
+
+                setPostModalOpen(prev => ({ ...prev, editing: null }));
+            }
+        } catch (error) {
+            console.error("Error editing post: ", error);
+        }
+    };
+
+    const handleMediaChange = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            setMessageMedia(prev => ({ ...prev, content: file }));
+
+            // Determine the media type (image or video)
+            if (file.type.startsWith("image/")) {
+                setMessageMedia(prev => ({ ...prev, type: "image" }));
+            } else if (file.type.startsWith("video/")) {
+                setMessageMedia(prev => ({ ...prev, type: "video" }));
+            }
+        }
+    };
+
     return (
         <>
             {postData.map((data) => {
@@ -62,7 +210,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
 
                 return (
                     <div key={data.id} className={`${postContainerStyle} flex flex-col gap-3 rounded-xl shadow-customFull2 bg-white`}>
-                        <div className="flex items-center justify-between p-4 pb-0">
+                        <div className="relative flex items-center justify-between p-4 pb-0 z-[5]">
                             <div className="flex items-center gap-2.5">
                                 {postUser?.profilePhoto ? (
                                     <img
@@ -88,9 +236,58 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                 </div>
                             </div>
 
-                            <div className="p-2 rounded-full cursor-pointer hover:bg-customGray-100">
-                                <span>{ReactIcons.OPTIONS_THREE_DOTS}</span>
-                            </div>
+                            <span
+                                onClick={() => setPostActionDropdown(data.id)}
+                                className="p-2 rounded-full cursor-pointer hover:bg-customGray-default"
+                            >
+                                {ReactIcons.OPTIONS_THREE_DOTS}
+                            </span>
+
+                            <BasicDropdown
+                                isOpen={postActionDropdown === data.id}
+                                isClose={() => setPostActionDropdown(null)}
+                                dropdownContainerStyle="dropdownContainerStyle1 p-2 gap-1.5 top-14 right-6 shadow-customFull2"
+                            >
+                                {data.uid === activeUser?.uid ? (
+                                    <>
+                                        <div
+                                            onClick={() => setPostModalOpen(prev => ({ ...prev, editing: data.id }))}
+                                            className='flex items-center p-1.5 gap-3 rounded-lg cursor-pointer hover:bg-customGray-default'
+                                        >
+                                            <span className="text-lg">{ReactIcons.EDIT_PENCIL}</span>
+
+                                            <div className="flex flex-col gap-0.5">
+                                                <h5 className="text-sm font-medium">Edit post</h5>
+                                                <p className="text-xs text-customGray-200">Edit your post as require</p>
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            onClick={() => handlePostDelete(data.id)}
+                                            className='flex items-center p-1.5 gap-3 rounded-lg cursor-pointer hover:bg-customGray-default'
+                                        >
+                                            <span className="text-lg">{ReactIcons.DELETE_TRASHBIN}</span>
+
+                                            <div className="flex flex-col gap-0.5">
+                                                <h5 className="text-sm font-medium">Move to trash</h5>
+                                                <p className="text-xs text-customGray-200">Items in your trash are deleted</p>
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div
+                                        onClick={() => handlePostSave(data.id, activeUser?.uid)}
+                                        className='flex items-center p-1.5 gap-3 rounded-lg cursor-pointer hover:bg-customGray-default'
+                                    >
+                                        <span className="text-lg rotate-90">{ReactIcons.SAVED_POST}</span>
+
+                                        <div className="flex flex-col gap-0.5">
+                                            <h5 className="text-sm font-medium">Save post</h5>
+                                            <p className="text-xs text-customGray-200">Add this to your saved items</p>
+                                        </div>
+                                    </div>
+                                )}
+                            </BasicDropdown>
                         </div>
 
                         <div className="flex flex-col px-4 gap-3">
@@ -150,6 +347,115 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                 <p className="text-sm font-medium text-customGray-300">Comment</p>
                             </div>
                         </div>
+
+                        {postModalOpen.editing === data.id && (
+                            <ModalLayout isOpen={true} containerStyle={'relative p-3 gap-3'}>
+                                <div className="flex justify-center">
+                                    <h1 className="text-lg font-bold">Edit post</h1>
+
+                                    <span
+                                        onClick={() => setPostModalOpen(prev => ({ ...prev, editing: null }))}
+                                        className="absolute top-2 right-2 p-1 cursor-pointer rounded-full hover:bg-customGray-default"
+                                    >
+                                        {ReactIcons.CLOSE}
+                                    </span>
+                                </div>
+
+                                <hr className="text-customGray-default" />
+
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex items-center gap-2.5">
+                                        {postUser?.profilePhoto ? (
+                                            <img
+                                                src={postUser?.profilePhoto}
+                                                alt={`profile picture of ${postUser?.username}`}
+                                                className="w-10 h-10 rounded-full border border-customGray-100 object-contain bg-white"
+                                            />
+                                        ) : (
+                                            <span className="text-4xl">
+                                                {ReactIcons.PROFILE_AVATAR}
+                                            </span>
+                                        )}
+
+                                        <p className="text-sm font-semibold">{postUser?.username}</p>
+                                    </div>
+
+                                    <TextareaField
+                                        textareaData={{
+                                            rows: 4,
+                                            value: messageText,
+                                            placeholder: "What's on your mind",
+                                            onChange: (e) => setMessageText(e.target.value),
+                                        }}
+                                        textareaStyle={`${messageMedia ? 'text-sm' : 'text-xl'} w-full resize-none`}
+                                    />
+
+                                    {messageMedia.content && (
+                                        <div className='relative rounded-lg border border-customGray-default'>
+                                            {messageMedia.type === 'image' && (
+                                                <img src={messageMedia.content} className="w-full h-56 p-1 rounded-lg object-contain" />
+                                            )}
+
+                                            {messageMedia.type === 'video' && (
+                                                <video controls className="w-full h-56 p-1 rounded-lg object-contain">
+                                                    <source src={messageMedia.content} type="video/mp4" />
+                                                </video>
+                                            )}
+
+                                            <span
+                                                onClick={() => setMessageMedia({ content: '', type: '' })}
+                                                className="absolute top-2 right-2 cursor-pointer"
+                                            >
+                                                {ReactIcons.CLOSE}
+                                            </span>
+                                        </div>
+                                    )}
+
+                                    <span
+                                        ref={emojiBoxRef}
+                                        onClick={() => setIsEmojiModalOpen(!isEmojiModalOpen)}
+                                        className="self-end text-xl text-customGray-200 cursor-pointer hover:text-customGray-300"
+                                    >
+                                        {ReactIcons.SMILE_EMOJI}
+                                    </span>
+
+                                    <EmojiPicker
+                                        onEmojiClick={(e) => setMessageText((prev) => prev + e.emoji)}
+                                        className={`${isEmojiModalOpen ? '' : '!hidden'} customStyle`}
+                                    />
+                                </div>
+
+                                <div className="flex flex-col px-3 gap-2 border rounded-lg border-customGray-default p-2.5">
+                                    <p className="text-sm font-semibold">Add to your post</p>
+
+                                    <div className="flex items-center gap-4">
+                                        {feedPostingOptions.map((data) => (
+                                            <img
+                                                key={data.id}
+                                                src={data.icon}
+                                                alt={`icon of ${data.title}`}
+                                                onClick={() => messageMediaInputRef.current.click()}
+                                                className="cursor-pointer"
+                                            />
+                                        ))}
+                                        <input
+                                            ref={messageMediaInputRef}
+                                            type="file"
+                                            accept="image/*,video/*"
+                                            onChange={handleMediaChange}
+                                            className="hidden"
+                                        />
+                                    </div>
+                                </div>
+
+                                <button
+                                    onClick={() => handlePostEdit(data.id, activeUser?.uid)}
+                                    className={`${(messageText || messageMedia.content) ? 'text-white bg-customBlue-default' : 'text-customGray-200 bg-customGray-100'} w-full font-medium py-1.5 rounded-lg cursor-pointer`}
+                                >
+                                    Save
+                                </button>
+                            </ModalLayout>
+                        )}
 
                         {postModalOpen.reaction === data.id && (
                             <ModalLayout isOpen={true} containerStyle={'relative p-3 gap-3'}>
