@@ -22,6 +22,10 @@
         @apply relative mx-auto flex h-full w-full max-w-outerContainer flex-col overflow-hidden shadow-xl;
     }
 
+    .leftbarStyle {
+        @apply h-full w-96 flex-shrink-0 bg-white shadow-customFull2;
+    }
+
     .launchpageInputStyle {
         @apply rounded-md border border-slate-300;
     }

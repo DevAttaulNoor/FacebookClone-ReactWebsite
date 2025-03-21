@@ -9,14 +9,15 @@ import { useFriends } from "@hooks/useFriends";
 import { useAuthUser } from "@hooks/useAuthUser";
 import { db, storage } from "@services/firebase";
 import { ReactIcons } from "@constants/ReactIcons";
+import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import { ProfileComponentLayout } from "@layouts/ProfileComponentLayout";
+import { TextareaField } from "@components/universal/inputs/TextareaField";
 import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
 import { Profile_About } from "./Profile_About";
 import { Profile_Video } from "./Profile_Video";
 import { Profile_Photos } from "./Profile_Photos";
 import { Profile_Friend } from "./Profile_Friend";
-import { TextareaField } from "@components/universal/inputs/TextareaField";
 
 const Profile = () => {
     const { id } = useParams();
@@ -180,17 +181,13 @@ const Profile = () => {
                                     <Link
                                         key={data.uid}
                                         to={`/profile/${data.uid}`}
-                                        className="w-8 h-8 rounded-full border-2 border-white -ml-2 first:-ml-0"
+                                        className="rounded-full border-2 border-white -ml-2 first:-ml-0"
                                     >
-                                        {data.profilePhoto ? (
-                                            <img
-                                                src={data.profilePhoto}
-                                                alt={`profile image of ${data.username}`}
-                                                className="w-full h-full rounded-full object-cover"
-                                            />
-                                        ) : (
-                                            <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
-                                        )}
+                                        <ProfileAvatar
+                                            userData={data}
+                                            imageStyleClass="w-8 h-8"
+                                            iconStyleClass="text-2xl"
+                                        />
                                     </Link>
                                 ))}
                             </div>
@@ -390,15 +387,11 @@ const Profile = () => {
                                                 to={`/profile/${data.uid}`}
                                                 className="flex flex-col gap-1"
                                             >
-                                                {data?.profilePhoto ? (
-                                                    <img
-                                                        src={data.profilePhoto}
-                                                        alt={`profile picture of ${data.username}`}
-                                                        className="w-full h-full rounded-md"
-                                                    />
-                                                ) : (
-                                                    <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
-                                                )}
+                                                <ProfileAvatar
+                                                    userData={data}
+                                                    imageStyleClass="w-full h-full !rounded-lg"
+                                                    iconStyleClass="text-3xl"
+                                                />
 
                                                 <p className="text-xs font-medium">{data.username}</p>
                                             </Link>

@@ -28,7 +28,7 @@ export const OuterContainer = ({ children }) => {
                 <>
                     <span
                         onClick={() => setIsMessageBoxVisisble(true)}
-                        className="absolute bottom-6 right-10 text-2xl p-3.5 rounded-full shadow-customFull2 cursor-pointer bg-white hover:bg-customGray-default"
+                        className="absolute bottom-4 right-8 text-2xl p-3.5 rounded-full shadow-customFull2 cursor-pointer bg-white hover:bg-customGray-default"
                     >
                         {ReactIcons.EDIT_PENCIL_BOX}
                     </span>

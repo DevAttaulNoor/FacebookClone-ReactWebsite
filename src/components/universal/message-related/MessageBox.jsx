@@ -5,6 +5,7 @@ import { useUsers } from "@hooks/useUsers";
 import { useChats } from "@hooks/useChats";
 import { useAuthUser } from "@hooks/useAuthUser";
 import { ReactIcons } from "@constants/ReactIcons";
+import { ProfileAvatar } from "../ProfileAvatar";
 import { InputField } from "../inputs/InputField";
 
 export const MessageBox = ({ isOpen, isClose }) => {
@@ -110,15 +111,11 @@ export const MessageBox = ({ isOpen, isClose }) => {
                 <div className="h-full flex flex-col justify-between">
                     <div className={`${isOpen ? 'h-72' : 'h-60'} flex flex-col overflow-y-auto`}>
                         <div className="flex flex-col items-center justify-center py-4 px-3 gap-1">
-                            {selectedUserData?.profilePhoto ? (
-                                <img
-                                    src={selectedUserData?.profilePhoto}
-                                    alt={`profile picture of ${selectedUserData?.username}`}
-                                    className="w-16 h-16 rounded-full border border-customGray-100 object-contain bg-white"
-                                />
-                            ) : (
-                                <span className="text-[64px]">{ReactIcons.PROFILE_AVATAR}</span>
-                            )}
+                            <ProfileAvatar
+                                userData={selectedUserData}
+                                imageStyleClass="w-16 h-16"
+                                iconStyleClass="text-[64px]"
+                            />
 
                             <p className="text-sm font-medium">{selectedUserData?.username}</p>
                             {selectedUserData?.bio && <p className="text-sm font-medium">{selectedUserData?.bio}</p>}
@@ -172,15 +169,11 @@ export const MessageBox = ({ isOpen, isClose }) => {
                             onClick={() => setSelectedUser(data.uid)}
                             className="flex items-center gap-2"
                         >
-                            {data.profilePhoto ? (
-                                <img
-                                    src={data.profilePhoto}
-                                    alt={`profile picture of ${data.username}`}
-                                    className="w-10 h-10 rounded-full border border-customGray-100 object-contain bg-white"
-                                />
-                            ) : (
-                                <span className="text-[38px]">{ReactIcons.PROFILE_AVATAR}</span>
-                            )}
+                            <ProfileAvatar
+                                userData={data}
+                                imageStyleClass="w-10 h-10"
+                                iconStyleClass="text-[38px]"
+                            />
 
                             <p className="text-sm font-medium">{data.username}</p>
                         </div>

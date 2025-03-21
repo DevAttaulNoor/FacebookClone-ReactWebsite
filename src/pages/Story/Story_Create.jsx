@@ -2,14 +2,15 @@ import html2canvas from "html2canvas";
 import { useRef, useState } from "react";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { useAuthUser } from "@hooks/useAuthUser"
 import { db, storage } from "@services/firebase";
-import { ReactIcons } from "@constants/ReactIcons"
+import { useAuthUser } from "@hooks/useAuthUser";
+import { ReactIcons } from "@constants/ReactIcons";
+import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { TextareaField } from "@components/universal/inputs/TextareaField"
 
 const Story_Create = () => {
-    const { user } = useAuthUser();
     const inputRef = useRef(null);
+    const { user } = useAuthUser();
     const [uploadLoading, setUploadLoading] = useState(false);
     const [textInput, setTextInput] = useState({
         value: '',
@@ -129,22 +130,18 @@ const Story_Create = () => {
 
     return (
         <div className="w-full h-full flex">
-            <div className='relative w-[420px] flex flex-col shadow-customFull2 bg-white'>
+            <div className='leftbarStyle relative flex flex-col'>
                 <div className="flex items-center justify-between p-4">
                     <h5 className="text-2xl font-bold">Your story</h5>
                     <span className="text-2xl p-2 rounded-full bg-customGray-default cursor-pointer hover:bg-customGray-100">{ReactIcons.SETTING}</span>
                 </div>
 
                 <div className="flex items-center px-4 gap-2 mb-3">
-                    {user?.profilePhoto ? (
-                        <img
-                            src={user.profilePhoto}
-                            alt={`profile picture of ${user.username}`}
-                            className="w-14 h-14 rounded-full border border-customGray-100 object-contain bg-white"
-                        />
-                    ) : (
-                        <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
-                    )}
+                    <ProfileAvatar
+                        userData={user}
+                        imageStyleClass="w-14 h-14"
+                        iconStyleClass="text-[56px]"
+                    />
 
                     <p className="font-medium">{user.username}</p>
                 </div>

@@ -6,11 +6,32 @@ import { useUsers } from "@hooks/useUsers";
 import { useFriends } from "@hooks/useFriends";
 import { useAuthUser } from "@hooks/useAuthUser";
 import { ReactIcons } from "@constants/ReactIcons";
+import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import { FeedStory } from "@components/universal/feed-related/FeedStory";
 import { MessageBox } from "@components/universal/message-related/MessageBox";
 import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
-import leftbarOptionsData from "@assets/data/home-related/LeftbarOptions.json";
+
+const leftbarOptionsData = [
+    {
+        id: 1,
+        title: "Friend",
+        icon: "FRIEND",
+        path: "FRIEND"
+    },
+    {
+        id: 2,
+        title: "Video",
+        icon: "VIDEO",
+        path: "VIDEO"
+    },
+    {
+        id: 3,
+        title: "Saved",
+        icon: "SAVED",
+        path: "SAVED"
+    }
+];
 
 const Home = () => {
     const { user } = useAuthUser();
@@ -21,20 +42,16 @@ const Home = () => {
 
     return (
         <div className="grid h-full w-full grid-cols-[1fr_2fr_1fr] gap-10 overflow-y-auto">
-            <div className="flex flex-col gap-2 h-full w-full overflow-y-auto p-2">
+            <div className="flex flex-col gap-1 h-full w-full overflow-y-auto p-2">
                 <Link
                     to={`/profile/${user.uid}`}
-                    className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 hover:bg-customGray-100"
+                    className="flex cursor-pointer items-center gap-3 rounded-lg p-1.5 hover:bg-customGray-100"
                 >
-                    {user?.profilePhoto ? (
-                        <img
-                            src={user?.profilePhoto}
-                            alt={`profile picture of ${user?.username}`}
-                            className="w-8 h-8 rounded-full border border-customGray-100 object-contain bg-white"
-                        />
-                    ) : (
-                        <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
-                    )}
+                    <ProfileAvatar
+                        userData={user}
+                        imageStyleClass='w-9 h-9'
+                        iconStyleClass='text-3xl p-1'
+                    />
 
                     <p className="font-medium">{user?.username}</p>
                 </Link>
@@ -43,17 +60,12 @@ const Home = () => {
                     <Link
                         key={data.id}
                         to={Routes[data.path].path}
-                        className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 hover:bg-customGray-100"
+                        className="flex cursor-pointer items-center gap-3 rounded-lg p-1.5 hover:bg-customGray-100"
                     >
-                        <span className="text-3xl">{ReactIcons[data.icon]}</span>
+                        <span className="p-1 text-3xl">{ReactIcons[data.icon]}</span>
                         <p className="font-medium">{data.title}</p>
                     </Link>
                 ))}
-
-                <div className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 hover:bg-customGray-100">
-                    <span className="text-3xl">{ReactIcons.DOWN}</span>
-                    <p className="font-medium">See more</p>
-                </div>
 
                 <p className="whitespace-pre-wrap text-xs px-3 text-slate-500">
                     <span className="cursor-pointer hover:underline">
@@ -115,15 +127,12 @@ const Home = () => {
                         onClick={() => setIsMessageBoxVisisble(user.uid)}
                         className="flex cursor-pointer items-center gap-2.5 rounded-lg p-2 hover:bg-customGray-100"
                     >
-                        {user?.profilePhoto ? (
-                            <img
-                                src={user.profilePhoto}
-                                alt={`profile picture of ${user.username}`}
-                                className="w-10 h-10 rounded-full border border-customGray-100 object-contain bg-white"
-                            />
-                        ) : (
-                            <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
-                        )}
+                        <ProfileAvatar
+                            userData={user}
+                            imageStyleClass="w-10 h-10"
+                            iconStyleClass="text-3xl"
+                        />
+
                         <p className="font-medium">{user.username}</p>
                     </div>
                 ))}

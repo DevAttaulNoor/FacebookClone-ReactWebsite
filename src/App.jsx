@@ -40,6 +40,7 @@ const routes = createBrowserRouter([
             { path: Routes.LOGIN.path, element: <Login /> },
             { path: Routes.SIGNUP.path, element: <Signup /> },
 
+            // Home Page Section Related
             { path: Routes.HOME.path, element: <Home /> },
 
             // Friends Page Section Related
@@ -51,21 +52,20 @@ const routes = createBrowserRouter([
             { path: Routes.VIDEO.path, element: <Video /> },
             { path: Routes.VIDEO_SAVED.path, element: <Video /> },
 
-            // Profile Page
+            // Story Page Section Related
+            { path: Routes.STORY.path, element: <Story /> },
+            { path: Routes.STORY_CREATE.path, element: <Story_Create /> },
+
+            // Profile Page Section Related
             { path: Routes.PROFILE.path, element: <Profile /> },
             { path: Routes.PROFILE_ABOUT.path, element: <Profile /> },
             { path: Routes.PROFILE_PHOTO.path, element: <Profile /> },
             { path: Routes.PROFILE_VIDEO.path, element: <Profile /> },
             { path: Routes.PROFILE_FRIEND.path, element: <Profile /> },
 
-            // Story Page
-            { path: Routes.STORY.path, element: <Story /> },
-            { path: Routes.STORY_CREATE.path, element: <Story_Create /> },
-
-            { path: Routes.SAVED.path, element: <Saved /> },
-            { path: Routes.VIDEO.path, element: <Video /> },
-            { path: Routes.BOOKMARK.path, element: <Bookmark /> },
             { path: Routes.POST.path, element: <Post /> },
+            { path: Routes.SAVED.path, element: <Saved /> },
+            { path: Routes.BOOKMARK.path, element: <Bookmark /> },
         ],
     },
 ]);

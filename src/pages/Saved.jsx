@@ -1,7 +1,7 @@
 import { NavLink } from "react-router";
 import { Routes } from "@constants/Routes";
 import { ReactIcons } from "@constants/ReactIcons";
-import userData from "@assets/data/universal/Users.json"
+import userData from "@assets/data/dummy/Users.json"
 
 const Saved = () => {
     return (

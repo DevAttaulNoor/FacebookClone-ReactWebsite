@@ -4,6 +4,7 @@ import { Routes } from "@constants/Routes";
 import { ReactIcons } from "@constants/ReactIcons";
 import { useAuthUser } from "@hooks/useAuthUser";
 import { InputField } from "./inputs/InputField";
+import { ProfileAvatar } from "./ProfileAvatar";
 import { BasicDropdown } from "./dropdowns/BasicDropdown";
 import fblogo from "/Images/fblogo.png";
 
@@ -207,17 +208,11 @@ export const Header = () => {
                     onClick={() => setIsOpen(prev => ({ ...prev, profileDropdown: true }))}
                     className="cursor-pointer"
                 >
-                    {user.profilePhoto ? (
-                        <img
-                            src={user.profilePhoto}
-                            alt={`profile picture of ${user.username}`}
-                            className="w-11 h-11 rounded-full border border-customGray-100 object-contain bg-white"
-                        />
-                    ) : (
-                        <span className="flex items-center justify-center rounded-full bg-customGray-100 p-2.5 text-2xl">
-                            {ReactIcons.PROFILE_AVATAR}
-                        </span>
-                    )}
+                    <ProfileAvatar
+                        userData={user}
+                        imageStyleClass="w-11 h-11"
+                        iconStyleClass="flex items-center justify-center rounded-full bg-customGray-100 p-2.5 text-2xl"
+                    />
                 </button>
 
                 <>
@@ -390,17 +385,11 @@ export const Header = () => {
                             to={`/profile/${user.uid}`}
                             className='flex items-center p-1.5 gap-2.5 rounded-lg cursor-pointer hover:bg-customGray-default'
                         >
-                            {user.profilePhoto ? (
-                                <img
-                                    src={user.profilePhoto}
-                                    alt={`profile picture of ${user.username}`}
-                                    className="w-9 h-9 rounded-full border border-customGray-100 object-contain bg-white"
-                                />
-                            ) : (
-                                <span className="text-xl p-2 rounded-full bg-customGray-100">
-                                    {ReactIcons.PROFILE_AVATAR}
-                                </span>
-                            )}
+                            <ProfileAvatar
+                                userData={user}
+                                imageStyleClass="w-9 h-9"
+                                iconStyleClass="flex items-center justify-center text-xl p-2 rounded-full bg-customGray-100"
+                            />
 
                             <p className="text-sm font-medium">{user.username}</p>
                         </Link>

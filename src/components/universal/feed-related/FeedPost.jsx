@@ -2,14 +2,15 @@ import '@assets/css/customEmojiPickerStyle.css'
 import EmojiPicker from 'emoji-picker-react';
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { addDoc, collection, deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db, storage } from "@services/firebase";
 import { ReactIcons } from "@constants/ReactIcons"
 import { ModalLayout } from "@layouts/ModalLayout";
+import { ProfileAvatar } from '../ProfileAvatar';
 import { InputField } from "../inputs/InputField";
-import { BasicDropdown } from "../dropdowns/BasicDropdown";
 import { TextareaField } from "../inputs/TextareaField";
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { BasicDropdown } from "../dropdowns/BasicDropdown";
 
 const feedPostingOptions = [
     {
@@ -30,40 +31,32 @@ const feedPostingOptions = [
 ];
 
 export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 'w-full' }) => {
-    const [commentInput, setCommentInput] = useState('');
+    const messageMediaRef = useRef(null);
+    const [message, setMessage] = useState({
+        text: '',
+        media: '',
+        mediaType: ''
+    });
     const [postModalOpen, setPostModalOpen] = useState({
+        emoji: false,
+        editing: null,
         comment: null,
         reaction: null,
-        editing: null,
     });
+    const [commentInput, setCommentInput] = useState('');
     const [postActionDropdown, setPostActionDropdown] = useState(null);
-
-
-    const emojiBoxRef = useRef(null);
-    const messageMediaInputRef = useRef(null);
-    // const [messageText, setMessageText] = useState('');
-    // const [messageMedia, setMessageMedia] = useState({ content: '', type: '' });
-    const [isModalOpen, setModalOpen] = useState(false);
-    const [isEmojiModalOpen, setIsEmojiModalOpen] = useState(false);
-
-
     const activePost = postData.find(data => data.id === postModalOpen.editing);
 
-    const [messageText, setMessageText] = useState("");
-    const [messageMedia, setMessageMedia] = useState({ content: "", type: "" });
-
-    // Update state when activePost changes
     useEffect(() => {
         if (activePost) {
-            setMessageText(activePost.message || "");
-            setMessageMedia({
-                content: activePost.media || "",
-                type: activePost.mediaType || "",
-            });
+            setMessage(prev => ({
+                ...prev,
+                text: activePost.message || "",
+                media: activePost.media || "",
+                mediaType: activePost.mediaType || "",
+            }))
         }
     }, [activePost]);
-
-    console.log(messageMedia)
 
     const handlePostDelete = async (postId) => {
         try {
@@ -142,9 +135,9 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
         try {
             const postRef = doc(db, "Posts", postId);
 
-            if ((messageText !== '') && (messageMedia.content === '')) {
+            if ((message.text !== '') && (message.media === '')) {
                 await updateDoc(postRef, {
-                    message: messageText,
+                    message: message.text,
                     media: '',
                     mediaType: '',
                 });
@@ -153,8 +146,8 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                 return;
             }
 
-            if ((messageText === '') && (messageMedia.content !== '')) {
-                const file = messageMedia.content;
+            if ((message.text === '') && (message.media !== '')) {
+                const file = message.media;
                 const storageRef = ref(storage, `Posts/${userId}/${file.name}`);
                 await uploadBytes(storageRef, file);
                 let mediaUrl = await getDownloadURL(storageRef);
@@ -162,22 +155,22 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                 await updateDoc(postRef, {
                     message: '',
                     media: mediaUrl,
-                    mediaType: messageMedia.type,
+                    mediaType: message.mediaType,
                 });
 
                 setPostModalOpen(prev => ({ ...prev, editing: null }));
             }
 
-            if ((messageText !== '') && (messageMedia.content !== '')) {
-                const file = messageMedia.content;
+            if ((message.text !== '') && (message.media !== '')) {
+                const file = message.media;
                 const storageRef = ref(storage, `Posts/${userId}/${file.name}`);
                 await uploadBytes(storageRef, file);
                 let mediaUrl = await getDownloadURL(storageRef);
 
                 await updateDoc(postRef, {
-                    message: messageText,
+                    message: message.text,
                     media: mediaUrl,
-                    mediaType: messageMedia.type,
+                    mediaType: message.mediaType,
                 });
 
                 setPostModalOpen(prev => ({ ...prev, editing: null }));
@@ -191,13 +184,13 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
         const file = e.target.files[0];
 
         if (file) {
-            setMessageMedia(prev => ({ ...prev, content: file }));
+            setMessage(prev => ({ ...prev, media: file }));
 
             // Determine the media type (image or video)
             if (file.type.startsWith("image/")) {
-                setMessageMedia(prev => ({ ...prev, type: "image" }));
+                setMessage(prev => ({ ...prev, mediaType: "image" }));
             } else if (file.type.startsWith("video/")) {
-                setMessageMedia(prev => ({ ...prev, type: "video" }));
+                setMessage(prev => ({ ...prev, mediaType: "video" }));
             }
         }
     };
@@ -212,17 +205,11 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                     <div key={data.id} className={`${postContainerStyle} flex flex-col gap-3 rounded-xl shadow-customFull2 bg-white`}>
                         <div className="relative flex items-center justify-between p-4 pb-0 z-[5]">
                             <div className="flex items-center gap-2.5">
-                                {postUser?.profilePhoto ? (
-                                    <img
-                                        src={postUser?.profilePhoto}
-                                        alt={`profile picture of ${postUser?.username}`}
-                                        className="w-10 h-10 rounded-full border border-customGray-100 object-contain bg-white"
-                                    />
-                                ) : (
-                                    <span className="text-4xl">
-                                        {ReactIcons.PROFILE_AVATAR}
-                                    </span>
-                                )}
+                                <ProfileAvatar
+                                    userData={postUser}
+                                    imageStyleClass="w-10 h-10"
+                                    iconStyleClass="text-4xl"
+                                />
 
                                 <div>
                                     <Link
@@ -310,25 +297,27 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                             )}
                         </div>
 
-                        <div className="flex items-center justify-between px-4">
-                            {data.reactions?.length > 0 && (
-                                <p
-                                    onClick={() => setPostModalOpen(prev => ({ ...prev, reaction: data.id }))}
-                                    className="text-sm cursor-pointer text-customGray-200 hover:underline"
-                                >
-                                    {data.reactions?.length} {data.reactions?.length > 1 ? 'reactions' : 'reaction'}
-                                </p>
-                            )}
+                        {(data.reactions?.length > 0 || data.comments?.length > 0) && (
+                            <div className="flex items-center justify-between px-4">
+                                {data.reactions?.length > 0 && (
+                                    <p
+                                        onClick={() => setPostModalOpen(prev => ({ ...prev, reaction: data.id }))}
+                                        className="text-sm cursor-pointer text-customGray-200 hover:underline"
+                                    >
+                                        {data.reactions?.length} {data.reactions?.length > 1 ? 'reactions' : 'reaction'}
+                                    </p>
+                                )}
 
-                            {data.comments?.length > 0 && (
-                                <p
-                                    onClick={() => setPostModalOpen(prev => ({ ...prev, comment: data.id }))}
-                                    className="text-sm cursor-pointer text-customGray-200 hover:underline"
-                                >
-                                    {data.comments?.length} {data.comments?.length > 1 ? 'comments' : 'comment'}
-                                </p>
-                            )}
-                        </div>
+                                {data.comments?.length > 0 && (
+                                    <p
+                                        onClick={() => setPostModalOpen(prev => ({ ...prev, comment: data.id }))}
+                                        className="text-sm cursor-pointer text-customGray-200 hover:underline"
+                                    >
+                                        {data.comments?.length} {data.comments?.length > 1 ? 'comments' : 'comment'}
+                                    </p>
+                                )}
+                            </div>
+                        )}
 
                         <div className='grid grid-cols-2 mx-4 py-2 gap-1.5 border-t border-t-slate-400'>
                             <div
@@ -365,17 +354,12 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
 
                                 <div className="flex flex-col gap-3">
                                     <div className="flex items-center gap-2.5">
-                                        {postUser?.profilePhoto ? (
-                                            <img
-                                                src={postUser?.profilePhoto}
-                                                alt={`profile picture of ${postUser?.username}`}
-                                                className="w-10 h-10 rounded-full border border-customGray-100 object-contain bg-white"
-                                            />
-                                        ) : (
-                                            <span className="text-4xl">
-                                                {ReactIcons.PROFILE_AVATAR}
-                                            </span>
-                                        )}
+                                        <ProfileAvatar
+                                            userData={postUser}
+                                            imageStyleClass="w-10 h-10"
+                                            iconStyleClass="text-4xl"
+                                        />
+
 
                                         <p className="text-sm font-semibold">{postUser?.username}</p>
                                     </div>
@@ -383,27 +367,27 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                     <TextareaField
                                         textareaData={{
                                             rows: 4,
-                                            value: messageText,
+                                            value: message.text,
                                             placeholder: "What's on your mind",
-                                            onChange: (e) => setMessageText(e.target.value),
+                                            onChange: (e) => setMessage(prev => ({ ...prev, text: e.target.value })),
                                         }}
-                                        textareaStyle={`${messageMedia ? 'text-sm' : 'text-xl'} w-full resize-none`}
+                                        textareaStyle={`${message.media ? 'text-sm' : 'text-xl'} w-full resize-none`}
                                     />
 
-                                    {messageMedia.content && (
+                                    {message.media && (
                                         <div className='relative rounded-lg border border-customGray-default'>
-                                            {messageMedia.type === 'image' && (
-                                                <img src={messageMedia.content} className="w-full h-56 p-1 rounded-lg object-contain" />
+                                            {message.mediaType === 'image' && (
+                                                <img src={message.media} className="w-full h-56 p-1 rounded-lg object-contain" />
                                             )}
 
-                                            {messageMedia.type === 'video' && (
+                                            {message.mediaType === 'video' && (
                                                 <video controls className="w-full h-56 p-1 rounded-lg object-contain">
-                                                    <source src={messageMedia.content} type="video/mp4" />
+                                                    <source src={message.media} type="video/mp4" />
                                                 </video>
                                             )}
 
                                             <span
-                                                onClick={() => setMessageMedia({ content: '', type: '' })}
+                                                onClick={() => setMessage(prev => ({ ...prev, media: '', mediaType: '' }))}
                                                 className="absolute top-2 right-2 cursor-pointer"
                                             >
                                                 {ReactIcons.CLOSE}
@@ -412,17 +396,18 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                     )}
 
                                     <span
-                                        ref={emojiBoxRef}
-                                        onClick={() => setIsEmojiModalOpen(!isEmojiModalOpen)}
+                                        onClick={() => setPostModalOpen(prev => ({ ...prev, emoji: !prev.emoji }))}
                                         className="self-end text-xl text-customGray-200 cursor-pointer hover:text-customGray-300"
                                     >
                                         {ReactIcons.SMILE_EMOJI}
                                     </span>
 
-                                    <EmojiPicker
-                                        onEmojiClick={(e) => setMessageText((prev) => prev + e.emoji)}
-                                        className={`${isEmojiModalOpen ? '' : '!hidden'} customStyle`}
-                                    />
+                                    {postModalOpen.emoji && (
+                                        <EmojiPicker
+                                            onEmojiClick={(e) => setMessage(prev => ({ ...prev, text: prev.text + e.emoji }))}
+                                            className='customStyle'
+                                        />
+                                    )}
                                 </div>
 
                                 <div className="flex flex-col px-3 gap-2 border rounded-lg border-customGray-default p-2.5">
@@ -434,12 +419,12 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                                 key={data.id}
                                                 src={data.icon}
                                                 alt={`icon of ${data.title}`}
-                                                onClick={() => messageMediaInputRef.current.click()}
+                                                onClick={() => messageMediaRef.current.click()}
                                                 className="cursor-pointer"
                                             />
                                         ))}
                                         <input
-                                            ref={messageMediaInputRef}
+                                            ref={messageMediaRef}
                                             type="file"
                                             accept="image/*,video/*"
                                             onChange={handleMediaChange}
@@ -450,54 +435,10 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
 
                                 <button
                                     onClick={() => handlePostEdit(data.id, activeUser?.uid)}
-                                    className={`${(messageText || messageMedia.content) ? 'text-white bg-customBlue-default' : 'text-customGray-200 bg-customGray-100'} w-full font-medium py-1.5 rounded-lg cursor-pointer`}
+                                    className={`${(message.text || message.media) ? 'text-white bg-customBlue-default' : 'text-customGray-200 bg-customGray-100'} w-full font-medium py-1.5 rounded-lg cursor-pointer`}
                                 >
                                     Save
                                 </button>
-                            </ModalLayout>
-                        )}
-
-                        {postModalOpen.reaction === data.id && (
-                            <ModalLayout isOpen={true} containerStyle={'relative p-3 gap-3'}>
-                                <div className="flex justify-center">
-                                    <h1 className="text-lg font-bold">Reactions</h1>
-
-                                    <span
-                                        onClick={() => setPostModalOpen(prev => ({ ...prev, reaction: null }))}
-                                        className="absolute top-2 right-2 p-1 cursor-pointer rounded-full hover:bg-customGray-default"
-                                    >
-                                        {ReactIcons.CLOSE}
-                                    </span>
-                                </div>
-
-                                <hr className="text-customGray-default" />
-
-                                {data.reactions?.map((elem) => {
-                                    const users = userData?.find(user => user.uid === elem);
-
-                                    return (
-                                        <div key={elem} className="flex items-center gap-2">
-                                            {users?.profilePhoto ? (
-                                                <img
-                                                    src={users?.profilePhoto}
-                                                    alt={`profile picture of ${users?.username}`}
-                                                    className="w-10 h-10 rounded-full border border-customGray-100 object-contain bg-white"
-                                                />
-                                            ) : (
-                                                <span className="text-4xl">
-                                                    {ReactIcons.PROFILE_AVATAR}
-                                                </span>
-                                            )}
-
-                                            <Link
-                                                to={`/profile/${users?.uid}`}
-                                                className="text-sm font-medium cursor-pointer hover:underline"
-                                            >
-                                                {users?.username}
-                                            </Link>
-                                        </div>
-                                    );
-                                })}
                             </ModalLayout>
                         )}
 
@@ -521,17 +462,11 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
 
                                     return (
                                         <div key={elem.id} className="flex gap-2">
-                                            {users?.profilePhoto ? (
-                                                <img
-                                                    src={users?.profilePhoto}
-                                                    alt={`profile picture of ${users?.username}`}
-                                                    className="w-10 h-10 rounded-full border border-customGray-100 object-contain bg-white"
-                                                />
-                                            ) : (
-                                                <span className="text-4xl">
-                                                    {ReactIcons.PROFILE_AVATAR}
-                                                </span>
-                                            )}
+                                            <ProfileAvatar
+                                                userData={users}
+                                                imageStyleClass="w-10 h-10"
+                                                iconStyleClass="text-4xl"
+                                            />
 
                                             <div className="flex flex-col">
                                                 <div className="px-3 py-1.5 rounded-2xl bg-customGray-default">
@@ -552,17 +487,11 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                 })}
 
                                 <div className="flex gap-2">
-                                    {activeUser?.profilePhoto ? (
-                                        <img
-                                            src={activeUser?.profilePhoto}
-                                            alt={`profile picture of ${activeUser?.username}`}
-                                            className="w-10 h-10 rounded-full border border-customGray-100 object-contain bg-white"
-                                        />
-                                    ) : (
-                                        <span className="text-4xl">
-                                            {ReactIcons.PROFILE_AVATAR}
-                                        </span>
-                                    )}
+                                    <ProfileAvatar
+                                        userData={activeUser}
+                                        imageStyleClass="w-10 h-10"
+                                        iconStyleClass="text-4xl"
+                                    />
 
                                     <div className="w-full flex items-center px-3 py-2.5 gap-1.5 rounded-xl bg-customGray-default">
                                         <InputField
@@ -589,6 +518,44 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                         )}
                                     </div>
                                 </div>
+                            </ModalLayout>
+                        )}
+
+                        {postModalOpen.reaction === data.id && (
+                            <ModalLayout isOpen={true} containerStyle={'relative p-3 gap-3'}>
+                                <div className="flex justify-center">
+                                    <h1 className="text-lg font-bold">Reactions</h1>
+
+                                    <span
+                                        onClick={() => setPostModalOpen(prev => ({ ...prev, reaction: null }))}
+                                        className="absolute top-2 right-2 p-1 cursor-pointer rounded-full hover:bg-customGray-default"
+                                    >
+                                        {ReactIcons.CLOSE}
+                                    </span>
+                                </div>
+
+                                <hr className="text-customGray-default" />
+
+                                {data.reactions?.map((elem) => {
+                                    const users = userData?.find(user => user.uid === elem);
+
+                                    return (
+                                        <div key={elem} className="flex items-center gap-2">
+                                            <ProfileAvatar
+                                                userData={users}
+                                                imageStyleClass="w-10 h-10"
+                                                iconStyleClass="text-4xl"
+                                            />
+
+                                            <Link
+                                                to={`/profile/${users?.uid}`}
+                                                className="text-sm font-medium cursor-pointer hover:underline"
+                                            >
+                                                {users?.username}
+                                            </Link>
+                                        </div>
+                                    );
+                                })}
                             </ModalLayout>
                         )}
                     </div>

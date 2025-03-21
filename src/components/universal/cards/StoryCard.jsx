@@ -1,5 +1,5 @@
 import { Link } from "react-router"
-import { ReactIcons } from "@constants/ReactIcons"
+import { ProfileAvatar } from "../ProfileAvatar";
 
 export const StoryCard = ({ userData, storyData }) => {
     const storyUser = userData.find(elem => elem.uid === storyData.uid);
@@ -10,15 +10,11 @@ export const StoryCard = ({ userData, storyData }) => {
             to={`/story/${storyData.uid}`}
             className="relative w-32 h-56 flex flex-col justify-between p-2 rounded-xl shadow-xl z-0 bg-black"
         >
-            {storyUser?.profilePhoto ? (
-                <img
-                    src={storyUser.profilePhoto}
-                    alt={`profile picture of ${storyUser.username}`}
-                    className="w-11 h-11 rounded-full border-[3px] border-customBlue-default object-contain bg-customGray-200"
-                />
-            ) : (
-                <span className="text-3xl">{ReactIcons.PROFILE_AVATAR}</span>
-            )}
+            <ProfileAvatar
+                userData={storyUser}
+                imageStyleClass="w-11 h-11 border-[3px] !border-customBlue-default"
+                iconStyleClass="text-3xl"
+            />
 
             <p className="text-xs font-medium px-1 drop-shadow-xl text-white">{storyUser.username}</p>
 

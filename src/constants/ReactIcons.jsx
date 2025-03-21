@@ -1,86 +1,48 @@
-import { IoHome } from "react-icons/io5";
-import { IoHomeOutline } from "react-icons/io5";
-import { BsPeopleFill } from "react-icons/bs";
-import { BsPeople } from "react-icons/bs";
-import { BsPlayBtnFill } from "react-icons/bs";
-import { BsPlayBtn } from "react-icons/bs";
-import { IoAppsSharp } from "react-icons/io5";
-import { MdMessage } from "react-icons/md";
-import { IoNotifications } from "react-icons/io5";
-import { BsPersonCircle } from "react-icons/bs";
-import { HiOutlineSearch } from "react-icons/hi";
-import { FaSave } from "react-icons/fa";
-import { IoPersonSharp } from "react-icons/io5";
-
-import { IoEllipsisHorizontalSharp } from "react-icons/io5";
-import { IoMdAdd } from "react-icons/io";
-import { FaAngleDown } from "react-icons/fa6";
-
-import { BiLike } from "react-icons/bi";
-import { BiSolidLike } from "react-icons/bi";
-import { FaRegCommentDots } from "react-icons/fa";
-
-import { IoSettingsSharp } from "react-icons/io5";
-import { IoPeople } from "react-icons/io5";
-import { BsFillPersonPlusFill } from "react-icons/bs";
-import { BsPersonLinesFill } from "react-icons/bs";
-import { FaCamera } from "react-icons/fa";
-import { IoClose } from "react-icons/io5";
-import { BsEmojiSmile } from "react-icons/bs";
-
 import { GrGallery } from "react-icons/gr";
-import { IoTextOutline } from "react-icons/io5";
-import { BsArrowLeft } from "react-icons/bs";
-import { MdEdit } from "react-icons/md";
-import { MdPersonAdd } from "react-icons/md";
-import { IoMdSend } from "react-icons/io";
-import { BiSolidEdit } from "react-icons/bi";
-import { PiTagSimpleFill } from "react-icons/pi";
 import { FaRegTrashCan } from "react-icons/fa6";
-
+import { PiTagSimpleFill } from "react-icons/pi";
+import { HiOutlineSearch } from "react-icons/hi";
+import { IoMdAdd, IoMdSend, IoIosArrowDown } from "react-icons/io";
+import { MdMessage, MdEdit, MdPersonAdd } from "react-icons/md";
+import { BiLike, BiSolidLike, BiSolidEdit } from "react-icons/bi";
+import { FaSave, FaCamera, FaRegCommentDots } from "react-icons/fa";
+import { BsPeopleFill, BsPeople, BsPlayBtnFill, BsPlayBtn, BsPersonCircle, BsPersonLinesFill, BsFillPersonPlusFill, BsEmojiSmile, BsArrowLeft } from "react-icons/bs";
+import { IoHome, IoHomeOutline, IoAppsSharp, IoNotifications, IoPersonSharp, IoEllipsisHorizontalSharp, IoPeople, IoClose, IoTextOutline, IoSettingsSharp } from "react-icons/io5";
 
 export const ReactIcons = {
+    ADD_PLUS: <IoMdAdd />,
+    ARROW_LEFT: <BsArrowLeft />,
+    CAMERA: <FaCamera />,
+    CLOSE: <IoClose />,
+    COMMENT: <FaRegCommentDots />,
+    DELETE_TRASHBIN: <FaRegTrashCan />,
+    ARROW_DOWN: <IoIosArrowDown />,
+    EDIT_PENCIL: <MdEdit />,
+    EDIT_PENCIL_BOX: <BiSolidEdit />,
+    FRIEND: <BsPeopleFill />,
+    FRIENDS_LIST: <BsPersonLinesFill />,
+    FRIENDS_REQUEST: <BsFillPersonPlusFill />,
+    FRIENDS_STYLE2: <IoPeople />,
+    FRIEND_OUTLINED: <BsPeople />,
+    FRIEND_ADD: <MdPersonAdd />,
     HOME: <IoHome />,
     HOME_OUTLINED: <IoHomeOutline />,
-    FRIEND: <BsPeopleFill />,
-    FRIEND_OUTLINED: <BsPeople />,
-    VIDEO: <BsPlayBtnFill />,
-    VIDEO_OUTLINED: <BsPlayBtn />,
-    SAVED: <FaSave />,
+    LIKE: <BiLike />,
+    LIKE_OUTLINE: <BiSolidLike />,
     MENU: <IoAppsSharp />,
     MESSAGE: <MdMessage />,
     NOTIFICATION: <IoNotifications />,
+    OPTIONS_THREE_DOTS: <IoEllipsisHorizontalSharp />,
+    PHOTO_GALLERY: <GrGallery />,
     PROFILE_AVATAR: <BsPersonCircle />,
     PROFILE_AVATAR_WITHOUT_CIRCLE: <IoPersonSharp />,
-    SEARCH_MAGNIFYINGGLASS: <HiOutlineSearch />,
-    CLOSE: <IoClose />,
-    SMILE_EMOJI: <BsEmojiSmile />,
-    PHOTO_GALLERY: <GrGallery />,
-    TEXT: <IoTextOutline />,
-    ARROW_LEFT: <BsArrowLeft />,
-    EDIT_PENCIL: <MdEdit />,
-    EDIT_PENCIL_BOX: <BiSolidEdit />,
-    SEND_ARROW: <IoMdSend />,
+    SAVED: <FaSave />,
     SAVED_POST: <PiTagSimpleFill />,
-    DELETE_TRASHBIN: <FaRegTrashCan />,
-
-    // Home Page
-    OPTIONS_THREE_DOTS: <IoEllipsisHorizontalSharp />,
-    ADD_PLUS: <IoMdAdd />,
-    DOWN: <FaAngleDown />,
-
-    // Post Feed
-    COMMENT: <FaRegCommentDots />,
-    LIKE: <BiLike />,
-    LIKE_OUTLINE: <BiSolidLike />,
-
-    // Friends Page
+    SEARCH_MAGNIFYINGGLASS: <HiOutlineSearch />,
+    SEND_ARROW: <IoMdSend />,
     SETTING: <IoSettingsSharp />,
-    FRIENDS_STYLE2: <IoPeople />,
-    FRIENDS_REQUEST: <BsFillPersonPlusFill />,
-    FRIENDS_LIST: <BsPersonLinesFill />,
-    FRIEND_ADD: <MdPersonAdd />,
-
-    // Profile Page
-    CAMERA: <FaCamera />,
+    SMILE_EMOJI: <BsEmojiSmile />,
+    TEXT: <IoTextOutline />,
+    VIDEO: <BsPlayBtnFill />,
+    VIDEO_OUTLINED: <BsPlayBtn />,
 };

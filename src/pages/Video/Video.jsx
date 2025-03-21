@@ -1,10 +1,11 @@
 import { NavLink, useLocation } from "react-router";
 import { Routes } from "@constants/Routes";
-import { ReactIcons } from "@constants/ReactIcons";
-import { Video_Saved } from "./Video_Saved";
-import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
+import { ReactIcons } from "@constants/ReactIcons";
+import { LeftbarLayout } from "@layouts/LeftbarLayout";
+import { FeedPost } from "@components/universal/feed-related/FeedPost";
+import { Video_Saved } from "./Video_Saved";
 
 const videosLeftbarOptions = [
     {
@@ -29,29 +30,29 @@ const Video = () => {
 
     return (
         <div className="w-full h-full flex">
-            <div className='w-[420px] flex flex-col p-2 shadow-customFull2 bg-white'>
-                <div className="flex items-center justify-between pl-2 mb-2">
-                    <p className="text-xl font-bold">Video</p>
-
-                    <span className="text-xl p-1.5 rounded-full bg-customGray-100 cursor-pointer hover:bg-slate-200">{ReactIcons.SETTING}</span>
-                </div>
-
+            <LeftbarLayout title="Videos" icon={ReactIcons.SETTING}>
                 <div className="flex flex-col gap-1">
                     {videosLeftbarOptions.map((data) => (
                         <NavLink
                             end
                             key={data.id}
                             to={data.path}
-                            className={({ isActive }) => `${isActive ? "bg-customGray-default" : "hover:bg-customGray-default"} flex items-center p-2 gap-2 rounded-lg cursor-pointer`}
+                            className={({ isActive }) => `${isActive ? "bg-customGray-default" : "hover:bg-customGray-default"} flex items-center p-2 gap-3 rounded-lg cursor-pointer`}
                         >
-                            <span className="text-xl p-1.5 rounded-full bg-customGray-100">{data.icon}</span>
-                            <p className="font-medium">{data.title}</p>
+                            {({ isActive }) => (
+                                <>
+                                    <span className={`${isActive ? "text-white bg-customBlue-300" : "bg-customGray-100"} text-2xl p-2 rounded-full`}>
+                                        {data.icon}
+                                    </span>
+                                    <p className="font-medium">{data.title}</p>
+                                </>
+                            )}
                         </NavLink>
                     ))}
                 </div>
-            </div>
+            </LeftbarLayout>
 
-            <div className='w-full flex flex-col items-center p-4 gap-4 overflow-x-hidden overflow-y-auto'>
+            <div className='flex-1 flex flex-col items-center p-4 gap-4 overflow-x-hidden overflow-y-auto'>
                 {location.pathname === Routes.VIDEO.path && (
                     <FeedPost
                         userData={users}

@@ -8,6 +8,7 @@ import { ReactIcons } from "@constants/ReactIcons";
 import { TextareaField } from '../inputs/TextareaField';
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ProfileAvatar } from '../ProfileAvatar';
 
 const feedPostingOptions = [
     {
@@ -119,17 +120,11 @@ export const FeedPostPosting = () => {
         <>
             <div className="flex w-full flex-col rounded-lg bg-white px-4 shadow">
                 <div className="flex items-center gap-2 py-3">
-                    {user?.profilePhoto ? (
-                        <img
-                            src={user?.profilePhoto}
-                            alt={`profile picture of ${user?.username}`}
-                            className="w-10 h-10 rounded-full border border-customGray-100 object-contain bg-white"
-                        />
-                    ) : (
-                        <span className="text-4xl">
-                            {ReactIcons.PROFILE_AVATAR}
-                        </span>
-                    )}
+                    <ProfileAvatar
+                        userData={user}
+                        imageStyleClass="w-10 h-10"
+                        iconStyleClass="text-4xl"
+                    />
 
                     <div onClick={() => setModalOpen(true)} className="w-full cursor-pointer rounded-3xl bg-customGray-default px-3 py-2.5 hover:bg-[#E4E6EB]">
                         <p className="text-slate-500">{`What's on your mind, ${user?.username}`}</p>
@@ -166,17 +161,11 @@ export const FeedPostPosting = () => {
 
                 <div className="flex flex-col gap-3">
                     <div className="flex items-center gap-2.5">
-                        {user?.profilePhoto ? (
-                            <img
-                                src={user?.profilePhoto}
-                                alt={`profile picture of ${user?.username}`}
-                                className="w-10 h-10 rounded-full border border-customGray-100 object-contain bg-white"
-                            />
-                        ) : (
-                            <span className="text-4xl">
-                                {ReactIcons.PROFILE_AVATAR}
-                            </span>
-                        )}
+                        <ProfileAvatar
+                            userData={user}
+                            imageStyleClass="w-10 h-10"
+                            iconStyleClass="text-4xl"
+                        />
 
                         <p className="text-sm font-semibold">{user?.username}</p>
                     </div>
