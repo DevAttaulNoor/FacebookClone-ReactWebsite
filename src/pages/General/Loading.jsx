@@ -1,3 +1,5 @@
 export const Loading = () => {
-    return <div>Loading</div>;
+    return (
+        <span className="w-full h-1 bg-customBlue-300" />
+    );
 };

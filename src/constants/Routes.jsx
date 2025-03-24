@@ -53,12 +53,6 @@ export const Routes = {
         metaTitle: "Saved Videos",
         metaDescription: "Saved Videos",
     },
-    BOOKMARK: {
-        path: "/bookmark",
-        title: "Bookmark",
-        metaTitle: "Bookmark",
-        metaDescription: "Bookmark",
-    },
     STORY: {
         path: "/story/:id",
         title: "Story",
@@ -100,11 +94,5 @@ export const Routes = {
         title: "Friend",
         metaTitle: "Friend",
         metaDescription: "Friend",
-    },
-    POST: {
-        path: "/post",
-        title: "Post",
-        metaTitle: "Post",
-        metaDescription: "Post",
     },
 };

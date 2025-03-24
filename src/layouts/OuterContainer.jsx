@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router";
 import { Routes } from "@constants/Routes";
 import { useAuthUser } from "@hooks/useAuthUser";
@@ -17,7 +17,7 @@ export const OuterContainer = ({ children }) => {
             top: 0,
             behavior: 'smooth',
         });
-    }, [location.pathname]);
+    }, [location]);
 
     return (
         <main className="outerContainerStyle">
