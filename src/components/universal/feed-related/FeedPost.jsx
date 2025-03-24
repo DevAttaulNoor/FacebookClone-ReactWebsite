@@ -269,7 +269,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                         <span className="text-lg rotate-90">{ReactIcons.SAVED_POST}</span>
 
                                         <div className="flex flex-col gap-0.5">
-                                            <h5 className="text-sm font-medium">Save post</h5>
+                                            <h5 className="text-sm font-medium">{data.saves?.find(elem => elem.uid === activeUser?.uid) ? 'Unsave post' : 'Save post'}</h5>
                                             <p className="text-xs text-customGray-200">Add this to your saved items</p>
                                         </div>
                                     </div>
