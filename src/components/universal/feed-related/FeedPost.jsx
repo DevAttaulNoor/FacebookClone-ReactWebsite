@@ -6,9 +6,10 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { addDoc, collection, deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db, storage } from "@services/firebase";
 import { ReactIcons } from "@constants/ReactIcons"
-import { ModalLayout } from "@layouts/ModalLayout";
 import { ProfileAvatar } from '../ProfileAvatar';
 import { InputField } from "../inputs/InputField";
+import { ModalLayout } from "@layouts/ModalLayout";
+import { timeAgoInitials } from '@utils/TimeModule';
 import { TextareaField } from "../inputs/TextareaField";
 import { BasicDropdown } from "../dropdowns/BasicDropdown";
 
@@ -267,7 +268,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                         {postUser?.username}
                                     </Link>
 
-                                    <p className="text-xs text-customGray-200 cursor-pointer">{data.timestamp}</p>
+                                    <p className="text-xs text-customGray-200 cursor-pointer">{timeAgoInitials(data.timestamp)}</p>
                                 </div>
                             </div>
 
@@ -528,7 +529,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                                     <p className="text-sm">{elem.comment}</p>
                                                 </div>
 
-                                                <p className="text-xs ml-1 text-customGray-200 cursor-pointer">{elem.timestamp}</p>
+                                                <p className="text-xs ml-1 text-customGray-200 cursor-pointer">{timeAgoInitials(elem.timestamp)}</p>
                                             </div>
                                         </div>
                                     );

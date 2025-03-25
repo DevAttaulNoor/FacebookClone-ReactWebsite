@@ -9,6 +9,7 @@ import { ProfileAvatar } from "./ProfileAvatar";
 import { useAuthUser } from "@hooks/useAuthUser";
 import { InputField } from "./inputs/InputField";
 import { ReactIcons } from "@constants/ReactIcons";
+import { timeAgoInitials } from "@utils/TimeModule";
 import { BasicDropdown } from "./dropdowns/BasicDropdown";
 import fblogo from "/Images/fblogo.png";
 
@@ -172,6 +173,7 @@ export const Header = () => {
                             <>
                                 {searchedUser?.map(data => (
                                     <Link
+                                        key={data.uid}
                                         to={`/profile/${data.uid}`}
                                         className='flex items-center p-1.5 gap-2.5 rounded-lg cursor-pointer hover:bg-customGray-default'
                                     >
@@ -285,7 +287,7 @@ export const Header = () => {
                                                 {chatUser?.username}
                                             </Link>
 
-                                            <p className="text-customGray-300">{data.chats[data.chats.length - 1].message} • {data.timestamp}</p>
+                                            <p className="text-customGray-300">{data.chats[data.chats.length - 1].message} • {timeAgoInitials(data.timestamp)}</p>
                                         </div>
                                     </div>
                                 )
@@ -343,7 +345,7 @@ export const Header = () => {
                                                     {''} has {data.status} on your post
                                                 </div>
 
-                                                <p className="text-xs text-customGray-300">{data.timestamp}</p>
+                                                <p className="text-xs text-customGray-300">{timeAgoInitials(data.timestamp)}</p>
                                             </div>
                                         )}
 
@@ -360,7 +362,7 @@ export const Header = () => {
                                                     {''} has sent you a friend request
                                                 </div>
 
-                                                <p className="text-xs text-customGray-300">{data.timestamp}</p>
+                                                <p className="text-xs text-customGray-300">{timeAgoInitials(data.timestamp)}</p>
                                             </div>
                                         )}
                                     </div>

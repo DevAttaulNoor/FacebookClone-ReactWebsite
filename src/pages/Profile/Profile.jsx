@@ -165,12 +165,12 @@ const Profile = () => {
                             )}
                         </div>
 
-                        <div className={`${acceptedFriends?.length > 0 ? 'mb-4' : 'mb-14'} flex flex-col`}>
+                        <div className={`${acceptedFriends?.length > 0 ? 'mb-2' : 'mb-14'} flex flex-col`}>
                             <h3 className="text-[28px] font-bold">{activeProfileUser?.username}</h3>
 
                             {/* Friends Count */}
                             {acceptedFriends?.length > 0 && (
-                                <Link to={Routes.FRIEND_AllFRIENDS.path} className="text-sm text-customGray-200 cursor-pointer hover:underline">
+                                <Link to={Routes.FRIEND_AllFRIENDS.path} className="w-fit text-sm text-customGray-200 cursor-pointer hover:underline">
                                     {`${acceptedFriends?.length} ${acceptedFriends?.length > 1 ? 'friends' : 'friend'}`}
                                 </Link>
                             )}

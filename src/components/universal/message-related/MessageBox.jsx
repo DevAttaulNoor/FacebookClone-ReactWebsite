@@ -7,6 +7,7 @@ import { useAuthUser } from "@hooks/useAuthUser";
 import { ReactIcons } from "@constants/ReactIcons";
 import { ProfileAvatar } from "../ProfileAvatar";
 import { InputField } from "../inputs/InputField";
+import { timeAgoInitials } from "@utils/TimeModule";
 
 export const MessageBox = ({ isOpen, isClose }) => {
     const { user } = useAuthUser();
@@ -128,7 +129,7 @@ export const MessageBox = ({ isOpen, isClose }) => {
                                     className={`${chat.senderId === user?.uid ? 'self-end items-end' : 'self-start items-start'} flex flex-col`}
                                 >
                                     <span className={`${chat.senderId === user?.uid ? 'text-white bg-customBlue-300' : 'bg-customGray-100'} w-fit px-3 py-2 text-sm rounded-xl`}>{chat.message}</span>
-                                    <span className="text-xs px-1 text-customGray-200">{chat.timestamp}</span>
+                                    <span className="text-xs px-1 text-customGray-200">{timeAgoInitials(chat.timestamp)}</span>
                                 </div>
                             ))}
                         </div>

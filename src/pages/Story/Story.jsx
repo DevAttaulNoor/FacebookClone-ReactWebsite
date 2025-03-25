@@ -4,6 +4,7 @@ import { useUsers } from "@hooks/useUsers";
 import { useStories } from "@hooks/useStories"
 import { useAuthUser } from "@hooks/useAuthUser"
 import { ReactIcons } from "@constants/ReactIcons";
+import { timeAgoInitials } from "@utils/TimeModule";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 
@@ -24,11 +25,8 @@ const Story = () => {
                     <h5 className="font-semibold px-2">Your story</h5>
 
                     {userStories.length > 0 ? (
-                        <Link
-                            to={`/story/${userStories[userStories.length - 1].uid}`}
-                            className={`${(story[story.length - 1].uid === userStories[userStories.length - 1].uid) && 'bg-customGray-default'} flex items-center justify-between p-2 rounded-lg cursor-pointer hover:bg-customGray-default`}
-                        >
-                            <div className='flex items-center gap-3'>
+                        <div className={`flex items-center justify-between p-2 rounded-lg cursor-pointer hover:bg-customGray-default ${story[story.length - 1].uid === userStories[userStories.length - 1].uid ? 'bg-customGray-default' : ''}`}>
+                            <Link to={`/story/${userStories[userStories.length - 1].uid}`} className="flex items-center gap-3">
                                 <ProfileAvatar
                                     userData={userStory}
                                     imageStyleClass="w-14 h-14"
@@ -37,17 +35,17 @@ const Story = () => {
 
                                 <div className='flex flex-col gap-0.5'>
                                     <h5 className="font-medium">{userStory.username}</h5>
-                                    <p className="text-xs">{userStories[userStories.length - 1].timestamp}</p>
+                                    <p className="text-xs">{timeAgoInitials(userStories[userStories.length - 1].timestamp)}</p>
                                 </div>
-                            </div>
+                            </Link>
 
                             <Link
                                 to={Routes.STORY_CREATE.path}
-                                className="flex items-center text-3xl p-3 rounded-full cursor-pointer text-customBlue-default bg-customGray-100"
+                                className="flex items-center text-3xl p-3 rounded-full text-customBlue-default bg-customGray-100"
                             >
                                 {ReactIcons.ADD_PLUS}
                             </Link>
-                        </Link>
+                        </div>
                     ) : (
                         <Link
                             to={Routes.STORY_CREATE.path}
@@ -85,7 +83,7 @@ const Story = () => {
 
                                         <div className='flex flex-col gap-0.5'>
                                             <h5 className="font-medium">{storyUser.username}</h5>
-                                            <p className="text-xs">{data?.stories[stories.length - 1]?.timestamp}</p>
+                                            <p className="text-xs">{timeAgoInitials(data?.stories[data?.stories.length - 1]?.timestamp)}</p>
                                         </div>
                                     </div>
                                 </Link>
@@ -109,10 +107,9 @@ const Story = () => {
                             iconStyleClass="text-4xl"
                         />
 
-
                         <div className='flex flex-col'>
                             <h5 className="font-medium">{userStory1?.username}</h5>
-                            <p className="text-sm">{story[story.length - 1]?.timestamp}</p>
+                            <p className="text-sm">{timeAgoInitials(story[story.length - 1]?.timestamp)}</p>
                         </div>
                     </div>
                 </div>
