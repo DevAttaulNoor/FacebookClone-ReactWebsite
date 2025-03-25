@@ -17,7 +17,7 @@ export const MessageBox = ({ isOpen, isClose }) => {
     const [selectedUser, setSelectedUser] = useState('');
     const searchedUser = usersExceptCurrent?.filter((data) => data?.username?.toLowerCase().includes(searchInput.toLowerCase()));
     const selectedUserData = usersExceptCurrent?.find((data) => (data?.uid === isOpen) || (data?.uid === selectedUser));
-    const selectedUserChats = chats?.find((data) => (data.id === `${user?.uid}${selectedUserData?.uid}`) || (data.id === `${selectedUserData?.uid}${user?.uid}`));
+    const selectedUserChats = chats?.find((data) => (data.uids === `${user?.uid}${selectedUserData?.uid}`) || (data.uids === `${selectedUserData?.uid}${user?.uid}`));
 
     const handleMessaging = async (userId, friendId, messageInput) => {
         try {
@@ -63,7 +63,7 @@ export const MessageBox = ({ isOpen, isClose }) => {
     };
 
     return (
-        <div className='absolute bottom-0 right-36 w-80 h-96 flex flex-col rounded-t-md shadow-customFull2 bg-white'>
+        <div className='absolute bottom-0 right-36 w-80 h-96 flex flex-col rounded-t-md shadow-customFull2 z-10 bg-white'>
             <div className={`${isOpen ? 'border-b' : 'pb-0'} flex items-center justify-between p-3`}>
                 {isOpen ? (
                     <h5 className="text-sm font-medium">{selectedUserData?.username}</h5>

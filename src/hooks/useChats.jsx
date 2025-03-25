@@ -9,7 +9,7 @@ export const useChats = () => {
 
     useEffect(() => {
         const unsubscribeChats = onSnapshot(collection(db, 'Chats'), (snapshot) => {
-            const allChats = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const allChats = snapshot.docs.map(doc => ({ ...doc.data() }));
             setChats(allChats);
             setLoading(false);
         },

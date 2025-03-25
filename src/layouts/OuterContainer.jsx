@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router";
 import { Routes } from "@constants/Routes";
 import { useAuthUser } from "@hooks/useAuthUser";
-import { Header } from "../components/universal/Header";
 import { ReactIcons } from "@constants/ReactIcons";
+import { Header } from "../components/universal/Header";
 import { MessageBox } from "@components/universal/message-related/MessageBox";
 
 export const OuterContainer = ({ children }) => {

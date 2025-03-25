@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router";
+import { signOut } from "firebase/auth";
+import { Link, NavLink, useNavigate } from "react-router";
+import { auth } from "@services/firebase";
 import { Routes } from "@constants/Routes";
-import { ReactIcons } from "@constants/ReactIcons";
+import { useUsers } from "@hooks/useUsers";
+import { useChats } from "@hooks/useChats";
+import { ProfileAvatar } from "./ProfileAvatar";
 import { useAuthUser } from "@hooks/useAuthUser";
 import { InputField } from "./inputs/InputField";
-import { ProfileAvatar } from "./ProfileAvatar";
+import { ReactIcons } from "@constants/ReactIcons";
 import { BasicDropdown } from "./dropdowns/BasicDropdown";
 import fblogo from "/Images/fblogo.png";
 
@@ -32,42 +36,32 @@ const headerLinks = [
     },
 ];
 
-const profileDropdownOptions = [
-    {
-        id: 1,
-        text: 'Setting & privacy',
-        icon: ReactIcons.SETTING,
-    },
-    {
-        id: 2,
-        text: 'Help & support',
-        icon: ReactIcons.SETTING,
-    },
-    {
-        id: 3,
-        text: 'Display & accessibility',
-        icon: ReactIcons.SETTING,
-    },
-    {
-        id: 4,
-        text: 'Log out',
-        icon: ReactIcons.SETTING,
-    }
-];
-
 export const Header = () => {
+    const navigate = useNavigate();
+    const { chats } = useChats();
     const { user } = useAuthUser();
-    const [inputValue, setInputValue] = useState({
-        userSearch: '',
-        chatSearch: ''
-    });
+    const { users, usersExceptCurrent } = useUsers(user.uid);
+    const [active, setActive] = useState('All');
     const [isOpen, setIsOpen] = useState({
         userSearchDropdown: false,
         profileDropdown: false,
         messageDropdown: false,
         notificationDropdown: false,
     });
-    const [active, setActive] = useState('All');
+    const [inputValue, setInputValue] = useState({
+        userSearch: '',
+        chatSearch: ''
+    });
+    const searchedUser = usersExceptCurrent?.filter((data) => data?.username?.toLowerCase().includes(inputValue.userSearch.toLowerCase()));
+
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            navigate(Routes.LOGIN.path)
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     const headerSideOptions = [
         {
@@ -87,6 +81,30 @@ export const Header = () => {
             icon: ReactIcons.NOTIFICATION,
             onChange: () => setIsOpen(prev => ({ ...prev, notificationDropdown: true })),
         },
+    ];
+
+    const profileDropdownOptions = [
+        {
+            id: 1,
+            text: 'Setting & privacy',
+            icon: ReactIcons.SETTING,
+        },
+        {
+            id: 2,
+            text: 'Help & support',
+            icon: ReactIcons.SETTING,
+        },
+        {
+            id: 3,
+            text: 'Display & accessibility',
+            icon: ReactIcons.SETTING,
+        },
+        {
+            id: 4,
+            text: 'Log out',
+            icon: ReactIcons.SETTING,
+            onClick: () => handleLogout()
+        }
     ];
 
     return (
@@ -122,9 +140,9 @@ export const Header = () => {
                 <BasicDropdown
                     isOpen={isOpen.userSearchDropdown}
                     isClose={() => setIsOpen(prev => ({ ...prev, userSearchDropdown: false }))}
-                    dropdownContainerStyle="dropdownContainerStyle1 top-0 -left-[10px] shadow-xl"
+                    dropdownContainerStyle="dropdownContainerStyle1 top-0 -left-[10px] max-h-96 shadow-xl"
                 >
-                    <div className="flex items-center gap-2 p-1">
+                    <div className="flex items-center gap-2">
                         <span
                             onClick={() => setIsOpen(prev => ({ ...prev, userSearchDropdown: false }))}
                             className="text-xl p-2.5 rounded-full cursor-pointer bg-customGray-default hover:bg-customGray-100"
@@ -149,19 +167,27 @@ export const Header = () => {
                         </div>
                     </div>
 
-                    <div className="searchBoxBottom">
-                        {/* {matchingUsernames.length > 0 ? (
-                            matchingUsernames.map((matchingUser) => (
-                                <div className='searchBoxBottomOption' key={matchingUser.id} onClick={() => handleSearchBoxVisibility()}>
-                                    <NavLink to={`/profilepage/${matchingUser.id}/post`} onClick={() => dispatch(setSelectedFriend(matchingUser.id))}>
-                                        <Avatar src={matchingUser.photoURL} />
-                                        <p>{matchingUser.username}</p>
-                                    </NavLink>
-                                </div>
-                            ))
+                    <div className="flex flex-col gap-1 overflow-y-auto">
+                        {searchedUser?.length > 0 ? (
+                            <>
+                                {searchedUser?.map(data => (
+                                    <Link
+                                        to={`/profile/${data.uid}`}
+                                        className='flex items-center p-1.5 gap-2.5 rounded-lg cursor-pointer hover:bg-customGray-default'
+                                    >
+                                        <ProfileAvatar
+                                            userData={data}
+                                            imageStyleClass="w-9 h-9"
+                                            iconStyleClass="flex items-center justify-center text-xl p-2 rounded-full bg-customGray-100"
+                                        />
+
+                                        <p className="text-sm font-medium">{data.username}</p>
+                                    </Link>
+                                ))}
+                            </>
                         ) : (
-                            <p id='noMatch'>No match found</p>
-                        )} */}
+                            <p className="text-center py-2 text-customGray-300">No match found</p>
+                        )}
                     </div>
                 </BasicDropdown>
             </div>
@@ -220,7 +246,7 @@ export const Header = () => {
                         isOpen={isOpen.messageDropdown}
                         isClose={() => setIsOpen(prev => ({ ...prev, messageDropdown: false }))}
                         dropdownData={{ title: 'Chats' }}
-                        dropdownContainerStyle="dropdownContainerStyle1"
+                        dropdownContainerStyle="dropdownContainerStyle1 p-2"
                     >
                         <div className="flex w-full items-center gap-1.5 rounded-3xl bg-customGray-default px-3">
                             <span className="text-customGray-200">{ReactIcons.SEARCH_MAGNIFYINGGLASS}</span>
@@ -236,24 +262,42 @@ export const Header = () => {
                             />
                         </div>
 
-                        {/* <div className='messageBoxBottomOption' onClick={() => handleMsgFriendBox(friend[0])}>
-                            <Avatar src={isUserSender ? chat.recipientPhotoUrl : chat.senderPhotoUrl} />
-                            <div className='messageBoxBottomOptionContent'>
-                                <p>{isUserSender ? chat.recipientName : chat.senderName}</p>
-                                <div className='messageBoxBottomOptionContentBottom'>
-                                    <span>{lastMessage.text}</span>
-                                    <p> · </p>
-                                    <h5>{timeAgoInitials(lastMessage.timestamp)}</h5>
-                                </div>
-                            </div>
-                        </div> */}
+                        <div className='flex flex-col gap-1'>
+                            {chats?.map((data, index) => {
+                                const chatUser = users?.find(elem => (elem.uid === data.chats[0].senderId) || (elem.uid === data.chats[0].receiverId))
+
+                                return (
+                                    <div
+                                        key={index}
+                                        className="flex items-center p-1 gap-2.5 rounded-md cursor-pointer hover:bg-customGray-default"
+                                    >
+                                        <ProfileAvatar
+                                            userData={chatUser}
+                                            imageStyleClass="w-12 h-12"
+                                            iconStyleClass="text-5xl"
+                                        />
+
+                                        <div className="flex flex-col text-sm">
+                                            <Link
+                                                to={`/profile/${chatUser?.uid}`}
+                                                className="text-sm font-medium cursor-pointer hover:underline"
+                                            >
+                                                {chatUser?.username}
+                                            </Link>
+
+                                            <p className="text-customGray-300">{data.chats[data.chats.length - 1].message} • {data.timestamp}</p>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </BasicDropdown>
 
                     <BasicDropdown
                         isOpen={isOpen.notificationDropdown}
                         isClose={() => setIsOpen(prev => ({ ...prev, notificationDropdown: false }))}
                         dropdownData={{ title: 'Notification' }}
-                        dropdownContainerStyle="dropdownContainerStyle1"
+                        dropdownContainerStyle="dropdownContainerStyle1 p-2"
                     >
                         <div className='flex items-center gap-2'>
                             <button
@@ -271,108 +315,57 @@ export const Header = () => {
                             </button>
                         </div>
 
-                        <div className='notificationBoxBottom'>
-                            {/* {active === 'All' && (
-                                <div className='notificationBoxBottomOptions'>
-                                    {notification.map((notification, index) => (
-                                        <div key={index}>
-                                            {notification.status === 'reacted' && (
-                                                <div className='notificationBoxBottomOption'>
-                                                    <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} onClick={() => handleNotificationClicked(notification.postid, "Likes")}>
-                                                        <div className='notificationBoxBottomOption_Left'>
-                                                            <Avatar src={notification.userphotoUrl} />
-                                                        </div>
-                                                        <div className="notificationBoxBottomOption_Right">
-                                                            <p> <span>{notification.username}</span> has {notification.status} on your post</p>
-                                                            <h5>{timeAgo(notification.timestamp)}</h5>
-                                                        </div>
-                                                    </NavLink>
+                        <div className='flex flex-col gap-1'>
+                            {user?.notifications?.map((data, index) => {
+                                const notificationRelatedUser = users?.find(elem => (elem.uid === data.uid) || (elem.uid === data.friendId))
+
+                                return (
+                                    <div
+                                        key={index}
+                                        className="flex items-center p-1 gap-3 rounded-md cursor-pointer hover:bg-customGray-default"
+                                    >
+                                        <ProfileAvatar
+                                            userData={notificationRelatedUser}
+                                            imageStyleClass="w-12 h-12"
+                                            iconStyleClass="text-5xl"
+                                        />
+
+                                        {data.postId && (
+                                            <div className="flex flex-col">
+                                                <div className="text-sm">
+                                                    <Link
+                                                        to={`/profile/${notificationRelatedUser?.uid}`}
+                                                        className="text-sm font-medium cursor-pointer hover:underline"
+                                                    >
+                                                        {notificationRelatedUser?.username}
+                                                    </Link>
+
+                                                    {''} has {data.status} on your post
                                                 </div>
-                                            )}
 
-                                            {notification.status === 'commented' && (
-                                                <div className='notificationBoxBottomOption'>
-                                                    <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} onClick={() => handleNotificationClicked(notification.postid, "Comments")}>
-                                                        <div className='notificationBoxBottomOption_Left'>
-                                                            <Avatar src={notification.userphotoUrl} />
-                                                        </div>
-                                                        <div className="notificationBoxBottomOption_Right">
-                                                            <p> <span>{notification.username}</span> has {notification.status} on your post</p>
-                                                            <h5>{timeAgo(notification.timestamp)}</h5>
-                                                        </div>
-                                                    </NavLink>
-                                                </div>
-                                            )}
-
-                                            {(notification.status === 'sent' || notification.status === 'accepted' || notification.status === 'removed') && (
-                                                <div className='notificationBoxBottomOption'>
-                                                    <NavLink to={`/friendpage/friendReqs`} onClick={() => handleNotificationClicked(notification.requestId, "FriendsReqs")}>
-                                                        <div className='notificationBoxBottomOption_Left'>
-                                                            <Avatar src={notification.senderPhotoUrl} />
-                                                        </div>
-                                                        <div className="notificationBoxBottomOption_Right">
-                                                            <p><span>{notification.senderName}</span> has sent you a friend request</p>
-                                                            <h5>{timeAgo(notification.timestamp)}</h5>
-                                                        </div>
-                                                    </NavLink>
-                                                </div>
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-
-                            {active === 'Unread' && (
-                                <div className='notificationBoxBottomOptions'>
-                                    {notification
-                                        .filter(notification => notification.notificationStatus === 'notseen')
-                                        .map((notification, index) => (
-                                            <div key={index}>
-                                                {notification.status === 'reacted' && (
-                                                    <div className='notificationBoxBottomOption'>
-                                                        <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} onClick={() => handleNotificationClicked(notification.postid, "Likes")}>
-                                                            <div className='notificationBoxBottomOption_Left'>
-                                                                <Avatar src={notification.userphotoUrl} />
-                                                            </div>
-                                                            <div className="notificationBoxBottomOption_Right">
-                                                                <p> <span>{notification.username}</span> has {notification.status} on your post</p>
-                                                                <h5>{timeAgo(notification.timestamp)}</h5>
-                                                            </div>
-                                                        </NavLink>
-                                                    </div>
-                                                )}
-
-                                                {notification.status === 'commented' && (
-                                                    <div className='notificationBoxBottomOption'>
-                                                        <NavLink to={`/profilepage/${notification.postuserid}/post/${notification.postid}`} onClick={() => handleNotificationClicked(notification.postid, "Comments")}>
-                                                            <div className='notificationBoxBottomOption_Left'>
-                                                                <Avatar src={notification.userphotoUrl} />
-                                                            </div>
-                                                            <div className="notificationBoxBottomOption_Right">
-                                                                <p> <span>{notification.username}</span> has {notification.status} on your post</p>
-                                                                <h5>{timeAgo(notification.timestamp)}</h5>
-                                                            </div>
-                                                        </NavLink>
-                                                    </div>
-                                                )}
-
-                                                {notification.status === 'sent' && (
-                                                    <div className='notificationBoxBottomOption'>
-                                                        <NavLink to={`/friendpage/friendReqs`} onClick={() => handleNotificationClicked(notification.requestId, "FriendsReqs")}>
-                                                            <div className='notificationBoxBottomOption_Left'>
-                                                                <Avatar src={notification.senderPhotoUrl} />
-                                                            </div>
-                                                            <div className="notificationBoxBottomOption_Right">
-                                                                <p><span>{notification.senderName}</span> has sent you a friend request</p>
-                                                                <h5>{timeAgo(notification.timestamp)}</h5>
-                                                            </div>
-                                                        </NavLink>
-                                                    </div>
-                                                )}
+                                                <p className="text-xs text-customGray-300">{data.timestamp}</p>
                                             </div>
-                                        ))}
-                                </div>
-                            )} */}
+                                        )}
+
+                                        {data.friendId && (
+                                            <div className="flex flex-col">
+                                                <div className="text-sm">
+                                                    <Link
+                                                        to={`/profile/${notificationRelatedUser?.uid}`}
+                                                        className="text-sm font-medium cursor-pointer hover:underline"
+                                                    >
+                                                        {notificationRelatedUser?.username}
+                                                    </Link>
+
+                                                    {''} has sent you a friend request
+                                                </div>
+
+                                                <p className="text-xs text-customGray-300">{data.timestamp}</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                )
+                            })}
                         </div>
                     </BasicDropdown>
 
@@ -397,6 +390,7 @@ export const Header = () => {
                         {profileDropdownOptions.map((data) => (
                             <div
                                 key={data.id}
+                                onClick={data?.onClick}
                                 className='flex items-center p-1.5 gap-2.5 rounded-lg cursor-pointer hover:bg-customGray-default'
                             >
                                 <span className="text-xl p-2 rounded-full bg-customGray-100">{data.icon}</span>
@@ -410,6 +404,6 @@ export const Header = () => {
                     </BasicDropdown>
                 </>
             </div>
-        </div >
+        </div>
     );
 };
