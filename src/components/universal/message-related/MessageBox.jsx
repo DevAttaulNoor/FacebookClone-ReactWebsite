@@ -162,7 +162,7 @@ export const MessageBox = ({ isOpen, isClose }) => {
                     </div>
                 </div>
             ) : (
-                <div className="flex flex-col p-3 gap-3.5 cursor-pointer">
+                <div className="flex flex-col p-3 gap-3.5 cursor-pointer overflow-y-auto">
                     {searchedUser.length > 0 ? (searchedUser.map((data) => (
                         <div
                             key={data.uid}

@@ -122,7 +122,7 @@ export const FeedPostPosting = () => {
                 <div className="flex items-center gap-2 py-3">
                     <ProfileAvatar
                         userData={user}
-                        imageStyleClass="w-10 h-10"
+                        imageStyleClass="w-11 h-11"
                         iconStyleClass="text-4xl"
                     />
 

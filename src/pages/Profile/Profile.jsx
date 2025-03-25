@@ -165,8 +165,8 @@ const Profile = () => {
                             )}
                         </div>
 
-                        <div className="flex flex-col mb-4">
-                            <h3 className="text-2xl font-bold">{activeProfileUser?.username}</h3>
+                        <div className={`${acceptedFriends?.length > 0 ? 'mb-4' : 'mb-14'} flex flex-col`}>
+                            <h3 className="text-[28px] font-bold">{activeProfileUser?.username}</h3>
 
                             {/* Friends Count */}
                             {acceptedFriends?.length > 0 && (

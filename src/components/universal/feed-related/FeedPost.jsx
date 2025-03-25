@@ -90,39 +90,87 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
         }
     };
 
-    const handleReaction = async (postId, userId) => {
+    const handleReaction = async (postId, postUid, userId) => {
         try {
             const postDocRef = doc(db, "Posts", postId);
             const postDoc = await getDoc(postDocRef);
 
-            if (postDoc.exists()) {
-                const existingReactions = postDoc.data().reactions || [];
+            const userDocRef = doc(db, "Users", postUid);
+            const userDoc = await getDoc(userDocRef);
 
-                if (existingReactions.includes(userId)) {
-                    const updatedReactions = existingReactions.filter(id => id !== userId);
-                    await updateDoc(postDocRef, { reactions: updatedReactions });
+            if (postDoc.exists()) {
+                let existingReactions = postDoc.data().reactions || [];
+
+                if (existingReactions.some(reaction => reaction.uid === userId)) {
+                    // Remove user reaction
+                    existingReactions = existingReactions.filter(reaction => reaction.uid !== userId);
                 } else {
-                    const updatedReactions = [...existingReactions, userId];
-                    await updateDoc(postDocRef, { reactions: updatedReactions });
+                    // Add user reaction with timestamp
+                    existingReactions.push({
+                        uid: userId,
+                        timestamp: Math.floor(Date.now() / 1000),
+                    });
                 }
+
+                await updateDoc(postDocRef, { reactions: existingReactions });
             } else {
                 console.error("Post not found.");
+                return;
             }
+
+            if (userDoc.exists()) {
+                let existingNotifications = userDoc.data().notifications || [];
+
+                if (existingNotifications.some(reaction => reaction.uid === userId)) {
+                    // Remove user reaction
+                    existingNotifications = existingNotifications.filter(notification => notification.uid !== userId);
+                } else {
+                    // Add user reaction with timestamp
+                    existingNotifications.push({
+                        uid: userId,
+                        postId: postId,
+                        status: 'reacted',
+                        timestamp: Math.floor(Date.now() / 1000),
+                    });
+                }
+
+                await updateDoc(userDocRef, { notifications: existingNotifications });
+            } else {
+                console.error("User not found.");
+            }
+
+            console.log("Reaction updated successfully!");
         } catch (error) {
             console.error("Error updating reaction:", error);
         }
     };
 
-    const handleCommenting = async (postId, userId) => {
+    const handleCommenting = async (postId, postUid, userId) => {
         try {
-            const postDocRef = doc(db, "Posts", postId);
-            const commentsCollectionRef = collection(postDocRef, "comments");
-
-            await addDoc(commentsCollectionRef, {
+            await addDoc(collection(doc(db, "Posts", postId), "comments"), {
                 uid: userId,
                 comment: commentInput,
                 timestamp: Math.floor(new Date().getTime() / 1000),
             });
+
+            const userDocRef = doc(db, "Users", postUid);
+            const userDoc = await getDoc(userDocRef);
+
+            if (userDoc.exists()) {
+                let existingNotifications = userDoc.data().notifications || [];
+
+                existingNotifications.push({
+                    uid: userId,
+                    postId: postId,
+                    status: 'commented',
+                    comment: commentInput,
+                    timestamp: Math.floor(Date.now() / 1000),
+                });
+
+                await updateDoc(userDocRef, { notifications: existingNotifications });
+            } else {
+                console.error("User not found.");
+            }
 
             setCommentInput('')
             console.log("Comment added successfully!");
@@ -199,7 +247,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
         <>
             {postData.map((data) => {
                 const postUser = userData.find(user => user.uid === data.uid);
-                const userReacted = data?.reactions?.some(reaction => reaction == activeUser?.uid)
+                const userReacted = data?.reactions?.some(reaction => reaction.uid == activeUser?.uid)
 
                 return (
                     <div key={data.id} className={`${postContainerStyle} flex flex-col gap-3 rounded-xl shadow-customFull2 bg-white`}>
@@ -321,7 +369,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
 
                         <div className='grid grid-cols-2 mx-4 py-2 gap-1.5 border-t border-t-slate-400'>
                             <div
-                                onClick={() => handleReaction(data.id, activeUser?.uid)}
+                                onClick={() => handleReaction(data.id, data.uid, activeUser?.uid)}
                                 className="flex items-center justify-center p-2 gap-1.5 rounded-md cursor-pointer hover:bg-customGray-100"
                             >
                                 <span className={`${userReacted ? 'text-customBlue-300' : 'text-customGray-300'} text-lg`}>{ReactIcons.LIKE_OUTLINE}</span>
@@ -506,7 +554,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
 
                                         {commentInput ? (
                                             <button
-                                                onClick={() => handleCommenting(data.id, activeUser?.uid)}
+                                                onClick={() => handleCommenting(data.id, data.uid, activeUser?.uid)}
                                                 className='cursor-pointer text-customBlue-300'
                                             >
                                                 {ReactIcons.SEND_ARROW}
@@ -537,7 +585,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                 <hr className="text-customGray-default" />
 
                                 {data.reactions?.map((elem) => {
-                                    const users = userData?.find(user => user.uid === elem);
+                                    const users = userData?.find(user => user.uid === elem.uid);
 
                                     return (
                                         <div key={elem} className="flex items-center gap-2">

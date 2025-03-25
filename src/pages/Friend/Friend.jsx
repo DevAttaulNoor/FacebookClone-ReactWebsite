@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router";
-import { setDoc, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { setDoc, doc, updateDoc, deleteDoc, arrayUnion, getDoc } from "firebase/firestore";
 import { db } from "@services/firebase";
 import { Routes } from "@constants/Routes";
 import { useFriends } from "@hooks/useFriends";
@@ -45,11 +45,27 @@ const Friend = () => {
                 status: 'pending',
             });
 
+            await updateDoc(doc(db, "Users", user.uid), {
+                notifications: arrayUnion({
+                    friendId: friendId,
+                    status: 'pending',
+                    timestamp: Math.floor(Date.now() / 1000),
+                }),
+            });
+
             // Add a request entry for the friend
             await setDoc(doc(db, "Users", friendId, "Friends", user.uid), {
                 senderUid: user.uid,
                 receiverUid: friendId,
                 status: 'pending',
+            });
+
+            await updateDoc(doc(db, "Users", friendId), {
+                notifications: arrayUnion({
+                    friendId: user.uid,
+                    status: 'pending',
+                    timestamp: Math.floor(Date.now() / 1000),
+                }),
             });
 
             console.log("Friend request sent successfully!");
@@ -60,17 +76,55 @@ const Friend = () => {
 
     const handleAcceptFriendRequest = async (friendId) => {
         try {
-            const requestRef = doc(db, "Users", user.uid, "Friends", friendId);
-            const friendRequestRef = doc(db, "Users", friendId, "Friends", user.uid);
+            const userRef = doc(db, "Users", user.uid);
+            const friendRef = doc(db, "Users", friendId);
 
-            // Update the status of the friend request
-            await updateDoc(requestRef, {
+            // Update the status of the friend request for both users
+            await updateDoc(doc(db, "Users", user.uid, "Friends", friendId), {
                 status: 'accepted',
             });
 
-            await updateDoc(friendRequestRef, {
+            await updateDoc(doc(db, "Users", friendId, "Friends", user.uid), {
                 status: 'accepted',
             });
+
+            // Fetch current user's notifications
+            const userSnap = await getDoc(userRef);
+            if (userSnap.exists()) {
+                const userData = userSnap.data();
+                const updatedUserNotifications = userData.notifications?.filter(
+                    (notification) => notification.friendId !== friendId
+                );
+
+                updatedUserNotifications.push({
+                    friendId: friendId,
+                    status: 'accepted',
+                    timestamp: Math.floor(Date.now() / 1000),
+                });
+
+                await updateDoc(userRef, {
+                    notifications: updatedUserNotifications,
+                });
+            }
+
+            // Fetch friend's notifications
+            const friendSnap = await getDoc(friendRef);
+            if (friendSnap.exists()) {
+                const friendData = friendSnap.data();
+                const updatedFriendNotifications = friendData.notifications?.filter(
+                    (notification) => notification.friendId !== user.uid
+                );
+
+                updatedFriendNotifications.push({
+                    friendId: user.uid,
+                    status: 'accepted',
+                    timestamp: Math.floor(Date.now() / 1000),
+                });
+
+                await updateDoc(friendRef, {
+                    notifications: updatedFriendNotifications,
+                });
+            }
 
             console.log("Friend request accepted successfully!");
         } catch (error) {
@@ -78,20 +132,54 @@ const Friend = () => {
         }
     };
 
+
     const handleDeclineFriendRequest = async (friendId) => {
         try {
-            const requestRef = doc(db, "Users", user.uid, "Friends", friendId);
-            const friendRequestRef = doc(db, "Users", friendId, "Friends", user.uid);
+            // Remove the friend request from both users' "Friends" collections
+            await deleteDoc(doc(db, "Users", user.uid, "Friends", friendId));
+            await deleteDoc(doc(db, "Users", friendId, "Friends", user.uid));
 
-            // Remove the request
-            await deleteDoc(requestRef);
-            await deleteDoc(friendRequestRef);
+            // Get user and friend documents
+            const userRef = doc(db, "Users", user.uid);
+            const friendRef = doc(db, "Users", friendId);
+
+            const userSnap = await getDoc(userRef);
+            const friendSnap = await getDoc(friendRef);
+
+            // Process the notifications for the current user
+            if (userSnap.exists()) {
+                const userData = userSnap.data();
+                const updatedUserNotifications = userData.notifications?.filter(
+                    (notification) => notification.friendId !== friendId
+                );
+
+                if (updatedUserNotifications.length !== userData.notifications.length) {
+                    await updateDoc(userRef, {
+                        notifications: updatedUserNotifications
+                    });
+                }
+            }
+
+            // Process the notifications for the friend
+            if (friendSnap.exists()) {
+                const friendData = friendSnap.data();
+                const updatedFriendNotifications = friendData.notifications?.filter(
+                    (notification) => notification.friendId !== user.uid
+                );
+
+                if (updatedFriendNotifications.length !== friendData.notifications.length) {
+                    await updateDoc(friendRef, {
+                        notifications: updatedFriendNotifications
+                    });
+                }
+            }
 
             console.log("Friend request declined successfully!");
         } catch (error) {
             console.error("Error declining friend request:", error);
         }
     };
+
 
     return (
         <div className="w-full h-full flex">

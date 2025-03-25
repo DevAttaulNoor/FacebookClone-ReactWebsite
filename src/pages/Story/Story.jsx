@@ -51,9 +51,9 @@ const Story = () => {
                     ) : (
                         <Link
                             to={Routes.STORY_CREATE.path}
-                            className='flex items-center justify-between p-2 rounded-lg'
+                            className='flex items-center p-2 gap-3 rounded-lg hover:bg-customGray-default'
                         >
-                            <span className="flex items-center text-3xl p-3 cursor-pointer text-customBlue-default bg-customGray-default">{ReactIcons.ADD_PLUS}</span>
+                            <span className="flex items-center text-3xl p-3 rounded-full cursor-pointer text-customBlue-default bg-customGray-100">{ReactIcons.ADD_PLUS}</span>
 
                             <div className='flex flex-col'>
                                 <h5 className="font-semibold">Create a story</h5>
@@ -63,11 +63,11 @@ const Story = () => {
                     )}
                 </div>
 
-                {storiesExceptCurrentUser.length > 0 ? (
+                {storiesExceptCurrentUser?.length > 0 ? (
                     <div className="flex flex-col gap-2">
                         <h5 className="font-semibold px-2">All stories</h5>
 
-                        {storiesExceptCurrentUser.map((data) => {
+                        {storiesExceptCurrentUser?.map((data) => {
                             const storyUser = users.find(elem => elem.uid === data.uid);
 
                             return (
@@ -85,7 +85,7 @@ const Story = () => {
 
                                         <div className='flex flex-col gap-0.5'>
                                             <h5 className="font-medium">{storyUser.username}</h5>
-                                            <p className="text-xs">{data.stories[stories.length - 1].timestamp}</p>
+                                            <p className="text-xs">{data?.stories[stories.length - 1]?.timestamp}</p>
                                         </div>
                                     </div>
                                 </Link>
