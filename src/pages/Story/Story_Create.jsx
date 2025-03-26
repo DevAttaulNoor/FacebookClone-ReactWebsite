@@ -246,8 +246,8 @@ const Story_Create = () => {
                             </button>
 
                             {uploadLoading ? (
-                                <button className="w-full font-semibold p-2.5 rounded-lg cursor-pointer text-white bg-customBlue-default">
-                                    ...
+                                <button className="w-full flex items-center justify-center p-2 rounded-lg bg-customBlue-default">
+                                    <div className='w-7 h-7 border-2 border-b-0 animate-spin rounded-full border-white' />
                                 </button>
                             ) : (
                                 <button

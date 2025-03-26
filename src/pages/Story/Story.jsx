@@ -13,10 +13,8 @@ const Story = () => {
     const { users } = useUsers();
     const { user } = useAuthUser();
     const { stories, userStories } = useStories(user.uid);
-    const story = stories?.flatMap(data => data.stories).filter(elem => elem.uid === id)
-    const userStory1 = users?.find(elem => elem.uid === story[story.length - 1]?.uid);
-    const userStory = users?.find(elem => elem.uid === userStories[userStories.length - 1]?.uid);
-    const storiesExceptCurrentUser = stories?.filter(data => data.uid !== user.uid)
+    const activeStoryUser = users?.find(data => data.uid === id)
+    const activeStoryData = stories?.flatMap(data => data.stories).filter(elem => elem.uid === id).sort((a, b) => a.timestamp - b.timestamp)
 
     return (
         <div className="w-full h-full flex">
@@ -25,17 +23,17 @@ const Story = () => {
                     <h5 className="font-semibold px-2">Your story</h5>
 
                     {userStories.length > 0 ? (
-                        <div className={`flex items-center justify-between p-2 rounded-lg cursor-pointer hover:bg-customGray-default ${story[story.length - 1].uid === userStories[userStories.length - 1].uid ? 'bg-customGray-default' : ''}`}>
+                        <div className={`${userStories[userStories.length - 1].uid === id ? 'bg-customGray-default' : ''} flex items-center justify-between p-2 rounded-lg cursor-pointer hover:bg-customGray-default`}>
                             <Link to={`/story/${userStories[userStories.length - 1].uid}`} className="flex items-center gap-3">
                                 <ProfileAvatar
-                                    userData={userStory}
+                                    userData={user}
                                     imageStyleClass="w-14 h-14"
                                     iconStyleClass="text-[56px]"
                                 />
 
                                 <div className='flex flex-col gap-0.5'>
-                                    <h5 className="font-medium">{userStory.username}</h5>
-                                    <p className="text-xs">{timeAgoInitials(userStories[userStories.length - 1].timestamp)}</p>
+                                    <h5 className="font-medium">{user.username}</h5>
+                                    <p className="text-xs">{timeAgoInitials(userStories.sort((a, b) => a.timestamp - b.timestamp)[userStories.length - 1].timestamp)}</p>
                                 </div>
                             </Link>
 
@@ -61,18 +59,18 @@ const Story = () => {
                     )}
                 </div>
 
-                {storiesExceptCurrentUser?.length > 0 ? (
+                {stories.filter(data => data.uid !== user.uid)?.length > 0 ? (
                     <div className="flex flex-col gap-2">
                         <h5 className="font-semibold px-2">All stories</h5>
 
-                        {storiesExceptCurrentUser?.map((data) => {
+                        {stories?.filter(data => data.uid !== user.uid).flatMap(elem => elem.stories).sort((a, b) => b.timestamp - a.timestamp)?.map((data) => {
                             const storyUser = users.find(elem => elem.uid === data.uid);
 
                             return (
                                 <Link
                                     key={data.uid}
                                     to={`/story/${data.uid}`}
-                                    className={`${(story[story.length - 1].uid === data.uid) && 'bg-customGray-default'} flex items-center justify-between p-2 rounded-lg cursor-pointer hover:bg-customGray-default`}
+                                    className={`${(data.uid === id) && 'bg-customGray-default'} flex items-center justify-between p-2 rounded-lg cursor-pointer hover:bg-customGray-default`}
                                 >
                                     <div className="flex items-center gap-3">
                                         <ProfileAvatar
@@ -83,7 +81,8 @@ const Story = () => {
 
                                         <div className='flex flex-col gap-0.5'>
                                             <h5 className="font-medium">{storyUser.username}</h5>
-                                            <p className="text-xs">{timeAgoInitials(data?.stories[data?.stories.length - 1]?.timestamp)}</p>
+                                            {/* <p className="text-xs">{timeAgoInitials(data?.stories[data?.stories.length - 1]?.timestamp)}</p> */}
+                                            <p className="text-xs">{timeAgoInitials(data.timestamp)}</p>
                                         </div>
                                     </div>
                                 </Link>
@@ -97,19 +96,19 @@ const Story = () => {
 
             <div className='w-full flex justify-center py-4 bg-black'>
                 <div
-                    style={{ backgroundImage: `url(${story[story.length - 1]?.background})` }}
+                    style={{ backgroundImage: `url(${activeStoryData[activeStoryData.length - 1]?.background})` }}
                     className="w-96 flex px-3 py-4 rounded-xl text-white bg-[#242526] bg-cover bg-center bg-no-repeat"
                 >
                     <div className="h-fit flex items-center gap-2">
                         <ProfileAvatar
-                            userData={userStory1}
+                            userData={activeStoryUser}
                             imageStyleClass="w-10 h-10"
                             iconStyleClass="text-4xl"
                         />
 
                         <div className='flex flex-col'>
-                            <h5 className="font-medium">{userStory1?.username}</h5>
-                            <p className="text-sm">{timeAgoInitials(story[story.length - 1]?.timestamp)}</p>
+                            <h5 className="font-medium">{activeStoryUser?.username}</h5>
+                            <p className="text-sm">{timeAgoInitials(activeStoryData[activeStoryData.length - 1]?.timestamp)}</p>
                         </div>
                     </div>
                 </div>

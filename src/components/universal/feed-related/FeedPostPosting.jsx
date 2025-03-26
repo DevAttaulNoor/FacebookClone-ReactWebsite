@@ -36,6 +36,7 @@ export const FeedPostPosting = () => {
     const [messageMedia, setMessageMedia] = useState({ content: '', type: '' });
     const [isModalOpen, setModalOpen] = useState(false);
     const [isEmojiModalOpen, setIsEmojiModalOpen] = useState(false);
+    const [postLoading, setPostLoading] = useState(false);
 
     const handleModalClose = () => {
         setModalOpen(false);
@@ -69,6 +70,7 @@ export const FeedPostPosting = () => {
         };
 
         try {
+            setPostLoading(true)
             const postRef = doc(collection(db, "Posts")); // Create a reference to a new document in the "Posts" collection
 
             if ((messageText !== '') && (messageMedia.content === '')) {
@@ -78,6 +80,7 @@ export const FeedPostPosting = () => {
                 });
 
                 handleModalClose();
+                setPostLoading(false)
                 return;
             }
 
@@ -93,6 +96,7 @@ export const FeedPostPosting = () => {
                     mediaType: messageMedia.type,
                 });
 
+                setPostLoading(false)
                 handleModalClose();
             }
 
@@ -109,6 +113,7 @@ export const FeedPostPosting = () => {
                     mediaType: messageMedia.type,
                 });
 
+                setPostLoading(false)
                 handleModalClose();
             }
         } catch (error) {
@@ -238,13 +243,19 @@ export const FeedPostPosting = () => {
                     </div>
                 </div>
 
-                <button
-                    onClick={handlePosting}
-                    className={`${(messageText || messageMedia.content) ? 'text-white bg-customBlue-default' : 'text-customGray-200 bg-customGray-100'} w-full font-medium py-1.5 rounded-lg cursor-pointer`}
-                >
-                    Post
-                </button>
-            </ModalLayout>
+                {postLoading ? (
+                    <button className='w-full flex items-center justify-center py-1.5 rounded-lg bg-customBlue-default'>
+                        <div className='w-6 h-6 border-2 border-b-0 animate-spin rounded-full border-white' />
+                    </button>
+                ) : (
+                    <button
+                        onClick={handlePosting}
+                        className={`${(messageText || messageMedia.content) ? 'text-white bg-customBlue-default' : 'text-customGray-200 bg-customGray-100'} w-full font-medium py-1.5 rounded-lg cursor-pointer`}
+                    >
+                        Post
+                    </button>
+                )}
+            </ModalLayout >
         </>
     )
 }

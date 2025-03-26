@@ -3,7 +3,6 @@ import { ProfileAvatar } from "../ProfileAvatar";
 
 export const StoryCard = ({ userData, storyData }) => {
     const storyUser = userData.find(elem => elem.uid === storyData.uid);
-    const storiesLength = storyData.stories.length - 1
 
     return (
         <Link
@@ -19,7 +18,7 @@ export const StoryCard = ({ userData, storyData }) => {
             <p className="text-xs font-medium px-1 drop-shadow-xl text-white">{storyUser.username}</p>
 
             <span
-                style={{ backgroundImage: `url(${storyData.stories[storiesLength].background})` }}
+                style={{ backgroundImage: `url(${storyData.stories.sort((a, b) => a.timestamp - b.timestamp)[storyData.stories.length - 1].background})` }}
                 className="absolute top-7 bottom-7 left-0 right-0 -z-[5] bg-cover bg-center bg-no-repeat"
             />
         </Link>

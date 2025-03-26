@@ -246,7 +246,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
 
     return (
         <>
-            {postData.map((data) => {
+            {postData.sort((a, b) => b.timestamp - a.timestamp).map((data) => {
                 const postUser = userData.find(user => user.uid === data.uid);
                 const userReacted = data?.reactions?.some(reaction => reaction.uid == activeUser?.uid)
 
@@ -492,7 +492,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                         )}
 
                         {postModalOpen.comment === data.id && (
-                            <ModalLayout isOpen={true} containerStyle={'relative p-3 gap-3'}>
+                            <ModalLayout isOpen={true} containerStyle={'relative max-h-96 p-3 gap-3'}>
                                 <div className="flex justify-center">
                                     <h1 className="text-lg font-bold">Comments</h1>
 
@@ -506,34 +506,36 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
 
                                 <hr className="text-customGray-default" />
 
-                                {data.comments?.map((elem) => {
-                                    const users = userData?.find(user => user.uid === elem.uid);
+                                <div className='flex flex-col gap-3 overflow-y-auto'>
+                                    {data.comments.sort((a, b) => a.timestamp - b.timestamp)?.map((elem) => {
+                                        const users = userData?.find(user => user.uid === elem.uid);
 
-                                    return (
-                                        <div key={elem.id} className="flex gap-2">
-                                            <ProfileAvatar
-                                                userData={users}
-                                                imageStyleClass="w-10 h-10"
-                                                iconStyleClass="text-4xl"
-                                            />
+                                        return (
+                                            <div key={elem.id} className="flex gap-2">
+                                                <ProfileAvatar
+                                                    userData={users}
+                                                    imageStyleClass="w-10 h-10"
+                                                    iconStyleClass="text-4xl"
+                                                />
 
-                                            <div className="flex flex-col">
-                                                <div className="px-3 py-1.5 rounded-2xl bg-customGray-default">
-                                                    <Link
-                                                        to={`/profile/${users?.uid}`}
-                                                        className="text-sm font-medium cursor-pointer hover:underline"
-                                                    >
-                                                        {users?.username}
-                                                    </Link>
+                                                <div className="flex flex-col">
+                                                    <div className="px-3 py-1.5 rounded-2xl bg-customGray-default">
+                                                        <Link
+                                                            to={`/profile/${users?.uid}`}
+                                                            className="text-sm font-medium cursor-pointer hover:underline"
+                                                        >
+                                                            {users?.username}
+                                                        </Link>
 
-                                                    <p className="text-sm">{elem.comment}</p>
+                                                        <p className="text-sm">{elem.comment}</p>
+                                                    </div>
+
+                                                    <p className="text-xs ml-1 text-customGray-200 cursor-pointer">{timeAgoInitials(elem.timestamp)}</p>
                                                 </div>
-
-                                                <p className="text-xs ml-1 text-customGray-200 cursor-pointer">{timeAgoInitials(elem.timestamp)}</p>
                                             </div>
-                                        </div>
-                                    );
-                                })}
+                                        );
+                                    })}
+                                </div>
 
                                 <div className="flex gap-2">
                                     <ProfileAvatar
@@ -571,7 +573,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                         )}
 
                         {postModalOpen.reaction === data.id && (
-                            <ModalLayout isOpen={true} containerStyle={'relative p-3 gap-3'}>
+                            <ModalLayout isOpen={true} containerStyle={'relative max-h-96 p-3 gap-3'}>
                                 <div className="flex justify-center">
                                     <h1 className="text-lg font-bold">Reactions</h1>
 
@@ -585,26 +587,28 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
 
                                 <hr className="text-customGray-default" />
 
-                                {data.reactions?.map((elem) => {
-                                    const users = userData?.find(user => user.uid === elem.uid);
+                                <div className='flex flex-col gap-3 overflow-y-auto'>
+                                    {data.reactions?.map((elem) => {
+                                        const users = userData?.find(user => user.uid === elem.uid);
 
-                                    return (
-                                        <div key={elem} className="flex items-center gap-2">
-                                            <ProfileAvatar
-                                                userData={users}
-                                                imageStyleClass="w-10 h-10"
-                                                iconStyleClass="text-4xl"
-                                            />
+                                        return (
+                                            <div key={elem} className="flex items-center gap-2">
+                                                <ProfileAvatar
+                                                    userData={users}
+                                                    imageStyleClass="w-10 h-10"
+                                                    iconStyleClass="text-4xl"
+                                                />
 
-                                            <Link
-                                                to={`/profile/${users?.uid}`}
-                                                className="text-sm font-medium cursor-pointer hover:underline"
-                                            >
-                                                {users?.username}
-                                            </Link>
-                                        </div>
-                                    );
-                                })}
+                                                <Link
+                                                    to={`/profile/${users?.uid}`}
+                                                    className="text-sm font-medium cursor-pointer hover:underline"
+                                                >
+                                                    {users?.username}
+                                                </Link>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                             </ModalLayout>
                         )}
                     </div>
