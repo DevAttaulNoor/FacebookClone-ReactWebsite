@@ -1,16 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router";
-import { Routes } from "@constants/Routes";
-import { useAuthUser } from "@hooks/useAuthUser";
-import { ReactIcons } from "@constants/ReactIcons";
-import { Header } from "../components/universal/Header";
-import { MessageBox } from "@components/universal/message-related/MessageBox";
 
 export const OuterContainer = ({ children }) => {
-    const { user } = useAuthUser();
     const location = useLocation();
-    const [isMessageBoxVisible, setIsMessageBoxVisisble] = useState(false);
-    const isHeaderVisible = !user || (location.pathname === Routes.LOGIN.path) || (location.pathname === Routes.SIGNUP.path)
 
     useEffect(() => {
         window.scrollTo({
@@ -21,21 +13,7 @@ export const OuterContainer = ({ children }) => {
 
     return (
         <main className="outerContainerStyle">
-            {!isHeaderVisible && < Header />}
             {children ? children : <Outlet />}
-
-            {user && (
-                <>
-                    <span
-                        onClick={() => setIsMessageBoxVisisble(true)}
-                        className="absolute bottom-4 right-8 text-2xl p-3.5 rounded-full shadow-customFull2 cursor-pointer bg-white hover:bg-customGray-default"
-                    >
-                        {ReactIcons.EDIT_PENCIL_BOX}
-                    </span>
-
-                    {isMessageBoxVisible && <MessageBox isClose={() => setIsMessageBoxVisisble(false)} />}
-                </>
-            )}
         </main>
     );
 };

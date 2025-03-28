@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { signOut } from "firebase/auth";
-import { Link, NavLink, useNavigate } from "react-router";
+import { Link, NavLink } from "react-router";
 import { auth } from "@services/firebase";
 import { Routes } from "@constants/Routes";
 import { useUsers } from "@hooks/useUsers";
@@ -38,7 +38,6 @@ const headerLinks = [
 ];
 
 export const Header = () => {
-    const navigate = useNavigate();
     const { chats } = useChats();
     const { user } = useAuthUser();
     const { users, usersExceptCurrent } = useUsers(user.uid);
@@ -58,7 +57,6 @@ export const Header = () => {
     const handleLogout = async () => {
         try {
             await signOut(auth);
-            navigate(Routes.LOGIN.path)
         } catch (error) {
             console.error(error);
         }

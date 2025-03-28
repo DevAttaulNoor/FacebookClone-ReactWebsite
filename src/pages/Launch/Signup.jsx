@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router";
-import { auth, db, storage } from "@services/firebase";
+import { Link } from "react-router";
+import { setDoc, doc } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { Routes } from "@constants/Routes";
-import { InputField } from "@components/universal/inputs/InputField";
-import { setDoc, doc } from "firebase/firestore";
 import { ReactIcons } from "@constants/ReactIcons";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { auth, db, storage } from "@services/firebase";
+import { InputField } from "@components/universal/inputs/InputField";
 
 const genderOptions = [
     {
@@ -51,7 +51,6 @@ const initialState = {
 };
 
 const Signup = () => {
-    const navigate = useNavigate();
     const [error, setError] = useState('');
     const [formData, setFormData] = useState(initialState);
 
@@ -99,7 +98,6 @@ const Signup = () => {
             });
 
             setError('');
-            navigate(Routes.HOME.path);
             setFormData(initialState);
             console.log("User creation successful", user);
         } catch (error) {

@@ -5,7 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 
 export const useAuthUser = () => {
     const [user, setUser] = useState('');
-    const [error, setError] = useState('');
+    const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -17,12 +17,13 @@ export const useAuthUser = () => {
                         ...userDoc.data(),
                         metadata: currentUser.metadata,
                     });
-
-                    setLoading(false);
+                } else {
+                    setUser('');
                 }
             } catch (err) {
-                setUser('');
                 setError(err);
+                setUser('');
+            } finally {
                 setLoading(false);
             }
         });
@@ -30,5 +31,5 @@ export const useAuthUser = () => {
         return () => unsubscribe();
     }, []);
 
-    return { user, loading, error };
+    return { isAuthenticated: !!user, user, loading, error };
 };
