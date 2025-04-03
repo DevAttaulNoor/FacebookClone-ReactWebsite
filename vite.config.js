@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [react()],
@@ -7,12 +7,14 @@ export default defineConfig({
     alias: {
       "@pages": "/src/pages/",
       "@hooks": "/src/hooks/",
-      "@utils": "/src/utils/",
       "@assets": "/src/assets/",
+      "@routes": "/src/routes/",
       "@layouts": "/src/layouts/",
-      "@services": "/src/services/",
-      "@constants": "/src/constants/",
-      "@components": "/src/components/"
+      "@components": "/src/components/",
+      "@utils": "/src/libs/utils/",
+      "@services": "/src/libs/services/",
+      "@contexts": "/src/libs/contexts/",
+      "@constants": "/src/libs/constants/",
     },
   },
 })

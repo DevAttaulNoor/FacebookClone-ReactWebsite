@@ -1,4 +1,4 @@
-import { ReactIcons } from "@constants/ReactIcons";
+import { ReactIcons } from "@constants/ReactIcons"
 
 export const FriendCard = ({
     userData,

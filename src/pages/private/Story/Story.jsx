@@ -1,8 +1,8 @@
 import { Link, useParams } from "react-router";
 import { Routes } from "@constants/Routes";
 import { useUsers } from "@hooks/useUsers";
-import { useStories } from "@hooks/useStories"
-import { useAuthUser } from "@hooks/useAuthUser"
+import { useStories } from "@hooks/useStories";
+import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { timeAgoInitials } from "@utils/TimeModule";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
@@ -10,8 +10,8 @@ import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 
 const Story = () => {
     const { id } = useParams();
+    const { user } = useAuth();
     const { users } = useUsers();
-    const { user } = useAuthUser();
     const { stories, userStories } = useStories(user.uid);
     const activeStoryUser = users?.find(data => data.uid === id)
     const activeStoryData = stories?.filter(elem => elem.uid === id).sort((a, b) => a.timestamp - b.timestamp)

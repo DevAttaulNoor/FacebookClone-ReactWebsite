@@ -1,13 +1,13 @@
 import { Link } from "react-router";
 import { Routes } from "@constants/Routes";
 import { useUsers } from "@hooks/useUsers";
-import { useStories } from "@hooks/useStories";
-import { useAuthUser } from "@hooks/useAuthUser";
-import { ReactIcons } from "@constants/ReactIcons";
 import { StoryCard } from "../cards/StoryCard";
+import { useStories } from "@hooks/useStories";
+import { useAuth } from "@contexts/AuthContext";
+import { ReactIcons } from "@constants/ReactIcons";
 
 export const FeedStory = () => {
-    const { user } = useAuthUser();
+    const { user } = useAuth();
     const { users } = useUsers();
     const { stories } = useStories();
 

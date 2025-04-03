@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { arrayUnion, collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "@services/firebase";
-import { useUsers } from "@hooks/useUsers";
 import { useChats } from "@hooks/useChats";
-import { useAuthUser } from "@hooks/useAuthUser";
-import { ReactIcons } from "@constants/ReactIcons";
+import { useUsers } from "@hooks/useUsers";
+import { useAuth } from "@contexts/AuthContext";
 import { ProfileAvatar } from "../ProfileAvatar";
 import { InputField } from "../inputs/InputField";
+import { ReactIcons } from "@constants/ReactIcons";
 import { timeAgoInitials } from "@utils/TimeModule";
 
 export const MessageBox = ({ isOpen, isClose }) => {
-    const { user } = useAuthUser();
+    const { user } = useAuth();
     const { chats } = useChats();
     const { usersExceptCurrent } = useUsers(user?.uid);
     const [searchInput, setSearchInput] = useState('');

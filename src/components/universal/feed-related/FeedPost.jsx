@@ -1,17 +1,17 @@
 import '@assets/css/customEmojiPickerStyle.css'
 import EmojiPicker from 'emoji-picker-react';
-import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
+import { useEffect, useRef, useState } from "react";
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { addDoc, collection, deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
-import { db, storage } from "@services/firebase";
-import { ReactIcons } from "@constants/ReactIcons"
+import { db, storage } from '@services/firebase';
 import { ProfileAvatar } from '../ProfileAvatar';
-import { InputField } from "../inputs/InputField";
-import { ModalLayout } from "@layouts/ModalLayout";
+import { InputField } from '../inputs/InputField';
+import { ReactIcons } from '@constants/ReactIcons';
+import { ModalLayout } from '@layouts/ModalLayout';
 import { timeAgoInitials } from '@utils/TimeModule';
-import { TextareaField } from "../inputs/TextareaField";
-import { BasicDropdown } from "../dropdowns/BasicDropdown";
+import { TextareaField } from '../inputs/TextareaField';
+import { BasicDropdown } from '../dropdowns/BasicDropdown';
 
 const feedPostingOptions = [
     {

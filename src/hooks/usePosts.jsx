@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { db } from "@services/firebase";
 import { collection, onSnapshot, doc } from "firebase/firestore";
+import { db } from "@services/firebase";
 
 export const usePosts = (userId) => {
     const [posts, setPosts] = useState([]);
     const [userPosts, setUserPosts] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const postsQuery = collection(db, "Posts");

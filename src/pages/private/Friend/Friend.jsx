@@ -3,7 +3,7 @@ import { setDoc, doc, updateDoc, deleteDoc, arrayUnion, getDoc } from "firebase/
 import { db } from "@services/firebase";
 import { Routes } from "@constants/Routes";
 import { useFriends } from "@hooks/useFriends";
-import { useAuthUser } from "@hooks/useAuthUser";
+import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { Friend_AllRequest } from "./Friend_AllRequest";
@@ -32,7 +32,7 @@ const friendsLeftbarOptions = [
 ];
 
 const Friend = () => {
-    const { user } = useAuthUser();
+    const { user } = useAuth();
     const location = useLocation();
     const { friends, pendingFriends, acceptingFriends, acceptedFriends } = useFriends(user.uid);
 

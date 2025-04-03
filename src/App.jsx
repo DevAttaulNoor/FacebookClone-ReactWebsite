@@ -1,22 +1,22 @@
-// App.js
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import { Routes } from "./constants/Routes";
-import { ErrorRoute } from "./routes/ErrorRoute";
-import { Loading } from "./pages/General/Loading";
-import { PublicRoute } from "./routes/PublicRoute";
-import { ProtectedRoute } from "./routes/ProtectedRoute";
-import { OuterContainer } from "./layouts/OuterContainer";
+import { Routes } from "@constants/Routes";
+import { ErrorRoute } from "@routes/ErrorRoute";
+import { Loading } from "@pages/general/Loading";
+import { PublicRoute } from "@routes/PublicRoute";
+import { AuthProvider } from "@contexts/AuthContext";
+import { ProtectedRoute } from "@routes/ProtectedRoute";
+import { OuterContainer } from "@layouts/OuterContainer";
 
-const Home = lazy(() => import("./pages/Home"));
-const Saved = lazy(() => import("./pages/Saved"));
-const Video = lazy(() => import("./pages/Video/Video"));
-const Story = lazy(() => import("./pages/Story/Story"));
-const Login = lazy(() => import("./pages/Launch/Login"));
-const Signup = lazy(() => import("./pages/Launch/Signup"));
-const Friend = lazy(() => import("./pages/Friend/Friend"));
-const Profile = lazy(() => import("./pages/Profile/Profile"));
-const Story_Create = lazy(() => import("./pages/Story/Story_Create"));
+const Home = lazy(() => import("./pages/private/Home"));
+const Saved = lazy(() => import("./pages/private/Saved"));
+const Video = lazy(() => import("./pages/private/Video/Video"));
+const Story = lazy(() => import("./pages/private/Story/Story"));
+const Login = lazy(() => import("./pages/public/Login"));
+const Signup = lazy(() => import("./pages/public/Signup"));
+const Friend = lazy(() => import("./pages/private/Friend/Friend"));
+const Profile = lazy(() => import("./pages/private/Profile/Profile"));
+const Story_Create = lazy(() => import("./pages/private/Story/Story_Create"));
 
 const routes = createBrowserRouter([{
     element: <OuterContainer />,
@@ -67,9 +67,11 @@ const routes = createBrowserRouter([{
 
 const App = () => {
     return (
-        <Suspense fallback={<Loading />}>
-            <RouterProvider router={routes} />
-        </Suspense>
+        <AuthProvider>
+            <Suspense fallback={<Loading />}>
+                <RouterProvider router={routes} />
+            </Suspense>
+        </AuthProvider>
     );
 };
 

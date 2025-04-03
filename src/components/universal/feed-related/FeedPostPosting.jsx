@@ -1,14 +1,14 @@
 import '@assets/css/customEmojiPickerStyle.css'
 import EmojiPicker from 'emoji-picker-react';
 import { useRef, useState } from "react";
-import { useAuthUser } from "@hooks/useAuthUser";
-import { db, storage } from '@services/firebase';
-import { ModalLayout } from "@layouts/ModalLayout";
-import { ReactIcons } from "@constants/ReactIcons";
-import { TextareaField } from '../inputs/TextareaField';
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { useAuth } from '@contexts/AuthContext';
+import { db, storage } from '@services/firebase';
 import { ProfileAvatar } from '../ProfileAvatar';
+import { ReactIcons } from '@constants/ReactIcons';
+import { ModalLayout } from '@layouts/ModalLayout';
+import { TextareaField } from '../inputs/TextareaField';
 
 const feedPostingOptions = [
     {
@@ -29,7 +29,7 @@ const feedPostingOptions = [
 ];
 
 export const FeedPostPosting = () => {
-    const { user } = useAuthUser();
+    const { user } = useAuth();
     const emojiBoxRef = useRef(null);
     const messageMediaInputRef = useRef(null);
     const [messageText, setMessageText] = useState('');

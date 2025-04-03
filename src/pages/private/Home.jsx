@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router";
 import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
 import { useFriends } from "@hooks/useFriends";
-import { useAuthUser } from "@hooks/useAuthUser";
+import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
@@ -34,7 +34,7 @@ const leftbarOptionsData = [
 ];
 
 const Home = () => {
-    const { user } = useAuthUser();
+    const { user } = useAuth();
     const { posts } = usePosts();
     const { users } = useUsers();
     const { acceptedFriends } = useFriends(user.uid);

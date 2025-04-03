@@ -2,11 +2,11 @@ import { useState } from "react";
 import { signOut } from "firebase/auth";
 import { Link, NavLink } from "react-router";
 import { auth } from "@services/firebase";
-import { Routes } from "@constants/Routes";
-import { useUsers } from "@hooks/useUsers";
 import { useChats } from "@hooks/useChats";
+import { useUsers } from "@hooks/useUsers";
+import { Routes } from "@constants/Routes";
+import { useAuth } from "@contexts/AuthContext";
 import { ProfileAvatar } from "./ProfileAvatar";
-import { useAuthUser } from "@hooks/useAuthUser";
 import { InputField } from "./inputs/InputField";
 import { ReactIcons } from "@constants/ReactIcons";
 import { timeAgoInitials } from "@utils/TimeModule";
@@ -38,8 +38,8 @@ const headerLinks = [
 ];
 
 export const Header = () => {
+    const { user } = useAuth();
     const { chats } = useChats();
-    const { user } = useAuthUser();
     const { users, usersExceptCurrent } = useUsers(user.uid);
     const [active, setActive] = useState('All');
     const [isOpen, setIsOpen] = useState({

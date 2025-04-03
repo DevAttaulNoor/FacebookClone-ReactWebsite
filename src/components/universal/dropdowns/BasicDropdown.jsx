@@ -1,4 +1,4 @@
-import { ReactIcons } from "@constants/ReactIcons";
+import { ReactIcons } from "@constants/ReactIcons"
 import { DropdownLayout } from "@layouts/DropdownLayout"
 
 export const BasicDropdown = ({ isOpen, isClose, dropdownContainerStyle = '', dropdownData = '', children }) => {

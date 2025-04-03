@@ -2,14 +2,14 @@ import { NavLink } from "react-router";
 import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
-import { useAuthUser } from "@hooks/useAuthUser";
+import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 
 const Saved = () => {
+    const { user } = useAuth();
     const { posts } = usePosts();
-    const { user } = useAuthUser();
     const { users } = useUsers();
     const savedPosts = posts.filter(post => post?.saves?.some(save => save.uid === user.uid));
 

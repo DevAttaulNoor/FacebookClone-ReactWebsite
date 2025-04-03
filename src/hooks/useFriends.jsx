@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "@services/firebase";
 import { useUsers } from './useUsers';
+import { db } from '@services/firebase';
 
 export const useFriends = (userId) => {
     const { usersExceptCurrent } = useUsers(userId);
@@ -10,8 +10,8 @@ export const useFriends = (userId) => {
     const [pendingFriends, setPendingFriends] = useState([]);
     const [acceptedFriends, setAcceptedFriends] = useState([]);
     const [acceptingFriends, setAcceptingFriends] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (!usersExceptCurrent || usersExceptCurrent.length === 0) return;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "@services/firebase";
+import { db } from '@services/firebase';
 
 export const useUsers = (userId) => {
     const [users, setUsers] = useState([]);

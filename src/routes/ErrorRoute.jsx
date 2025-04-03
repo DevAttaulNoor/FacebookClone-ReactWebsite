@@ -1,6 +1,6 @@
-import { OuterContainer } from "@layouts/OuterContainer";
-import { Error } from "@pages/General/Error";
 import { useRouteError } from "react-router";
+import { Error } from "@pages/general/Error";
+import { OuterContainer } from "@layouts/OuterContainer";
 
 export const ErrorRoute = () => {
     const errorData = useRouteError();

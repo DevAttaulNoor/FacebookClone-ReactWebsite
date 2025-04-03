@@ -2,15 +2,15 @@ import html2canvas from "html2canvas";
 import { useRef, useState } from "react";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { useAuth } from "@contexts/AuthContext";
 import { db, storage } from "@services/firebase";
-import { useAuthUser } from "@hooks/useAuthUser";
 import { ReactIcons } from "@constants/ReactIcons";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
-import { TextareaField } from "@components/universal/inputs/TextareaField"
+import { TextareaField } from "@components/universal/inputs/TextareaField";
 
 const Story_Create = () => {
+    const { user } = useAuth();
     const inputRef = useRef(null);
-    const { user } = useAuthUser();
     const [uploadLoading, setUploadLoading] = useState(false);
     const [textInput, setTextInput] = useState({
         value: '',
