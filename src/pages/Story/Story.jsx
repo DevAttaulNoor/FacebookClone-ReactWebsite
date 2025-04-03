@@ -14,7 +14,7 @@ const Story = () => {
     const { user } = useAuthUser();
     const { stories, userStories } = useStories(user.uid);
     const activeStoryUser = users?.find(data => data.uid === id)
-    const activeStoryData = stories?.flatMap(data => data.stories).filter(elem => elem.uid === id).sort((a, b) => a.timestamp - b.timestamp)
+    const activeStoryData = stories?.filter(elem => elem.uid === id).sort((a, b) => a.timestamp - b.timestamp)
 
     return (
         <div className="w-full h-full flex">
@@ -63,31 +63,39 @@ const Story = () => {
                     <div className="flex flex-col gap-2">
                         <h5 className="font-semibold px-2">All stories</h5>
 
-                        {stories?.filter(data => data.uid !== user.uid).flatMap(elem => elem.stories).sort((a, b) => b.timestamp - a.timestamp)?.map((data) => {
-                            const storyUser = users.find(elem => elem.uid === data.uid);
+                        {stories
+                            ?.filter(data => data.uid !== user.uid)
+                            ?.sort((a, b) => b.timestamp - a.timestamp)
+                            ?.reduce((acc, data) => {
+                                if (!acc.some(item => item.uid === data.uid)) {
+                                    acc.push(data);
+                                }
+                                return acc;
+                            }, [])
+                            ?.map((data) => {
+                                const storyUser = users.find(elem => elem.uid === data.uid);
 
-                            return (
-                                <Link
-                                    key={data.uid}
-                                    to={`/story/${data.uid}`}
-                                    className={`${(data.uid === id) && 'bg-customGray-default'} flex items-center justify-between p-2 rounded-lg cursor-pointer hover:bg-customGray-default`}
-                                >
-                                    <div className="flex items-center gap-3">
-                                        <ProfileAvatar
-                                            userData={storyUser}
-                                            imageStyleClass="w-14 h-14"
-                                            iconStyleClass="text-[56px]"
-                                        />
+                                return (
+                                    <Link
+                                        key={data.uid}
+                                        to={`/story/${data.uid}`}
+                                        className={`${(data.uid === id) && 'bg-customGray-default'} flex items-center justify-between p-2 rounded-lg cursor-pointer hover:bg-customGray-default`}
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <ProfileAvatar
+                                                userData={storyUser}
+                                                imageStyleClass="w-14 h-14"
+                                                iconStyleClass="text-[56px]"
+                                            />
 
-                                        <div className='flex flex-col gap-0.5'>
-                                            <h5 className="font-medium">{storyUser.username}</h5>
-                                            {/* <p className="text-xs">{timeAgoInitials(data?.stories[data?.stories.length - 1]?.timestamp)}</p> */}
-                                            <p className="text-xs">{timeAgoInitials(data.timestamp)}</p>
+                                            <div className='flex flex-col gap-0.5'>
+                                                <h5 className="font-medium">{storyUser?.username}</h5>
+                                                <p className="text-xs">{timeAgoInitials(data.timestamp)}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </Link>
-                            )
-                        })}
+                                    </Link>
+                                );
+                            })}
                     </div>
                 ) : (
                     <p className="text-sm font-medium text-customGray-300">There are no stories to be shown from friends and others</p>

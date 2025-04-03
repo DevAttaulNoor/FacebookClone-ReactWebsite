@@ -357,7 +357,11 @@ export const Header = () => {
                                                         {notificationRelatedUser?.username}
                                                     </Link>
 
-                                                    {''} has sent you a friend request
+                                                    {data.status === 'sent' ? (
+                                                        `${``} has ${data.status} you a friend request`
+                                                    ) : (
+                                                        `${``} has ${data.status} your friend request`
+                                                    )}
                                                 </div>
 
                                                 <p className="text-xs text-customGray-300">{timeAgoInitials(data.timestamp)}</p>

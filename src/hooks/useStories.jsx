@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { db } from "@services/firebase";
 import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "@services/firebase";
 
 export const useStories = (userId) => {
     const [stories, setStories] = useState([]);
@@ -11,18 +11,7 @@ export const useStories = (userId) => {
     useEffect(() => {
         const unsubscribeStories = onSnapshot(collection(db, 'Stories'), (snapshot) => {
             const allStories = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-            const groupedStories = allStories.reduce((user, story) => {
-                const existingGroup = user.find(group => group.uid === story.uid);
-
-                if (existingGroup) {
-                    existingGroup.stories.push(story);
-                } else {
-                    user.push({ uid: story.uid, stories: [story] });
-                }
-
-                return user;
-            }, []);
+            setStories(allStories);
 
             // Filter stories for the current user
             if (userId) {
@@ -30,8 +19,6 @@ export const useStories = (userId) => {
                 setUserStories(currentUserStories);
             }
 
-            // Group stories by uid
-            setStories(groupedStories);
             setLoading(false);
         },
             (err) => {

@@ -39,13 +39,21 @@ export const FeedStory = () => {
                         </div>
                     </Link>
 
-                    {stories.map((data) => (
-                        <StoryCard
-                            key={data.uid}
-                            storyData={data}
-                            userData={users}
-                        />
-                    ))}
+                    {stories
+                        ?.sort((a, b) => b.timestamp - a.timestamp)
+                        ?.reduce((acc, data) => {
+                            if (!acc.some(item => item.uid === data.uid)) {
+                                acc.push(data);
+                            }
+                            return acc;
+                        }, [])
+                        .map((data) => (
+                            <StoryCard
+                                key={data.uid}
+                                storyData={data}
+                                userData={users}
+                            />
+                        ))}
                 </div>
             ) : (
                 <Link
