@@ -2,6 +2,7 @@ import { NavLink } from "react-router";
 import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
+import { SvgIcons } from "@constants/SvgIcons";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
@@ -24,7 +25,7 @@ const Saved = () => {
                     {({ isActive }) => (
                         <>
                             <span className={`${isActive ? "text-white bg-customBlue-300" : "bg-customGray-100"} text-2xl p-2 rounded-full`}>
-                                {ReactIcons.SAVED}
+                                {SvgIcons.SAVED({ styleClass: 'w-[22px] h-[22px]' })}
                             </span>
                             <p className="font-medium">Saved items</p>
                         </>

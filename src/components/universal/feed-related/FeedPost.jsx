@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { addDoc, collection, deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import { SvgIcons } from '@constants/SvgIcons';
 import { db, storage } from '@services/firebase';
 import { ProfileAvatar } from '../ProfileAvatar';
 import { InputField } from '../inputs/InputField';
@@ -315,7 +316,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                         onClick={() => handlePostSave(data.id, activeUser?.uid)}
                                         className='flex items-center p-1.5 gap-3 rounded-lg cursor-pointer hover:bg-customGray-default'
                                     >
-                                        <span className="text-lg rotate-90">{ReactIcons.SAVED_POST}</span>
+                                        <span>{SvgIcons.SAVED({ styleClass: 'w-[18px] h-[18px]' })}</span>
 
                                         <div className="flex flex-col gap-0.5">
                                             <h5 className="text-sm font-medium">{data.saves?.find(elem => elem.uid === activeUser?.uid) ? 'Unsave post' : 'Save post'}</h5>

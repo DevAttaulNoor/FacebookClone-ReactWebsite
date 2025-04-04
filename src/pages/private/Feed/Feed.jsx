@@ -1,39 +1,51 @@
+import { useMemo } from "react";
 import { NavLink, useLocation } from "react-router";
 import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
-import { Video_Saved } from "./Video_Saved";
+import { useFriends } from "@hooks/useFriends";
 import { SvgIcons } from "@constants/SvgIcons";
+import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
+import Feed_Friend from "./Feed_Friend";
 
-const videosLeftbarOptions = [
+const feedLeftbarOptions = [
     {
         id: 1,
-        title: 'Home',
-        icon: ReactIcons.VIDEO,
-        path: Routes.VIDEO.path
+        title: 'All',
+        icon: SvgIcons.FEED({ styleClass: 'w-6 h-6' }),
+        path: Routes.FEED.path
     },
     {
         id: 2,
-        title: 'Saved Videos',
-        icon: SvgIcons.SAVED({ styleClass: 'w-[18px] h-[18px]' }),
-        path: Routes.VIDEO_SAVED.path
+        title: 'Friends',
+        icon: ReactIcons.FRIEND,
+        path: Routes.FEED_FRIENDS.path
     },
-]
+];
 
-const Video = () => {
+const Feed = () => {
     const location = useLocation();
+    const { user } = useAuth();
     const { users } = useUsers();
     const { posts } = usePosts();
-    const videoPosts = posts.filter(post => post.mediaType === 'video')
+    const { acceptedFriends } = useFriends(user.uid);
+
+    const friendFeed = useMemo(() => {
+        if (!posts || !acceptedFriends) return [];
+
+        const friendUids = new Set(acceptedFriends.map(friend => friend.uid));
+
+        return posts.filter(post => friendUids.has(post.uid));
+    }, [posts, acceptedFriends, user.uid]);
 
     return (
         <div className="w-full h-full flex">
-            <LeftbarLayout title="Videos" icon={ReactIcons.SETTING}>
+            <LeftbarLayout title="Stories">
                 <div className="flex flex-col gap-1">
-                    {videosLeftbarOptions.map((data) => (
+                    {feedLeftbarOptions.map((data) => (
                         <NavLink
                             end
                             key={data.id}
@@ -54,20 +66,24 @@ const Video = () => {
             </LeftbarLayout>
 
             <div className='flex-1 flex flex-col items-center p-4 gap-4 overflow-x-hidden overflow-y-auto'>
-                {location.pathname === Routes.VIDEO.path && (
+                {location.pathname === Routes.FEED.path && (
                     <FeedPost
                         userData={users}
-                        postData={videoPosts}
-                        postContainerStyle="w-2/3"
+                        postData={posts}
+                        postContainerStyle="w-1/2"
                     />
                 )}
 
-                {location.pathname === Routes.VIDEO_SAVED.path && (
-                    <Video_Saved />
+                {location.pathname === Routes.FEED_FRIENDS.path && (
+                    <Feed_Friend
+                        userData={users}
+                        postData={friendFeed}
+                        postContainerStyle="w-1/2"
+                    />
                 )}
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Video;
+export default Feed

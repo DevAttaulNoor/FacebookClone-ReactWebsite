@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
+import { SvgIcons } from "@constants/SvgIcons";
 import { useFriends } from "@hooks/useFriends";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
@@ -16,20 +17,32 @@ const leftbarOptionsData = [
     {
         id: 1,
         title: "Friend",
-        icon: "FRIEND",
+        icon: ReactIcons.FRIEND,
         path: "FRIEND"
     },
     {
         id: 2,
         title: "Video",
-        icon: "VIDEO",
+        icon: ReactIcons.VIDEO,
         path: "VIDEO"
     },
     {
         id: 3,
         title: "Saved",
-        icon: "SAVED",
+        icon: SvgIcons.SAVED({ styleClass: 'w-[28px] h-[28px]' }),
         path: "SAVED"
+    },
+    {
+        id: 4,
+        title: "Feed",
+        icon: SvgIcons.FEED({ styleClass: 'w-[30px] h-[30px]' }),
+        path: "FEED"
+    },
+    {
+        id: 5,
+        title: "Reel",
+        icon: SvgIcons.REEL({ styleClass: 'w-[30px] h-[30px]' }),
+        path: "REEL"
     }
 ];
 
@@ -62,7 +75,7 @@ const Home = () => {
                         to={Routes[data.path].path}
                         className="flex cursor-pointer items-center gap-3 rounded-lg p-1.5 hover:bg-customGray-100"
                     >
-                        <span className="p-1 text-3xl">{ReactIcons[data.icon]}</span>
+                        <span className="p-1 text-3xl">{data.icon}</span>
                         <p className="font-medium">{data.title}</p>
                     </Link>
                 ))}

@@ -53,6 +53,18 @@ export const Routes = {
         metaTitle: "Saved Videos",
         metaDescription: "Saved Videos",
     },
+    FEED: {
+        path: "/feed",
+        title: "Feed",
+        metaTitle: "Feed",
+        metaDescription: "Feed",
+    },
+    FEED_FRIENDS: {
+        path: "/feed/friends",
+        title: "Feed Friends",
+        metaTitle: "Feed Friends",
+        metaDescription: "Feed Friends",
+    },
     STORY: {
         path: "/story/:id",
         title: "Story",
@@ -64,6 +76,18 @@ export const Routes = {
         title: "Create Story",
         metaTitle: "Create Story",
         metaDescription: "Create Story",
+    },
+    REEL: {
+        path: "/reel",
+        title: "Reel",
+        metaTitle: "Reel",
+        metaDescription: "Reel",
+    },
+    REEL_CREATE: {
+        path: "/reel/create",
+        title: "Create Reel",
+        metaTitle: "Create Reel",
+        metaDescription: "Create Reel",
     },
     PROFILE: {
         path: "/profile/:id",

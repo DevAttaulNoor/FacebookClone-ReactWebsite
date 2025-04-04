@@ -9,13 +9,16 @@ import { ProtectedRoute } from "@routes/ProtectedRoute";
 import { OuterContainer } from "@layouts/OuterContainer";
 
 const Home = lazy(() => import("./pages/private/Home"));
+const Login = lazy(() => import("./pages/public/Login"));
 const Saved = lazy(() => import("./pages/private/Saved"));
+const Signup = lazy(() => import("./pages/public/Signup"));
+const Feed = lazy(() => import("./pages/private/Feed/Feed"));
+const Reel = lazy(() => import("./pages/private/Reel/Reel"));
 const Video = lazy(() => import("./pages/private/Video/Video"));
 const Story = lazy(() => import("./pages/private/Story/Story"));
-const Login = lazy(() => import("./pages/public/Login"));
-const Signup = lazy(() => import("./pages/public/Signup"));
 const Friend = lazy(() => import("./pages/private/Friend/Friend"));
 const Profile = lazy(() => import("./pages/private/Profile/Profile"));
+const Reel_Create = lazy(() => import("./pages/private/Reel/Reel_Create"));
 const Story_Create = lazy(() => import("./pages/private/Story/Story_Create"));
 
 const routes = createBrowserRouter([{
@@ -50,6 +53,14 @@ const routes = createBrowserRouter([{
                 // Story Page Section Related
                 { path: Routes.STORY.path, element: <Story /> },
                 { path: Routes.STORY_CREATE.path, element: <Story_Create /> },
+
+                // Reel Page Section Related
+                { path: Routes.REEL.path, element: <Reel /> },
+                { path: Routes.REEL_CREATE.path, element: <Reel_Create /> },
+
+                // Feeds Page Section Related
+                { path: Routes.FEED.path, element: <Feed /> },
+                { path: Routes.FEED_FRIENDS.path, element: <Feed /> },
 
                 // Profile Page Section Related
                 { path: Routes.PROFILE.path, element: <Profile /> },

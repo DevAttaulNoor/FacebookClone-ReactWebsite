@@ -1,11 +1,10 @@
 import { GrGallery } from "react-icons/gr";
 import { FaRegTrashCan } from "react-icons/fa6";
-import { PiTagSimpleFill } from "react-icons/pi";
 import { HiOutlineSearch } from "react-icons/hi";
-import { IoMdAdd, IoMdSend, IoIosArrowDown } from "react-icons/io";
+import { FaCamera, FaRegCommentDots } from "react-icons/fa";
 import { MdMessage, MdEdit, MdPersonAdd } from "react-icons/md";
 import { BiLike, BiSolidLike, BiSolidEdit } from "react-icons/bi";
-import { FaSave, FaCamera, FaRegCommentDots } from "react-icons/fa";
+import { IoMdAdd, IoMdSend, IoIosArrowDown } from "react-icons/io";
 import { BsPeopleFill, BsPeople, BsPlayBtnFill, BsPlayBtn, BsPersonCircle, BsPersonLinesFill, BsFillPersonPlusFill, BsEmojiSmile, BsArrowLeft } from "react-icons/bs";
 import { IoHome, IoHomeOutline, IoAppsSharp, IoNotifications, IoPersonSharp, IoEllipsisHorizontalSharp, IoPeople, IoClose, IoTextOutline, IoSettingsSharp } from "react-icons/io5";
 
@@ -36,8 +35,6 @@ export const ReactIcons = {
     PHOTO_GALLERY: <GrGallery />,
     PROFILE_AVATAR: <BsPersonCircle />,
     PROFILE_AVATAR_WITHOUT_CIRCLE: <IoPersonSharp />,
-    SAVED: <FaSave />,
-    SAVED_POST: <PiTagSimpleFill />,
     SEARCH_MAGNIFYINGGLASS: <HiOutlineSearch />,
     SEND_ARROW: <IoMdSend />,
     SETTING: <IoSettingsSharp />,
