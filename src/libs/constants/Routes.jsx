@@ -78,7 +78,7 @@ export const Routes = {
         metaDescription: "Create Story",
     },
     REEL: {
-        path: "/reel",
+        path: "/reel/:id",
         title: "Reel",
         metaTitle: "Reel",
         metaDescription: "Reel",

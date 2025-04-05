@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
+import { useReels } from "@hooks/useReels";
 import { SvgIcons } from "@constants/SvgIcons";
 import { useFriends } from "@hooks/useFriends";
 import { useAuth } from "@contexts/AuthContext";
@@ -13,45 +14,46 @@ import { FeedStory } from "@components/universal/feed-related/FeedStory";
 import { MessageBox } from "@components/universal/message-related/MessageBox";
 import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
 
-const leftbarOptionsData = [
-    {
-        id: 1,
-        title: "Friend",
-        icon: ReactIcons.FRIEND,
-        path: "FRIEND"
-    },
-    {
-        id: 2,
-        title: "Video",
-        icon: ReactIcons.VIDEO,
-        path: "VIDEO"
-    },
-    {
-        id: 3,
-        title: "Saved",
-        icon: SvgIcons.SAVED({ styleClass: 'w-[28px] h-[28px]' }),
-        path: "SAVED"
-    },
-    {
-        id: 4,
-        title: "Feed",
-        icon: SvgIcons.FEED({ styleClass: 'w-[30px] h-[30px]' }),
-        path: "FEED"
-    },
-    {
-        id: 5,
-        title: "Reel",
-        icon: SvgIcons.REEL({ styleClass: 'w-[30px] h-[30px]' }),
-        path: "REEL"
-    }
-];
-
 const Home = () => {
     const { user } = useAuth();
     const { posts } = usePosts();
     const { users } = useUsers();
+    const { reels } = useReels();
     const { acceptedFriends } = useFriends(user.uid);
     const [isMessageBoxVisible, setIsMessageBoxVisisble] = useState(null);
+
+    const leftbarOptionsData = [
+        {
+            id: 1,
+            icon: ReactIcons.FRIEND,
+            title: Routes.FRIEND.title,
+            path: Routes.FRIEND.path,
+        },
+        {
+            id: 2,
+            icon: ReactIcons.VIDEO,
+            title: Routes.VIDEO.title,
+            path: Routes.VIDEO.path,
+        },
+        {
+            id: 3,
+            icon: SvgIcons.SAVED({ styleClass: 'w-[28px] h-[28px]' }),
+            title: Routes.SAVED.title,
+            path: Routes.SAVED.path,
+        },
+        {
+            id: 4,
+            icon: SvgIcons.FEED({ styleClass: 'w-[30px] h-[30px]' }),
+            title: Routes.FEED.title,
+            path: Routes.FEED.path,
+        },
+        {
+            id: 5,
+            icon: SvgIcons.REEL({ styleClass: 'w-[30px] h-[30px]' }),
+            title: Routes.REEL.title,
+            path: `/reel/${reels[reels.length - 1]?.id}`,
+        }
+    ];
 
     return (
         <div className="grid h-full w-full grid-cols-[1fr_2fr_1fr] gap-10 overflow-y-auto">
@@ -72,7 +74,7 @@ const Home = () => {
                 {leftbarOptionsData.map((data) => (
                     <Link
                         key={data.id}
-                        to={Routes[data.path].path}
+                        to={data.path}
                         className="flex cursor-pointer items-center gap-3 rounded-lg p-1.5 hover:bg-customGray-100"
                     >
                         <span className="p-1 text-3xl">{data.icon}</span>
