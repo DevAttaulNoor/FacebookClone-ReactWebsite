@@ -52,6 +52,12 @@ const Home = () => {
             icon: SvgIcons.REEL({ styleClass: 'w-[30px] h-[30px]' }),
             title: Routes.REEL.title,
             path: `/reel/${reels[reels.length - 1]?.id}`,
+        },
+        {
+            id: 6,
+            icon: ReactIcons.GROUP,
+            title: Routes.GROUP_CREATE.title,
+            path: Routes.GROUP_CREATE.path,
         }
     ];
 

@@ -51,7 +51,6 @@ const Reel_Create = () => {
                     <h5 className="text-2xl font-bold">Upload Video</h5>
                 </div>
 
-
                 <div className="h-full flex flex-col justify-between px-4">
                     {stage === 1 && (
                         <button

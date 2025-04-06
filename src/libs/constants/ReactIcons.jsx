@@ -1,4 +1,5 @@
 import { GrGallery } from "react-icons/gr";
+import { HiUserGroup } from "react-icons/hi2";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { HiOutlineSearch } from "react-icons/hi";
 import { FaCamera, FaRegCommentDots } from "react-icons/fa";
@@ -42,4 +43,6 @@ export const ReactIcons = {
     TEXT: <IoTextOutline />,
     VIDEO: <BsPlayBtnFill />,
     VIDEO_OUTLINED: <BsPlayBtn />,
+
+    GROUP: <HiUserGroup />,
 };

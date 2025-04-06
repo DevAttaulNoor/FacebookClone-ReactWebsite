@@ -53,6 +53,12 @@ export const Routes = {
         metaTitle: "Saved Videos",
         metaDescription: "Saved Videos",
     },
+    GROUP_CREATE: {
+        path: "/group/create",
+        title: "Group",
+        metaTitle: "Group",
+        metaDescription: "Group",
+    },
     FEED: {
         path: "/feed",
         title: "Feed",

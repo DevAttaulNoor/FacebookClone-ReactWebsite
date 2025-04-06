@@ -2,13 +2,13 @@ import { useRef, useState } from "react";
 import { doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Link, NavLink, useLocation, useParams } from "react-router-dom";
-import { useAuth } from "@contexts/AuthContext";
 import { Routes } from "@constants/Routes";
 import { useUsers } from "@hooks/useUsers";
 import { usePosts } from "@hooks/usePosts";
 import { useFriends } from "@hooks/useFriends";
 import { Profile_About } from "./Profile_About";
 import { Profile_Video } from "./Profile_Video";
+import { useAuth } from "@contexts/AuthContext";
 import { db, storage } from "@services/firebase";
 import { Profile_Photos } from "./Profile_Photos";
 import { Profile_Friend } from "./Profile_Friend";
@@ -43,7 +43,7 @@ const Profile = () => {
         { id: 2, title: 'About', path: `/profile/${activeProfileUser?.uid}/about` },
         { id: 3, title: 'Friends', path: `/profile/${activeProfileUser?.uid}/friend` },
         { id: 4, title: 'Photos', path: `/profile/${activeProfileUser?.uid}/photo` },
-        { id: 5, title: 'Videos', path: `/profile/${activeProfileUser?.uid}/video` }
+        { id: 5, title: 'Videos', path: `/profile/${activeProfileUser?.uid}/video` },
     ];
 
     const handlePhotoChange = async (photoType, photoTypeRef) => {
@@ -80,7 +80,7 @@ const Profile = () => {
         } catch (error) {
             console.error(`Error uploading bio text`, error);
         }
-    }
+    };
 
     return (
         <div className="w-full h-full flex items-center flex-col overflow-y-auto bg">
@@ -435,7 +435,7 @@ const Profile = () => {
                     />
                 )}
             </div>
-        </div >
+        </div>
     );
 };
 
