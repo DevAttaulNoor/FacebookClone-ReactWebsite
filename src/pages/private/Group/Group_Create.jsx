@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { collection, doc, setDoc } from "firebase/firestore";
+import { db } from "@services/firebase";
 import { useFriends } from "@hooks/useFriends";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
@@ -36,10 +38,45 @@ const Group_Create = () => {
     const { acceptedFriends } = useFriends(user.uid);
     const [groupName, setGroupName] = useState('');
     const [searchInput, setSearchInput] = useState('');
-    const [selectedUser, setSelectedUser] = useState([]);
+    const [selectedUsers, setSelectedUsers] = useState([]);
     const [loading, setLoading] = useState(false);
-    const selectedUserData = acceptedFriends?.find(data => data?.uid === selectedUser);
-    const searchedUser = acceptedFriends?.filter((data) => data?.username?.toLowerCase().includes(searchInput.toLowerCase()));
+    const searchedUser = acceptedFriends?.filter((data) =>
+        data?.username?.toLowerCase().includes(searchInput.toLowerCase()) &&
+        !selectedUsers.includes(data.uid)
+    );
+
+    const handleUserSelection = (userId) => {
+        if (!selectedUsers.includes(userId)) {
+            setSelectedUsers([...selectedUsers, userId]);
+        }
+        setSearchInput('');
+    };
+
+    const removeSelectedUser = (userId) => {
+        setSelectedUsers(selectedUsers.filter(id => id !== userId));
+    };
+
+    const handleGroupCreation = async () => {
+        try {
+            setLoading(true);
+            const allMembers = [...selectedUsers, user.uid];
+
+            await setDoc(doc(collection(db, "Groups")), {
+                adminId: user.uid,
+                adminEmail: user.email,
+                name: groupName,
+                members: allMembers,
+                timestamp: Math.floor(new Date().getTime() / 1000),
+            });
+
+            setLoading(false);
+            setGroupName('');
+            setSelectedUsers([]);
+        } catch (error) {
+            console.error(error);
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="w-full h-full flex bg-customGray-default">
@@ -56,9 +93,9 @@ const Group_Create = () => {
                         iconStyleClass="text-3xl"
                     />
 
-                    <div className="flex flex-col">
-                        <h5 className="font-medium">{user?.username}</h5>
-                        <p className="text-sm">Admin</p>
+                    <div className="flex flex-col gap-1">
+                        <h5 className="font-medium leading-none">{user?.username}</h5>
+                        <p className="text-sm leading-none text-customGray-200">Admin</p>
                     </div>
                 </div>
 
@@ -85,29 +122,35 @@ const Group_Create = () => {
                                 }}
                             />
 
-                            {selectedUser && (
-                                <div className="w-fit flex items-center p-2 gap-1 rounded-md text-customBlue-default bg-customGray-default">
-                                    <p className="text-sm font-medium">{selectedUserData?.username}</p>
-
-                                    <span
-                                        onClick={() => { setSelectedUser(''), setSearchInput('') }}
-                                        className="text-sm cursor-pointer"
-                                    >
-                                        {ReactIcons.CLOSE}
-                                    </span>
+                            {selectedUsers.length > 0 && (
+                                <div className="flex flex-wrap gap-2">
+                                    {selectedUsers.map(userId => {
+                                        const userData = acceptedFriends?.find(data => data?.uid === userId);
+                                        return (
+                                            <div key={userId} className="w-fit flex items-center p-2 gap-1 rounded-md text-customBlue-default bg-customGray-default">
+                                                <p className="text-sm font-medium">{userData?.username}</p>
+                                                <span
+                                                    onClick={() => removeSelectedUser(userId)}
+                                                    className="text-sm cursor-pointer"
+                                                >
+                                                    {ReactIcons.CLOSE}
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             )}
                         </div>
 
                         <DropdownLayout
                             isOpen={searchInput}
-                            isClose={selectedUser}
+                            isClose={selectedUsers.length > 0}
                             dropdownContainerStyle='top-14 right-0 left-0 p-2 border rounded-md bg-white'
                         >
                             {searchedUser.length > 0 ? (searchedUser.map((data) => (
                                 <div
                                     key={data.uid}
-                                    onClick={() => setSelectedUser(data.uid)}
+                                    onClick={() => handleUserSelection(data.uid)}
                                     className="flex items-center px-2 py-1 mt-2 gap-2 rounded-md cursor-pointer first:mt-0 hover:bg-customGray-default"
                                 >
                                     <ProfileAvatar
@@ -126,36 +169,46 @@ const Group_Create = () => {
                 </div>
 
                 <div className="flex items-center gap-3 p-4 shadow-customFull2 bg-white">
-                    {loading ? (
-                        <button className="w-full flex items-center justify-center p-2 rounded-lg bg-customBlue-default">
-                            <div className='w-7 h-7 border-2 border-b-0 animate-spin rounded-full border-white' />
-                        </button>
+                    {groupName ? (
+                        <>
+                            {loading ? (
+                                <button className="w-full flex items-center justify-center p-2 rounded-lg bg-customBlue-default">
+                                    <div className='w-7 h-7 border-2 border-b-0 animate-spin rounded-full border-white' />
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={handleGroupCreation}
+                                    className="w-full font-semibold p-2.5 rounded-lg cursor-pointer text-white bg-customBlue-default"
+                                >
+                                    Create
+                                </button>
+                            )}
+                        </>
                     ) : (
-                        <button
-                            // onClick={handleStoryPosting}
-                            className="w-full font-semibold p-2.5 rounded-lg cursor-pointer text-white bg-customBlue-default"
-                        >
+                        <button className="w-full font-semibold p-2.5 rounded-lg cursor-not-allowed text-customGray-200 bg-customGray-100">
                             Create
                         </button>
                     )}
                 </div>
             </div>
 
-            <div className='w-full flex justify-center py-12'>
-                <div className="w-[80%] flex flex-col justify-center gap-5 p-4 rounded-lg shadow-lg bg-white">
+            <div className='w-full flex items-center justify-center'>
+                <div className="w-2/3 flex flex-col justify-center p-4 gap-5 rounded-lg shadow-lg bg-white">
                     <h5 className="text-sm font-medium">Preview</h5>
 
-                    <div className="h-full flex flex-col justify-between border rounded-lg bg-customGray-default">
+                    <div className="h-full flex flex-col justify-between border rounded-lg overflow-y-auto bg-customGray-default">
                         <div className="flex flex-col gap-4 shadow-md bg-white">
                             <img
                                 src={group_coverphoto}
                                 alt="cover photo of group"
-                                className="rounded-t-md"
+                                className="rounded-t-md object-contain"
                             />
 
-                            <div className="px-4">
+                            <div className="px-6">
                                 <h1 className="text-2xl font-extrabold text-customGray-200">{groupName ? groupName : 'Group Name'}</h1>
-                                <p className="text-sm font-medium text-customGray-300">{1} members</p>
+                                <p className="text-sm font-medium text-customGray-300">
+                                    {selectedUsers.length + 1} members {/* +1 for the admin */}
+                                </p>
 
                                 <div className="flex gap-1 mt-4 border-t">
                                     {groupComponents.map((data) => (
@@ -170,7 +223,7 @@ const Group_Create = () => {
                             </div>
                         </div>
 
-                        <div className="p-4">
+                        <div className="p-6">
                             <div className="flex w-full flex-col rounded-lg bg-white px-4 shadow">
                                 <div className="flex items-center gap-2 py-3">
                                     <ProfileAvatar

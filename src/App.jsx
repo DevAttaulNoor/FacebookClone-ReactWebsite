@@ -16,6 +16,7 @@ const Feed = lazy(() => import("./pages/private/Feed/Feed"));
 const Reel = lazy(() => import("./pages/private/Reel/Reel"));
 const Video = lazy(() => import("./pages/private/Video/Video"));
 const Story = lazy(() => import("./pages/private/Story/Story"));
+const Group = lazy(() => import("./pages/private/Group/Group"));
 const Friend = lazy(() => import("./pages/private/Friend/Friend"));
 const Profile = lazy(() => import("./pages/private/Profile/Profile"));
 const Reel_Create = lazy(() => import("./pages/private/Reel/Reel_Create"));
@@ -52,6 +53,7 @@ const routes = createBrowserRouter([{
                 { path: Routes.VIDEO_SAVED.path, element: <Video /> },
 
                 // Group Page Section Related
+                { path: Routes.GROUP.path, element: <Group /> },
                 { path: Routes.GROUP_CREATE.path, element: <Group_Create /> },
 
                 // Story Page Section Related
