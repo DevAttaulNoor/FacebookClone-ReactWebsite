@@ -132,7 +132,6 @@ const Friend = () => {
         }
     };
 
-
     const handleDeclineFriendRequest = async (friendId) => {
         try {
             // Remove the friend request from both users' "Friends" collections
@@ -179,7 +178,6 @@ const Friend = () => {
             console.error("Error declining friend request:", error);
         }
     };
-
 
     return (
         <div className="w-full h-full flex">
@@ -264,7 +262,6 @@ const Friend = () => {
                 )}
             </div>
         </div>
-
     );
 };
 
