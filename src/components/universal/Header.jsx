@@ -35,6 +35,13 @@ const headerLinks = [
         ActiveIcon: ReactIcons.VIDEO,
         nonActiveIcon: ReactIcons.VIDEO_OUTLINED,
     },
+    {
+        id: 4,
+        title: Routes.GROUP.title,
+        path: Routes.GROUP_FEED.path,
+        ActiveIcon: ReactIcons.GROUP,
+        nonActiveIcon: ReactIcons.GROUP,
+    },
 ];
 
 export const Header = () => {

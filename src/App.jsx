@@ -19,6 +19,7 @@ const Story = lazy(() => import("./pages/private/Story/Story"));
 const Group = lazy(() => import("./pages/private/Group/Group"));
 const Friend = lazy(() => import("./pages/private/Friend/Friend"));
 const Profile = lazy(() => import("./pages/private/Profile/Profile"));
+const Group_Feed = lazy(() => import("./pages/private/Group/Group_Feed"));
 const Reel_Create = lazy(() => import("./pages/private/Reel/Reel_Create"));
 const Group_Create = lazy(() => import("./pages/private/Group/Group_Create"));
 const Story_Create = lazy(() => import("./pages/private/Story/Story_Create"));
@@ -54,6 +55,12 @@ const routes = createBrowserRouter([{
 
                 // Group Page Section Related
                 { path: Routes.GROUP.path, element: <Group /> },
+                { path: Routes.GROUP_ABOUT.path, element: <Group /> },
+                { path: Routes.GROUP_MEDIA.path, element: <Group /> },
+                { path: Routes.GROUP_PEOPLE.path, element: <Group /> },
+                { path: Routes.GROUP_FEED.path, element: <Group_Feed /> },
+                { path: Routes.GROUP_JOINED.path, element: <Group_Feed /> },
+                { path: Routes.GROUP_DISCOVER.path, element: <Group_Feed /> },
                 { path: Routes.GROUP_CREATE.path, element: <Group_Create /> },
 
                 // Story Page Section Related

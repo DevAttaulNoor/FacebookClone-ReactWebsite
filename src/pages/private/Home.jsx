@@ -56,8 +56,8 @@ const Home = () => {
         {
             id: 6,
             icon: ReactIcons.GROUP,
-            title: Routes.GROUP_CREATE.title,
-            path: Routes.GROUP_CREATE.path,
+            title: Routes.GROUP.title,
+            path: Routes.GROUP_FEED.path,
         }
     ];
 

@@ -59,11 +59,47 @@ export const Routes = {
         metaTitle: "Group",
         metaDescription: "Group",
     },
+    GROUP_ABOUT: {
+        path: "/group/:id/about",
+        title: "About",
+        metaTitle: "Group About",
+        metaDescription: "Group About",
+    },
+    GROUP_PEOPLE: {
+        path: "/group/:id/people",
+        title: "People",
+        metaTitle: "Group People",
+        metaDescription: "Group People",
+    },
+    GROUP_MEDIA: {
+        path: "/group/:id/media",
+        title: "Media",
+        metaTitle: "Group Media",
+        metaDescription: "Group Media",
+    },
     GROUP_CREATE: {
         path: "/group/create",
         title: "Group",
         metaTitle: "Group",
         metaDescription: "Group",
+    },
+    GROUP_FEED: {
+        path: "/group/feed",
+        title: "Your feed",
+        metaTitle: "Group Feed",
+        metaDescription: "Group Feed",
+    },
+    GROUP_DISCOVER: {
+        path: "/group/discover",
+        title: "Discover",
+        metaTitle: "Group Discover",
+        metaDescription: "Group Discover",
+    },
+    GROUP_JOINED: {
+        path: "/group/joins",
+        title: "Your groups",
+        metaTitle: "Group Joined",
+        metaDescription: "Group Joined",
     },
     FEED: {
         path: "/feed",
