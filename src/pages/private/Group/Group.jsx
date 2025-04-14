@@ -6,12 +6,18 @@ import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import Group_About from "./Group_About";
 import Group_Media from "./Group_Media";
 import Group_People from "./Group_People";
+import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
+import { FeedPost } from "@components/universal/feed-related/FeedPost";
+import { useUsers } from "@hooks/useUsers";
+import { usePosts } from "@hooks/usePosts";
 
 const Group = () => {
     const location = useLocation();
     const { id } = useParams();
     const { user } = useAuth();
+    const { users } = useUsers();
     const { groups } = useGroups();
+    const { groupPosts } = usePosts();
     const activeGroup = groups?.find(data => data.id === id);
     const groupsJoined = groups?.filter(data => data.adminId === user?.uid || data.members?.some(mem => mem === user?.uid));
 
@@ -121,7 +127,156 @@ const Group = () => {
             <div className="max-w-[1040px] w-full flex p-4 gap-4">
                 {location.pathname === `/group/${id}` && (
                     <>
-                        Group Discussions
+                        <div className="flex flex-[0.6] w-full flex-col gap-4">
+                            <FeedPostPosting
+                                groupData={activeGroup}
+                                usedInGroupPosting={true}
+                            />
+
+                            <FeedPost
+                                activeUser={user}
+                                userData={users}
+                                postData={groupPosts}
+                                usedInGroupPosting={true}
+                            />
+                        </div>
+
+                        <div className="flex flex-[0.4] flex-col gap-4">
+                            {/* {activeProfileUser?.uid == user?.uid ? (
+                                <ProfileComponentLayout
+                                    path={`/profile/${activeProfileUser?.uid}/about`}
+                                    title={Routes.PROFILE_ABOUT.title}
+                                    noSeeAll={false}
+                                >
+                                    {bioInput.isVisible ? (
+                                        <div className="flex flex-col rounded-lg">
+                                            <TextareaField
+                                                textareaData={{
+                                                    rows: 3,
+                                                    value: bioInput.value,
+                                                    maxLength: bioInput.count,
+                                                    placeholder: 'Describe who you are',
+                                                    onChange: (e) => setBioInput(prev => ({ ...prev, value: e.target.value })),
+                                                }}
+                                                textareaStyle="text-center text-sm font-medium py-2 px-3 rounded-lg border-2 resize-none cursor-pointer bg-customGray-default hover:bg-customGray-100"
+                                            />
+
+                                            <p className="text-end text-xs font-medium text-customGray-300">
+                                                {bioInput.count - bioInput.value.length} characters limit
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <p className="text-sm text-center">{activeProfileUser?.bio}</p>
+                                            <button
+                                                onClick={() => setBioInput(prev => ({ ...prev, isVisible: !prev.isVisible }))}
+                                                className="w-full text-sm font-medium py-2.5 rounded-lg bg-customGray-100 hover:bg-customGray-default"
+                                            >
+                                                {`${activeProfileUser.bio ? 'Edit' : 'Add'} bio`}
+                                            </button>
+                                        </>
+                                    )}
+
+                                    <div className={`${bioInput.isVisible ? 'flex' : 'hidden'} justify-end gap-2`}>
+                                        <button
+                                            onClick={handleBioText}
+                                            className="text-sm font-medium py-2 px-4 rounded-lg text-white bg-customBlue-default"
+                                        >
+                                            Save
+                                        </button>
+
+                                        <button
+                                            onClick={() => setBioInput(prev => ({ ...prev, isVisible: false }))}
+                                            className="text-sm font-medium py-2 px-4 rounded-lg bg-customGray-100"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </ProfileComponentLayout>
+                            ) : (
+                                <>
+                                    {activeProfileUser?.bio && (
+                                        <ProfileComponentLayout
+                                            path={`/profile/${activeProfileUser?.uid}/about`}
+                                            title={Routes.PROFILE_ABOUT.title}
+                                            noSeeAll={false}
+                                        >
+                                            <p className="text-sm text-center">{activeProfileUser?.bio}</p>
+                                        </ProfileComponentLayout>
+                                    )}
+                                </>
+                            )}
+
+                            <ProfileComponentLayout
+                                path={`/profile/${activeProfileUser?.uid}/photo`}
+                                title={Routes.PROFILE_PHOTO.title}
+                            >
+                                <div className="grid grid-cols-3 gap-2">
+                                    <img
+                                        src={activeProfileUser?.profilePhoto}
+                                        alt={`profile image of ${activeProfileUser?.username}`}
+                                        className="w-full h-full object-cover"
+                                    />
+
+                                    {userPostPhotos.length > 0 && (
+                                        <>
+                                            {userPostPhotos.map((data) => (
+                                                <img
+                                                    key={data.id}
+                                                    src={data.media}
+                                                    alt={`image from post of ${data.username}`}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            ))}
+                                        </>
+                                    )}
+                                </div>
+                            </ProfileComponentLayout>
+
+                            {userPostVideos.length > 0 && (
+                                <ProfileComponentLayout
+                                    path={`/profile/${activeProfileUser?.uid}/video`}
+                                    title={Routes.PROFILE_VIDEO.title}
+                                >
+                                    <div className="grid grid-cols-3 gap-2">
+                                        {userPostVideos.map((data) => (
+                                            <video
+                                                controls
+                                                key={data.id}
+                                                className="w-full h-full object-cover"
+                                            >
+                                                <source src={data.media} type="video/mp4" />
+                                            </video>
+                                        ))}
+                                    </div>
+                                </ProfileComponentLayout>
+                            )}
+
+                            {acceptedFriends.length > 0 && (
+                                <ProfileComponentLayout
+                                    path={`/profile/${activeProfileUser?.uid}/friend`}
+                                    title={Routes.PROFILE_FRIEND.title}
+                                >
+                                    <div className="grid grid-cols-3 gap-x-3 gap-y-4">
+                                        {acceptedFriends?.map((data) => (
+                                            <Link
+                                                key={data.uid}
+                                                to={`/profile/${data.uid}`}
+                                                className="flex flex-col gap-1"
+                                            >
+                                                <ProfileAvatar
+                                                    userData={data}
+                                                    imageStyleClass="w-full h-full !rounded-lg"
+                                                    iconStyleClass="text-3xl"
+                                                />
+
+                                                <p className="text-xs font-medium">{data.username}</p>
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </ProfileComponentLayout>
+                            )} */}
+                        </div>
                     </>
                 )}
 

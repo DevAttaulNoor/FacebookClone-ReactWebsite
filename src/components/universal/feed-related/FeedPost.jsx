@@ -32,7 +32,7 @@ const feedPostingOptions = [
     },
 ];
 
-export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 'w-full' }) => {
+export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 'w-full', usedInGroupPosting = false }) => {
     const messageMediaRef = useRef(null);
     const [message, setMessage] = useState({
         text: '',
@@ -255,19 +255,31 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                     <div key={data.id} className={`${postContainerStyle} flex flex-col gap-3 rounded-xl shadow-customFull2 bg-white`}>
                         <div className="relative flex items-center justify-between p-4 pb-0 z-[5]">
                             <div className="flex items-center gap-2.5">
-                                <ProfileAvatar
-                                    userData={postUser}
-                                    imageStyleClass="w-10 h-10"
-                                    iconStyleClass="text-4xl"
-                                />
+                                {(usedInGroupPosting && data?.isAnonymous) ? (
+                                    <span className='text-[36px]'>
+                                        {ReactIcons.PROFILE_AVATAR}
+                                    </span>
+                                ) : (
+                                    <ProfileAvatar
+                                        userData={postUser}
+                                        imageStyleClass="w-10 h-10"
+                                        iconStyleClass="text-4xl"
+                                    />
+                                )}
 
                                 <div>
-                                    <Link
-                                        to={`/profile/${postUser?.uid}`}
-                                        className="text-sm font-medium cursor-pointer hover:underline"
-                                    >
-                                        {postUser?.username}
-                                    </Link>
+                                    {(usedInGroupPosting && data?.isAnonymous) ? (
+                                        <p className="text-sm font-medium cursor-pointer hover:underline">
+                                            Anonymous participant
+                                        </p>
+                                    ) : (
+                                        <Link
+                                            to={`/profile/${postUser?.uid}`}
+                                            className="text-sm font-medium cursor-pointer hover:underline"
+                                        >
+                                            {postUser?.username}
+                                        </Link>
+                                    )}
 
                                     <p className="text-xs text-customGray-200 cursor-pointer">{timeAgoInitials(data.timestamp)}</p>
                                 </div>

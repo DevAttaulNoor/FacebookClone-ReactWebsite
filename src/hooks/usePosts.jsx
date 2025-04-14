@@ -4,6 +4,7 @@ import { db } from "@services/firebase";
 
 export const usePosts = (userId) => {
     const [posts, setPosts] = useState([]);
+    const [groupPosts, setGroupPosts] = useState([]);
     const [userPosts, setUserPosts] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -46,10 +47,11 @@ export const usePosts = (userId) => {
                     unsubscribeCommentsMap[post.id] = unsubscribeComments;
                 });
 
-                setPosts(allPosts);
+                setPosts(allPosts.filter(post => !post.groupId || post.groupId === ''));
+                setGroupPosts(allPosts.filter(post => post.groupId && post.groupId !== ''));
 
                 if (userId) {
-                    setUserPosts(allPosts.filter(post => post.uid === userId));
+                    setUserPosts(allPosts.filter(post => (!post.groupId || post.groupId === '') && (post.uid === userId)));
                 }
 
                 setLoading(false);
@@ -69,5 +71,5 @@ export const usePosts = (userId) => {
         };
     }, [userId]);
 
-    return { posts, userPosts, loading, error };
+    return { posts, groupPosts, userPosts, loading, error };
 };

@@ -1,6 +1,6 @@
 import '@assets/css/customEmojiPickerStyle.css'
 import EmojiPicker from 'emoji-picker-react';
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useAuth } from '@contexts/AuthContext';
@@ -9,6 +9,7 @@ import { ProfileAvatar } from '../ProfileAvatar';
 import { ReactIcons } from '@constants/ReactIcons';
 import { ModalLayout } from '@layouts/ModalLayout';
 import { TextareaField } from '../inputs/TextareaField';
+import { ToggleButton } from '../buttons/ToggleButton';
 
 const feedPostingOptions = [
     {
@@ -28,7 +29,7 @@ const feedPostingOptions = [
     },
 ];
 
-export const FeedPostPosting = () => {
+export const FeedPostPosting = ({ usedInGroupPosting = false, groupData }) => {
     const { user } = useAuth();
     const emojiBoxRef = useRef(null);
     const messageMediaInputRef = useRef(null);
@@ -37,6 +38,7 @@ export const FeedPostPosting = () => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [isEmojiModalOpen, setIsEmojiModalOpen] = useState(false);
     const [postLoading, setPostLoading] = useState(false);
+    const [isAnonymous, setIsAnonymously] = useState(false);
 
     const handleModalClose = () => {
         setModalOpen(false);
@@ -67,11 +69,12 @@ export const FeedPostPosting = () => {
             uid: user.uid,
             email: user.email,
             timestamp: Math.floor(new Date().getTime() / 1000),
+            ...(usedInGroupPosting ? { groupId: groupData.id, isAnonymous } : {})
         };
 
         try {
             setPostLoading(true)
-            const postRef = doc(collection(db, "Posts")); // Create a reference to a new document in the "Posts" collection
+            const postRef = doc(collection(db, "Posts"));
 
             if ((messageText !== '') && (messageMedia.content === '')) {
                 await setDoc(postRef, {
@@ -121,6 +124,12 @@ export const FeedPostPosting = () => {
         }
     };
 
+    useEffect(() => {
+        if (usedInGroupPosting === false) {
+            setIsAnonymously(false)
+        }
+    }, [])
+
     return (
         <>
             <div className="flex w-full flex-col rounded-lg bg-white px-4 shadow">
@@ -131,8 +140,8 @@ export const FeedPostPosting = () => {
                         iconStyleClass="text-4xl"
                     />
 
-                    <div onClick={() => setModalOpen(true)} className="w-full cursor-pointer rounded-3xl bg-customGray-default px-3 py-2.5 hover:bg-[#E4E6EB]">
-                        <p className="text-slate-500">{`What's on your mind, ${user?.username}`}</p>
+                    <div onClick={() => setModalOpen(true)} className="w-full cursor-pointer rounded-3xl px-3 py-2.5 text-customGray-200 bg-customGray-default hover:bg-[#E4E6EB]">
+                        {usedInGroupPosting ? 'Write something...' : `What's on your mind, ${user?.username}`}
                     </div>
                 </div>
 
@@ -164,25 +173,46 @@ export const FeedPostPosting = () => {
 
                 <hr className="text-customGray-default" />
 
-                <div className="flex flex-col gap-3">
-                    <div className="flex items-center gap-2.5">
-                        <ProfileAvatar
-                            userData={user}
-                            imageStyleClass="w-10 h-10"
-                            iconStyleClass="text-4xl"
-                        />
+                {usedInGroupPosting && (
+                    <div className='flex items-center justify-between py-3 px-4 rounded-lg bg-customGray-default'>
+                        <h5 className='font-medium text-customGray-300'>Post anonymously</h5>
 
-                        <p className="text-sm font-semibold">{user?.username}</p>
+                        <ToggleButton
+                            checked={isAnonymous}
+                            onClick={() => setIsAnonymously(prev => !prev)}
+                        />
                     </div>
+                )}
+
+                <div className="flex flex-col gap-3">
+                    {isAnonymous ? (
+                        <div className="flex items-center gap-2.5">
+                            <span className='text-[36px]'>
+                                {ReactIcons.PROFILE_AVATAR}
+                            </span>
+
+                            <p className="text-sm font-semibold">Anonymous participant</p>
+                        </div>
+                    ) : (
+                        <div className="flex items-center gap-2.5">
+                            <ProfileAvatar
+                                userData={user}
+                                imageStyleClass="w-10 h-10"
+                                iconStyleClass="text-4xl"
+                            />
+
+                            <p className="text-sm font-semibold">{user?.username}</p>
+                        </div>
+                    )}
 
                     <TextareaField
                         textareaData={{
                             rows: 4,
                             value: messageText,
-                            placeholder: "What's on your mind",
+                            placeholder: `${isAnonymous ? 'Submit an anonymous post...' : "What's on your mind..."}`,
                             onChange: (e) => setMessageText(e.target.value),
                         }}
-                        textareaStyle={`${messageMedia ? 'text-sm' : 'text-xl'} w-full resize-none`}
+                        textareaStyle={`${messageMedia.content === null ? 'text-base' : 'text-2xl'} w-full resize-none`}
                     />
 
                     {messageMedia.content && (
@@ -252,7 +282,7 @@ export const FeedPostPosting = () => {
                         onClick={handlePosting}
                         className={`${(messageText || messageMedia.content) ? 'text-white bg-customBlue-default' : 'text-customGray-200 bg-customGray-100'} w-full font-medium py-1.5 rounded-lg cursor-pointer`}
                     >
-                        Post
+                        {isAnonymous ? 'Submit' : 'Post'}
                     </button>
                 )}
             </ModalLayout >
