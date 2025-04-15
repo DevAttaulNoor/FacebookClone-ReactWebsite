@@ -10,6 +10,8 @@ import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPost
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import { useUsers } from "@hooks/useUsers";
 import { usePosts } from "@hooks/usePosts";
+import { GroupComponentLayout } from "@layouts/GroupComponentLayout";
+import { formatJoinedDate } from "@utils/TimeModule";
 
 const Group = () => {
     const location = useLocation();
@@ -19,6 +21,7 @@ const Group = () => {
     const { groups } = useGroups();
     const { groupPosts } = usePosts();
     const activeGroup = groups?.find(data => data.id === id);
+    const activeGroupPosts = groupPosts?.filter(data => data.groupId === activeGroup?.id)
     const groupsJoined = groups?.filter(data => data.adminId === user?.uid || data.members?.some(mem => mem === user?.uid));
 
     const groupComponents = [
@@ -27,6 +30,27 @@ const Group = () => {
         { id: 3, title: 'People', path: `/group/${id}/people` },
         { id: 4, title: 'Media', path: `/group/${id}/media` },
     ];
+
+    const aboutSectionItems = [
+        {
+            id: 1,
+            icon: ReactIcons.GLOBE,
+            title: 'Public',
+            description: "Anyone can see who's in the group and what they post.",
+        },
+        {
+            id: 2,
+            icon: ReactIcons.EYE,
+            title: 'Visible',
+            description: "Anyone can find this group.",
+        },
+        {
+            id: 3,
+            icon: ReactIcons.CLOCK,
+            title: 'History',
+            description: `Group created on ${formatJoinedDate(activeGroup?.timestamp)}`,
+        },
+    ]
 
     return (
         <div className="w-full h-full flex items-center flex-col overflow-y-auto bg">
@@ -136,161 +160,54 @@ const Group = () => {
                             <FeedPost
                                 activeUser={user}
                                 userData={users}
-                                postData={groupPosts}
+                                postData={activeGroupPosts}
                                 usedInGroupPosting={true}
                             />
                         </div>
 
                         <div className="flex flex-[0.4] flex-col gap-4">
-                            {/* {activeProfileUser?.uid == user?.uid ? (
-                                <ProfileComponentLayout
-                                    path={`/profile/${activeProfileUser?.uid}/about`}
-                                    title={Routes.PROFILE_ABOUT.title}
-                                    noSeeAll={false}
-                                >
-                                    {bioInput.isVisible ? (
-                                        <div className="flex flex-col rounded-lg">
-                                            <TextareaField
-                                                textareaData={{
-                                                    rows: 3,
-                                                    value: bioInput.value,
-                                                    maxLength: bioInput.count,
-                                                    placeholder: 'Describe who you are',
-                                                    onChange: (e) => setBioInput(prev => ({ ...prev, value: e.target.value })),
-                                                }}
-                                                textareaStyle="text-center text-sm font-medium py-2 px-3 rounded-lg border-2 resize-none cursor-pointer bg-customGray-default hover:bg-customGray-100"
-                                            />
-
-                                            <p className="text-end text-xs font-medium text-customGray-300">
-                                                {bioInput.count - bioInput.value.length} characters limit
-                                            </p>
-                                        </div>
-                                    ) : (
-                                        <>
-                                            <p className="text-sm text-center">{activeProfileUser?.bio}</p>
-                                            <button
-                                                onClick={() => setBioInput(prev => ({ ...prev, isVisible: !prev.isVisible }))}
-                                                className="w-full text-sm font-medium py-2.5 rounded-lg bg-customGray-100 hover:bg-customGray-default"
-                                            >
-                                                {`${activeProfileUser.bio ? 'Edit' : 'Add'} bio`}
-                                            </button>
-                                        </>
-                                    )}
-
-                                    <div className={`${bioInput.isVisible ? 'flex' : 'hidden'} justify-end gap-2`}>
-                                        <button
-                                            onClick={handleBioText}
-                                            className="text-sm font-medium py-2 px-4 rounded-lg text-white bg-customBlue-default"
-                                        >
-                                            Save
-                                        </button>
-
-                                        <button
-                                            onClick={() => setBioInput(prev => ({ ...prev, isVisible: false }))}
-                                            className="text-sm font-medium py-2 px-4 rounded-lg bg-customGray-100"
-                                        >
-                                            Cancel
-                                        </button>
-                                    </div>
-                                </ProfileComponentLayout>
-                            ) : (
-                                <>
-                                    {activeProfileUser?.bio && (
-                                        <ProfileComponentLayout
-                                            path={`/profile/${activeProfileUser?.uid}/about`}
-                                            title={Routes.PROFILE_ABOUT.title}
-                                            noSeeAll={false}
-                                        >
-                                            <p className="text-sm text-center">{activeProfileUser?.bio}</p>
-                                        </ProfileComponentLayout>
-                                    )}
-                                </>
-                            )}
-
-                            <ProfileComponentLayout
-                                path={`/profile/${activeProfileUser?.uid}/photo`}
-                                title={Routes.PROFILE_PHOTO.title}
+                            <GroupComponentLayout
+                                title={'About this group'}
+                                description={activeGroup?.description}
+                                containerStyle={'w-full'}
                             >
-                                <div className="grid grid-cols-3 gap-2">
-                                    <img
-                                        src={activeProfileUser?.profilePhoto}
-                                        alt={`profile image of ${activeProfileUser?.username}`}
-                                        className="w-full h-full object-cover"
-                                    />
+                                {aboutSectionItems.map(data => (
+                                    <div key={data.id} className="flex items-center gap-2.5">
+                                        <span className="text-2xl text-customGray-200">{data.icon}</span>
 
-                                    {userPostPhotos.length > 0 && (
-                                        <>
-                                            {userPostPhotos.map((data) => (
-                                                <img
-                                                    key={data.id}
-                                                    src={data.media}
-                                                    alt={`image from post of ${data.username}`}
-                                                    className="w-full h-full object-cover"
-                                                />
-                                            ))}
-                                        </>
-                                    )}
-                                </div>
-                            </ProfileComponentLayout>
-
-                            {userPostVideos.length > 0 && (
-                                <ProfileComponentLayout
-                                    path={`/profile/${activeProfileUser?.uid}/video`}
-                                    title={Routes.PROFILE_VIDEO.title}
-                                >
-                                    <div className="grid grid-cols-3 gap-2">
-                                        {userPostVideos.map((data) => (
-                                            <video
-                                                controls
-                                                key={data.id}
-                                                className="w-full h-full object-cover"
-                                            >
-                                                <source src={data.media} type="video/mp4" />
-                                            </video>
-                                        ))}
+                                        <div className="flex flex-col">
+                                            <h5 className="font-semibold">{data.title}</h5>
+                                            <p className="text-xs">{data.description}</p>
+                                        </div>
                                     </div>
-                                </ProfileComponentLayout>
-                            )}
-
-                            {acceptedFriends.length > 0 && (
-                                <ProfileComponentLayout
-                                    path={`/profile/${activeProfileUser?.uid}/friend`}
-                                    title={Routes.PROFILE_FRIEND.title}
-                                >
-                                    <div className="grid grid-cols-3 gap-x-3 gap-y-4">
-                                        {acceptedFriends?.map((data) => (
-                                            <Link
-                                                key={data.uid}
-                                                to={`/profile/${data.uid}`}
-                                                className="flex flex-col gap-1"
-                                            >
-                                                <ProfileAvatar
-                                                    userData={data}
-                                                    imageStyleClass="w-full h-full !rounded-lg"
-                                                    iconStyleClass="text-3xl"
-                                                />
-
-                                                <p className="text-xs font-medium">{data.username}</p>
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </ProfileComponentLayout>
-                            )} */}
+                                ))}
+                            </GroupComponentLayout>
                         </div>
                     </>
                 )}
 
                 {location.pathname === `/group/${id}/about` && (
-                    <Group_About />
+                    <Group_About
+                        usersData={users}
+                        groupData={activeGroup}
+                    />
                 )}
 
                 {location.pathname === `/group/${id}/people` && (
-                    <Group_People />
+                    <Group_People
+                        usersData={users}
+                        groupData={activeGroup}
+                    />
                 )}
 
-                {location.pathname === `/group/${id}/media` && (
-                    <Group_Media />
-                )}
+                {((location.pathname === `/group/${id}/media`) ||
+                    (location.pathname === `/group/${id}/media/photos`) ||
+                    (location.pathname === `/group/${id}/media/videos`)) && (
+                        <Group_Media
+                            groupData={activeGroup}
+                            groupPosts={activeGroupPosts}
+                        />
+                    )}
             </div>
         </div>
     )

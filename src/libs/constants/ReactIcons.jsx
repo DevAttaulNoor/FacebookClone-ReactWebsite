@@ -1,11 +1,11 @@
 import { GrGallery } from "react-icons/gr";
 import { HiUserGroup } from "react-icons/hi2";
-import { FaRegTrashCan } from "react-icons/fa6";
+import { FaClock, FaRegTrashCan } from "react-icons/fa6";
 import { HiOutlineSearch } from "react-icons/hi";
-import { FaCamera, FaRegCommentDots } from "react-icons/fa";
+import { FaCamera, FaGlobeAmericas, FaRegCommentDots } from "react-icons/fa";
 import { MdMessage, MdEdit, MdPersonAdd } from "react-icons/md";
 import { BiLike, BiSolidLike, BiSolidEdit } from "react-icons/bi";
-import { IoMdAdd, IoMdSend, IoIosArrowDown } from "react-icons/io";
+import { IoMdEye, IoMdAdd, IoMdSend, IoIosArrowDown } from "react-icons/io";
 import { BsPeopleFill, BsPeople, BsPlayBtnFill, BsPlayBtn, BsPersonCircle, BsPersonLinesFill, BsFillPersonPlusFill, BsEmojiSmile, BsArrowLeft } from "react-icons/bs";
 import { IoHome, IoHomeOutline, IoAppsSharp, IoNotifications, IoPersonSharp, IoEllipsisHorizontalSharp, IoPeople, IoClose, IoTextOutline, IoSettingsSharp } from "react-icons/io5";
 
@@ -45,4 +45,7 @@ export const ReactIcons = {
     VIDEO_OUTLINED: <BsPlayBtn />,
 
     GROUP: <HiUserGroup />,
+    GLOBE: <FaGlobeAmericas />,
+    EYE: <IoMdEye />,
+    CLOCK: <FaClock />,
 };

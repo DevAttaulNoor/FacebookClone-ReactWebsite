@@ -77,6 +77,18 @@ export const Routes = {
         metaTitle: "Group Media",
         metaDescription: "Group Media",
     },
+    GROUP_MEDIA_PHOTO: {
+        path: "/group/:id/media/photos",
+        title: "Media Photo",
+        metaTitle: "Group Media Photo",
+        metaDescription: "Group Media Photo",
+    },
+    GROUP_MEDIA_VIDEO: {
+        path: "/group/:id/media/videos",
+        title: "Media Video",
+        metaTitle: "Group Media Video",
+        metaDescription: "Group Media Video",
+    },
     GROUP_CREATE: {
         path: "/group/create",
         title: "Group",

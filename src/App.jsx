@@ -57,6 +57,8 @@ const routes = createBrowserRouter([{
                 { path: Routes.GROUP.path, element: <Group /> },
                 { path: Routes.GROUP_ABOUT.path, element: <Group /> },
                 { path: Routes.GROUP_MEDIA.path, element: <Group /> },
+                { path: Routes.GROUP_MEDIA_PHOTO.path, element: <Group /> },
+                { path: Routes.GROUP_MEDIA_VIDEO.path, element: <Group /> },
                 { path: Routes.GROUP_PEOPLE.path, element: <Group /> },
                 { path: Routes.GROUP_FEED.path, element: <Group_Feed /> },
                 { path: Routes.GROUP_JOINED.path, element: <Group_Feed /> },
