@@ -1,7 +1,7 @@
 import { NavLink, useLocation, useParams } from "react-router";
 import { ReactIcons } from "@constants/ReactIcons";
 
-const Group_Media = ({ groupData, groupPosts }) => {
+const Group_Media = ({ groupPosts }) => {
     const location = useLocation();
     const { id } = useParams();
     const groupPostPhotos = groupPosts?.filter(data => data?.mediaType === 'image')

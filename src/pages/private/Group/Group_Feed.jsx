@@ -1,13 +1,16 @@
 import { Link, NavLink, useLocation } from "react-router";
 import { Routes } from "@constants/Routes";
+import { timeAgo } from "@utils/TimeModule";
+import { useGroups } from "@hooks/useGroups";
+import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import Group_Joined from "./Group_Joined";
 import Group_Discover from "./Group_Discover";
 import group_coverphoto from '/Images/universal/group/group-coverphoto.png';
-import { useAuth } from "@contexts/AuthContext";
-import { useGroups } from "@hooks/useGroups";
-import { timeAgo } from "@utils/TimeModule";
+import { useUsers } from "@hooks/useUsers";
+import { usePosts } from "@hooks/usePosts";
+import { FeedPost } from "@components/universal/feed-related/FeedPost";
 
 const groupsLeftbarOptions = [
     {
@@ -33,7 +36,12 @@ const groupsLeftbarOptions = [
 const Group_Feed = () => {
     const location = useLocation();
     const { user } = useAuth();
+    const { users } = useUsers();
+    const { groupPosts } = usePosts();
     const { groups, userGroupsJoined, userGroupsCreated } = useGroups(user.uid);
+    const userRelatedGroupsData = userGroupsJoined.concat(userGroupsCreated);
+    const userRelatedGroupIds = userRelatedGroupsData.map(group => group.id);
+    const groupJoinedPostsFeed = groupPosts?.filter(post => userRelatedGroupIds.includes(post.groupId));
 
     return (
         <div className="w-full h-full flex">
@@ -146,8 +154,13 @@ const Group_Feed = () => {
 
             <div className="flex-1 p-10 overflow-x-hidden overflow-y-auto">
                 {location.pathname === Routes.GROUP_FEED.path && (
-                    <>
-                    </>
+                    <div className="flex flex-col items-center gap-4">
+                        <FeedPost
+                            userData={users}
+                            postData={groupJoinedPostsFeed}
+                            postContainerStyle="w-2/3"
+                        />
+                    </div>
                 )}
 
                 {location.pathname === Routes.GROUP_DISCOVER.path && (
@@ -164,7 +177,7 @@ const Group_Feed = () => {
                     />
                 )}
             </div>
-        </div >
+        </div>
     )
 }
 

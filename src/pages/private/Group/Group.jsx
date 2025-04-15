@@ -204,7 +204,6 @@ const Group = () => {
                     (location.pathname === `/group/${id}/media/photos`) ||
                     (location.pathname === `/group/${id}/media/videos`)) && (
                         <Group_Media
-                            groupData={activeGroup}
                             groupPosts={activeGroupPosts}
                         />
                     )}
