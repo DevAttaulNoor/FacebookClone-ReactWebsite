@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Link, NavLink, useLocation, useParams } from "react-router";
 import { useGroups } from "@hooks/useGroups"
 import { useAuth } from "@contexts/AuthContext";
@@ -12,9 +13,13 @@ import { useUsers } from "@hooks/useUsers";
 import { usePosts } from "@hooks/usePosts";
 import { GroupComponentLayout } from "@layouts/GroupComponentLayout";
 import { formatJoinedDate } from "@utils/TimeModule";
+import { db, storage } from "@services/firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { doc, updateDoc } from "firebase/firestore";
 
 const Group = () => {
     const location = useLocation();
+    const coverPhotoRef = useRef();
     const { id } = useParams();
     const { user } = useAuth();
     const { users } = useUsers();
@@ -50,7 +55,25 @@ const Group = () => {
             title: 'History',
             description: `Group created on ${formatJoinedDate(activeGroup?.timestamp)}`,
         },
-    ]
+    ];
+
+    const handlePhotoChange = async (photoTypeRef, groupId) => {
+        const file = photoTypeRef.current.files[0];
+        if (file) {
+            try {
+                let photo;
+                const storageRef = ref(storage, `Groups/${user.uid}/${file.name}`);
+                await uploadBytes(storageRef, file);
+                photo = await getDownloadURL(storageRef);
+
+                const groupDocRef = doc(db, "Groups", groupId);
+                await updateDoc(groupDocRef, { coverPhoto: photo });
+                console.log(`Success uploading coverPhoto`);
+            } catch (error) {
+                console.error(`Error uploading coverPhoto:`, error);
+            }
+        }
+    };
 
     return (
         <div className="w-full h-full flex items-center flex-col overflow-y-auto bg">
@@ -69,13 +92,13 @@ const Group = () => {
                                 <span className="text-lg">{ReactIcons.EDIT_PENCIL}</span>
                                 <p className="text-sm font-semibold">Edit</p>
 
-                                {/* <input
+                                <input
                                     type="file"
                                     ref={coverPhotoRef}
                                     accept="image/*"
-                                    onChange={() => handlePhotoChange('coverPhoto', coverPhotoRef)}
+                                    onChange={() => handlePhotoChange(coverPhotoRef, activeGroup?.id)}
                                     className="hidden"
-                                /> */}
+                                />
                             </button>
                         )}
                     </div>
@@ -160,6 +183,7 @@ const Group = () => {
                             <FeedPost
                                 activeUser={user}
                                 userData={users}
+                                groupData={groups}
                                 postData={activeGroupPosts}
                                 usedInGroupPosting={true}
                             />

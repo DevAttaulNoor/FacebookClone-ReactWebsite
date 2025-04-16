@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { collection, doc, setDoc } from "firebase/firestore";
-import { db } from "@services/firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { db, storage } from "@services/firebase";
 import { useFriends } from "@hooks/useFriends";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
@@ -45,6 +46,10 @@ const Group_Create = () => {
         !selectedUsers.includes(data.uid)
     );
 
+    const removeSelectedUser = (userId) => {
+        setSelectedUsers(selectedUsers.filter(id => id !== userId));
+    };
+
     const handleUserSelection = (userId) => {
         if (!selectedUsers.includes(userId)) {
             setSelectedUsers([...selectedUsers, userId]);
@@ -52,20 +57,23 @@ const Group_Create = () => {
         setSearchInput('');
     };
 
-    const removeSelectedUser = (userId) => {
-        setSelectedUsers(selectedUsers.filter(id => id !== userId));
-    };
-
     const handleGroupCreation = async () => {
         try {
             setLoading(true);
             const allMembers = [...selectedUsers, user.uid];
+
+            const response = await fetch(group_coverphoto);
+            const blob = await response.blob();
+            const storageRef = ref(storage, `Groups/${user.uid}/cover_photo.jpg`);
+            await uploadBytes(storageRef, blob);
+            const coverPhotoUrl = await getDownloadURL(storageRef);
 
             await setDoc(doc(collection(db, "Groups")), {
                 adminId: user.uid,
                 adminEmail: user.email,
                 name: groupName,
                 members: allMembers,
+                coverPhoto: coverPhotoUrl,
                 timestamp: Math.floor(new Date().getTime() / 1000),
             });
 

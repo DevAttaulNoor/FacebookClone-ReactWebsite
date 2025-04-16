@@ -158,6 +158,8 @@ const Group_Feed = () => {
                         <FeedPost
                             userData={users}
                             postData={groupJoinedPostsFeed}
+                            groupData={userRelatedGroupsData}
+                            usedInGroupPosting={true}
                             postContainerStyle="w-2/3"
                         />
                     </div>

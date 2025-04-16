@@ -32,7 +32,7 @@ const feedPostingOptions = [
     },
 ];
 
-export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 'w-full', usedInGroupPosting = false }) => {
+export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 'w-full', groupData, usedInGroupPosting = false }) => {
     const messageMediaRef = useRef(null);
     const [message, setMessage] = useState({
         text: '',
@@ -49,46 +49,16 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
     const [postActionDropdown, setPostActionDropdown] = useState(null);
     const activePost = postData.find(data => data.id === postModalOpen.editing);
 
-    useEffect(() => {
-        if (activePost) {
-            setMessage(prev => ({
-                ...prev,
-                text: activePost.message || "",
-                media: activePost.media || "",
-                mediaType: activePost.mediaType || "",
-            }))
-        }
-    }, [activePost]);
+    const handleMediaChange = (e) => {
+        const file = e.target.files[0];
 
-    const handlePostDelete = async (postId) => {
-        try {
-            await deleteDoc(doc(db, 'Posts', postId));
-        } catch (error) {
-            console.error("Error deleting:", error);
-        }
-    };
-
-    const handlePostSave = async (postId, userId) => {
-        try {
-            const postDocRef = doc(db, "Posts", postId);
-            const postDoc = await getDoc(postDocRef);
-
-            if (postDoc.exists()) {
-                const existingSaves = postDoc.data().saves || [];
-                const userIndex = existingSaves.findIndex(entry => entry.uid === userId);
-
-                if (userIndex !== -1) {
-                    const updatedSaves = existingSaves.filter(entry => entry.uid !== userId);
-                    await updateDoc(postDocRef, { saves: updatedSaves });
-                } else {
-                    const updatedSaves = [...existingSaves, { uid: userId, timestamp: Math.floor(Date.now() / 1000) }];
-                    await updateDoc(postDocRef, { saves: updatedSaves });
-                }
-            } else {
-                console.error("Post not found.");
+        if (file) {
+            setMessage(prev => ({ ...prev, media: file }));
+            if (file.type.startsWith("image/")) {
+                setMessage(prev => ({ ...prev, mediaType: "image" }));
+            } else if (file.type.startsWith("video/")) {
+                setMessage(prev => ({ ...prev, mediaType: "video" }));
             }
-        } catch (error) {
-            console.error("Error saving post:", error);
         }
     };
 
@@ -181,6 +151,38 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
         }
     };
 
+    const handlePostDelete = async (postId) => {
+        try {
+            await deleteDoc(doc(db, 'Posts', postId));
+        } catch (error) {
+            console.error("Error deleting:", error);
+        }
+    };
+
+    const handlePostSave = async (postId, userId) => {
+        try {
+            const postDocRef = doc(db, "Posts", postId);
+            const postDoc = await getDoc(postDocRef);
+
+            if (postDoc.exists()) {
+                const existingSaves = postDoc.data().saves || [];
+                const userIndex = existingSaves.findIndex(entry => entry.uid === userId);
+
+                if (userIndex !== -1) {
+                    const updatedSaves = existingSaves.filter(entry => entry.uid !== userId);
+                    await updateDoc(postDocRef, { saves: updatedSaves });
+                } else {
+                    const updatedSaves = [...existingSaves, { uid: userId, timestamp: Math.floor(Date.now() / 1000) }];
+                    await updateDoc(postDocRef, { saves: updatedSaves });
+                }
+            } else {
+                console.error("Post not found.");
+            }
+        } catch (error) {
+            console.error("Error saving post:", error);
+        }
+    };
+
     const handlePostEdit = async (postId, userId) => {
         try {
             const postRef = doc(db, "Posts", postId);
@@ -230,35 +232,62 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
         }
     };
 
-    const handleMediaChange = (e) => {
-        const file = e.target.files[0];
-
-        if (file) {
-            setMessage(prev => ({ ...prev, media: file }));
-
-            // Determine the media type (image or video)
-            if (file.type.startsWith("image/")) {
-                setMessage(prev => ({ ...prev, mediaType: "image" }));
-            } else if (file.type.startsWith("video/")) {
-                setMessage(prev => ({ ...prev, mediaType: "video" }));
-            }
+    useEffect(() => {
+        if (activePost) {
+            setMessage(prev => ({
+                ...prev,
+                text: activePost.message || "",
+                media: activePost.media || "",
+                mediaType: activePost.mediaType || "",
+            }))
         }
-    };
+    }, [activePost]);
 
     return (
         <>
-            {postData.sort((a, b) => b.timestamp - a.timestamp).map((data) => {
-                const postUser = userData.find(user => user.uid === data.uid);
+            {postData?.sort((a, b) => b.timestamp - a.timestamp).map((data) => {
+                const postUser = userData?.find(user => user.uid === data.uid);
+                const activeGroup = groupData?.find(group => group.id === data.groupId)
                 const userReacted = data?.reactions?.some(reaction => reaction.uid == activeUser?.uid)
 
                 return (
                     <div key={data.id} className={`${postContainerStyle} flex flex-col gap-3 rounded-xl shadow-customFull2 bg-white`}>
                         <div className="relative flex items-center justify-between p-4 pb-0 z-[5]">
-                            <div className="flex items-center gap-2.5">
-                                {(usedInGroupPosting && data?.isAnonymous) ? (
-                                    <span className='text-[36px]'>
-                                        {ReactIcons.PROFILE_AVATAR}
-                                    </span>
+                            <div className={`${usedInGroupPosting ? 'gap-3.5' : 'gap-2.5'} flex items-center`}>
+                                {usedInGroupPosting ? (
+                                    <>
+                                        {data?.isAnonymous ? (
+                                            <div className="relative">
+                                                <img
+                                                    src={data?.coverPhoto}
+                                                    alt={`cover picture of ${data?.name}`}
+                                                    className='w-10 h-10 object-contain border rounded-lg border-customGray-100 bg-white'
+                                                />
+
+                                                <div className="absolute -bottom-2 -right-2">
+                                                    <span className='text-2xl'>
+                                                        {ReactIcons.PROFILE_AVATAR}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className="relative">
+                                                <img
+                                                    src={data?.coverPhoto}
+                                                    alt={`cover picture of ${data?.name}`}
+                                                    className='w-10 h-10 object-contain border rounded-lg border-customGray-100 bg-white'
+                                                />
+
+                                                <div className="absolute -bottom-2 -right-2">
+                                                    <ProfileAvatar
+                                                        userData={postUser}
+                                                        imageStyleClass="w-8 h-8"
+                                                        iconStyleClass="text-lg"
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
+                                    </>
                                 ) : (
                                     <ProfileAvatar
                                         userData={postUser}
@@ -268,20 +297,44 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                 )}
 
                                 <div>
-                                    {(usedInGroupPosting && data?.isAnonymous) ? (
-                                        <p className="text-sm font-medium cursor-pointer hover:underline">
-                                            Anonymous participant
-                                        </p>
-                                    ) : (
-                                        <Link
-                                            to={`/profile/${postUser?.uid}`}
-                                            className="text-sm font-medium cursor-pointer hover:underline"
-                                        >
-                                            {postUser?.username}
-                                        </Link>
-                                    )}
+                                    {usedInGroupPosting ? (
+                                        <>
+                                            <Link
+                                                to={`/group/${activeGroup?.groupId}`}
+                                                className="text-sm font-medium cursor-pointer hover:underline"
+                                            >
+                                                {activeGroup?.name}
+                                            </Link>
 
-                                    <p className="text-xs text-customGray-200 cursor-pointer">{timeAgoInitials(data.timestamp)}</p>
+                                            <div className="flex items-center gap-1">
+                                                {data?.isAnonymous ? (
+                                                    <p className="text-xs font-medium cursor-pointer text-customGray-200 hover:underline">
+                                                        Anonymous participant
+                                                    </p>
+                                                ) : (
+                                                    <Link
+                                                        to={`/profile/${postUser?.uid}`}
+                                                        className="text-xs font-medium cursor-pointer text-customGray-200 hover:underline"
+                                                    >
+                                                        {postUser?.username}
+                                                    </Link>
+                                                )}
+
+                                                <p className="text-xs text-customGray-200 cursor-pointer"> · {timeAgoInitials(data.timestamp)}</p>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Link
+                                                to={`/profile/${postUser?.uid}`}
+                                                className="text-sm font-medium cursor-pointer hover:underline"
+                                            >
+                                                {postUser?.username}
+                                            </Link>
+
+                                            <p className="text-xs text-customGray-200 cursor-pointer">{timeAgoInitials(data.timestamp)}</p>
+                                        </>
+                                    )}
                                 </div>
                             </div>
 
