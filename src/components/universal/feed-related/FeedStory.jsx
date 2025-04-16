@@ -5,25 +5,28 @@ import { StoryCard } from "../cards/StoryCard";
 import { useStories } from "@hooks/useStories";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
+import { useFriends } from "@hooks/useFriends";
 
 export const FeedStory = () => {
     const { user } = useAuth();
     const { users } = useUsers();
     const { stories } = useStories();
+    const { acceptedFriends } = useFriends(user?.uid);
+    const friendsStories = stories?.filter(data => acceptedFriends.some(friend => friend.uid === data.uid))
 
     return (
         <>
-            {stories.length > 0 ? (
+            {friendsStories.length > 0 ? (
                 <div className='flex gap-2 overflow-x-auto overflow-y-hidden'>
                     <Link
                         to={Routes.STORY_CREATE.path}
-                        className="min-w-32 h-56 flex flex-col rounded-xl shadow-xl bg-white"
+                        className="min-w-32 h-56 flex flex-col rounded-xl bg-white"
                     >
                         {user?.profilePhoto ? (
                             <img
                                 src={user.profilePhoto}
                                 alt={`profile picture of ${user.username}`}
-                                className="w-full h-[82%] rounded-t-xl object-cover"
+                                className="w-32 h-[82%] rounded-t-xl object-cover"
                             />
                         ) : (
                             <span className="flex items-center justify-center text-8xl h-[85%] w-full rounded-t-lg bg-customGray-default">
@@ -39,7 +42,7 @@ export const FeedStory = () => {
                         </div>
                     </Link>
 
-                    {stories
+                    {friendsStories
                         ?.sort((a, b) => b.timestamp - a.timestamp)
                         ?.reduce((acc, data) => {
                             if (!acc.some(item => item.uid === data.uid)) {

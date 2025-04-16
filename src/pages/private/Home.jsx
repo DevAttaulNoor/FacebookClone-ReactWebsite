@@ -13,6 +13,7 @@ import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import { FeedStory } from "@components/universal/feed-related/FeedStory";
 import { MessageBox } from "@components/universal/message-related/MessageBox";
 import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
+import { HomeLeftbarContentLayout } from "@layouts/HomeLeftbarContentLayout";
 
 const Home = () => {
     const { user } = useAuth();
@@ -21,6 +22,8 @@ const Home = () => {
     const { reels } = useReels();
     const { acceptedFriends } = useFriends(user.uid);
     const [isMessageBoxVisible, setIsMessageBoxVisisble] = useState(null);
+    const friendsPosts = posts?.filter(data => acceptedFriends.some(friend => friend.uid === data.uid))
+    const friendsPhotoPosts = friendsPosts?.filter(data => data.mediaType === 'image')
 
     const leftbarOptionsData = [
         {
@@ -124,41 +127,37 @@ const Home = () => {
                 <FeedPost
                     activeUser={user}
                     userData={users}
-                    postData={posts}
+                    postData={friendsPhotoPosts}
                 />
             </div>
 
             <div className="h-full w-full flex flex-col p-2 gap-2 overflow-y-auto">
-                <div className="flex items-center justify-between border-b border-b-slate-300">
-                    <h4 className="font-medium text-[#65676B]">Contacts</h4>
+                <HomeLeftbarContentLayout title={'Contacts'}>
+                    <div className="flex flex-col gap-1.5">
+                        {acceptedFriends.map((user) => (
+                            <div
+                                key={user.uid}
+                                onClick={() => setIsMessageBoxVisisble(user.uid)}
+                                className="flex cursor-pointer items-center gap-2.5 rounded-lg p-2 hover:bg-customGray-100"
+                            >
+                                <ProfileAvatar
+                                    userData={user}
+                                    imageStyleClass="w-10 h-10"
+                                    iconStyleClass="text-3xl"
+                                />
 
-                    <div className="flex items-center">
-                        <span className="cursor-pointer rounded-3xl p-1.5 text-lg text-[#65676B] hover:bg-slate-100">
-                            {ReactIcons.SEARCH_MAGNIFYINGGLASS}
-                        </span>
-                        <span className="cursor-pointer rounded-3xl p-1.5 text-lg text-[#65676B] hover:bg-slate-100">
-                            {ReactIcons.OPTIONS_THREE_DOTS}
-                        </span>
+                                <p className="font-medium">{user.username}</p>
+                            </div>
+                        ))}
                     </div>
-                </div>
+                </HomeLeftbarContentLayout>
 
-                {acceptedFriends.map((user) => (
-                    <div
-                        key={user.uid}
-                        onClick={() => setIsMessageBoxVisisble(user.uid)}
-                        className="flex cursor-pointer items-center gap-2.5 rounded-lg p-2 hover:bg-customGray-100"
-                    >
-                        <ProfileAvatar
-                            userData={user}
-                            imageStyleClass="w-10 h-10"
-                            iconStyleClass="text-3xl"
-                        />
-
-                        <p className="font-medium">{user.username}</p>
-                    </div>
-                ))}
-
-                {isMessageBoxVisible && <MessageBox isOpen={isMessageBoxVisible} isClose={() => setIsMessageBoxVisisble(null)} />}
+                {isMessageBoxVisible && (
+                    <MessageBox
+                        isOpen={isMessageBoxVisible}
+                        isClose={() => setIsMessageBoxVisisble(null)}
+                    />
+                )}
             </div>
         </div>
     );

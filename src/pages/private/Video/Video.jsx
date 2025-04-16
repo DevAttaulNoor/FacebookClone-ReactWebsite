@@ -7,6 +7,8 @@ import { SvgIcons } from "@constants/SvgIcons";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
+import { useFriends } from "@hooks/useFriends";
+import { useAuth } from "@contexts/AuthContext";
 
 const videosLeftbarOptions = [
     {
@@ -18,16 +20,19 @@ const videosLeftbarOptions = [
     {
         id: 2,
         title: 'Saved Videos',
-        icon: SvgIcons.SAVED({ styleClass: 'w-[18px] h-[18px]' }),
+        icon: SvgIcons.SAVED({ styleClass: 'w-[22px] h-[22px]' }),
         path: Routes.VIDEO_SAVED.path
     },
 ]
 
 const Video = () => {
     const location = useLocation();
+    const { user } = useAuth();
     const { users } = useUsers();
     const { posts } = usePosts();
-    const videoPosts = posts.filter(post => post.mediaType === 'video')
+    const { acceptedFriends } = useFriends(user.uid);
+    const friendsPosts = posts?.filter(data => acceptedFriends?.concat(user)?.some(friend => friend.uid === data.uid))
+    const friendsVideoPosts = friendsPosts?.filter(data => data.mediaType === 'video')
 
     return (
         <div className="w-full h-full flex">
@@ -56,14 +61,19 @@ const Video = () => {
             <div className='flex-1 flex flex-col items-center p-4 gap-4 overflow-x-hidden overflow-y-auto'>
                 {location.pathname === Routes.VIDEO.path && (
                     <FeedPost
+                        activeUser={user}
                         userData={users}
-                        postData={videoPosts}
+                        postData={friendsVideoPosts}
                         postContainerStyle="w-2/3"
                     />
                 )}
 
                 {location.pathname === Routes.VIDEO_SAVED.path && (
-                    <Video_Saved />
+                    <Video_Saved
+                        activeUser={user}
+                        userData={users}
+                        postData={friendsVideoPosts}
+                    />
                 )}
             </div>
         </div>

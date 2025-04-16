@@ -7,14 +7,17 @@ import { ReactIcons } from "@constants/ReactIcons";
 import { timeAgoInitials } from "@utils/TimeModule";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
+import { useFriends } from "@hooks/useFriends";
 
 const Story = () => {
     const { id } = useParams();
     const { user } = useAuth();
     const { users } = useUsers();
+    const { acceptedFriends } = useFriends(user?.uid);
     const { stories, userStories } = useStories(user.uid);
     const activeStoryUser = users?.find(data => data.uid === id)
     const activeStoryData = stories?.filter(elem => elem.uid === id).sort((a, b) => a.timestamp - b.timestamp)
+    const friendsStories = stories?.filter(data => acceptedFriends.some(friend => friend.uid === data.uid))
 
     return (
         <div className="w-full h-full flex">
@@ -59,11 +62,11 @@ const Story = () => {
                     )}
                 </div>
 
-                {stories.filter(data => data.uid !== user.uid)?.length > 0 ? (
+                {friendsStories.filter(data => data.uid !== user.uid)?.length > 0 ? (
                     <div className="flex flex-col gap-2">
                         <h5 className="font-semibold px-2">All stories</h5>
 
-                        {stories
+                        {friendsStories
                             ?.filter(data => data.uid !== user.uid)
                             ?.sort((a, b) => b.timestamp - a.timestamp)
                             ?.reduce((acc, data) => {

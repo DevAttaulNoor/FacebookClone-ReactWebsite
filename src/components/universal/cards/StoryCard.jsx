@@ -7,7 +7,7 @@ export const StoryCard = ({ userData, storyData }) => {
     return (
         <Link
             to={`/story/${storyData.uid}`}
-            className="relative min-w-32 h-56 flex flex-col justify-between p-2 rounded-xl shadow-xl z-0 bg-black"
+            className="relative min-w-32 h-56 flex flex-col justify-between p-2 rounded-xl z-0 bg-black"
         >
             <ProfileAvatar
                 userData={storyUser}

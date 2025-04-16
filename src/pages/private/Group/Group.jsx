@@ -1,21 +1,21 @@
 import { useRef } from "react";
+import { doc, updateDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Link, NavLink, useLocation, useParams } from "react-router";
-import { useGroups } from "@hooks/useGroups"
+import { useUsers } from "@hooks/useUsers";
+import { usePosts } from "@hooks/usePosts";
+import { useGroups } from "@hooks/useGroups";
 import { useAuth } from "@contexts/AuthContext";
+import { db, storage } from "@services/firebase";
 import { ReactIcons } from "@constants/ReactIcons";
+import { formatJoinedDate } from "@utils/TimeModule";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
+import { GroupComponentLayout } from "@layouts/GroupComponentLayout";
+import { FeedPost } from "@components/universal/feed-related/FeedPost";
+import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
 import Group_About from "./Group_About";
 import Group_Media from "./Group_Media";
 import Group_People from "./Group_People";
-import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
-import { FeedPost } from "@components/universal/feed-related/FeedPost";
-import { useUsers } from "@hooks/useUsers";
-import { usePosts } from "@hooks/usePosts";
-import { GroupComponentLayout } from "@layouts/GroupComponentLayout";
-import { formatJoinedDate } from "@utils/TimeModule";
-import { db, storage } from "@services/firebase";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { doc, updateDoc } from "firebase/firestore";
 
 const Group = () => {
     const location = useLocation();
