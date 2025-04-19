@@ -2,9 +2,9 @@ import { useRef } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useReels } from "@hooks/useReels";
 import { useUsers } from "@hooks/useUsers";
+import { ReactIcons } from "@constants/ReactIcons";
 import { timeAgoInitials } from "@utils/TimeModule";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
-import { ReactIcons } from "@constants/ReactIcons";
 
 const Reel = () => {
     const navigate = useNavigate();

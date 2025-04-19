@@ -20,6 +20,15 @@ export const MessageBox = ({ isOpen, isClose }) => {
     const selectedUserData = usersExceptCurrent?.find((data) => (data?.uid === isOpen) || (data?.uid === selectedUser));
     const selectedUserChats = chats?.find((data) => (data.uids === `${user?.uid}${selectedUserData?.uid}`) || (data.uids === `${selectedUserData?.uid}${user?.uid}`));
 
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            if (messageInput.trim()) {
+                handleMessaging(user?.uid, selectedUserData?.uid, messageInput);
+            }
+        }
+    };
+
     const handleMessaging = async (userId, friendId, messageInput) => {
         try {
             const chatId = userId < friendId ? `${userId}${friendId}` : `${friendId}${userId}`;
@@ -51,15 +60,6 @@ export const MessageBox = ({ isOpen, isClose }) => {
             }
         } catch (error) {
             console.error("Unsuccessful", error);
-        }
-    };
-
-    const handleKeyDown = (e) => {
-        if (e.key === "Enter") {
-            e.preventDefault();
-            if (messageInput.trim()) {
-                handleMessaging(user?.uid, selectedUserData?.uid, messageInput);
-            }
         }
     };
 

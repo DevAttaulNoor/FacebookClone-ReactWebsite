@@ -1,10 +1,10 @@
-import { TextareaField } from "@components/universal/inputs/TextareaField";
-import { ReactIcons } from "@constants/ReactIcons"
-import { useAuth } from "@contexts/AuthContext";
-import { db, storage } from "@services/firebase";
+import { useRef, useState } from "react"
 import { collection, doc, setDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { useRef, useState } from "react"
+import { useAuth } from "@contexts/AuthContext";
+import { db, storage } from "@services/firebase";
+import { ReactIcons } from "@constants/ReactIcons"
+import { TextareaField } from "@components/universal/inputs/TextareaField";
 
 const Reel_Create = () => {
     const inputRef = useRef(null);

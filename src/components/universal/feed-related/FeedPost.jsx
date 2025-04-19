@@ -12,6 +12,7 @@ import { ReactIcons } from '@constants/ReactIcons';
 import { ModalLayout } from '@layouts/ModalLayout';
 import { timeAgoInitials } from '@utils/TimeModule';
 import { TextareaField } from '../inputs/TextareaField';
+import { handleMediaChange } from '@utils/mediaHandling';
 import { BasicDropdown } from '../dropdowns/BasicDropdown';
 
 const feedPostingOptions = [
@@ -48,19 +49,6 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
     const [commentInput, setCommentInput] = useState('');
     const [postActionDropdown, setPostActionDropdown] = useState(null);
     const activePost = postData.find(data => data.id === postModalOpen.editing);
-
-    const handleMediaChange = (e) => {
-        const file = e.target.files[0];
-
-        if (file) {
-            setMessage(prev => ({ ...prev, media: file }));
-            if (file.type.startsWith("image/")) {
-                setMessage(prev => ({ ...prev, mediaType: "image" }));
-            } else if (file.type.startsWith("video/")) {
-                setMessage(prev => ({ ...prev, mediaType: "video" }));
-            }
-        }
-    };
 
     const handleReaction = async (postId, postUid, userId) => {
         try {
@@ -542,7 +530,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                             ref={messageMediaRef}
                                             type="file"
                                             accept="image/*,video/*"
-                                            onChange={handleMediaChange}
+                                            onChange={(e) => handleMediaChange(e, setMessage)}
                                             className="hidden"
                                         />
                                     </div>

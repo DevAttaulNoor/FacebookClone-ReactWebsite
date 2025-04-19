@@ -22,7 +22,7 @@ const Home = () => {
     const { reels } = useReels();
     const { acceptedFriends } = useFriends(user.uid);
     const [isMessageBoxVisible, setIsMessageBoxVisisble] = useState(null);
-    const friendsPosts = posts?.filter(data => acceptedFriends.some(friend => friend.uid === data.uid))
+    const friendsPosts = posts?.filter(data => (data.uid === user?.uid) || (acceptedFriends.some(friend => friend.uid === data.uid)));
     const friendsPhotoPosts = friendsPosts?.filter(data => data.mediaType === 'image')
 
     const leftbarOptionsData = [

@@ -2,12 +2,12 @@ import { Link, useParams } from "react-router";
 import { Routes } from "@constants/Routes";
 import { useUsers } from "@hooks/useUsers";
 import { useStories } from "@hooks/useStories";
+import { useFriends } from "@hooks/useFriends";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { timeAgoInitials } from "@utils/TimeModule";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
-import { useFriends } from "@hooks/useFriends";
 
 const Story = () => {
     const { id } = useParams();

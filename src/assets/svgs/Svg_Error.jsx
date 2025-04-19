@@ -1,9 +1,10 @@
-export const Svg_Error = () => {
+export const Svg_Error = ({ styleClass }) => {
     return (
         <svg
             width="112"
             height="112"
             viewBox="0 0 112 112"
+            className={styleClass}
         >
             <defs>
                 <clipPath id="a">

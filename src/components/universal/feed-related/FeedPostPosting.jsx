@@ -8,8 +8,9 @@ import { db, storage } from '@services/firebase';
 import { ProfileAvatar } from '../ProfileAvatar';
 import { ReactIcons } from '@constants/ReactIcons';
 import { ModalLayout } from '@layouts/ModalLayout';
-import { TextareaField } from '../inputs/TextareaField';
 import { ToggleButton } from '../buttons/ToggleButton';
+import { TextareaField } from '../inputs/TextareaField';
+import { handleMediaChange } from '@utils/mediaHandling';
 
 const feedPostingOptions = [
     {
@@ -45,21 +46,6 @@ export const FeedPostPosting = ({ usedInGroupPosting = false, groupData }) => {
         setIsEmojiModalOpen(false);
         setMessageText('');
         setMessageMedia({ content: '', type: '' });
-    };
-
-    const handleMediaChange = (e) => {
-        const file = e.target.files[0];
-
-        if (file) {
-            setMessageMedia(prev => ({ ...prev, content: file }));
-
-            // Determine the media type (image or video)
-            if (file.type.startsWith("image/")) {
-                setMessageMedia(prev => ({ ...prev, type: "image" }));
-            } else if (file.type.startsWith("video/")) {
-                setMessageMedia(prev => ({ ...prev, type: "video" }));
-            }
-        }
     };
 
     const handlePosting = async (e) => {
@@ -267,7 +253,7 @@ export const FeedPostPosting = ({ usedInGroupPosting = false, groupData }) => {
                             ref={messageMediaInputRef}
                             type="file"
                             accept="image/*,video/*"
-                            onChange={handleMediaChange}
+                            onChange={(e) => handleMediaChange(e, setMessageMedia)}
                             className="hidden"
                         />
                     </div>

@@ -1,5 +1,4 @@
 import { ReactIcons } from "@constants/ReactIcons"
-import { ProfileAvatar } from "@components/universal/ProfileAvatar"
 
 export const HomeLeftbarContentLayout = ({ title, children }) => {
     return (
