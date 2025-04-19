@@ -1,6 +1,6 @@
 import { FriendCard } from "@components/friend-related/FriendCard"
 
-export const Friend_AllRequest = ({
+const Friend_AllRequest = ({
     userData,
     usersData,
     friendsData,
@@ -28,3 +28,5 @@ export const Friend_AllRequest = ({
         </div>
     )
 }
+
+export default Friend_AllRequest

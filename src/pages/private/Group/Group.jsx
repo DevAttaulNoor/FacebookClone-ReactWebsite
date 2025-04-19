@@ -84,22 +84,24 @@ const Group = () => {
                         style={{ backgroundImage: `url(${activeGroup?.coverPhoto})` }}
                         className="w-full h-full flex items-end justify-end py-4 px-6 rounded-b-lg bg-cover bg-center bg-no-repeat bg-customGray-default"
                     >
-                        {activeGroup?.adminId === user?.uid && (
-                            <button
-                                onClick={() => coverPhotoRef.current.click()}
-                                className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer bg-white hover:bg-customGray-default z-[5]"
-                            >
-                                <span className="text-lg">{ReactIcons.EDIT_PENCIL}</span>
-                                <p className="text-sm font-semibold">Edit</p>
+                        {activeGroup?.adminId === user?.uid && (<>
+                            <BasicButton
+                                btnStyleClass="!w-fit z-[5] bg-white hover:bg-slate-50"
+                                btnData={{
+                                    text: activeGroup?.adminId ? 'Edit' : 'Add',
+                                    icon: activeGroup?.adminId ? ReactIcons.EDIT_PENCIL : ReactIcons.ADD_PLUS,
+                                    onClick: () => coverPhotoRef.current.click(),
+                                }}
+                            />
 
-                                <input
-                                    type="file"
-                                    ref={coverPhotoRef}
-                                    accept="image/*"
-                                    onChange={() => handlePhotoChange(coverPhotoRef, activeGroup?.id)}
-                                    className="hidden"
-                                />
-                            </button>
+                            <input
+                                ref={coverPhotoRef}
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={() => handlePhotoChange('coverPhoto', coverPhotoRef)}
+                            />
+                        </>
                         )}
                     </div>
                 </div>
@@ -134,19 +136,21 @@ const Group = () => {
 
                     <div className="flex gap-2">
                         {groupsJoined ? (
-                            <button
-                                className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer bg-customGray-100"
-                            >
-                                <span className="text-lg">{ReactIcons.GROUP}</span>
-                                <p className="text-sm font-semibold">Joined</p>
-                            </button>
+                            <BasicButton
+                                btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
+                                btnData={{
+                                    text: 'Joined',
+                                    icon: ReactIcons.GROUP,
+                                }}
+                            />
                         ) : (
-                            <button
-                                className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer bg-customGray-100"
-                            >
-                                <span className="text-lg">{ReactIcons.GROUP}</span>
-                                <p className="text-sm font-semibold">Leave</p>
-                            </button>
+                            <BasicButton
+                                btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
+                                btnData={{
+                                    text: 'Leave',
+                                    icon: ReactIcons.GROUP,
+                                }}
+                            />
                         )}
                     </div>
                 </div>

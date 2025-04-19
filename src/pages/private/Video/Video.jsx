@@ -2,13 +2,13 @@ import { NavLink, useLocation } from "react-router";
 import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
-import { Video_Saved } from "./Video_Saved";
 import { SvgIcons } from "@constants/SvgIcons";
+import { useFriends } from "@hooks/useFriends";
+import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
-import { useFriends } from "@hooks/useFriends";
-import { useAuth } from "@contexts/AuthContext";
+import Video_Saved from "./Video_Saved";
 
 const videosLeftbarOptions = [
     {
@@ -35,7 +35,7 @@ const Video = () => {
     const friendsVideoPosts = friendsPosts?.filter(data => data.mediaType === 'video')
 
     return (
-        <div className="w-full h-full flex">
+        <div className="pageWithLeftbarStyle">
             <LeftbarLayout title="Videos" icon={ReactIcons.SETTING}>
                 <div className="flex flex-col gap-1">
                     {videosLeftbarOptions.map((data) => (

@@ -1,7 +1,7 @@
 import { ReactIcons } from "@constants/ReactIcons";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 
-export const Video_Saved = ({ activeUser, userData, postData }) => {
+const Video_Saved = ({ activeUser, userData, postData }) => {
     const savedVideoPosts = postData?.filter(post => post?.saves?.some(save => save.uid === activeUser?.uid));
 
     return (
@@ -67,3 +67,5 @@ export const Video_Saved = ({ activeUser, userData, postData }) => {
         </div>
     )
 }
+
+export default Video_Saved

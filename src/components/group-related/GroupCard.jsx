@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { BasicButton } from '@components/universal/buttons/BasicButton';
 import group_coverphoto from '/Images/universal/group/group-coverphoto.png';
 
 export const GroupCard = ({
@@ -15,13 +15,13 @@ export const GroupCard = ({
                 <img
                     src={groupData?.coverPhoto}
                     alt={`cover photo of ${groupData?.name}`}
-                    className="h-52 rounded-t-lg object-cover"
+                    className="h-60 rounded-t-lg object-cover"
                 />
             ) : (
                 <img
                     src={group_coverphoto}
                     alt={`cover photo of ${groupData?.name}`}
-                    className="h-52 rounded-t-lg object-cover"
+                    className="h-60 rounded-t-lg object-cover"
                 />
             )}
 
@@ -32,29 +32,34 @@ export const GroupCard = ({
 
             <div className='flex flex-col p-3 gap-2'>
                 {groupJoined ? (
-                    <Link
-                        to={`/group/${groupData?.id}`}
-                        className="w-full text-center text-sm font-semibold px-2.5 py-2 rounded cursor-pointer bg-customGray-100 hover:bg-customGray-default"
-                    >
-                        View group
-                    </Link>
+                    <BasicButton
+                        btnStyleClass='bg-customGray-100 hover:bg-customGray-default'
+                        btnData={{
+                            link: `/group/${groupData?.id}`,
+                            text: 'View group'
+                        }}
+                    />
                 ) : (
                     <>
                         {joiningLoading ? (
-                            <button className="w-full text-sm font-semibold px-2.5 py-2 rounded cursor-pointer bg-customGray-100 hover:bg-customGray-default">
-                                <div className='w-5 h-5 mx-auto border-2 border-b-0 animate-spin rounded-full border-customGray-200' />
-                            </button>
+                            <BasicButton
+                                btnStyleClass='!py-2 bg-customGray-100 hover:bg-customGray-default'
+                                btnData={{
+                                    textStyleClass: 'w-5 h-5 mx-auto border-2 border-b-0 animate-spin rounded-full border-customGray-200'
+                                }}
+                            />
                         ) : (
-                            <button
-                                onClick={() => handleGroupJoining(userData.uid, groupData.id)}
-                                className="w-full text-sm font-semibold px-2.5 py-2 rounded cursor-pointer bg-customGray-100 hover:bg-customGray-default"
-                            >
-                                Join
-                            </button>
+                            <BasicButton
+                                btnStyleClass='bg-customGray-100 hover:bg-customGray-default'
+                                btnData={{
+                                    text: 'Join',
+                                    onClick: () => handleGroupJoining(userData.uid, groupData.id)
+                                }}
+                            />
                         )}
                     </>
                 )}
             </div>
-        </div>
+        </div >
     )
 }

@@ -42,7 +42,7 @@ const Feed = () => {
     }, [posts, acceptedFriends, user.uid]);
 
     return (
-        <div className="w-full h-full flex">
+        <div className="pageWithLeftbarStyle">
             <LeftbarLayout title="Stories">
                 <div className="flex flex-col gap-1">
                     {feedLeftbarOptions.map((data) => (

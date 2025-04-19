@@ -22,6 +22,14 @@
         @apply relative mx-auto flex h-full w-full max-w-outerContainer flex-col overflow-hidden shadow-xl;
     }
 
+    .homeSidebarStyle {
+        @apply sticky top-0 flex h-screenMinusHeader w-full flex-col gap-1 overflow-y-auto px-2 py-4;
+    }
+
+    .pageWithLeftbarStyle {
+        @apply flex h-screenMinusHeader w-full;
+    }
+
     .leftbarStyle {
         @apply h-full w-96 flex-shrink-0 bg-white shadow-customFull2;
     }

@@ -6,9 +6,9 @@ import { useFriends } from "@hooks/useFriends";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
-import { Friend_AllRequest } from "./Friend_AllRequest";
-import { Friend_AllFriends } from "./Friend_AllFriends";
 import { FriendCard } from "@components/friend-related/FriendCard";
+import Friend_AllRequest from "./Friend_AllRequest";
+import Friend_AllFriends from "./Friend_AllFriends";
 
 const friendsLeftbarOptions = [
     {
@@ -180,7 +180,7 @@ const Friend = () => {
     };
 
     return (
-        <div className="w-full h-full flex">
+        <div className="pageWithLeftbarStyle">
             <LeftbarLayout title="Friends" icon={ReactIcons.SETTING}>
                 <div className="flex flex-col gap-1">
                     {friendsLeftbarOptions.map((data) => (

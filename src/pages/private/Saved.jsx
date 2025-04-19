@@ -15,7 +15,7 @@ const Saved = () => {
     const savedPosts = posts.filter(post => post?.saves?.some(save => save.uid === user.uid));
 
     return (
-        <div className="w-full h-full flex">
+        <div className="pageWithLeftbarStyle">
             <LeftbarLayout title="Saved" icon={ReactIcons.SETTING}>
                 <NavLink
                     end

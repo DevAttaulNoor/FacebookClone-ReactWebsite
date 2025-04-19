@@ -8,6 +8,7 @@ import { ReactIcons } from "@constants/ReactIcons";
 import { DropdownLayout } from "@layouts/DropdownLayout";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { InputField } from "@components/universal/inputs/InputField";
+import { BasicButton } from "@components/universal/buttons/BasicButton";
 import group_coverphoto from '/Images/universal/group/group-coverphoto.png';
 
 const groupComponents = [
@@ -87,7 +88,7 @@ const Group_Create = () => {
     };
 
     return (
-        <div className="w-full h-full flex bg-customGray-default">
+        <div className="pageWithLeftbarStyle">
             <div className='leftbarStyle relative flex flex-col'>
                 <div className="flex flex-col p-4">
                     <p className="text-xs text-customGray-200">Create group</p>
@@ -180,22 +181,31 @@ const Group_Create = () => {
                     {groupName ? (
                         <>
                             {loading ? (
-                                <button className="w-full flex items-center justify-center p-2 rounded-lg bg-customBlue-default">
-                                    <div className='w-7 h-7 border-2 border-b-0 animate-spin rounded-full border-white' />
-                                </button>
+                                <BasicButton
+                                    btnStyleClass="!py-2 text-white bg-customBlue-default"
+                                    btnData={{
+                                        textStyleClass: 'w-6 h-6 border-2 border-b-0 animate-spin rounded-full border-white',
+                                    }}
+                                />
                             ) : (
-                                <button
-                                    onClick={handleGroupCreation}
-                                    className="w-full font-semibold p-2.5 rounded-lg cursor-pointer text-white bg-customBlue-default"
-                                >
-                                    Create
-                                </button>
+                                <BasicButton
+                                    btnStyleClass="text-white bg-customBlue-default"
+                                    btnData={{
+                                        text: 'Create',
+                                        textStyleClass: 'text-base',
+                                        onClick: handleGroupCreation
+                                    }}
+                                />
                             )}
                         </>
                     ) : (
-                        <button className="w-full font-semibold p-2.5 rounded-lg cursor-not-allowed text-customGray-200 bg-customGray-100">
-                            Create
-                        </button>
+                        <BasicButton
+                            btnStyleClass="cursor-not-allowed text-customGray-200 bg-customGray-100"
+                            btnData={{
+                                text: 'Create',
+                                textStyleClass: 'text-base'
+                            }}
+                        />
                     )}
                 </div>
             </div>

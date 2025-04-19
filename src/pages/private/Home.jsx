@@ -11,9 +11,9 @@ import { ReactIcons } from "@constants/ReactIcons";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import { FeedStory } from "@components/universal/feed-related/FeedStory";
+import { HomeLeftbarContentLayout } from "@layouts/HomeLeftbarContentLayout";
 import { MessageBox } from "@components/universal/message-related/MessageBox";
 import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
-import { HomeLeftbarContentLayout } from "@layouts/HomeLeftbarContentLayout";
 
 const Home = () => {
     const { user } = useAuth();
@@ -65,8 +65,8 @@ const Home = () => {
     ];
 
     return (
-        <div className="grid h-full w-full grid-cols-[1fr_2fr_1fr] gap-10 overflow-y-auto">
-            <div className="flex flex-col gap-1 h-full w-full overflow-y-auto p-2">
+        <div className="relative w-full grid grid-cols-[1fr_2fr_1fr] gap-10 overflow-y-auto">
+            <div className="homeSidebarStyle">
                 <Link
                     to={`/profile/${user.uid}`}
                     className="flex cursor-pointer items-center gap-3 rounded-lg p-1.5 hover:bg-customGray-100"
@@ -119,7 +119,7 @@ const Home = () => {
                 </p>
             </div>
 
-            <div className="mx-auto flex w-full max-w-[600px] flex-col gap-4 py-4">
+            <div className="max-w-[600px] w-full flex flex-col py-4 mx-auto gap-4">
                 <FeedStory />
 
                 <FeedPostPosting />
@@ -131,7 +131,7 @@ const Home = () => {
                 />
             </div>
 
-            <div className="h-full w-full flex flex-col p-2 gap-2 overflow-y-auto">
+            <div className="homeSidebarStyle">
                 <HomeLeftbarContentLayout title={'Contacts'}>
                     <div className="flex flex-col gap-1.5">
                         {acceptedFriends.map((user) => (

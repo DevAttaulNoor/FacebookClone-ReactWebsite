@@ -114,7 +114,7 @@ export const Header = () => {
     ];
 
     return (
-        <div className="sticky top-0 z-30 grid grid-cols-[1fr_2fr_1fr] bg-white px-3 shadow">
+        <div className="grid grid-cols-[1fr_2fr_1fr] bg-white px-3 shadow z-30">
             <div className="relative flex items-center gap-2 py-2">
                 <Link to={Routes.HOME.path}>
                     <img

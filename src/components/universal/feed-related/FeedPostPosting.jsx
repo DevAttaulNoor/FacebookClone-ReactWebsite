@@ -11,6 +11,7 @@ import { ModalLayout } from '@layouts/ModalLayout';
 import { ToggleButton } from '../buttons/ToggleButton';
 import { TextareaField } from '../inputs/TextareaField';
 import { handleMediaChange } from '@utils/mediaHandling';
+import { BasicButton } from '../buttons/BasicButton';
 
 const feedPostingOptions = [
     {
@@ -260,16 +261,20 @@ export const FeedPostPosting = ({ usedInGroupPosting = false, groupData }) => {
                 </div>
 
                 {postLoading ? (
-                    <button className='w-full flex items-center justify-center py-1.5 rounded-lg bg-customBlue-default'>
-                        <div className='w-6 h-6 border-2 border-b-0 animate-spin rounded-full border-white' />
-                    </button>
+                    <BasicButton
+                        btnStyleClass='!py-2 bg-customBlue-default'
+                        btnData={{
+                            textStyleClass: 'w-6 h-6 border-2 border-b-0 animate-spin rounded-full border-white'
+                        }}
+                    />
                 ) : (
-                    <button
-                        onClick={handlePosting}
-                        className={`${(messageText || messageMedia.content) ? 'text-white bg-customBlue-default' : 'text-customGray-200 bg-customGray-100'} w-full font-medium py-1.5 rounded-lg cursor-pointer`}
-                    >
-                        {isAnonymous ? 'Submit' : 'Post'}
-                    </button>
+                    <BasicButton
+                        btnStyleClass={`${(messageText || messageMedia.content) ? 'text-white bg-customBlue-default' : 'text-customGray-200 bg-customGray-100'}`}
+                        btnData={{
+                            text: isAnonymous ? 'Submit' : 'Post',
+                            onClick: handlePosting
+                        }}
+                    />
                 )}
             </ModalLayout >
         </>

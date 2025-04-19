@@ -7,7 +7,7 @@ import { ReactIcons } from "@constants/ReactIcons";
 import { Header } from "@components/universal/Header";
 import { MessageBox } from "@components/universal/message-related/MessageBox";
 
-export const ProtectedRoute = () => {
+export const PrivateRoute = () => {
     const { user, loading } = useAuth();
     const [isMessageBoxVisible, setIsMessageBoxVisisble] = useState(false);
 

@@ -20,7 +20,7 @@ const Story = () => {
     const friendsStories = stories?.filter(data => acceptedFriends.some(friend => friend.uid === data.uid))
 
     return (
-        <div className="w-full h-full flex">
+        <div className="pageWithLeftbarStyle">
             <LeftbarLayout title="Stories" icon={ReactIcons.SETTING}>
                 <div className="flex flex-col mb-5 gap-2">
                     <h5 className="font-semibold px-2">Your story</h5>

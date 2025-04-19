@@ -6,6 +6,7 @@ import { useAuth } from "@contexts/AuthContext";
 import { db, storage } from "@services/firebase";
 import { ReactIcons } from "@constants/ReactIcons";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
+import { BasicButton } from "@components/universal/buttons/BasicButton";
 import { TextareaField } from "@components/universal/inputs/TextareaField";
 
 const Story_Create = () => {
@@ -129,7 +130,7 @@ const Story_Create = () => {
     };
 
     return (
-        <div className="w-full h-full flex">
+        <div className="pageWithLeftbarStyle">
             <div className='leftbarStyle relative flex flex-col'>
                 <div className="flex items-center justify-between p-4">
                     <h5 className="text-2xl font-bold">Your story</h5>
@@ -238,24 +239,31 @@ const Story_Create = () => {
 
                     {(storyContent.isTextStoryContentVisible || storyContent.isPhotoStoryContentVisible) && (
                         <div className="flex items-center gap-3 p-4 shadow-customFull2 bg-white">
-                            <button
-                                onClick={handleDiscardClick}
-                                className="w-full font-semibold p-2.5 rounded-lg cursor-pointer bg-customGray-100"
-                            >
-                                Discard
-                            </button>
+                            <BasicButton
+                                btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
+                                btnData={{
+                                    text: 'Discard',
+                                    textStyleClass: 'text-base',
+                                    onClick: handleDiscardClick
+                                }}
+                            />
 
                             {uploadLoading ? (
-                                <button className="w-full flex items-center justify-center p-2 rounded-lg bg-customBlue-default">
-                                    <div className='w-7 h-7 border-2 border-b-0 animate-spin rounded-full border-white' />
-                                </button>
+                                <BasicButton
+                                    btnStyleClass="!py-2 bg-customBlue-default"
+                                    btnData={{
+                                        textStyleClass: 'w-6 h-6 border-2 border-b-0 animate-spin rounded-full border-white',
+                                    }}
+                                />
                             ) : (
-                                <button
-                                    onClick={handleStoryPosting}
-                                    className="w-full font-semibold p-2.5 rounded-lg cursor-pointer text-white bg-customBlue-default"
-                                >
-                                    Share to Story
-                                </button>
+                                <BasicButton
+                                    btnStyleClass="text-white bg-customBlue-default"
+                                    btnData={{
+                                        text: 'Share to Story',
+                                        textStyleClass: 'text-base',
+                                        onClick: handleStoryPosting
+                                    }}
+                                />
                             )}
                         </div>
                     )}

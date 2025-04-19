@@ -6,6 +6,10 @@ export default {
     ],
     theme: {
         extend: {
+            height: {
+                screenMinusHeader: 'calc(100vh - 56px)',
+            },
+
             maxWidth: {
                 outerContainer: '1920px'
             },

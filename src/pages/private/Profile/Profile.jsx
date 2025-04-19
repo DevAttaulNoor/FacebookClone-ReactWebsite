@@ -15,6 +15,7 @@ import { Profile_Friend } from "./Profile_Friend";
 import { ReactIcons } from "@constants/ReactIcons";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
+import { BasicButton } from "@components/universal/buttons/BasicButton";
 import { ProfileComponentLayout } from "@layouts/ProfileComponentLayout";
 import { TextareaField } from "@components/universal/inputs/TextareaField";
 import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
@@ -87,53 +88,31 @@ const Profile = () => {
             <div className="w-full flex flex-col items-center bg-white">
                 {/* Cover Photo */}
                 <div className="w-[1080px] h-[460px] rounded-b-lg bg-coverPhoto-gradient">
-                    {activeProfileUser?.coverPhoto ? (
-                        <div
-                            style={{ backgroundImage: `url(${activeProfileUser?.coverPhoto})` }}
-                            className="w-full h-full flex items-end justify-end py-4 px-6 rounded-b-lg bg-cover bg-center bg-no-repeat bg-customGray-default"
-                        >
-                            {activeProfileUser?.uid === user?.uid && (
-                                <button
-                                    onClick={() => coverPhotoRef.current.click()}
-                                    className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer bg-white hover:bg-customGray-default z-[5]"
-                                >
-                                    <span className="text-lg">{ReactIcons.EDIT_PENCIL}</span>
-                                    <p className="text-sm font-semibold">Edit cover photo</p>
+                    <div
+                        style={{ backgroundImage: `url(${activeProfileUser?.coverPhoto})` }}
+                        className="w-full h-full flex items-end justify-end py-4 px-6 rounded-b-lg bg-cover bg-center bg-no-repeat bg-customGray-default"
+                    >
+                        {activeProfileUser?.uid === user?.uid && (
+                            <>
+                                <BasicButton
+                                    btnStyleClass="!w-fit z-[5] bg-white hover:bg-slate-50"
+                                    btnData={{
+                                        text: activeProfileUser?.coverPhoto ? 'Edit cover photo' : 'Add cover photo',
+                                        icon: activeProfileUser?.coverPhoto ? ReactIcons.EDIT_PENCIL : ReactIcons.ADD_PLUS,
+                                        onClick: () => coverPhotoRef.current.click(),
+                                    }}
+                                />
 
-                                    <input
-                                        type="file"
-                                        ref={coverPhotoRef}
-                                        accept="image/*"
-                                        onChange={() => handlePhotoChange('coverPhoto', coverPhotoRef)}
-                                        className="hidden"
-                                    />
-                                </button>
-                            )}
-                        </div>
-                    ) : (
-                        <div
-                            style={{ backgroundImage: `url(${activeProfileUser?.coverPhoto})` }}
-                            className="w-full h-full flex items-end justify-end py-4 px-6 rounded-b-lg bg-cover bg-center bg-no-repeat bg-customGray-default"
-                        >
-                            {activeProfileUser?.uid === user?.uid && (
-                                <button
-                                    onClick={() => coverPhotoRef.current.click()}
-                                    className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer bg-white hover:bg-customGray-100 z-[5]"
-                                >
-                                    <span className="text-lg">{ReactIcons.ADD_PLUS}</span>
-                                    <p className="text-sm font-semibold">Add cover photo</p>
-
-                                    <input
-                                        type="file"
-                                        ref={coverPhotoRef}
-                                        accept="image/*"
-                                        onChange={() => handlePhotoChange('coverPhoto', coverPhotoRef)}
-                                        className="hidden"
-                                    />
-                                </button>
-                            )}
-                        </div>
-                    )}
+                                <input
+                                    ref={coverPhotoRef}
+                                    type="file"
+                                    accept="image/*"
+                                    className="hidden"
+                                    onChange={() => handlePhotoChange('coverPhoto', coverPhotoRef)}
+                                />
+                            </>
+                        )}
+                    </div>
                 </div>
 
                 {/* Profile Section */}
@@ -198,44 +177,51 @@ const Profile = () => {
                     <div className="flex gap-2">
                         {activeProfileUser?.uid == user?.uid ? (
                             <>
-                                <Link
-                                    to={Routes.STORY_CREATE.path}
-                                    className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer text-white bg-customBlue-default"
-                                >
-                                    <span className="text-lg">{ReactIcons.ADD_PLUS}</span>
-                                    <p className="text-sm font-semibold">Add to story</p>
-                                </Link>
+                                <BasicButton
+                                    btnStyleClass="text-white bg-customBlue-default"
+                                    btnData={{
+                                        link: Routes.STORY_CREATE.path,
+                                        text: 'Add to story',
+                                        icon: ReactIcons.ADD_PLUS,
+                                    }}
+                                />
 
-                                <button
-                                    className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer bg-customGray-100"
-                                >
-                                    <span className="text-lg">{ReactIcons.EDIT_PENCIL}</span>
-                                    <p className="text-sm font-semibold">Edit profile</p>
-                                </button>
+                                <BasicButton
+                                    btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
+                                    btnData={{
+                                        text: 'Edit profile',
+                                        icon: ReactIcons.EDIT_PENCIL,
+                                    }}
+                                />
                             </>
                         ) : (
                             <>
                                 {acceptedFriends?.some(data => data.uid == user?.uid) ? (
-                                    <span className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer text-white bg-customBlue-default">
-                                        <span className="text-lg">{ReactIcons.FRIEND}</span>
-                                        <p className="text-sm font-semibold">Friend</p>
-                                    </span>
+                                    <BasicButton
+                                        btnStyleClass="text-white bg-customBlue-default"
+                                        btnData={{
+                                            text: 'Friend',
+                                            icon: ReactIcons.FRIEND,
+                                        }}
+                                    />
                                 ) : (
-                                    <Link
-                                        to={Routes.FRIEND.path}
-                                        className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer text-white bg-customBlue-default"
-                                    >
-                                        <span className="text-lg">{ReactIcons.FRIEND_ADD}</span>
-                                        <p className="text-sm font-semibold">Add friend</p>
-                                    </Link>
+                                    <BasicButton
+                                        btnStyleClass="text-white bg-customBlue-default"
+                                        btnData={{
+                                            link: Routes.FRIEND.path,
+                                            text: 'Add friend',
+                                            icon: ReactIcons.FRIEND_ADD,
+                                        }}
+                                    />
                                 )}
 
-                                <button
-                                    className="flex items-center px-3 py-2 gap-1 rounded-md cursor-pointer bg-customGray-100"
-                                >
-                                    <span className="text-lg">{ReactIcons.MESSAGE}</span>
-                                    <p className="text-sm font-semibold">Message</p>
-                                </button>
+                                <BasicButton
+                                    btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
+                                    btnData={{
+                                        text: 'Message',
+                                        icon: ReactIcons.MESSAGE,
+                                    }}
+                                />
                             </>
                         )}
                     </div>
@@ -291,29 +277,33 @@ const Profile = () => {
                                     ) : (
                                         <>
                                             <p className="text-sm text-center">{activeProfileUser?.bio}</p>
-                                            <button
-                                                onClick={() => setBioInput(prev => ({ ...prev, isVisible: !prev.isVisible }))}
-                                                className="w-full text-sm font-medium py-2.5 rounded-lg bg-customGray-100 hover:bg-customGray-default"
-                                            >
-                                                {`${activeProfileUser.bio ? 'Edit' : 'Add'} bio`}
-                                            </button>
+
+                                            <BasicButton
+                                                btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
+                                                btnData={{
+                                                    text: `${activeProfileUser.bio ? 'Edit' : 'Add'} bio`,
+                                                    onClick: () => setBioInput(prev => ({ ...prev, isVisible: !prev.isVisible }))
+                                                }}
+                                            />
                                         </>
                                     )}
 
                                     <div className={`${bioInput.isVisible ? 'flex' : 'hidden'} justify-end gap-2`}>
-                                        <button
-                                            onClick={handleBioText}
-                                            className="text-sm font-medium py-2 px-4 rounded-lg text-white bg-customBlue-default"
-                                        >
-                                            Save
-                                        </button>
+                                        <BasicButton
+                                            btnStyleClass="text-white bg-customBlue-default"
+                                            btnData={{
+                                                text: 'Save',
+                                                onClick: handleBioText
+                                            }}
+                                        />
 
-                                        <button
-                                            onClick={() => setBioInput(prev => ({ ...prev, isVisible: false }))}
-                                            className="text-sm font-medium py-2 px-4 rounded-lg bg-customGray-100"
-                                        >
-                                            Cancel
-                                        </button>
+                                        <BasicButton
+                                            btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
+                                            btnData={{
+                                                text: 'Cancel',
+                                                onClick: () => setBioInput(prev => ({ ...prev, isVisible: false }))
+                                            }}
+                                        />
                                     </div>
                                 </ProfileComponentLayout>
                             ) : (

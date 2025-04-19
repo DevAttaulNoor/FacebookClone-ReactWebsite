@@ -1,16 +1,17 @@
 import { Link, NavLink, useLocation } from "react-router";
 import { Routes } from "@constants/Routes";
+import { useUsers } from "@hooks/useUsers";
+import { usePosts } from "@hooks/usePosts";
 import { timeAgo } from "@utils/TimeModule";
 import { useGroups } from "@hooks/useGroups";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
+import { FeedPost } from "@components/universal/feed-related/FeedPost";
+import { BasicButton } from "@components/universal/buttons/BasicButton";
 import Group_Joined from "./Group_Joined";
 import Group_Discover from "./Group_Discover";
 import group_coverphoto from '/Images/universal/group/group-coverphoto.png';
-import { useUsers } from "@hooks/useUsers";
-import { usePosts } from "@hooks/usePosts";
-import { FeedPost } from "@components/universal/feed-related/FeedPost";
 
 const groupsLeftbarOptions = [
     {
@@ -44,7 +45,7 @@ const Group_Feed = () => {
     const groupJoinedPostsFeed = groupPosts?.filter(post => userRelatedGroupIds.includes(post.groupId));
 
     return (
-        <div className="w-full h-full flex">
+        <div className="pageWithLeftbarStyle">
             <LeftbarLayout title="Groups" icon={ReactIcons.SETTING}>
                 <div className="flex flex-col gap-1">
                     {groupsLeftbarOptions.map((data) => (
@@ -67,13 +68,15 @@ const Group_Feed = () => {
                 </div>
 
                 <div className="px-2 mt-3">
-                    <Link
-                        to={Routes.GROUP_CREATE.path}
-                        className="w-full flex items-center justify-center gap-1 text-sm font-medium p-2.5 rounded-lg cursor-pointer text-customBlue-300 bg-customBlue-100 hover:bg-customGray-default"
-                    >
-                        <span className="text-lg">{ReactIcons.ADD_PLUS}</span>
-                        Create new group
-                    </Link>
+                    <BasicButton
+                        btnStyleClass="text-customBlue-300 bg-customBlue-100 hover:bg-customGray-default"
+                        btnData={{
+                            link: Routes.GROUP_CREATE.path,
+                            text: 'Create new group',
+                            icon: ReactIcons.ADD_PLUS,
+                            iconStyleClass: 'text-lg'
+                        }}
+                    />
                 </div>
 
                 {userGroupsCreated.length > 0 && (
@@ -152,7 +155,7 @@ const Group_Feed = () => {
                 )}
             </LeftbarLayout >
 
-            <div className="flex-1 p-10 overflow-x-hidden overflow-y-auto">
+            <div className="flex-1 p-8 overflow-x-hidden overflow-y-auto">
                 {location.pathname === Routes.GROUP_FEED.path && (
                     <div className="flex flex-col items-center gap-4">
                         <FeedPost

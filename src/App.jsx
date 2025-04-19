@@ -4,8 +4,8 @@ import { Routes } from "@constants/Routes";
 import { ErrorRoute } from "@routes/ErrorRoute";
 import { Loading } from "@pages/general/Loading";
 import { PublicRoute } from "@routes/PublicRoute";
+import { PrivateRoute } from "@routes/PrivateRoute";
 import { AuthProvider } from "@contexts/AuthContext";
-import { ProtectedRoute } from "@routes/ProtectedRoute";
 import { OuterContainer } from "@layouts/OuterContainer";
 
 const Home = lazy(() => import("./pages/private/Home"));
@@ -37,9 +37,9 @@ const routes = createBrowserRouter([{
             ],
         },
 
-        // Protected routes (only accessible when logged in)
+        // Private routes (only accessible when logged in)
         {
-            element: <ProtectedRoute />,
+            element: <PrivateRoute />,
             children: [
                 // Home Page Section Related
                 { path: Routes.HOME.path, element: <Home /> },

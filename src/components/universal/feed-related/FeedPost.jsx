@@ -14,6 +14,7 @@ import { timeAgoInitials } from '@utils/TimeModule';
 import { TextareaField } from '../inputs/TextareaField';
 import { handleMediaChange } from '@utils/mediaHandling';
 import { BasicDropdown } from '../dropdowns/BasicDropdown';
+import { BasicButton } from '../buttons/BasicButton';
 
 const feedPostingOptions = [
     {
@@ -536,12 +537,13 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                     </div>
                                 </div>
 
-                                <button
-                                    onClick={() => handlePostEdit(data.id, activeUser?.uid)}
-                                    className={`${(message.text || message.media) ? 'text-white bg-customBlue-default' : 'text-customGray-200 bg-customGray-100'} w-full font-medium py-1.5 rounded-lg cursor-pointer`}
-                                >
-                                    Save
-                                </button>
+                                <BasicButton
+                                    btnStyleClass={`${(message.text || message.media) ? 'text-white bg-customBlue-default' : 'text-customGray-200 bg-customGray-100'}`}
+                                    btnData={{
+                                        text: 'Save',
+                                        onClick: () => handlePostEdit(data.id, activeUser?.uid),
+                                    }}
+                                />
                             </ModalLayout>
                         )}
 
