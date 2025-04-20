@@ -151,14 +151,14 @@ const Home = () => {
                         ))}
                     </div>
                 </HomeLeftbarContentLayout>
-
-                {isMessageBoxVisible && (
-                    <MessageBox
-                        isOpen={isMessageBoxVisible}
-                        isClose={() => setIsMessageBoxVisisble(null)}
-                    />
-                )}
             </div>
+
+            {isMessageBoxVisible && (
+                <MessageBox
+                    isOpen={isMessageBoxVisible}
+                    isClose={() => setIsMessageBoxVisisble(null)}
+                />
+            )}
         </div>
     );
 };

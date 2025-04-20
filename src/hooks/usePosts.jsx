@@ -35,6 +35,9 @@ export const usePosts = (userId) => {
                     setPosts(prevPosts =>
                         prevPosts.map(p => p.id === post.id ? { ...p, comments: postComments } : p)
                     );
+                    setGroupPosts(prevPosts =>
+                        prevPosts.map(p => p.id === post.id ? { ...p, comments: postComments } : p)
+                    );
                 },
                     (err) => console.error(`Error fetching comments for post ${post.id}:`, err)
                 );

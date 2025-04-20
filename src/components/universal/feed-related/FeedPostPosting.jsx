@@ -8,10 +8,10 @@ import { db, storage } from '@services/firebase';
 import { ProfileAvatar } from '../ProfileAvatar';
 import { ReactIcons } from '@constants/ReactIcons';
 import { ModalLayout } from '@layouts/ModalLayout';
+import { BasicButton } from '../buttons/BasicButton';
 import { ToggleButton } from '../buttons/ToggleButton';
 import { TextareaField } from '../inputs/TextareaField';
 import { handleMediaChange } from '@utils/mediaHandling';
-import { BasicButton } from '../buttons/BasicButton';
 
 const feedPostingOptions = [
     {

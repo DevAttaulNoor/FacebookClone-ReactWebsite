@@ -1,4 +1,6 @@
 import { NavLink } from "react-router";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "@services/firebase";
 import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
@@ -7,12 +9,32 @@ import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
+import { BasicButton } from "@components/universal/buttons/BasicButton";
+import { useGroups } from "@hooks/useGroups";
 
 const Saved = () => {
     const { user } = useAuth();
-    const { posts } = usePosts();
     const { users } = useUsers();
-    const savedPosts = posts.filter(post => post?.saves?.some(save => save.uid === user.uid));
+    const { groups } = useGroups();
+    const { posts, groupPosts } = usePosts();
+    const savedPosts = posts?.concat(groupPosts)?.filter(post => post?.saves?.some(save => save.uid === user.uid));
+
+    const handlePostUnSave = async (postId, userId) => {
+        try {
+            const postDocRef = doc(db, "Posts", postId);
+            const postDoc = await getDoc(postDocRef);
+
+            if (postDoc.exists()) {
+                const existingSaves = postDoc.data().saves || [];
+                const updatedSaves = existingSaves.filter(entry => entry.uid !== userId);
+                await updateDoc(postDocRef, { saves: updatedSaves });
+            } else {
+                console.error("Post not found.");
+            }
+        } catch (error) {
+            console.error("Error unsaving post:", error);
+        }
+    };
 
     return (
         <div className="pageWithLeftbarStyle">
@@ -40,6 +62,7 @@ const Saved = () => {
                     <>
                         {savedPosts?.map((data) => {
                             const savedPostUser = users.find(user => user.uid === data.uid);
+                            const savedPostGroup = groups.find(group => group.id === data.groupId)
 
                             return (
                                 <div className='w-full h-40 flex p-3 gap-4 rounded-md shadow-customFull2 bg-white'>
@@ -69,23 +92,75 @@ const Saved = () => {
                                         <div className="flex flex-col gap-2">
                                             <h3 className="text-lg font-bold cursor-pointer hover:underline">{data?.message ? data?.message : '1 Photo'}</h3>
 
-                                            <div className='flex items-center gap-1'>
-                                                <ProfileAvatar
-                                                    userData={savedPostUser}
-                                                    imageStyleClass='w-6 h-6'
-                                                    iconStyleClass='text-xl'
-                                                />
+                                            {data?.groupId ? (
+                                                <div className='flex items-center gap-1'>
+                                                    <>
+                                                        {data?.isAnonymous ? (
+                                                            <div className="relative mr-1">
+                                                                <img
+                                                                    src={data?.coverPhoto}
+                                                                    alt={`cover picture of ${data?.name}`}
+                                                                    className='w-8 h-8 object-contain border rounded-lg border-customGray-100 bg-white'
+                                                                />
 
-                                                <p className="text-xs text-customGray-300">Saved from</p>
-                                                <span className="text-xs font-medium cursor-pointer hover:underline">{savedPostUser?.username}'s post</span>
-                                            </div>
+                                                                <div className="absolute -bottom-2 -right-2">
+                                                                    <span className='text-xl'>
+                                                                        {ReactIcons.PROFILE_AVATAR}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="relative mr-1">
+                                                                <img
+                                                                    src={data?.coverPhoto}
+                                                                    alt={`cover picture of ${data?.name}`}
+                                                                    className='w-8 h-8 object-contain border rounded-lg border-customGray-100 bg-white'
+                                                                />
+
+                                                                <div className="absolute -bottom-2 -right-2">
+                                                                    <ProfileAvatar
+                                                                        userData={savedPostUser}
+                                                                        imageStyleClass='w-5 h-5'
+                                                                        iconStyleClass='text-xl'
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    </>
+
+                                                    <p className="text-xs text-customGray-300">Saved from</p>
+
+                                                    <span className="text-xs font-medium cursor-pointer hover:underline">
+                                                        {data?.isAnonymous ? 'Anonymous participant' : savedPostUser?.username}'s post
+                                                    </span>
+
+                                                    <p className="text-xs text-customGray-300">in</p>
+
+                                                    <span className="text-xs font-medium cursor-pointer hover:underline">
+                                                        {savedPostGroup?.name}
+                                                    </span>
+                                                </div>
+                                            ) : (
+                                                <div className='flex items-center gap-1'>
+                                                    <ProfileAvatar
+                                                        userData={savedPostUser}
+                                                        imageStyleClass='w-6 h-6'
+                                                        iconStyleClass='text-xl'
+                                                    />
+
+                                                    <p className="text-xs text-customGray-300">Saved from</p>
+                                                    <span className="text-xs font-medium cursor-pointer hover:underline">{savedPostUser?.username}'s post</span>
+                                                </div>
+                                            )}
                                         </div>
 
-                                        <div className='flex gap-2'>
-                                            <button className="text-sm font-medium flex items-center justify-center py-2 px-8 rounded-md bg-customGray-100 cursor-pointer hover:bg-customGray-default">Add to collection</button>
-
-                                            <span className="flex items-center justify-center text-xl px-2 rounded-md bg-customGray-100 cursor-pointer hover:bg-customGray-default">{ReactIcons.OPTIONS_THREE_DOTS}</span>
-                                        </div>
+                                        <BasicButton
+                                            btnStyleClass="!w-32 bg-customGray-100 hover:bg-customGray-default"
+                                            btnData={{
+                                                text: 'Unsave',
+                                                onClick: () => handlePostUnSave(data.id, user.uid)
+                                            }}
+                                        />
                                     </div>
                                 </div>
                             )

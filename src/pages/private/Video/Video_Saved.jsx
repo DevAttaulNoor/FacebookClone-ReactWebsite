@@ -1,8 +1,26 @@
 import { ReactIcons } from "@constants/ReactIcons";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
+import { BasicButton } from "@components/universal/buttons/BasicButton";
 
 const Video_Saved = ({ activeUser, userData, postData }) => {
     const savedVideoPosts = postData?.filter(post => post?.saves?.some(save => save.uid === activeUser?.uid));
+
+    const handlePostUnSave = async (postId, userId) => {
+        try {
+            const postDocRef = doc(db, "Posts", postId);
+            const postDoc = await getDoc(postDocRef);
+
+            if (postDoc.exists()) {
+                const existingSaves = postDoc.data().saves || [];
+                const updatedSaves = existingSaves.filter(entry => entry.uid !== userId);
+                await updateDoc(postDocRef, { saves: updatedSaves });
+            } else {
+                console.error("Post not found.");
+            }
+        } catch (error) {
+            console.error("Error unsaving post:", error);
+        }
+    };
 
     return (
         <div className='w-full flex flex-col px-16 py-4 gap-4 overflow-y-auto'>
@@ -49,11 +67,13 @@ const Video_Saved = ({ activeUser, userData, postData }) => {
                                         </div>
                                     </div>
 
-                                    <div className='flex gap-2'>
-                                        <button className="text-sm font-medium flex items-center justify-center py-2 px-8 rounded-md bg-customGray-100 cursor-pointer hover:bg-customGray-default">Add to collection</button>
-
-                                        <span className="flex items-center justify-center text-xl px-2 rounded-md bg-customGray-100 cursor-pointer hover:bg-customGray-default">{ReactIcons.OPTIONS_THREE_DOTS}</span>
-                                    </div>
+                                    <BasicButton
+                                        btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
+                                        btnData={{
+                                            text: 'Unsave',
+                                            onClick: () => handlePostUnSave(data.id, activeUser?.uid)
+                                        }}
+                                    />
                                 </div>
                             </div>
                         )

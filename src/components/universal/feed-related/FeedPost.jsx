@@ -11,10 +11,10 @@ import { InputField } from '../inputs/InputField';
 import { ReactIcons } from '@constants/ReactIcons';
 import { ModalLayout } from '@layouts/ModalLayout';
 import { timeAgoInitials } from '@utils/TimeModule';
+import { BasicButton } from '../buttons/BasicButton';
 import { TextareaField } from '../inputs/TextareaField';
 import { handleMediaChange } from '@utils/mediaHandling';
 import { BasicDropdown } from '../dropdowns/BasicDropdown';
-import { BasicButton } from '../buttons/BasicButton';
 
 const feedPostingOptions = [
     {
@@ -424,21 +424,21 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                         )}
 
                         <div className='grid grid-cols-2 mx-4 py-2 gap-1.5 border-t border-t-slate-400'>
-                            <div
+                            <button
                                 onClick={() => handleReaction(data.id, data.uid, activeUser?.uid)}
-                                className="flex items-center justify-center p-2 gap-1.5 rounded-md cursor-pointer hover:bg-customGray-100"
+                                className="flex items-center justify-center p-2 gap-1.5 rounded-md cursor-pointer hover:bg-customGray-default"
                             >
                                 <span className={`${userReacted ? 'text-customBlue-300' : 'text-customGray-300'} text-lg`}>{ReactIcons.LIKE_OUTLINE}</span>
                                 <p className={`${userReacted ? 'text-customBlue-300' : 'text-customGray-300'} text-sm font-medium`}>Like</p>
-                            </div>
+                            </button>
 
-                            <div
+                            <button
                                 onClick={() => setPostModalOpen(prev => ({ ...prev, comment: data.id }))}
-                                className="flex items-center justify-center p-2 gap-1.5 rounded-md cursor-pointer hover:bg-customGray-100"
+                                className="flex items-center justify-center p-2 gap-1.5 rounded-md cursor-pointer hover:bg-customGray-default"
                             >
                                 <span className="text-lg text-customGray-300">{ReactIcons.COMMENT}</span>
                                 <p className="text-sm font-medium text-customGray-300">Comment</p>
-                            </div>
+                            </button>
                         </div>
 
                         {postModalOpen.editing === data.id && (

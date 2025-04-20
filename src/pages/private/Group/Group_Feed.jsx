@@ -159,6 +159,7 @@ const Group_Feed = () => {
                 {location.pathname === Routes.GROUP_FEED.path && (
                     <div className="flex flex-col items-center gap-4">
                         <FeedPost
+                            activeUser={user}
                             userData={users}
                             postData={groupJoinedPostsFeed}
                             groupData={userRelatedGroupsData}
