@@ -1,11 +1,11 @@
 import { GrGallery } from "react-icons/gr";
-import { HiUserGroup } from "react-icons/hi2";
-import { FaClock, FaRegTrashCan } from "react-icons/fa6";
 import { HiOutlineSearch } from "react-icons/hi";
-import { FaCamera, FaGlobeAmericas, FaRegCommentDots } from "react-icons/fa";
+import { FaClock, FaRegTrashCan } from "react-icons/fa6";
 import { MdMessage, MdEdit, MdPersonAdd } from "react-icons/md";
 import { BiLike, BiSolidLike, BiSolidEdit } from "react-icons/bi";
-import { IoMdEye, IoMdAdd, IoMdSend, IoIosArrowDown } from "react-icons/io";
+import { FaCamera, FaGlobeAmericas, FaRegCommentDots } from "react-icons/fa";
+import { HiUserGroup, HiMiniSpeakerWave, HiMiniSpeakerXMark } from "react-icons/hi2";
+import { IoMdEye, IoMdAdd, IoIosPlay, IoMdSend, IoIosPause, IoIosArrowDown } from "react-icons/io";
 import { BsPeopleFill, BsPeople, BsPlayBtnFill, BsPlayBtn, BsPersonCircle, BsPersonLinesFill, BsFillPersonPlusFill, BsEmojiSmile, BsArrowLeft } from "react-icons/bs";
 import { IoHome, IoHomeOutline, IoAppsSharp, IoNotifications, IoPersonSharp, IoEllipsisHorizontalSharp, IoPeople, IoClose, IoTextOutline, IoSettingsSharp } from "react-icons/io5";
 
@@ -48,4 +48,9 @@ export const ReactIcons = {
     GLOBE: <FaGlobeAmericas />,
     EYE: <IoMdEye />,
     CLOCK: <FaClock />,
+    SPEAKER_SOUND: <HiMiniSpeakerWave />,
+    SPEAKER_NO_SOUND: <HiMiniSpeakerXMark />,
+    PAUSE: <IoIosPause />,
+    PLAY: <IoIosPlay />,
+
 };
