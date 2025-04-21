@@ -8,7 +8,6 @@ import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { FriendCard } from "@components/friend-related/FriendCard";
 import Friend_AllRequest from "./Friend_AllRequest";
-import Friend_AllFriends from "./Friend_AllFriends";
 
 const friendsLeftbarOptions = [
     {
@@ -234,21 +233,6 @@ const Friend = () => {
                 {location.pathname === Routes.FRIEND_AllREQUEST.path && (
                     <Friend_AllRequest
                         userData={acceptingFriends}
-                        usersData={friends}
-                        friendsData={{
-                            pendingFriends: pendingFriends,
-                            acceptingFriends: acceptingFriends,
-                            acceptedFriends: acceptedFriends,
-                        }}
-                        handleAddFriend={handleAddFriend}
-                        handleAcceptFriendRequest={handleAcceptFriendRequest}
-                        handleDeclineFriendRequest={handleDeclineFriendRequest}
-                    />
-                )}
-
-                {location.pathname === Routes.FRIEND_AllFRIENDS.path && (
-                    <Friend_AllFriends
-                        userData={acceptedFriends}
                         usersData={friends}
                         friendsData={{
                             pendingFriends: pendingFriends,
