@@ -1,5 +1,7 @@
 import { NavLink, useLocation, useParams } from "react-router";
+import { Routes } from "@constants/Routes";
 import { ReactIcons } from "@constants/ReactIcons";
+import { generatePath, getActiveRoute } from "@utils/PathResolver";
 
 const Group_Media = ({ groupPosts }) => {
     const location = useLocation();
@@ -8,8 +10,8 @@ const Group_Media = ({ groupPosts }) => {
     const groupPostVideos = groupPosts?.filter(data => data?.mediaType === 'video')
 
     const groupMediaComponents = [
-        { id: 1, title: 'Photos', path: `/group/${id}/media/photos` },
-        { id: 2, title: 'Videos', path: `/group/${id}/media/videos` },
+        { id: 1, title: 'Photos', path: generatePath({ path: Routes.GROUP_MEDIA_PHOTO.path }, { id: id }) },
+        { id: 2, title: 'Videos', path: generatePath({ path: Routes.GROUP_MEDIA_VIDEO.path }, { id: id }) },
     ];
 
     return (
@@ -36,7 +38,7 @@ const Group_Media = ({ groupPosts }) => {
                 ))}
             </div>
 
-            {location.pathname === `/group/${id}/media/photos` && (
+            {getActiveRoute(Routes.GROUP_MEDIA_PHOTO, location.pathname, { id: id }) && (
                 <div className="grid grid-cols-5 gap-2">
                     {groupPostPhotos?.map((data) => (
                         <img
@@ -49,7 +51,7 @@ const Group_Media = ({ groupPosts }) => {
                 </div>
             )}
 
-            {location.pathname === `/group/${id}/media/videos` && (
+            {getActiveRoute(Routes.GROUP_MEDIA_VIDEO, location.pathname, { id: id }) && (
                 <div className="grid grid-cols-5 gap-2">
                     {groupPostVideos?.map((data) => (
                         <video

@@ -104,46 +104,43 @@ const Profile = () => {
     };
 
     return (
-        <div className="w-full h-full flex items-center flex-col overflow-y-auto bg">
-            <div className="w-full flex flex-col items-center bg-white">
+        <div className="w-full h-full flex flex-col items-center overflow-y-auto">
+            <div className="w-full flex flex-col items-center shadow bg-white">
                 {/* Cover Photo */}
-                <div className="w-[1080px] h-[460px] rounded-b-lg bg-coverPhoto-gradient">
-                    <div
-                        style={{ backgroundImage: `url(${activeProfileUser?.coverPhoto})` }}
-                        className="w-full h-full flex items-end justify-end py-4 px-6 rounded-b-lg bg-cover bg-center bg-no-repeat bg-customGray-default"
-                    >
-                        {activeProfileUser?.uid === user?.uid && (
-                            <>
-                                <BasicButton
-                                    btnStyleClass="!w-fit z-[5] bg-white hover:bg-slate-50"
-                                    btnData={{
-                                        text: activeProfileUser?.coverPhoto ? 'Edit cover photo' : 'Add cover photo',
-                                        icon: activeProfileUser?.coverPhoto ? ReactIcons.EDIT_PENCIL : ReactIcons.ADD_PLUS,
-                                        onClick: () => coverPhotoRef.current.click(),
-                                    }}
-                                />
+                <div
+                    style={{ backgroundImage: `url(${activeProfileUser?.coverPhoto})` }}
+                    className="w-[1080px] h-[460px] flex items-end justify-end py-4 px-6 rounded-b-lg bg-cover bg-center bg-no-repeat bg-customGray-default"
+                >
+                    {activeProfileUser?.uid === user?.uid && (
+                        <>
+                            <BasicButton
+                                btnStyleClass="!w-fit z-[5] bg-white hover:bg-slate-50"
+                                btnData={{
+                                    text: activeProfileUser?.coverPhoto ? 'Edit cover photo' : 'Add cover photo',
+                                    icon: activeProfileUser?.coverPhoto ? ReactIcons.EDIT_PENCIL : ReactIcons.ADD_PLUS,
+                                    onClick: () => coverPhotoRef.current.click(),
+                                }}
+                            />
 
-                                <input
-                                    ref={coverPhotoRef}
-                                    type="file"
-                                    accept="image/*"
-                                    className="hidden"
-                                    onChange={() => handlePhotoChange('coverPhoto', coverPhotoRef)}
-                                />
-                            </>
-                        )}
-                    </div>
+                            <input
+                                ref={coverPhotoRef}
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={() => handlePhotoChange('coverPhoto', coverPhotoRef)}
+                            />
+                        </>
+                    )}
                 </div>
 
                 {/* Profile Section */}
-                <div className="max-w-[1040px] w-full flex items-end justify-between p-4 -mt-20">
+                <div className="max-w-[1040px] w-full flex items-end justify-between p-4 -mt-16">
                     <div className="flex items-end gap-4">
-                        {/* Profile Image */}
                         <div className="relative">
                             <img
                                 src={activeProfileUser?.profilePhoto}
                                 alt={`profile image of ${activeProfileUser?.username}`}
-                                className="w-44 h-44 rounded-full border-2 border-white object-cover"
+                                className="w-44 h-44 rounded-full border-4 border-white object-cover"
                             />
 
                             {activeProfileUser?.uid == user?.uid && (
@@ -167,25 +164,23 @@ const Profile = () => {
                         <div className={`${acceptedFriends?.length > 0 ? 'mb-2' : 'mb-14'} flex flex-col`}>
                             <h3 className="text-[28px] font-bold">{activeProfileUser?.username}</h3>
 
-                            {/* Friends Count */}
                             {acceptedFriends?.length > 0 && (
                                 <Link to={Routes.FRIEND_AllFRIENDS.path} className="w-fit text-sm text-customGray-200 cursor-pointer hover:underline">
                                     {`${acceptedFriends?.length} ${acceptedFriends?.length > 1 ? 'friends' : 'friend'}`}
                                 </Link>
                             )}
 
-                            {/* Friends List Preview */}
                             <div className="flex items-center mt-1">
                                 {acceptedFriends?.slice(0, 8).map((data) => (
                                     <Link
                                         key={data.uid}
                                         to={`/profile/${data.uid}`}
-                                        className="rounded-full border-2 border-white -ml-2 first:-ml-0"
+                                        className="rounded-full border-2 border-white -mr-3 last:-mr-0"
                                     >
                                         <ProfileAvatar
                                             userData={data}
-                                            imageStyleClass="w-8 h-8"
-                                            iconStyleClass="text-2xl"
+                                            imageStyleClass="w-10 h-10"
+                                            iconStyleClass="text-3xl"
                                         />
                                     </Link>
                                 ))}
@@ -193,7 +188,6 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    {/* Action Buttons */}
                     <div className="flex gap-2">
                         {activeProfileUser?.uid == user?.uid ? (
                             <>
@@ -248,24 +242,20 @@ const Profile = () => {
                 </div>
 
                 {/* Profile Navigation */}
-                <div className="max-w-[1040px] w-full flex items-center justify-between px-4 border-t border-slate-400">
-                    <div className="flex gap-1">
-                        {profileComponents.map(({ id, title, path }) => (
-                            <NavLink
-                                end
-                                key={id}
-                                to={path}
-                                className={({ isActive }) => {
-                                    const isActuallyActive = isActive || (id === 1 && location.pathname === `/profile/${activeProfileUser?.uid}`);
-                                    return `${isActuallyActive ? 'text-customBlue-default before:absolute before:-bottom-1 before:left-0 before:right-0 before:h-[2px] before:bg-[#2381fa]' : 'text-customGray-300 hover:bg-customGray-default'} relative text-sm font-semibold p-4 my-1 rounded-lg cursor-pointer`;
-                                }}
-                            >
-                                {title}
-                            </NavLink>
-                        ))}
-                    </div>
-
-                    <span className="text-xl cursor-pointer">{ReactIcons.OPTIONS_THREE_DOTS}</span>
+                <div className="max-w-[1040px] w-full flex gap-1 px-4 border-t border-slate-400">
+                    {profileComponents.map(({ id, title, path }) => (
+                        <NavLink
+                            end
+                            key={id}
+                            to={path}
+                            className={({ isActive }) => {
+                                const isActuallyActive = isActive || (id === 1 && location.pathname === `/profile/${activeProfileUser?.uid}`);
+                                return `${isActuallyActive ? 'text-customBlue-default before:absolute before:-bottom-1 before:left-0 before:right-0 before:h-[2px] before:bg-[#2381fa]' : 'text-customGray-300 hover:bg-customGray-default'} relative text-sm font-semibold p-4 my-1 rounded-lg cursor-pointer`;
+                            }}
+                        >
+                            {title}
+                        </NavLink>
+                    ))}
                 </div>
             </div>
 

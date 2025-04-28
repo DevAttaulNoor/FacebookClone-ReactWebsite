@@ -1,22 +1,28 @@
+import { useState } from "react"
 import { Link } from "react-router"
 import { ReactIcons } from "@constants/ReactIcons"
 import { ProfileAvatar } from "@components/universal/ProfileAvatar"
+import { SearchBar } from "@components/universal/searchBar/SearchBar"
 
 export const Profile_Friend = ({ friendsData }) => {
+    const [serachInput, setSearchInput] = useState('');
+
     return (
         <div className="w-full p-4 rounded-lg shadow-customFull2 bg-white">
             <div className="flex items-center justify-between mb-2">
                 <h1 className="text-lg font-bold cursor-pointer hover:underline">Friends</h1>
 
                 <div className="flex items-center">
-                    <div className='flex items-center p-1.5 mx-1 rounded-3xl bg-customGray-100'>
-                        <span className="text-lg ml-1 text-customGray-300">{ReactIcons.SEARCH_MAGNIFYINGGLASS}</span>
-                        <input
-                            type="text"
-                            placeholder='Search Friends'
-                            className="w-32 px-1 text-sm text-customGray-300 bg-customGray-100"
-                        />
-                    </div>
+                    <SearchBar
+                        containerStyle="max-w-36"
+                        inputStyle={"w-full bg-transparent py-2.5 text-sm"}
+                        inputData={{
+                            type: 'text',
+                            value: serachInput,
+                            placeholder: 'Search Friends',
+                            onChange: (e) => setSearchInput(e.target.value)
+                        }}
+                    />
 
                     <p className="text-sm font-medium p-2 mx-1 rounded text-customBlue-default cursor-pointer hover:bg-customGray-100">Friends requests</p>
                     <p className="text-sm font-medium p-2 mx-1 rounded text-customBlue-default cursor-pointer hover:bg-customGray-100">Find Friends</p>

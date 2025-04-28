@@ -3,15 +3,18 @@ import { doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Link, NavLink, useLocation, useParams } from "react-router";
 import { useUsers } from "@hooks/useUsers";
+import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
 import { useGroups } from "@hooks/useGroups";
 import { useAuth } from "@contexts/AuthContext";
 import { db, storage } from "@services/firebase";
 import { ReactIcons } from "@constants/ReactIcons";
 import { formatJoinedDate } from "@utils/TimeModule";
+import { generatePath, getActiveRoute } from "@utils/PathResolver";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { GroupComponentLayout } from "@layouts/GroupComponentLayout";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
+import { BasicButton } from "@components/universal/buttons/BasicButton";
 import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
 import Group_About from "./Group_About";
 import Group_Media from "./Group_Media";
@@ -30,10 +33,10 @@ const Group = () => {
     const groupsJoined = groups?.filter(data => data.adminId === user?.uid || data.members?.some(mem => mem === user?.uid));
 
     const groupComponents = [
-        { id: 1, title: 'About', path: `/group/${id}/about` },
-        { id: 2, title: 'Discussion', path: `/group/${id}` },
-        { id: 3, title: 'People', path: `/group/${id}/people` },
-        { id: 4, title: 'Media', path: `/group/${id}/media` },
+        { id: 1, title: 'About', path: generatePath({ path: Routes.GROUP_ABOUT.path }, { id: id }) },
+        { id: 2, title: 'Discussion', path: generatePath({ path: Routes.GROUP.path }, { id: id }) },
+        { id: 3, title: 'People', path: generatePath({ path: Routes.GROUP_PEOPLE.path }, { id: id }) },
+        { id: 4, title: 'Media', path: generatePath({ path: Routes.GROUP_MEDIA.path }, { id: id }) },
     ];
 
     const aboutSectionItems = [
@@ -76,15 +79,15 @@ const Group = () => {
     };
 
     return (
-        <div className="w-full h-full flex items-center flex-col overflow-y-auto bg">
+        <div className="w-full h-full flex flex-col items-center overflow-y-auto">
             <div className="w-full flex flex-col items-center bg-white">
                 {/* Cover Photo */}
-                <div className="w-[1080px] h-[460px] rounded-b-lg bg-coverPhoto-gradient">
-                    <div
-                        style={{ backgroundImage: `url(${activeGroup?.coverPhoto})` }}
-                        className="w-full h-full flex items-end justify-end py-4 px-6 rounded-b-lg bg-cover bg-center bg-no-repeat bg-customGray-default"
-                    >
-                        {activeGroup?.adminId === user?.uid && (<>
+                <div
+                    style={{ backgroundImage: `url(${activeGroup?.coverPhoto})` }}
+                    className="w-[1080px] h-[460px] flex items-end justify-end py-4 px-6 rounded-b-lg bg-cover bg-center bg-no-repeat bg-customGray-default"
+                >
+                    {activeGroup?.adminId === user?.uid && (
+                        <>
                             <BasicButton
                                 btnStyleClass="!w-fit z-[5] bg-white hover:bg-slate-50"
                                 btnData={{
@@ -102,8 +105,7 @@ const Group = () => {
                                 onChange={() => handlePhotoChange('coverPhoto', coverPhotoRef)}
                             />
                         </>
-                        )}
-                    </div>
+                    )}
                 </div>
 
                 {/* Profile Section */}
@@ -111,23 +113,21 @@ const Group = () => {
                     <div className='flex flex-col'>
                         <h3 className="text-[28px] font-bold">{activeGroup?.name}</h3>
 
-                        {/* Members Count */}
                         <div className="w-fit text-sm font-medium text-customGray-300 cursor-pointer hover:underline">
                             {`${activeGroup?.members?.length} ${activeGroup?.members?.length > 1 ? 'members' : 'member'}`}
                         </div>
 
-                        {/* Members List Preview */}
                         <div className="flex items-center">
                             {activeGroup?.members?.slice(0, 8).map((data) => (
                                 <Link
                                     key={data}
                                     to={`/profile/${data}`}
-                                    className="rounded-full border-2 border-white -ml-2 first:-ml-0"
+                                    className="rounded-full border-2 border-white -mr-2 last:-mr-0"
                                 >
                                     <ProfileAvatar
                                         userData={data}
-                                        imageStyleClass="w-8 h-8"
-                                        iconStyleClass="text-2xl"
+                                        imageStyleClass="w-10 h-10"
+                                        iconStyleClass="text-3xl"
                                     />
                                 </Link>
                             ))}
@@ -156,27 +156,23 @@ const Group = () => {
                 </div>
 
                 {/* Group Components Navigation */}
-                <div className="max-w-[1040px] w-full flex items-center justify-between px-4 border-t border-slate-400">
-                    <div className="flex gap-1">
-                        {groupComponents.map((data) => (
-                            <NavLink
-                                end
-                                key={data.id}
-                                to={data.path}
-                                className={({ isActive }) => `${isActive ? 'text-customBlue-default before:absolute before:-bottom-1 before:left-0 before:right-0 before:h-[2px] before:bg-[#2381fa]' : 'text-customGray-300 hover:bg-customGray-default'} relative text-sm font-semibold p-4 my-1 rounded-lg cursor-pointer`}
-                            >
-                                {data.title}
-                            </NavLink>
-                        ))}
-                    </div>
-
-                    <span className="text-xl cursor-pointer">{ReactIcons.OPTIONS_THREE_DOTS}</span>
+                <div className="max-w-[1040px] w-full flex px-4 gap-1 border-t border-slate-400">
+                    {groupComponents.map((data) => (
+                        <NavLink
+                            end
+                            key={data.id}
+                            to={data.path}
+                            className={({ isActive }) => `${isActive ? 'text-customBlue-default before:absolute before:-bottom-1 before:left-0 before:right-0 before:h-[2px] before:bg-[#2381fa]' : 'text-customGray-300 hover:bg-customGray-default'} relative text-sm font-semibold p-4 my-1 rounded-lg cursor-pointer`}
+                        >
+                            {data.title}
+                        </NavLink>
+                    ))}
                 </div>
             </div>
 
             {/* Group Page Components */}
             <div className="max-w-[1040px] w-full flex p-4 gap-4">
-                {location.pathname === `/group/${id}` && (
+                {getActiveRoute(Routes.GROUP, location.pathname, { id: id }) && (
                     <>
                         <div className="flex flex-[0.6] w-full flex-col gap-4">
                             <FeedPostPosting
@@ -214,23 +210,23 @@ const Group = () => {
                     </>
                 )}
 
-                {location.pathname === `/group/${id}/about` && (
+                {getActiveRoute(Routes.GROUP_ABOUT, location.pathname, { id: id }) && (
                     <Group_About
                         usersData={users}
                         groupData={activeGroup}
                     />
                 )}
 
-                {location.pathname === `/group/${id}/people` && (
+                {getActiveRoute(Routes.GROUP_PEOPLE, location.pathname, { id: id }) && (
                     <Group_People
                         usersData={users}
                         groupData={activeGroup}
                     />
                 )}
 
-                {((location.pathname === `/group/${id}/media`) ||
-                    (location.pathname === `/group/${id}/media/photos`) ||
-                    (location.pathname === `/group/${id}/media/videos`)) && (
+                {(getActiveRoute(Routes.GROUP_MEDIA, location.pathname, { id: id }) ||
+                    (getActiveRoute(Routes.GROUP_MEDIA_PHOTO, location.pathname, { id: id })) ||
+                    (getActiveRoute(Routes.GROUP_MEDIA_VIDEO, location.pathname, { id: id }))) && (
                         <Group_Media
                             groupPosts={activeGroupPosts}
                         />

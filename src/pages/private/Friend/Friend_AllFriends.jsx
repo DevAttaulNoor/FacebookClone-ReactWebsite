@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, NavLink, useLocation, useParams, Outlet } from "react-router-dom";
 import { Routes } from "@constants/Routes";
 import { useFriends } from "@hooks/useFriends";
@@ -6,12 +7,14 @@ import { ReactIcons } from "@constants/ReactIcons";
 import { generatePath } from "@utils/PathResolver";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
+import { SearchBar } from "@components/universal/searchBar/SearchBar";
 
 const Friend_AllFriends = () => {
     const location = useLocation();
     const { id } = useParams();
     const { user } = useAuth();
     const { acceptedFriends } = useFriends(user?.uid);
+    const [searchInput, setSearchInput] = useState('');
     const viewingFriendProfile = id && location.pathname.includes(generatePath({ path: Routes.PROFILE.alternativePath }, { id: id }));
 
     return (
@@ -31,7 +34,19 @@ const Friend_AllFriends = () => {
                         </h5>
                     </div>
 
-                    <hr className="w-full h-[1px] bg-customGray-100" />
+                    <div className="flex flex-col px-2 gap-4">
+                        <SearchBar
+                            inputStyle={"w-full bg-transparent py-2.5 text-sm"}
+                            inputData={{
+                                type: 'text',
+                                value: searchInput,
+                                placeholder: 'Search friends',
+                                onChange: (e) => setSearchInput(e.target.value)
+                            }}
+                        />
+
+                        <hr className="w-full h-[1px] bg-customGray-100" />
+                    </div>
 
                     <div className="flex flex-col gap-1">
                         <h6 className="font-medium px-2">{acceptedFriends.length} friends</h6>

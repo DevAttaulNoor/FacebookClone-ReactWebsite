@@ -8,6 +8,7 @@ import { Routes } from "@constants/Routes";
 import { useAuth } from "@contexts/AuthContext";
 import { ProfileAvatar } from "./ProfileAvatar";
 import { InputField } from "./inputs/InputField";
+import { SearchBar } from "./searchBar/SearchBar";
 import { ReactIcons } from "@constants/ReactIcons";
 import { timeAgoInitials } from "@utils/TimeModule";
 import { BasicDropdown } from "./dropdowns/BasicDropdown";
@@ -114,7 +115,7 @@ export const Header = () => {
     ];
 
     return (
-        <div className="grid grid-cols-[1fr_2fr_1fr] bg-white px-3 shadow z-30">
+        <div className="grid grid-cols-[1fr_2fr_1fr] px-3 shadow z-30 bg-white">
             <div className="relative flex items-center gap-2 py-2">
                 <Link to={Routes.HOME.path}>
                     <img
@@ -124,24 +125,17 @@ export const Header = () => {
                     />
                 </Link>
 
-                <div
-                    onClick={() => setIsOpen(prev => ({ ...prev, userSearchDropdown: true }))}
-                    className="flex w-full max-w-64 items-center gap-1.5 rounded-3xl bg-customGray-default px-3"
-                >
-                    <span className="text-customGray-200">
-                        {ReactIcons.SEARCH_MAGNIFYINGGLASS}
-                    </span>
-
-                    <InputField
-                        inputStyle="w-full bg-transparent py-2.5 text-sm"
-                        inputData={{
-                            type: 'text',
-                            value: inputValue.userSearch,
-                            placeholder: 'Search Facebook',
-                            onChange: (e) => setInputValue(prev => ({ ...prev, userSearch: e.target.value }))
-                        }}
-                    />
-                </div>
+                <SearchBar
+                    containerStyle="max-w-64"
+                    containerOnClick={() => setIsOpen(prev => ({ ...prev, userSearchDropdown: true }))}
+                    inputStyle={"w-full bg-transparent py-2.5 text-sm"}
+                    inputData={{
+                        type: 'text',
+                        value: inputValue.userSearch,
+                        placeholder: 'Search Facebook',
+                        onChange: (e) => setInputValue(prev => ({ ...prev, userSearch: e.target.value }))
+                    }}
+                />
 
                 <BasicDropdown
                     isOpen={isOpen.userSearchDropdown}
@@ -255,19 +249,15 @@ export const Header = () => {
                         dropdownData={{ title: 'Chats' }}
                         dropdownContainerStyle="dropdownContainerStyle1 p-2"
                     >
-                        <div className="flex w-full items-center gap-1.5 rounded-3xl bg-customGray-default px-3">
-                            <span className="text-customGray-200">{ReactIcons.SEARCH_MAGNIFYINGGLASS}</span>
-
-                            <InputField
-                                inputStyle="w-full bg-transparent py-2.5 text-sm"
-                                inputData={{
-                                    type: 'text',
-                                    value: inputValue.chatSearch,
-                                    placeholder: 'Search Messenger',
-                                    onChange: (e) => setInputValue(prev => ({ ...prev, chatSearch: e.target.value }))
-                                }}
-                            />
-                        </div>
+                        <SearchBar
+                            inputStyle={"w-full bg-transparent py-2.5 text-sm"}
+                            inputData={{
+                                type: 'text',
+                                value: inputValue.chatSearch,
+                                placeholder: 'Search Messenger',
+                                onChange: (e) => setInputValue(prev => ({ ...prev, chatSearch: e.target.value }))
+                            }}
+                        />
 
                         <div className='flex flex-col gap-1'>
                             {chats?.map((data, index) => {
