@@ -1,18 +1,18 @@
-import { FriendCard } from "@components/friend-related/FriendCard"
-import { ProfileAvatar } from "@components/universal/ProfileAvatar";
-import { ReactIcons } from "@constants/ReactIcons"
+import { Link, NavLink, useLocation, useParams, Outlet } from "react-router-dom";
 import { Routes } from "@constants/Routes";
-import { useAuth } from "@contexts/AuthContext";
 import { useFriends } from "@hooks/useFriends";
-import { LeftbarLayout } from "@layouts/LeftbarLayout"
-import { Link, NavLink, useLocation, useParams } from "react-router";
-import Profile from "../Profile/Profile";
+import { useAuth } from "@contexts/AuthContext";
+import { ReactIcons } from "@constants/ReactIcons";
+import { generatePath } from "@utils/PathResolver";
+import { LeftbarLayout } from "@layouts/LeftbarLayout";
+import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 
 const Friend_AllFriends = () => {
-    const { id } = useParams()
-    const { user } = useAuth();
     const location = useLocation();
-    const { friends, pendingFriends, acceptingFriends, acceptedFriends } = useFriends(user.uid);
+    const { id } = useParams();
+    const { user } = useAuth();
+    const { acceptedFriends } = useFriends(user?.uid);
+    const viewingFriendProfile = id && location.pathname.includes(generatePath({ path: Routes.PROFILE.alternativePath }, { id: id }));
 
     return (
         <div className="pageWithLeftbarStyle">
@@ -26,7 +26,9 @@ const Friend_AllFriends = () => {
                             {ReactIcons.ARROW_LEFT}
                         </Link>
 
-                        <h5 className="text-2xl font-extrabold leading-none">All friends</h5>
+                        <h5 className="text-2xl font-extrabold leading-none">
+                            {viewingFriendProfile ? "Friend Profile" : "All friends"}
+                        </h5>
                     </div>
 
                     <hr className="w-full h-[1px] bg-customGray-100" />
@@ -36,8 +38,8 @@ const Friend_AllFriends = () => {
 
                         {acceptedFriends?.map(data => (
                             <NavLink
-                                key={data.id}
-                                to={`/friend/friendlist/${data.id}`}
+                                key={data.uid}
+                                to={`/friend/friendlist/${data.uid}`}
                                 className="flex items-center p-2 gap-2.5 rounded-md cursor-pointer hover:bg-customGray-default"
                             >
                                 <ProfileAvatar
@@ -53,19 +55,17 @@ const Friend_AllFriends = () => {
                 </div>
             </LeftbarLayout>
 
-            {location.pathname === Routes.FRIEND_AllFRIENDS.path && (
-                <div className="h-full flex-1 flex items-center justify-center px-10 overflow-x-hidden overflow-y-auto">
-                    Select people's names to preview their profile.
-                </div>
-            )}
-
-            {location.pathname === `/friend/friendlist/${id}` && (
-                <div className="h-full flex-1 overflow-x-hidden overflow-y-auto">
-                    <Profile />
-                </div>
-            )}
+            <div className="h-full flex-1 overflow-x-hidden overflow-y-auto">
+                {viewingFriendProfile ? (
+                    <Outlet />
+                ) : (
+                    <div className="h-full flex items-center justify-center px-10">
+                        Select people's names to preview their profile.
+                    </div>
+                )}
+            </div>
         </div>
-    )
-}
+    );
+};
 
-export default Friend_AllFriends
+export default Friend_AllFriends;

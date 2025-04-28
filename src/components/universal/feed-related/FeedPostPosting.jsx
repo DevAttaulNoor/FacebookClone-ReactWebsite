@@ -11,7 +11,7 @@ import { ModalLayout } from '@layouts/ModalLayout';
 import { BasicButton } from '../buttons/BasicButton';
 import { ToggleButton } from '../buttons/ToggleButton';
 import { TextareaField } from '../inputs/TextareaField';
-import { handleMediaChange } from '@utils/mediaHandling';
+import { handleMediaChange } from '@utils/MediaHandling';
 
 const feedPostingOptions = [
     {

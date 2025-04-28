@@ -15,24 +15,24 @@ import { Profile_Friend } from "./Profile_Friend";
 import { ReactIcons } from "@constants/ReactIcons";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
+import { getActiveRoute, getPreferredPath } from "@utils/PathResolver";
 import { BasicButton } from "@components/universal/buttons/BasicButton";
 import { ProfileComponentLayout } from "@layouts/ProfileComponentLayout";
 import { TextareaField } from "@components/universal/inputs/TextareaField";
 import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
 
 const Profile = () => {
+    const location = useLocation();
     const { id } = useParams();
     const { user } = useAuth();
     const { users } = useUsers();
+    const coverPhotoRef = useRef(null);
+    const profilePhotoRef = useRef(null);
     const activeProfileUser = users?.find(data => data.uid === id);
     const { userPosts } = usePosts(activeProfileUser?.uid);
     const { acceptedFriends } = useFriends(activeProfileUser?.uid);
     const userPostPhotos = userPosts.filter(data => data.mediaType === 'image')
     const userPostVideos = userPosts.filter(data => data.mediaType === 'video')
-    const location = useLocation();
-    const coverPhotoRef = useRef(null);
-    const profilePhotoRef = useRef(null);
-
     const [bioInput, setBioInput] = useState({
         value: "",
         count: 101,
@@ -40,12 +40,42 @@ const Profile = () => {
     });
 
     const profileComponents = [
-        { id: 1, title: 'Posts', path: `/profile/${activeProfileUser?.uid}` },
-        { id: 2, title: 'About', path: `/profile/${activeProfileUser?.uid}/about` },
-        { id: 3, title: 'Friends', path: `/profile/${activeProfileUser?.uid}/friend` },
-        { id: 4, title: 'Photos', path: `/profile/${activeProfileUser?.uid}/photo` },
-        { id: 5, title: 'Videos', path: `/profile/${activeProfileUser?.uid}/video` },
+        {
+            id: 1,
+            title: 'Posts',
+            path: getPreferredPath(Routes.PROFILE, { id: activeProfileUser?.uid }, location.pathname)
+        },
+        {
+            id: 2,
+            title: 'About',
+            path: getPreferredPath(Routes.PROFILE_ABOUT, { id: activeProfileUser?.uid }, location.pathname)
+        },
+        {
+            id: 3,
+            title: 'Friends',
+            path: getPreferredPath(Routes.PROFILE_FRIEND, { id: activeProfileUser?.uid }, location.pathname)
+        },
+        {
+            id: 4,
+            title: 'Photos',
+            path: getPreferredPath(Routes.PROFILE_PHOTO, { id: activeProfileUser?.uid }, location.pathname)
+        },
+        {
+            id: 5,
+            title: 'Videos',
+            path: getPreferredPath(Routes.PROFILE_VIDEO, { id: activeProfileUser?.uid }, location.pathname)
+        },
     ];
+
+    const handleBioText = async () => {
+        try {
+            const userDocRef = doc(db, "Users", user.uid);
+            await updateDoc(userDocRef, { bio: bioInput.value });
+            setBioInput((prev) => ({ ...prev, isVisible: false }));
+        } catch (error) {
+            console.error(`Error uploading bio text`, error);
+        }
+    };
 
     const handlePhotoChange = async (photoType, photoTypeRef) => {
         const file = photoTypeRef.current.files[0];
@@ -70,16 +100,6 @@ const Profile = () => {
             } catch (error) {
                 console.error(`Error uploading ${photoType}:`, error);
             }
-        }
-    };
-
-    const handleBioText = async () => {
-        try {
-            const userDocRef = doc(db, "Users", user.uid);
-            await updateDoc(userDocRef, { bio: bioInput.value });
-            setBioInput((prev) => ({ ...prev, isVisible: false }));
-        } catch (error) {
-            console.error(`Error uploading bio text`, error);
         }
     };
 
@@ -230,14 +250,17 @@ const Profile = () => {
                 {/* Profile Navigation */}
                 <div className="max-w-[1040px] w-full flex items-center justify-between px-4 border-t border-slate-400">
                     <div className="flex gap-1">
-                        {profileComponents.map((data) => (
+                        {profileComponents.map(({ id, title, path }) => (
                             <NavLink
                                 end
-                                key={data.id}
-                                to={data.path}
-                                className={({ isActive }) => `${isActive ? 'text-customBlue-default before:absolute before:-bottom-1 before:left-0 before:right-0 before:h-[2px] before:bg-[#2381fa]' : 'text-customGray-300 hover:bg-customGray-default'} relative text-sm font-semibold p-4 my-1 rounded-lg cursor-pointer`}
+                                key={id}
+                                to={path}
+                                className={({ isActive }) => {
+                                    const isActuallyActive = isActive || (id === 1 && location.pathname === `/profile/${activeProfileUser?.uid}`);
+                                    return `${isActuallyActive ? 'text-customBlue-default before:absolute before:-bottom-1 before:left-0 before:right-0 before:h-[2px] before:bg-[#2381fa]' : 'text-customGray-300 hover:bg-customGray-default'} relative text-sm font-semibold p-4 my-1 rounded-lg cursor-pointer`;
+                                }}
                             >
-                                {data.title}
+                                {title}
                             </NavLink>
                         ))}
                     </div>
@@ -248,12 +271,12 @@ const Profile = () => {
 
             {/* Profile Page Components */}
             <div className="max-w-[1040px] w-full flex p-4 gap-4">
-                {location.pathname === `/profile/${activeProfileUser?.uid}` && (
+                {getActiveRoute(Routes.PROFILE, location.pathname, { id: activeProfileUser?.uid }) && (
                     <>
                         <div className="flex flex-[0.4] flex-col gap-4">
                             {activeProfileUser?.uid == user?.uid ? (
                                 <ProfileComponentLayout
-                                    path={`/profile/${activeProfileUser?.uid}/about`}
+                                    path={getPreferredPath(Routes.PROFILE_ABOUT, { id: activeProfileUser?.uid }, location.pathname)}
                                     title={Routes.PROFILE_ABOUT.title}
                                     noSeeAll={false}
                                 >
@@ -310,7 +333,7 @@ const Profile = () => {
                                 <>
                                     {activeProfileUser?.bio && (
                                         <ProfileComponentLayout
-                                            path={`/profile/${activeProfileUser?.uid}/about`}
+                                            path={getPreferredPath(Routes.PROFILE_ABOUT, { id: activeProfileUser?.uid }, location.pathname)}
                                             title={Routes.PROFILE_ABOUT.title}
                                             noSeeAll={false}
                                         >
@@ -321,7 +344,7 @@ const Profile = () => {
                             )}
 
                             <ProfileComponentLayout
-                                path={`/profile/${activeProfileUser?.uid}/photo`}
+                                path={getPreferredPath(Routes.PROFILE_PHOTO, { id: activeProfileUser?.uid }, location.pathname)}
                                 title={Routes.PROFILE_PHOTO.title}
                             >
                                 <div className="grid grid-cols-3 gap-2">
@@ -348,7 +371,7 @@ const Profile = () => {
 
                             {userPostVideos.length > 0 && (
                                 <ProfileComponentLayout
-                                    path={`/profile/${activeProfileUser?.uid}/video`}
+                                    path={getPreferredPath(Routes.PROFILE_VIDEO, { id: activeProfileUser?.uid }, location.pathname)}
                                     title={Routes.PROFILE_VIDEO.title}
                                 >
                                     <div className="grid grid-cols-3 gap-2">
@@ -367,7 +390,7 @@ const Profile = () => {
 
                             {acceptedFriends.length > 0 && (
                                 <ProfileComponentLayout
-                                    path={`/profile/${activeProfileUser?.uid}/friend`}
+                                    path={getPreferredPath(Routes.PROFILE_FRIEND, { id: activeProfileUser?.uid }, location.pathname)}
                                     title={Routes.PROFILE_FRIEND.title}
                                 >
                                     <div className="grid grid-cols-3 gap-x-3 gap-y-4">
@@ -392,7 +415,9 @@ const Profile = () => {
                         </div>
 
                         <div className="flex flex-[0.6] w-full flex-col gap-4">
-                            <FeedPostPosting />
+                            {user?.uid === activeProfileUser?.uid && (
+                                <FeedPostPosting />
+                            )}
 
                             <FeedPost
                                 userData={users}
@@ -402,24 +427,24 @@ const Profile = () => {
                     </>
                 )}
 
-                {location.pathname === `/profile/${activeProfileUser?.uid}/about` && (
+                {getActiveRoute(Routes.PROFILE_ABOUT, location.pathname, { id: activeProfileUser?.uid }) && (
                     <Profile_About />
                 )}
 
-                {location.pathname === `/profile/${activeProfileUser?.uid}/friend` && (
+                {getActiveRoute(Routes.PROFILE_FRIEND, location.pathname, { id: activeProfileUser?.uid }) && (
                     <Profile_Friend
                         friendsData={acceptedFriends}
                     />
                 )}
 
-                {location.pathname === `/profile/${activeProfileUser?.uid}/photo` && (
+                {getActiveRoute(Routes.PROFILE_PHOTO, location.pathname, { id: activeProfileUser?.uid }) && (
                     <Profile_Photos
                         userData={activeProfileUser}
                         userPhotosData={userPostPhotos}
                     />
                 )}
 
-                {location.pathname === `/profile/${activeProfileUser?.uid}/video` && (
+                {getActiveRoute(Routes.PROFILE_VIDEO, location.pathname, { id: activeProfileUser?.uid }) && (
                     <Profile_Video
                         userVideosData={userPostVideos}
                     />

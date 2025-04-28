@@ -23,6 +23,7 @@ const Group_Feed = lazy(() => import("./pages/private/Group/Group_Feed"));
 const Reel_Create = lazy(() => import("./pages/private/Reel/Reel_Create"));
 const Group_Create = lazy(() => import("./pages/private/Group/Group_Create"));
 const Story_Create = lazy(() => import("./pages/private/Story/Story_Create"));
+const Friend_AllFriends = lazy(() => import("./pages/private/Friend/Friend_AllFriends"));
 
 const routes = createBrowserRouter([{
     element: <OuterContainer />,
@@ -47,7 +48,7 @@ const routes = createBrowserRouter([{
                 // Friends Page Section Related
                 { path: Routes.FRIEND.path, element: <Friend /> },
                 { path: Routes.FRIEND_AllREQUEST.path, element: <Friend /> },
-                { path: Routes.FRIEND_AllFRIENDS.path, element: <Friend /> },
+                { path: Routes.FRIEND_AllFRIENDS.path, element: <Friend_AllFriends /> },
 
                 // Videos Page Section Related
                 { path: Routes.VIDEO.path, element: <Video /> },
@@ -83,6 +84,17 @@ const routes = createBrowserRouter([{
                 { path: Routes.PROFILE_PHOTO.path, element: <Profile /> },
                 { path: Routes.PROFILE_VIDEO.path, element: <Profile /> },
                 { path: Routes.PROFILE_FRIEND.path, element: <Profile /> },
+                {
+                    path: Routes.PROFILE.alternativePath,
+                    element: <Friend_AllFriends />,
+                    children: [
+                        { path: "", element: <Profile context="friend" /> },
+                        { path: "about", element: <Profile context="friend" /> },
+                        { path: "friend", element: <Profile context="friend" /> },
+                        { path: "photo", element: <Profile context="friend" /> },
+                        { path: "video", element: <Profile context="friend" /> }
+                    ]
+                },
 
                 // Saved Page Section Related
                 { path: Routes.SAVED.path, element: <Saved /> },

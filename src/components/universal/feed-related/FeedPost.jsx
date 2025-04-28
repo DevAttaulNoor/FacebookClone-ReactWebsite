@@ -13,7 +13,7 @@ import { ModalLayout } from '@layouts/ModalLayout';
 import { timeAgoInitials } from '@utils/TimeModule';
 import { BasicButton } from '../buttons/BasicButton';
 import { TextareaField } from '../inputs/TextareaField';
-import { handleMediaChange } from '@utils/mediaHandling';
+import { handleMediaChange } from '@utils/MediaHandling';
 import { BasicDropdown } from '../dropdowns/BasicDropdown';
 
 const feedPostingOptions = [

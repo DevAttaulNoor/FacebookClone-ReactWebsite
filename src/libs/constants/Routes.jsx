@@ -35,6 +35,12 @@ export const Routes = {
         metaTitle: "All friends",
         metaDescription: "All friends",
     },
+    FRIEND_AllFRIENDS_FRIEND: {
+        path: "/friend/friendlist/:id",
+        title: "All friends friend",
+        metaTitle: "All friends friend",
+        metaDescription: "All friends friend",
+    },
     SAVED: {
         path: "/saved",
         title: "Saved",
@@ -151,30 +157,35 @@ export const Routes = {
     },
     PROFILE: {
         path: "/profile/:id",
+        alternativePath: "/friend/friendlist/:id",
         title: "Profile",
         metaTitle: "Profile",
         metaDescription: "Profile",
     },
     PROFILE_ABOUT: {
         path: "/profile/:id/about",
+        alternativePath: "/friend/friendlist/:id/about",
         title: "Intro",
         metaTitle: "About",
         metaDescription: "About",
     },
     PROFILE_VIDEO: {
         path: "/profile/:id/video",
+        alternativePath: "/friend/friendlist/:id/video",
         title: "Video",
         metaTitle: "Video",
         metaDescription: "Video",
     },
     PROFILE_PHOTO: {
         path: "/profile/:id/photo",
+        alternativePath: "/friend/friendlist/:id/photo",
         title: "Photo",
         metaTitle: "Photo",
         metaDescription: "Photo",
     },
     PROFILE_FRIEND: {
         path: "/profile/:id/friend",
+        alternativePath: "/friend/friendlist/:id/friend",
         title: "Friend",
         metaTitle: "Friend",
         metaDescription: "Friend",
