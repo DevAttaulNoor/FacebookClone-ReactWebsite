@@ -10,6 +10,7 @@ import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import Feed_Friend from "./Feed_Friend";
+import { useGroups } from "@hooks/useGroups";
 
 const feedLeftbarOptions = [
     {
@@ -30,8 +31,13 @@ const Feed = () => {
     const location = useLocation();
     const { user } = useAuth();
     const { users } = useUsers();
-    const { posts } = usePosts();
+    const { posts, groupPosts } = usePosts();
     const { acceptedFriends } = useFriends(user.uid);
+    const { userGroupsJoined, userGroupsCreated } = useGroups(user?.uid);
+    const userRelatedGroups = userGroupsCreated.concat(userGroupsJoined)
+    const groupFeed = groupPosts.filter(data => userRelatedGroups.map(group => group.adminId === data.adminId))
+    const userRelatedPosts = posts?.filter(data => (data.uid === user?.uid) || (acceptedFriends.some(friend => friend.uid === data.uid)));
+    const allFeed = groupFeed.concat(userRelatedPosts)
 
     const friendFeed = useMemo(() => {
         if (!posts || !acceptedFriends) return [];
@@ -43,7 +49,7 @@ const Feed = () => {
 
     return (
         <div className="pageWithLeftbarStyle">
-            <LeftbarLayout title="Stories">
+            <LeftbarLayout title="Feeds">
                 <div className="flex flex-col gap-1">
                     {feedLeftbarOptions.map((data) => (
                         <NavLink
@@ -69,8 +75,10 @@ const Feed = () => {
                 {location.pathname === Routes.FEED.path && (
                     <FeedPost
                         userData={users}
-                        postData={posts}
-                        postContainerStyle="w-1/2"
+                        postData={allFeed}
+                        groupData={userRelatedGroups}
+                        usedInGroupPosting={true}
+                        postContainerStyle="feedPostWidth"
                     />
                 )}
 
@@ -78,7 +86,7 @@ const Feed = () => {
                     <Feed_Friend
                         userData={users}
                         postData={friendFeed}
-                        postContainerStyle="w-1/2"
+                        postContainerStyle="feedPostWidth"
                     />
                 )}
             </div>

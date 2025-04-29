@@ -239,11 +239,13 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                 const activeGroup = groupData?.find(group => group.id === data.groupId)
                 const userReacted = data?.reactions?.some(reaction => reaction.uid == activeUser?.uid)
 
+                console.log(data.groupId)
+
                 return (
                     <div key={data.id} className={`${postContainerStyle} flex flex-col gap-3 rounded-xl shadow-customFull2 bg-white`}>
                         <div className="relative flex items-center justify-between p-4 pb-0 z-[5]">
-                            <div className={`${usedInGroupPosting ? 'gap-3.5' : 'gap-2.5'} flex items-center`}>
-                                {usedInGroupPosting ? (
+                            <div className={`${(usedInGroupPosting && data.groupId) ? 'gap-3.5' : 'gap-2.5'} flex items-center`}>
+                                {(usedInGroupPosting && data.groupId) ? (
                                     <>
                                         {data?.isAnonymous ? (
                                             <div className="relative">
@@ -286,7 +288,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                 )}
 
                                 <div>
-                                    {usedInGroupPosting ? (
+                                    {(usedInGroupPosting && data.groupId) ? (
                                         <>
                                             <Link
                                                 to={`/group/${activeGroup?.groupId}`}

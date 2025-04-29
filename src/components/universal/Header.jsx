@@ -259,7 +259,7 @@ export const Header = () => {
                             }}
                         />
 
-                        <div className='flex flex-col gap-1'>
+                        <div className='headerOptionDropdownContentStyle'>
                             {chats?.map((data, index) => {
                                 const chatUser = users?.find(elem => (elem.uid === data.chats[0].senderId) || (elem.uid === data.chats[0].receiverId))
 
@@ -312,7 +312,7 @@ export const Header = () => {
                             </button>
                         </div>
 
-                        <div className='flex flex-col gap-1'>
+                        <div className='headerOptionDropdownContentStyle'>
                             {user?.notifications?.map((data, index) => {
                                 const notificationRelatedUser = users?.find(elem => (elem.uid === data.uid) || (elem.uid === data.friendId))
 

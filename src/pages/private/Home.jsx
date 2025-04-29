@@ -119,7 +119,7 @@ const Home = () => {
                 </p>
             </div>
 
-            <div className="max-w-[600px] w-full flex flex-col py-4 mx-auto gap-4">
+            <div className="feedPostWidth flex flex-col py-4 mx-auto gap-4">
                 <FeedStory />
 
                 <FeedPostPosting />

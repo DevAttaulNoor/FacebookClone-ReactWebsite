@@ -64,7 +64,7 @@ const Video = () => {
                         activeUser={user}
                         userData={users}
                         postData={friendsVideoPosts}
-                        postContainerStyle="w-2/3"
+                        postContainerStyle="feedPostWidth"
                     />
                 )}
 

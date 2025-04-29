@@ -164,7 +164,7 @@ const Group_Feed = () => {
                             postData={groupJoinedPostsFeed}
                             groupData={userRelatedGroupsData}
                             usedInGroupPosting={true}
-                            postContainerStyle="w-2/3"
+                            postContainerStyle="feedPostWidth"
                         />
                     </div>
                 )}

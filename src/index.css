@@ -34,6 +34,14 @@
         @apply h-full w-96 flex-shrink-0 bg-white shadow-customFull2;
     }
 
+    .headerOptionDropdownContentStyle {
+        @apply flex h-full max-h-96 flex-col gap-1 overflow-y-auto;
+    }
+
+    .feedPostWidth {
+        @apply w-full max-w-[600px];
+    }
+
     .launchpageInputStyle {
         @apply rounded-md border border-slate-300;
     }
