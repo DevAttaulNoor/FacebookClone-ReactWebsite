@@ -239,8 +239,6 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                 const activeGroup = groupData?.find(group => group.id === data.groupId)
                 const userReacted = data?.reactions?.some(reaction => reaction.uid == activeUser?.uid)
 
-                console.log(data.groupId)
-
                 return (
                     <div key={data.id} className={`${postContainerStyle} flex flex-col gap-3 rounded-xl shadow-customFull2 bg-white`}>
                         <div className="relative flex items-center justify-between p-4 pb-0 z-[5]">

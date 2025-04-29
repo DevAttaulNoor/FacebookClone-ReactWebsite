@@ -26,11 +26,10 @@ const Group = () => {
     const { id } = useParams();
     const { user } = useAuth();
     const { users } = useUsers();
-    const { groups } = useGroups();
+    const { groups, userRelatedGroups } = useGroups(user?.uid);
     const { groupPosts } = usePosts();
     const activeGroup = groups?.find(data => data.id === id);
     const activeGroupPosts = groupPosts?.filter(data => data.groupId === activeGroup?.id)
-    const groupsJoined = groups?.filter(data => data.adminId === user?.uid || data.members?.some(mem => mem === user?.uid));
 
     const groupComponents = [
         { id: 1, title: 'About', path: generatePath({ path: Routes.GROUP_ABOUT.path }, { id: id }) },
@@ -135,7 +134,7 @@ const Group = () => {
                     </div>
 
                     <div className="flex gap-2">
-                        {groupsJoined ? (
+                        {userRelatedGroups ? (
                             <BasicButton
                                 btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
                                 btnData={{

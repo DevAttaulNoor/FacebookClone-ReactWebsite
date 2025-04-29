@@ -3,6 +3,7 @@ import { NavLink, useLocation } from "react-router";
 import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
+import { useGroups } from "@hooks/useGroups";
 import { useFriends } from "@hooks/useFriends";
 import { SvgIcons } from "@constants/SvgIcons";
 import { useAuth } from "@contexts/AuthContext";
@@ -10,7 +11,6 @@ import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import Feed_Friend from "./Feed_Friend";
-import { useGroups } from "@hooks/useGroups";
 
 const feedLeftbarOptions = [
     {
@@ -33,8 +33,7 @@ const Feed = () => {
     const { users } = useUsers();
     const { posts, groupPosts } = usePosts();
     const { acceptedFriends } = useFriends(user.uid);
-    const { userGroupsJoined, userGroupsCreated } = useGroups(user?.uid);
-    const userRelatedGroups = userGroupsCreated.concat(userGroupsJoined)
+    const { userRelatedGroups } = useGroups(user?.uid);
     const groupFeed = groupPosts.filter(data => userRelatedGroups.map(group => group.adminId === data.adminId))
     const userRelatedPosts = posts?.filter(data => (data.uid === user?.uid) || (acceptedFriends.some(friend => friend.uid === data.uid)));
     const allFeed = groupFeed.concat(userRelatedPosts)

@@ -3,7 +3,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@services/firebase";
 import { GroupCard } from "@components/group-related/GroupCard"
 
-const Group_Discover = ({ userData, groupsData }) => {
+const Group_Discover = ({ userData, groupsData, userRelatedGroup }) => {
     const [loading, setLoading] = useState(false);
     const groupsToExplore = groupsData?.filter(
         data =>
@@ -45,6 +45,7 @@ const Group_Discover = ({ userData, groupsData }) => {
                         userData={userData}
                         groupData={data}
                         joiningLoading={loading}
+                        userRelatedGroup={userRelatedGroup}
                         handleGroupJoining={handleGroupJoining}
                     />
                 ))}

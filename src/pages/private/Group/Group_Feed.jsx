@@ -39,10 +39,8 @@ const Group_Feed = () => {
     const { user } = useAuth();
     const { users } = useUsers();
     const { groupPosts } = usePosts();
-    const { groups, userGroupsJoined, userGroupsCreated } = useGroups(user.uid);
-    const userRelatedGroupsData = userGroupsJoined.concat(userGroupsCreated);
-    const userRelatedGroupIds = userRelatedGroupsData.map(group => group.id);
-    const groupJoinedPostsFeed = groupPosts?.filter(post => userRelatedGroupIds.includes(post.groupId));
+    const { groups, userGroupsJoined, userGroupsCreated, userRelatedGroups } = useGroups(user?.uid);
+    const groupJoinedPostsFeed = groupPosts.filter(data => userRelatedGroups.map(group => group.adminId === data.adminId));
 
     return (
         <div className="pageWithLeftbarStyle">
@@ -162,7 +160,7 @@ const Group_Feed = () => {
                             activeUser={user}
                             userData={users}
                             postData={groupJoinedPostsFeed}
-                            groupData={userRelatedGroupsData}
+                            groupData={userRelatedGroups}
                             usedInGroupPosting={true}
                             postContainerStyle="feedPostWidth"
                         />
@@ -173,13 +171,14 @@ const Group_Feed = () => {
                     <Group_Discover
                         userData={user}
                         groupsData={groups}
+                        userRelatedGroup={userRelatedGroups}
                     />
                 )}
 
                 {location.pathname === Routes.GROUP_JOINED.path && (
                     <Group_Joined
                         userData={user}
-                        groupsData={groups}
+                        groupsData={userRelatedGroups}
                     />
                 )}
             </div>

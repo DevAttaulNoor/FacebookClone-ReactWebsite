@@ -5,10 +5,9 @@ export const GroupCard = ({
     userData,
     groupData,
     joiningLoading,
+    userRelatedGroup,
     handleGroupJoining
 }) => {
-    const groupJoined = groupData.adminId === userData?.uid || groupData.members?.some(mem => mem === userData?.uid)
-
     return (
         <div className='flex flex-col rounded-lg gap-1.5 shadow-customFull2 bg-white'>
             {groupData?.coverPhoto ? (
@@ -31,7 +30,7 @@ export const GroupCard = ({
             </div>
 
             <div className='flex flex-col p-3 gap-2'>
-                {groupJoined ? (
+                {userRelatedGroup ? (
                     <BasicButton
                         btnStyleClass='bg-customGray-100 hover:bg-customGray-default'
                         btnData={{

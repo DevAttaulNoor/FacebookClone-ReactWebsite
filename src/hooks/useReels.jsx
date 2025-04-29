@@ -1,36 +1,21 @@
 import { useEffect, useState } from "react";
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "@services/firebase";
+import { useCollectionData } from "./useDataCollection";
 
 export const useReels = (userId) => {
-    const [reels, setReels] = useState([]);
+    const { collectionData, loading, error } = useCollectionData('Reels');
     const [userReels, setUserReels] = useState([]);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const unsubscribeReels = onSnapshot(collection(db, 'Reels'), (snapshot) => {
-            const allReels = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            setReels(allReels);
+        if (userId && collectionData) {
+            const currentUserReels = collectionData?.filter(reel => reel.uid === userId);
+            setUserReels(currentUserReels);
+        }
+    }, [userId, collectionData]);
 
-            // Filter stories for the current user
-            if (userId) {
-                const currentUserReels = allReels.filter(story => story.uid === userId);
-                setUserReels(currentUserReels);
-            }
-
-            setLoading(false);
-        },
-            (err) => {
-                setError(err);
-                setLoading(false);
-            }
-        );
-
-        return () => {
-            unsubscribeReels();
-        };
-    }, [userId]);
-
-    return { reels, userReels, loading, error };
-}
+    return {
+        reels: collectionData ? collectionData : null,
+        userReels: userId ? userReels : null,
+        loading,
+        error
+    };
+};

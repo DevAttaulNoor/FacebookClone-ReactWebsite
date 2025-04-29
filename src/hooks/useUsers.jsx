@@ -1,38 +1,21 @@
-import { useState, useEffect } from 'react';
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from '@services/firebase';
+import { useEffect, useState } from "react";
+import { useCollectionData } from "./useDataCollection";
 
 export const useUsers = (userId) => {
-    const [users, setUsers] = useState([]);
+    const { collectionData, loading, error } = useCollectionData('Users');
     const [usersExceptCurrent, setUsersExceptCurrent] = useState([]);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const usersQuery = collection(db, 'Users');
+        if (userId && collectionData) {
+            const exceptCurrentUser = collectionData?.filter(user => user.uid !== userId);
+            setUsersExceptCurrent(exceptCurrentUser);
+        }
+    }, [userId, collectionData]);
 
-        const unsubscribeUsers = onSnapshot(usersQuery, (snapshot) => {
-            const allUsers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            setUsers(allUsers);
-
-            // Filter out the current user
-            if (userId) {
-                const currentUser = allUsers.filter(user => user.uid !== userId);
-                setUsersExceptCurrent(currentUser);
-            }
-
-            setLoading(false);
-        },
-            (err) => {
-                setError(err);
-                setLoading(false);
-            }
-        );
-
-        return () => {
-            unsubscribeUsers();
-        };
-    }, [userId]);
-
-    return { usersExceptCurrent, users, loading, error };
+    return {
+        users: collectionData ? collectionData : null,
+        usersExceptCurrent: userId ? usersExceptCurrent : null,
+        loading,
+        error
+    };
 };

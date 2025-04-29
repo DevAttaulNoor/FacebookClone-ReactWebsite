@@ -1,28 +1,11 @@
-import { useEffect, useState } from "react";
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "@services/firebase";
+import { useCollectionData } from "./useDataCollection";
 
 export const useChats = () => {
-    const [chats, setChats] = useState([]);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const { collectionData, loading, error } = useCollectionData('Chats');
 
-    useEffect(() => {
-        const unsubscribeChats = onSnapshot(collection(db, 'Chats'), (snapshot) => {
-            const allChats = snapshot.docs.map(doc => ({ ...doc.data() }));
-            setChats(allChats);
-            setLoading(false);
-        },
-            (err) => {
-                setError(err);
-                setLoading(false);
-            }
-        );
-
-        return () => {
-            unsubscribeChats();
-        };
-    }, []);
-
-    return { chats, loading, error };
+    return {
+        chats: collectionData ? collectionData : null,
+        loading,
+        error
+    };
 };
