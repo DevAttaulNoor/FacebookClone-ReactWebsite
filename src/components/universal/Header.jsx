@@ -7,6 +7,7 @@ import { useUsers } from "@hooks/useUsers";
 import { Routes } from "@constants/Routes";
 import { useAuth } from "@contexts/AuthContext";
 import { ProfileAvatar } from "./ProfileAvatar";
+import { TermsAndLinks } from "./TermsAndLinks";
 import { InputField } from "./inputs/InputField";
 import { SearchBar } from "./searchBar/SearchBar";
 import { ReactIcons } from "@constants/ReactIcons";
@@ -115,20 +116,20 @@ export const Header = () => {
     ];
 
     return (
-        <div className="grid grid-cols-[1fr_2fr_1fr] px-3 shadow z-30 bg-white">
+        <div className="grid grid-cols-[1fr_2fr_1fr] px-3 gap-4 shadow z-30 bg-white">
             <div className="relative flex items-center gap-2 py-2">
                 <Link to={Routes.HOME.path}>
                     <img
                         src={fblogo}
                         alt="logo of facebook"
-                        className="w-10"
+                        className="max-w-10"
                     />
                 </Link>
 
                 <SearchBar
-                    containerStyle="max-w-64"
+                    containerStyle="max-w-10 py-2.5 cursor-pointer lg:max-w-64"
                     containerOnClick={() => setIsOpen(prev => ({ ...prev, userSearchDropdown: true }))}
-                    inputStyle={"w-full bg-transparent py-2.5 text-sm"}
+                    inputStyle={"w-full text-sm bg-transparent"}
                     inputData={{
                         type: 'text',
                         value: inputValue.userSearch,
@@ -140,7 +141,7 @@ export const Header = () => {
                 <BasicDropdown
                     isOpen={isOpen.userSearchDropdown}
                     isClose={() => setIsOpen(prev => ({ ...prev, userSearchDropdown: false }))}
-                    dropdownContainerStyle="dropdownContainerStyle1 top-0 -left-[10px] max-h-96 shadow-xl"
+                    dropdownContainerStyle="dropdownContainerStyle1 top-0 -left-[10px] max-h-96 shadow-xl z-10"
                 >
                     <div className="flex items-center gap-2">
                         <span
@@ -199,9 +200,7 @@ export const Header = () => {
                         key={data.id}
                         to={data.path}
                         title={data.title}
-                        className={({ isActive }) =>
-                            `${isActive ? "before:absolute before:-bottom-1 before:left-0 before:right-0 before:h-[2px] before:bg-customBlue-300" : "hover:bg-customGray-default"} relative flex cursor-pointer items-center rounded-lg px-12`
-                        }
+                        className={({ isActive }) => `${isActive ? "before:absolute before:-bottom-1 before:left-0 before:right-0 before:h-[2px] before:bg-customBlue-300" : "hover:bg-customGray-default"} hidden relative items-center px-4 rounded-lg cursor-pointer sm:px-6 md:flex md:px-8 lg:px-10 xl:px-12`}
                     >
                         {({ isActive }) =>
                             isActive ? (
@@ -230,17 +229,13 @@ export const Header = () => {
                     </button>
                 ))}
 
-                <button
+                <ProfileAvatar
+                    userData={user}
                     title={"Profile"}
                     onClick={() => setIsOpen(prev => ({ ...prev, profileDropdown: true }))}
-                    className="cursor-pointer"
-                >
-                    <ProfileAvatar
-                        userData={user}
-                        imageStyleClass="w-11 h-11"
-                        iconStyleClass="flex items-center justify-center rounded-full bg-customGray-100 p-2.5 text-2xl"
-                    />
-                </button>
+                    imageStyleClass="min-w-11 min-h-11 max-w-11 max-h-11"
+                    iconStyleClass="flex items-center justify-center rounded-full bg-customGray-100 p-2.5 text-2xl"
+                />
 
                 <>
                     <BasicDropdown
@@ -399,9 +394,7 @@ export const Header = () => {
                             </div>
                         ))}
 
-                        <p className="text-xs whitespace-pre-wrap px-1.5 mt-1.5 text-customGray-300">
-                            <span className="cursor-pointer hover:underline">Privacy</span> · <span className="cursor-pointer hover:underline">Terms</span> · <span className="cursor-pointer hover:underline">Advertising</span> · <span className="cursor-pointer hover:underline">Ad choices</span> · <span className="cursor-pointer hover:underline">Cookies</span> · <span className="cursor-pointer hover:underline">More</span> · <span className="cursor-pointer hover:underline">Meta © 2023</span>
-                        </p>
+                        <TermsAndLinks containerStyle="px-1.5 mt-1.5" />
                     </BasicDropdown>
                 </>
             </div>

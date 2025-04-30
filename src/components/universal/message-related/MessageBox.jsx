@@ -64,7 +64,7 @@ export const MessageBox = ({ isOpen, isClose }) => {
     };
 
     return (
-        <div className='absolute bottom-0 right-36 w-80 h-96 flex flex-col rounded-t-md shadow-customFull2 z-10 bg-white'>
+        <div className='absolute bottom-0 right-24 w-64 h-96 flex flex-col rounded-t-md shadow-customFull2 z-10 bg-white sm:w-72 md:right-28 md:w-80 lg:right-36'>
             <div className={`${isOpen ? 'border-b' : 'pb-0'} flex items-center justify-between p-3`}>
                 {isOpen ? (
                     <h5 className="text-sm font-medium">{selectedUserData?.username}</h5>

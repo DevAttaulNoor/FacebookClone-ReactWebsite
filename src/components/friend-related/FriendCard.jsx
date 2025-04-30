@@ -10,7 +10,7 @@ export const FriendCard = ({
     handleDeclineFriendRequest
 }) => {
     return (
-        <div className='flex flex-col justify-between gap-1.5 border rounded-lg shadow-customFull2 border-slate-300 bg-white'>
+        <div className='max-w-72 w-full flex flex-col justify-between mx-auto gap-1.5 border rounded-lg shadow-customFull2 border-slate-300 bg-white'>
             <div className="flex flex-col gap-1.5">
                 {userData?.profilePhoto ? (
                     <img

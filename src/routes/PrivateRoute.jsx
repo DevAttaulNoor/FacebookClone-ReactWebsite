@@ -21,7 +21,7 @@ export const PrivateRoute = () => {
             <Outlet />
             <span
                 onClick={() => setIsMessageBoxVisisble(true)}
-                className="absolute bottom-4 right-8 text-2xl p-3.5 rounded-full shadow-customFull2 cursor-pointer bg-white hover:bg-customGray-default"
+                className="absolute bottom-3 right-7 text-2xl p-3 rounded-full shadow-customFull2 cursor-pointer bg-white hover:bg-customGray-default lg:bottom-4 lg:right-8 lg:p-3.5"
             >
                 {ReactIcons.EDIT_PENCIL_BOX}
             </span>

@@ -9,6 +9,7 @@ import { useFriends } from "@hooks/useFriends";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
+import { TermsAndLinks } from "@components/universal/TermsAndLinks";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import { FeedStory } from "@components/universal/feed-related/FeedStory";
 import { HomeLeftbarContentLayout } from "@layouts/HomeLeftbarContentLayout";
@@ -65,8 +66,8 @@ const Home = () => {
     ];
 
     return (
-        <div className="relative w-full grid grid-cols-[1fr_2fr_1fr] gap-10 overflow-y-auto">
-            <div className="homeSidebarStyle">
+        <div className="relative w-full grid grid-cols-[1fr] gap-8 overflow-y-auto md:grid-cols-[2fr_1fr] lg:grid-cols-[1fr_2fr_1fr]">
+            <div className="hidden homeSidebarStyle lg:flex">
                 <Link
                     to={`/profile/${user.uid}`}
                     className="flex cursor-pointer items-center gap-3 rounded-lg p-1.5 hover:bg-customGray-100"
@@ -91,35 +92,10 @@ const Home = () => {
                     </Link>
                 ))}
 
-                <p className="whitespace-pre-wrap text-xs px-3 text-slate-500">
-                    <span className="cursor-pointer hover:underline">
-                        Privacy
-                    </span>{" "}
-                    ·{" "}
-                    <span className="cursor-pointer hover:underline">
-                        Terms
-                    </span>{" "}
-                    ·{" "}
-                    <span className="cursor-pointer hover:underline">
-                        Advertising
-                    </span>{" "}
-                    ·{" "}
-                    <span className="cursor-pointer hover:underline">
-                        Ad choices
-                    </span>{" "}
-                    ·{" "}
-                    <span className="cursor-pointer hover:underline">
-                        Cookies
-                    </span>{" "}
-                    ·{" "}
-                    <span className="cursor-pointer hover:underline">
-                        More
-                    </span>{" "}
-                    · <span>Meta © 2023</span>
-                </p>
+                <TermsAndLinks containerStyle="px-3" />
             </div>
 
-            <div className="feedPostWidth flex flex-col py-4 mx-auto gap-4">
+            <div className="feedPostWidth flex flex-col p-4 mx-auto gap-4">
                 <FeedStory />
 
                 <FeedPostPosting />
@@ -131,7 +107,7 @@ const Home = () => {
                 />
             </div>
 
-            <div className="homeSidebarStyle">
+            <div className="hidden homeSidebarStyle md:flex">
                 <HomeLeftbarContentLayout title={'Contacts'}>
                     <div className="flex flex-col gap-1.5">
                         {acceptedFriends.map((user) => (

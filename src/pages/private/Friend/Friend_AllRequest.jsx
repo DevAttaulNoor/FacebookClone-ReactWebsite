@@ -12,7 +12,7 @@ const Friend_AllRequest = ({
         <div className="flex flex-col gap-4">
             <h1 className="text-xl font-bold">All the Requests</h1>
 
-            <div className="grid grid-cols-5 gap-3">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
                 {userData.map((data) => (
                     <FriendCard
                         key={data.uid}
