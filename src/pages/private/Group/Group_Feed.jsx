@@ -45,20 +45,20 @@ const Group_Feed = () => {
     return (
         <div className="pageWithLeftbarStyle">
             <LeftbarLayout title="Groups" icon={ReactIcons.SETTING}>
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-wrap gap-2 sm:flex-col sm:gap-1">
                     {groupsLeftbarOptions.map((data) => (
                         <NavLink
                             end
                             key={data.id}
                             to={data.path}
-                            className={({ isActive }) => `${isActive ? "bg-customGray-default" : "hover:bg-customGray-default"} flex items-center justify-between p-2 rounded-lg cursor-pointer`}
+                            className={({ isActive }) => `${isActive ? "bg-customGray-default" : "hover:bg-customGray-default"} flex items-center justify-between px-3.5 py-2 rounded-3xl cursor-pointer sm:p-2 sm:rounded-lg`}
                         >
                             {({ isActive }) => (
                                 <div className="flex items-center gap-3">
-                                    <span className={`${isActive ? "text-white bg-customBlue-300" : "bg-customGray-100"} text-2xl p-2 rounded-full`}>
+                                    <span className={`${isActive ? "text-white bg-customBlue-300" : "bg-customGray-100"} hidden text-2xl p-2 rounded-full sm:block`}>
                                         {data.icon}
                                     </span>
-                                    <p className="font-medium">{data.title}</p>
+                                    <p className={`${isActive && "text-customBlue-300"} font-medium sm:text-black`}>{data.title}</p>
                                 </div>
                             )}
                         </NavLink>
@@ -153,7 +153,7 @@ const Group_Feed = () => {
                 )}
             </LeftbarLayout >
 
-            <div className="flex-1 p-8 overflow-x-hidden overflow-y-auto">
+            <div className="flex-1 p-4 overflow-x-hidden overflow-y-auto sm:p-5 md:p-6 lg:p-7 xl:p-8 2xl:p-10">
                 {location.pathname === Routes.GROUP_FEED.path && (
                     <div className="flex flex-col items-center gap-4">
                         <FeedPost

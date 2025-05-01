@@ -2,7 +2,7 @@ export const LeftbarLayout = ({ title, icon, children }) => {
     return (
         <div className='leftbarStyle py-3 px-2 z-[5]'>
             {(title || icon) && (
-                <div className="flex items-center justify-between px-2 mb-3">
+                <div className="flex items-center justify-between px-1 mb-3 sm:px-2">
                     <h5 className="text-2xl font-extrabold">{title}</h5>
 
                     {icon && (

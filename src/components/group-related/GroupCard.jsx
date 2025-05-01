@@ -9,7 +9,7 @@ export const GroupCard = ({
     handleGroupJoining
 }) => {
     return (
-        <div className='flex flex-col rounded-lg gap-1.5 shadow-customFull2 bg-white'>
+        <div className='max-w-72 flex flex-col rounded-lg mx-auto gap-1.5 shadow-customFull2 bg-white'>
             {groupData?.coverPhoto ? (
                 <img
                     src={groupData?.coverPhoto}

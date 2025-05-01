@@ -6,6 +6,10 @@ export default {
     ],
     theme: {
         extend: {
+            screens: {
+                xs: '450px',
+            },
+
             height: {
                 screenMinusHeader: 'calc(100vh - 56px)',
             },

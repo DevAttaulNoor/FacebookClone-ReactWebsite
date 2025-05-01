@@ -23,7 +23,7 @@ const Video_Saved = ({ activeUser, userData, postData }) => {
     };
 
     return (
-        <div className='w-full flex flex-col px-16 py-4 gap-4 overflow-y-auto'>
+        <div className='w-full flex flex-col gap-4 overflow-y-auto sm:px-4 sm:py-4 md:px-8 lg:px-12 xl:px-16'>
             {savedVideoPosts.length > 0 ? (
                 <>
                     {savedVideoPosts?.map((data) => {
@@ -80,7 +80,7 @@ const Video_Saved = ({ activeUser, userData, postData }) => {
                     })}
                 </>
             ) : (
-                <div className="w-full h-24 flex items-center justify-center text-xl font-semibold p-3 gap-4 rounded-md shadow-customFull2 text-customGray-300 bg-white">
+                <div className="w-full h-24 flex items-center justify-center text-center text-xl font-semibold p-3 gap-4 rounded-md shadow-customFull2 text-customGray-300 bg-white">
                     You do not have any saved items.
                 </div>
             )}

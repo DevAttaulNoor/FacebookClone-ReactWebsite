@@ -105,11 +105,11 @@ const Profile = () => {
 
     return (
         <div className="w-full h-full flex flex-col items-center overflow-y-auto">
-            <div className="w-full flex flex-col items-center shadow bg-white">
+            <div className="w-full flex flex-col items-center px-4 shadow bg-white">
                 {/* Cover Photo */}
                 <div
                     style={{ backgroundImage: `url(${activeProfileUser?.coverPhoto})` }}
-                    className="w-[1080px] h-[460px] flex items-end justify-end py-4 px-6 rounded-b-lg bg-cover bg-center bg-no-repeat bg-customGray-default"
+                    className="w-full max-w-[1080px] h-[300px] flex items-end justify-end py-4 px-6 rounded-b-lg bg-cover bg-center bg-no-repeat bg-customGray-default sm:h-[340px] md:h-[380px] lg:h-[400px] xl:h-[420px] 2xl:h-[460px]"
                 >
                     {activeProfileUser?.uid === user?.uid && (
                         <>
