@@ -109,7 +109,7 @@ const Profile = () => {
                 {/* Cover Photo */}
                 <div
                     style={{ backgroundImage: `url(${activeProfileUser?.coverPhoto})` }}
-                    className="w-full max-w-[1080px] h-[300px] flex items-end justify-end py-4 px-6 rounded-b-lg bg-cover bg-center bg-no-repeat bg-customGray-default sm:h-[340px] md:h-[380px] lg:h-[400px] xl:h-[420px] 2xl:h-[460px]"
+                    className="bg-cover bg-center bg-no-repeat h-[200px] max-w-[1080px] w-full flex items-end justify-end p-1.5 rounded-b-lg bg-customGray-default xs:h-[240px] xs:p-2 sm:h-[280px] sm:p-2.5 md:h-[320px] md:p-3 lg:h-[360px] lg:p-3.5 xl:h-[400px] xl:p-4 2xl:h-[450px]"
                 >
                     {activeProfileUser?.uid === user?.uid && (
                         <>
@@ -134,19 +134,19 @@ const Profile = () => {
                 </div>
 
                 {/* Profile Section */}
-                <div className="max-w-[1040px] w-full flex items-end justify-between p-4 -mt-16">
-                    <div className="flex items-end gap-4">
+                <div className="max-w-[1040px] w-full flex items-end justify-between p-1.5 -mt-10 xs:p-2 sm:p-2.5 md:p-3 md:-mt-14 lg:p-3.5 lg:-mt-16 xl:p-4 xl:-mt-[72px]">
+                    <div className="flex flex-col items-center gap-1.5 xs:flex-row xs:items-end xs:gap-2 sm:gap-2.5 md:gap-3 lg:gap-3.5 xl:gap-4">
                         <div className="relative">
                             <img
                                 src={activeProfileUser?.profilePhoto}
                                 alt={`profile image of ${activeProfileUser?.username}`}
-                                className="w-44 h-44 rounded-full border-4 border-white object-cover"
+                                className="w-24 h-24 rounded-full border-4 border-white object-cover xs:w-28 xs:h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 lg:w-40 lg:h-40 xl:w-44 xl:h-44"
                             />
 
                             {activeProfileUser?.uid == user?.uid && (
                                 <span
                                     onClick={() => profilePhotoRef.current.click()}
-                                    className="absolute bottom-2 right-2 p-2 text-lg bg-customGray-100 rounded-full cursor-pointer hover:bg-customGray-default"
+                                    className="absolute bottom-1 right-1 text-xs p-1.5 bg-customGray-100 rounded-full cursor-pointer hover:bg-customGray-default xs:bottom-1.5 xs:right-1.5 sm:text-sm md:bottom-2 md:right-2 md:text-base lg:bottom-2.5 lg:right-2.5 lg:p-2"
                                 >
                                     {ReactIcons.CAMERA}
 
@@ -161,11 +161,11 @@ const Profile = () => {
                             )}
                         </div>
 
-                        <div className={`${acceptedFriends?.length > 0 ? 'mb-2' : 'mb-14'} flex flex-col`}>
-                            <h3 className="text-[28px] font-bold">{activeProfileUser?.username}</h3>
+                        <div className={`${acceptedFriends?.length > 0 ? 'mb-0 sm:mb-1 xl:mb-2' : 'mb-14'} flex flex-col`}>
+                            <h3 className="text-lg font-bold xs:text-xl sm:text-2xl lg:text-3xl">{activeProfileUser?.username}</h3>
 
                             {acceptedFriends?.length > 0 && (
-                                <Link to={Routes.FRIEND_AllFRIENDS.path} className="w-fit text-sm text-customGray-200 cursor-pointer hover:underline">
+                                <Link to={Routes.FRIEND_AllFRIENDS.path} className="w-fit text-xs md:text-sm text-customGray-200 cursor-pointer hover:underline">
                                     {`${acceptedFriends?.length} ${acceptedFriends?.length > 1 ? 'friends' : 'friend'}`}
                                 </Link>
                             )}
@@ -179,7 +179,7 @@ const Profile = () => {
                                     >
                                         <ProfileAvatar
                                             userData={data}
-                                            imageStyleClass="w-10 h-10"
+                                            imageStyleClass="w-7 h-7 md:w-8 md:h-8 xl:w-9 xl:h-9"
                                             iconStyleClass="text-3xl"
                                         />
                                     </Link>
@@ -188,7 +188,7 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    <div className="flex gap-2">
+                    <div className="flex flex-col gap-2 sm:flex-row">
                         {activeProfileUser?.uid == user?.uid ? (
                             <>
                                 <BasicButton
@@ -242,7 +242,7 @@ const Profile = () => {
                 </div>
 
                 {/* Profile Navigation */}
-                <div className="max-w-[1040px] w-full flex gap-1 px-4 border-t border-slate-400">
+                <div className="max-w-[1040px] w-full flex gap-1 px-1.5 border-t border-slate-400 xs:px-2 sm:px-2.5 md:px-3 lg:px-3.5 xl:px-4">
                     {profileComponents.map(({ id, title, path }) => (
                         <NavLink
                             end
@@ -250,7 +250,7 @@ const Profile = () => {
                             to={path}
                             className={({ isActive }) => {
                                 const isActuallyActive = isActive || (id === 1 && location.pathname === `/profile/${activeProfileUser?.uid}`);
-                                return `${isActuallyActive ? 'text-customBlue-default before:absolute before:-bottom-1 before:left-0 before:right-0 before:h-[2px] before:bg-[#2381fa]' : 'text-customGray-300 hover:bg-customGray-default'} relative text-sm font-semibold p-4 my-1 rounded-lg cursor-pointer`;
+                                return `${isActuallyActive ? 'text-customBlue-default before:absolute before:-bottom-1 before:left-0 before:right-0 before:h-[2px] before:bg-[#2381fa]' : 'text-customGray-300 hover:bg-customGray-default'} relative text-xs font-semibold p-2 my-1 rounded-lg cursor-pointer xs:p-2.5 sm:p-3 md:text-sm lg:p-3.5 2xl:p-4`;
                             }}
                         >
                             {title}
@@ -260,7 +260,7 @@ const Profile = () => {
             </div>
 
             {/* Profile Page Components */}
-            <div className="max-w-[1040px] w-full flex p-4 gap-4">
+            <div className="max-w-[1040px] w-full flex flex-col p-4 gap-4 sm:flex-row">
                 {getActiveRoute(Routes.PROFILE, location.pathname, { id: activeProfileUser?.uid }) && (
                     <>
                         <div className="flex flex-[0.4] flex-col gap-4">
@@ -337,11 +337,11 @@ const Profile = () => {
                                 path={getPreferredPath(Routes.PROFILE_PHOTO, { id: activeProfileUser?.uid }, location.pathname)}
                                 title={Routes.PROFILE_PHOTO.title}
                             >
-                                <div className="grid grid-cols-3 gap-2">
+                                <div className="grid grid-cols-3 gap-2 xs:grid-cols-4 sm:grid-cols-3">
                                     <img
                                         src={activeProfileUser?.profilePhoto}
                                         alt={`profile image of ${activeProfileUser?.username}`}
-                                        className="w-full h-full object-cover"
+                                        className="max-h-32 h-full w-full shadow object-contain bg-slate-100 xs:max-h-36 sm:max-h-40"
                                     />
 
                                     {userPostPhotos.length > 0 && (
@@ -364,12 +364,12 @@ const Profile = () => {
                                     path={getPreferredPath(Routes.PROFILE_VIDEO, { id: activeProfileUser?.uid }, location.pathname)}
                                     title={Routes.PROFILE_VIDEO.title}
                                 >
-                                    <div className="grid grid-cols-3 gap-2">
+                                    <div className="grid grid-cols-3 gap-2 xs:grid-cols-4 sm:grid-cols-3">
                                         {userPostVideos.map((data) => (
                                             <video
                                                 controls
                                                 key={data.id}
-                                                className="w-full h-full object-cover"
+                                                className="max-h-32 h-full w-full shadow object-contain bg-slate-100 xs:max-h-36 sm:max-h-40"
                                             >
                                                 <source src={data.media} type="video/mp4" />
                                             </video>
@@ -383,7 +383,7 @@ const Profile = () => {
                                     path={getPreferredPath(Routes.PROFILE_FRIEND, { id: activeProfileUser?.uid }, location.pathname)}
                                     title={Routes.PROFILE_FRIEND.title}
                                 >
-                                    <div className="grid grid-cols-3 gap-x-3 gap-y-4">
+                                    <div className="grid grid-cols-3 gap-x-2 gap-y-3 xs:grid-cols-4 xs:gap-x-3 sm:grid-cols-3">
                                         {acceptedFriends?.map((data) => (
                                             <Link
                                                 key={data.uid}
@@ -392,11 +392,11 @@ const Profile = () => {
                                             >
                                                 <ProfileAvatar
                                                     userData={data}
-                                                    imageStyleClass="w-full h-full !rounded-lg"
+                                                    imageStyleClass="max-h-32 h-full w-full shadow !rounded-lg object-contain !bg-slate-100 xs:max-h-36 sm:max-h-40"
                                                     iconStyleClass="text-3xl"
                                                 />
 
-                                                <p className="text-xs font-medium">{data.username}</p>
+                                                <p className="text-[10px] xs:text-xs font-medium">{data.username}</p>
                                             </Link>
                                         ))}
                                     </div>

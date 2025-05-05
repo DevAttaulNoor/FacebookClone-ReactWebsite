@@ -10,12 +10,12 @@ export const Profile_Friend = ({ friendsData }) => {
     return (
         <div className="w-full p-4 rounded-lg shadow-customFull2 bg-white">
             <div className="flex items-center justify-between mb-2">
-                <h1 className="text-lg font-bold cursor-pointer hover:underline">Friends</h1>
+                <h1 className="text-lg font-bold cursor-pointer hover:underline xs:text-xl">Friends</h1>
 
                 <div className="flex items-center">
                     <SearchBar
-                        containerStyle="max-w-36"
-                        inputStyle={"w-full bg-transparent py-2.5 text-sm"}
+                        containerStyle="max-w-32 sm:max-w-36"
+                        inputStyle={"w-full bg-transparent py-2 text-xs sm:text-sm sm:py-2.5"}
                         inputData={{
                             type: 'text',
                             value: serachInput,
@@ -24,31 +24,29 @@ export const Profile_Friend = ({ friendsData }) => {
                         }}
                     />
 
-                    <p className="text-sm font-medium p-2 mx-1 rounded text-customBlue-default cursor-pointer hover:bg-customGray-100">Friends requests</p>
-                    <p className="text-sm font-medium p-2 mx-1 rounded text-customBlue-default cursor-pointer hover:bg-customGray-100">Find Friends</p>
-
-                    <span className="text-lg py-2 px-3 rounded-lg ml-1.5 cursor-pointer bg-customGray-100">{ReactIcons.OPTIONS_THREE_DOTS}</span>
+                    <p className="hidden text-sm font-medium p-2 mx-1 rounded text-customBlue-default cursor-pointer hover:bg-customGray-default sm:block">Friends requests</p>
+                    <p className="hidden text-sm font-medium p-2 mx-1 rounded text-customBlue-default cursor-pointer hover:bg-customGray-default md:block">Find Friends</p>
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 gap-2 xs:grid-cols-2 md:grid-cols-3 md:gap-3">
                 {friendsData.map((data) => (
                     <Link
                         key={data.uid}
                         to={`/profile/${data.uid}`}
-                        className="flex items-center justify-between p-2 rounded-lg border border-customGray-100"
+                        className="flex items-center justify-between p-1 rounded-lg border shadow-sm border-customGray-100 xs:p-1.5 sm:p-2"
                     >
-                        <div className="flex gap-2 items-center">
+                        <div className="flex gap-1.5 sm:gap-2 items-center">
                             <ProfileAvatar
                                 userData={data}
-                                imageStyleClass="w-16 h-16"
+                                imageStyleClass="w-12 h-12 xs:w-[52px] xs:h-[52px] sm:w-14 sm:h-14 md:w-[60px] md:h-[60px] xl:w-16 xl:h-16"
                                 iconStyleClass="text-[64px]"
                             />
 
-                            <p className="text-sm font-medium">{data.username}</p>
+                            <p className="text-xs font-medium sm:text-sm">{data.username}</p>
                         </div>
 
-                        <span className="p-2 rounded-full cursor-pointer hover:bg-customGray-100">{ReactIcons.OPTIONS_THREE_DOTS}</span>
+                        <span className="text-sm p-1 rounded-full cursor-pointer hover:bg-customGray-default xs:p-1.5 sm:text-base sm:p-2">{ReactIcons.OPTIONS_THREE_DOTS}</span>
                     </Link>
                 ))}
             </div>

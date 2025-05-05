@@ -390,12 +390,12 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                 <img
                                     src={data.media}
                                     alt={`image of ${data.media}`}
-                                    className="max-h-[500px] w-full h-full object-contain bg-customGray-default"
+                                    className="max-h-[420px] w-full h-full object-contain bg-customGray-default"
                                 />
                             )}
 
                             {data.mediaType === 'video' && (
-                                <video controls className="max-h-[500px] w-full h-full object-contain bg-customGray-default">
+                                <video controls className="max-h-[420px] w-full h-full object-contain bg-customGray-default">
                                     <source src={data.media} type="video/mp4" />
                                 </video>
                             )}

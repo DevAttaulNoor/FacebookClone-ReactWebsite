@@ -6,7 +6,7 @@ export const ProfileComponentLayout = ({ children, path, title, noSeeAll = true 
             <div className="flex items-center justify-between">
                 <Link
                     to={path}
-                    className="text-xl font-bold cursor-pointer hover:underline"
+                    className="text-lg font-bold cursor-pointer hover:underline xs:text-xl"
                 >
                     {title}
                 </Link>
@@ -14,7 +14,7 @@ export const ProfileComponentLayout = ({ children, path, title, noSeeAll = true 
                 {noSeeAll && (
                     <Link
                         to={path}
-                        className="text-customBlue-default p-2 rounded-md cursor-pointer hover:bg-customGray-default"
+                        className="text-xs text-customBlue-default p-2 rounded-md cursor-pointer hover:bg-customGray-default md:text-sm xl:text-base"
                     >
                         See all {title}
                     </Link>
