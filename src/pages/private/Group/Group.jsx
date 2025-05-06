@@ -1,33 +1,27 @@
-import { useRef } from "react";
-import { doc, updateDoc } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { Link, NavLink, useLocation, useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { useUsers } from "@hooks/useUsers";
 import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
 import { useGroups } from "@hooks/useGroups";
 import { useAuth } from "@contexts/AuthContext";
-import { db, storage } from "@services/firebase";
 import { ReactIcons } from "@constants/ReactIcons";
 import { formatJoinedDate } from "@utils/TimeModule";
 import { generatePath, getActiveRoute } from "@utils/PathResolver";
-import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { GroupComponentLayout } from "@layouts/GroupComponentLayout";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
-import { BasicButton } from "@components/universal/buttons/BasicButton";
 import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
+import { EntityInformationSection } from "@sections/universal/EntityInformationSection";
 import Group_About from "./Group_About";
 import Group_Media from "./Group_Media";
 import Group_People from "./Group_People";
 
 const Group = () => {
     const location = useLocation();
-    const coverPhotoRef = useRef();
     const { id } = useParams();
     const { user } = useAuth();
     const { users } = useUsers();
-    const { groups, userRelatedGroups } = useGroups(user?.uid);
     const { groupPosts } = usePosts();
+    const { groups, userRelatedGroups } = useGroups(user?.uid);
     const activeGroup = groups?.find(data => data.id === id);
     const activeGroupPosts = groupPosts?.filter(data => data.groupId === activeGroup?.id)
 
@@ -59,120 +53,22 @@ const Group = () => {
         },
     ];
 
-    const handlePhotoChange = async (photoTypeRef, groupId) => {
-        const file = photoTypeRef.current.files[0];
-        if (file) {
-            try {
-                let photo;
-                const storageRef = ref(storage, `Groups/${user.uid}/${file.name}`);
-                await uploadBytes(storageRef, file);
-                photo = await getDownloadURL(storageRef);
-
-                const groupDocRef = doc(db, "Groups", groupId);
-                await updateDoc(groupDocRef, { coverPhoto: photo });
-                console.log(`Success uploading coverPhoto`);
-            } catch (error) {
-                console.error(`Error uploading coverPhoto:`, error);
-            }
-        }
-    };
-
     return (
         <div className="w-full h-full flex flex-col items-center overflow-y-auto">
-            <div className="w-full flex flex-col items-center bg-white">
-                {/* Cover Photo */}
-                <div
-                    style={{ backgroundImage: `url(${activeGroup?.coverPhoto})` }}
-                    className="w-[1080px] h-[460px] flex items-end justify-end py-4 px-6 rounded-b-lg bg-cover bg-center bg-no-repeat bg-customGray-default"
-                >
-                    {activeGroup?.adminId === user?.uid && (
-                        <>
-                            <BasicButton
-                                btnStyleClass="!w-fit z-[5] bg-white hover:bg-slate-50"
-                                btnData={{
-                                    text: activeGroup?.adminId ? 'Edit' : 'Add',
-                                    icon: activeGroup?.adminId ? ReactIcons.EDIT_PENCIL : ReactIcons.ADD_PLUS,
-                                    onClick: () => coverPhotoRef.current.click(),
-                                }}
-                            />
-
-                            <input
-                                ref={coverPhotoRef}
-                                type="file"
-                                accept="image/*"
-                                className="hidden"
-                                onChange={() => handlePhotoChange('coverPhoto', coverPhotoRef)}
-                            />
-                        </>
-                    )}
-                </div>
-
-                {/* Profile Section */}
-                <div className="max-w-[1040px] w-full flex items-end justify-between p-4">
-                    <div className='flex flex-col'>
-                        <h3 className="text-[28px] font-bold">{activeGroup?.name}</h3>
-
-                        <div className="w-fit text-sm font-medium text-customGray-300 cursor-pointer hover:underline">
-                            {`${activeGroup?.members?.length} ${activeGroup?.members?.length > 1 ? 'members' : 'member'}`}
-                        </div>
-
-                        <div className="flex items-center">
-                            {activeGroup?.members?.slice(0, 8).map((data) => (
-                                <Link
-                                    key={data}
-                                    to={`/profile/${data}`}
-                                    className="rounded-full border-2 border-white -mr-2 last:-mr-0"
-                                >
-                                    <ProfileAvatar
-                                        userData={data}
-                                        imageStyleClass="w-10 h-10"
-                                        iconStyleClass="text-3xl"
-                                    />
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="flex gap-2">
-                        {userRelatedGroups ? (
-                            <BasicButton
-                                btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
-                                btnData={{
-                                    text: 'Joined',
-                                    icon: ReactIcons.GROUP,
-                                }}
-                            />
-                        ) : (
-                            <BasicButton
-                                btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
-                                btnData={{
-                                    text: 'Leave',
-                                    icon: ReactIcons.GROUP,
-                                }}
-                            />
-                        )}
-                    </div>
-                </div>
-
-                {/* Group Components Navigation */}
-                <div className="max-w-[1040px] w-full flex px-4 gap-1 border-t border-slate-400">
-                    {groupComponents.map((data) => (
-                        <NavLink
-                            end
-                            key={data.id}
-                            to={data.path}
-                            className={({ isActive }) => `${isActive ? 'text-customBlue-default before:absolute before:-bottom-1 before:left-0 before:right-0 before:h-[2px] before:bg-[#2381fa]' : 'text-customGray-300 hover:bg-customGray-default'} relative text-sm font-semibold p-4 my-1 rounded-lg cursor-pointer`}
-                        >
-                            {data.title}
-                        </NavLink>
-                    ))}
-                </div>
-            </div>
+            <EntityInformationSection
+                location={location}
+                entityType='group'
+                entityData={{
+                    activeEntityData: activeGroup,
+                    activeEntityRelatedData: userRelatedGroups
+                }}
+                componentsData={groupComponents}
+            />
 
             {/* Group Page Components */}
-            <div className="max-w-[1040px] w-full flex p-4 gap-4">
+            <div className="max-w-[1040px] w-full p-4">
                 {getActiveRoute(Routes.GROUP, location.pathname, { id: id }) && (
-                    <>
+                    <div className="flex flex-col-reverse gap-4 sm:flex-row">
                         <div className="flex flex-[0.6] w-full flex-col gap-4">
                             <FeedPostPosting
                                 groupData={activeGroup}
@@ -206,7 +102,7 @@ const Group = () => {
                                 ))}
                             </GroupComponentLayout>
                         </div>
-                    </>
+                    </div>
                 )}
 
                 {getActiveRoute(Routes.GROUP_ABOUT, location.pathname, { id: id }) && (

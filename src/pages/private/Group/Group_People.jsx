@@ -11,7 +11,7 @@ const Group_People = ({ usersData, groupData }) => {
             <GroupComponentLayout
                 title={`Members · ${groupData?.members?.length}`}
                 description={"New people and Pages who join this group will appear here."}
-                containerStyle={'w-[460px]'}
+                containerStyle={'max-w-[460px] w-full'}
             >
                 <div className="flex flex-col gap-3">
                     <h6 className="text-[14px] font-medium">{`Admins · 1`}</h6>

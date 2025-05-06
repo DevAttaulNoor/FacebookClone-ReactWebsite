@@ -35,7 +35,7 @@ const Group_About = ({ usersData, groupData }) => {
             <GroupComponentLayout
                 title={'About this group'}
                 description={groupData?.description}
-                containerStyle={'w-[460px]'}
+                containerStyle={'max-w-[460px] w-full'}
             >
                 {aboutSectionItems.map(data => (
                     <div key={data.id} className="flex items-center gap-2.5">
@@ -51,7 +51,7 @@ const Group_About = ({ usersData, groupData }) => {
 
             <GroupComponentLayout
                 title={`Members · ${groupData?.members?.length}`}
-                containerStyle={'w-[460px]'}
+                containerStyle={'max-w-[460px] w-full'}
             >
                 <div className="flex flex-col gap-2">
                     <div className="flex gap-2">
