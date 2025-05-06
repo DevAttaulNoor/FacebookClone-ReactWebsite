@@ -289,7 +289,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                     {(usedInGroupPosting && data.groupId) ? (
                                         <>
                                             <Link
-                                                to={`/group/${activeGroup?.groupId}`}
+                                                to={`/group/${activeGroup?.id}`}
                                                 className="text-sm font-medium cursor-pointer hover:underline"
                                             >
                                                 {activeGroup?.name}
