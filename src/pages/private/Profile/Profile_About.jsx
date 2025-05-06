@@ -58,7 +58,7 @@ const rightOptionData = [
     },
 ]
 
-export const Profile_About = () => {
+const Profile_About = () => {
     return (
         <div className="w-full flex rounded-lg shadow-customFull2 bg-white">
             <div className="flex-[0.35] p-2 border-r border-r-customGray-default sm:flex-[0.25] sm:p-2.5">
@@ -87,3 +87,5 @@ export const Profile_About = () => {
         </div>
     )
 }
+
+export default Profile_About

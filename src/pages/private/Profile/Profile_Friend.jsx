@@ -4,7 +4,7 @@ import { ReactIcons } from "@constants/ReactIcons"
 import { ProfileAvatar } from "@components/universal/ProfileAvatar"
 import { SearchBar } from "@components/universal/searchBar/SearchBar"
 
-export const Profile_Friend = ({ friendsData }) => {
+const Profile_Friend = ({ friendsData }) => {
     const [serachInput, setSearchInput] = useState('');
 
     return (
@@ -53,3 +53,5 @@ export const Profile_Friend = ({ friendsData }) => {
         </div>
     )
 }
+
+export default Profile_Friend

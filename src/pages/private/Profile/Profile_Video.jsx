@@ -1,6 +1,6 @@
 import { ReactIcons } from "@constants/ReactIcons"
 
-export const Profile_Video = ({ userVideosData }) => {
+const Profile_Video = ({ userVideosData }) => {
     return (
         <div className="w-full p-4 rounded-lg shadow-customFull2 bg-white">
             <div className="flex items-center justify-between mb-2">
@@ -26,3 +26,5 @@ export const Profile_Video = ({ userVideosData }) => {
         </div>
     )
 }
+
+export default Profile_Video
