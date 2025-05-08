@@ -9,13 +9,13 @@ import { InputField } from "../inputs/InputField";
 import { ReactIcons } from "@constants/ReactIcons";
 import { timeAgoInitials } from "@utils/TimeModule";
 
-export const MessageBox = ({ isOpen, isClose }) => {
+export const MessageBox = ({ isOpen, isClose, selectUser }) => {
     const { user } = useAuth();
     const { chats } = useChats();
     const { usersExceptCurrent } = useUsers(user?.uid);
     const [searchInput, setSearchInput] = useState('');
     const [messageInput, setMessageInput] = useState('');
-    const [selectedUser, setSelectedUser] = useState('');
+    const [selectedUser, setSelectedUser] = useState(selectUser);
     const searchedUser = usersExceptCurrent?.filter((data) => data?.username?.toLowerCase().includes(searchInput.toLowerCase()));
     const selectedUserData = usersExceptCurrent?.find((data) => (data?.uid === isOpen) || (data?.uid === selectedUser));
     const selectedUserChats = chats?.find((data) => (data.uids === `${user?.uid}${selectedUserData?.uid}`) || (data.uids === `${selectedUserData?.uid}${user?.uid}`));

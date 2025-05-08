@@ -13,6 +13,7 @@ import { SearchBar } from "./searchBar/SearchBar";
 import { ReactIcons } from "@constants/ReactIcons";
 import { timeAgoInitials } from "@utils/TimeModule";
 import { BasicDropdown } from "./dropdowns/BasicDropdown";
+import { useMessageBox } from "@contexts/MessageBoxContext";
 import fblogo from "/Images/fblogo.png";
 
 const headerLinks = [
@@ -50,6 +51,7 @@ export const Header = () => {
     const { user } = useAuth();
     const { chats } = useChats();
     const { users, usersExceptCurrent } = useUsers(user.uid);
+    const { setSelectedMessageUser, setIsMessageBoxOpen } = useMessageBox();
     const [active, setActive] = useState('All');
     const [isOpen, setIsOpen] = useState({
         userSearchDropdown: false,
@@ -261,6 +263,11 @@ export const Header = () => {
                                 return (
                                     <div
                                         key={index}
+                                        onClick={() => {
+                                            setIsMessageBoxOpen(true);
+                                            setSelectedMessageUser(chatUser?.id);
+                                            setIsOpen(prev => ({ ...prev, messageDropdown: false }));
+                                        }}
                                         className="flex items-center p-1 gap-2.5 rounded-md cursor-pointer hover:bg-customGray-default"
                                     >
                                         <ProfileAvatar
@@ -272,6 +279,7 @@ export const Header = () => {
                                         <div className="flex flex-col text-sm">
                                             <Link
                                                 to={`/profile/${chatUser?.uid}`}
+                                                onClick={() => setIsOpen(prev => ({ ...prev, messageDropdown: false }))}
                                                 className="text-sm font-medium cursor-pointer hover:underline"
                                             >
                                                 {chatUser?.username}
@@ -372,6 +380,7 @@ export const Header = () => {
                     >
                         <Link
                             to={`/profile/${user.uid}`}
+                            onClick={() => setIsOpen(prev => ({ ...prev, profileDropdown: false }))}
                             className='flex items-center p-1.5 gap-2.5 rounded-lg cursor-pointer hover:bg-customGray-default'
                         >
                             <ProfileAvatar
@@ -386,7 +395,10 @@ export const Header = () => {
                         {profileDropdownOptions.map((data) => (
                             <div
                                 key={data.id}
-                                onClick={data?.onClick}
+                                onClick={() => {
+                                    data?.onClick?.();
+                                    setIsOpen(prev => ({ ...prev, profileDropdown: false }));
+                                }}
                                 className='flex items-center p-1.5 gap-2.5 rounded-lg cursor-pointer hover:bg-customGray-default'
                             >
                                 <span className="text-xl p-2 rounded-full bg-customGray-100">{data.icon}</span>
@@ -398,6 +410,6 @@ export const Header = () => {
                     </BasicDropdown>
                 </>
             </div>
-        </div>
+        </div >
     );
 };

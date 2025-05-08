@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router";
 import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
@@ -8,12 +7,12 @@ import { SvgIcons } from "@constants/SvgIcons";
 import { useFriends } from "@hooks/useFriends";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
+import { useMessageBox } from "@contexts/MessageBoxContext";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { TermsAndLinks } from "@components/universal/TermsAndLinks";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import { FeedStory } from "@components/universal/feed-related/FeedStory";
 import { HomeLeftbarContentLayout } from "@layouts/HomeLeftbarContentLayout";
-import { MessageBox } from "@components/universal/message-related/MessageBox";
 import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
 
 const Home = () => {
@@ -22,7 +21,7 @@ const Home = () => {
     const { users } = useUsers();
     const { reels } = useReels();
     const { acceptedFriends } = useFriends(user.uid);
-    const [isMessageBoxVisible, setIsMessageBoxVisisble] = useState(null);
+    const { setSelectedMessageUser, setIsMessageBoxOpen } = useMessageBox();
     const friendsPosts = posts?.filter(data => (data.uid === user?.uid) || (acceptedFriends.some(friend => friend.uid === data.uid)));
     const friendsPhotoPosts = friendsPosts?.filter(data => data.mediaType === 'image')
 
@@ -113,7 +112,10 @@ const Home = () => {
                         {acceptedFriends.map((user) => (
                             <div
                                 key={user.uid}
-                                onClick={() => setIsMessageBoxVisisble(user.uid)}
+                                onClick={() => {
+                                    setIsMessageBoxOpen(true);
+                                    setSelectedMessageUser(user.uid);
+                                }}
                                 className="flex cursor-pointer items-center gap-2.5 rounded-lg p-2 hover:bg-customGray-100"
                             >
                                 <ProfileAvatar
@@ -128,13 +130,6 @@ const Home = () => {
                     </div>
                 </HomeLeftbarContentLayout>
             </div>
-
-            {isMessageBoxVisible && (
-                <MessageBox
-                    isOpen={isMessageBoxVisible}
-                    isClose={() => setIsMessageBoxVisisble(null)}
-                />
-            )}
         </div>
     );
 };
