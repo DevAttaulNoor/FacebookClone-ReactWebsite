@@ -49,9 +49,9 @@ const headerLinks = [
 
 export const Header = () => {
     const { user } = useAuth();
-    const { chats } = useChats();
     const { users, usersExceptCurrent } = useUsers(user.uid);
     const { setSelectedMessageUser, setIsMessageBoxOpen } = useMessageBox();
+    const { userChats } = useChats(user.uid, usersExceptCurrent.map(data => data.uid));
     const [active, setActive] = useState('All');
     const [isOpen, setIsOpen] = useState({
         userSearchDropdown: false,
@@ -257,8 +257,8 @@ export const Header = () => {
                         />
 
                         <div className='headerOptionDropdownContentStyle'>
-                            {chats?.map((data, index) => {
-                                const chatUser = users?.find(elem => (elem.uid === data.chats[0].senderId) || (elem.uid === data.chats[0].receiverId))
+                            {userChats?.map((data, index) => {
+                                const chatUser = usersExceptCurrent?.find(elem => (elem.uid === data.chats[0].senderId) || (elem.uid === data.chats[0].receiverId))
 
                                 return (
                                     <div
