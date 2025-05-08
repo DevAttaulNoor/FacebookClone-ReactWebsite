@@ -23,16 +23,16 @@ const Login = () => {
     };
 
     return (
-        <div className="flex h-full w-full items-center justify-center py-10">
-            <div className="flex flex-col gap-2">
+        <div className="h-full w-full flex flex-col items-center justify-center gap-4 py-10 px-4 md:flex-row">
+            <div className="flex flex-col items-center gap-2 md:items-start">
                 <h1 className="text-5xl font-bold text-customBlue-default">facebook</h1>
-                <p className="w-2/3 text-2xl text-slate-900">
+                <p className="w-full text-center text-2xl text-slate-900 xs:w-[80%] sm:w-2/3 md:w-[70%] md:text-start lg:w-2/3">
                     Facebook helps you connect and share with the people in your
                     life.
                 </p>
             </div>
 
-            <div className="flex flex-col gap-3.5 rounded-lg bg-white p-4">
+            <div className="max-w-[380px] w-full flex flex-col p-4 gap-3.5 rounded-lg bg-white">
                 <form
                     onSubmit={handleLogin}
                     className="flex flex-col gap-3.5"
@@ -45,7 +45,7 @@ const Login = () => {
                             onChange: (e) => setEmail(e.target.value),
                             required: true
                         }}
-                        inputStyle="launchpageInputStyle w-96 p-4"
+                        inputStyle="launchpageInputStyle w-full p-4"
                     />
 
                     <InputField
@@ -56,10 +56,10 @@ const Login = () => {
                             onChange: (e) => setPassword(e.target.value),
                             required: true
                         }}
-                        inputStyle="launchpageInputStyle w-96 p-4"
+                        inputStyle="launchpageInputStyle w-full p-4"
                     />
 
-                    <button className="rounded-md border border-slate-100 bg-customBlue-default px-4 py-2.5 text-xl font-semibold text-white outline-none">
+                    <button className="w-full rounded-md border border-slate-100 bg-customBlue-default px-4 py-2.5 text-xl font-semibold text-white outline-none">
                         Log in
                     </button>
 
@@ -69,10 +69,12 @@ const Login = () => {
                 <button className="text-sm text-customBlue-default outline-none">
                     Forgotten password?
                 </button>
+
                 <hr className="text-slate-300" />
+
                 <Link
                     to={Routes.SIGNUP.path}
-                    className="mx-auto w-fit rounded-md bg-[#42b72a] px-4 py-3 text-lg font-bold text-white"
+                    className="mx-auto w-fit rounded-md bg-[#42b72a] px-4 py-3 text-center text-lg font-bold text-white"
                 >
                     {Routes.SIGNUP.title}
                 </Link>

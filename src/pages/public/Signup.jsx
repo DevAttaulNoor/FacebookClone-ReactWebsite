@@ -107,7 +107,7 @@ const Signup = () => {
     };
 
     return (
-        <div className="flex h-full w-full flex-col items-center py-8 gap-8 overflow-y-auto">
+        <div className="flex h-full w-full flex-col items-center py-8 px-4 gap-8 overflow-y-auto">
             <h1 className="text-[64px] font-bold text-customBlue-default">facebook</h1>
 
             <div className="flex flex-col rounded-lg bg-white shadow-customFull">
@@ -136,7 +136,7 @@ const Signup = () => {
                                     onChange: (e) => setFormData(prev => ({ ...prev, name: { ...prev.name, first: e.target.value } })),
                                     required: true,
                                 }}
-                                inputStyle="launchpageInputStyle px-3 py-2"
+                                inputStyle="launchpageInputStyle w-full px-3 py-2"
                             />
 
                             <InputField
@@ -147,7 +147,7 @@ const Signup = () => {
                                     onChange: (e) => setFormData(prev => ({ ...prev, name: { ...prev.name, last: e.target.value } })),
                                     required: true,
                                 }}
-                                inputStyle="launchpageInputStyle px-3 py-2"
+                                inputStyle="launchpageInputStyle w-full px-3 py-2"
                             />
                         </div>
 
@@ -248,7 +248,7 @@ const Signup = () => {
                             )}
                         </div>
 
-                        <div className="w-96">
+                        <div className="max-w-96 w-full">
                             <p className="mb-4 text-xs text-customGray-200">
                                 People who use our service may have uploaded
                                 your contact information to Facebook.{" "}
