@@ -3,9 +3,9 @@ import { Routes } from "@constants/Routes";
 import { useUsers } from "@hooks/useUsers";
 import { StoryCard } from "../cards/StoryCard";
 import { useStories } from "@hooks/useStories";
+import { useFriends } from "@hooks/useFriends";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
-import { useFriends } from "@hooks/useFriends";
 
 export const FeedStory = () => {
     const { user } = useAuth();

@@ -10,6 +10,7 @@ import { ProfileAvatar } from '../ProfileAvatar';
 import { InputField } from '../inputs/InputField';
 import { ReactIcons } from '@constants/ReactIcons';
 import { ModalLayout } from '@layouts/ModalLayout';
+import { handleSaving } from '@utils/PostHandling';
 import { timeAgoInitials } from '@utils/TimeModule';
 import { BasicButton } from '../buttons/BasicButton';
 import { TextareaField } from '../inputs/TextareaField';
@@ -19,16 +20,11 @@ import { BasicDropdown } from '../dropdowns/BasicDropdown';
 const feedPostingOptions = [
     {
         id: 1,
-        title: "Live video",
-        icon: "https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/c0dWho49-X3.png?_nc_eui2=AeHnEIjVawZBI76yMIMwddXsVnUPE18ZZ-dWdQ8TXxln51Q2S_zbzfHpnn234I7BWgTtb2IssbzIPCV_o410lzBg",
-    },
-    {
-        id: 2,
         title: "Photo/video",
         icon: "https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j",
     },
     {
-        id: 3,
+        id: 2,
         title: "Feeling/activity",
         icon: "https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Y4mYLVOhTwq.png?_nc_eui2=AeHSN24y7ZwUiP0ks-vc5M5LvPIN-OmHLJy88g346YcsnMgGxvtWqzXUT3WG--zLIURpvgdh0oglkNtF3k-n2n77",
     },
@@ -145,30 +141,6 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
             await deleteDoc(doc(db, 'Posts', postId));
         } catch (error) {
             console.error("Error deleting:", error);
-        }
-    };
-
-    const handlePostSave = async (postId, userId) => {
-        try {
-            const postDocRef = doc(db, "Posts", postId);
-            const postDoc = await getDoc(postDocRef);
-
-            if (postDoc.exists()) {
-                const existingSaves = postDoc.data().saves || [];
-                const userIndex = existingSaves.findIndex(entry => entry.uid === userId);
-
-                if (userIndex !== -1) {
-                    const updatedSaves = existingSaves.filter(entry => entry.uid !== userId);
-                    await updateDoc(postDocRef, { saves: updatedSaves });
-                } else {
-                    const updatedSaves = [...existingSaves, { uid: userId, timestamp: Math.floor(Date.now() / 1000) }];
-                    await updateDoc(postDocRef, { saves: updatedSaves });
-                }
-            } else {
-                console.error("Post not found.");
-            }
-        } catch (error) {
-            console.error("Error saving post:", error);
         }
     };
 
@@ -367,7 +339,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                     </>
                                 ) : (
                                     <div
-                                        onClick={() => handlePostSave(data.id, activeUser?.uid)}
+                                        onClick={() => handleSaving(data.id, activeUser?.uid)}
                                         className='flex items-center p-1.5 gap-3 rounded-lg cursor-pointer hover:bg-customGray-default'
                                     >
                                         <span>{SvgIcons.SAVED({ styleClass: 'w-[18px] h-[18px]' })}</span>

@@ -1,16 +1,15 @@
 import { NavLink } from "react-router";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "@services/firebase";
 import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
+import { useGroups } from "@hooks/useGroups";
 import { SvgIcons } from "@constants/SvgIcons";
 import { useAuth } from "@contexts/AuthContext";
+import { handleSaving } from "@utils/PostHandling";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { BasicButton } from "@components/universal/buttons/BasicButton";
-import { useGroups } from "@hooks/useGroups";
 
 const Saved = () => {
     const { user } = useAuth();
@@ -18,23 +17,6 @@ const Saved = () => {
     const { groups } = useGroups();
     const { posts, groupPosts } = usePosts();
     const savedPosts = posts?.concat(groupPosts)?.filter(post => post?.saves?.some(save => save.uid === user.uid));
-
-    const handlePostUnSave = async (postId, userId) => {
-        try {
-            const postDocRef = doc(db, "Posts", postId);
-            const postDoc = await getDoc(postDocRef);
-
-            if (postDoc.exists()) {
-                const existingSaves = postDoc.data().saves || [];
-                const updatedSaves = existingSaves.filter(entry => entry.uid !== userId);
-                await updateDoc(postDocRef, { saves: updatedSaves });
-            } else {
-                console.error("Post not found.");
-            }
-        } catch (error) {
-            console.error("Error unsaving post:", error);
-        }
-    };
 
     return (
         <div className="pageWithLeftbarStyle">
@@ -67,7 +49,7 @@ const Saved = () => {
                             const savedPostGroup = groups.find(group => group.id === data.groupId)
 
                             return (
-                                <div className='w-full h-40 flex p-3 gap-4 rounded-md shadow-customFull2 bg-white'>
+                                <div key={data.id} className='w-full h-40 flex p-3 gap-4 rounded-md shadow-customFull2 bg-white'>
                                     {data?.media ? (
                                         <img
                                             src={data?.media}
@@ -160,7 +142,7 @@ const Saved = () => {
                                             btnStyleClass="!w-32 bg-customGray-100 hover:bg-customGray-default"
                                             btnData={{
                                                 text: 'Unsave',
-                                                onClick: () => handlePostUnSave(data.id, user.uid)
+                                                onClick: () => handleSaving(data.id, user.uid)
                                             }}
                                         />
                                     </div>

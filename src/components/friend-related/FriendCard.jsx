@@ -1,14 +1,11 @@
+import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons"
 import { BasicButton } from "@components/universal/buttons/BasicButton"
+import { handleAcceptingFriend, handleAddingFriend, handleDecliningFriend } from "@utils/FriendsHandling"
 
-export const FriendCard = ({
-    userData,
-    usersData,
-    friendsData,
-    handleAddFriend,
-    handleAcceptFriendRequest,
-    handleDeclineFriendRequest
-}) => {
+export const FriendCard = ({ userData, usersData, friendsData }) => {
+    const { user } = useAuth();
+
     return (
         <div className='max-w-72 w-full flex flex-col justify-between mx-auto gap-1.5 border rounded-lg shadow-customFull2 border-slate-300 bg-white'>
             <div className="flex flex-col gap-1.5">
@@ -43,7 +40,7 @@ export const FriendCard = ({
                             btnStyleClass="text-customBlue-default bg-customBlue-100 hover:bg-customGray-default"
                             btnData={{
                                 text: 'Accept',
-                                onClick: () => handleAcceptFriendRequest(userData.uid)
+                                onClick: () => handleAcceptingFriend(user?.uid, userData.uid)
                             }}
                         />
 
@@ -51,7 +48,7 @@ export const FriendCard = ({
                             btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
                             btnData={{
                                 text: 'Decline',
-                                onClick: () => handleDeclineFriendRequest(userData.uid)
+                                onClick: () => handleDecliningFriend(user?.uid, userData.uid)
                             }}
                         />
                     </>
@@ -62,7 +59,7 @@ export const FriendCard = ({
                         btnStyleClass="text-customBlue-default bg-customBlue-100 hover:bg-customGray-default"
                         btnData={{
                             text: 'Add friend',
-                            onClick: () => handleAddFriend(userData.uid)
+                            onClick: () => handleAddingFriend(user?.uid, userData.uid)
                         }}
                     />
                 )}

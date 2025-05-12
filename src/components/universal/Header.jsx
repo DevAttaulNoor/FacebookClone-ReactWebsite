@@ -5,6 +5,7 @@ import { auth } from "@services/firebase";
 import { useChats } from "@hooks/useChats";
 import { useUsers } from "@hooks/useUsers";
 import { Routes } from "@constants/Routes";
+import { SvgIcons } from "@constants/SvgIcons";
 import { useAuth } from "@contexts/AuthContext";
 import { ProfileAvatar } from "./ProfileAvatar";
 import { TermsAndLinks } from "./TermsAndLinks";
@@ -15,7 +16,6 @@ import { timeAgoInitials } from "@utils/TimeModule";
 import { BasicDropdown } from "./dropdowns/BasicDropdown";
 import { useMessageBox } from "@contexts/MessageBoxContext";
 import fblogo from "/Images/fblogo.png";
-import { SvgIcons } from "@constants/SvgIcons";
 
 const headerLinks = [
     {

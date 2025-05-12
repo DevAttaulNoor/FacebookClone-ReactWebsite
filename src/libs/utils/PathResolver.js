@@ -9,20 +9,6 @@ const generatePath = (route, params = {}) => {
     return path;
 };
 
-// Helper function to check if current path matches a route
-// const getActiveRoute = (route, currentPath, params = {}) => {
-//     const mainPath = generatePath(route, params);
-//     const altPath = route.alternativePath ? generatePath({ ...route, path: route.alternativePath }, params) : null;
-
-//     // Exact match for base profile path
-//     if (route.path === Routes.PROFILE.path) {
-//         return currentPath === mainPath || currentPath === mainPath + '/' || (altPath && (currentPath === altPath || currentPath === altPath + '/'));
-//     }
-
-//     // For other routes, check if current path starts with the route path
-//     return currentPath.startsWith(mainPath) || (altPath && currentPath.startsWith(altPath));
-// };
-
 const getActiveRoute = (route, currentPath, params = {}) => {
     const mainPath = generatePath(route, params);
     const altPath = route.alternativePath
