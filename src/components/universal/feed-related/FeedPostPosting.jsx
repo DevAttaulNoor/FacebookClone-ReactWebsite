@@ -16,16 +16,11 @@ import { handleMediaChange } from '@utils/MediaHandling';
 const feedPostingOptions = [
     {
         id: 1,
-        title: "Live video",
-        icon: "https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/c0dWho49-X3.png?_nc_eui2=AeHnEIjVawZBI76yMIMwddXsVnUPE18ZZ-dWdQ8TXxln51Q2S_zbzfHpnn234I7BWgTtb2IssbzIPCV_o410lzBg",
-    },
-    {
-        id: 2,
         title: "Photo/video",
         icon: "https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeFIN4dua_6GwPFkOshGHR00PL4YoeGsw5I8vhih4azDkrvKepSUCMn7LYfrqKUcUJimL4hKbOZB6qAi70AVDE9j",
     },
     {
-        id: 3,
+        id: 2,
         title: "Feeling/activity",
         icon: "https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Y4mYLVOhTwq.png?_nc_eui2=AeHSN24y7ZwUiP0ks-vc5M5LvPIN-OmHLJy88g346YcsnMgGxvtWqzXUT3WG--zLIURpvgdh0oglkNtF3k-n2n77",
     },
@@ -127,14 +122,14 @@ export const FeedPostPosting = ({ usedInGroupPosting = false, groupData }) => {
                         iconStyleClass="text-4xl"
                     />
 
-                    <div onClick={() => setModalOpen(true)} className="w-full cursor-pointer rounded-3xl px-3 py-2.5 text-customGray-200 bg-customGray-default hover:bg-[#E4E6EB]">
+                    <div onClick={() => setModalOpen(true)} className="w-full text-sm cursor-pointer rounded-3xl px-3 py-2.5 text-customGray-200 bg-customGray-default hover:bg-[#E4E6EB] sm:text-base">
                         {usedInGroupPosting ? 'Write something...' : `What's on your mind, ${user?.username}`}
                     </div>
                 </div>
 
                 <div className="h-[1px] w-full bg-slate-100"></div>
 
-                <div className="grid grid-cols-3 gap-1 py-2">
+                <div className="grid grid-cols-2 gap-1 py-2">
                     {feedPostingOptions.map((data) => (
                         <div key={data.id} className="flex cursor-pointer items-center justify-center gap-2 rounded-lg p-3 hover:bg-slate-100">
                             <img src={data.icon} alt={""} className="w-5" />
@@ -276,7 +271,7 @@ export const FeedPostPosting = ({ usedInGroupPosting = false, groupData }) => {
                         }}
                     />
                 )}
-            </ModalLayout >
+            </ModalLayout>
         </>
     )
 }

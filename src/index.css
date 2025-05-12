@@ -47,6 +47,6 @@
     }
 
     .dropdownContainerStyle1 {
-        @apply top-16 flex w-80 flex-col gap-2.5 rounded-lg bg-white p-3 shadow-customFull2;
+        @apply right-4 top-[54px] flex w-64 flex-col gap-2.5 rounded-lg bg-white p-3 shadow-customFull2 xs:w-72 sm:w-80;
     }
 }

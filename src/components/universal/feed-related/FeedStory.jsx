@@ -20,7 +20,7 @@ export const FeedStory = () => {
                 <div className='flex gap-2 overflow-x-auto overflow-y-hidden'>
                     <Link
                         to={Routes.STORY_CREATE.path}
-                        className="min-w-32 h-56 flex flex-col rounded-xl bg-white"
+                        className="w-24 h-40 flex flex-col rounded-xl bg-white xs:w-28 xs:h-44 sm:w-32 sm:h-56"
                     >
                         {user?.profilePhoto ? (
                             <img
@@ -35,7 +35,7 @@ export const FeedStory = () => {
                         )}
 
                         <div className="flex flex-col items-center justify-center p-2 -mt-8">
-                            <span className="text-xl p-2 border-[3px] border-white rounded-full text-white bg-customBlue-default">
+                            <span className="text-base p-1 border-[3px] border-white rounded-full text-white bg-customBlue-default xs:text-lg  xs:p-1.5 sm:text-xl sm:p-2">
                                 {ReactIcons.ADD_PLUS}
                             </span>
                             <h5 className="text-xs font-medium">Create story</h5>

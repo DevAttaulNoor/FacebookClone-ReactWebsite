@@ -15,6 +15,7 @@ import { timeAgoInitials } from "@utils/TimeModule";
 import { BasicDropdown } from "./dropdowns/BasicDropdown";
 import { useMessageBox } from "@contexts/MessageBoxContext";
 import fblogo from "/Images/fblogo.png";
+import { SvgIcons } from "@constants/SvgIcons";
 
 const headerLinks = [
     {
@@ -55,13 +56,15 @@ export const Header = () => {
     const [active, setActive] = useState('All');
     const [isOpen, setIsOpen] = useState({
         userSearchDropdown: false,
+        menuDropdown: false,
         profileDropdown: false,
         messageDropdown: false,
         notificationDropdown: false,
     });
     const [inputValue, setInputValue] = useState({
         userSearch: '',
-        chatSearch: ''
+        chatSearch: '',
+        menuSearch: ''
     });
     const searchedUser = usersExceptCurrent?.filter((data) => data?.username?.toLowerCase().includes(inputValue.userSearch.toLowerCase()));
 
@@ -78,6 +81,7 @@ export const Header = () => {
             id: 1,
             title: "Menu",
             icon: ReactIcons.MENU,
+            onChange: () => setIsOpen(prev => ({ ...prev, menuDropdown: true })),
         },
         {
             id: 2,
@@ -115,6 +119,70 @@ export const Header = () => {
             icon: ReactIcons.SETTING,
             onClick: () => handleLogout()
         }
+    ];
+
+    const headerMenuCreateOptions = [
+        {
+            id: 1,
+            title: "Post",
+            icon: ReactIcons.EDIT_PENCIL_BOX,
+        },
+        {
+            id: 2,
+            title: "Story",
+            icon: SvgIcons.STORY({ styleClass: 'w-[22px] h-[20px]' }),
+            link: Routes.STORY_CREATE.path,
+        },
+        {
+            id: 3,
+            title: "Reel",
+            icon: SvgIcons.REEL({ styleClass: 'w-[22px] h-[20px]' }),
+            link: Routes.REEL_CREATE.path,
+        },
+        {
+            id: 4,
+            title: "Group",
+            icon: ReactIcons.GROUP,
+            link: Routes.GROUP_CREATE.path,
+        },
+    ];
+
+    const headerMenuOptions = [
+        {
+            id: 1,
+            title: "Friends",
+            description: 'Search for friends or people you may know.',
+            icon: ReactIcons.FRIEND,
+            link: Routes.FRIEND.path
+        },
+        {
+            id: 2,
+            title: "Groups",
+            description: 'Connect with people who share your interests.',
+            icon: ReactIcons.GROUP,
+            link: Routes.GROUP_FEED.path
+        },
+        {
+            id: 3,
+            title: "Feeds",
+            description: 'See the most recent posts from your friends, groups and more.',
+            icon: SvgIcons.FEED({ styleClass: 'w-[29px] h-[26px]' }),
+            link: Routes.FEED.path
+        },
+        {
+            id: 4,
+            title: "Videos",
+            description: 'A video destination personalized to your interests and connection.',
+            icon: ReactIcons.VIDEO,
+            link: Routes.VIDEO.path
+        },
+        {
+            id: 5,
+            title: "Saved",
+            description: 'Find posts, photos and videos that you have saved for later.',
+            icon: SvgIcons.SAVED({ styleClass: 'w-[29px] h-[26px]' }),
+            link: Routes.SAVED.path
+        },
     ];
 
     return (
@@ -241,10 +309,70 @@ export const Header = () => {
 
                 <>
                     <BasicDropdown
+                        isOpen={isOpen.menuDropdown}
+                        isClose={() => setIsOpen(prev => ({ ...prev, menuDropdown: false }))}
+                        dropdownData={{ title: 'Menu' }}
+                        dropdownContainerStyle="dropdownContainerStyle1 !w-80 p-3 xs:!w-96 sm:!w-[420px] "
+                    >
+                        <div className="flex gap-4">
+                            <div className="flex-[0.7] flex flex-col p-2 rounded-lg shadow-customFull bg-white">
+                                <div className="py-2">
+                                    <SearchBar
+                                        inputStyle={"w-full bg-transparent py-2.5 text-sm"}
+                                        inputData={{
+                                            type: 'text',
+                                            value: inputValue.menuSearch,
+                                            placeholder: 'Search menu',
+                                            onChange: (e) => setInputValue(prev => ({ ...prev, menuSearch: e.target.value }))
+                                        }}
+                                    />
+                                </div>
+
+                                <div className="flex flex-col gap-1">
+                                    {headerMenuOptions.map(data => (
+                                        <Link
+                                            key={data.id}
+                                            to={data.link}
+                                            className='flex items-center p-1.5 gap-3 rounded-lg cursor-pointer hover:bg-customGray-default'
+                                        >
+                                            <span className="text-3xl">{data.icon}</span>
+
+                                            <div className="flex flex-col gap-0.5">
+                                                <h5 className="text-sm font-medium">{data.title}</h5>
+                                                <p className="text-xs text-customGray-200">{data.description}</p>
+                                            </div>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="h-fit flex-[0.3] flex flex-col p-2 rounded-lg shadow-customFull bg-white">
+                                <h2 className="text-lg font-semibold mb-2">Create</h2>
+
+                                <div className="flex flex-col gap-1">
+                                    {headerMenuCreateOptions.map((data) => (
+                                        <Link
+                                            key={data.id}
+                                            to={data?.link}
+                                            className='flex items-center px-1.5 py-2 gap-2 rounded-lg cursor-pointer hover:bg-customGray-default'
+                                        >
+                                            <span className="flex items-center justify-center p-1.5 text-2xl rounded-full cursor-pointer bg-customGray-100">
+                                                {data.icon}
+                                            </span>
+
+                                            <h5 className="text-sm font-medium">{data.title}</h5>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </BasicDropdown>
+
+                    <BasicDropdown
                         isOpen={isOpen.messageDropdown}
                         isClose={() => setIsOpen(prev => ({ ...prev, messageDropdown: false }))}
                         dropdownData={{ title: 'Chats' }}
-                        dropdownContainerStyle="dropdownContainerStyle1 p-2"
+                        dropdownContainerStyle="dropdownContainerStyle1 p-3"
                     >
                         <SearchBar
                             inputStyle={"w-full bg-transparent py-2.5 text-sm"}
@@ -297,7 +425,7 @@ export const Header = () => {
                         isOpen={isOpen.notificationDropdown}
                         isClose={() => setIsOpen(prev => ({ ...prev, notificationDropdown: false }))}
                         dropdownData={{ title: 'Notification' }}
-                        dropdownContainerStyle="dropdownContainerStyle1 p-2"
+                        dropdownContainerStyle="dropdownContainerStyle1 p-3"
                     >
                         <div className='flex items-center gap-2'>
                             <button
@@ -322,7 +450,7 @@ export const Header = () => {
                                 return (
                                     <div
                                         key={index}
-                                        className="flex items-center p-1 gap-3 rounded-md cursor-pointer hover:bg-customGray-default"
+                                        className="flex items-center p-1 gap-2 rounded-md cursor-pointer hover:bg-customGray-default xs:gap-2.5 sm:gap-3"
                                     >
                                         <ProfileAvatar
                                             userData={notificationRelatedUser}
@@ -332,10 +460,10 @@ export const Header = () => {
 
                                         {data.postId && (
                                             <div className="flex flex-col">
-                                                <div className="text-sm">
+                                                <div className="text-xs sm:text-sm">
                                                     <Link
                                                         to={`/profile/${notificationRelatedUser?.uid}`}
-                                                        className="text-sm font-medium cursor-pointer hover:underline"
+                                                        className="text-xs font-medium cursor-pointer hover:underline sm:text-sm"
                                                     >
                                                         {notificationRelatedUser?.username}
                                                     </Link>
@@ -343,16 +471,16 @@ export const Header = () => {
                                                     {''} has {data.status} on your post
                                                 </div>
 
-                                                <p className="text-xs text-customGray-300">{timeAgoInitials(data.timestamp)}</p>
+                                                <p className="text-[10px] text-customGray-300 sm:text-xs">{timeAgoInitials(data.timestamp)}</p>
                                             </div>
                                         )}
 
                                         {data.friendId && (
                                             <div className="flex flex-col">
-                                                <div className="text-sm">
+                                                <div className="text-xs sm:text-sm">
                                                     <Link
                                                         to={`/profile/${notificationRelatedUser?.uid}`}
-                                                        className="text-sm font-medium cursor-pointer hover:underline"
+                                                        className="text-xs font-medium cursor-pointer hover:underline sm:text-sm"
                                                     >
                                                         {notificationRelatedUser?.username}
                                                     </Link>
@@ -364,7 +492,7 @@ export const Header = () => {
                                                     )}
                                                 </div>
 
-                                                <p className="text-xs text-customGray-300">{timeAgoInitials(data.timestamp)}</p>
+                                                <p className="text-[10px] text-customGray-300 sm:text-xs">{timeAgoInitials(data.timestamp)}</p>
                                             </div>
                                         )}
                                     </div>

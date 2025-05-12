@@ -11,7 +11,7 @@ export const BasicDropdown = ({ isOpen, isClose, dropdownContainerStyle = '', dr
             {dropdownData.title && (
                 <div className='flex items-center justify-between'>
                     <h2 className="text-2xl font-semibold">{dropdownData.title}</h2>
-                    <span className="text-xl p-2 rounded-full cursor-pointer text-customGray-200 hover:bg-customGray-default">{ReactIcons.OPTIONS_THREE_DOTS}</span>
+                    {/* <span className="text-xl p-2 rounded-full cursor-pointer text-customGray-200 hover:bg-customGray-default">{ReactIcons.OPTIONS_THREE_DOTS}</span> */}
                 </div>
             )}
 
