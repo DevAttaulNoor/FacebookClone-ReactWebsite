@@ -2,20 +2,19 @@ import '@assets/css/customEmojiPickerStyle.css'
 import EmojiPicker from 'emoji-picker-react';
 import { Link } from "react-router";
 import { useEffect, useRef, useState } from "react";
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { addDoc, collection, deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from '@services/firebase';
 import { SvgIcons } from '@constants/SvgIcons';
-import { db, storage } from '@services/firebase';
 import { ProfileAvatar } from '../ProfileAvatar';
 import { InputField } from '../inputs/InputField';
 import { ReactIcons } from '@constants/ReactIcons';
 import { ModalLayout } from '@layouts/ModalLayout';
-import { handleSaving } from '@utils/PostHandling';
 import { timeAgoInitials } from '@utils/TimeModule';
 import { BasicButton } from '../buttons/BasicButton';
 import { TextareaField } from '../inputs/TextareaField';
 import { handleMediaChange } from '@utils/MediaHandling';
 import { BasicDropdown } from '../dropdowns/BasicDropdown';
+import { handleDeleting, handlePosting, handleSaving } from '@utils/PostHandling';
 
 const feedPostingOptions = [
     {
@@ -44,7 +43,9 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
         reaction: null,
     });
     const [commentInput, setCommentInput] = useState('');
+    const [isAnonymous, setIsAnonymously] = useState(false);
     const [postActionDropdown, setPostActionDropdown] = useState(null);
+    const [postEditingLoading, setPostEditingLoading] = useState(false);
     const activePost = postData.find(data => data.id === postModalOpen.editing);
 
     const handleReaction = async (postId, postUid, userId) => {
@@ -136,61 +137,9 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
         }
     };
 
-    const handlePostDelete = async (postId) => {
-        try {
-            await deleteDoc(doc(db, 'Posts', postId));
-        } catch (error) {
-            console.error("Error deleting:", error);
-        }
-    };
-
-    const handlePostEdit = async (postId, userId) => {
-        try {
-            const postRef = doc(db, "Posts", postId);
-
-            if ((message.text !== '') && (message.media === '')) {
-                await updateDoc(postRef, {
-                    message: message.text,
-                    media: '',
-                    mediaType: '',
-                });
-
-                setPostModalOpen(prev => ({ ...prev, editing: null }));
-                return;
-            }
-
-            if ((message.text === '') && (message.media !== '')) {
-                const file = message.media;
-                const storageRef = ref(storage, `Posts/${userId}/${file.name}`);
-                await uploadBytes(storageRef, file);
-                let mediaUrl = await getDownloadURL(storageRef);
-
-                await updateDoc(postRef, {
-                    message: '',
-                    media: mediaUrl,
-                    mediaType: message.mediaType,
-                });
-
-                setPostModalOpen(prev => ({ ...prev, editing: null }));
-            }
-
-            if ((message.text !== '') && (message.media !== '')) {
-                const file = message.media;
-                const storageRef = ref(storage, `Posts/${userId}/${file.name}`);
-                await uploadBytes(storageRef, file);
-                let mediaUrl = await getDownloadURL(storageRef);
-
-                await updateDoc(postRef, {
-                    message: message.text,
-                    media: mediaUrl,
-                    mediaType: message.mediaType,
-                });
-
-                setPostModalOpen(prev => ({ ...prev, editing: null }));
-            }
-        } catch (error) {
-            console.error("Error editing post: ", error);
-        }
+    const handleModalClose = () => {
+        setMessage({ text: '', media: '', mediaType: '' })
+        setPostModalOpen({ emoji: false, editing: null })
     };
 
     useEffect(() => {
@@ -314,7 +263,10 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                 {data.uid === activeUser?.uid ? (
                                     <>
                                         <div
-                                            onClick={() => setPostModalOpen(prev => ({ ...prev, editing: data.id }))}
+                                            onClick={() => {
+                                                setPostModalOpen(prev => ({ ...prev, editing: data.id }))
+                                                setPostActionDropdown(null)
+                                            }}
                                             className='flex items-center p-1.5 gap-3 rounded-lg cursor-pointer hover:bg-customGray-default'
                                         >
                                             <span className="text-lg">{ReactIcons.EDIT_PENCIL}</span>
@@ -326,7 +278,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                         </div>
 
                                         <div
-                                            onClick={() => handlePostDelete(data.id)}
+                                            onClick={() => handleDeleting(data.id)}
                                             className='flex items-center p-1.5 gap-3 rounded-lg cursor-pointer hover:bg-customGray-default'
                                         >
                                             <span className="text-lg">{ReactIcons.DELETE_TRASHBIN}</span>
@@ -509,13 +461,22 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                     </div>
                                 </div>
 
-                                <BasicButton
-                                    btnStyleClass={`${(message.text || message.media) ? 'text-white bg-customBlue-default' : 'text-customGray-200 bg-customGray-100'}`}
-                                    btnData={{
-                                        text: 'Save',
-                                        onClick: () => handlePostEdit(data.id, activeUser?.uid),
-                                    }}
-                                />
+                                {postEditingLoading ? (
+                                    <BasicButton
+                                        btnStyleClass='!py-2 bg-customBlue-default'
+                                        btnData={{
+                                            textStyleClass: 'w-6 h-6 border-2 border-b-0 animate-spin rounded-full border-white'
+                                        }}
+                                    />
+                                ) : (
+                                    <BasicButton
+                                        btnStyleClass={`${(message.text || message.media) ? 'text-white bg-customBlue-default' : 'text-customGray-200 bg-customGray-100'}`}
+                                        btnData={{
+                                            text: 'Save',
+                                            onClick: () => handlePosting(message, activePost, activeUser, groupData, usedInGroupPosting, isAnonymous, setPostEditingLoading, handleModalClose, true)
+                                        }}
+                                    />
+                                )}
                             </ModalLayout>
                         )}
 
@@ -639,7 +600,7 @@ export const FeedPost = ({ activeUser, userData, postData, postContainerStyle = 
                                 </div>
                             </ModalLayout>
                         )}
-                    </div>
+                    </div >
                 )
             })}
         </>

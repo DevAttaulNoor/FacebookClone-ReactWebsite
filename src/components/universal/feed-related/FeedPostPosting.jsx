@@ -1,13 +1,11 @@
 import '@assets/css/customEmojiPickerStyle.css'
 import EmojiPicker from 'emoji-picker-react';
 import { useEffect, useRef, useState } from "react";
-import { collection, doc, setDoc } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useAuth } from '@contexts/AuthContext';
-import { db, storage } from '@services/firebase';
 import { ProfileAvatar } from '../ProfileAvatar';
 import { ReactIcons } from '@constants/ReactIcons';
 import { ModalLayout } from '@layouts/ModalLayout';
+import { handlePosting } from '@utils/PostHandling';
 import { BasicButton } from '../buttons/BasicButton';
 import { ToggleButton } from '../buttons/ToggleButton';
 import { TextareaField } from '../inputs/TextareaField';
@@ -28,82 +26,22 @@ const feedPostingOptions = [
 
 export const FeedPostPosting = ({ usedInGroupPosting = false, groupData }) => {
     const { user } = useAuth();
-    const emojiBoxRef = useRef(null);
-    const messageMediaInputRef = useRef(null);
-    const [messageText, setMessageText] = useState('');
-    const [messageMedia, setMessageMedia] = useState({ content: '', type: '' });
-    const [isModalOpen, setModalOpen] = useState(false);
-    const [isEmojiModalOpen, setIsEmojiModalOpen] = useState(false);
+    const messageMediaRef = useRef(null);
+    const [message, setMessage] = useState({
+        text: '',
+        media: '',
+        mediaType: ''
+    });
+    const [modalOpen, setModalOpen] = useState({
+        emoji: false,
+        posting: false,
+    });
     const [postLoading, setPostLoading] = useState(false);
     const [isAnonymous, setIsAnonymously] = useState(false);
 
     const handleModalClose = () => {
-        setModalOpen(false);
-        setIsEmojiModalOpen(false);
-        setMessageText('');
-        setMessageMedia({ content: '', type: '' });
-    };
-
-    const handlePosting = async (e) => {
-        e.preventDefault();
-
-        const postDetails = {
-            uid: user.uid,
-            email: user.email,
-            timestamp: Math.floor(new Date().getTime() / 1000),
-            ...(usedInGroupPosting ? { groupId: groupData.id, isAnonymous } : {})
-        };
-
-        try {
-            setPostLoading(true)
-            const postRef = doc(collection(db, "Posts"));
-
-            if ((messageText !== '') && (messageMedia.content === '')) {
-                await setDoc(postRef, {
-                    ...postDetails,
-                    message: messageText,
-                });
-
-                handleModalClose();
-                setPostLoading(false)
-                return;
-            }
-
-            if ((messageText === '') && (messageMedia.content !== '')) {
-                const file = messageMedia.content;
-                const storageRef = ref(storage, `Posts/${user.uid}/${file.name}`);
-                await uploadBytes(storageRef, file);
-                let mediaUrl = await getDownloadURL(storageRef);
-
-                await setDoc(postRef, {
-                    ...postDetails,
-                    media: mediaUrl,
-                    mediaType: messageMedia.type,
-                });
-
-                setPostLoading(false)
-                handleModalClose();
-            }
-
-            if ((messageText !== '') && (messageMedia.content !== '')) {
-                const file = messageMedia.content;
-                const storageRef = ref(storage, `Posts/${user.uid}/${file.name}`);
-                await uploadBytes(storageRef, file);
-                let mediaUrl = await getDownloadURL(storageRef);
-
-                await setDoc(postRef, {
-                    ...postDetails,
-                    message: messageText,
-                    media: mediaUrl,
-                    mediaType: messageMedia.type,
-                });
-
-                setPostLoading(false)
-                handleModalClose();
-            }
-        } catch (error) {
-            console.error("Error uploading post: ", error);
-        }
+        setModalOpen({ emoji: false, posting: false })
+        setMessage({ text: '', media: '', mediaType: '' })
     };
 
     useEffect(() => {
@@ -122,7 +60,7 @@ export const FeedPostPosting = ({ usedInGroupPosting = false, groupData }) => {
                         iconStyleClass="text-4xl"
                     />
 
-                    <div onClick={() => setModalOpen(true)} className="w-full text-sm cursor-pointer rounded-3xl px-3 py-2.5 text-customGray-200 bg-customGray-default hover:bg-[#E4E6EB] sm:text-base">
+                    <div onClick={() => setModalOpen(prev => ({ ...prev, posting: true }))} className="w-full text-sm cursor-pointer rounded-3xl px-3 py-2.5 text-customGray-200 bg-customGray-default hover:bg-[#E4E6EB] sm:text-base">
                         {usedInGroupPosting ? 'Write something...' : `What's on your mind, ${user?.username}`}
                     </div>
                 </div>
@@ -141,7 +79,7 @@ export const FeedPostPosting = ({ usedInGroupPosting = false, groupData }) => {
                 </div>
             </div>
 
-            <ModalLayout isOpen={isModalOpen} containerStyle={'relative p-3 gap-3'}>
+            <ModalLayout isOpen={modalOpen.posting} containerStyle={'relative p-3 gap-3'}>
                 <div className="flex justify-center">
                     <h1 className="text-lg font-bold">Create Post</h1>
 
@@ -190,27 +128,27 @@ export const FeedPostPosting = ({ usedInGroupPosting = false, groupData }) => {
                     <TextareaField
                         textareaData={{
                             rows: 4,
-                            value: messageText,
+                            value: message.text,
                             placeholder: `${isAnonymous ? 'Submit an anonymous post...' : "What's on your mind..."}`,
-                            onChange: (e) => setMessageText(e.target.value),
+                            onChange: (e) => setMessage(prev => ({ ...prev, text: e.target.value })),
                         }}
-                        textareaStyle={`${messageMedia.content === null ? 'text-base' : 'text-2xl'} w-full resize-none`}
+                        textareaStyle={`${message.media === null ? 'text-base' : 'text-2xl'} w-full resize-none`}
                     />
 
-                    {messageMedia.content && (
+                    {message.media && (
                         <div className='relative rounded-lg border border-customGray-default'>
-                            {messageMedia.type === 'image' && (
-                                <img src={URL.createObjectURL(messageMedia.content)} className="w-full h-56 p-1 rounded-lg object-contain" />
+                            {message.mediaType === 'image' && (
+                                <img src={URL.createObjectURL(message.media)} className="w-full h-56 p-1 rounded-lg object-contain" />
                             )}
 
-                            {messageMedia.type === 'video' && (
+                            {message.mediaType === 'video' && (
                                 <video controls className="w-full h-56 p-1 rounded-lg object-contain">
-                                    <source src={URL.createObjectURL(messageMedia.content)} type="video/mp4" />
+                                    <source src={URL.createObjectURL(message.media)} type="video/mp4" />
                                 </video>
                             )}
 
                             <span
-                                onClick={() => setMessageMedia({ content: '', type: '' })}
+                                onClick={() => setMessage(prev => ({ ...prev, media: '', mediaType: '' }))}
                                 className="absolute top-2 right-2 cursor-pointer"
                             >
                                 {ReactIcons.CLOSE}
@@ -219,17 +157,18 @@ export const FeedPostPosting = ({ usedInGroupPosting = false, groupData }) => {
                     )}
 
                     <span
-                        ref={emojiBoxRef}
-                        onClick={() => setIsEmojiModalOpen(!isEmojiModalOpen)}
+                        onClick={() => setModalOpen(prev => ({ ...prev, emoji: !prev.emoji }))}
                         className="self-end text-xl text-customGray-200 cursor-pointer hover:text-customGray-300"
                     >
                         {ReactIcons.SMILE_EMOJI}
                     </span>
 
-                    <EmojiPicker
-                        onEmojiClick={(e) => setMessageText((prev) => prev + e.emoji)}
-                        className={`${isEmojiModalOpen ? '' : '!hidden'} customStyle`}
-                    />
+                    {modalOpen.emoji && (
+                        <EmojiPicker
+                            onEmojiClick={(e) => setMessage(prev => ({ ...prev, text: prev.text + e.emoji }))}
+                            className='customStyle'
+                        />
+                    )}
                 </div>
 
                 <div className="flex flex-col px-3 gap-2 border rounded-lg border-customGray-default p-2.5">
@@ -241,15 +180,15 @@ export const FeedPostPosting = ({ usedInGroupPosting = false, groupData }) => {
                                 key={data.id}
                                 src={data.icon}
                                 alt={`icon of ${data.title}`}
-                                onClick={() => messageMediaInputRef.current.click()}
+                                onClick={() => messageMediaRef.current.click()}
                                 className="cursor-pointer"
                             />
                         ))}
                         <input
-                            ref={messageMediaInputRef}
+                            ref={messageMediaRef}
                             type="file"
                             accept="image/*,video/*"
-                            onChange={(e) => handleMediaChange(e, setMessageMedia)}
+                            onChange={(e) => handleMediaChange(e, setMessage)}
                             className="hidden"
                         />
                     </div>
@@ -264,10 +203,10 @@ export const FeedPostPosting = ({ usedInGroupPosting = false, groupData }) => {
                     />
                 ) : (
                     <BasicButton
-                        btnStyleClass={`${(messageText || messageMedia.content) ? 'text-white bg-customBlue-default' : 'text-customGray-200 bg-customGray-100'}`}
+                        btnStyleClass={`${(message.text || message.media) ? 'text-white bg-customBlue-default' : 'text-customGray-200 bg-customGray-100'}`}
                         btnData={{
                             text: isAnonymous ? 'Submit' : 'Post',
-                            onClick: handlePosting
+                            onClick: () => handlePosting(message, null, user, groupData, usedInGroupPosting, isAnonymous, setPostLoading, handleModalClose)
                         }}
                     />
                 )}

@@ -236,6 +236,7 @@ const Profile = () => {
                             )}
 
                             <FeedPost
+                                activeUser={user}
                                 userData={users}
                                 postData={userPosts}
                             />
