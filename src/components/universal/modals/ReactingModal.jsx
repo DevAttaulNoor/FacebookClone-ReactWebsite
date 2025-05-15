@@ -5,7 +5,7 @@ import { ReactIcons } from '@constants/ReactIcons';
 
 export const ReactingModal = ({
     modalStateData,
-    postData,
+    entityData,
     usersData
 }) => {
     return (
@@ -27,7 +27,7 @@ export const ReactingModal = ({
             <hr className="text-customGray-default" />
 
             <div className='flex flex-col gap-3 overflow-y-auto'>
-                {postData?.reactions?.map((elem) => {
+                {entityData?.reactions?.map((elem) => {
                     const users = usersData?.find(user => user.uid === elem.uid);
 
                     return (

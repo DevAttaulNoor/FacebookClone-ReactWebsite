@@ -1,6 +1,6 @@
 import { db, storage } from "@services/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { collection, doc, addDoc, setDoc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import { collection, doc, setDoc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 
 const handleSaving = async (postId, userId) => {
     try {
@@ -31,90 +31,6 @@ const handleDeleting = async (postId) => {
         await deleteDoc(doc(db, 'Posts', postId));
     } catch (error) {
         console.error("Error deleting:", error);
-    }
-};
-
-const handleReacting = async (postData, userId) => {
-    try {
-        const postDocRef = doc(db, "Posts", postData?.id);
-        const postDoc = await getDoc(postDocRef);
-
-        const userDocRef = doc(db, "Users", postData?.uid);
-        const userDoc = await getDoc(userDocRef);
-
-        if (postDoc.exists()) {
-            let existingReactions = postDoc.data().reactions || [];
-
-            if (existingReactions.some(reaction => reaction.uid === userId)) {
-                // Remove user reaction
-                existingReactions = existingReactions.filter(reaction => reaction.uid !== userId);
-            } else {
-                // Add user reaction with timestamp
-                existingReactions.push({
-                    uid: userId,
-                    timestamp: Math.floor(Date.now() / 1000),
-                });
-            }
-
-            await updateDoc(postDocRef, { reactions: existingReactions });
-        } else {
-            console.error("Post not found.");
-            return;
-        }
-
-        if (userDoc.exists()) {
-            let existingNotifications = userDoc.data().notifications || [];
-
-            if (existingNotifications.some(reaction => reaction.uid === userId)) {
-                // Remove user reaction
-                existingNotifications = existingNotifications.filter(notification => notification.uid !== userId);
-            } else {
-                // Add user reaction with timestamp
-                existingNotifications.push({
-                    uid: userId,
-                    postId: postData?.id,
-                    status: 'reacted',
-                    timestamp: Math.floor(Date.now() / 1000),
-                });
-            }
-
-            await updateDoc(userDocRef, { notifications: existingNotifications });
-        } else {
-            console.error("User not found.");
-        }
-    } catch (error) {
-        console.error("Error updating reaction:", error);
-    }
-};
-
-const handleCommenting = async (postData, userId, commentInput) => {
-    try {
-        await addDoc(collection(doc(db, "Posts", postData?.id), "comments"), {
-            uid: userId,
-            comment: commentInput,
-            timestamp: Math.floor(new Date().getTime() / 1000),
-        });
-
-        const userDocRef = doc(db, "Users", postData?.uid);
-        const userDoc = await getDoc(userDocRef);
-
-        if (userDoc.exists()) {
-            let existingNotifications = userDoc.data().notifications || [];
-
-            existingNotifications.push({
-                uid: userId,
-                postId: postData?.id,
-                status: 'commented',
-                comment: commentInput,
-                timestamp: Math.floor(Date.now() / 1000),
-            });
-
-            await updateDoc(userDocRef, { notifications: existingNotifications });
-        } else {
-            console.error("User not found.");
-        }
-    } catch (error) {
-        console.error("Error adding comment:", error);
     }
 };
 
@@ -232,4 +148,4 @@ const handlePosting = async (messageData, postData, userData, groupData, usedInG
     }
 };
 
-export { handleSaving, handleDeleting, handleReacting, handleCommenting, handlePosting }
+export { handleSaving, handleDeleting, handlePosting }

@@ -5,11 +5,12 @@ import { InputField } from "../inputs/InputField";
 import { ReactIcons } from "@constants/ReactIcons";
 import { ModalLayout } from "@layouts/ModalLayout";
 import { timeAgoInitials } from "@utils/TimeModule";
-import { handleCommenting } from "@utils/PostHandling";
+import { handleCommenting } from "@utils/ReactionHandling";
 
 export const CommentingModal = ({
     modalStateData,
-    postData,
+    entity,
+    enityData,
     userData,
     usersData,
 }) => {
@@ -34,7 +35,7 @@ export const CommentingModal = ({
             <hr className="text-customGray-default" />
 
             <div className='flex flex-col gap-3 overflow-y-auto'>
-                {postData?.comments?.sort((a, b) => a.timestamp - b.timestamp)?.map((elem) => {
+                {enityData?.comments?.sort((a, b) => a.timestamp - b.timestamp)?.map((elem) => {
                     const users = usersData?.find(user => user.uid === elem.uid);
 
                     return (
@@ -86,7 +87,7 @@ export const CommentingModal = ({
                         <button
                             className='cursor-pointer text-customBlue-300'
                             onClick={() => {
-                                handleCommenting(postData, userData?.uid, input)
+                                handleCommenting(entity, enityData, userData?.uid, input)
                                 setInput('')
                             }}
                         >

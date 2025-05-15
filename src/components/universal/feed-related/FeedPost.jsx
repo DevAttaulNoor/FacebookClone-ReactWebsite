@@ -6,9 +6,10 @@ import { ReactIcons } from '@constants/ReactIcons';
 import { timeAgoInitials } from '@utils/TimeModule';
 import { PostingModal } from '../modals/PostingModal';
 import { ReactingModal } from "../modals/ReactingModal";
+import { handleReacting } from "@utils/ReactionHandling";
 import { BasicDropdown } from '../dropdowns/BasicDropdown';
 import { CommentingModal } from "../modals/CommentingModal";
-import { handleDeleting, handleReacting, handleSaving } from '@utils/PostHandling';
+import { handleDeleting, handleSaving } from '@utils/PostHandling';
 
 export const FeedPost = ({ postContainerStyle = 'w-full', postData, activeUser, userData, groupData, usedInGroupPosting = false }) => {
     const [message, setMessage] = useState({
@@ -234,7 +235,7 @@ export const FeedPost = ({ postContainerStyle = 'w-full', postData, activeUser, 
 
                         <div className='grid grid-cols-2 mx-4 py-2 gap-1.5 border-t border-t-slate-400'>
                             <button
-                                onClick={() => handleReacting(data, activeUser?.uid)}
+                                onClick={() => handleReacting('Posts', data, activeUser?.uid)}
                                 className="flex items-center justify-center p-2 gap-1.5 rounded-md cursor-pointer hover:bg-customGray-default"
                             >
                                 <span className={`${userReacted ? 'text-customBlue-300' : 'text-customGray-300'} text-lg`}>{ReactIcons.LIKE_OUTLINE}</span>
@@ -278,8 +279,9 @@ export const FeedPost = ({ postContainerStyle = 'w-full', postData, activeUser, 
                                     modalOpen: modalOpen,
                                     setModalOpen: setModalOpen
                                 }}
+                                entity={'Posts'}
+                                enityData={data}
                                 userData={activeUser}
-                                postData={data}
                                 usersData={userData}
                             />
                         )}
@@ -290,7 +292,7 @@ export const FeedPost = ({ postContainerStyle = 'w-full', postData, activeUser, 
                                     modalOpen: modalOpen,
                                     setModalOpen: setModalOpen
                                 }}
-                                postData={data}
+                                entityData={data}
                                 usersData={userData}
                             />
                         )}
