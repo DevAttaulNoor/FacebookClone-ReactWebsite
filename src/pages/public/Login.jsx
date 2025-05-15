@@ -1,26 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@services/firebase";
 import { Routes } from "@constants/Routes";
+import { handleLoggingIn } from "@utils/AuthHandling";
 import { InputField } from "@components/universal/inputs/InputField";
 
 const Login = () => {
-    const [email, setEmail] = useState('');
+    const [formInput, setFormInput] = useState({
+        email: '',
+        password: ''
+    })
     const [error, setError] = useState('');
-    const [password, setPassword] = useState('');
-
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-            setEmail('');
-            setError('');
-            setPassword('');
-        } catch (error) {
-            setError(error.message);
-        }
-    };
+    const [loading, setLoading] = useState(false);
 
     return (
         <div className="h-full w-full flex flex-col items-center justify-center gap-4 py-10 px-4 md:flex-row">
@@ -34,15 +24,15 @@ const Login = () => {
 
             <div className="max-w-[380px] w-full flex flex-col p-4 gap-3.5 rounded-lg bg-white">
                 <form
-                    onSubmit={handleLogin}
+                    onSubmit={(e) => handleLoggingIn(e, formInput, setFormInput, setError, setLoading)}
                     className="flex flex-col gap-3.5"
                 >
                     <InputField
                         inputData={{
                             type: 'email',
-                            value: email,
+                            value: formInput.email,
                             placeholder: 'Email address',
-                            onChange: (e) => setEmail(e.target.value),
+                            onChange: (e) => setFormInput(prev => ({ ...prev, email: e.target.value })),
                             required: true
                         }}
                         inputStyle="launchpageInputStyle w-full p-4"
@@ -51,17 +41,23 @@ const Login = () => {
                     <InputField
                         inputData={{
                             type: 'password',
-                            value: password,
+                            value: formInput.password,
                             placeholder: 'Password',
-                            onChange: (e) => setPassword(e.target.value),
+                            onChange: (e) => setFormInput(prev => ({ ...prev, password: e.target.value })),
                             required: true
                         }}
                         inputStyle="launchpageInputStyle w-full p-4"
                     />
 
-                    <button className="w-full rounded-md border border-slate-100 bg-customBlue-default px-4 py-2.5 text-xl font-semibold text-white outline-none">
-                        Log in
-                    </button>
+                    {loading ? (
+                        <button className="w-full rounded-md border border-slate-100 bg-customBlue-default px-4 py-2.5 text-xl font-semibold text-white outline-none">
+                            <p className='w-7 h-7 mx-auto border-2 border-b-0 animate-spin rounded-full border-white'></p>
+                        </button>
+                    ) : (
+                        <button className="w-full rounded-md border border-slate-100 bg-customBlue-default px-4 py-2.5 text-xl font-semibold text-white outline-none">
+                            Log in
+                        </button>
+                    )}
 
                     {error && <p className="text-center text-sm text-red-500">{error}</p>}
                 </form>

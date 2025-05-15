@@ -1,15 +1,13 @@
 import { Link } from "react-router";
 import { useEffect, useState } from "react";
-import { SvgIcons } from '@constants/SvgIcons';
 import { ProfileAvatar } from '../ProfileAvatar';
 import { ReactIcons } from '@constants/ReactIcons';
 import { timeAgoInitials } from '@utils/TimeModule';
 import { PostingModal } from '../modals/PostingModal';
 import { ReactingModal } from "../modals/ReactingModal";
 import { handleReacting } from "@utils/ReactionHandling";
-import { BasicDropdown } from '../dropdowns/BasicDropdown';
 import { CommentingModal } from "../modals/CommentingModal";
-import { handleDeleting, handleSaving } from '@utils/PostHandling';
+import { PostOptionsDropdown } from "../dropdowns/PostOptionsDropdown";
 
 export const FeedPost = ({ postContainerStyle = 'w-full', postData, activeUser, userData, groupData, usedInGroupPosting = false }) => {
     const [message, setMessage] = useState({
@@ -141,54 +139,18 @@ export const FeedPost = ({ postContainerStyle = 'w-full', postData, activeUser, 
                                 {ReactIcons.OPTIONS_THREE_DOTS}
                             </span>
 
-                            <BasicDropdown
-                                isOpen={postActionDropdown === data.id}
-                                isClose={() => setPostActionDropdown(null)}
-                                dropdownContainerStyle="dropdownContainerStyle1 p-2 gap-1.5 top-14 right-6 shadow-customFull2"
-                            >
-                                {data.uid === activeUser?.uid ? (
-                                    <>
-                                        <div
-                                            onClick={() => {
-                                                setModalOpen(prev => ({ ...prev, editing: data.id }))
-                                                setPostActionDropdown(null)
-                                            }}
-                                            className='flex items-center p-1.5 gap-3 rounded-lg cursor-pointer hover:bg-customGray-default'
-                                        >
-                                            <span className="text-lg">{ReactIcons.EDIT_PENCIL}</span>
-
-                                            <div className="flex flex-col gap-0.5">
-                                                <h5 className="text-sm font-medium">Edit post</h5>
-                                                <p className="text-xs text-customGray-200">Edit your post as require</p>
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            onClick={() => handleDeleting(data.id)}
-                                            className='flex items-center p-1.5 gap-3 rounded-lg cursor-pointer hover:bg-customGray-default'
-                                        >
-                                            <span className="text-lg">{ReactIcons.DELETE_TRASHBIN}</span>
-
-                                            <div className="flex flex-col gap-0.5">
-                                                <h5 className="text-sm font-medium">Move to trash</h5>
-                                                <p className="text-xs text-customGray-200">Items in your trash are deleted</p>
-                                            </div>
-                                        </div>
-                                    </>
-                                ) : (
-                                    <div
-                                        onClick={() => handleSaving(data.id, activeUser?.uid)}
-                                        className='flex items-center p-1.5 gap-3 rounded-lg cursor-pointer hover:bg-customGray-default'
-                                    >
-                                        <span>{SvgIcons.SAVED({ styleClass: 'w-[18px] h-[18px]' })}</span>
-
-                                        <div className="flex flex-col gap-0.5">
-                                            <h5 className="text-sm font-medium">{data.saves?.find(elem => elem.uid === activeUser?.uid) ? 'Unsave post' : 'Save post'}</h5>
-                                            <p className="text-xs text-customGray-200">Add this to your saved items</p>
-                                        </div>
-                                    </div>
-                                )}
-                            </BasicDropdown>
+                            <PostOptionsDropdown
+                                dropdownStateData={{
+                                    dropdownOpen: postActionDropdown,
+                                    setDropdownOpen: setPostActionDropdown
+                                }}
+                                modalStateData={{
+                                    modalOpen: modalOpen,
+                                    setModalOpen: setModalOpen
+                                }}
+                                postData={data}
+                                userData={activeUser}
+                            />
                         </div>
 
                         <div className="flex flex-col px-4 gap-3">
