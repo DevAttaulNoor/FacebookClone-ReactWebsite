@@ -7,7 +7,7 @@ import { DropdownLayout } from "@layouts/DropdownLayout";
 import { useMessageBox } from "@contexts/MessageBoxContext";
 
 export const ChatsDropdown = ({ dropdownStateData, searchInputStateData, userData, usersData }) => {
-    const { setSelectedMessageUser, setIsMessageBoxOpen } = useMessageBox();
+    const { setIsMessageBoxOpen } = useMessageBox();
     const { userChats } = useChats(userData?.uid, usersData?.map(data => data.uid));
 
     return (
@@ -36,8 +36,7 @@ export const ChatsDropdown = ({ dropdownStateData, searchInputStateData, userDat
                         <div
                             key={index}
                             onClick={() => {
-                                setIsMessageBoxOpen(true);
-                                setSelectedMessageUser(chatUser?.id);
+                                setIsMessageBoxOpen(chatUser?.id);
                                 dropdownStateData.setDropdownOpen(prev => ({ ...prev, messageDropdown: false }));
                             }}
                             className="flex items-center p-1 gap-2.5 rounded-md cursor-pointer hover:bg-customGray-default"

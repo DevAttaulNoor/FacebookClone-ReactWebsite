@@ -20,8 +20,8 @@ const Home = () => {
     const { posts } = usePosts();
     const { users } = useUsers();
     const { reels } = useReels();
+    const { setIsMessageBoxOpen } = useMessageBox();
     const { acceptedFriends } = useFriends(user.uid);
-    const { setSelectedMessageUser, setIsMessageBoxOpen } = useMessageBox();
     const friendsPosts = posts?.filter(data => (data.uid === user?.uid) || (acceptedFriends.some(friend => friend.uid === data.uid)));
     const friendsPhotoPosts = friendsPosts?.filter(data => data.mediaType === 'image')
 
@@ -109,13 +109,10 @@ const Home = () => {
             <div className="hidden homeSidebarStyle md:flex">
                 <HomeLeftbarContentLayout title={'Contacts'}>
                     <div className="flex flex-col gap-1.5">
-                        {acceptedFriends.map((user) => (
+                        {acceptedFriends?.map((user) => (
                             <div
-                                key={user.uid}
-                                onClick={() => {
-                                    setIsMessageBoxOpen(true);
-                                    setSelectedMessageUser(user.uid);
-                                }}
+                                key={user?.uid}
+                                onClick={() => setIsMessageBoxOpen(user?.uid)}
                                 className="flex cursor-pointer items-center gap-2.5 rounded-lg p-2 hover:bg-customGray-100"
                             >
                                 <ProfileAvatar
@@ -124,7 +121,7 @@ const Home = () => {
                                     iconStyleClass="text-3xl"
                                 />
 
-                                <p className="font-medium">{user.username}</p>
+                                <p className="font-medium">{user?.username}</p>
                             </div>
                         ))}
                     </div>

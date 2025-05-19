@@ -8,17 +8,18 @@ import { ProfileAvatar } from "../ProfileAvatar";
 import { InputField } from "../inputs/InputField";
 import { ReactIcons } from "@constants/ReactIcons";
 import { timeAgoInitials } from "@utils/TimeModule";
+import { useMessageBox } from "@contexts/MessageBoxContext";
 
-export const MessageBox = ({ isOpen, isClose, selectUser }) => {
+export const MessageBox = () => {
     const { user } = useAuth();
     const { chats } = useChats();
     const { usersExceptCurrent } = useUsers(user?.uid);
     const [searchInput, setSearchInput] = useState('');
     const [messageInput, setMessageInput] = useState('');
-    const [selectedUser, setSelectedUser] = useState(selectUser);
-    const searchedUser = usersExceptCurrent?.filter((data) => data?.username?.toLowerCase().includes(searchInput.toLowerCase()));
-    const selectedUserData = usersExceptCurrent?.find((data) => (data?.uid === isOpen) || (data?.uid === selectedUser));
-    const selectedUserChats = chats?.find((data) => (data.uids === `${user?.uid}${selectedUserData?.uid}`) || (data.uids === `${selectedUserData?.uid}${user?.uid}`));
+    const { isMessageBoxOpen, setIsMessageBoxOpen } = useMessageBox();
+    const searchedUser = usersExceptCurrent?.filter(data => data?.username?.toLowerCase().includes(searchInput.toLowerCase()));
+    const selectedUserData = usersExceptCurrent?.find(data => data?.uid === isMessageBoxOpen);
+    const selectedUserChats = chats?.find(data => (data.uids === `${user?.uid}${selectedUserData?.uid}`) || (data.uids === `${selectedUserData?.uid}${user?.uid}`));
 
     const handleKeyDown = (e) => {
         if (e.key === "Enter") {
@@ -65,22 +66,22 @@ export const MessageBox = ({ isOpen, isClose, selectUser }) => {
 
     return (
         <div className='absolute bottom-0 right-24 w-64 h-96 flex flex-col rounded-t-md shadow-customFull2 z-10 bg-white sm:w-72 md:right-28 md:w-80 lg:right-36'>
-            <div className={`${isOpen ? 'border-b' : 'pb-0'} flex items-center justify-between p-3`}>
-                {isOpen ? (
-                    <h5 className="text-sm font-medium">{selectedUserData?.username}</h5>
-                ) : (
+            <div className={`${isMessageBoxOpen ? 'border-b' : 'pb-0'} flex items-center justify-between p-3`}>
+                {isMessageBoxOpen === true ? (
                     <h5 className="text-sm font-medium">New message</h5>
+                ) : (
+                    <h5 className="text-sm font-medium">{selectedUserData?.username}</h5>
                 )}
 
                 <span
-                    onClick={isClose}
+                    onClick={() => setIsMessageBoxOpen(false)}
                     className="text-xl p-0.5 rounded-full cursor-pointer text-customGray-300 hover:bg-customGray-default"
                 >
                     {ReactIcons.CLOSE}
                 </span>
             </div>
 
-            {!isOpen && (
+            {isMessageBoxOpen === true && (
                 <div className='flex p-3 gap-3 border-b'>
                     <p className="text-sm">To: </p>
 
@@ -89,7 +90,7 @@ export const MessageBox = ({ isOpen, isClose, selectUser }) => {
                             <p className="text-xs font-medium">{selectedUserData?.username}</p>
 
                             <span
-                                onClick={() => { setSelectedUser(''), setSearchInput('') }}
+                                onClick={() => { setIsMessageBoxOpen(false), setSearchInput('') }}
                                 className="text-sm cursor-pointer"
                             >
                                 {ReactIcons.CLOSE}
@@ -108,9 +109,9 @@ export const MessageBox = ({ isOpen, isClose, selectUser }) => {
                 </div>
             )}
 
-            {selectedUser || isOpen ? (
+            {isMessageBoxOpen !== true ? (
                 <div className="h-full flex flex-col justify-between">
-                    <div className={`${isOpen ? 'h-72' : 'h-60'} flex flex-col overflow-y-auto`}>
+                    <div className={`${isMessageBoxOpen ? 'h-72' : 'h-60'} flex flex-col overflow-y-auto`}>
                         <div className="flex flex-col items-center justify-center py-4 px-3 gap-1">
                             <ProfileAvatar
                                 userData={selectedUserData}
@@ -126,10 +127,10 @@ export const MessageBox = ({ isOpen, isClose, selectUser }) => {
                             {selectedUserChats?.chats?.map((chat, index) => (
                                 <div
                                     key={index}
-                                    className={`${chat.senderId === user?.uid ? 'self-end items-end' : 'self-start items-start'} flex flex-col`}
+                                    className={`${chat?.senderId === user?.uid ? 'self-end items-end' : 'self-start items-start'} flex flex-col`}
                                 >
-                                    <span className={`${chat.senderId === user?.uid ? 'text-white bg-customBlue-300' : 'bg-customGray-100'} w-fit px-3 py-2 text-sm rounded-xl`}>{chat.message}</span>
-                                    <span className="text-xs px-1 text-customGray-200">{timeAgoInitials(chat.timestamp)}</span>
+                                    <span className={`${chat?.senderId === user?.uid ? 'text-white bg-customBlue-300' : 'bg-customGray-100'} w-fit px-3 py-2 text-sm rounded-xl`}>{chat?.message}</span>
+                                    <span className="text-xs px-1 text-customGray-200">{timeAgoInitials(chat?.timestamp)}</span>
                                 </div>
                             ))}
                         </div>
@@ -166,8 +167,8 @@ export const MessageBox = ({ isOpen, isClose, selectUser }) => {
                 <div className="flex flex-col p-3 gap-3.5 cursor-pointer overflow-y-auto">
                     {searchedUser.length > 0 ? (searchedUser.map((data) => (
                         <div
-                            key={data.uid}
-                            onClick={() => setSelectedUser(data.uid)}
+                            key={data?.uid}
+                            onClick={() => setIsMessageBoxOpen(data?.uid)}
                             className="flex items-center gap-2"
                         >
                             <ProfileAvatar
@@ -176,7 +177,7 @@ export const MessageBox = ({ isOpen, isClose, selectUser }) => {
                                 iconStyleClass="text-[38px]"
                             />
 
-                            <p className="text-sm font-medium">{data.username}</p>
+                            <p className="text-sm font-medium">{data?.username}</p>
                         </div>
                     ))) : (
                         <p className="text-sm text-customGray-400">No users found</p>

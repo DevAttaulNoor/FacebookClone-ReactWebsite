@@ -9,7 +9,7 @@ import { MessageBox } from "@components/universal/message-related/MessageBox";
 
 export const PrivateRoute = () => {
     const { user, loading } = useAuth();
-    const { isMessageBoxOpen, selectedMessageUser, setIsMessageBoxOpen, setSelectedMessageUser } = useMessageBox();
+    const { isMessageBoxOpen, setIsMessageBoxOpen } = useMessageBox();
 
     if (loading || user === undefined) {
         return <Loading />;
@@ -28,13 +28,7 @@ export const PrivateRoute = () => {
             </span>
 
             {isMessageBoxOpen && (
-                <MessageBox
-                    selectUser={selectedMessageUser}
-                    isClose={() => {
-                        setIsMessageBoxOpen(false);
-                        setSelectedMessageUser(null);
-                    }}
-                />
+                <MessageBox />
             )}
         </>
     ) : (
