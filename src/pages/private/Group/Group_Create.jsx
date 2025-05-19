@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "@services/firebase";
@@ -37,8 +37,10 @@ const feedPostingOptions = [
 
 const Group_Create = () => {
     const { user } = useAuth();
+    const coverPhotoRef = useRef(null);
     const { acceptedFriends } = useFriends(user.uid);
     const [groupName, setGroupName] = useState('');
+    const [coverPhoto, setCoverPhoto] = useState('')
     const [searchInput, setSearchInput] = useState('');
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -63,11 +65,19 @@ const Group_Create = () => {
             setLoading(true);
             const allMembers = [...selectedUsers, user.uid];
 
-            const response = await fetch(group_coverphoto);
-            const blob = await response.blob();
-            const storageRef = ref(storage, `Groups/${user.uid}/cover_photo.jpg`);
-            await uploadBytes(storageRef, blob);
-            const coverPhotoUrl = await getDownloadURL(storageRef);
+            let coverPhotoUrl = "";
+            if (coverPhoto) {
+                const file = coverPhoto;
+                const storageRef = ref(storage, `Groups/${user.uid}/${file.name}`);
+                await uploadBytes(storageRef, file);
+                coverPhotoUrl = await getDownloadURL(storageRef);
+            } else {
+                const response = await fetch(group_coverphoto);
+                const blob = await response.blob();
+                const storageRef = ref(storage, `Groups/${user.uid}/cover_photo.jpg`);
+                await uploadBytes(storageRef, blob);
+                coverPhotoUrl = await getDownloadURL(storageRef);
+            }
 
             await setDoc(doc(collection(db, "Groups")), {
                 adminId: user.uid,
@@ -80,6 +90,7 @@ const Group_Create = () => {
 
             setLoading(false);
             setGroupName('');
+            setCoverPhoto('');
             setSelectedUsers([]);
         } catch (error) {
             console.error(error);
@@ -216,11 +227,27 @@ const Group_Create = () => {
 
                     <div className="h-full flex flex-col justify-between border rounded-lg overflow-y-auto bg-customGray-default">
                         <div className="flex flex-col gap-4 shadow-md bg-white">
-                            <img
-                                src={group_coverphoto}
-                                alt="cover photo of group"
-                                className="rounded-t-md object-contain"
-                            />
+                            <div
+                                style={{ backgroundImage: `url(${coverPhoto ? URL.createObjectURL(coverPhoto) : group_coverphoto})` }}
+                                className="bg-contain bg-center bg-no-repeat h-44 flex items-end justify-end p-1.5 rounded-t-md bg-customGray-default xs:p-2 sm:p-2.5 md:p-3 lg:p-3.5 xl:p-4"
+                            >
+                                <BasicButton
+                                    btnStyleClass="!w-fit z-[5] bg-white hover:bg-slate-50"
+                                    btnData={{
+                                        text: 'Add',
+                                        icon: ReactIcons.ADD_PLUS,
+                                        onClick: () => coverPhotoRef.current.click(),
+                                    }}
+                                />
+
+                                <input
+                                    ref={coverPhotoRef}
+                                    type="file"
+                                    accept="image/*"
+                                    className="hidden"
+                                    onChange={(e) => setCoverPhoto(e.target.files[0])}
+                                />
+                            </div>
 
                             <div className="px-6">
                                 <h1 className="text-2xl font-extrabold text-customGray-200">{groupName ? groupName : 'Group Name'}</h1>
