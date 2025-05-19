@@ -1,74 +1,53 @@
-import { useState, useEffect } from "react";
-import { collection, onSnapshot, doc } from "firebase/firestore";
+import { useEffect, useState, useMemo } from "react";
+import { collection, onSnapshot, query } from "firebase/firestore";
 import { db } from "@services/firebase";
+import { useCollectionData } from "./useDataCollection";
 
 export const usePosts = (userId) => {
+    const { collectionData, loading, error } = useCollectionData("Posts");
     const [posts, setPosts] = useState([]);
-    const [groupPosts, setGroupPosts] = useState([]);
-    const [userPosts, setUserPosts] = useState([]);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const postsQuery = collection(db, "Posts");
+        if (collectionData) {
+            const unsubscribes = [];
 
-        const unsubscribePosts = onSnapshot(postsQuery, (snapshot) => {
-            let allPosts = snapshot.docs.map(postDoc => ({
-                id: postDoc.id,
-                ...postDoc.data(),
-                comments: []
-            }));
+            collectionData.forEach((post) => {
+                const commentsRef = collection(db, "Posts", post.id, "comments");
+                const q = query(commentsRef);
 
-            // Create a map to store unsubscribe functions for each post's comments
-            const unsubscribeCommentsMap = {};
-
-            allPosts.forEach(post => {
-                const commentsRef = collection(doc(db, "Posts", post.id), "comments");
-
-                const unsubscribeComments = onSnapshot(commentsRef, (commentsSnapshot) => {
-                    const postComments = commentsSnapshot.docs.map(commentDoc => ({
-                        id: commentDoc.id,
-                        ...commentDoc.data(),
+                const unsubscribe = onSnapshot(q, (snapshot) => {
+                    const comments = snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        ...doc.data(),
                     }));
 
-                    // Update the post with its real-time comments
-                    setPosts(prevPosts =>
-                        prevPosts.map(p => p.id === post.id ? { ...p, comments: postComments } : p)
-                    );
-                    setGroupPosts(prevPosts =>
-                        prevPosts.map(p => p.id === post.id ? { ...p, comments: postComments } : p)
-                    );
-                },
-                    (err) => console.error(`Error fetching comments for post ${post.id}:`, err)
-                );
+                    setPosts((prev) => {
+                        const others = prev.filter((r) => r.id !== post.id);
+                        return [...others, { ...post, comments }];
+                    });
+                });
 
-                // Store the unsubscribe function for cleanup
-                unsubscribeCommentsMap[post.id] = unsubscribeComments;
+                unsubscribes.push(unsubscribe);
             });
 
-            setPosts(allPosts.filter(post => !post.groupId || post.groupId === ''));
-            setGroupPosts(allPosts.filter(post => post.groupId && post.groupId !== ''));
-
-            if (userId) {
-                setUserPosts(allPosts.filter(post => (!post.groupId || post.groupId === '') && (post.uid === userId)));
-            }
-
-            setLoading(false);
-
             return () => {
-                Object.values(unsubscribeCommentsMap).forEach(unsub => unsub());
+                unsubscribes.forEach((unsub) => unsub());
             };
-        },
-            (err) => {
-                setError(err);
-                setLoading(false);
-            }
-        );
+        }
+    }, [collectionData]);
 
-        return () => {
-            unsubscribePosts();
-        };
-    }, [userId]);
+    // Use useMemo to efficiently derive filtered posts
+    const { userPosts, groupPosts } = useMemo(() => {
+        const userPosts = posts?.filter(post => (!post.groupId || post.groupId === '') && (post.uid === userId));
+        const groupPosts = posts?.filter(post => post.groupId && post.groupId !== '');
+        return { userPosts, groupPosts };
+    }, [posts, userId]);
 
-    return { posts, groupPosts, userPosts, loading, error };
+    return {
+        posts: posts,
+        userPosts,
+        groupPosts,
+        loading,
+        error,
+    };
 };
