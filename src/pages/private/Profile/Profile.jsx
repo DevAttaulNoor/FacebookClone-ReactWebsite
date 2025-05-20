@@ -27,8 +27,8 @@ const Profile = () => {
     const { users, userCurrent } = useUsers(id);
     const { userPosts } = usePosts(userCurrent?.uid);
     const { acceptedFriends } = useFriends(userCurrent?.uid);
-    const userPostPhotos = userPosts.filter(data => data.mediaType === 'image')
-    const userPostVideos = userPosts.filter(data => data.mediaType === 'video')
+    const userPostPhotos = userPosts?.filter(data => data.mediaType === 'image')
+    const userPostVideos = userPosts?.filter(data => data.mediaType === 'video')
     const [bioInput, setBioInput] = useState({
         value: "",
         count: 101,

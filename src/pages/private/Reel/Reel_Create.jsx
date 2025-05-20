@@ -27,7 +27,8 @@ const Reel_Create = () => {
 
             await setDoc(doc(collection(db, "Reels")), {
                 uid: user.uid,
-                video: mediaUrl,
+                media: mediaUrl,
+                mediaType: 'reel',
                 email: user.email,
                 message: input.message,
                 timestamp: Math.floor(new Date().getTime() / 1000),

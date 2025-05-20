@@ -7,7 +7,7 @@ export const useStories = (userId) => {
 
     useEffect(() => {
         if (userId && collectionData) {
-            const currentUserStories = collectionData.filter(story => story.uid === userId);
+            const currentUserStories = collectionData?.filter(story => story.uid === userId);
             setUserStories(currentUserStories);
         }
     }, [userId, collectionData]);

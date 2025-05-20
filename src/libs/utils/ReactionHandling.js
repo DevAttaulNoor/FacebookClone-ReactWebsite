@@ -1,5 +1,5 @@
 import { db } from "@services/firebase";
-import { collection, doc, addDoc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 const handleReacting = async (entity, entityData, userId) => {
     try {
@@ -56,14 +56,26 @@ const handleReacting = async (entity, entityData, userId) => {
 
 const handleCommenting = async (entity, entityData, userId, commentInput) => {
     try {
-        await addDoc(collection(doc(db, entity, entityData?.id), "comments"), {
-            uid: userId,
-            comment: commentInput,
-            timestamp: Math.floor(new Date().getTime() / 1000),
-        });
+        const postDocRef = doc(db, entity, entityData?.id);
+        const postDoc = await getDoc(postDocRef);
 
         const userDocRef = doc(db, "Users", entityData?.uid);
         const userDoc = await getDoc(userDocRef);
+
+        if (postDoc.exists()) {
+            let existingComments = postDoc.data().comments || [];
+
+            existingComments.push({
+                uid: userId,
+                comment: commentInput,
+                timestamp: Math.floor(new Date().getTime() / 1000),
+            });
+
+            await updateDoc(postDocRef, { comments: existingComments });
+        } else {
+            console.error(`${entity} not found.`);
+            return;
+        }
 
         if (userDoc.exists()) {
             let existingNotifications = userDoc.data().notifications || [];

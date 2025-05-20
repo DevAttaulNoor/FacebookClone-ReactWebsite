@@ -11,6 +11,7 @@ import { handleReacting } from "@utils/ReactionHandling";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { ReactingModal } from "@components/universal/modals/ReactingModal";
 import { CommentingModal } from "@components/universal/modals/CommentingModal";
+import { EntityOptionsDropdown } from "@components/universal/dropdowns/EntityOptionsDropdown";
 
 const Reel = () => {
     const navigate = useNavigate();
@@ -21,6 +22,7 @@ const Reel = () => {
     const { reels } = useReels();
     const [isMuted, setIsMuted] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
+    const [reelActionDropdown, setReelActionDropdown] = useState(null);
     const currentIndex = reels?.findIndex(data => data.id === id) || 0;
     const activeReelContent = reels?.[currentIndex];
     const activeReelUser = users?.find(data => data.uid === activeReelContent?.uid);
@@ -66,7 +68,7 @@ const Reel = () => {
                             ref={videoRef}
                             muted={isMuted}
                             onClick={handleVideoToggle}
-                            src={activeReelContent?.video}
+                            src={activeReelContent?.media}
                             className="w-full h-full rounded-md object-cover"
                         />
 
@@ -89,7 +91,27 @@ const Reel = () => {
                                 {isMuted ? ReactIcons.SPEAKER_NO_SOUND : ReactIcons.SPEAKER_SOUND}
                             </button>
 
-                            <span className="text-xl cursor-pointer text-white">{ReactIcons.OPTIONS_THREE_DOTS}</span>
+                            <span
+                                onClick={() => setReelActionDropdown(activeReelContent?.id)}
+                                className="p-2 rounded-full cursor-pointer text-white hover:hover:bg-[#313131]"
+                            >
+                                {ReactIcons.OPTIONS_THREE_DOTS}
+                            </span>
+
+                            <EntityOptionsDropdown
+                                dropdownStateData={{
+                                    dropdownOpen: reelActionDropdown,
+                                    setDropdownOpen: setReelActionDropdown
+                                }}
+                                modalStateData={{
+                                    modalOpen: modalOpen,
+                                    setModalOpen: setModalOpen
+                                }}
+                                entity={'Reels'}
+                                userData={user}
+                                entityData={activeReelContent}
+                                goToNextReel={goToNextReel}
+                            />
                         </div>
 
                         {/* Content */}

@@ -7,7 +7,7 @@ import { PostingModal } from '../modals/PostingModal';
 import { ReactingModal } from "../modals/ReactingModal";
 import { handleReacting } from "@utils/ReactionHandling";
 import { CommentingModal } from "../modals/CommentingModal";
-import { PostOptionsDropdown } from "../dropdowns/PostOptionsDropdown";
+import { EntityOptionsDropdown } from "../dropdowns/EntityOptionsDropdown";
 
 export const FeedPost = ({ postContainerStyle = 'w-full', postData, activeUser, userData, groupData, usedInGroupPosting = false }) => {
     const [message, setMessage] = useState({
@@ -53,8 +53,8 @@ export const FeedPost = ({ postContainerStyle = 'w-full', postData, activeUser, 
                                         {data?.isAnonymous ? (
                                             <div className="relative">
                                                 <img
-                                                    src={data?.coverPhoto}
-                                                    alt={`cover picture of ${data?.name}`}
+                                                    src={activeGroup?.coverPhoto}
+                                                    alt={`cover picture of ${activeGroup?.name}`}
                                                     className='w-10 h-10 object-contain border rounded-lg border-customGray-100 bg-white'
                                                 />
 
@@ -67,8 +67,8 @@ export const FeedPost = ({ postContainerStyle = 'w-full', postData, activeUser, 
                                         ) : (
                                             <div className="relative">
                                                 <img
-                                                    src={data?.coverPhoto}
-                                                    alt={`cover picture of ${data?.name}`}
+                                                    src={activeGroup?.coverPhoto}
+                                                    alt={`cover picture of ${activeGroup?.name}`}
                                                     className='w-10 h-10 object-contain border rounded-lg border-customGray-100 bg-white'
                                                 />
 
@@ -139,7 +139,7 @@ export const FeedPost = ({ postContainerStyle = 'w-full', postData, activeUser, 
                                 {ReactIcons.OPTIONS_THREE_DOTS}
                             </span>
 
-                            <PostOptionsDropdown
+                            <EntityOptionsDropdown
                                 dropdownStateData={{
                                     dropdownOpen: postActionDropdown,
                                     setDropdownOpen: setPostActionDropdown
@@ -148,7 +148,8 @@ export const FeedPost = ({ postContainerStyle = 'w-full', postData, activeUser, 
                                     modalOpen: modalOpen,
                                     setModalOpen: setModalOpen
                                 }}
-                                postData={data}
+                                entity={'Posts'}
+                                entityData={data}
                                 userData={activeUser}
                             />
                         </div>

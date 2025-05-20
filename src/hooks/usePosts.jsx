@@ -1,53 +1,26 @@
-import { useEffect, useState, useMemo } from "react";
-import { collection, onSnapshot, query } from "firebase/firestore";
-import { db } from "@services/firebase";
+import { useEffect, useState } from "react";
 import { useCollectionData } from "./useDataCollection";
 
 export const usePosts = (userId) => {
-    const { collectionData, loading, error } = useCollectionData("Posts");
-    const [posts, setPosts] = useState([]);
+    const { collectionData, loading, error } = useCollectionData('Posts');
+    const [userPosts, setUserPosts] = useState([]);
+    const [groupPosts, setGroupPosts] = useState([]);
 
     useEffect(() => {
         if (collectionData) {
-            const unsubscribes = [];
+            setGroupPosts(collectionData?.filter(post => post.groupId && post.groupId !== ''));
 
-            collectionData.forEach((post) => {
-                const commentsRef = collection(db, "Posts", post.id, "comments");
-                const q = query(commentsRef);
-
-                const unsubscribe = onSnapshot(q, (snapshot) => {
-                    const comments = snapshot.docs.map((doc) => ({
-                        id: doc.id,
-                        ...doc.data(),
-                    }));
-
-                    setPosts((prev) => {
-                        const others = prev.filter((r) => r.id !== post.id);
-                        return [...others, { ...post, comments }];
-                    });
-                });
-
-                unsubscribes.push(unsubscribe);
-            });
-
-            return () => {
-                unsubscribes.forEach((unsub) => unsub());
-            };
+            if (userId) {
+                setUserPosts(collectionData?.filter(post => (!post.groupId || post.groupId === '') && post.uid === userId));
+            }
         }
-    }, [collectionData]);
-
-    // Use useMemo to efficiently derive filtered posts
-    const { userPosts, groupPosts } = useMemo(() => {
-        const userPosts = posts?.filter(post => (!post.groupId || post.groupId === '') && (post.uid === userId));
-        const groupPosts = posts?.filter(post => post.groupId && post.groupId !== '');
-        return { userPosts, groupPosts };
-    }, [posts, userId]);
+    }, [userId, collectionData]);
 
     return {
-        posts: posts,
-        userPosts,
-        groupPosts,
+        posts: collectionData ? collectionData : null,
+        userPosts: userId ? userPosts : null,
+        groupPosts: collectionData ? groupPosts : null,
         loading,
-        error,
+        error
     };
 };

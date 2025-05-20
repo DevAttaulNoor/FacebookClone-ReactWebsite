@@ -1,5 +1,5 @@
 import { ReactIcons } from "@constants/ReactIcons";
-import { handleSaving } from "@utils/PostHandling";
+import { handleSaving } from "@utils/EntityHandling";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { BasicButton } from "@components/universal/buttons/BasicButton";
 
@@ -55,7 +55,7 @@ const Video_Saved = ({ activeUser, userData, postData }) => {
                                         btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
                                         btnData={{
                                             text: 'Unsave',
-                                            onClick: () => handleSaving(data.id, activeUser?.uid)
+                                            onClick: () => handleSaving('Posts', data.id, activeUser?.uid)
                                         }}
                                     />
                                 </div>

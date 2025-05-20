@@ -35,11 +35,11 @@ export const CommentingModal = ({
             <hr className="text-customGray-default" />
 
             <div className='flex flex-col gap-3 overflow-y-auto'>
-                {enityData?.comments?.sort((a, b) => a.timestamp - b.timestamp)?.map((elem) => {
+                {enityData?.comments?.sort((a, b) => a.timestamp - b.timestamp)?.map((elem, index) => {
                     const users = usersData?.find(user => user.uid === elem.uid);
 
                     return (
-                        <div key={elem.id} className="flex gap-2">
+                        <div key={index} className="flex gap-2">
                             <ProfileAvatar
                                 userData={users}
                                 imageStyleClass="w-10 h-10"

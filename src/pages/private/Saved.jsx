@@ -2,11 +2,12 @@ import { NavLink } from "react-router";
 import { Routes } from "@constants/Routes";
 import { usePosts } from "@hooks/usePosts";
 import { useUsers } from "@hooks/useUsers";
+import { useReels } from "@hooks/useReels";
 import { useGroups } from "@hooks/useGroups";
 import { SvgIcons } from "@constants/SvgIcons";
 import { useAuth } from "@contexts/AuthContext";
-import { handleSaving } from "@utils/PostHandling";
 import { ReactIcons } from "@constants/ReactIcons";
+import { handleSaving } from "@utils/EntityHandling";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { BasicButton } from "@components/universal/buttons/BasicButton";
@@ -14,9 +15,12 @@ import { BasicButton } from "@components/universal/buttons/BasicButton";
 const Saved = () => {
     const { user } = useAuth();
     const { users } = useUsers();
+    const { posts } = usePosts();
+    const { reels } = useReels();
     const { groups } = useGroups();
-    const { posts, groupPosts } = usePosts();
-    const savedPosts = posts?.concat(groupPosts)?.filter(post => post?.saves?.some(save => save.uid === user.uid));
+    const savedPosts = posts?.filter(post => post?.saves?.some(save => save.uid === user.uid));
+    const savedReels = reels?.filter(reel => reel?.saves?.some(save => save.uid === user.uid));
+    const savedEntity = savedReels.concat(savedPosts);
 
     return (
         <div className="pageWithLeftbarStyle">
@@ -44,7 +48,7 @@ const Saved = () => {
 
                 {savedPosts.length > 0 ? (
                     <>
-                        {savedPosts?.map((data) => {
+                        {savedEntity?.map((data) => {
                             const savedPostUser = users.find(user => user.uid === data.uid);
                             const savedPostGroup = groups.find(group => group.id === data.groupId)
 
@@ -74,7 +78,9 @@ const Saved = () => {
 
                                     <div className='flex flex-col justify-between'>
                                         <div className="flex flex-col gap-2">
-                                            <h3 className="text-lg font-bold cursor-pointer hover:underline">{data?.message ? data?.message : '1 Photo'}</h3>
+                                            <h3 className="text-lg font-bold cursor-pointer hover:underline">
+                                                {data?.message ? data?.message : (data?.mediaType === 'video' ? '1 Video' : '1 Photo')}
+                                            </h3>
 
                                             {data?.groupId ? (
                                                 <div className='flex items-center gap-1'>
@@ -133,7 +139,7 @@ const Saved = () => {
                                                     />
 
                                                     <p className="text-xs text-customGray-300">Saved from</p>
-                                                    <span className="text-xs font-medium cursor-pointer hover:underline">{savedPostUser?.username}'s post</span>
+                                                    <span className="text-xs font-medium cursor-pointer hover:underline">{savedPostUser?.username}'s {data?.mediaType === 'reel' ? 'reel' : 'post'}</span>
                                                 </div>
                                             )}
                                         </div>
@@ -142,7 +148,7 @@ const Saved = () => {
                                             btnStyleClass="!w-32 bg-customGray-100 hover:bg-customGray-default"
                                             btnData={{
                                                 text: 'Unsave',
-                                                onClick: () => handleSaving(data.id, user.uid)
+                                                onClick: () => handleSaving((data?.mediaType === 'reel' ? 'Reels' : 'Posts'), data.id, user.uid)
                                             }}
                                         />
                                     </div>
