@@ -1,5 +1,7 @@
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { auth } from "@services/firebase";
+import { doc, setDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { auth, db, storage } from "@services/firebase";
 
 const handleLoggingOut = async () => {
     try {
@@ -48,4 +50,44 @@ const handleLoggingIn = async (e, formData, setFormData, setError, setLoading) =
     }
 };
 
-export { handleLoggingIn, handleLoggingOut }
+const handleSigningUp = async (e, formDataInitial, formData, setFormData, setError, setLoading) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+        const userCredentials = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+        const user = userCredentials.user;
+
+        let photoURL = "";
+        if (formData.profilePhoto) {
+            const file = formData.profilePhoto;
+            const storageRef = ref(storage, `Users/${user.uid}/${file.name}`);
+            await uploadBytes(storageRef, file);
+            photoURL = await getDownloadURL(storageRef);
+        }
+
+        await updateProfile(user, {
+            displayName: `${formData.name.first} ${formData.name.last}`,
+            photoURL: photoURL,
+        });
+
+        await setDoc(doc(db, "Users", user.uid), {
+            uid: user.uid,
+            email: user.email,
+            gender: formData.gender,
+            username: user.displayName,
+            profilePhoto: photoURL,
+            dob: `${formData.dob.day}/${formData.dob.month}/${formData.dob.year}`,
+        });
+
+        setError('');
+        setLoading(false);
+        setFormData(formDataInitial);
+    } catch (error) {
+        setLoading(false);
+        setError(error.message);
+        console.error("User creation failed", error);
+    }
+};
+
+export { handleLoggingIn, handleLoggingOut, handleSigningUp }

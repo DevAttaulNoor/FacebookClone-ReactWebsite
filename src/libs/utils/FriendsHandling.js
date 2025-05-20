@@ -32,8 +32,6 @@ const handleAddingFriend = async (userId, friendId) => {
                 timestamp: Math.floor(Date.now() / 1000),
             }),
         });
-
-        console.log("Friend request sent successfully!");
     } catch (error) {
         console.error("Error sending friend request:", error);
     }
@@ -90,8 +88,6 @@ const handleAcceptingFriend = async (userId, friendId) => {
                 notifications: updatedFriendNotifications,
             });
         }
-
-        console.log("Friend request accepted successfully!");
     } catch (error) {
         console.error("Error accepting friend request:", error);
     }
@@ -137,8 +133,6 @@ const handleDecliningFriend = async (userId, friendId) => {
                 });
             }
         }
-
-        console.log("Friend request declined successfully!");
     } catch (error) {
         console.error("Error declining friend request:", error);
     }

@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { setDoc, doc } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { Routes } from "@constants/Routes";
 import { ReactIcons } from "@constants/ReactIcons";
-import { auth, db, storage } from "@services/firebase";
+import { handleSigningUp } from "@utils/AuthHandling";
 import { InputField } from "@components/universal/inputs/InputField";
 
 const genderOptions = [
@@ -52,6 +49,7 @@ const initialState = {
 
 const Signup = () => {
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState(initialState);
 
     const handleDobChange = (type, value) => {
@@ -66,44 +64,6 @@ const Signup = () => {
             ...prev,
             gender: value
         }));
-    };
-
-    const handleSignup = async (e) => {
-        e.preventDefault();
-
-        try {
-            const userCredentials = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-            const user = userCredentials.user;
-
-            let photoURL = "";
-            if (formData.profilePhoto) {
-                const file = formData.profilePhoto;
-                const storageRef = ref(storage, `Users/${user.uid}/${file.name}`);
-                await uploadBytes(storageRef, file);
-                photoURL = await getDownloadURL(storageRef);
-            }
-
-            await updateProfile(user, {
-                displayName: `${formData.name.first} ${formData.name.last}`,
-                photoURL: photoURL,
-            });
-
-            await setDoc(doc(db, "Users", user.uid), {
-                uid: user.uid,
-                email: user.email,
-                gender: formData.gender,
-                username: user.displayName,
-                profilePhoto: photoURL,
-                dob: `${formData.dob.day}/${formData.dob.month}/${formData.dob.year}`,
-            });
-
-            setError('');
-            setFormData(initialState);
-            console.log("User creation successful", user);
-        } catch (error) {
-            setError(error.message);
-            console.error("User creation failed", error);
-        }
     };
 
     return (
@@ -124,7 +84,7 @@ const Signup = () => {
 
                 <div className="flex flex-col items-center gap-3.5 p-4">
                     <form
-                        onSubmit={handleSignup}
+                        onSubmit={(e) => handleSigningUp(e, initialState, formData, setFormData, setError, setLoading)}
                         className="flex flex-col gap-3.5"
                     >
                         <div className="w-full flex items-center gap-2.5">
@@ -275,10 +235,8 @@ const Signup = () => {
                             </p>
                         </div>
 
-                        <button
-                            className="mx-auto w-fit rounded-md bg-[#42b72a] px-16 py-2 text-lg font-bold text-white"
-                        >
-                            Sign Up
+                        <button className="w-44 mx-auto rounded-md bg-[#42b72a] p-2 text-lg font-bold text-white">
+                            {loading ? <p className='w-7 h-7 mx-auto border-2 border-b-0 animate-spin rounded-full border-white' /> : <p>Sign Up</p>}
                         </button>
 
                         {error && <p className="text-center text-sm text-red-500">{error}</p>}
