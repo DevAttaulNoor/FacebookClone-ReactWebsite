@@ -36,14 +36,14 @@ const feedPostingOptions = [
 ];
 
 const Group_Create = () => {
-    const { user } = useAuth();
     const coverPhotoRef = useRef(null);
+    const { user } = useAuth();
     const { acceptedFriends } = useFriends(user.uid);
+    const [loading, setLoading] = useState(false);
     const [groupName, setGroupName] = useState('');
     const [coverPhoto, setCoverPhoto] = useState('')
     const [searchInput, setSearchInput] = useState('');
     const [selectedUsers, setSelectedUsers] = useState([]);
-    const [loading, setLoading] = useState(false);
     const searchedUser = acceptedFriends?.filter((data) =>
         data?.username?.toLowerCase().includes(searchInput.toLowerCase()) &&
         !selectedUsers.includes(data.uid)

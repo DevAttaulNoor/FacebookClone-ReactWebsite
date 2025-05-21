@@ -1,22 +1,26 @@
-import { useRef } from "react";
-import { Link, NavLink, useParams } from "react-router";
+import { useRef, useState } from "react";
+import { Link, NavLink, useNavigate, useParams } from "react-router";
 import { doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Routes } from "@constants/Routes";
+import { useUsers } from "@hooks/useUsers";
 import { useAuth } from "@contexts/AuthContext";
 import { db, storage } from "@services/firebase";
 import { ReactIcons } from "@constants/ReactIcons";
+import { generatePath } from "@utils/PathResolver";
+import { handleDeleting } from "@utils/EntityHandling";
+import { handleGroupJoining } from "@utils/GroupHandling";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { BasicButton } from "@components/universal/buttons/BasicButton";
-import { useUsers } from "@hooks/useUsers";
-import { generatePath } from "@utils/PathResolver";
 
 export const EntityInformationSection = ({ location, entityType, entityData, componentsData }) => {
+    const navigate = useNavigate();
     const { id } = useParams();
     const { user } = useAuth();
-    const { users } = useUsers()
+    const { users } = useUsers();
     const coverPhotoRef = useRef(null);
     const profilePhotoRef = useRef(null);
+    const [loading, setLoading] = useState(false);
     const entityId = entityType === 'profile'
         ? entityData.activeEntityData?.uid
         : entityData.activeEntityData?.adminId;
@@ -242,22 +246,62 @@ export const EntityInformationSection = ({ location, entityType, entityData, com
                         </div>
 
                         <div className="flex gap-2">
-                            {entityData.activeEntityRelatedData ? (
-                                <BasicButton
-                                    btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
-                                    btnData={{
-                                        text: 'Joined',
-                                        icon: ReactIcons.GROUP,
-                                    }}
-                                />
+                            {entityData.activeEntityRelatedData.some(data => data.id === entityData.activeEntityData?.id) ? (
+                                <>
+                                    {entityData.activeEntityData?.adminId === user?.uid ? (
+                                        <BasicButton
+                                            btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
+                                            btnData={{
+                                                text: 'Delete',
+                                                icon: ReactIcons.GROUP,
+                                                onClick: () => {
+                                                    handleDeleting('Groups', entityData.activeEntityData?.id)
+                                                    navigate(Routes.GROUP_FEED.path)
+                                                }
+                                            }}
+                                        />
+                                    ) : (
+                                        <>
+                                            {loading ? (
+                                                <BasicButton
+                                                    btnStyleClass="!px-5 bg-customGray-100"
+                                                    btnData={{
+                                                        textStyleClass: 'w-5 h-5 mx-auto border-2 border-b-0 animate-spin rounded-full border-white'
+                                                    }}
+                                                />
+                                            ) : (
+                                                <BasicButton
+                                                    btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
+                                                    btnData={{
+                                                        text: 'Leave',
+                                                        icon: ReactIcons.GROUP,
+                                                        onClick: () => handleGroupJoining(user?.uid, entityData.activeEntityData?.id, setLoading)
+                                                    }}
+                                                />
+                                            )}
+                                        </>
+                                    )}
+                                </>
                             ) : (
-                                <BasicButton
-                                    btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
-                                    btnData={{
-                                        text: 'Leave',
-                                        icon: ReactIcons.GROUP,
-                                    }}
-                                />
+                                <>
+                                    {loading ? (
+                                        <BasicButton
+                                            btnStyleClass="!px-5 text-white bg-customBlue-default"
+                                            btnData={{
+                                                textStyleClass: 'w-5 h-5 mx-auto border-2 border-b-0 animate-spin rounded-full border-white'
+                                            }}
+                                        />
+                                    ) : (
+                                        <BasicButton
+                                            btnStyleClass="text-white bg-customBlue-default"
+                                            btnData={{
+                                                text: 'Join',
+                                                icon: ReactIcons.GROUP,
+                                                onClick: () => handleGroupJoining(user?.uid, entityData.activeEntityData?.id, setLoading)
+                                            }}
+                                        />
+                                    )}
+                                </>
                             )}
                         </div>
                     </div>

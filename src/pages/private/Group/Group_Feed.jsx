@@ -171,7 +171,6 @@ const Group_Feed = () => {
                     <Group_Discover
                         userData={user}
                         groupsData={groups}
-                        userRelatedGroup={userRelatedGroups}
                     />
                 )}
 

@@ -1,28 +1,21 @@
+import { useState } from 'react';
+import { handleGroupJoining } from '@utils/GroupHandling';
 import { BasicButton } from '@components/universal/buttons/BasicButton';
-import group_coverphoto from '/Images/universal/group/group-coverphoto.png';
 
 export const GroupCard = ({
     userData,
     groupData,
-    joiningLoading,
     userRelatedGroup,
-    handleGroupJoining
 }) => {
+    const [loading, setLoading] = useState(false);
+
     return (
-        <div className='max-w-72 flex flex-col rounded-lg mx-auto gap-1.5 shadow-customFull2 bg-white'>
-            {groupData?.coverPhoto ? (
-                <img
-                    src={groupData?.coverPhoto}
-                    alt={`cover photo of ${groupData?.name}`}
-                    className="h-60 rounded-t-lg object-cover"
-                />
-            ) : (
-                <img
-                    src={group_coverphoto}
-                    alt={`cover photo of ${groupData?.name}`}
-                    className="h-60 rounded-t-lg object-cover"
-                />
-            )}
+        <div className='max-w-72 w-full flex flex-col rounded-lg mx-auto gap-1.5 shadow-customFull2 bg-white'>
+            <img
+                src={groupData?.coverPhoto}
+                alt={`cover photo of ${groupData?.name}`}
+                className="h-60 rounded-t-lg object-cover"
+            />
 
             <div className='flex flex-col px-3'>
                 <h5 className="font-medium">{groupData?.name}</h5>
@@ -30,29 +23,29 @@ export const GroupCard = ({
             </div>
 
             <div className='flex flex-col p-3 gap-2'>
-                {userRelatedGroup ? (
-                    <BasicButton
-                        btnStyleClass='bg-customGray-100 hover:bg-customGray-default'
-                        btnData={{
-                            link: `/group/${groupData?.id}`,
-                            text: 'View group'
-                        }}
-                    />
-                ) : (
+                <BasicButton
+                    btnStyleClass='bg-customGray-100 hover:bg-customGray-default'
+                    btnData={{
+                        link: `/group/${groupData?.id}`,
+                        text: 'View group'
+                    }}
+                />
+
+                {!userRelatedGroup && (
                     <>
-                        {joiningLoading ? (
+                        {loading ? (
                             <BasicButton
-                                btnStyleClass='!py-2 bg-customGray-100 hover:bg-customGray-default'
+                                btnStyleClass='!py-2 text-customBlue-default bg-customBlue-100'
                                 btnData={{
                                     textStyleClass: 'w-5 h-5 mx-auto border-2 border-b-0 animate-spin rounded-full border-customGray-200'
                                 }}
                             />
                         ) : (
                             <BasicButton
-                                btnStyleClass='bg-customGray-100 hover:bg-customGray-default'
+                                btnStyleClass='text-customBlue-default bg-customBlue-100 hover:bg-customGray-default'
                                 btnData={{
                                     text: 'Join',
-                                    onClick: () => handleGroupJoining(userData.uid, groupData.id)
+                                    onClick: () => handleGroupJoining(userData.uid, groupData.id, setLoading)
                                 }}
                             />
                         )}
