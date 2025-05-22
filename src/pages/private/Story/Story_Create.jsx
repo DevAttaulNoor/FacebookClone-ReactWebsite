@@ -8,6 +8,7 @@ import { ReactIcons } from "@constants/ReactIcons";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { BasicButton } from "@components/universal/buttons/BasicButton";
 import { TextareaField } from "@components/universal/inputs/TextareaField";
+import { ButtonWithLoadingLayout } from "@layouts/ButtonWithLoadingLayout";
 
 const Story_Create = () => {
     const { user } = useAuth();
@@ -144,7 +145,7 @@ const Story_Create = () => {
                         iconStyleClass="text-[56px]"
                     />
 
-                    <p className="font-medium">{user.username}</p>
+                    <p className="font-medium">{user?.username}</p>
                 </div>
 
                 <span className="w-full h-[1px] bg-customGray-100" />
@@ -240,7 +241,7 @@ const Story_Create = () => {
                     {(storyContent.isTextStoryContentVisible || storyContent.isPhotoStoryContentVisible) && (
                         <div className="flex items-center gap-3 p-4 shadow-customFull2 bg-white">
                             <BasicButton
-                                btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
+                                btnStyleClass="h-full bg-customGray-100 hover:bg-customGray-default"
                                 btnData={{
                                     text: 'Discard',
                                     textStyleClass: 'text-base',
@@ -248,23 +249,19 @@ const Story_Create = () => {
                                 }}
                             />
 
-                            {uploadLoading ? (
-                                <BasicButton
-                                    btnStyleClass="!py-2 bg-customBlue-default"
-                                    btnData={{
-                                        textStyleClass: 'w-6 h-6 border-2 border-b-0 animate-spin rounded-full border-white',
-                                    }}
-                                />
-                            ) : (
-                                <BasicButton
-                                    btnStyleClass="text-white bg-customBlue-default"
-                                    btnData={{
-                                        text: 'Share to Story',
-                                        textStyleClass: 'text-base',
-                                        onClick: handleStoryPosting
-                                    }}
-                                />
-                            )}
+                            <ButtonWithLoadingLayout
+                                loadingState={uploadLoading}
+                                btnStyleClass={'h-full text-white bg-customBlue-default'}
+                                loadingBtn={{
+                                    btnStyleClass: '!py-1',
+                                    textStyleClass: 'w-6 h-6'
+                                }}
+                                actionBtn={{
+                                    text: 'Share to Story',
+                                    textStyleClass: 'text-base',
+                                    onClick: handleStoryPosting
+                                }}
+                            />
                         </div>
                     )}
                 </div>

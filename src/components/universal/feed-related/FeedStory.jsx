@@ -10,13 +10,13 @@ import { ReactIcons } from "@constants/ReactIcons";
 export const FeedStory = () => {
     const { user } = useAuth();
     const { users } = useUsers();
-    const { stories } = useStories();
     const { acceptedFriends } = useFriends(user?.uid);
-    const friendsStories = stories?.filter(data => acceptedFriends.some(friend => friend.uid === data.uid))
+    const { stories, userStories } = useStories(user?.uid);
+    const userRelatedStories = stories?.filter(data => acceptedFriends.some(friend => friend.uid === data.uid)).concat(userStories)
 
     return (
         <>
-            {friendsStories.length > 0 ? (
+            {userRelatedStories.length > 0 ? (
                 <div className='flex gap-2 overflow-x-auto overflow-y-hidden'>
                     <Link
                         to={Routes.STORY_CREATE.path}
@@ -42,7 +42,7 @@ export const FeedStory = () => {
                         </div>
                     </Link>
 
-                    {friendsStories
+                    {userRelatedStories
                         ?.sort((a, b) => b.timestamp - a.timestamp)
                         ?.reduce((acc, data) => {
                             if (!acc.some(item => item.uid === data.uid)) {

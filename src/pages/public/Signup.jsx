@@ -4,6 +4,7 @@ import { Routes } from "@constants/Routes";
 import { ReactIcons } from "@constants/ReactIcons";
 import { handleSigningUp } from "@utils/AuthHandling";
 import { InputField } from "@components/universal/inputs/InputField";
+import { ButtonWithLoadingLayout } from "@layouts/ButtonWithLoadingLayout";
 
 const genderOptions = [
     {
@@ -235,9 +236,18 @@ const Signup = () => {
                             </p>
                         </div>
 
-                        <button className="w-44 mx-auto rounded-md bg-[#42b72a] p-2 text-lg font-bold text-white">
-                            {loading ? <p className='w-7 h-7 mx-auto border-2 border-b-0 animate-spin rounded-full border-white' /> : <p>Sign Up</p>}
-                        </button>
+                        <ButtonWithLoadingLayout
+                            loadingState={loading}
+                            btnStyleClass={'max-w-44 mx-auto rounded-md p-2 text-white bg-[#42b72a]'}
+                            loadingBtn={{
+                                btnStyleClass: '!py-1.5',
+                                textStyleClass: 'w-[24px] h-[24px]'
+                            }}
+                            actionBtn={{
+                                text: 'Sign Up',
+                                textStyleClass: 'text-lg font-bold',
+                            }}
+                        />
 
                         {error && <p className="text-center text-sm text-red-500">{error}</p>}
                     </form>

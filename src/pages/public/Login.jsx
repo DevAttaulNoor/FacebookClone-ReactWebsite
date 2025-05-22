@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { Routes } from "@constants/Routes";
 import { handleLoggingIn } from "@utils/AuthHandling";
 import { InputField } from "@components/universal/inputs/InputField";
+import { ButtonWithLoadingLayout } from "@layouts/ButtonWithLoadingLayout";
 
 const Login = () => {
     const [formInput, setFormInput] = useState({
@@ -49,15 +50,18 @@ const Login = () => {
                         inputStyle="launchpageInputStyle w-full p-4"
                     />
 
-                    {loading ? (
-                        <button className="w-full rounded-md border border-slate-100 bg-customBlue-default px-4 py-2.5 text-xl font-semibold text-white outline-none">
-                            <p className='w-7 h-7 mx-auto border-2 border-b-0 animate-spin rounded-full border-white'></p>
-                        </button>
-                    ) : (
-                        <button className="w-full rounded-md border border-slate-100 bg-customBlue-default px-4 py-2.5 text-xl font-semibold text-white outline-none">
-                            Log in
-                        </button>
-                    )}
+                    <ButtonWithLoadingLayout
+                        loadingState={loading}
+                        btnStyleClass={'w-full rounded-md border border-slate-100 bg-customBlue-default text-white outline-none'}
+                        loadingBtn={{
+                            btnStyleClass: '!py-2',
+                            textStyleClass: 'w-6 h-6'
+                        }}
+                        actionBtn={{
+                            text: 'Log in',
+                            textStyleClass: 'text-xl font-semibold',
+                        }}
+                    />
 
                     {error && <p className="text-center text-sm text-red-500">{error}</p>}
                 </form>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { handleGroupJoining } from '@utils/GroupHandling';
 import { BasicButton } from '@components/universal/buttons/BasicButton';
+import { ButtonWithLoadingLayout } from '@layouts/ButtonWithLoadingLayout';
 
 export const GroupCard = ({
     userData,
@@ -32,24 +33,18 @@ export const GroupCard = ({
                 />
 
                 {!userRelatedGroup && (
-                    <>
-                        {loading ? (
-                            <BasicButton
-                                btnStyleClass='!py-2 text-customBlue-default bg-customBlue-100'
-                                btnData={{
-                                    textStyleClass: 'w-5 h-5 mx-auto border-2 border-b-0 animate-spin rounded-full border-customGray-200'
-                                }}
-                            />
-                        ) : (
-                            <BasicButton
-                                btnStyleClass='text-customBlue-default bg-customBlue-100 hover:bg-customGray-default'
-                                btnData={{
-                                    text: 'Join',
-                                    onClick: () => handleGroupJoining(userData.uid, groupData.id, setLoading)
-                                }}
-                            />
-                        )}
-                    </>
+                    <ButtonWithLoadingLayout
+                        loadingState={loading}
+                        btnStyleClass={'text-customBlue-default bg-customBlue-100 hover:bg-customGray-default'}
+                        loadingBtn={{
+                            btnStyleClass: '!py-2',
+                            textStyleClass: 'w-6 h-6 !border-customBlue-default'
+                        }}
+                        actionBtn={{
+                            text: 'Join',
+                            onClick: () => handleGroupJoining(userData.uid, groupData.id, setLoading)
+                        }}
+                    />
                 )}
             </div>
         </div >

@@ -4,11 +4,11 @@ import { useRef, useState } from "react"
 import { ProfileAvatar } from "../ProfileAvatar"
 import { ModalLayout } from "@layouts/ModalLayout"
 import { ReactIcons } from "@constants/ReactIcons"
-import { BasicButton } from "../buttons/BasicButton"
 import { handlePosting } from '@utils/PostHandling';
 import { ToggleButton } from "../buttons/ToggleButton"
 import { TextareaField } from "../inputs/TextareaField"
 import { handleMediaChange } from "@utils/MediaHandling"
+import { ButtonWithLoadingLayout } from '@layouts/ButtonWithLoadingLayout';
 
 const feedPostingOptions = [
     {
@@ -76,7 +76,7 @@ export const PostingModal = ({
             <div className="flex flex-col gap-3">
                 {anonymousStateData.isAnonymous ? (
                     <div className="flex items-center gap-2.5">
-                        <span className='text-[36px]'>
+                        <span className='text-[37.5px]'>
                             {ReactIcons.PROFILE_AVATAR}
                         </span>
 
@@ -163,34 +163,18 @@ export const PostingModal = ({
                 </div>
             </div>
 
-            {postLoading ? (
-                <BasicButton
-                    btnStyleClass='!py-2 bg-customBlue-default'
-                    btnData={{
-                        textStyleClass: 'w-6 h-6 border-2 border-b-0 animate-spin rounded-full border-white'
-                    }}
-                />
-            ) : (
-                <>
-                    {editingStatus ? (
-                        <BasicButton
-                            btnStyleClass={`${(messageStateData.message.text || messageStateData.message.media) ? 'text-white bg-customBlue-default' : 'text-customGray-200 bg-customGray-100'}`}
-                            btnData={{
-                                text: 'Save',
-                                onClick: () => handlePosting(messageStateData.message, postData, userData, groupData, usedInGroupPosting, anonymousStateData.isAnonymous, setPostLoading, handleModalClose, true)
-                            }}
-                        />
-                    ) : (
-                        <BasicButton
-                            btnStyleClass={`${(messageStateData.message.text || messageStateData.message.media) ? 'text-white bg-customBlue-default' : 'text-customGray-200 bg-customGray-100'}`}
-                            btnData={{
-                                text: anonymousStateData.isAnonymous ? 'Submit' : 'Post',
-                                onClick: () => handlePosting(messageStateData.message, null, userData, groupData, usedInGroupPosting, anonymousStateData.isAnonymous, setPostLoading, handleModalClose)
-                            }}
-                        />
-                    )}
-                </>
-            )}
+            <ButtonWithLoadingLayout
+                loadingState={postLoading}
+                btnStyleClass={`${(messageStateData.message.text || messageStateData.message.media) ? 'cursor-pointer text-white bg-customBlue-default' : 'cursor-not-allowed text-customGray-200 bg-customGray-100'}`}
+                loadingBtn={{
+                    btnStyleClass: '!py-2',
+                    textStyleClass: 'w-6 h-6'
+                }}
+                actionBtn={{
+                    text: editingStatus ? 'Save' : (anonymousStateData.isAnonymous ? 'Submit' : 'Post'),
+                    onClick: editingStatus ? () => handlePosting(messageStateData.message, postData, userData, groupData, usedInGroupPosting, anonymousStateData.isAnonymous, setPostLoading, handleModalClose, true) : () => handlePosting(messageStateData.message, null, userData, groupData, usedInGroupPosting, anonymousStateData.isAnonymous, setPostLoading, handleModalClose)
+                }}
+            />
         </ModalLayout>
     )
 }

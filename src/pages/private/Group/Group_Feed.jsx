@@ -87,19 +87,11 @@ const Group_Feed = () => {
                                 to={`/group/${data.id}`}
                                 className="flex items-center p-2 gap-2.5 rounded-md cursor-pointer hover:bg-customGray-default"
                             >
-                                {data?.coverPhoto ? (
-                                    <img
-                                        src={data?.coverPhoto}
-                                        alt={`cover photo of ${data?.name}`}
-                                        className="w-12 h-12 border rounded-lg object-cover"
-                                    />
-                                ) : (
-                                    <img
-                                        src={group_coverphoto}
-                                        alt="image of group"
-                                        className="w-12 h-12 border rounded-lg object-cover"
-                                    />
-                                )}
+                                <img
+                                    src={data?.coverPhoto ? data?.coverPhoto : group_coverphoto}
+                                    alt={`cover photo of ${data?.name}`}
+                                    className="w-12 h-12 border rounded-lg object-cover"
+                                />
 
                                 <div>
                                     <h5 className="text-sm font-medium">{data?.name}</h5>
@@ -129,19 +121,11 @@ const Group_Feed = () => {
                                 to={`/group/${data.id}`}
                                 className="flex items-center p-2 gap-2.5 rounded-md cursor-pointer hover:bg-customGray-default"
                             >
-                                {data?.coverPhoto ? (
-                                    <img
-                                        src={data?.coverPhoto}
-                                        alt={`cover photo of ${data?.name}`}
-                                        className="w-12 h-12 border rounded-lg object-cover"
-                                    />
-                                ) : (
-                                    <img
-                                        src={group_coverphoto}
-                                        alt="image of group"
-                                        className="w-12 h-12 border rounded-lg object-cover"
-                                    />
-                                )}
+                                <img
+                                    src={data?.coverPhoto ? data?.coverPhoto : group_coverphoto}
+                                    alt={`cover photo of ${data?.name}`}
+                                    className="w-12 h-12 border rounded-lg object-cover"
+                                />
 
                                 <div>
                                     <h5 className="text-sm font-medium">{data?.name}</h5>

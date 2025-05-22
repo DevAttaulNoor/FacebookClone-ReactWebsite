@@ -9,6 +9,7 @@ import { DropdownLayout } from "@layouts/DropdownLayout";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { InputField } from "@components/universal/inputs/InputField";
 import { BasicButton } from "@components/universal/buttons/BasicButton";
+import { ButtonWithLoadingLayout } from "@layouts/ButtonWithLoadingLayout";
 import group_coverphoto from '/Images/universal/group/group-coverphoto.png';
 
 const groupComponents = [
@@ -190,25 +191,19 @@ const Group_Create = () => {
 
                 <div className="flex items-center gap-3 p-4 shadow-customFull2 bg-white">
                     {groupName ? (
-                        <>
-                            {loading ? (
-                                <BasicButton
-                                    btnStyleClass="!py-2 text-white bg-customBlue-default"
-                                    btnData={{
-                                        textStyleClass: 'w-6 h-6 border-2 border-b-0 animate-spin rounded-full border-white',
-                                    }}
-                                />
-                            ) : (
-                                <BasicButton
-                                    btnStyleClass="text-white bg-customBlue-default"
-                                    btnData={{
-                                        text: 'Create',
-                                        textStyleClass: 'text-base',
-                                        onClick: handleGroupCreation
-                                    }}
-                                />
-                            )}
-                        </>
+                        <ButtonWithLoadingLayout
+                            loadingState={loading}
+                            btnStyleClass={'text-white bg-customBlue-default'}
+                            loadingBtn={{
+                                btnStyleClass: '!py-1.5',
+                                textStyleClass: 'w-6 h-6'
+                            }}
+                            actionBtn={{
+                                text: 'Create',
+                                textStyleClass: 'text-base',
+                                onClick: handleGroupCreation
+                            }}
+                        />
                     ) : (
                         <BasicButton
                             btnStyleClass="cursor-not-allowed text-customGray-200 bg-customGray-100"

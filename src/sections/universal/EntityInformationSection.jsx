@@ -12,6 +12,7 @@ import { handleDeleting } from "@utils/EntityHandling";
 import { handleGroupJoining } from "@utils/GroupHandling";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { BasicButton } from "@components/universal/buttons/BasicButton";
+import { ButtonWithLoadingLayout } from "@layouts/ButtonWithLoadingLayout";
 
 export const EntityInformationSection = ({ location, entityType, entityData, componentsData }) => {
     const navigate = useNavigate();
@@ -261,47 +262,35 @@ export const EntityInformationSection = ({ location, entityType, entityData, com
                                             }}
                                         />
                                     ) : (
-                                        <>
-                                            {loading ? (
-                                                <BasicButton
-                                                    btnStyleClass="!px-5 bg-customGray-100"
-                                                    btnData={{
-                                                        textStyleClass: 'w-5 h-5 mx-auto border-2 border-b-0 animate-spin rounded-full border-white'
-                                                    }}
-                                                />
-                                            ) : (
-                                                <BasicButton
-                                                    btnStyleClass="bg-customGray-100 hover:bg-customGray-default"
-                                                    btnData={{
-                                                        text: 'Leave',
-                                                        icon: ReactIcons.GROUP,
-                                                        onClick: () => handleGroupJoining(user?.uid, entityData.activeEntityData?.id, setLoading)
-                                                    }}
-                                                />
-                                            )}
-                                        </>
-                                    )}
-                                </>
-                            ) : (
-                                <>
-                                    {loading ? (
-                                        <BasicButton
-                                            btnStyleClass="!px-5 text-white bg-customBlue-default"
-                                            btnData={{
-                                                textStyleClass: 'w-5 h-5 mx-auto border-2 border-b-0 animate-spin rounded-full border-white'
+                                        <ButtonWithLoadingLayout
+                                            loadingState={loading}
+                                            btnStyleClass={'bg-customGray-100 hover:bg-customGray-default'}
+                                            loadingBtn={{
+                                                btnStyleClass: '!px-6 !py-2',
+                                                textStyleClass: 'w-6 h-6'
                                             }}
-                                        />
-                                    ) : (
-                                        <BasicButton
-                                            btnStyleClass="text-white bg-customBlue-default"
-                                            btnData={{
-                                                text: 'Join',
+                                            actionBtn={{
+                                                text: 'Leave',
                                                 icon: ReactIcons.GROUP,
                                                 onClick: () => handleGroupJoining(user?.uid, entityData.activeEntityData?.id, setLoading)
                                             }}
                                         />
                                     )}
                                 </>
+                            ) : (
+                                <ButtonWithLoadingLayout
+                                    loadingState={loading}
+                                    btnStyleClass={'text-white bg-customBlue-default'}
+                                    loadingBtn={{
+                                        btnStyleClass: '!px-5 !py-2',
+                                        textStyleClass: 'w-6 h-6'
+                                    }}
+                                    actionBtn={{
+                                        text: 'Join',
+                                        icon: ReactIcons.GROUP,
+                                        onClick: () => handleGroupJoining(user?.uid, entityData.activeEntityData?.id, setLoading)
+                                    }}
+                                />
                             )}
                         </div>
                     </div>

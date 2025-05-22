@@ -4,8 +4,8 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useAuth } from "@contexts/AuthContext";
 import { db, storage } from "@services/firebase";
 import { ReactIcons } from "@constants/ReactIcons"
-import { BasicButton } from "@components/universal/buttons/BasicButton";
 import { TextareaField } from "@components/universal/inputs/TextareaField";
+import { ButtonWithLoadingLayout } from "@layouts/ButtonWithLoadingLayout";
 
 const Reel_Create = () => {
     const inputRef = useRef(null);
@@ -88,63 +88,42 @@ const Reel_Create = () => {
 
                 <div className="flex items-center gap-3 p-4 shadow-customFull2 bg-white">
                     {stage > 1 && (
-                        <>
-                            {stage < 0 ? (
-                                <button
-                                    className="w-full font-semibold p-2.5 rounded-lg cursor-not-allowed bg-customGray-100"
-                                >
-                                    Previous
-                                </button>
-                            ) : (
-                                <button
-                                    onClick={() => setStage(stage - 1)}
-                                    className="w-full font-semibold p-2.5 rounded-lg cursor-pointer bg-customGray-100"
-                                >
-                                    Previous
-                                </button>
-                            )}
-                        </>
+                        <button
+                            onClick={() => {
+                                stage > 0 && setStage(stage - 1);
+                                setInput({
+                                    media: '',
+                                    message: '',
+                                })
+                            }}
+                            className='w-full font-semibold p-2.5 rounded-lg cursor-pointer bg-customGray-100'
+                        >
+                            Previous
+                        </button>
                     )}
 
                     {stage === 1 && (
-                        <>
-                            {input.media ? (
-                                <button
-                                    onClick={() => setStage(stage + 1)}
-                                    className="w-full font-semibold p-2.5 rounded-lg cursor-pointer text-white bg-customBlue-default"
-                                >
-                                    Next
-                                </button>
-                            ) : (
-                                <button
-                                    className="w-full font-semibold p-2.5 rounded-lg cursor-not-allowed text-white bg-customBlue-default"
-                                >
-                                    Next
-                                </button>
-                            )}
-                        </>
+                        <button
+                            onClick={() => input.media && setStage(stage + 1)}
+                            className={`${input.media ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'} w-full font-semibold p-2.5 rounded-lg text-white bg-customBlue-default`}
+                        >
+                            Next
+                        </button>
                     )}
 
                     {stage === 2 && (
-                        <>
-                            {reelLoading ? (
-                                <BasicButton
-                                    btnStyleClass="!py-2 bg-customBlue-default"
-                                    btnData={{
-                                        textStyleClass: 'w-6 h-6 border-2 border-b-0 animate-spin rounded-full border-white',
-                                    }}
-                                />
-                            ) : (
-                                <BasicButton
-                                    btnStyleClass="text-white bg-customBlue-default"
-                                    btnData={{
-                                        text: 'Publish',
-                                        textStyleClass: 'text-base',
-                                        onClick: handleReel
-                                    }}
-                                />
-                            )}
-                        </>
+                        <ButtonWithLoadingLayout
+                            loadingState={reelLoading}
+                            btnStyleClass={'h-full text-white bg-customBlue-default'}
+                            loadingBtn={{
+                                textStyleClass: 'w-6 h-6'
+                            }}
+                            actionBtn={{
+                                text: 'Publish',
+                                textStyleClass: 'text-base',
+                                onClick: handleReel
+                            }}
+                        />
                     )}
                 </div>
             </div>
