@@ -8,7 +8,7 @@ import { SvgIcons } from "@constants/SvgIcons";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
-import { SavedPost } from "@components/universal/SavedPost";
+import { SavedPost } from "@components/universal/posts/SavedPost";
 
 const Saved = () => {
     const { user } = useAuth();

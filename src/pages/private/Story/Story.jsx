@@ -8,7 +8,7 @@ import { ReactIcons } from "@constants/ReactIcons";
 import { timeAgoInitials } from "@utils/TimeModule";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
-import { StoryPost } from "@components/universal/StoryPost";
+import { StoryPost } from "@components/universal/posts/StoryPost";
 
 const Story = () => {
     const { id } = useParams();

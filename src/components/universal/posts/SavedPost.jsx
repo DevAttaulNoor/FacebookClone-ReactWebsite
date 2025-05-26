@@ -1,6 +1,6 @@
-import { ProfileAvatar } from "./ProfileAvatar"
+import { ProfileAvatar } from "../ProfileAvatar"
 import { ReactIcons } from "@constants/ReactIcons"
-import { BasicButton } from "./buttons/BasicButton"
+import { BasicButton } from "../buttons/BasicButton"
 import { handleSaving } from "@utils/EntityHandling"
 
 export const SavedPost = ({ savedPostData, savedPostUser, savedPostGroup }) => {

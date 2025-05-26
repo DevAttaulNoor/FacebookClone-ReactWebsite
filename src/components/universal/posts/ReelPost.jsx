@@ -1,14 +1,14 @@
 import { useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import { useUsers } from '@hooks/useUsers'
-import { ProfileAvatar } from './ProfileAvatar'
+import { ProfileAvatar } from '../ProfileAvatar'
 import { useAuth } from '@contexts/AuthContext'
 import { ReactIcons } from '@constants/ReactIcons'
 import { timeAgoInitials } from '@utils/TimeModule'
-import { ReactingModal } from './modals/ReactingModal'
+import { ReactingModal } from '../modals/ReactingModal'
 import { handleReacting } from '@utils/ReactionHandling'
-import { CommentingModal } from './modals/CommentingModal'
-import { EntityOptionsDropdown } from './dropdowns/EntityOptionsDropdown'
+import { CommentingModal } from '../modals/CommentingModal'
+import { EntityOptionsDropdown } from '../dropdowns/EntityOptionsDropdown'
 
 export const ReelPost = ({ reelsData }) => {
     const navigate = useNavigate();

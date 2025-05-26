@@ -1,4 +1,4 @@
-import { ProfileAvatar } from "./ProfileAvatar"
+import { ProfileAvatar } from "../ProfileAvatar"
 import { timeAgoInitials } from "@utils/TimeModule"
 
 export const StoryPost = ({ userData, storyData }) => {
