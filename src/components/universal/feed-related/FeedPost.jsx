@@ -85,8 +85,8 @@ export const FeedPost = ({ postContainerStyle = 'w-full', postData, activeUser, 
                                 ) : (
                                     <ProfileAvatar
                                         userData={postUser}
-                                        imageStyleClass="w-10 h-10"
-                                        iconStyleClass="text-4xl"
+                                        imageStyleClass="w-[42px] h-[42px]"
+                                        iconStyleClass="text-[42px]"
                                     />
                                 )}
 

@@ -34,8 +34,8 @@ export const ReactingModal = ({
                         <div key={elem} className="flex items-center gap-2">
                             <ProfileAvatar
                                 userData={users}
-                                imageStyleClass="w-10 h-10"
-                                iconStyleClass="text-4xl"
+                                imageStyleClass="w-[38px] h-[38px]"
+                                iconStyleClass="text-[38px]"
                             />
 
                             <Link

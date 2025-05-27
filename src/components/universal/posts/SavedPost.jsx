@@ -5,12 +5,12 @@ import { handleSaving } from "@utils/EntityHandling"
 
 export const SavedPost = ({ savedPostData, savedPostUser, savedPostGroup }) => {
     return (
-        <div className='w-full h-40 flex p-3 gap-4 rounded-md shadow-customFull2 bg-white'>
+        <div className='w-full h-28 flex p-3 gap-2 lg:gap-4 rounded-md shadow-customFull2 bg-white sm:h-32 lg:h-36 2xl:h-40'>
             {savedPostData?.media ? (
                 <img
                     src={savedPostData?.media}
                     alt={`image of ${savedPostUser?.username} post`}
-                    className="w-36 cursor-pointer object-cover rounded-md"
+                    className="w-20 object-cover rounded-md cursor-pointer xs:w-24 sm:w-28 lg:w-32 2xl:w-36"
                 />
             ) : (
                 <>
@@ -18,7 +18,7 @@ export const SavedPost = ({ savedPostData, savedPostUser, savedPostGroup }) => {
                         <img
                             src={savedPostUser?.profilePhoto}
                             alt={`image of ${savedPostUser?.username}`}
-                            className="w-36 cursor-pointer object-cover rounded-md"
+                            className="w-20 object-cover rounded-md cursor-pointer xs:w-24 sm:w-28 lg:w-32 2xl:w-36"
                         />
                     ) : (
                         <span className="flex items-center justify-center text-8xl h-52 w-full rounded-md bg-customGray-default">
@@ -28,9 +28,9 @@ export const SavedPost = ({ savedPostData, savedPostUser, savedPostGroup }) => {
                 </>
             )}
 
-            <div className='flex flex-col justify-between'>
+            <div className='w-full flex flex-col justify-between gap-2'>
                 <div className="flex flex-col gap-2">
-                    <h3 className="text-lg font-bold cursor-pointer hover:underline">
+                    <h3 className="text-lg font-bold leading-none cursor-pointer hover:underline md:text-xl">
                         {savedPostData?.message ? savedPostData?.message : (savedPostData?.mediaType === 'video' ? '1 Video' : '1 Photo')}
                     </h3>
 
@@ -70,17 +70,9 @@ export const SavedPost = ({ savedPostData, savedPostUser, savedPostGroup }) => {
                                 )}
                             </>
 
-                            <p className="text-xs text-customGray-300">Saved from</p>
-
-                            <span className="text-xs font-medium cursor-pointer hover:underline">
-                                {savedPostData?.isAnonymous ? 'Anonymous participant' : savedPostUser?.username}'s post
-                            </span>
-
-                            <p className="text-xs text-customGray-300">in</p>
-
-                            <span className="text-xs font-medium cursor-pointer hover:underline">
-                                {savedPostGroup?.name}
-                            </span>
+                            <p className="text-xs text-customGray-300">
+                                Saved from <strong className="cursor-pointer hover:underline">{savedPostData?.isAnonymous ? 'Anonymous participant' : savedPostUser?.username}</strong>'s post in <strong className="cursor-pointer hover:underline">{savedPostGroup?.name}</strong>
+                            </p>
                         </div>
                     ) : (
                         <div className='flex items-center gap-1'>
@@ -90,14 +82,15 @@ export const SavedPost = ({ savedPostData, savedPostUser, savedPostGroup }) => {
                                 iconStyleClass='text-xl'
                             />
 
-                            <p className="text-xs text-customGray-300">Saved from</p>
-                            <span className="text-xs font-medium cursor-pointer hover:underline">{savedPostUser?.username}'s {savedPostData?.mediaType === 'reel' ? 'reel' : 'post'}</span>
+                            <p className="text-xs text-customGray-300">
+                                Saved from <strong className="cursor-pointer hover:underline">{savedPostUser?.username}</strong>'s {savedPostData?.mediaType === 'reel' ? 'reel' : 'post'}
+                            </p>
                         </div>
                     )}
                 </div>
 
                 <BasicButton
-                    btnStyleClass="!w-32 bg-customGray-100 hover:bg-customGray-default"
+                    btnStyleClass="bg-customGray-100 hover:bg-customGray-default xs:w-28 lg:w-32"
                     btnData={{
                         text: 'Unsave',
                         onClick: () => handleSaving((savedPostData?.mediaType === 'reel' ? 'Reels' : 'Posts'), savedPostData?.id, user.uid)

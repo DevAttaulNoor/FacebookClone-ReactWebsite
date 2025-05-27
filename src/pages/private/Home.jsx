@@ -117,8 +117,8 @@ const Home = () => {
                             >
                                 <ProfileAvatar
                                     userData={user}
-                                    imageStyleClass="w-10 h-10"
-                                    iconStyleClass="text-3xl"
+                                    imageStyleClass="w-[42px] h-[42px]"
+                                    iconStyleClass="text-[42px]"
                                 />
 
                                 <p className="font-medium">{user?.username}</p>

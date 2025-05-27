@@ -40,8 +40,8 @@ export const FeedPostPosting = ({ usedInGroupPosting = false, groupData }) => {
             <div className="flex items-center gap-2 py-3">
                 <ProfileAvatar
                     userData={user}
-                    imageStyleClass="w-11 h-11"
-                    iconStyleClass="text-4xl"
+                    imageStyleClass="w-[42px] h-[42px]"
+                    iconStyleClass="text-[42px]"
                 />
 
                 <div onClick={() => setModalOpen(prev => ({ ...prev, posting: true }))} className="w-full text-sm cursor-pointer rounded-3xl px-3 py-2.5 text-customGray-200 bg-customGray-default hover:bg-[#E4E6EB] sm:text-base">

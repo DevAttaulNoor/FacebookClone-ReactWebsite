@@ -76,7 +76,7 @@ export const PostingModal = ({
             <div className="flex flex-col gap-3">
                 {anonymousStateData.isAnonymous ? (
                     <div className="flex items-center gap-2.5">
-                        <span className='text-[37.5px]'>
+                        <span className='text-[42px]'>
                             {ReactIcons.PROFILE_AVATAR}
                         </span>
 
@@ -86,8 +86,8 @@ export const PostingModal = ({
                     <div className="flex items-center gap-2.5">
                         <ProfileAvatar
                             userData={userData}
-                            imageStyleClass="w-10 h-10"
-                            iconStyleClass="text-4xl"
+                            imageStyleClass="w-[42px] h-[42px]"
+                            iconStyleClass="text-[42px]"
                         />
 
                         <p className="text-sm font-semibold">{userData?.username}</p>

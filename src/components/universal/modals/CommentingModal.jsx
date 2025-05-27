@@ -42,8 +42,8 @@ export const CommentingModal = ({
                         <div key={index} className="flex gap-2">
                             <ProfileAvatar
                                 userData={users}
-                                imageStyleClass="w-10 h-10"
-                                iconStyleClass="text-4xl"
+                                imageStyleClass="w-[38px] h-[38px]"
+                                iconStyleClass="text-[38px]"
                             />
 
                             <div className="flex flex-col">
@@ -68,8 +68,8 @@ export const CommentingModal = ({
             <div className="flex gap-2">
                 <ProfileAvatar
                     userData={userData}
-                    imageStyleClass="w-10 h-10"
-                    iconStyleClass="text-4xl"
+                    imageStyleClass="w-[38px] h-[38px]"
+                    iconStyleClass="text-[38px]"
                 />
 
                 <div className="w-full flex items-center px-3 py-2.5 gap-1.5 rounded-xl bg-customGray-default">

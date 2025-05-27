@@ -42,8 +42,8 @@ export const NotificationsDropdown = ({ dropdownStateData, userData, usersData }
                         >
                             <ProfileAvatar
                                 userData={notificationRelatedUser}
-                                imageStyleClass="w-12 h-12"
-                                iconStyleClass="text-5xl"
+                                imageStyleClass="w-[50px] h-[50px]"
+                                iconStyleClass="text-[50px]"
                             />
 
                             {data?.postId && (

@@ -11,8 +11,8 @@ export const StoryCard = ({ userData, storyData }) => {
         >
             <ProfileAvatar
                 userData={storyUser}
-                imageStyleClass="w-11 h-11 border-[3px] !border-customBlue-default"
-                iconStyleClass="text-3xl"
+                imageStyleClass="w-[42px] h-[42px] border-[3px] !border-customBlue-default"
+                iconStyleClass="text-[42px]"
             />
 
             <p className="text-xs font-medium px-1 drop-shadow-xl text-white">{storyUser.username}</p>
