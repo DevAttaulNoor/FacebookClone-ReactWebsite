@@ -8,7 +8,7 @@ const Reel = () => {
     const { reels } = useReels();
 
     return (
-        <div className='relative w-full h-screenMinusHeader flex items-start justify-center bg-black'>
+        <div className='relative w-full h-screenMinusHeader flex items-center justify-center bg-black'>
             {reels.length > 0 ? (
                 <ReelPost
                     reelsData={reels}

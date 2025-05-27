@@ -54,9 +54,9 @@ export const ReelPost = ({ reelsData }) => {
 
     return (
         <>
-            <div className="h-full flex justify-center items-end py-4 gap-8">
+            <div className="h-[85%] flex flex-col justify-center items-center py-4 gap-4 sm:h-[90%] sm:gap-6 md:h-full md:flex-row md:items-end lg:gap-8">
                 <div className="h-full relative">
-                    <div className="relative w-[420px] h-full">
+                    <div className="relative w-80 h-full xs:w-[350px] sm:w-96 md:w-[400px] lg:w-[420px]">
                         <video
                             loop
                             autoPlay
@@ -138,7 +138,7 @@ export const ReelPost = ({ reelsData }) => {
                     {currentIndex > 0 && (
                         <button
                             onClick={goToPrevReel}
-                            className="absolute top-1/2 -left-20 -translate-y-1/2 text-[32px] p-1.5 border-[3px] rotate-90 rounded-full text-customGray-100"
+                            className="absolute -bottom-[64px] left-6 w-[48px] h-[48px] text-[32px] p-1.5 border-[3px] rotate-90 rounded-full text-customGray-100 md:top-1/2 md:-left-20 md:-translate-y-1/2"
                         >
                             {ReactIcons.ARROW_DOWN}
                         </button>
@@ -146,13 +146,13 @@ export const ReelPost = ({ reelsData }) => {
 
                     <button
                         onClick={goToNextReel}
-                        className="absolute top-1/2 -right-20 -translate-y-1/2 text-[32px] p-1.5 border-[3px] rotate-[270deg] rounded-full text-customGray-100"
+                        className="absolute -bottom-[64px] right-6 w-[48px] h-[48px] text-[32px] p-1.5 border-[3px] rotate-[270deg] rounded-full text-customGray-100 md:top-1/2 md:-right-20 md:-translate-y-1/2"
                     >
                         {ReactIcons.ARROW_DOWN}
                     </button>
                 </div>
 
-                <div className="flex flex-col gap-4">
+                <div className="flex gap-4 md:flex-col">
                     <div className="flex flex-col items-center gap-0.5">
                         <span
                             onClick={() => handleReacting('Reels', activeReelContent, user?.uid)}
