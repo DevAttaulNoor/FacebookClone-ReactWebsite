@@ -10,7 +10,6 @@ export default defineConfig({
       "@assets": "/src/assets/",
       "@routes": "/src/routes/",
       "@layouts": "/src/layouts/",
-      "@sections": "/src/sections/",
       "@components": "/src/components/",
       "@utils": "/src/libs/utils/",
       "@services": "/src/libs/services/",

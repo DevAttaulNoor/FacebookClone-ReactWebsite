@@ -13,8 +13,8 @@ import { getActiveRoute, getPreferredPath } from "@utils/PathResolver";
 import { BasicButton } from "@components/universal/buttons/BasicButton";
 import { ProfileComponentLayout } from "@layouts/ProfileComponentLayout";
 import { TextareaField } from "@components/universal/inputs/TextareaField";
+import { EntityInformation } from "@components/universal/EntityInformation";
 import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
-import { EntityInformationSection } from "@sections/universal/EntityInformationSection";
 import Profile_About from "./Profile_About";
 import Profile_Video from "./Profile_Video";
 import Profile_Photos from "./Profile_Photos";
@@ -75,7 +75,7 @@ const Profile = () => {
 
     return (
         <div className="w-full h-full flex flex-col items-center overflow-y-auto">
-            <EntityInformationSection
+            <EntityInformation
                 location={location}
                 entityType='profile'
                 entityData={{

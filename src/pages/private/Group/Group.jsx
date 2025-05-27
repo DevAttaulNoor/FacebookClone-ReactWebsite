@@ -9,8 +9,8 @@ import { formatJoinedDate } from "@utils/TimeModule";
 import { generatePath, getActiveRoute } from "@utils/PathResolver";
 import { GroupComponentLayout } from "@layouts/GroupComponentLayout";
 import { FeedPost } from "@components/universal/feed-related/FeedPost";
+import { EntityInformation } from "@components/universal/EntityInformation";
 import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
-import { EntityInformationSection } from "@sections/universal/EntityInformationSection";
 import Group_About from "./Group_About";
 import Group_Media from "./Group_Media";
 import Group_People from "./Group_People";
@@ -55,7 +55,7 @@ const Group = () => {
 
     return (
         <div className="w-full h-full flex flex-col items-center overflow-y-auto">
-            <EntityInformationSection
+            <EntityInformation
                 location={location}
                 entityType='group'
                 entityData={{

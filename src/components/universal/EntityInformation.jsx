@@ -14,7 +14,7 @@ import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { BasicButton } from "@components/universal/buttons/BasicButton";
 import { ButtonWithLoadingLayout } from "@layouts/ButtonWithLoadingLayout";
 
-export const EntityInformationSection = ({ location, entityType, entityData, componentsData }) => {
+export const EntityInformation = ({ location, entityType, entityData, componentsData }) => {
     const navigate = useNavigate();
     const { id } = useParams();
     const { user } = useAuth();
