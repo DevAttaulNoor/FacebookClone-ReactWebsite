@@ -26,47 +26,26 @@ export const EntityInformationSection = ({ location, entityType, entityData, com
         ? entityData.activeEntityData?.uid
         : entityData.activeEntityData?.adminId;
 
-    const handleGroupRelatedPhotoChange = async (photoTypeRef, groupId) => {
-        const file = photoTypeRef.current.files[0];
-        if (file) {
-            try {
-                let photo;
-                const storageRef = ref(storage, `Groups/${user.uid}/${file.name}`);
-                await uploadBytes(storageRef, file);
-                photo = await getDownloadURL(storageRef);
+    const handlePhotoChange = async ({
+        fileRef,
+        path,
+        docPath,
+        updateField
+    }) => {
+        const file = fileRef.current?.files?.[0];
+        if (!file) return;
 
-                const groupDocRef = doc(db, "Groups", groupId);
-                await updateDoc(groupDocRef, { coverPhoto: photo });
-                console.log(`Success uploading coverPhoto`);
-            } catch (error) {
-                console.error(`Error uploading coverPhoto:`, error);
-            }
-        }
-    };
+        try {
+            const storageRef = ref(storage, `${path}/${file.name}`);
+            await uploadBytes(storageRef, file);
+            const photoURL = await getDownloadURL(storageRef);
 
-    const handleProfileRelatedPhotoChange = async (photoType, photoTypeRef) => {
-        const file = photoTypeRef.current.files[0];
-        if (file) {
-            try {
-                let photo;
-                const storageRef = ref(storage, `Users/${user.uid}/${file.name}`);
-                await uploadBytes(storageRef, file);
-                photo = await getDownloadURL(storageRef);
+            const docRef = doc(db, ...docPath);
+            await updateDoc(docRef, { [updateField]: photoURL });
 
-                const userDocRef = doc(db, "Users", user.uid);
-
-                if (photoType === "profilePhoto") {
-                    await updateDoc(userDocRef, { profilePhoto: photo });
-                } else if (photoType === "coverPhoto") {
-                    await updateDoc(userDocRef, { coverPhoto: photo });
-                } else {
-                    console.error(`Invalid photoType: ${photoType}`);
-                }
-
-                console.log(`Success uploading ${photoType}`);
-            } catch (error) {
-                console.error(`Error uploading ${photoType}:`, error);
-            }
+            console.log(`Success uploading ${updateField}`);
+        } catch (error) {
+            console.error(`Error uploading ${updateField}:`, error);
         }
     };
 
@@ -96,7 +75,12 @@ export const EntityInformationSection = ({ location, entityType, entityData, com
                             type="file"
                             accept="image/*"
                             className="hidden"
-                            onChange={entityData === 'profile' ? () => handleProfileRelatedPhotoChange('coverPhoto', coverPhotoRef) : () => handleGroupRelatedPhotoChange('coverPhoto', coverPhotoRef)}
+                            onChange={() => handlePhotoChange({
+                                fileRef: coverPhotoRef,
+                                path: entityType === 'profile' ? `Users/${user.uid}` : `Groups/${user.uid}`,
+                                docPath: entityType === 'profile' ? ["Users", user.uid] : ["Groups", id],
+                                updateField: "coverPhoto"
+                            })}
                         />
                     </>
                 )}
@@ -125,7 +109,12 @@ export const EntityInformationSection = ({ location, entityType, entityData, com
                                             type="file"
                                             ref={profilePhotoRef}
                                             accept="image/*"
-                                            onChange={() => handlePhotoChange('profilePhoto', profilePhotoRef)}
+                                            onChange={() => handlePhotoChange({
+                                                fileRef: profilePhotoRef,
+                                                path: `Users/${user.uid}`,
+                                                docPath: ["Users", user.uid],
+                                                updateField: "profilePhoto"
+                                            })}
                                             className="hidden"
                                         />
                                     </span>

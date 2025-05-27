@@ -1,11 +1,9 @@
 import { useRef, useState } from "react";
-import { collection, doc, setDoc } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { db, storage } from "@services/firebase";
 import { useFriends } from "@hooks/useFriends";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { DropdownLayout } from "@layouts/DropdownLayout";
+import { handleGroupCreation } from "@utils/GroupHandling";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { InputField } from "@components/universal/inputs/InputField";
 import { BasicButton } from "@components/universal/buttons/BasicButton";
@@ -39,64 +37,25 @@ const feedPostingOptions = [
 const Group_Create = () => {
     const coverPhotoRef = useRef(null);
     const { user } = useAuth();
-    const { acceptedFriends } = useFriends(user.uid);
+    const { acceptedFriends } = useFriends(user?.uid);
     const [loading, setLoading] = useState(false);
-    const [groupName, setGroupName] = useState('');
-    const [coverPhoto, setCoverPhoto] = useState('')
     const [searchInput, setSearchInput] = useState('');
-    const [selectedUsers, setSelectedUsers] = useState([]);
+    const [groupData, setGroupData] = useState({
+        name: '',
+        members: [],
+        coverPhoto: '',
+    });
     const searchedUser = acceptedFriends?.filter((data) =>
         data?.username?.toLowerCase().includes(searchInput.toLowerCase()) &&
-        !selectedUsers.includes(data.uid)
+        !groupData.members.includes(data.uid)
     );
 
-    const removeSelectedUser = (userId) => {
-        setSelectedUsers(selectedUsers.filter(id => id !== userId));
-    };
-
     const handleUserSelection = (userId) => {
-        if (!selectedUsers.includes(userId)) {
-            setSelectedUsers([...selectedUsers, userId]);
+        if (!groupData.members.includes(userId)) {
+            setGroupData(prev => ({ ...prev, members: [...groupData.members, userId] }))
+            // setSelectedUsers([...selectedUsers, userId]);
         }
         setSearchInput('');
-    };
-
-    const handleGroupCreation = async () => {
-        try {
-            setLoading(true);
-            const allMembers = [...selectedUsers, user.uid];
-
-            let coverPhotoUrl = "";
-            if (coverPhoto) {
-                const file = coverPhoto;
-                const storageRef = ref(storage, `Groups/${user.uid}/${file.name}`);
-                await uploadBytes(storageRef, file);
-                coverPhotoUrl = await getDownloadURL(storageRef);
-            } else {
-                const response = await fetch(group_coverphoto);
-                const blob = await response.blob();
-                const storageRef = ref(storage, `Groups/${user.uid}/cover_photo.jpg`);
-                await uploadBytes(storageRef, blob);
-                coverPhotoUrl = await getDownloadURL(storageRef);
-            }
-
-            await setDoc(doc(collection(db, "Groups")), {
-                adminId: user.uid,
-                adminEmail: user.email,
-                name: groupName,
-                members: allMembers,
-                coverPhoto: coverPhotoUrl,
-                timestamp: Math.floor(new Date().getTime() / 1000),
-            });
-
-            setLoading(false);
-            setGroupName('');
-            setCoverPhoto('');
-            setSelectedUsers([]);
-        } catch (error) {
-            console.error(error);
-            setLoading(false);
-        }
     };
 
     return (
@@ -125,9 +84,9 @@ const Group_Create = () => {
                         inputStyle="p-4 border rounded-md"
                         inputData={{
                             type: 'text',
-                            value: groupName,
+                            value: groupData.name,
                             placeholder: 'Group name',
-                            onChange: (e) => setGroupName(e.target.value),
+                            onChange: (e) => setGroupData(prev => ({ ...prev, name: e.target.value })),
                         }}
                     />
 
@@ -143,15 +102,15 @@ const Group_Create = () => {
                                 }}
                             />
 
-                            {selectedUsers.length > 0 && (
+                            {groupData.members.length > 0 && (
                                 <div className="flex flex-wrap gap-2">
-                                    {selectedUsers.map(userId => {
+                                    {groupData.members.map(userId => {
                                         const userData = acceptedFriends?.find(data => data?.uid === userId);
                                         return (
                                             <div key={userId} className="w-fit flex items-center p-2 gap-1 rounded-md text-customBlue-default bg-customGray-default">
                                                 <p className="text-sm font-medium">{userData?.username}</p>
                                                 <span
-                                                    onClick={() => removeSelectedUser(userId)}
+                                                    onClick={() => setGroupData(prev => ({ ...prev, members: groupData.members.filter(id => id !== userId) }))}
                                                     className="text-sm cursor-pointer"
                                                 >
                                                     {ReactIcons.CLOSE}
@@ -165,7 +124,7 @@ const Group_Create = () => {
 
                         <DropdownLayout
                             isOpen={searchInput}
-                            isClose={selectedUsers.length > 0}
+                            isClose={groupData.members.length > 0}
                             dropdownContainerStyle='top-14 right-0 left-0 p-2 border rounded-md bg-white'
                         >
                             {searchedUser.length > 0 ? (searchedUser.map((data) => (
@@ -190,7 +149,7 @@ const Group_Create = () => {
                 </div>
 
                 <div className="flex items-center gap-3 p-4 shadow-customFull2 bg-white">
-                    {groupName ? (
+                    {groupData.name ? (
                         <ButtonWithLoadingLayout
                             loadingState={loading}
                             btnStyleClass={'text-white bg-customBlue-default'}
@@ -201,7 +160,7 @@ const Group_Create = () => {
                             actionBtn={{
                                 text: 'Create',
                                 textStyleClass: 'text-base',
-                                onClick: handleGroupCreation
+                                onClick: () => handleGroupCreation(user, groupData, setGroupData, group_coverphoto, setLoading)
                             }}
                         />
                     ) : (
@@ -223,7 +182,7 @@ const Group_Create = () => {
                     <div className="h-full flex flex-col justify-between border rounded-lg overflow-y-auto bg-customGray-default">
                         <div className="flex flex-col gap-4 shadow-md bg-white">
                             <div
-                                style={{ backgroundImage: `url(${coverPhoto ? URL.createObjectURL(coverPhoto) : group_coverphoto})` }}
+                                style={{ backgroundImage: `url(${groupData.coverPhoto ? URL.createObjectURL(groupData.coverPhoto) : group_coverphoto})` }}
                                 className="bg-contain bg-center bg-no-repeat h-44 flex items-end justify-end p-1.5 rounded-t-md bg-customGray-default xs:p-2 sm:p-2.5 md:p-3 lg:p-3.5 xl:p-4"
                             >
                                 <BasicButton
@@ -240,14 +199,14 @@ const Group_Create = () => {
                                     type="file"
                                     accept="image/*"
                                     className="hidden"
-                                    onChange={(e) => setCoverPhoto(e.target.files[0])}
+                                    onChange={(e) => setGroupData(prev => ({ ...prev, coverPhoto: e.target.files[0] }))}
                                 />
                             </div>
 
                             <div className="px-6">
-                                <h1 className="text-2xl font-extrabold text-customGray-200">{groupName ? groupName : 'Group Name'}</h1>
+                                <h1 className="text-2xl font-extrabold text-customGray-200">{groupData.name ? groupData.name : 'Group Name'}</h1>
                                 <p className="text-sm font-medium text-customGray-300">
-                                    {selectedUsers.length + 1} members {/* +1 for the admin */}
+                                    {groupData.members.length + 1} members {/* +1 for the admin */}
                                 </p>
 
                                 <div className="flex gap-1 mt-4 border-t">
@@ -293,7 +252,7 @@ const Group_Create = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 
