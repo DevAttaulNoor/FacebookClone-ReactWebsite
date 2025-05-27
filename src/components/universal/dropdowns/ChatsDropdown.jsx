@@ -39,24 +39,24 @@ export const ChatsDropdown = ({ dropdownStateData, searchInputStateData, userDat
                                 setIsMessageBoxOpen(chatUser?.id);
                                 dropdownStateData.setDropdownOpen(prev => ({ ...prev, messageDropdown: false }));
                             }}
-                            className="flex items-center p-1 gap-2.5 rounded-md cursor-pointer hover:bg-customGray-default"
+                            className="flex items-center p-1 gap-2 rounded-md cursor-pointer hover:bg-customGray-default xs:gap-2.5 sm:gap-3"
                         >
                             <ProfileAvatar
                                 userData={chatUser}
-                                imageStyleClass="w-12 h-12"
-                                iconStyleClass="text-5xl"
+                                imageStyleClass="w-[42px] h-[42px]"
+                                iconStyleClass="text-[42px]"
                             />
 
-                            <div className="flex flex-col text-sm">
+                            <div className="flex flex-col text-xs sm:text-sm">
                                 <Link
                                     to={`/profile/${chatUser?.uid}`}
                                     onClick={() => dropdownStateData.setDropdownOpen(prev => ({ ...prev, messageDropdown: false }))}
-                                    className="text-sm font-medium cursor-pointer hover:underline"
+                                    className="text-xs font-medium cursor-pointer hover:underline sm:text-sm"
                                 >
                                     {chatUser?.username}
                                 </Link>
 
-                                <p className="text-customGray-300">{data.chats[data.chats.length - 1].message} • {timeAgoInitials(data.timestamp)}</p>
+                                <p className="text-[10px] text-customGray-300 sm:text-xs">{data.chats[data.chats.length - 1].message} • {timeAgoInitials(data.timestamp)}</p>
                             </div>
                         </div>
                     )

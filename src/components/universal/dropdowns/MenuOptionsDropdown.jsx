@@ -78,7 +78,7 @@ export const MenuOptionsDropdown = ({ dropdownStateData, searchInputStateData })
         >
             <h2 className="text-2xl font-semibold">Menu</h2>
 
-            <div className="flex gap-4">
+            <div className="flex gap-3 sm:gap-4">
                 <div className="flex-[0.7] flex flex-col p-2 rounded-lg shadow-customFull bg-white">
                     <div className="py-2">
                         <SearchBar
@@ -98,13 +98,13 @@ export const MenuOptionsDropdown = ({ dropdownStateData, searchInputStateData })
                                 key={data.id}
                                 to={data.link}
                                 onClick={() => dropdownStateData.setDropdownOpen(prev => ({ ...prev, menuDropdown: false }))}
-                                className='flex items-center p-1.5 gap-3 rounded-lg cursor-pointer hover:bg-customGray-default'
+                                className='flex items-center p-1.5 gap-2 rounded-lg cursor-pointer hover:bg-customGray-default md:gap-3'
                             >
                                 <span className="text-3xl">{data.icon}</span>
 
                                 <div className="flex flex-col gap-0.5">
-                                    <h5 className="text-sm font-medium">{data.title}</h5>
-                                    <p className="text-xs text-customGray-200">{data.description}</p>
+                                    <h5 className="text-xs font-medium sm:text-sm">{data.title}</h5>
+                                    <p className="text-[10px] text-customGray-200 sm:text-xs">{data.description}</p>
                                 </div>
                             </Link>
                         ))}
@@ -126,7 +126,7 @@ export const MenuOptionsDropdown = ({ dropdownStateData, searchInputStateData })
                                     {data.icon}
                                 </span>
 
-                                <h5 className="text-sm font-medium">{data.title}</h5>
+                                <h5 className="text-xs font-medium sm:text-sm">{data.title}</h5>
                             </Link>
                         ))}
                     </div>
