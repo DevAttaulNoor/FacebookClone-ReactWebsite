@@ -20,7 +20,7 @@ export const useUsers = (userId) => {
         users: collectionData ? collectionData : null,
         userCurrent: userId ? userCurrent : null,
         usersExceptCurrent: userId ? usersExceptCurrent : null,
-        loading,
-        error
+        usersLoading: loading,
+        usersError: error
     };
 };

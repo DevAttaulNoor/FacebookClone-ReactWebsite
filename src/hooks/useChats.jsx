@@ -20,7 +20,7 @@ export const useChats = (userId, friendIds) => {
     return {
         chats: collectionData || null,
         userChats: (userId && memoizedFriendIds) ? userChats : null,
-        loading,
-        error
+        chatsLoading: loading,
+        chatsError: error
     };
 };

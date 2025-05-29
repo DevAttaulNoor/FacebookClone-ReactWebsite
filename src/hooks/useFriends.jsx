@@ -10,8 +10,8 @@ export const useFriends = (userId) => {
     const [pendingFriends, setPendingFriends] = useState([]);
     const [acceptedFriends, setAcceptedFriends] = useState([]);
     const [acceptingFriends, setAcceptingFriends] = useState([]);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [friendsError, setFriendsError] = useState(null);
+    const [friendsLoading, setFriendsLoading] = useState(true);
 
     useEffect(() => {
         if (!usersExceptCurrent || usersExceptCurrent.length === 0) return;
@@ -60,11 +60,11 @@ export const useFriends = (userId) => {
                 });
                 setFriends(FriendsTobeMade);
 
-                setLoading(false);
+                setFriendsLoading(false);
             },
             (err) => {
-                setError(err);
-                setLoading(false);
+                setFriendsError(err);
+                setFriendsLoading(false);
             }
         );
 
@@ -73,5 +73,5 @@ export const useFriends = (userId) => {
         };
     }, [userId, usersExceptCurrent]);
 
-    return { friends, friendReqs, pendingFriends, acceptingFriends, acceptedFriends, loading, error };
+    return { friends, friendReqs, pendingFriends, acceptingFriends, acceptedFriends, friendsLoading, friendsError };
 };

@@ -20,7 +20,7 @@ export const usePosts = (userId) => {
         posts: collectionData ? collectionData : null,
         userPosts: userId ? userPosts : null,
         groupPosts: collectionData ? groupPosts : null,
-        loading,
-        error
+        postsLoading: loading,
+        postsError: error
     };
 };

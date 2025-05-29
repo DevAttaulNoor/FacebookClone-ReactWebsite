@@ -15,7 +15,7 @@ export const useStories = (userId) => {
     return {
         stories: collectionData ? collectionData : null,
         userStories: userId ? userStories : null,
-        loading,
-        error
+        storiesLoading: loading,
+        storiesError: error
     };
 };

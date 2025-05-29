@@ -14,7 +14,7 @@ export const useReels = (userId) => {
     return {
         reels: collectionData ? collectionData : null,
         userReels: userId ? userReels : null,
-        loading,
-        error
+        reelsLoading: loading,
+        reelsError: error
     };
 };

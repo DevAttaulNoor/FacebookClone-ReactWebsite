@@ -24,7 +24,7 @@ export const useGroups = (userId) => {
         userGroupsJoined: userId ? userGroupsJoined : null,
         userGroupsCreated: userId ? userGroupsCreated : null,
         userRelatedGroups: userId ? userRelatedGroups : null,
-        loading,
-        error
+        groupsLoading: loading,
+        groupsError: error,
     };
 };

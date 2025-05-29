@@ -25,8 +25,8 @@ const Home = () => {
     const { acceptedFriends } = useFriends(user.uid);
     const { stories, userStories } = useStories(user?.uid);
     const friendsPosts = posts?.filter(data => (data.uid === user?.uid) || (acceptedFriends?.some(friend => friend.uid === data.uid)));
-    const friendsPhotoPosts = friendsPosts?.filter(data => data.mediaType === 'image')
-    const userRelatedStories = stories?.filter(data => acceptedFriends.some(friend => friend.uid === data.uid)).concat(userStories)
+    const friendsPhotoPosts = friendsPosts?.filter(data => data.mediaType === 'image');
+    const userRelatedStories = stories?.filter(data => acceptedFriends.some(friend => friend.uid === data.uid)).concat(userStories);
 
     const leftbarOptionsData = [
         {
