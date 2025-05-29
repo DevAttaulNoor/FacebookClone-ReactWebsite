@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { useAuth } from '@contexts/AuthContext';
 import { ProfileAvatar } from '../ProfileAvatar';
 import { PostingModal } from '../modals/PostingModal';
 
-const feedPostingOptions = [
+const RegularPostPostingOptions = [
     {
         id: 1,
         title: "Photo/video",
@@ -16,8 +15,7 @@ const feedPostingOptions = [
     },
 ];
 
-export const FeedPostPosting = ({ usedInGroupPosting = false, groupData }) => {
-    const { user } = useAuth();
+export const PostingRegularPost = ({ userData, groupData, usedInGroupPosting = false }) => {
     const [message, setMessage] = useState({
         text: '',
         media: '',
@@ -39,20 +37,20 @@ export const FeedPostPosting = ({ usedInGroupPosting = false, groupData }) => {
         <div className="flex w-full flex-col rounded-lg bg-white px-4 shadow">
             <div className="flex items-center gap-2 py-3">
                 <ProfileAvatar
-                    userData={user}
+                    userData={userData}
                     imageStyleClass="w-[42px] h-[42px]"
                     iconStyleClass="text-[42px]"
                 />
 
                 <div onClick={() => setModalOpen(prev => ({ ...prev, posting: true }))} className="w-full text-sm cursor-pointer rounded-3xl px-3 py-2.5 text-customGray-200 bg-customGray-default hover:bg-[#E4E6EB] sm:text-base">
-                    {usedInGroupPosting ? 'Write something...' : `What's on your mind, ${user?.username}`}
+                    {usedInGroupPosting ? 'Write something...' : `What's on your mind, ${userData?.username}`}
                 </div>
             </div>
 
             <div className="h-[1px] w-full bg-slate-100"></div>
 
             <div className="grid grid-cols-2 gap-1 py-2">
-                {feedPostingOptions.map((data) => (
+                {RegularPostPostingOptions.map((data) => (
                     <div key={data.id} className="flex cursor-pointer items-center justify-center gap-2 rounded-lg p-3 hover:bg-slate-100">
                         <img
                             src={data.icon}
@@ -69,7 +67,7 @@ export const FeedPostPosting = ({ usedInGroupPosting = false, groupData }) => {
 
             <PostingModal
                 editingStatus={false}
-                userData={user}
+                userData={userData}
                 groupData={groupData}
                 modalStateData={{
                     modalOpen: modalOpen,

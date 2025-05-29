@@ -7,8 +7,8 @@ import { useGroups } from "@hooks/useGroups";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
-import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import { BasicButton } from "@components/universal/buttons/BasicButton";
+import { RegularPostFeed } from "@components/universal/feed-related/RegularPostFeed";
 import Group_Joined from "./Group_Joined";
 import Group_Discover from "./Group_Discover";
 import group_coverphoto from '/Images/universal/group/group-coverphoto.png';
@@ -140,10 +140,10 @@ const Group_Feed = () => {
             <div className="flex-1 p-4 overflow-x-hidden overflow-y-auto sm:p-5 md:p-6 lg:p-7 xl:p-8 2xl:p-10">
                 {location.pathname === Routes.GROUP_FEED.path && (
                     <div className="flex flex-col items-center gap-4">
-                        <FeedPost
-                            activeUser={user}
-                            userData={users}
-                            postData={groupJoinedPostsFeed}
+                        <RegularPostFeed
+                            userData={user}
+                            usersData={users}
+                            postsData={groupJoinedPostsFeed}
                             groupData={userRelatedGroups}
                             usedInGroupPosting={true}
                             postContainerStyle="feedPostWidth"

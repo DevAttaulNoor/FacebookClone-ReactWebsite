@@ -8,9 +8,9 @@ import { ReactIcons } from "@constants/ReactIcons";
 import { formatJoinedDate } from "@utils/TimeModule";
 import { generatePath, getActiveRoute } from "@utils/PathResolver";
 import { GroupComponentLayout } from "@layouts/GroupComponentLayout";
-import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import { EntityInformation } from "@components/universal/EntityInformation";
-import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
+import { PostingRegularPost } from "@components/universal/post-related/PostingRegularPost";
+import { RegularPostFeed } from "@components/universal/feed-related/RegularPostFeed";
 import Group_About from "./Group_About";
 import Group_Media from "./Group_Media";
 import Group_People from "./Group_People";
@@ -70,16 +70,17 @@ const Group = () => {
                 {getActiveRoute(Routes.GROUP, location.pathname, { id: id }) && (
                     <div className="flex flex-col-reverse gap-4 sm:flex-row">
                         <div className="flex flex-[0.6] w-full flex-col gap-4">
-                            <FeedPostPosting
+                            <PostingRegularPost
+                                userData={user}
                                 groupData={activeGroup}
                                 usedInGroupPosting={true}
                             />
 
-                            <FeedPost
-                                activeUser={user}
-                                userData={users}
+                            <RegularPostFeed
+                                userData={user}
+                                usersData={users}
+                                postsData={activeGroupPosts}
                                 groupData={groups}
-                                postData={activeGroupPosts}
                                 usedInGroupPosting={true}
                             />
                         </div>

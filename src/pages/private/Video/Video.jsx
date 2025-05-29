@@ -7,7 +7,7 @@ import { useFriends } from "@hooks/useFriends";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
-import { FeedPost } from "@components/universal/feed-related/FeedPost";
+import { RegularPostFeed } from "@components/universal/feed-related/RegularPostFeed";
 import Video_Saved from "./Video_Saved";
 
 const videosLeftbarOptions = [
@@ -60,10 +60,10 @@ const Video = () => {
 
             <div className='flex-1 flex flex-col items-center p-4 gap-4 overflow-x-hidden overflow-y-auto'>
                 {location.pathname === Routes.VIDEO.path && (
-                    <FeedPost
-                        activeUser={user}
-                        userData={users}
-                        postData={friendsVideoPosts}
+                    <RegularPostFeed
+                        userData={user}
+                        usersData={users}
+                        postsData={friendsVideoPosts}
                         postContainerStyle="feedPostWidth"
                     />
                 )}

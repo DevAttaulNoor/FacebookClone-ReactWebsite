@@ -8,13 +8,13 @@ import { usePosts } from "@hooks/usePosts";
 import { useFriends } from "@hooks/useFriends";
 import { useAuth } from "@contexts/AuthContext";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
-import { FeedPost } from "@components/universal/feed-related/FeedPost";
 import { getActiveRoute, getPreferredPath } from "@utils/PathResolver";
 import { BasicButton } from "@components/universal/buttons/BasicButton";
 import { ProfileComponentLayout } from "@layouts/ProfileComponentLayout";
 import { TextareaField } from "@components/universal/inputs/TextareaField";
 import { EntityInformation } from "@components/universal/EntityInformation";
-import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
+import { PostingRegularPost } from "@components/universal/post-related/PostingRegularPost";
+import { RegularPostFeed } from "@components/universal/feed-related/RegularPostFeed";
 import Profile_About from "./Profile_About";
 import Profile_Video from "./Profile_Video";
 import Profile_Photos from "./Profile_Photos";
@@ -232,13 +232,15 @@ const Profile = () => {
 
                         <div className="flex flex-[0.6] w-full flex-col gap-4">
                             {user?.uid === userCurrent?.uid && (
-                                <FeedPostPosting />
+                                <PostingRegularPost
+                                    userData={user}
+                                />
                             )}
 
-                            <FeedPost
-                                activeUser={user}
-                                userData={users}
-                                postData={userPosts}
+                            <RegularPostFeed
+                                userData={user}
+                                usersData={users}
+                                postsData={userPosts}
                             />
                         </div>
                     </div>

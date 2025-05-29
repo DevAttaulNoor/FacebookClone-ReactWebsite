@@ -1,10 +1,10 @@
-import { FeedPost } from "@components/universal/feed-related/FeedPost"
+import { RegularPostFeed } from "@components/universal/feed-related/RegularPostFeed"
 
-const Feed_Friend = ({ userData, postData, postContainerStyle }) => {
+const Feed_Friend = ({ usersData, postsData, postContainerStyle }) => {
     return (
-        <FeedPost
-            userData={userData}
-            postData={postData}
+        <RegularPostFeed
+            usersData={usersData}
+            postsData={postsData}
             postContainerStyle={postContainerStyle}
         />
     )

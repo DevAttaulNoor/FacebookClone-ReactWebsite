@@ -5,15 +5,16 @@ import { useUsers } from "@hooks/useUsers";
 import { useReels } from "@hooks/useReels";
 import { SvgIcons } from "@constants/SvgIcons";
 import { useFriends } from "@hooks/useFriends";
+import { useStories } from "@hooks/useStories";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { useMessageBox } from "@contexts/MessageBoxContext";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { TermsAndLinks } from "@components/universal/TermsAndLinks";
-import { FeedPost } from "@components/universal/feed-related/FeedPost";
-import { FeedStory } from "@components/universal/feed-related/FeedStory";
 import { HomeLeftbarContentLayout } from "@layouts/HomeLeftbarContentLayout";
-import { FeedPostPosting } from "@components/universal/feed-related/FeedPostPosting";
+import { StoryPostFeed } from "@components/universal/feed-related/StoryPostFeed";
+import { PostingRegularPost } from "@components/universal/post-related/PostingRegularPost";
+import { RegularPostFeed } from "@components/universal/feed-related/RegularPostFeed";
 
 const Home = () => {
     const { user } = useAuth();
@@ -22,8 +23,10 @@ const Home = () => {
     const { reels } = useReels();
     const { setIsMessageBoxOpen } = useMessageBox();
     const { acceptedFriends } = useFriends(user.uid);
-    const friendsPosts = posts?.filter(data => (data.uid === user?.uid) || (acceptedFriends.some(friend => friend.uid === data.uid)));
+    const { stories, userStories } = useStories(user?.uid);
+    const friendsPosts = posts?.filter(data => (data.uid === user?.uid) || (acceptedFriends?.some(friend => friend.uid === data.uid)));
     const friendsPhotoPosts = friendsPosts?.filter(data => data.mediaType === 'image')
+    const userRelatedStories = stories?.filter(data => acceptedFriends.some(friend => friend.uid === data.uid)).concat(userStories)
 
     const leftbarOptionsData = [
         {
@@ -95,21 +98,27 @@ const Home = () => {
             </div>
 
             <div className="feedPostWidth flex flex-col p-4 mx-auto gap-4">
-                <FeedStory />
+                <StoryPostFeed
+                    userData={user}
+                    usersData={users}
+                    userRelatedStoriesData={userRelatedStories}
+                />
 
-                <FeedPostPosting />
+                <PostingRegularPost
+                    userData={user}
+                />
 
-                <FeedPost
-                    activeUser={user}
-                    userData={users}
-                    postData={friendsPhotoPosts}
+                <RegularPostFeed
+                    userData={user}
+                    usersData={users}
+                    postsData={friendsPhotoPosts}
                 />
             </div>
 
             <div className="hidden homeSidebarStyle md:flex">
                 <HomeLeftbarContentLayout title={'Contacts'}>
                     <div className="flex flex-col gap-1.5">
-                        {acceptedFriends?.map((user) => (
+                        {acceptedFriends?.map(user => (
                             <div
                                 key={user?.uid}
                                 onClick={() => setIsMessageBoxOpen(user?.uid)}

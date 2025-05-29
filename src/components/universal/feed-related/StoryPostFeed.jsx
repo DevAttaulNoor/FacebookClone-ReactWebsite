@@ -1,31 +1,21 @@
 import { Link } from "react-router";
 import { Routes } from "@constants/Routes";
-import { useUsers } from "@hooks/useUsers";
-import { StoryCard } from "../cards/StoryCard";
-import { useStories } from "@hooks/useStories";
-import { useFriends } from "@hooks/useFriends";
-import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
+import { ProfileAvatar } from "../ProfileAvatar";
 
-export const FeedStory = () => {
-    const { user } = useAuth();
-    const { users } = useUsers();
-    const { acceptedFriends } = useFriends(user?.uid);
-    const { stories, userStories } = useStories(user?.uid);
-    const userRelatedStories = stories?.filter(data => acceptedFriends.some(friend => friend.uid === data.uid)).concat(userStories)
-
+export const StoryPostFeed = ({ userData, usersData, userRelatedStoriesData }) => {
     return (
         <>
-            {userRelatedStories.length > 0 ? (
+            {userRelatedStoriesData.length > 0 ? (
                 <div className='flex gap-2 overflow-x-auto overflow-y-hidden'>
                     <Link
                         to={Routes.STORY_CREATE.path}
                         className="w-24 h-40 flex flex-col rounded-xl bg-white xs:w-28 xs:h-44 sm:w-32 sm:h-56"
                     >
-                        {user?.profilePhoto ? (
+                        {userData?.profilePhoto ? (
                             <img
-                                src={user.profilePhoto}
-                                alt={`profile picture of ${user.username}`}
+                                src={userData?.profilePhoto}
+                                alt={`profile picture of ${userData?.username}`}
                                 className="w-32 h-[82%] rounded-t-xl object-cover"
                             />
                         ) : (
@@ -42,7 +32,7 @@ export const FeedStory = () => {
                         </div>
                     </Link>
 
-                    {userRelatedStories
+                    {userRelatedStoriesData
                         ?.sort((a, b) => b.timestamp - a.timestamp)
                         ?.reduce((acc, data) => {
                             if (!acc.some(item => item.uid === data.uid)) {
@@ -50,13 +40,30 @@ export const FeedStory = () => {
                             }
                             return acc;
                         }, [])
-                        .map((data) => (
-                            <StoryCard
-                                key={data.uid}
-                                storyData={data}
-                                userData={users}
-                            />
-                        ))}
+                        .map((data) => {
+                            const storyUser = usersData?.find(user => user.uid === data?.uid);
+
+                            return (
+                                <Link
+                                    key={data?.uid}
+                                    to={`/story/${data?.uid}`}
+                                    className="relative w-24 h-40 flex flex-col justify-between p-2 rounded-xl z-0 bg-black xs:w-28 xs:h-44 sm:w-32 sm:h-56"
+                                >
+                                    <ProfileAvatar
+                                        userData={storyUser}
+                                        imageStyleClass="w-[42px] h-[42px] border-[3px] !border-customBlue-default"
+                                        iconStyleClass="text-[42px]"
+                                    />
+
+                                    <p className="text-xs font-medium px-1 drop-shadow-xl text-white">{storyUser?.username}</p>
+
+                                    <span
+                                        style={{ backgroundImage: `url(${data?.background})` }}
+                                        className="absolute top-7 bottom-7 left-0 right-0 -z-[5] bg-cover bg-center bg-no-repeat"
+                                    />
+                                </Link>
+                            )
+                        })}
                 </div>
             ) : (
                 <Link
@@ -71,7 +78,7 @@ export const FeedStory = () => {
                             <p className="text-sm text-customGray-200">Share a photo or write something.</p>
                         </div>
                     </div>
-                </Link >
+                </Link>
             )}
         </>
     )

@@ -9,7 +9,7 @@ import { SvgIcons } from "@constants/SvgIcons";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
-import { FeedPost } from "@components/universal/feed-related/FeedPost";
+import { RegularPostFeed } from "@components/universal/feed-related/RegularPostFeed";
 import Feed_Friend from "./Feed_Friend";
 
 const feedLeftbarOptions = [
@@ -72,9 +72,9 @@ const Feed = () => {
 
             <div className='flex-1 flex flex-col items-center p-4 gap-4 overflow-x-hidden overflow-y-auto'>
                 {location.pathname === Routes.FEED.path && (
-                    <FeedPost
-                        userData={users}
-                        postData={allFeed}
+                    <RegularPostFeed
+                        usersData={users}
+                        postsData={allFeed}
                         groupData={userRelatedGroups}
                         usedInGroupPosting={true}
                         postContainerStyle="feedPostWidth"
@@ -83,8 +83,8 @@ const Feed = () => {
 
                 {location.pathname === Routes.FEED_FRIENDS.path && (
                     <Feed_Friend
-                        userData={users}
-                        postData={friendFeed}
+                        usersData={users}
+                        postsData={friendFeed}
                         postContainerStyle="feedPostWidth"
                     />
                 )}

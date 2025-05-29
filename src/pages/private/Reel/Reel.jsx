@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useReels } from "@hooks/useReels";
 import { Routes } from "@constants/Routes";
 import { SvgIcons } from "@constants/SvgIcons";
-import { ReelPost } from "@components/universal/posts/ReelPost";
+import { ReelPost } from "@components/universal/post-related/ReelPost";
 
 const Reel = () => {
     const { reels } = useReels();
