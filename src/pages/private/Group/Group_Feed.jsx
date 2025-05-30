@@ -12,6 +12,7 @@ import { RegularPostFeed } from "@components/universal/feed-related/RegularPostF
 import Group_Joined from "./Group_Joined";
 import Group_Discover from "./Group_Discover";
 import group_coverphoto from '/Images/universal/group/group-coverphoto.png';
+import { GroupList } from "@components/group-related/GroupList";
 
 const groupsLeftbarOptions = [
     {
@@ -40,7 +41,7 @@ const Group_Feed = () => {
     const { users } = useUsers();
     const { groupPosts } = usePosts();
     const { groups, userGroupsJoined, userGroupsCreated, userRelatedGroups } = useGroups(user?.uid);
-    const groupJoinedPostsFeed = groupPosts.filter(data => userRelatedGroups.map(group => group.adminId === data.adminId));
+    const groupJoinedPostsFeed = groupPosts.filter(data => userRelatedGroups.some(group => group.id === data.groupId));
 
     return (
         <div className="pageWithLeftbarStyle">
@@ -78,62 +79,18 @@ const Group_Feed = () => {
                 </div>
 
                 {userGroupsCreated.length > 0 && (
-                    <div className="flex flex-col pt-3 mt-4 gap-1 border-t">
-                        <h5 className="font-semibold px-2">Groups you manage</h5>
-
-                        {userGroupsCreated.map(data => (
-                            <Link
-                                key={data.id}
-                                to={`/group/${data.id}`}
-                                className="flex items-center p-2 gap-2.5 rounded-md cursor-pointer hover:bg-customGray-default"
-                            >
-                                <img
-                                    src={data?.coverPhoto ? data?.coverPhoto : group_coverphoto}
-                                    alt={`cover photo of ${data?.name}`}
-                                    className="w-12 h-12 border rounded-lg object-cover"
-                                />
-
-                                <div>
-                                    <h5 className="text-sm font-medium">{data?.name}</h5>
-                                    <p className="text-xs text-customGray-200 cursor-pointer">{timeAgo(data?.timestamp)}</p>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
+                    <GroupList
+                        title={"Groups you manage"}
+                        groupsData={userGroupsCreated}
+                    />
                 )}
 
                 {userGroupsJoined.length > 0 && (
-                    <div className="flex flex-col pt-3 mt-4 gap-1 border-t">
-                        <div className="flex justify-between px-2">
-                            <h5 className="font-semibold">Groups you've joined</h5>
-
-                            <Link
-                                to={Routes.GROUP_JOINED.path}
-                                className="text-sm font-light cursor-pointer text-customBlue-300 hover:underline"
-                            >
-                                see all
-                            </Link>
-                        </div>
-
-                        {userGroupsJoined.map(data => (
-                            <Link
-                                key={data.id}
-                                to={`/group/${data.id}`}
-                                className="flex items-center p-2 gap-2.5 rounded-md cursor-pointer hover:bg-customGray-default"
-                            >
-                                <img
-                                    src={data?.coverPhoto ? data?.coverPhoto : group_coverphoto}
-                                    alt={`cover photo of ${data?.name}`}
-                                    className="w-12 h-12 border rounded-lg object-cover"
-                                />
-
-                                <div>
-                                    <h5 className="text-sm font-medium">{data?.name}</h5>
-                                    <p className="text-xs text-customGray-200 cursor-pointer">{timeAgo(data?.timestamp)}</p>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
+                    <GroupList
+                        title={"Groups you've joined"}
+                        titleLink={Routes.GROUP_JOINED.path}
+                        groupsData={userGroupsJoined}
+                    />
                 )}
             </LeftbarLayout >
 
