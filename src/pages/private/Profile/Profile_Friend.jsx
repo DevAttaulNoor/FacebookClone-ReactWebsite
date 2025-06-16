@@ -36,7 +36,7 @@ const Profile_Friend = ({ friendsData }) => {
                         to={`/profile/${data.uid}`}
                         className="flex items-center justify-between p-1 rounded-lg border shadow-sm border-customGray-100 xs:p-1.5 sm:p-2"
                     >
-                        <div className="flex gap-1.5 sm:gap-2 items-center">
+                        <div className="flex gap-1.5 items-center sm:gap-2">
                             <ProfileAvatar
                                 userData={data}
                                 imageStyleClass="w-12 h-12 xs:w-[52px] xs:h-[52px] sm:w-14 sm:h-14 md:w-[60px] md:h-[60px] xl:w-16 xl:h-16"

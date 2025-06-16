@@ -8,21 +8,16 @@ import { DropdownLayout } from "@layouts/DropdownLayout";
 const profileOptions = [
     {
         id: 1,
-        text: 'Setting & privacy',
-        icon: ReactIcons.SETTING,
+        text: 'Display & accessibility',
+        icon: ReactIcons.MOON,
     },
     {
         id: 2,
-        text: 'Help & support',
-        icon: ReactIcons.SETTING,
+        text: 'Contact Dev',
+        icon: ReactIcons.CODE,
     },
     {
         id: 3,
-        text: 'Display & accessibility',
-        icon: ReactIcons.SETTING,
-    },
-    {
-        id: 4,
         text: 'Log out',
         icon: ReactIcons.SETTING,
         onClick: () => handleLoggingOut()

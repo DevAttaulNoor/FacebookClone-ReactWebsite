@@ -167,7 +167,7 @@ const Profile = () => {
                                     <img
                                         src={userCurrent?.profilePhoto}
                                         alt={`profile image of ${userCurrent?.username}`}
-                                        className="max-h-32 h-full w-full shadow object-contain bg-slate-100 xs:max-h-36 sm:max-h-40"
+                                        className="w-full shadow object-contain bg-slate-100"
                                     />
 
                                     {userPostPhotos.length > 0 && (
@@ -195,7 +195,7 @@ const Profile = () => {
                                             <video
                                                 controls
                                                 key={data.id}
-                                                className="max-h-32 h-full w-full shadow object-contain bg-slate-100 xs:max-h-36 sm:max-h-40"
+                                                className="w-full shadow object-contain bg-slate-100"
                                             >
                                                 <source src={data.media} type="video/mp4" />
                                             </video>
@@ -218,7 +218,7 @@ const Profile = () => {
                                             >
                                                 <ProfileAvatar
                                                     userData={data}
-                                                    imageStyleClass="max-h-32 h-full w-full shadow !rounded-lg object-contain !bg-slate-100 xs:max-h-36 sm:max-h-40"
+                                                    imageStyleClass="w-full shadow !rounded-sm object-contain !bg-slate-100"
                                                     iconStyleClass="text-3xl"
                                                 />
 
