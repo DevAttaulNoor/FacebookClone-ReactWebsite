@@ -190,4 +190,10 @@ export const Routes = {
         metaTitle: "Friend",
         metaDescription: "Friend",
     },
+    CONTACT: {
+        path: "/contact",
+        title: "Contact",
+        metaTitle: "Contact Dev",
+        metaDescription: "Contact Dev",
+    },
 };

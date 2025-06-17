@@ -12,6 +12,7 @@ const Saved = lazy(() => import("@pages/private/Saved"));
 const Signup = lazy(() => import("@pages/public/Signup"));
 const Feed = lazy(() => import("@pages/private/Feed/Feed"));
 const Reel = lazy(() => import("@pages/private/Reel/Reel"));
+const Contact = lazy(() => import("@pages/private/Contact"));
 const Video = lazy(() => import("@pages/private/Video/Video"));
 const Story = lazy(() => import("@pages/private/Story/Story"));
 const Group = lazy(() => import("@pages/private/Group/Group"));
@@ -96,6 +97,9 @@ export const RouteStructure = createBrowserRouter([{
 
                 // Saved Page Section Related
                 { path: Routes.SAVED.path, element: <Saved /> },
+
+                // Contact Page Section Related
+                { path: Routes.CONTACT.path, element: <Contact /> },
             ],
         },
     ]
