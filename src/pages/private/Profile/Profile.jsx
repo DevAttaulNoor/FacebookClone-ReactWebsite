@@ -15,6 +15,7 @@ import { TextareaField } from "@components/universal/inputs/TextareaField";
 import { EntityInformation } from "@components/universal/EntityInformation";
 import { RegularPostFeed } from "@components/universal/feed-related/RegularPostFeed";
 import { PostingRegularPost } from "@components/universal/post-related/PostingRegularPost";
+import { RegularPostSkeleton } from "@components/universal/loading-skeletons/RegularPostSkeleton";
 import Profile_About from "./Profile_About";
 import Profile_Video from "./Profile_Video";
 import Profile_Photos from "./Profile_Photos";
@@ -25,7 +26,7 @@ const Profile = () => {
     const { id } = useParams();
     const { user } = useAuth();
     const { users, userCurrent } = useUsers(id);
-    const { userPosts } = usePosts(userCurrent?.uid);
+    const { userPosts, postsLoading } = usePosts(userCurrent?.uid);
     const { acceptedFriends } = useFriends(userCurrent?.uid);
     const userPostPhotos = userPosts?.filter(data => data.mediaType === 'image')
     const userPostVideos = userPosts?.filter(data => data.mediaType === 'video')
@@ -237,11 +238,15 @@ const Profile = () => {
                                 />
                             )}
 
-                            <RegularPostFeed
-                                userData={user}
-                                usersData={users}
-                                postsData={userPosts}
-                            />
+                            {postsLoading ? (
+                                <RegularPostSkeleton />
+                            ) : (
+                                <RegularPostFeed
+                                    userData={user}
+                                    usersData={users}
+                                    postsData={userPosts}
+                                />
+                            )}
                         </div>
                     </div>
                 )}

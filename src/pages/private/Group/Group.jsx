@@ -11,6 +11,7 @@ import { GroupComponentLayout } from "@layouts/GroupComponentLayout";
 import { EntityInformation } from "@components/universal/EntityInformation";
 import { RegularPostFeed } from "@components/universal/feed-related/RegularPostFeed";
 import { PostingRegularPost } from "@components/universal/post-related/PostingRegularPost";
+import { RegularPostSkeleton } from "@components/universal/loading-skeletons/RegularPostSkeleton";
 import Group_About from "./Group_About";
 import Group_Media from "./Group_Media";
 import Group_People from "./Group_People";
@@ -20,7 +21,7 @@ const Group = () => {
     const { id } = useParams();
     const { user } = useAuth();
     const { users } = useUsers();
-    const { groupPosts } = usePosts();
+    const { groupPosts, postsLoading } = usePosts();
     const { groups, userRelatedGroups } = useGroups(user?.uid);
     const activeGroup = groups?.find(data => data.id === id);
     const activeGroupPosts = groupPosts?.filter(data => data.groupId === activeGroup?.id)
@@ -76,13 +77,20 @@ const Group = () => {
                                 usedInGroupPosting={true}
                             />
 
-                            <RegularPostFeed
-                                userData={user}
-                                usersData={users}
-                                postsData={activeGroupPosts}
-                                groupData={groups}
-                                usedInGroupPosting={true}
-                            />
+                            {postsLoading ? (
+                                <RegularPostSkeleton
+                                    usedInGroupPosting={true}
+                                    postContainerStyle="feedPostWidth"
+                                />
+                            ) : (
+                                <RegularPostFeed
+                                    userData={user}
+                                    usersData={users}
+                                    postsData={activeGroupPosts}
+                                    groupData={groups}
+                                    usedInGroupPosting={true}
+                                />
+                            )}
                         </div>
 
                         <div className="flex flex-[0.4] flex-col gap-4">

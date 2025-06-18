@@ -15,10 +15,11 @@ import { HomeLeftbarContentLayout } from "@layouts/HomeLeftbarContentLayout";
 import { StoryPostFeed } from "@components/universal/feed-related/StoryPostFeed";
 import { PostingRegularPost } from "@components/universal/post-related/PostingRegularPost";
 import { RegularPostFeed } from "@components/universal/feed-related/RegularPostFeed";
+import { RegularPostSkeleton } from "@components/universal/loading-skeletons/RegularPostSkeleton";
 
 const Home = () => {
     const { user } = useAuth();
-    const { posts } = usePosts();
+    const { posts, postsLoading } = usePosts();
     const { users } = useUsers();
     const { reels } = useReels();
     const { setIsMessageBoxOpen } = useMessageBox();
@@ -108,11 +109,15 @@ const Home = () => {
                     userData={user}
                 />
 
-                <RegularPostFeed
-                    userData={user}
-                    usersData={users}
-                    postsData={friendsPhotoPosts}
-                />
+                {postsLoading ? (
+                    <RegularPostSkeleton />
+                ) : (
+                    <RegularPostFeed
+                        userData={user}
+                        usersData={users}
+                        postsData={friendsPhotoPosts}
+                    />
+                )}
             </div>
 
             <div className="hidden homeSidebarStyle md:flex">

@@ -1,18 +1,17 @@
-import { Link, NavLink, useLocation } from "react-router";
+import { NavLink, useLocation } from "react-router";
 import { Routes } from "@constants/Routes";
 import { useUsers } from "@hooks/useUsers";
 import { usePosts } from "@hooks/usePosts";
-import { timeAgo } from "@utils/TimeModule";
 import { useGroups } from "@hooks/useGroups";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
+import { GroupList } from "@components/group-related/GroupList";
 import { BasicButton } from "@components/universal/buttons/BasicButton";
 import { RegularPostFeed } from "@components/universal/feed-related/RegularPostFeed";
+import { RegularPostSkeleton } from "@components/universal/loading-skeletons/RegularPostSkeleton";
 import Group_Joined from "./Group_Joined";
 import Group_Discover from "./Group_Discover";
-import group_coverphoto from '/Images/universal/group/group-coverphoto.png';
-import { GroupList } from "@components/group-related/GroupList";
 
 const groupsLeftbarOptions = [
     {
@@ -39,7 +38,7 @@ const Group_Feed = () => {
     const location = useLocation();
     const { user } = useAuth();
     const { users } = useUsers();
-    const { groupPosts } = usePosts();
+    const { groupPosts, postsLoading } = usePosts();
     const { groups, userGroupsJoined, userGroupsCreated, userRelatedGroups } = useGroups(user?.uid);
     const groupJoinedPostsFeed = groupPosts.filter(data => userRelatedGroups.some(group => group.id === data.groupId));
 
@@ -97,14 +96,21 @@ const Group_Feed = () => {
             <div className="flex-1 p-4 overflow-x-hidden overflow-y-auto sm:p-5 md:p-6 lg:p-7 xl:p-8 2xl:p-10">
                 {location.pathname === Routes.GROUP_FEED.path && (
                     <div className="flex flex-col items-center gap-4">
-                        <RegularPostFeed
-                            userData={user}
-                            usersData={users}
-                            postsData={groupJoinedPostsFeed}
-                            groupData={userRelatedGroups}
-                            usedInGroupPosting={true}
-                            postContainerStyle="feedPostWidth"
-                        />
+                        {postsLoading ? (
+                            <RegularPostSkeleton
+                                usedInGroupPosting={true}
+                                postContainerStyle="feedPostWidth"
+                            />
+                        ) : (
+                            <RegularPostFeed
+                                userData={user}
+                                usersData={users}
+                                postsData={groupJoinedPostsFeed}
+                                groupData={userRelatedGroups}
+                                usedInGroupPosting={true}
+                                postContainerStyle="feedPostWidth"
+                            />
+                        )}
                     </div>
                 )}
 

@@ -1,12 +1,21 @@
 import { RegularPostFeed } from "@components/universal/feed-related/RegularPostFeed"
+import { RegularPostSkeleton } from "@components/universal/loading-skeletons/RegularPostSkeleton"
 
-const Feed_Friend = ({ usersData, postsData, postContainerStyle }) => {
+const Feed_Friend = ({ usersData, postsLoading, postsData, postContainerStyle }) => {
     return (
-        <RegularPostFeed
-            usersData={usersData}
-            postsData={postsData}
-            postContainerStyle={postContainerStyle}
-        />
+        <>
+            {postsLoading ? (
+                <RegularPostSkeleton
+                    postContainerStyle={postContainerStyle}
+                />
+            ) : (
+                <RegularPostFeed
+                    usersData={usersData}
+                    postsData={postsData}
+                    postContainerStyle={postContainerStyle}
+                />
+            )}
+        </>
     )
 }
 

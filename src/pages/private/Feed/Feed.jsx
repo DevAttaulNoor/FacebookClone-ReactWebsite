@@ -10,6 +10,7 @@ import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { RegularPostFeed } from "@components/universal/feed-related/RegularPostFeed";
+import { RegularPostSkeleton } from "@components/universal/loading-skeletons/RegularPostSkeleton";
 import Feed_Friend from "./Feed_Friend";
 
 const feedLeftbarOptions = [
@@ -31,7 +32,7 @@ const Feed = () => {
     const location = useLocation();
     const { user } = useAuth();
     const { users } = useUsers();
-    const { posts, groupPosts } = usePosts();
+    const { posts, groupPosts, postsLoading } = usePosts();
     const { acceptedFriends } = useFriends(user.uid);
     const { userRelatedGroups } = useGroups(user?.uid);
     const groupFeed = groupPosts.filter(data => userRelatedGroups.map(group => group.adminId === data.adminId))
@@ -72,19 +73,29 @@ const Feed = () => {
 
             <div className='flex-1 flex flex-col items-center p-4 gap-4 overflow-x-hidden overflow-y-auto'>
                 {location.pathname === Routes.FEED.path && (
-                    <RegularPostFeed
-                        usersData={users}
-                        postsData={allFeed}
-                        groupData={userRelatedGroups}
-                        usedInGroupPosting={true}
-                        postContainerStyle="feedPostWidth"
-                    />
+                    <>
+                        {postsLoading ? (
+                            <RegularPostSkeleton
+                                usedInGroupPosting={true}
+                                postContainerStyle="feedPostWidth"
+                            />
+                        ) : (
+                            <RegularPostFeed
+                                usersData={users}
+                                postsData={allFeed}
+                                groupData={userRelatedGroups}
+                                usedInGroupPosting={true}
+                                postContainerStyle="feedPostWidth"
+                            />
+                        )}
+                    </>
                 )}
 
                 {location.pathname === Routes.FEED_FRIENDS.path && (
                     <Feed_Friend
                         usersData={users}
                         postsData={friendFeed}
+                        postsLoading={postsLoading}
                         postContainerStyle="feedPostWidth"
                     />
                 )}

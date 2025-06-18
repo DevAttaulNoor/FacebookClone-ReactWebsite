@@ -8,6 +8,7 @@ import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { RegularPostFeed } from "@components/universal/feed-related/RegularPostFeed";
+import { RegularPostSkeleton } from "@components/universal/loading-skeletons/RegularPostSkeleton";
 import Video_Saved from "./Video_Saved";
 
 const videosLeftbarOptions = [
@@ -29,7 +30,7 @@ const Video = () => {
     const location = useLocation();
     const { user } = useAuth();
     const { users } = useUsers();
-    const { posts } = usePosts();
+    const { posts, postsLoading } = usePosts();
     const { acceptedFriends } = useFriends(user.uid);
     const friendsPosts = posts?.filter(data => acceptedFriends?.concat(user)?.some(friend => friend.uid === data.uid))
     const friendsVideoPosts = friendsPosts?.filter(data => data.mediaType === 'video')
@@ -60,12 +61,20 @@ const Video = () => {
 
             <div className='flex-1 flex flex-col items-center p-4 gap-4 overflow-x-hidden overflow-y-auto'>
                 {location.pathname === Routes.VIDEO.path && (
-                    <RegularPostFeed
-                        userData={user}
-                        usersData={users}
-                        postsData={friendsVideoPosts}
-                        postContainerStyle="feedPostWidth"
-                    />
+                    <>
+                        {postsLoading ? (
+                            <RegularPostSkeleton
+                                postContainerStyle="feedPostWidth"
+                            />
+                        ) : (
+                            <RegularPostFeed
+                                userData={user}
+                                usersData={users}
+                                postsData={friendsVideoPosts}
+                                postContainerStyle="feedPostWidth"
+                            />
+                        )}
+                    </>
                 )}
 
                 {location.pathname === Routes.VIDEO_SAVED.path && (
