@@ -20,6 +20,10 @@ export default {
 
             fontFamily: {
                 roboto: ["Roboto", "sans-serif"],
+                verdana: ['Verdana', 'Geneva', 'sans-serif'],
+                times: ['"Times New Roman"', 'Times', 'serif'],
+                helvetica: ['Helvetica', 'Arial', 'sans-serif'],
+                courier: ['"Courier New"', 'Courier', 'monospace'],
             },
 
             colors: {

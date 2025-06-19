@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import { useUsers } from '@hooks/useUsers'
 import { ProfileAvatar } from '../ProfileAvatar'
@@ -19,7 +19,7 @@ export const ReelPost = ({ reelsData }) => {
     const [isMuted, setIsMuted] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
     const [reelActionDropdown, setReelActionDropdown] = useState(null);
-    const currentIndex = reelsData?.findIndex(data => data.id === id) || 0;
+    const currentIndex = Math.max(reelsData?.findIndex(data => data.id === id), 0);
     const activeReelContent = reelsData?.[currentIndex];
     const activeReelUser = users?.find(data => data.uid === activeReelContent?.uid);
     const [modalOpen, setModalOpen] = useState({
@@ -51,6 +51,19 @@ export const ReelPost = ({ reelsData }) => {
         videoRef.current.paused ? videoRef.current.play() : videoRef.current.pause();
         setIsPaused(videoRef.current.paused);
     };
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if ((e.key === 'ArrowRight') && (currentIndex + 1 !== reelsData.length)) {
+                goToNextReel();
+            } else if ((e.key === 'ArrowLeft') && (currentIndex > 0)) {
+                goToPrevReel();
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [currentIndex]);
 
     return (
         <>
@@ -144,12 +157,14 @@ export const ReelPost = ({ reelsData }) => {
                         </button>
                     )}
 
-                    <button
-                        onClick={goToNextReel}
-                        className="absolute -bottom-[64px] right-6 w-[48px] h-[48px] text-[32px] p-1.5 border-[3px] rotate-[270deg] rounded-full text-customGray-100 md:top-1/2 md:-right-20 md:-translate-y-1/2"
-                    >
-                        {ReactIcons.ARROW_DOWN}
-                    </button>
+                    {currentIndex + 1 !== reelsData.length && (
+                        <button
+                            onClick={goToNextReel}
+                            className="absolute -bottom-[64px] right-6 w-[48px] h-[48px] text-[32px] p-1.5 border-[3px] rotate-[270deg] rounded-full text-customGray-100 md:top-1/2 md:-right-20 md:-translate-y-1/2"
+                        >
+                            {ReactIcons.ARROW_DOWN}
+                        </button>
+                    )}
                 </div>
 
                 <div className="flex gap-4 md:flex-col">

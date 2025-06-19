@@ -107,12 +107,22 @@ export const PostingModal = ({
                 {messageStateData.message.media && (
                     <div className='relative rounded-lg border border-customGray-default'>
                         {messageStateData.message.mediaType === 'image' && (
-                            <img src={messageStateData.message.media} className="w-full h-56 p-1 rounded-lg object-contain" />
+                            <>
+                                {typeof messageStateData.message.media == 'object' ?
+                                    <img src={URL.createObjectURL(messageStateData.message.media)} className="w-full h-56 p-1 rounded-lg object-contain" />
+                                    :
+                                    <img src={messageStateData.message.media} className="w-full h-56 p-1 rounded-lg object-contain" />
+                                }
+                            </>
                         )}
 
                         {messageStateData.message.mediaType === 'video' && (
                             <video controls className="w-full h-56 p-1 rounded-lg object-contain">
-                                <source src={messageStateData.message.media} type="video/mp4" />
+                                {typeof messageStateData.message.media == 'object' ?
+                                    <source src={URL.createObjectURL(messageStateData.message.media)} type="video/mp4" />
+                                    :
+                                    <source src={messageStateData.message.media} type="video/mp4" />
+                                }
                             </video>
                         )}
 

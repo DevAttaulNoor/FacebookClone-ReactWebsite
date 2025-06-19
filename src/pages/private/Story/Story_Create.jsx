@@ -9,6 +9,7 @@ import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { BasicButton } from "@components/universal/buttons/BasicButton";
 import { TextareaField } from "@components/universal/inputs/TextareaField";
 import { ButtonWithLoadingLayout } from "@layouts/ButtonWithLoadingLayout";
+import { StoryContainerContent } from "@components/story-related/StoryContainerContent";
 
 const Story_Create = () => {
     const { user } = useAuth();
@@ -28,22 +29,33 @@ const Story_Create = () => {
         isPhotoStoryContentVisible: false,
     })
     const [cardsFontFamily, setCardsFontFamily] = useState({
-        fonts: ['Helvetica', 'Times New Roman', 'Courier New', 'Verdana'],
-        activeFont: 'Helvetica',
+        fonts: [
+            { label: 'Helvetica', value: 'font-helvetica' },
+            { label: 'Times New Roman', value: 'font-times' },
+            { label: 'Courier New', value: 'font-courier' },
+            { label: 'Verdana', value: 'font-verdana' },
+        ],
+        activeFont: 'font-helvetica',
     });
+
     const [textCardBgColor, setTextCardBgColor] = useState({
         colors: ['blue', 'red', 'green', 'brown', 'yellow', 'purple', 'cyan', 'black', 'violet', 'gray'],
         activeColor: 'blue',
     });
 
     const handleDiscardClick = () => {
-        setTextInput(prev => ({ ...prev, value: '' }))
         setPhotoInput(prev => ({ ...prev, value: '' }))
-        setTextInput(prev => ({ ...prev, count: 250 }))
-        setStoryContent(prev => ({ ...prev, isStoryCardsVisible: true }));
-        setStoryContent(prev => ({ ...prev, isTextStoryContentVisible: false }));
-        setStoryContent(prev => ({ ...prev, isPhotoStoryContentVisible: false }));
+        setTextInput({
+            value: '',
+            count: 250,
+        })
+        setStoryContent({
+            isStoryCardsVisible: true,
+            isTextStoryContentVisible: false,
+            isPhotoStoryContentVisible: false
+        });
         setTextCardBgColor(prev => ({ ...prev, activeColor: textCardBgColor.colors[0] }))
+        setCardsFontFamily(prev => ({ ...prev, activeFont: cardsFontFamily.fonts[0].value }))
 
         // Reset the file input
         if (inputRef.current) {
@@ -52,19 +64,25 @@ const Story_Create = () => {
     };
 
     const handleTextStoryContent = () => {
-        setStoryContent(prev => ({ ...prev, isStoryCardsVisible: false }));
-        setStoryContent(prev => ({ ...prev, isTextStoryContentVisible: true }));
-        setStoryContent(prev => ({ ...prev, isPhotoStoryContentVisible: false }));
+        setStoryContent({
+            isStoryCardsVisible: false,
+            isTextStoryContentVisible: true,
+            isPhotoStoryContentVisible: false
+        });
     };
 
     const handlePhotoStoryContent = (e) => {
         const selectedImage = e.target.files[0];
         if (selectedImage && selectedImage.type.includes('image')) {
-            setPhotoInput(prev => ({ ...prev, value: selectedImage }));
-            setPhotoInput(prev => ({ ...prev, url: (URL.createObjectURL(selectedImage)) }));
-            setStoryContent(prev => ({ ...prev, isStoryCardsVisible: false }));
-            setStoryContent(prev => ({ ...prev, isTextStoryContentVisible: false }));
-            setStoryContent(prev => ({ ...prev, isPhotoStoryContentVisible: true }));
+            setPhotoInput({
+                value: selectedImage,
+                url: (URL.createObjectURL(selectedImage))
+            })
+            setStoryContent({
+                isStoryCardsVisible: false,
+                isTextStoryContentVisible: false,
+                isPhotoStoryContentVisible: true
+            });
         } else {
             console.error('Invalid file type. Please select an image.');
         }
@@ -150,8 +168,8 @@ const Story_Create = () => {
 
                 <span className="w-full h-[1px] bg-customGray-100" />
 
-                <div className="h-full flex flex-col justify-between">
-                    {storyContent.isTextStoryContentVisible && (
+                {(storyContent.isTextStoryContentVisible || storyContent.isPhotoStoryContentVisible) && (
+                    <div className="h-full flex flex-col justify-between">
                         <div className='flex flex-col p-4 gap-4'>
                             <div className='flex flex-col'>
                                 <TextareaField
@@ -172,73 +190,33 @@ const Story_Create = () => {
 
                             <select
                                 className="px-3 py-4 rounded-lg border"
-                                onChange={(e) => setCardsFontFamily(prev => ({ ...prev, activeFont: e.target.value }))}
+                                onChange={(e) => setCardsFontFamily((prev) => ({ ...prev, activeFont: e.target.value }))}
                             >
                                 {cardsFontFamily.fonts.map((font, index) => (
-                                    <option
-                                        key={index}
-                                        value={font}
-                                        className="text-sm"
-                                    >
-                                        {font}
+                                    <option key={index} value={font.value} className="text-sm">
+                                        {font.label}
                                     </option>
                                 ))}
                             </select>
 
-                            <div className='p-4 rounded-lg border'>
-                                <h6 className="text-sm mb-2 text-customGray-300">Backgrounds</h6>
+                            {storyContent.isTextStoryContentVisible && (
+                                <div className='p-4 rounded-lg border'>
+                                    <h6 className="text-sm mb-2 text-customGray-300">Backgrounds</h6>
 
-                                <div className="flex flex-wrap items-center gap-2">
-                                    {textCardBgColor.colors.map((color, index) => (
-                                        <span
-                                            key={index}
-                                            onClick={() => setTextCardBgColor(prev => ({ ...prev, activeColor: color }))}
-                                            style={{ backgroundColor: color }}
-                                            className={`${textCardBgColor.activeColor === color ? 'border-customBlue-default' : 'border-transparent'} w-7 h-7 rounded-full border-[3px] cursor-pointer`}
-                                        />
-                                    ))}
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        {textCardBgColor.colors.map((color, index) => (
+                                            <span
+                                                key={index}
+                                                onClick={() => setTextCardBgColor(prev => ({ ...prev, activeColor: color }))}
+                                                style={{ backgroundColor: color }}
+                                                className={`${textCardBgColor.activeColor === color ? 'border-customBlue-default' : 'border-transparent'} w-7 h-7 rounded-full border-[3px] cursor-pointer`}
+                                            />
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
-                    )}
 
-                    {storyContent.isPhotoStoryContentVisible && (
-                        <div className='flex flex-col p-4 gap-4'>
-                            <div className='flex flex-col'>
-                                <TextareaField
-                                    textareaStyle={'p-4 rounded-lg border resize-none'}
-                                    textareaData={{
-                                        rows: '7',
-                                        placeholder: 'Start typing',
-                                        value: textInput.value,
-                                        maxLength: 250,
-                                        onChange: (e) => setTextInput(prev => ({ ...prev, value: e.target.value }))
-                                    }}
-                                />
-
-                                <p className="text-end text-xs font-medium text-customGray-300">
-                                    {textInput.count - textInput.value.length} characters limit
-                                </p>
-                            </div>
-
-                            <select
-                                className="px-3 py-4 rounded-lg border"
-                                onChange={(e) => setCardsFontFamily(prev => ({ ...prev, activeFont: e.target.value }))}
-                            >
-                                {cardsFontFamily.fonts.map((font, index) => (
-                                    <option
-                                        key={index}
-                                        value={font}
-                                        className="text-sm"
-                                    >
-                                        {font}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                    )}
-
-                    {(storyContent.isTextStoryContentVisible || storyContent.isPhotoStoryContentVisible) && (
                         <div className="flex items-center gap-3 p-4 shadow-customFull2 bg-white">
                             <BasicButton
                                 btnStyleClass="h-full bg-customGray-100 hover:bg-customGray-default"
@@ -263,8 +241,8 @@ const Story_Create = () => {
                                 }}
                             />
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
             </div>
 
             <div className='w-full flex justify-center py-4'>
@@ -295,36 +273,15 @@ const Story_Create = () => {
                     </div>
                 )}
 
-                {storyContent.isTextStoryContentVisible && (
-                    <div className="w-[80%] flex flex-col gap-5 p-4 rounded-lg shadow-lg bg-white">
-                        <h5 className="text-sm font-medium">Preview</h5>
-
-                        <div className="h-full flex items-center justify-center p-4 rounded-lg bg-black">
-                            <div
-                                id="textStoryContent"
-                                style={{ backgroundColor: textCardBgColor.activeColor }}
-                                className={`font-${cardsFontFamily.activeFont} w-72 h-full text-xl font-semibold flex items-center justify-center py-10 px-8 rounded-2xl break-words bg-no-repeat bg-cover overflow-x-hidden overflow-y-auto text-white`}
-                            >
-                                {textInput.value}
-                            </div>
-                        </div>
-                    </div>
-                )}
-
-                {storyContent.isPhotoStoryContentVisible && (
-                    <div className="w-[80%] flex flex-col gap-5 p-4 rounded-lg shadow-lg bg-white">
-                        <h5 className="text-sm font-medium">Preview</h5>
-
-                        <div className="h-full flex items-center justify-center p-4 rounded-lg bg-black">
-                            <div
-                                id="photoStoryContent"
-                                style={{ backgroundImage: `url(${photoInput.url})` }}
-                                className={`font-${cardsFontFamily.activeFont} w-72 h-full text-xl font-semibold flex items-center justify-center py-10 px-8 rounded-2xl break-words bg-no-repeat bg-cover bg-center overflow-x-hidden overflow-y-auto text-white`}
-                            >
-                                {textInput.value}
-                            </div>
-                        </div>
-                    </div>
+                {(storyContent.isTextStoryContentVisible || storyContent.isPhotoStoryContentVisible) && (
+                    <StoryContainerContent
+                        storyData={{
+                            id: (storyContent.isTextStoryContentVisible && 'textStoryContent') || (storyContent.isPhotoStoryContentVisible && 'photoStoryContent'),
+                            background: (storyContent.isTextStoryContentVisible && textCardBgColor.activeColor) || (storyContent.isPhotoStoryContentVisible && `url(${photoInput.url})`),
+                            fontfamily: cardsFontFamily.activeFont,
+                            inputValue: textInput.value
+                        }}
+                    />
                 )}
             </div>
         </div>
