@@ -58,7 +58,7 @@ const Home = () => {
             id: 5,
             icon: SvgIcons.REEL({ styleClass: 'w-[30px] h-[30px]' }),
             title: Routes.REEL.title,
-            path: `/reel/${reels[reels.length - 1]?.id}`,
+            path: `/reel/${reels[0]?.id}`,
         },
         {
             id: 6,
@@ -122,23 +122,33 @@ const Home = () => {
 
             <div className="hidden homeSidebarStyle md:flex">
                 <HomeLeftbarContentLayout title={'Contacts'}>
-                    <div className="flex flex-col gap-1.5">
-                        {acceptedFriends?.map(user => (
-                            <div
-                                key={user?.uid}
-                                onClick={() => setIsMessageBoxOpen(user?.uid)}
-                                className="flex cursor-pointer items-center gap-2.5 rounded-lg p-2 hover:bg-customGray-100"
-                            >
-                                <ProfileAvatar
-                                    userData={user}
-                                    imageStyleClass="w-[42px] h-[42px]"
-                                    iconStyleClass="text-[42px]"
-                                />
+                    {acceptedFriends.length > 0 ? (
+                        <div className="flex flex-col gap-1.5">
+                            {acceptedFriends?.map(user => (
+                                <div
+                                    key={user?.uid}
+                                    onClick={() => setIsMessageBoxOpen(user?.uid)}
+                                    className="flex cursor-pointer items-center gap-2.5 rounded-lg p-2 hover:bg-customGray-100"
+                                >
+                                    <ProfileAvatar
+                                        userData={user}
+                                        imageStyleClass="w-[42px] h-[42px]"
+                                        iconStyleClass="text-[42px]"
+                                    />
 
-                                <p className="font-medium">{user?.username}</p>
-                            </div>
-                        ))}
-                    </div>
+                                    <p className="font-medium">{user?.username}</p>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <Link
+                            to={Routes.FRIEND.path}
+                            className="flex cursor-pointer items-center gap-2.5 rounded-lg p-2 hover:bg-customGray-100"
+                        >
+                            <span className="text-[26px] p-2 rounded-full text-white bg-customBlue-default">{ReactIcons.ADD_PLUS}</span>
+                            <p className="font-medium">Add Friends</p>
+                        </Link>
+                    )}
                 </HomeLeftbarContentLayout>
             </div>
         </div>

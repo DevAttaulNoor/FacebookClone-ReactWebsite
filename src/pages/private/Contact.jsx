@@ -112,7 +112,6 @@ const Contact = () => {
                     />
 
                     <TextareaField
-                        textareaStyle={'w-full p-4 rounded-md resize-none border border-slate-300 bg-white'}
                         textareaData={{
                             rows: '7',
                             maxLength: 250,
@@ -122,6 +121,7 @@ const Contact = () => {
                             onChange: (e) => setFormData(prev => ({ ...prev, message: e.target.value })),
                             required: true
                         }}
+                        textareaStyle='w-full p-4 rounded-md resize-none border border-slate-300 bg-white'
                     />
 
                     <ButtonWithLoadingLayout

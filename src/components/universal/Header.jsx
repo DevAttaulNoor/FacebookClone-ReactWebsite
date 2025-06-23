@@ -166,10 +166,6 @@ export const Header = () => {
                             dropdownOpen: isOpen,
                             setDropdownOpen: setIsOpen
                         }}
-                        searchInputStateData={{
-                            inputValue: inputValue,
-                            setInputValue: setInputValue,
-                        }}
                     />
 
                     <ChatsDropdown

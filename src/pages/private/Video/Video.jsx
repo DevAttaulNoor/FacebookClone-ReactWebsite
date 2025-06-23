@@ -62,17 +62,25 @@ const Video = () => {
             <div className='flex-1 flex flex-col items-center p-4 gap-4 overflow-x-hidden overflow-y-auto'>
                 {location.pathname === Routes.VIDEO.path && (
                     <>
-                        {postsLoading ? (
-                            <RegularPostSkeleton
-                                postContainerStyle="feedPostWidth"
-                            />
+                        {friendsVideoPosts.length > 0 ? (
+                            <>
+                                {postsLoading ? (
+                                    <RegularPostSkeleton
+                                        postContainerStyle="feedPostWidth"
+                                    />
+                                ) : (
+                                    <RegularPostFeed
+                                        userData={user}
+                                        usersData={users}
+                                        postsData={friendsVideoPosts}
+                                        postContainerStyle="feedPostWidth"
+                                    />
+                                )}
+                            </>
                         ) : (
-                            <RegularPostFeed
-                                userData={user}
-                                usersData={users}
-                                postsData={friendsVideoPosts}
-                                postContainerStyle="feedPostWidth"
-                            />
+                            <div className="h-full flex items-center justify-center px-10">
+                                When you have videos or suggestions, you'll see them here.
+                            </div>
                         )}
                     </>
                 )}

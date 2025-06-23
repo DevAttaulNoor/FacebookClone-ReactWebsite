@@ -95,7 +95,10 @@ const Group = () => {
 
                         <div className="flex flex-[0.4] flex-col gap-4">
                             <GroupComponentLayout
-                                title={'About this group'}
+                                titleData={{
+                                    path: generatePath({ path: Routes.GROUP_ABOUT.path }, { id: id }),
+                                    text: 'About this group'
+                                }}
                                 description={activeGroup?.description}
                                 containerStyle={'w-full'}
                             >

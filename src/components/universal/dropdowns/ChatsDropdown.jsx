@@ -29,38 +29,44 @@ export const ChatsDropdown = ({ dropdownStateData, searchInputStateData, userDat
             />
 
             <div className='headerOptionDropdownContentStyle'>
-                {userChats?.map((data, index) => {
-                    const chatUser = usersData?.find(elem => (elem.uid === data.chats[0].senderId) || (elem.uid === data.chats[0].receiverId))
+                {userChats.length > 0 ? (
+                    <>
+                        {userChats?.map((data, index) => {
+                            const chatUser = usersData?.find(elem => (elem.uid === data.chats[0].senderId) || (elem.uid === data.chats[0].receiverId))
 
-                    return (
-                        <div
-                            key={index}
-                            onClick={() => {
-                                setIsMessageBoxOpen(chatUser?.id);
-                                dropdownStateData.setDropdownOpen(prev => ({ ...prev, messageDropdown: false }));
-                            }}
-                            className="flex items-center p-1 gap-2 rounded-md cursor-pointer hover:bg-customGray-default xs:gap-2.5 sm:gap-3"
-                        >
-                            <ProfileAvatar
-                                userData={chatUser}
-                                imageStyleClass="w-[42px] h-[42px]"
-                                iconStyleClass="text-[42px]"
-                            />
-
-                            <div className="flex flex-col text-xs sm:text-sm">
-                                <Link
-                                    to={`/profile/${chatUser?.uid}`}
-                                    onClick={() => dropdownStateData.setDropdownOpen(prev => ({ ...prev, messageDropdown: false }))}
-                                    className="text-xs font-medium cursor-pointer hover:underline sm:text-sm"
+                            return (
+                                <div
+                                    key={index}
+                                    onClick={() => {
+                                        setIsMessageBoxOpen(chatUser?.id);
+                                        dropdownStateData.setDropdownOpen(prev => ({ ...prev, messageDropdown: false }));
+                                    }}
+                                    className="flex items-center p-1 gap-2 rounded-md cursor-pointer hover:bg-customGray-default xs:gap-2.5 sm:gap-3"
                                 >
-                                    {chatUser?.username}
-                                </Link>
+                                    <ProfileAvatar
+                                        userData={chatUser}
+                                        imageStyleClass="w-[42px] h-[42px]"
+                                        iconStyleClass="text-[42px]"
+                                    />
 
-                                <p className="text-[10px] text-customGray-300 sm:text-xs">{data.chats[data.chats.length - 1].message} • {timeAgoInitials(data.timestamp)}</p>
-                            </div>
-                        </div>
-                    )
-                })}
+                                    <div className="flex flex-col text-xs sm:text-sm">
+                                        <Link
+                                            to={`/profile/${chatUser?.uid}`}
+                                            onClick={() => dropdownStateData.setDropdownOpen(prev => ({ ...prev, messageDropdown: false }))}
+                                            className="text-xs font-medium cursor-pointer hover:underline sm:text-sm"
+                                        >
+                                            {chatUser?.username}
+                                        </Link>
+
+                                        <p className="text-[10px] text-customGray-300 sm:text-xs">{data.chats[data.chats.length - 1].message} • {timeAgoInitials(data.timestamp)}</p>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </>
+                ) : (
+                    <p className="text-center py-2 text-customGray-300">No chats to be shown</p>
+                )}
             </div>
         </DropdownLayout>
     )

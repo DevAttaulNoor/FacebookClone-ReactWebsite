@@ -62,10 +62,8 @@ export const RegularPost = ({
                                         className='w-10 h-10 object-contain border rounded-lg border-customGray-100 bg-white'
                                     />
 
-                                    <div className="absolute -bottom-2 -right-2">
-                                        <span className='text-2xl'>
-                                            {ReactIcons.PROFILE_AVATAR}
-                                        </span>
+                                    <div className="absolute -bottom-2 -right-2 text-[16px] p-1 border rounded-full border-customGray-100 text-customGray-300 bg-white">
+                                        {ReactIcons.PROFILE_AVATAR_WITHOUT_CIRCLE}
                                     </div>
                                 </div>
                             ) : (
@@ -79,8 +77,8 @@ export const RegularPost = ({
                                     <div className="absolute -bottom-2 -right-2">
                                         <ProfileAvatar
                                             userData={postUser}
-                                            imageStyleClass="w-8 h-8"
-                                            iconStyleClass="text-lg"
+                                            imageStyleClass="w-7 h-7"
+                                            iconStyleClass="text-[26px]"
                                         />
                                     </div>
                                 </div>

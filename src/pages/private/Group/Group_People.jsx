@@ -2,14 +2,17 @@ import { Link } from "react-router";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar"
 import { GroupComponentLayout } from "@layouts/GroupComponentLayout"
 
-const Group_People = ({ usersData, groupData }) => {
+const Group_People = ({ pathData, usersData, groupData }) => {
     const adminData = usersData?.find(data => data.uid === groupData?.adminId);
     const memberData = usersData?.filter(data => groupData?.members?.filter(uid => uid !== groupData?.adminId).includes(data.uid));
 
     return (
         <div className="w-full flex flex-col items-center gap-4">
             <GroupComponentLayout
-                title={`Members · ${groupData?.members?.length}`}
+                titleData={{
+                    path: pathData,
+                    text: `Members · ${groupData?.members?.length}`
+                }}
                 description={"New people and Pages who join this group will appear here."}
                 containerStyle={'max-w-[460px] w-full'}
             >

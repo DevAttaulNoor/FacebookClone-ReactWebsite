@@ -35,7 +35,7 @@ const Feed = () => {
     const { posts, groupPosts, postsLoading } = usePosts();
     const { acceptedFriends } = useFriends(user.uid);
     const { userRelatedGroups } = useGroups(user?.uid);
-    const groupFeed = groupPosts.filter(data => userRelatedGroups.map(group => group.adminId === data.adminId))
+    const groupFeed = groupPosts.filter(data => userRelatedGroups.some(group => group.adminId === data.adminId))
     const userRelatedPosts = posts?.filter(data => (data.uid === user?.uid) || (acceptedFriends.some(friend => friend.uid === data.uid)));
     const allFeed = groupFeed.concat(userRelatedPosts)
 

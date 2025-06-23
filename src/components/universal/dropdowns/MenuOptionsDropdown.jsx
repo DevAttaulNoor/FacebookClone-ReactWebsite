@@ -1,7 +1,6 @@
 import { Link } from "react-router"
 import { Routes } from "@constants/Routes";
 import { SvgIcons } from "@constants/SvgIcons";
-import { SearchBar } from "../searchBar/SearchBar"
 import { ReactIcons } from "@constants/ReactIcons";
 import { DropdownLayout } from "@layouts/DropdownLayout"
 
@@ -69,7 +68,7 @@ const MenuOptions = [
     },
 ];
 
-export const MenuOptionsDropdown = ({ dropdownStateData, searchInputStateData }) => {
+export const MenuOptionsDropdown = ({ dropdownStateData }) => {
     return (
         <DropdownLayout
             isOpen={dropdownStateData.dropdownOpen.menuDropdown}
@@ -79,36 +78,22 @@ export const MenuOptionsDropdown = ({ dropdownStateData, searchInputStateData })
             <h2 className="text-2xl font-semibold">Menu</h2>
 
             <div className="flex gap-3 sm:gap-4">
-                <div className="flex-[0.7] flex flex-col p-2 rounded-lg shadow-customFull bg-white">
-                    <div className="py-2">
-                        <SearchBar
-                            inputStyle={"w-full bg-transparent py-2.5 text-sm"}
-                            inputData={{
-                                type: 'text',
-                                value: searchInputStateData.inputValue.menuSearch,
-                                placeholder: 'Search menu',
-                                onChange: (e) => searchInputStateData.setInputValue(prev => ({ ...prev, menuSearch: e.target.value }))
-                            }}
-                        />
-                    </div>
+                <div className="flex-[0.7] flex flex-col p-2 gap-1 rounded-lg shadow-customFull bg-white">
+                    {MenuOptions.map(data => (
+                        <Link
+                            key={data.id}
+                            to={data.link}
+                            onClick={() => dropdownStateData.setDropdownOpen(prev => ({ ...prev, menuDropdown: false }))}
+                            className='flex items-center p-1.5 gap-2 rounded-lg cursor-pointer hover:bg-customGray-default md:gap-3'
+                        >
+                            <span className="text-3xl">{data.icon}</span>
 
-                    <div className="flex flex-col gap-1">
-                        {MenuOptions.map(data => (
-                            <Link
-                                key={data.id}
-                                to={data.link}
-                                onClick={() => dropdownStateData.setDropdownOpen(prev => ({ ...prev, menuDropdown: false }))}
-                                className='flex items-center p-1.5 gap-2 rounded-lg cursor-pointer hover:bg-customGray-default md:gap-3'
-                            >
-                                <span className="text-3xl">{data.icon}</span>
-
-                                <div className="flex flex-col gap-0.5">
-                                    <h5 className="text-xs font-medium sm:text-sm">{data.title}</h5>
-                                    <p className="text-[10px] text-customGray-200 sm:text-xs">{data.description}</p>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
+                            <div className="flex flex-col gap-0.5">
+                                <h5 className="text-xs font-medium sm:text-sm">{data.title}</h5>
+                                <p className="text-[10px] text-customGray-200 sm:text-xs">{data.description}</p>
+                            </div>
+                        </Link>
+                    ))}
                 </div>
 
                 <div className="h-fit flex-[0.3] flex flex-col p-2 rounded-lg shadow-customFull bg-white">

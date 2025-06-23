@@ -42,7 +42,10 @@ export const PostingRegularPost = ({ userData, groupData, usedInGroupPosting = f
                     iconStyleClass="text-[42px]"
                 />
 
-                <div onClick={() => setModalOpen(prev => ({ ...prev, posting: true }))} className="w-full text-sm cursor-pointer rounded-3xl px-3 py-2.5 text-customGray-200 bg-customGray-default hover:bg-[#E4E6EB] sm:text-base">
+                <div
+                    onClick={() => setModalOpen(prev => ({ ...prev, posting: true }))}
+                    className="w-full text-sm cursor-pointer rounded-3xl px-3 py-2.5 text-customGray-200 bg-customGray-default hover:bg-[#E4E6EB] sm:text-base"
+                >
                     {usedInGroupPosting ? 'Write something...' : `What's on your mind, ${userData?.username}`}
                 </div>
             </div>
@@ -51,7 +54,10 @@ export const PostingRegularPost = ({ userData, groupData, usedInGroupPosting = f
 
             <div className="grid grid-cols-2 gap-1 py-2">
                 {RegularPostPostingOptions.map((data) => (
-                    <div key={data.id} className="flex cursor-pointer items-center justify-center gap-2 rounded-lg p-3 hover:bg-slate-100">
+                    <div
+                        key={data.id}
+                        onClick={() => setModalOpen(prev => ({ ...prev, posting: true }))}
+                        className="flex cursor-pointer items-center justify-center gap-2 rounded-lg p-3 hover:bg-slate-100">
                         <img
                             src={data.icon}
                             alt={"posting options icons"}
