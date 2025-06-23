@@ -66,7 +66,7 @@ const Group_About = ({ usersData, groupData }) => {
                         {memberData?.slice(0, 9).map(data => (
                             <Link
                                 key={data.uid}
-                                to={`/profile/${data.uid}`}
+                                to={generatePath({ path: Routes.PROFILE.path }, { id: data?.uid })}
                             >
                                 <ProfileAvatar
                                     userData={data}
@@ -81,7 +81,7 @@ const Group_About = ({ usersData, groupData }) => {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                    <Link to={`/profile/${adminData?.uid}`}>
+                    <Link to={generatePath({ path: Routes.PROFILE.path }, { id: adminData?.uid })}>
                         <ProfileAvatar
                             userData={adminData}
                             iconStyleClass={'text-3xl'}
@@ -93,7 +93,7 @@ const Group_About = ({ usersData, groupData }) => {
                 </div>
 
                 <Link
-                    to={`/group/${id}/people`}
+                    to={generatePath({ path: Routes.GROUP_PEOPLE.path }, { id: id })}
                     className="w-full text-center text-sm font-medium py-2.5 rounded-lg bg-customGray-100 hover:bg-customGray-default"
                 >
                     See all

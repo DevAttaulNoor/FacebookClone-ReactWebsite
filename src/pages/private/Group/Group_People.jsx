@@ -1,4 +1,6 @@
 import { Link } from "react-router";
+import { Routes } from "@constants/Routes";
+import { generatePath } from "@utils/PathResolver";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar"
 import { GroupComponentLayout } from "@layouts/GroupComponentLayout"
 
@@ -27,7 +29,7 @@ const Group_People = ({ pathData, usersData, groupData }) => {
                         />
 
                         <Link
-                            to={`/profile/${adminData?.uid}`}
+                            to={generatePath({ path: Routes.PROFILE.path }, { id: adminData?.uid })}
                             className="text-sm font-medium cursor-pointer hover:underline"
                         >
                             {adminData?.username}
@@ -50,7 +52,7 @@ const Group_People = ({ pathData, usersData, groupData }) => {
                             />
 
                             <Link
-                                to={`/profile/${data.uid}`}
+                                to={generatePath({ path: Routes.PROFILE.path }, { id: data?.uid })}
                                 className="text-sm font-medium cursor-pointer hover:underline"
                             >
                                 {data.username}

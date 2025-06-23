@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { Link } from "react-router"
+import { Routes } from "@constants/Routes"
 import { ReactIcons } from "@constants/ReactIcons"
+import { generatePath } from "@utils/PathResolver"
 import { ProfileAvatar } from "@components/universal/ProfileAvatar"
 import { SearchBar } from "@components/universal/searchBar/SearchBar"
 
@@ -33,7 +35,7 @@ const Profile_Friend = ({ friendsData }) => {
                 {friendsData.map((data) => (
                     <Link
                         key={data.uid}
-                        to={`/profile/${data.uid}`}
+                        to={generatePath({ path: Routes.PROFILE.path }, { id: data?.uid })}
                         className="flex items-center justify-between p-1 rounded-lg border shadow-sm border-customGray-100 xs:p-1.5 sm:p-2"
                     >
                         <div className="flex gap-1.5 items-center sm:gap-2">

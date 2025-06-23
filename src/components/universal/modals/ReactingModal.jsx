@@ -1,7 +1,9 @@
 import { Link } from 'react-router';
+import { Routes } from '@constants/Routes';
 import { ProfileAvatar } from '../ProfileAvatar';
 import { ModalLayout } from '@layouts/ModalLayout';
 import { ReactIcons } from '@constants/ReactIcons';
+import { generatePath } from '@utils/PathResolver';
 
 export const ReactingModal = ({
     modalStateData,
@@ -39,7 +41,7 @@ export const ReactingModal = ({
                             />
 
                             <Link
-                                to={`/profile/${users?.uid}`}
+                                to={generatePath({ path: Routes.PROFILE.path }, { id: users?.uid })}
                                 className="text-sm font-medium cursor-pointer hover:underline"
                             >
                                 {users?.username}

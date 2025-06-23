@@ -1,7 +1,9 @@
 import { Link } from 'react-router'
+import { Routes } from '@constants/Routes'
 import { ProfileAvatar } from '../ProfileAvatar'
 import { InputField } from '../inputs/InputField'
 import { ReactIcons } from '@constants/ReactIcons'
+import { generatePath } from '@utils/PathResolver'
 import { DropdownLayout } from '@layouts/DropdownLayout'
 
 export const UserSearchingDropdown = ({ dropdownStateData, inputStateData, usersData }) => {
@@ -44,7 +46,7 @@ export const UserSearchingDropdown = ({ dropdownStateData, inputStateData, users
                         {searchedUser?.map(data => (
                             <Link
                                 key={data?.uid}
-                                to={`/profile/${data?.uid}`}
+                                to={generatePath({ path: Routes.PROFILE.path }, { id: data?.uid })}
                                 onClick={() => dropdownStateData.setDropdownOpen(prev => ({ ...prev, userSearchDropdown: false }))}
                                 className='flex items-center p-1.5 gap-2.5 rounded-lg cursor-pointer hover:bg-customGray-default'
                             >

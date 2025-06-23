@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { Link } from "react-router"
+import { Routes } from "@constants/Routes"
 import { ProfileAvatar } from "../ProfileAvatar"
+import { generatePath } from "@utils/PathResolver"
 import { timeAgoInitials } from "@utils/TimeModule"
 import { DropdownLayout } from "@layouts/DropdownLayout"
 
@@ -52,7 +54,7 @@ export const NotificationsDropdown = ({ dropdownStateData, userData, usersData }
                                         <div className="flex flex-col">
                                             <div className="text-xs sm:text-sm">
                                                 <Link
-                                                    to={`/profile/${notificationRelatedUser?.uid}`}
+                                                    to={generatePath({ path: Routes.PROFILE.path }, { id: notificationRelatedUser?.uid })}
                                                     className="text-xs font-medium cursor-pointer hover:underline sm:text-sm"
                                                 >
                                                     {notificationRelatedUser?.username}
@@ -71,7 +73,7 @@ export const NotificationsDropdown = ({ dropdownStateData, userData, usersData }
                                                 A friend request has been {data?.status} from
 
                                                 <Link
-                                                    to={`/profile/${notificationRelatedUser?.uid}`}
+                                                    to={generatePath({ path: Routes.PROFILE.path }, { id: notificationRelatedUser?.uid })}
                                                     className="text-xs font-medium cursor-pointer hover:underline sm:text-sm"
                                                 >
                                                     {''} {notificationRelatedUser?.username}

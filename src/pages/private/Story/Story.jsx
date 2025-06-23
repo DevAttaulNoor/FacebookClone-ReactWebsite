@@ -5,6 +5,7 @@ import { useStories } from "@hooks/useStories";
 import { useFriends } from "@hooks/useFriends";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
+import { generatePath } from "@utils/PathResolver";
 import { timeAgoInitials } from "@utils/TimeModule";
 import { LeftbarLayout } from "@layouts/LeftbarLayout";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
@@ -28,7 +29,10 @@ const Story = () => {
 
                     {userStories.length > 0 ? (
                         <div className={`${userStories[userStories.length - 1].uid === id ? 'bg-customGray-default' : ''} flex items-center justify-between p-2 rounded-lg cursor-pointer hover:bg-customGray-default`}>
-                            <Link to={`/story/${userStories[userStories.length - 1].uid}`} className="flex items-center gap-3">
+                            <Link
+                                to={generatePath({ path: Routes.STORY.path }, { id: userStories[userStories.length - 1]?.uid })}
+                                className="flex items-center gap-3"
+                            >
                                 <ProfileAvatar
                                     userData={user}
                                     imageStyleClass="w-14 h-14"
@@ -82,7 +86,7 @@ const Story = () => {
                                 return (
                                     <Link
                                         key={data.uid}
-                                        to={`/story/${data.uid}`}
+                                        to={generatePath({ path: Routes.STORY.path }, { id: data.uid })}
                                         className={`${(data.uid === id) && 'bg-customGray-default'} flex items-center justify-between p-2 rounded-lg cursor-pointer hover:bg-customGray-default`}
                                     >
                                         <div className="flex items-center gap-3">

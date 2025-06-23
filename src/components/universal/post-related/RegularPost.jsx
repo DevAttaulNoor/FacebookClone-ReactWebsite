@@ -1,7 +1,9 @@
 import { Link } from "react-router";
 import { useEffect, useState } from "react";
+import { Routes } from "@constants/Routes";
 import { ProfileAvatar } from "../ProfileAvatar";
 import { ReactIcons } from "@constants/ReactIcons";
+import { generatePath } from "@utils/PathResolver";
 import { timeAgoInitials } from "@utils/TimeModule";
 import { PostingModal } from "../modals/PostingModal";
 import { ReactingModal } from "../modals/ReactingModal";
@@ -96,7 +98,7 @@ export const RegularPost = ({
                         {(usedInGroupPosting && postData?.groupId) ? (
                             <>
                                 <Link
-                                    to={`/group/${activeGroup?.id}`}
+                                    to={generatePath({ path: Routes.GROUP.path }, { id: activeGroup?.id })}
                                     className="text-sm font-medium cursor-pointer hover:underline"
                                 >
                                     {activeGroup?.name}
@@ -109,7 +111,7 @@ export const RegularPost = ({
                                         </p>
                                     ) : (
                                         <Link
-                                            to={`/profile/${postUser?.uid}`}
+                                            to={generatePath({ path: Routes.PROFILE.path }, { id: postUser?.uid })}
                                             className="text-xs font-medium cursor-pointer text-customGray-200 hover:underline"
                                         >
                                             {postUser?.username}
@@ -122,7 +124,7 @@ export const RegularPost = ({
                         ) : (
                             <>
                                 <Link
-                                    to={`/profile/${postUser?.uid}`}
+                                    to={generatePath({ path: Routes.PROFILE.path }, { id: postUser?.uid })}
                                     className="text-sm font-medium cursor-pointer hover:underline"
                                 >
                                     {postUser?.username}

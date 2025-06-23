@@ -8,12 +8,12 @@ import { usePosts } from "@hooks/usePosts";
 import { useFriends } from "@hooks/useFriends";
 import { useAuth } from "@contexts/AuthContext";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
-import { getActiveRoute, getPreferredPath } from "@utils/PathResolver";
 import { BasicButton } from "@components/universal/buttons/BasicButton";
 import { ProfileComponentLayout } from "@layouts/ProfileComponentLayout";
 import { TextareaField } from "@components/universal/inputs/TextareaField";
 import { EntityInformation } from "@components/universal/EntityInformation";
 import { RegularPostFeed } from "@components/universal/feed-related/RegularPostFeed";
+import { generatePath, getActiveRoute, getPreferredPath } from "@utils/PathResolver";
 import { PostingRegularPost } from "@components/universal/post-related/PostingRegularPost";
 import { RegularPostSkeleton } from "@components/universal/loading-skeletons/RegularPostSkeleton";
 import Profile_About from "./Profile_About";
@@ -214,7 +214,7 @@ const Profile = () => {
                                         {acceptedFriends?.map((data) => (
                                             <Link
                                                 key={data.uid}
-                                                to={`/profile/${data.uid}`}
+                                                to={generatePath({ path: Routes.PROFILE.path }, { id: data?.uid })}
                                                 className="flex flex-col gap-1"
                                             >
                                                 <ProfileAvatar

@@ -1,7 +1,8 @@
 import { Link } from "react-router";
 import { Routes } from "@constants/Routes";
-import { ReactIcons } from "@constants/ReactIcons";
 import { ProfileAvatar } from "../ProfileAvatar";
+import { ReactIcons } from "@constants/ReactIcons";
+import { generatePath } from "@utils/PathResolver";
 
 export const StoryPostFeed = ({ userData, usersData, userRelatedStoriesData }) => {
     return (
@@ -46,7 +47,7 @@ export const StoryPostFeed = ({ userData, usersData, userRelatedStoriesData }) =
                             return (
                                 <Link
                                     key={data?.uid}
-                                    to={`/story/${data?.uid}`}
+                                    to={generatePath({ path: Routes.STORY.path }, { id: data?.uid })}
                                     className="relative w-24 h-40 flex flex-col justify-between p-2 rounded-xl z-0 bg-black xs:w-28 xs:h-44 sm:w-32 sm:h-56"
                                 >
                                     <ProfileAvatar

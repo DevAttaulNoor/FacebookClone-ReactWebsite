@@ -54,7 +54,7 @@ const Friend_AllFriends = () => {
                         {acceptedFriends?.map(data => (
                             <NavLink
                                 key={data.uid}
-                                to={`/friend/friendlist/${data.uid}`}
+                                to={generatePath({ path: Routes.FRIEND_AllFRIENDS_FRIEND.path }, { id: data.uid })}
                                 className="flex items-center p-2 gap-2.5 rounded-md cursor-pointer hover:bg-customGray-default"
                             >
                                 <ProfileAvatar

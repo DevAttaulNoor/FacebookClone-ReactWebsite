@@ -5,6 +5,7 @@ import { TermsAndLinks } from "../TermsAndLinks";
 import { ReactIcons } from "@constants/ReactIcons";
 import { handleLoggingOut } from "@utils/AuthHandling";
 import { DropdownLayout } from "@layouts/DropdownLayout";
+import { generatePath } from "@utils/PathResolver";
 
 export const ProfileOptionsDropdown = ({ dropdownStateData, userData }) => {
     const navigate = useNavigate();
@@ -36,7 +37,7 @@ export const ProfileOptionsDropdown = ({ dropdownStateData, userData }) => {
             dropdownContainerStyle="dropdownContainerStyle1 gap-1"
         >
             <Link
-                to={`/profile/${userData?.uid}`}
+                to={generatePath({ path: Routes.PROFILE.path }, { id: userData?.uid })}
                 onClick={() => dropdownStateData.setDropdownOpen(prev => ({ ...prev, profileDropdown: false }))}
                 className='flex items-center p-1.5 gap-2.5 rounded-lg cursor-pointer hover:bg-customGray-default'
             >

@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import { useChats } from "@hooks/useChats";
 import { ProfileAvatar } from "../ProfileAvatar";
 import { SearchBar } from "../searchBar/SearchBar";
@@ -50,13 +49,12 @@ export const ChatsDropdown = ({ dropdownStateData, searchInputStateData, userDat
                                     />
 
                                     <div className="flex flex-col text-xs sm:text-sm">
-                                        <Link
-                                            to={`/profile/${chatUser?.uid}`}
+                                        <h5
                                             onClick={() => dropdownStateData.setDropdownOpen(prev => ({ ...prev, messageDropdown: false }))}
-                                            className="text-xs font-medium cursor-pointer hover:underline sm:text-sm"
+                                            className="text-xs font-medium sm:text-sm"
                                         >
                                             {chatUser?.username}
-                                        </Link>
+                                        </h5>
 
                                         <p className="text-[10px] text-customGray-300 sm:text-xs">{data.chats[data.chats.length - 1].message} • {timeAgoInitials(data.timestamp)}</p>
                                     </div>

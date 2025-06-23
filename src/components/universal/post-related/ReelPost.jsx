@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
+import { Routes } from '@constants/Routes'
 import { useUsers } from '@hooks/useUsers'
 import { ProfileAvatar } from '../ProfileAvatar'
 import { useAuth } from '@contexts/AuthContext'
 import { ReactIcons } from '@constants/ReactIcons'
+import { generatePath } from '@utils/PathResolver'
 import { timeAgoInitials } from '@utils/TimeModule'
 import { ReactingModal } from '../modals/ReactingModal'
 import { handleReacting } from '@utils/ReactionHandling'
@@ -133,7 +135,7 @@ export const ReelPost = ({ reelsData }) => {
                                 />
                                 <div className='flex flex-col text-white'>
                                     <Link
-                                        to={`/profile/${activeReelUser?.uid}`}
+                                        to={generatePath({ path: Routes.PROFILE.path }, { id: activeReelUser?.uid })}
                                         className="font-medium cursor-pointer hover:underline"
                                     >
                                         {activeReelUser?.username}

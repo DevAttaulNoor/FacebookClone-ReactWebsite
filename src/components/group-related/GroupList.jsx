@@ -1,5 +1,7 @@
 import { Link } from "react-router"
+import { Routes } from "@constants/Routes"
 import { timeAgo } from "@utils/TimeModule"
+import { generatePath } from "@utils/PathResolver"
 
 export const GroupList = ({ title, titleLink, groupsData }) => {
     return (
@@ -20,7 +22,7 @@ export const GroupList = ({ title, titleLink, groupsData }) => {
             {groupsData.map(data => (
                 <Link
                     key={data.id}
-                    to={`/group/${data.id}`}
+                    to={generatePath({ path: Routes.GROUP.path }, { id: data.id })}
                     className="flex items-center p-2 gap-2.5 rounded-md cursor-pointer hover:bg-customGray-default"
                 >
                     <img

@@ -134,7 +134,7 @@ export const EntityInformation = ({ location, entityType, entityData, components
                                     {entityData.activeEntityFriends?.slice(0, 8).map((data) => (
                                         <Link
                                             key={data.uid}
-                                            to={`/profile/${data.uid}`}
+                                            to={generatePath({ path: Routes.PROFILE.path }, { id: data.uid })}
                                             className="rounded-full border-2 border-white -mr-3 last:-mr-0"
                                         >
                                             <ProfileAvatar
@@ -221,7 +221,7 @@ export const EntityInformation = ({ location, entityType, entityData, components
                                     return (
                                         <Link
                                             key={data}
-                                            to={`/profile/${data}`}
+                                            to={generatePath({ path: Routes.PROFILE.path }, { id: data })}
                                             className="rounded-full border-2 border-white -mr-2 last:-mr-0"
                                         >
                                             <ProfileAvatar

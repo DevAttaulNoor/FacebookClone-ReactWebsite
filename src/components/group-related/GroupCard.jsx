@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Routes } from '@constants/Routes';
+import { generatePath } from '@utils/PathResolver';
 import { handleGroupJoining } from '@utils/GroupHandling';
 import { BasicButton } from '@components/universal/buttons/BasicButton';
 import { ButtonWithLoadingLayout } from '@layouts/ButtonWithLoadingLayout';
@@ -27,7 +29,7 @@ export const GroupCard = ({
                 <BasicButton
                     btnStyleClass='bg-customGray-100 hover:bg-customGray-default'
                     btnData={{
-                        link: `/group/${groupData?.id}`,
+                        link: generatePath({ path: Routes.GROUP.path }, { id: groupData?.id }),
                         text: 'View group'
                     }}
                 />

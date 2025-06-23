@@ -8,13 +8,14 @@ import { useFriends } from "@hooks/useFriends";
 import { useStories } from "@hooks/useStories";
 import { useAuth } from "@contexts/AuthContext";
 import { ReactIcons } from "@constants/ReactIcons";
+import { generatePath } from "@utils/PathResolver";
 import { useMessageBox } from "@contexts/MessageBoxContext";
 import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { TermsAndLinks } from "@components/universal/TermsAndLinks";
 import { HomeLeftbarContentLayout } from "@layouts/HomeLeftbarContentLayout";
 import { StoryPostFeed } from "@components/universal/feed-related/StoryPostFeed";
-import { PostingRegularPost } from "@components/universal/post-related/PostingRegularPost";
 import { RegularPostFeed } from "@components/universal/feed-related/RegularPostFeed";
+import { PostingRegularPost } from "@components/universal/post-related/PostingRegularPost";
 import { RegularPostSkeleton } from "@components/universal/loading-skeletons/RegularPostSkeleton";
 
 const Home = () => {
@@ -58,7 +59,7 @@ const Home = () => {
             id: 5,
             icon: SvgIcons.REEL({ styleClass: 'w-[30px] h-[30px]' }),
             title: Routes.REEL.title,
-            path: `/reel/${reels[0]?.id}`,
+            path: generatePath({ path: Routes.REEL.path }, { id: reels[0]?.id }),
         },
         {
             id: 6,
@@ -72,7 +73,7 @@ const Home = () => {
         <div className="relative w-full grid grid-cols-[1fr] gap-8 overflow-y-auto md:grid-cols-[2fr_1fr] lg:grid-cols-[1fr_2fr_1fr]">
             <div className="hidden homeSidebarStyle lg:flex">
                 <Link
-                    to={`/profile/${user.uid}`}
+                    to={generatePath({ path: Routes.PROFILE.path }, { id: user?.uid })}
                     className="flex cursor-pointer items-center gap-3 rounded-lg p-1.5 hover:bg-customGray-100"
                 >
                     <ProfileAvatar

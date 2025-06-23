@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import { Routes } from "@constants/Routes";
 import { ProfileAvatar } from "../ProfileAvatar";
 import { InputField } from "../inputs/InputField";
 import { ReactIcons } from "@constants/ReactIcons";
 import { ModalLayout } from "@layouts/ModalLayout";
+import { generatePath } from "@utils/PathResolver";
 import { timeAgoInitials } from "@utils/TimeModule";
 import { handleCommenting } from "@utils/ReactionHandling";
 
@@ -49,7 +51,7 @@ export const CommentingModal = ({
                             <div className="flex flex-col">
                                 <div className="px-3 py-1.5 rounded-2xl bg-customGray-default">
                                     <Link
-                                        to={`/profile/${users?.uid}`}
+                                        to={generatePath({ path: Routes.PROFILE.path }, { id: users?.uid })}
                                         className="text-sm font-medium cursor-pointer hover:underline"
                                     >
                                         {users?.username}
