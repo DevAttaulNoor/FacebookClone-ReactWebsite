@@ -8,7 +8,7 @@ import { ProfileAvatar } from "@components/universal/ProfileAvatar";
 import { InputField } from "@components/universal/inputs/InputField";
 import { BasicButton } from "@components/universal/buttons/BasicButton";
 import { ButtonWithLoadingLayout } from "@layouts/ButtonWithLoadingLayout";
-import group_coverphoto from '/Images/universal/group/group-coverphoto.png';
+import group_coverphoto from '/Images/group-coverphoto.png';
 
 const groupComponents = [
     { id: 1, title: 'About' },
