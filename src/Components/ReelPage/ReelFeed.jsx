@@ -75,7 +75,7 @@ function ReelFeed() {
 
     return (
         <>
-            {reels.length === 0 ? (
+            {reels?.length === 0 ? (
                 <div className="reelFeed">
                     <NavLink to={'/homepage/storyreels'}>
                         <AddIcon />
@@ -92,7 +92,7 @@ function ReelFeed() {
                     <div className='reelFeed_ScrollReels' ref={containerRef}>
                         <NavLink to={'/homepage/storyreels'}>
                             <div className="reelFeed_ScrollReelsInner">
-                                <Avatar src={user.photoURL}/>
+                                <Avatar src={user.photoURL} />
                                 <div className='ScrollReelsCreate'>
                                     <AddIcon />
                                     <h5>Create story</h5>
@@ -100,21 +100,25 @@ function ReelFeed() {
                             </div>
                         </NavLink >
 
-                        {reels.map((reelContent) => (
-                            <NavLink to={`/reelpage/${reelContent.id}`} key={reelContent.id} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
-                                <div
-                                    className="reelFeed_ScrollReelsStories"
-                                    style={{
-                                        backgroundImage: `url(${reelContent.reel[[reelContent.reel.length - 1]].background})`,
-                                        backgroundSize: 'cover',
-                                        backgroundPosition: 'center'
-                                    }}
-                                >
-                                    <Avatar src={reelContent.photoURL} />
-                                    <p>{reelContent.username}</p>
-                                </div>
-                            </NavLink>
-                        ))}
+                        {reels?.map((reelContent) => {
+                            console.log(reelContent)
+
+                            return (
+                                <NavLink to={`/reelpage/${reelContent.id}`} key={reelContent.id} onClick={() => dispatch(setSelectedReel(reelContent.id))}>
+                                    <div
+                                        className="reelFeed_ScrollReelsStories"
+                                        style={{
+                                            backgroundImage: `url(${reelContent.reel[reelContent.reel.length - 1].background})`,
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center'
+                                        }}
+                                    >
+                                        <Avatar src={reelContent.photoURL} />
+                                        <p>{reelContent.username}</p>
+                                    </div>
+                                </NavLink>
+                            )
+                        })}
                     </div>
 
                     {showRightButton && (<button id='rightScroll' onClick={scrollRight}><KeyboardArrowRightIcon /></button>)}
